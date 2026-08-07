@@ -1,9 +1,13 @@
 Package: CleanLASA
-Title: What the Package Does (One Line, Title Case)
+Title: Import and Clean LASA SPSS Data
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+    person("Bram", "Hoogerheide", , "b.hoogerheide@vu.nl", role = c("aut", "cre"))
+Description: Tools for importing and cleaning data from the Longitudinal
+    Aging Study Amsterdam (LASA). Applies SPSS variable- and value-labels
+    from LASA documentation across waves, provides a wrapper function to
+    automatically detect and import LASA datafiles, and reports variables
+    that could not be matched to their corresponding documentation.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -17,3 +21,4 @@ VignetteBuilder: knitr
 Depends: 
     R (>= 3.5)
 LazyData: true
+URL: https://highmeadows.github.io/CleanLASA/
