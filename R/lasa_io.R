@@ -4,21 +4,42 @@
 # live in functions such as `apply_lasa046_labels()`, `apply_lasa004_labels()`,
 # `apply_lasa_fi_labels()`, and `apply_lasa_oa_labels()`.
 
+#' Assert that a value is a single, non-missing TRUE/FALSE
+#'
+#' Small internal validator shared by the argument-checking code in this
+#' file, so the same error message format is used everywhere a scalar
+#' logical argument is required.
+#'
+#' @param x The value to check.
+#' @param name Character scalar: the argument name to use in the error
+#'   message.
+#'
+#' @return Invisibly `NULL`. Called for its side effect of raising an error
+#'   when `x` is not a scalar logical.
+#' @keywords internal
+.lasa_validate_scalar_logical <- function(x, name) {
+  if (length(x) != 1L || is.na(x) || !is.logical(x)) {
+    stop("'", name, "' must be TRUE or FALSE.", call. = FALSE)
+  }
+  invisible(NULL)
+}
+
 #' Parse a LASA data-file name
 #'
 #' Internal helper used by [read_lasa_sav()] to derive the LASA wave and file
 #' code from the documented file naming convention.
 #'
 #' Standard wave files use `LASA[wave][file_code].SAV`, for example
-#' `LASAB046.SAV` or `LASAZ004.SAV`. Files for waves 2B, 3B, 4B, and MB omit
-#' the `A` after `LAS`, for example `LAS2B046.SAV` or `LASMB004.SAV`.
+#' `LASAB046.SAV` or `LASAZ004.SAV`. Files for the replenishment/migrant
+#' cohort waves 2B, 3B, 4B, and MB omit the `A` after `LAS`, for example
+#' `LAS2B046.SAV` or `LASMB004.SAV`.
 #'
 #' @param path Character string containing a LASA file path or file name.
 #'
 #' @return A named list with `wave`, `file_code`, `file_name`, and
 #'   `apply_function`.
 #' @keywords internal
-.lasa_parse_filename <- function(path) {
+.lasa_parse_datafile_name <- function(path) {
   if (length(path) != 1L || is.na(path) || !nzchar(path)) {
     stop("'path' must be a single non-empty file path.", call. = FALSE)
   }
@@ -28,28 +49,30 @@
 
   # Regular single-character LASA waves, including Z for data that are stored
   # once because the information is constant or otherwise spans waves.
-  regular <- regexec(
+  # e.g. "LASAB046" -> wave "B", file code "046".
+  regex_standard_wave <- regexec(
     "^LASA([BCDEFGHIJKLZ])([[:alnum:]]{2,3})$",
     stem,
     ignore.case = TRUE
   )
-  regular_match <- regmatches(stem, regular)[[1L]]
+  match_standard_wave <- regmatches(stem, regex_standard_wave)[[1L]]
 
   # Replenishment/migrant-cohort wave codes are part of filenames beginning
   # with LAS rather than LASA: LAS2B..., LAS3B..., LAS4B..., LASMB....
-  special <- regexec(
+  # e.g. "LAS3B046" -> wave "3B", file code "046".
+  regex_replenishment_wave <- regexec(
     "^LAS(2B|3B|4B|MB)([[:alnum:]]{2,3})$",
     stem,
     ignore.case = TRUE
   )
-  special_match <- regmatches(stem, special)[[1L]]
+  match_replenishment_wave <- regmatches(stem, regex_replenishment_wave)[[1L]]
 
-  if (length(regular_match) == 3L) {
-    wave <- toupper(regular_match[[2L]])
-    file_code_raw <- regular_match[[3L]]
-  } else if (length(special_match) == 3L) {
-    wave <- toupper(special_match[[2L]])
-    file_code_raw <- special_match[[3L]]
+  if (length(match_standard_wave) == 3L) {
+    wave <- toupper(match_standard_wave[[2L]])
+    file_code_raw <- match_standard_wave[[3L]]
+  } else if (length(match_replenishment_wave) == 3L) {
+    wave <- toupper(match_replenishment_wave[[2L]])
+    file_code_raw <- match_replenishment_wave[[3L]]
   } else {
     stop(
       "Cannot identify a LASA wave and file code from file name '",
@@ -73,7 +96,7 @@
     file_code_lower
   }
 
-  apply_function <- .lasa_apply_function_name(file_code)
+  apply_function <- .lasa_label_function_name_from_file_code(file_code)
 
   list(
     wave = wave,
@@ -93,7 +116,7 @@
 #'
 #' @return Character scalar containing the expected function name.
 #' @keywords internal
-.lasa_apply_function_name <- function(file_code) {
+.lasa_label_function_name_from_file_code <- function(file_code) {
   code <- tolower(file_code)
 
   # The three osteoarthritis algorithm files are one logical data-file family
@@ -111,6 +134,78 @@
   }
 }
 
+#' Validate arguments forwarded to a LASA label function
+#'
+#' Internal helper used by [read_lasa_sav()] to make forwarding through `...`
+#' explicit and predictable. All forwarded arguments must be named. When the
+#' selected label function does not declare `...`, every forwarded argument is
+#' checked against that function's formal arguments before `do.call()` is used.
+#'
+#' @param args Named list of user-supplied arguments from `...`.
+#' @param label_fun The selected file-specific label function.
+#' @param label_fun_name Character scalar naming `label_fun`, used in messages.
+#'
+#' @return Invisibly `NULL`; called for validation side effects.
+#' @keywords internal
+.lasa_validate_forwarded_label_arguments <- function(args,
+                                                label_fun,
+                                                label_fun_name) {
+  if (length(args) == 0L) {
+    return(invisible(NULL))
+  }
+
+  arg_names <- names(args)
+  if (is.null(arg_names) || any(!nzchar(arg_names))) {
+    stop(
+      "All arguments supplied through `...` to read_lasa_sav() must be named.",
+      call. = FALSE
+    )
+  }
+
+  if (anyDuplicated(arg_names)) {
+    duplicated_args <- unique(arg_names[duplicated(arg_names)])
+    stop(
+      "Argument(s) supplied more than once through `...`: ",
+      paste(duplicated_args, collapse = ", "),
+      ".",
+      call. = FALSE
+    )
+  }
+
+  reserved <- intersect(arg_names, c("data", "wave", "file_code"))
+  if (length(reserved) > 0L) {
+    stop(
+      "Do not supply ",
+      paste(reserved, collapse = ", "),
+      " through `...`; these arguments are derived by read_lasa_sav().",
+      call. = FALSE
+    )
+  }
+
+  formal_names <- names(formals(label_fun))
+
+  # A file-specific implementation that declares `...` explicitly accepts
+  # additional named arguments and is responsible for validating them.
+  if ("..." %in% formal_names) {
+    return(invisible(NULL))
+  }
+
+  unsupported <- setdiff(arg_names, formal_names)
+  if (length(unsupported) > 0L) {
+    stop(
+      "The selected label function `", label_fun_name, "()` does not support ",
+      "the following argument(s) supplied through `...`: ",
+      paste(unsupported, collapse = ", "),
+      ". Supported file-specific arguments are: ",
+      paste(setdiff(formal_names, c("data", "wave", "file_code")), collapse = ", "),
+      ".",
+      call. = FALSE
+    )
+  }
+
+  invisible(NULL)
+}
+
 #' Read and label a LASA SPSS data file
 #'
 #' Reads a LASA `.sav` file, identifies its wave and file code from the file
@@ -125,9 +220,12 @@
 #' @param read_sav_args Optional named list of additional arguments passed to
 #'   [haven::read_sav()], for example `list(encoding = "UTF-8")`. Do not include
 #'   `file` or `user_na`; those are controlled by `path` and `user_na`.
-#' @param ... Named arguments forwarded to the selected file-specific label
-#'   function, such as `to_factor`, `to_numeric`, `standardize_names`, or
-#'   `name_corrections` where supported.
+#' @param ... Named arguments forwarded unchanged to the selected
+#'   file-specific label function. For LASA 046, supported options include
+#'   `fuzzy_match`, `max_edit_distance`, `name_corrections`, `warn_unmatched`,
+#'   `to_factor`, `to_numeric`, and `standardize_names`. Other file-specific
+#'   implementations may expose a different set of options. Unsupported
+#'   arguments are detected before the label function is called.
 #'
 #' @details
 #' The dispatcher follows the LASA filename convention:
@@ -151,10 +249,19 @@
 #'
 #' The selected function must already be available in the package namespace or
 #' current R session. The wrapper always supplies `data`. It supplies `wave`
-#' when that argument exists in the selected function, and supplies `file_code`
-#' when that argument exists. This permits shared implementations such as a
-#' future `apply_lasa_oa_labels(data, file_code, ...)` while retaining the
-#' standard wave-aware interface used by `apply_lasa046_labels(data, wave, ...)`.
+#' when that argument exists in the selected function's formal arguments
+#' (checked via `formals()`), and supplies `file_code` when that argument
+#' exists. This permits shared implementations such as a future
+#' `apply_lasa_oa_labels(data, file_code, ...)` while retaining the standard
+#' wave-aware interface used by `apply_lasa046_labels(data, wave, ...)`.
+#'
+#' Arguments supplied through `...` are reserved for the selected label
+#' function, not for [haven::read_sav()]. They are validated against that
+#' function's formal arguments and then passed through with `do.call()`. For
+#' example, when file 046 is detected, `to_factor = TRUE`,
+#' `to_numeric = TRUE`, `standardize_names = TRUE`, and `name_corrections =`
+#' `...` are passed directly to [apply_lasa046_labels()]. Additional SPSS
+#' import options belong in `read_sav_args`.
 #'
 #' After labelling, generic provenance attributes are attached:
 #' `"LASA_wave"`, `"LASA_file_code"`, `"LASA_source_file"`, and
@@ -174,7 +281,8 @@
 #'   "LASAE046.SAV",
 #'   to_factor = TRUE,
 #'   to_numeric = TRUE,
-#'   standardize_names = TRUE
+#'   standardize_names = TRUE,
+#'   name_corrections = c(lphya08 = "ELPYA08")
 #' )
 #'
 #' # Also dispatches to apply_lasa046_labels(), with wave = "3B"
@@ -199,9 +307,7 @@ read_lasa_sav <- function(path,
     )
   }
 
-  if (length(user_na) != 1L || is.na(user_na) || !is.logical(user_na)) {
-    stop("'user_na' must be TRUE or FALSE.", call. = FALSE)
-  }
+  .lasa_validate_scalar_logical(user_na, "user_na")
 
   if (!is.list(read_sav_args)) {
     stop("'read_sav_args' must be a list.", call. = FALSE)
@@ -223,7 +329,7 @@ read_lasa_sav <- function(path,
     }
   }
 
-  info <- .lasa_parse_filename(path)
+  info <- .lasa_parse_datafile_name(path)
 
   label_fun <- get0(
     info$apply_function,
@@ -242,27 +348,26 @@ read_lasa_sav <- function(path,
     )
   }
 
+  # Validate file-specific options before reading the potentially large SPSS
+  # file, so misspelled/unsupported `...` arguments fail early.
+  user_label_args <- list(...)
+  .lasa_validate_forwarded_label_arguments(
+    args = user_label_args,
+    label_fun = label_fun,
+    label_fun_name = info$apply_function
+  )
+
   read_call <- c(
     list(file = path, user_na = user_na),
     read_sav_args
   )
   data <- do.call(haven::read_sav, read_call)
 
-  user_label_args <- list(...)
-  if (length(user_label_args) > 0L) {
-    dot_names <- names(user_label_args)
-    if (!is.null(dot_names)) {
-      reserved_label_args <- intersect(dot_names, c("data", "wave", "file_code"))
-      if (length(reserved_label_args) > 0L) {
-        stop(
-          "Do not supply ", paste(reserved_label_args, collapse = ", "),
-          " through `...`; these arguments are derived by read_lasa_sav().",
-          call. = FALSE
-        )
-      }
-    }
-  }
-
+  # Only pass `wave` / `file_code` through to the label function if it
+  # actually declares that argument. This lets wave-aware implementations
+  # (e.g. apply_lasa046_labels(data, wave, ...)) and shared, file-code-aware
+  # implementations (e.g. a future apply_lasa_oa_labels(data, file_code, ...))
+  # coexist behind the same read_lasa_sav() entry point.
   formal_names <- names(formals(label_fun))
   label_call <- list(data = data)
 
@@ -276,6 +381,9 @@ read_lasa_sav <- function(path,
   label_call <- c(label_call, user_label_args)
   out <- do.call(label_fun, label_call)
 
+  # Attach provenance attributes so the object "remembers" which file and
+  # label function produced it, independent of any file-specific attributes
+  # the label function itself may have set (e.g. "label_report").
   attr(out, "LASA_wave") <- info$wave
   attr(out, "LASA_file_code") <- info$file_code
   attr(out, "LASA_source_file") <- info$file_name
@@ -311,8 +419,9 @@ read_lasa_sav <- function(path,
 #' `problem` column.
 #'
 #' @return A data frame containing the variable-name matching audit. The
-#'   returned report retains LASA context in the attributes `"LASA_wave"` and
-#'   `"LASA_file_code"` when those are available on `data`.
+#'   returned report retains LASA context in the attributes `"LASA_wave"`,
+#'   `"LASA_file_code"`, `"LASA_source_file"`, and `"LASA_label_function"` when
+#'   those are available on `data`.
 #'
 #' @seealso [read_lasa_sav()], [apply_lasa046_labels()]
 #' @export
@@ -322,10 +431,7 @@ read_lasa_sav <- function(path,
 #' dat <- apply_lasa046_labels(dat, wave = "B", warn_unmatched = FALSE)
 #' lasa_label_report(dat, problems_only = TRUE)
 lasa_label_report <- function(data, problems_only = FALSE) {
-  if (length(problems_only) != 1L || is.na(problems_only) ||
-      !is.logical(problems_only)) {
-    stop("'problems_only' must be TRUE or FALSE.", call. = FALSE)
-  }
+  .lasa_validate_scalar_logical(problems_only, "problems_only")
 
   report <- attr(data, "label_report", exact = TRUE)
 
@@ -381,5 +487,7 @@ lasa_label_report <- function(data, problems_only = FALSE) {
   rownames(report) <- NULL
   attr(report, "LASA_wave") <- attr(data, "LASA_wave", exact = TRUE)
   attr(report, "LASA_file_code") <- attr(data, "LASA_file_code", exact = TRUE)
+  attr(report, "LASA_source_file") <- attr(data, "LASA_source_file", exact = TRUE)
+  attr(report, "LASA_label_function") <- attr(data, "LASA_label_function", exact = TRUE)
   report
 }
