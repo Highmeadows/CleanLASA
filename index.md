@@ -29,12 +29,16 @@ the correct import/cleaning function automatically:
 library(CleanLASA)
 
 # Import and label a LASA .sav file
+
+# importing the data should generally be in this fomrat:
 data <- read_lasa_sav("path/to/LASA[wave][file_code].sav")
-data <- read_lasa_sav("path/to/LASAB046.sav") # LASA wave B file 046
-data <- read_lasa_sav("path/to/LASAZ004.sav") # LASA wave Z file 004
-data <- read_lasa_sav("path/to/LAS2B011.sav") # LASA wave 2B file 011
-data <- read_lasa_sav("path/to/lasazoa1.sav") # LASA wave Z file oa1
-data <- read_lasa_sav("path/to/LASAJFI.sav") # LASA wave J file FI
+
+# Specific examples:
+data <- read_lasa_sav("LASAB046.sav") # LASA wave B file 046
+data <- read_lasa_sav("LASA_data/LASAZ004.sav") # LASA wave Z file 004
+data <- read_lasa_sav("Documents/Research/data/LAS2B011.sav") # LASA wave 2B file 011
+data <- read_lasa_sav("lasazoa1.sav") # LASA wave Z file oa1
+data <- read_lasa_sav("LASAJFI.sav") # LASA wave J file FI
 ```
 
 For LASA046 files specifically,
@@ -45,10 +49,13 @@ correctly. The current version supports waves: `B`, `C`, `D`, `E`, `2B`,
 
 ``` r
 
+# Specifically for LASA046 (Physical Activity), datapath should be in this format:
 data <- apply_lasa046_labels("path/to/LASA[wave]046.sav")
-data <- apply_lasa046_labels("path/to/LASAC046.sav")
-data <- apply_lasa046_labels("path/to/LASMB046.sav")
-data <- apply_lasa046_labels("path/to/LAS3B046.sav")
+
+# Examples
+data <- apply_lasa046_labels("LASAC046.sav")
+data <- apply_lasa046_labels("LASMB046.sav")
+data <- apply_lasa046_labels("LAS3B046.sav")
 ```
 
 In the future, similar functions will be built for other datafiles.
@@ -73,6 +80,7 @@ resolve them before analysis.
 | [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md) | Wrapper function that identifies the LASA datafile type and calls the correct import/cleaning function |
 | [`apply_lasa046_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa046_labels.md) | Applies SPSS variable- and value-labels for LASA046 data files and imports them correctly; works across all waves |
 | [`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md) | Returns variables that could not be matched to the corresponding LASA documentation |
+| [`lasa_var_info()`](https://highmeadows.github.io/CleanLASA/reference/lasa_var_info.md) | Returns the LASA documentation of the corresponding datafile in an external pdf viewer |
 
 ## Documentation
 
