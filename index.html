@@ -72,18 +72,25 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://highmeadows.github.io/CleanLASA/">CleanLASA</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Import and label a LASA .sav file</span></span>
+<span></span>
+<span><span class="co"># importing the data should generally be in this fomrat:</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"path/to/LASA[wave][file_code].sav"</span><span class="op">)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"path/to/LASAB046.sav"</span><span class="op">)</span> <span class="co"># LASA wave B file 046</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"path/to/LASAZ004.sav"</span><span class="op">)</span> <span class="co"># LASA wave Z file 004</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"path/to/LAS2B011.sav"</span><span class="op">)</span> <span class="co"># LASA wave 2B file 011</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"path/to/lasazoa1.sav"</span><span class="op">)</span> <span class="co"># LASA wave Z file oa1</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"path/to/LASAJFI.sav"</span><span class="op">)</span> <span class="co"># LASA wave J file FI</span></span></code></pre></div>
+<span></span>
+<span><span class="co"># Specific examples:</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span> <span class="co"># LASA wave B file 046</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASA_data/LASAZ004.sav"</span><span class="op">)</span> <span class="co"># LASA wave Z file 004</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"Documents/Research/data/LAS2B011.sav"</span><span class="op">)</span> <span class="co"># LASA wave 2B file 011</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"lasazoa1.sav"</span><span class="op">)</span> <span class="co"># LASA wave Z file oa1</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAJFI.sav"</span><span class="op">)</span> <span class="co"># LASA wave J file FI</span></span></code></pre></div>
 <p>For LASA046 files specifically, <code><a href="reference/apply_lasa046_labels.html">apply_lasa046_labels()</a></code> applies all SPSS variable- and value-labels and imports the data correctly. The current version supports waves: <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>2B</code>, <code>F</code>, <code>G</code>, <code>H</code>, <code>MB</code>, <code>3B</code>, <code>I</code>, <code>J</code>, <code>K</code></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/apply_lasa046_labels.html">apply_lasa046_labels</a></span><span class="op">(</span><span class="st">"path/to/LASA[wave]046.sav"</span><span class="op">)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/apply_lasa046_labels.html">apply_lasa046_labels</a></span><span class="op">(</span><span class="st">"path/to/LASAC046.sav"</span><span class="op">)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/apply_lasa046_labels.html">apply_lasa046_labels</a></span><span class="op">(</span><span class="st">"path/to/LASMB046.sav"</span><span class="op">)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/apply_lasa046_labels.html">apply_lasa046_labels</a></span><span class="op">(</span><span class="st">"path/to/LAS3B046.sav"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Specifically for LASA046 (Physical Activity), datapath should be in this format:</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/apply_lasa046_labels.html">apply_lasa046_labels</a></span><span class="op">(</span><span class="st">"path/to/LASA[wave]046.sav"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Examples</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/apply_lasa046_labels.html">apply_lasa046_labels</a></span><span class="op">(</span><span class="st">"LASAC046.sav"</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/apply_lasa046_labels.html">apply_lasa046_labels</a></span><span class="op">(</span><span class="st">"LASMB046.sav"</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/apply_lasa046_labels.html">apply_lasa046_labels</a></span><span class="op">(</span><span class="st">"LAS3B046.sav"</span><span class="op">)</span></span></code></pre></div>
 <p>In the future, similar functions will be built for other datafiles.</p>
 <p>After importing, you can check whether any variables could not be matched to the LASA documentation using <code><a href="reference/lasa_label_report.html">lasa_label_report()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -114,6 +121,10 @@
 <tr>
 <td><code><a href="reference/lasa_label_report.html">lasa_label_report()</a></code></td>
 <td>Returns variables that could not be matched to the corresponding LASA documentation</td>
+</tr>
+<tr>
+<td><code><a href="reference/lasa_var_info.html">lasa_var_info()</a></code></td>
+<td>Returns the LASA documentation of the corresponding datafile in an external pdf viewer</td>
 </tr>
 </tbody>
 </table>
