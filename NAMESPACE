@@ -2,4 +2,5 @@
 
 export(apply_lasa046_labels)
 export(lasa_label_report)
+export(lasa_var_info)
 export(read_lasa_sav)
