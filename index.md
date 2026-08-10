@@ -19,9 +19,10 @@ devtools::install_github("Highmeadows/CleanLASA")
 
 ## Example
 
-The main entry point is `read_lasa_sav()`, which detects which LASA
-datafile you’re working with and dispatches to the correct
-import/cleaning function automatically:
+The main entry point is
+[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md),
+which detects which LASA datafile you’re working with and dispatches to
+the correct import/cleaning function automatically:
 
 ``` r
 
@@ -29,19 +30,32 @@ library(CleanLASA)
 
 # Import and label a LASA .sav file
 data <- read_lasa_sav("path/to/LASA[wave][file_code].sav")
+data <- read_lasa_sav("path/to/LASAB046.sav") # LASA wave B file 046
+data <- read_lasa_sav("path/to/LASAZ004.sav") # LASA wave Z file 004
+data <- read_lasa_sav("path/to/LAS2B011.sav") # LASA wave 2B file 011
+data <- read_lasa_sav("path/to/lasazoa1.sav") # LASA wave Z file oa1
+data <- read_lasa_sav("path/to/LASAJFI.sav") # LASA wave J file FI
 ```
 
-For LASA046 files specifically, `apply_lasa046_labels()` applies all
-SPSS variable- and value-labels and imports the data correctly. It works
-across all waves of LASA046:
+For LASA046 files specifically,
+[`apply_lasa046_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa046_labels.md)
+applies all SPSS variable- and value-labels and imports the data
+correctly. The current version supports waves: `B`, `C`, `D`, `E`, `2B`,
+`F`, `G`, `H`, `MB`, `3B`, `I`, `J`, `K`
 
 ``` r
 
 data <- apply_lasa046_labels("path/to/LASA[wave]046.sav")
+data <- apply_lasa046_labels("path/to/LASAC046.sav")
+data <- apply_lasa046_labels("path/to/LASMB046.sav")
+data <- apply_lasa046_labels("path/to/LAS3B046.sav")
 ```
 
+In the future, similar functions will be built for other datafiles.
+
 After importing, you can check whether any variables could not be
-matched to the LASA documentation using `lasa_label_report()`:
+matched to the LASA documentation using
+[`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md):
 
 ``` r
 
@@ -56,9 +70,9 @@ resolve them before analysis.
 
 | Function | Description |
 |----|----|
-| `read_lasa_sav()` | Wrapper function that identifies the LASA datafile type and calls the correct import/cleaning function |
-| `apply_lasa046_labels()` | Applies SPSS variable- and value-labels for LASA046 data files and imports them correctly; works across all waves |
-| `lasa_label_report()` | Returns variables that could not be matched to the corresponding LASA documentation |
+| [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md) | Wrapper function that identifies the LASA datafile type and calls the correct import/cleaning function |
+| [`apply_lasa046_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa046_labels.md) | Applies SPSS variable- and value-labels for LASA046 data files and imports them correctly; works across all waves |
+| [`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md) | Returns variables that could not be matched to the corresponding LASA documentation |
 
 ## Documentation
 
