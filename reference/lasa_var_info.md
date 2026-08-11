@@ -1,10 +1,10 @@
-# Open a LASA variable-information codebook
+# Open LASA variable information
 
-Opens the variable-information codebook associated with a LASA data-file
-code. This is for conveniently looking up the variable- and value
-labels, but not always self-explanatory. For more information on a
-variable, its references, original questionnaire, and other relevant
-information search the LASA website: https://lasa-vu.nl/topics/
+Searches the live [LASA topic
+overview](https://lasa-vu.nl/en/topic-table/) and opens the
+variable-information PDF linked by LASA. The documentation is opened
+from the LASA website; no PDF files are read from or bundled with the
+package.
 
 ## Usage
 
@@ -12,7 +12,10 @@ information search the LASA website: https://lasa-vu.nl/topics/
 lasa_var_info(
   filecode,
   viewer = c("auto", "rstudio", "system"),
-  open = interactive()
+  open = interactive(),
+  fuzzy_match = TRUE,
+  max_edit_distance = 2L,
+  refresh = FALSE
 )
 ```
 
@@ -20,60 +23,45 @@ lasa_var_info(
 
 - filecode:
 
-  A single non-empty character string containing a LASA data-file code,
-  such as `"046"`, `"z004"`, or `"zoa2"`. The optional `"LASA"` prefix
-  is accepted.
+  A single LASA file code, data-file name, or topic name, such as
+  `"046"`, `"LASA046"`, `"LASA 046"`, `"lasa_046"`, or
+  `"Physical activity"`.
 
 - viewer:
 
-  Where to open the codebook. One of:
-
-  `"auto"`
-
-  :   Use the RStudio Viewer when available and otherwise use the
-      system's default browser or PDF viewer.
-
-  `"rstudio"`
-
-  :   Attempt to use the RStudio Viewer and fall back to the system's
-      default browser or PDF viewer if it is unavailable.
-
-  `"system"`
-
-  :   Use the system's default browser or PDF viewer.
+  Where to open the PDF. One of `"auto"`, `"rstudio"`, or `"system"`.
+  `"auto"` uses the system's webbrowser as PDF viewer.
 
 - open:
 
-  Logical. Should the codebook be opened? The default is `TRUE` during
-  interactive use and `FALSE` otherwise. Set `open = FALSE` to retrieve
-  the codebook path without opening the PDF.
+  Logical. Should the PDF be opened? The default is `TRUE` in an
+  interactive R session and `FALSE` otherwise. If `FALSE`, the URL is
+  returned without being opened.
+
+- fuzzy_match:
+
+  Logical. If `TRUE`, allow small typographical errors in topic names.
+
+- max_edit_distance:
+
+  Maximum edit distance allowed for fuzzy topic-name matching.
+
+- refresh:
+
+  Logical. If `TRUE`, refresh the cached LASA topic table before
+  searching it.
 
 ## Value
 
-Invisibly returns the full path to the codebook PDF.
+Invisibly returns the HTTPS URL of the matched variable-information PDF.
 
 ## Details
 
-Codebooks are downloaded directly from the public LASA website, and
-exported wit this package in the `inst/codebooks/` directory. In
-RStudio, the function first attempts to display the PDF in the Viewer
-pane. If the RStudio Viewer is unavailable or cannot open the file, the
-PDF is opened with the system's default browser or PDF viewer.
-
-Codebook filenames are derived automatically from `filecode` according
-to the LASA naming conventions:
-
-- Standard data files: `LASA[filecode]_varinfo.pdf`, for example
-  `LASA046_varinfo.pdf`.
-
-- Z-files: `LASAz[number]_varinfo.pdf`, for example
-  `LASAz004_varinfo.pdf`.
-
-- Algorithm-based osteoarthritis files `zoa1`, `zoa2`, and `zoa3`:
-  `LASAzoa1_2_3_varinfo.pdf`.
-
-Filename matching is case-insensitive. Consequently, file codes may be
-supplied with or without the `LASA` prefix and in upper- or lowercase.
+`filecode` may be a LASA file code, a LASA data-file name, or a topic
+name. File-code matching ignores case, spaces, underscores, hyphens, an
+optional `"LASA"` prefix, and common file suffixes. Topic matching is
+case-insensitive and accepts incomplete names. Small typographical
+errors are accepted when `fuzzy_match = TRUE`.
 
 ## Examples
 
@@ -81,14 +69,12 @@ supplied with or without the `LASA` prefix and in upper- or lowercase.
 if (FALSE) { # \dontrun{
 lasa_var_info("046")
 lasa_var_info("LASA046")
-lasa_var_info("z004")
-lasa_var_info("LASAz095")
-lasa_var_info("zoa2")
+lasa_var_info("LASA 046")
+lasa_var_info("lasa_046")
+lasa_var_info("Physical activity")
+lasa_var_info("physical act")
 
-# Explicitly use the system's default PDF viewer
-lasa_var_info("046", viewer = "system")
-
-# Retrieve the installed path without opening the PDF
-codebook_path <- lasa_var_info("046", open = FALSE)
+# Retrieve the URL without opening the PDF
+url <- lasa_var_info("046", open = FALSE)
 } # }
 ```

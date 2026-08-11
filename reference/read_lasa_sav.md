@@ -7,7 +7,16 @@ function, and applies that function to the imported data.
 ## Usage
 
 ``` r
-read_lasa_sav(path, user_na = TRUE, read_sav_args = list(), ...)
+read_lasa_sav(
+  path,
+  user_na = TRUE,
+  read_sav_args = list(),
+  name_corrections = NULL,
+  to_factor = FALSE,
+  to_numeric = FALSE,
+  standardize_names = FALSE,
+  ...
+)
 ```
 
 ## Arguments
@@ -19,26 +28,59 @@ read_lasa_sav(path, user_na = TRUE, read_sav_args = list(), ...)
 
 - user_na:
 
-  Logical passed to `haven::read_sav()`. The default is `TRUE` so SPSS
-  user-defined missing codes remain available to the file-specific
-  labelling function before any requested conversion to `NA`.
+  Logical passed to
+  [`haven::read_sav()`](https://haven.tidyverse.org/reference/read_spss.html).
+  The default is `TRUE` so SPSS user-defined missing codes remain
+  available to the file-specific labelling function before any requested
+  conversion to `NA`.
 
 - read_sav_args:
 
   Optional named list of additional arguments passed to
-  `haven::read_sav()`, for example `list(encoding = "UTF-8")`. Do not
-  include `file` or `user_na`; those are controlled by `path` and
-  `user_na`.
+  [`haven::read_sav()`](https://haven.tidyverse.org/reference/read_spss.html),
+  for example `list(encoding = "UTF-8")`. Do not include `file` or
+  `user_na`; those are controlled by `path` and `user_na`.
+
+- name_corrections:
+
+  Optional named character vector of manual column overrides, forwarded
+  to the selected file-specific label function when it declares a
+  `name_corrections` argument (every `apply_*_labels()` function in this
+  package does; see
+  [`apply_lasa046_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa046_labels.md)
+  for details). Names are canonical variable suffixes (without the wave
+  prefix); values are the actual column names found in the imported
+  data, for example `c(lphya08 = "BLPYA08")`. Use this when a column in
+  the `.sav` file does not exactly or case-insensitively match its
+  documented LASA name.
+
+- to_factor:
+
+  Logical, default `FALSE`. Forwarded to the selected file-specific
+  label function. When `TRUE`, categorical variables are converted to
+  factors using their SPSS value labels as level text, instead of being
+  left numeric with value-label attributes attached.
+
+- to_numeric:
+
+  Logical, default `FALSE`. Forwarded to the selected file-specific
+  label function. When `TRUE`, count/continuous variables (those whose
+  only codebook value labels are negative missing-reason codes) are
+  restored to plain numeric, with negative codes converted to `NA`.
+  Takes precedence over `to_factor` for those variables.
+
+- standardize_names:
+
+  Logical, default `FALSE`. Forwarded to the selected file-specific
+  label function. When `TRUE`, every successfully matched column is
+  renamed to its canonical lowercase LASA documentation name (e.g.
+  `blphya01`).
 
 - ...:
 
-  Named arguments forwarded unchanged to the selected file-specific
-  label function. For LASA 046, supported options include `fuzzy_match`,
-  `max_edit_distance`, `name_corrections`, `warn_unmatched`,
-  `to_factor`, `to_numeric`, and `standardize_names`. Other
-  file-specific implementations may expose a different set of options.
-  Unsupported arguments are detected before the label function is
-  called.
+  Additional named arguments forwarded to the selected file-specific
+  label function, for file-specific parameters that fall outside the
+  four shared reshaping arguments listed above.
 
 ## Value
 
@@ -70,31 +112,42 @@ with a letter, the expected function is
 `apply_lasa_fi_labels()`. The OA files `oa1`, `oa2`, and `oa3` are a
 hard-coded family and all map to `apply_lasa_oa_labels()`.
 
-The selected function must already be available in the package namespace
-or current R session. The wrapper always supplies `data`. It supplies
-`wave` when that argument exists in the selected function's formal
-arguments (checked via
-[`formals()`](https://rdrr.io/r/base/formals.html)), and supplies
-`file_code` when that argument exists. This permits shared
-implementations such as a future
-`apply_lasa_oa_labels(data, file_code, ...)` while retaining the
-standard wave-aware interface used by
-`apply_lasa046_labels(data, wave, ...)`.
+Every `apply_*_labels()` function in this package shares the same
+parameter contract: `data`, a wave- and/or file-code-identifying
+argument, and the four reshaping arguments documented above
+(`name_corrections`, `to_factor`, `to_numeric`, `standardize_names`; see
+[`apply_lasa046_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa046_labels.md)
+for the canonical implementation). `read_lasa_sav()` declares those four
+reshaping arguments explicitly, with the defaults shown above, so
+callers can discover and use them without needing to know which
+file-specific function is ultimately dispatched to. The selected
+function must already be available in the package namespace or current R
+session. `read_lasa_sav()` inspects that function's formal arguments
+(via [`formals()`](https://rdrr.io/r/base/formals.html)) and:
 
-Arguments supplied through `...` are reserved for the selected label
-function, not for `haven::read_sav()`. They are validated against that
-function's formal arguments and then passed through with
-[`do.call()`](https://rdrr.io/r/base/do.call.html). For example, when
-file 046 is detected, `to_factor = TRUE`, `to_numeric = TRUE`,
-`standardize_names = TRUE`, and `name_corrections =` `...` are passed
-directly to
-[`apply_lasa046_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa046_labels.md).
-Additional SPSS import options belong in `read_sav_args`.
+- always supplies `data`;
+
+- supplies `wave` and/or `file_code` when the function declares them;
+
+- supplies `name_corrections`, `to_factor`, `to_numeric`, and
+  `standardize_names` when the function declares them, and otherwise
+  warns – rather than silently ignoring the request – if the caller
+  supplied a non-default value for one of these;
+
+- forwards any further named arguments from `...` unchanged, for
+  file-specific parameters that fall outside the shared contract.
+
+This permits shared implementations such as a future
+`apply_lasa_oa_labels(data, file_code, name_corrections, to_factor, to_numeric, standardize_names, ...)`
+to coexist with wave-aware ones such as
+`apply_lasa046_labels(data, wave, name_corrections, to_factor, to_numeric, standardize_names)`.
 
 After labelling, generic provenance attributes are attached:
 `"LASA_wave"`, `"LASA_file_code"`, `"LASA_source_file"`, and
 `"LASA_label_function"`. File-specific functions should attach their
-variable-name audit under the generic `"label_report"` attribute.
+variable-name matching audit under the generic `"label_report"`
+attribute; retrieve it with
+[`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md).
 
 ## See also
 
@@ -106,16 +159,26 @@ variable-name audit under the generic `"label_report"` attribute.
 ``` r
 if (FALSE) { # \dontrun{
 # Automatically dispatches to apply_lasa046_labels()
-dat_e <- read_lasa_sav(
-  "LASAE046.SAV",
-  to_factor = TRUE,
-  to_numeric = TRUE,
-  standardize_names = TRUE,
-  name_corrections = c(lphya08 = "ELPYA08")
-)
+dat_e <- read_lasa_sav("LASAE046.SAV")
 
 # Also dispatches to apply_lasa046_labels(), with wave = "3B"
 dat_3b <- read_lasa_sav("LAS3B046.SAV")
+
+# The four shared reshaping arguments are available directly on
+# read_lasa_sav(), without needing to know they live on
+# apply_lasa046_labels() specifically:
+dat_h <- read_lasa_sav(
+  "LASAH046.SAV",
+  to_factor = TRUE,
+  to_numeric = TRUE,
+  standardize_names = TRUE
+)
+
+# Manually correct a mistyped column name:
+dat_b <- read_lasa_sav(
+  "LASAB046.SAV",
+  name_corrections = c(lphya08 = "BLPYA08")
+)
 
 # Dispatches to apply_lasa004_labels() once that function exists
 dat_z004 <- read_lasa_sav("LASAZ004.SAV")
