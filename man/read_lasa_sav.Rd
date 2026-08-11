@@ -4,7 +4,16 @@
 \alias{read_lasa_sav}
 \title{Read and label a LASA SPSS data file}
 \usage{
-read_lasa_sav(path, user_na = TRUE, read_sav_args = list(), ...)
+read_lasa_sav(
+  path,
+  user_na = TRUE,
+  read_sav_args = list(),
+  name_corrections = NULL,
+  to_factor = FALSE,
+  to_numeric = FALSE,
+  standardize_names = FALSE,
+  ...
+)
 }
 \arguments{
 \item{path}{Path to a LASA SPSS \code{.sav} file. LASA file names are parsed
@@ -15,15 +24,39 @@ so SPSS user-defined missing codes remain available to the file-specific
 labelling function before any requested conversion to \code{NA}.}
 
 \item{read_sav_args}{Optional named list of additional arguments passed to
-\code{\link[haven:read_spss]{haven::read_sav()}}, for example \code{list(encoding = "UTF-8")}. Do not include
-\code{file} or \code{user_na}; those are controlled by \code{path} and \code{user_na}.}
+\code{\link[haven:read_spss]{haven::read_sav()}}, for example \code{list(encoding = "UTF-8")}. Do not
+include \code{file} or \code{user_na}; those are controlled by \code{path} and
+\code{user_na}.}
 
-\item{...}{Named arguments forwarded unchanged to the selected
-file-specific label function. For LASA 046, supported options include
-\code{fuzzy_match}, \code{max_edit_distance}, \code{name_corrections}, \code{warn_unmatched},
-\code{to_factor}, \code{to_numeric}, and \code{standardize_names}. Other file-specific
-implementations may expose a different set of options. Unsupported
-arguments are detected before the label function is called.}
+\item{name_corrections}{Optional named character vector of manual column
+overrides, forwarded to the selected file-specific label function when
+it declares a \code{name_corrections} argument (every \verb{apply_*_labels()}
+function in this package does; see \code{\link[=apply_lasa046_labels]{apply_lasa046_labels()}} for
+details). Names are canonical variable suffixes (without the wave
+prefix); values are the actual column names found in the imported data,
+for example \code{c(lphya08 = "BLPYA08")}. Use this when a column in the
+\code{.sav} file does not exactly or case-insensitively match its documented
+LASA name.}
+
+\item{to_factor}{Logical, default \code{FALSE}. Forwarded to the selected
+file-specific label function. When \code{TRUE}, categorical variables are
+converted to factors using their SPSS value labels as level text,
+instead of being left numeric with value-label attributes attached.}
+
+\item{to_numeric}{Logical, default \code{FALSE}. Forwarded to the selected
+file-specific label function. When \code{TRUE}, count/continuous variables
+(those whose only codebook value labels are negative missing-reason
+codes) are restored to plain numeric, with negative codes converted to
+\code{NA}. Takes precedence over \code{to_factor} for those variables.}
+
+\item{standardize_names}{Logical, default \code{FALSE}. Forwarded to the
+selected file-specific label function. When \code{TRUE}, every successfully
+matched column is renamed to its canonical lowercase LASA documentation
+name (e.g. \code{blphya01}).}
+
+\item{...}{Additional named arguments forwarded to the selected
+file-specific label function, for file-specific parameters that fall
+outside the four shared reshaping arguments listed above.}
 }
 \value{
 The object returned by the selected file-specific label function,
@@ -31,8 +64,8 @@ with generic LASA provenance attributes attached.
 }
 \description{
 Reads a LASA \code{.sav} file, identifies its wave and file code from the file
-name, finds the corresponding file-specific \verb{apply_*_labels()} function, and
-applies that function to the imported data.
+name, finds the corresponding file-specific \verb{apply_*_labels()} function,
+and applies that function to the imported data.
 }
 \details{
 The dispatcher follows the LASA filename convention:
@@ -55,40 +88,61 @@ If the file code starts with a letter, the expected function is
 \code{apply_lasa_fi_labels()}. The OA files \code{oa1}, \code{oa2}, and \code{oa3} are a
 hard-coded family and all map to \code{apply_lasa_oa_labels()}.
 
-The selected function must already be available in the package namespace or
-current R session. The wrapper always supplies \code{data}. It supplies \code{wave}
-when that argument exists in the selected function's formal arguments
-(checked via \code{formals()}), and supplies \code{file_code} when that argument
-exists. This permits shared implementations such as a future
-\code{apply_lasa_oa_labels(data, file_code, ...)} while retaining the standard
-wave-aware interface used by \code{apply_lasa046_labels(data, wave, ...)}.
+Every \verb{apply_*_labels()} function in this package shares the same
+parameter contract: \code{data}, a wave- and/or file-code-identifying
+argument, and the four reshaping arguments documented above
+(\code{name_corrections}, \code{to_factor}, \code{to_numeric}, \code{standardize_names}; see
+\code{\link[=apply_lasa046_labels]{apply_lasa046_labels()}} for the canonical implementation).
+\code{read_lasa_sav()} declares those four reshaping arguments explicitly, with
+the defaults shown above, so callers can discover and use them without
+needing to know which file-specific function is ultimately dispatched to.
+The selected function must already be available in the package namespace
+or current R session. \code{read_lasa_sav()} inspects that function's formal
+arguments (via \code{formals()}) and:
+\itemize{
+\item always supplies \code{data};
+\item supplies \code{wave} and/or \code{file_code} when the function declares them;
+\item supplies \code{name_corrections}, \code{to_factor}, \code{to_numeric}, and
+\code{standardize_names} when the function declares them, and otherwise
+warns -- rather than silently ignoring the request -- if the caller
+supplied a non-default value for one of these;
+\item forwards any further named arguments from \code{...} unchanged, for
+file-specific parameters that fall outside the shared contract.
+}
 
-Arguments supplied through \code{...} are reserved for the selected label
-function, not for \code{\link[haven:read_spss]{haven::read_sav()}}. They are validated against that
-function's formal arguments and then passed through with \code{do.call()}. For
-example, when file 046 is detected, \code{to_factor = TRUE},
-\code{to_numeric = TRUE}, \code{standardize_names = TRUE}, and \verb{name_corrections =}
-\code{...} are passed directly to \code{\link[=apply_lasa046_labels]{apply_lasa046_labels()}}. Additional SPSS
-import options belong in \code{read_sav_args}.
+This permits shared implementations such as a future
+\code{apply_lasa_oa_labels(data, file_code, name_corrections, to_factor, to_numeric, standardize_names, ...)} to coexist with wave-aware ones such
+as \code{apply_lasa046_labels(data, wave, name_corrections, to_factor, to_numeric, standardize_names)}.
 
 After labelling, generic provenance attributes are attached:
 \code{"LASA_wave"}, \code{"LASA_file_code"}, \code{"LASA_source_file"}, and
 \code{"LASA_label_function"}. File-specific functions should attach their
-variable-name audit under the generic \code{"label_report"} attribute.
+variable-name matching audit under the generic \code{"label_report"}
+attribute; retrieve it with \code{\link[=lasa_label_report]{lasa_label_report()}}.
 }
 \examples{
 \dontrun{
 # Automatically dispatches to apply_lasa046_labels()
-dat_e <- read_lasa_sav(
-  "LASAE046.SAV",
-  to_factor = TRUE,
-  to_numeric = TRUE,
-  standardize_names = TRUE,
-  name_corrections = c(lphya08 = "ELPYA08")
-)
+dat_e <- read_lasa_sav("LASAE046.SAV")
 
 # Also dispatches to apply_lasa046_labels(), with wave = "3B"
 dat_3b <- read_lasa_sav("LAS3B046.SAV")
+
+# The four shared reshaping arguments are available directly on
+# read_lasa_sav(), without needing to know they live on
+# apply_lasa046_labels() specifically:
+dat_h <- read_lasa_sav(
+  "LASAH046.SAV",
+  to_factor = TRUE,
+  to_numeric = TRUE,
+  standardize_names = TRUE
+)
+
+# Manually correct a mistyped column name:
+dat_b <- read_lasa_sav(
+  "LASAB046.SAV",
+  name_corrections = c(lphya08 = "BLPYA08")
+)
 
 # Dispatches to apply_lasa004_labels() once that function exists
 dat_z004 <- read_lasa_sav("LASAZ004.SAV")

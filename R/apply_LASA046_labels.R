@@ -1,169 +1,185 @@
-# LASA 046 (LAPAQ / Physical activity) metadata
+# Apply LASA 046 (LAPAQ / Physical activity) SPSS variable and value labels
 #
-# File-specific implementation for applying SPSS variable labels and value
-# labels to LASA 046 data. Generic file reading, dispatch, and audit inspection
-# are implemented in `lasa_io.R` through `read_lasa_sav()` and
-# `lasa_label_report()`.
+# Source: LASA046_varinfo_PhysicalActivity.pdf (19-Jan-2024)
 #
-# Metadata source:
-#   LASA046_varinfo_PhysicalActivity.pdf, 19-Jan-2024.
+# This is the reference implementation of the package's shared parameter
+# contract described at the top of lasa_io.R: every apply_*_labels()
+# function is expected to accept `data`, a wave/file-code identifying
+# argument, and the same four reshaping arguments implemented here
+# (name_corrections, to_factor, to_numeric, standardize_names). Because
+# read_lasa_sav() forwards those four arguments automatically to whichever
+# label function it dispatches to, keeping their names, defaults, and
+# behaviour consistent across files (e.g. a future apply_lasa011_labels() or
+# apply_lasaz004_labels()) is what lets users pass them through
+# read_lasa_sav() without needing to know which file-specific function will
+# ultimately handle them.
 #
-# The implementation is intentionally wave-aware because B, 2B, 3B, and MB
-# all use a `b` variable prefix while questionnaire content/coding differs
-# between several of those waves.
+# By default this script keeps variables numeric and stores labels in the
+# same attributes used by haven/labelled:
+#   attr(x, "label")  = SPSS variable label
+#   attr(x, "labels") = named numeric vector of SPSS value labels
+#
+# The four reshaping arguments let you get a different shape of output:
+#   * name_corrections  - manually point a LASA046 suffix at a differently
+#                          named column, for a known typo/renaming in `data`.
+#   * to_factor         - convert categorical (value-labelled) variables to
+#                          factors, using the value labels as factor levels.
+#   * to_numeric        - convert count/continuous variables (whose codebook
+#                          labels are *only* negative missing-reason codes)
+#                          back to plain numeric, with negative codes -> NA.
+#   * standardize_names - rename matched columns to their canonical
+#                          lowercase LASA documentation name (e.g. "blphya01").
+#
+# `to_numeric` takes precedence over `to_factor`: a variable that qualifies
+# as numeric (all its codebook value labels are negative) is always restored
+# to plain numeric, never converted to a factor, even if both flags are TRUE.
+#
+# A matching/labelling audit is attached to the returned object as the
+# generic `"label_report"` attribute (see lasa_label_report() in lasa_io.R).
+#
+# Usage:
+#   dat_b  <- apply_lasa046_labels(dat_b,  wave = "B")
+#   dat_2b <- apply_lasa046_labels(dat_2b, wave = "2B")
+#   dat_h  <- apply_lasa046_labels(dat_h,  wave = "H")
+#   dat_3b <- apply_lasa046_labels(dat_3b, wave = "3B")
+#   dat_k  <- apply_lasa046_labels(dat_k,  wave = "K")
+#
+#   # Convert categorical variables to factors, restore count variables to
+#   # plain numeric, and use standardized (canonical) column names:
+#   dat_b <- apply_lasa046_labels(
+#     dat_b, wave = "B",
+#     to_factor = TRUE, to_numeric = TRUE, standardize_names = TRUE
+#   )
+#
+#   # Point a mistyped column at its correct LASA046 variable:
+#   dat_b <- apply_lasa046_labels(
+#     dat_b, wave = "B",
+#     name_corrections = c(lphya08 = "BLPYA08")
+#   )
+#
+#   # The same four arguments also work through read_lasa_sav(), which
+#   # dispatches to this function automatically for LASA046 files:
+#   dat_b <- read_lasa_sav("LASAB046.SAV", to_factor = TRUE)
+#
+# Wave must be supplied because B, 2B, 3B and MB all use variable names
+# beginning with "b", while some labels/codings differ between those waves.
 
-#' Normalize a LASA 046 variable name for matching
+#' Apply LASA046 (LAPAQ / Physical Activity) SPSS labels
 #'
-#' Internal helper used to compare LASA variable names case-insensitively and
-#' while ignoring punctuation such as underscores. It does not rename columns;
-#' canonical renaming is handled by [apply_lasa046_labels()] when
-#' `standardize_names = TRUE`.
+#' Attaches SPSS-style variable labels (`attr(x, "label")`) and value labels
+#' (`attr(x, "labels")`) to a LASA046 (LAPAQ physical activity questionnaire)
+#' data frame, using the coding scheme documented for the requested wave.
+#' By default variables are left numeric; optional arguments allow converting
+#' categorical variables to factors, restoring count/continuous variables to
+#' plain numeric, correcting mismatched column names, and standardizing
+#' column names to the canonical LASA documentation spelling.
 #'
-#' @param x Character vector of variable names.
+#' LASA046 variable names, wording, and value codings change across waves
+#' (for example, the sport-type coding scheme was redesigned starting at
+#' wave H, and several items only exist in a subset of waves). `wave` must be
+#' supplied explicitly because several waves share the same variable-name
+#' prefix (`"b"` for B, 2B, 3B, and MB) but use different labels/codings.
 #'
-#' @return Lowercase alphanumeric character vector.
-#' @keywords internal
-.lasa046_normalize_variable_name <- function(x) {
-  tolower(gsub("[^[:alnum:]]", "", x))
-}
-
-#' Apply LASA 046 variable labels, value labels, and optional harmonisation
+#' Column matching tries, in order: (1) an explicit override in
+#' `name_corrections`, (2) an exact (case-sensitive) name match, (3) a
+#' case-insensitive name match. A LASA046 variable that cannot be matched by
+#' any of these is left unlabelled and recorded as `"not found"` in the
+#' matching audit rather than raising an error, since not every wave's file
+#' contains every variable.
 #'
-#' Applies metadata documented for LASA file 046 (LAPAQ / Physical activity)
-#' to a single LASA wave data set. The function is designed for data imported
-#' from SPSS with [haven::read_sav()] but can be used on an equivalent data
-#' frame or tibble already present in R.
+#' `name_corrections`, `to_factor`, `to_numeric`, and `standardize_names` are
+#' part of a parameter contract shared by every `apply_*_labels()` function
+#' in this package (see the header comment in `lasa_io.R`). Because
+#' [read_lasa_sav()] forwards these same four arguments automatically when
+#' dispatching to this function, they can be supplied either directly to
+#' `apply_lasa046_labels()` or through `read_lasa_sav()` -- both forms behave
+#' identically.
 #'
-#' @param data A data frame or tibble containing one LASA 046 data file.
-#' @param wave Character scalar identifying the LASA measurement wave. Supported
-#'   values are `"B"`, `"C"`, `"D"`, `"E"`, `"2B"`, `"F"`, `"G"`, `"H"`,
-#'   `"3B"`, `"MB"`, `"I"`, `"J"`, and `"K"`. Matching is case-insensitive.
-#'   The wave must be supplied explicitly because B, 2B, 3B, and MB all use a
-#'   `b` variable-name prefix while some labels and coding rules differ.
-#' @param fuzzy_match Logical scalar. If `TRUE` (default), permit conservative
-#'   fuzzy matching for likely variable-name typing errors after exact,
-#'   case-insensitive, and punctuation-insensitive matching have failed.
-#' @param max_edit_distance Non-negative integer giving the maximum edit
-#'   distance accepted for automatic fuzzy matching. Defaults to `1`.
-#' @param name_corrections Optional named character vector for explicit
-#'   variable-name corrections. Vector names are canonical LASA suffixes (or
-#'   `"respnr"`) and values are the corresponding column names in `data`, for
-#'   example `c(lphya08 = "BLPYA08", respnr = "RespNrr")`. Explicit
-#'   corrections take precedence over automatic matching.
-#' @param warn_unmatched Logical scalar. If `TRUE` (default), issue a warning
-#'   when an expected variable cannot be matched confidently, a match is
-#'   ambiguous, a manual correction fails, or the respondent identifier has to
-#'   be inferred from first-column position. Successful fuzzy matches are
-#'   reported by message and in the audit but do not by themselves trigger this
-#'   warning.
-#' @param to_factor Logical scalar. If `FALSE` (default), variables with
-#'   substantive value labels remain numeric/haven-labelled and receive
-#'   SPSS-style `"labels"` attributes. If `TRUE`, those variables are converted
-#'   to factors using the LASA value labels as factor-level labels. Any observed
-#'   value without a codebook value label is retained as its own factor level
-#'   rather than being converted to `NA`.
-#' @param to_numeric Logical scalar. If `FALSE` (default), count, duration, and
-#'   other numeric variables retain their documented negative missing-reason
-#'   value labels. If `TRUE`, a variable is treated as substantive numeric when
-#'   every value label documented for it is a negative missing-reason code.
-#'   Such variables are converted to ordinary numeric vectors, every observed
-#'   value below zero is replaced by `NA`, and all non-negative values are
-#'   retained. For these variables `to_numeric = TRUE` takes precedence over
-#'   `to_factor = TRUE`.
-#' @param standardize_names Logical scalar. If `FALSE` (default), the original
-#'   source column names are retained. If `TRUE`, every successfully matched
-#'   LASA 046 variable is renamed to the canonical lowercase LASA documentation
-#'   name for the supplied wave (for example `blphya01`, `clphya26`, or
-#'   `klphya50`) and the first-column respondent identifier is renamed
-#'   `respnr`. Unmatched non-046 columns are left unchanged.
+#' @param data A data frame or tibble imported from a LASA046 `.sav` file
+#'   (for example via `haven::read_sav()`), containing wave-prefixed
+#'   variables such as `blphya01`, `clphya01`, etc.
+#' @param wave Character scalar identifying the LASA wave, matched
+#'   case-insensitively. One of `"B"`, `"C"`, `"D"`, `"E"`, `"2B"`, `"F"`,
+#'   `"G"`, `"H"`, `"3B"`, `"MB"`, `"I"`, `"J"`, or `"K"`.
+#' @param name_corrections Optional named character vector for explicit name
+#'   overrides, used when a column in `data` does not exactly or
+#'   case-insensitively match its expected LASA046 name (e.g. a typo
+#'   introduced during data entry or export). Names are canonical LASA046
+#'   suffixes (without the wave prefix), and values are the actual column
+#'   names found in `data`, for example `c(lphya08 = "BLPYA08")`. A
+#'   correction that points to a column not present in `data` is recorded as
+#'   `"manual_not_found"` in the matching audit rather than raising an error.
+#' @param to_factor Logical. If `FALSE` (default), categorical variables
+#'   remain numeric with SPSS-style value-label attributes. If `TRUE`, every
+#'   categorical variable's value labels are used as factor levels; any
+#'   observed value that has no codebook label is retained as its own level
+#'   (labelled with the numeric code) rather than being converted to `NA`.
+#'   Ignored for a given variable when `to_numeric` applies to it instead
+#'   (see below).
+#' @param to_numeric Logical. If `FALSE` (default), count/continuous
+#'   variables keep their SPSS-style missing-reason value-label attributes.
+#'   If `TRUE`, every variable whose codebook value labels consist
+#'   exclusively of negative missing-reason codes (e.g. -1, -2, -3) is
+#'   restored to an ordinary numeric vector: all negative values become `NA`
+#'   and all remaining values are kept as numeric. This takes precedence
+#'   over `to_factor` for these variables.
+#' @param standardize_names Logical. If `FALSE` (default), original column
+#'   names in `data` are left unchanged. If `TRUE`, every successfully
+#'   matched LASA046 column is renamed to its canonical lowercase
+#'   documentation name, such as `blphya01`, `clphya26`, or `klphya50`.
+#'   Renaming happens only after all variables have been matched, so it
+#'   cannot affect matching decisions; the function stops with an
+#'   informative error if renaming would create duplicate column names.
 #'
-#' @details
-#' **Variable-name matching.** Matching proceeds in the following order:
+#' @return `data`, with `label` and `labels` attributes added to every
+#'   matched LASA046 column (transformed to a factor or plain numeric where
+#'   `to_factor`/`to_numeric` apply), and optionally renamed when
+#'   `standardize_names = TRUE`. A variable-name matching audit is attached
+#'   as the generic `"label_report"` attribute; retrieve it with
+#'   [lasa_label_report()].
 #'
-#' 1. explicit `name_corrections`;
-#' 2. exact name;
-#' 3. case-insensitive exact name;
-#' 4. normalized exact name, ignoring punctuation/underscores;
-#' 5. optionally, a unique fuzzy match within `max_edit_distance`.
-#'
-#' Fuzzy matching is deliberately conservative. Correctly formed LASA 046
-#' names belonging to another questionnaire item are protected from being
-#' selected merely because their edit distance is small.
-#'
-#' **Respondent number.** The first column is expected to contain the
-#' respondent number. Capitalization and minor spelling variants of `respnr`
-#' are handled by the same matching logic. Because first-column position is a
-#' structural invariant of these files, the first column is used as a final
-#' fallback when its name cannot be matched; this is flagged in the audit.
-#'
-#' **Numeric versus categorical conversion.** `to_numeric` does not simply
-#' convert every labelled variable to numeric. A variable is identified as a
-#' substantive numeric variable only when all of its codebook value labels are
-#' negative missing-reason codes. This distinguishes variables such as numbers
-#' of occasions and minutes from categorical variables whose substantive codes
-#' have labels such as `"no"`, `"yes"`, or sport categories.
-#'
-#' When both `to_factor = TRUE` and `to_numeric = TRUE`, numeric/count/duration
-#' variables become ordinary numeric vectors with negative codes set to `NA`,
-#' while categorical variables become factors.
-#'
-#' **Name harmonisation.** Canonical renaming is performed only after all
-#' matching is complete, so changing an earlier column name cannot alter later
-#' matching decisions. The function stops rather than creating duplicate names
-#' if a canonical name would collide with another column.
-#'
-#' **Audit and provenance.** The returned object contains a generic matching
-#' audit in `attr(x, "label_report")`. It also receives `"LASA_wave"`,
-#' `"LASA_file_code"`, and `"LASA_names_standardized"` attributes. These generic
-#' names are shared with other future LASA label implementations and can be
-#' inspected through [lasa_label_report()].
-#'
-#' @return `data` with LASA 046 variable metadata applied and, depending on the
-#'   requested options, variables converted to factors/numeric vectors and/or
-#'   names harmonised. The object carries the generic attributes
-#'   `"label_report"`, `"LASA_wave"`, `"LASA_file_code"`, and
-#'   `"LASA_names_standardized"`.
-#'
-#' @seealso [read_lasa_sav()], [lasa_label_report()]
+#' @seealso [lasa_label_report()], [read_lasa_sav()]
 #' @export
 #'
 #' @examples
-#' dat <- data.frame(
-#'   RespNr = c(101, 102, 103),
-#'   BLPHYA07 = c(1, 2, -1),
-#'   BLPYA08 = c(4, -1, 7)
+#' \dontrun{
+#' dat_b  <- apply_lasa046_labels(dat_b, wave = "B")
+#' dat_2b <- apply_lasa046_labels(dat_2b, wave = "2B")
+#'
+#' # Convert categorical variables to factors, restore count variables to
+#' # plain numeric, and use canonical column names:
+#' dat_h <- apply_lasa046_labels(
+#'   dat_h, wave = "H",
+#'   to_factor = TRUE, to_numeric = TRUE, standardize_names = TRUE
 #' )
 #'
-#' dat <- apply_lasa046_labels(
-#'   dat,
-#'   wave = "B",
-#'   fuzzy_match = TRUE,
-#'   to_factor = TRUE,
-#'   to_numeric = TRUE,
-#'   standardize_names = TRUE,
-#'   warn_unmatched = FALSE
+#' # Manually correct a mistyped column name:
+#' dat_3b <- apply_lasa046_labels(
+#'   dat_3b, wave = "3B",
+#'   name_corrections = c(lphya08 = "BLPYA08")
 #' )
 #'
-#' names(dat)[1:3]
-#' levels(dat$blphya07)
-#' dat$blphya08
-#' lasa_label_report(dat, problems_only = TRUE)
-
+#' # Equivalently, via read_lasa_sav():
+#' dat_h <- read_lasa_sav(
+#'   "LASAH046.SAV",
+#'   to_factor = TRUE, to_numeric = TRUE, standardize_names = TRUE
+#' )
+#'
+#' lasa_label_report(dat_h, problems_only = TRUE)
+#' }
 apply_lasa046_labels <- function(data,
                                  wave,
-                                 fuzzy_match = TRUE,
-                                 max_edit_distance = 1L,
                                  name_corrections = NULL,
-                                 warn_unmatched = TRUE,
                                  to_factor = FALSE,
                                  to_numeric = FALSE,
                                  standardize_names = FALSE) {
 
-  if (length(wave) != 1L || is.na(wave) || !is.character(wave) || !nzchar(wave)) {
-    stop("'wave' must be a single non-empty character value.", call. = FALSE)
-  }
   wave <- toupper(wave)
 
+  # Maps each LASA wave to the lower-case letter prefix used in its variable
+  # names (e.g. wave "E" -> variables named e...). Waves B, 2B, 3B, and MB
+  # all share prefix "b", even though they are distinct waves with their own
+  # (sometimes differing) value-label schemes handled further below.
   wave_prefix <- c(
     B = "b", C = "c", D = "d", E = "e", `2B` = "b",
     F = "f", G = "g", H = "h", `3B` = "b", MB = "b",
@@ -179,56 +195,54 @@ apply_lasa046_labels <- function(data,
 
   prefix <- unname(wave_prefix[[wave]])
 
-  if (length(fuzzy_match) != 1L || is.na(fuzzy_match) || !is.logical(fuzzy_match)) {
-    stop("'fuzzy_match' must be TRUE or FALSE.", call. = FALSE)
-  }
+  # ---- Validate the shared reshaping arguments ------------------------------
+  # .lasa_assert_scalar_logical() and .lasa_assert_name_corrections() are
+  # defined once in lasa_io.R and shared by every apply_*_labels() function
+  # in this package, so all of them validate these arguments identically.
+  .lasa_assert_scalar_logical(to_factor, "to_factor")
+  .lasa_assert_scalar_logical(to_numeric, "to_numeric")
+  .lasa_assert_scalar_logical(standardize_names, "standardize_names")
+  .lasa_assert_name_corrections(name_corrections)
 
-  if (length(warn_unmatched) != 1L || is.na(warn_unmatched) ||
-      !is.logical(warn_unmatched)) {
-    stop("'warn_unmatched' must be TRUE or FALSE.", call. = FALSE)
+  # Lower-cased lookup keys for name_corrections, e.g. c(lphya08 = "BLPYA08")
+  # -> correction_keys = "lphya08". Empty when no corrections were supplied.
+  correction_keys <- if (is.null(name_corrections)) {
+    character(0)
+  } else {
+    tolower(names(name_corrections))
   }
-
-  if (!is.null(name_corrections) && !is.character(name_corrections)) {
-    stop("'name_corrections' must be NULL or a named character vector.", call. = FALSE)
-  }
-
-  if (length(to_factor) != 1L || is.na(to_factor) || !is.logical(to_factor)) {
-    stop("'to_factor' must be TRUE or FALSE.")
-  }
-
-  if (length(to_numeric) != 1L || is.na(to_numeric) || !is.logical(to_numeric)) {
-    stop("'to_numeric' must be TRUE or FALSE.")
-  }
-
-  if (length(standardize_names) != 1L || is.na(standardize_names) ||
-      !is.logical(standardize_names)) {
-    stop("'standardize_names' must be TRUE or FALSE.")
-  }
-
-  if (length(max_edit_distance) != 1L || is.na(max_edit_distance) ||
-      !is.numeric(max_edit_distance) || max_edit_distance < 0 ||
-      max_edit_distance != as.integer(max_edit_distance)) {
-    stop("'max_edit_distance' must be a single non-negative integer.")
-  }
-  max_edit_distance <- as.integer(max_edit_distance)
 
   # ---- Helpers -------------------------------------------------------------
 
-  make_value_labels <- function(...) {
-    # Named numeric vector: names = value labels, values = numeric codes.
+  # Named numeric vector: names = value labels, values = numeric codes.
+  # Just a thin, self-documenting wrapper around c() used throughout this
+  # file so that value-label definitions read as "value_labels(label = code)".
+  value_labels <- function(...) {
     c(...)
   }
 
-  make_reference_variable_name <- function(suffix) {
+  # Builds the upper-case skip-reference variable name for this wave, e.g.
+  # skip_reference_var("cara01") -> "BCARA01" when prefix is "b". Used when
+  # a missing-value code refers back to another variable ("na, see BCARA01").
+  skip_reference_var <- function(suffix) {
     toupper(paste0(prefix, suffix))
   }
 
-  make_missing_value_labels <- function(ref = NULL,
-                         include_wrong_skip = TRUE,
-                         wrong_skip_label = "na, wrong skip",
-                         include_asked = TRUE,
-                         include_interview_terminated = FALSE,
-                         include_short_interview = FALSE) {
+  # Builds the common stack of SPSS missing-value codes shared by nearly
+  # every LASA046 item:
+  #   -5 interview terminated   (optional, `include_interview_terminated`)
+  #   -4 short interview        (optional, `include_short_interview`)
+  #   -3 wrong skip             (optional, `include_wrong_skip`)
+  #   -2 "na, see <ref>"        (only added when `ref` is supplied)
+  #   -1 asked (still missing)  (optional, `include_asked`)
+  # Each LASA046 question only uses a subset of these codes, so every part
+  # can be switched on/off individually via the arguments below.
+  standard_missing_codes <- function(ref = NULL,
+                                     include_wrong_skip = TRUE,
+                                     wrong_skip_label = "na, wrong skip",
+                                     include_asked = TRUE,
+                                     include_interview_terminated = FALSE,
+                                     include_short_interview = FALSE) {
     out <- numeric(0)
 
     if (include_interview_terminated) {
@@ -241,7 +255,7 @@ apply_lasa046_labels <- function(data,
       out <- c(out, setNames(-3, wrong_skip_label))
     }
     if (!is.null(ref)) {
-      out <- c(out, setNames(-2, paste0("na, see ", make_reference_variable_name(ref))))
+      out <- c(out, setNames(-2, paste0("na, see ", skip_reference_var(ref))))
     }
     if (include_asked) {
       out <- c(out, setNames(-1, "na, asked"))
@@ -250,63 +264,57 @@ apply_lasa046_labels <- function(data,
     out
   }
 
-  make_yes_no_value_labels <- function(ref = NULL, ...) {
+  # Standard missing codes + a plain no(1)/yes(2) substantive answer.
+  yes_no_value_labels <- function(ref = NULL, ...) {
     c(
-      make_missing_value_labels(ref = ref, ...),
-      make_value_labels("no" = 1, "yes" = 2)
+      standard_missing_codes(ref = ref, ...),
+      value_labels("no" = 1, "yes" = 2)
     )
   }
 
-  make_mentioned_value_labels <- function(ref = "lphya39") {
+  # Standard missing codes + "not mentioned(0)/mentioned(1)", used for the
+  # multi-item checklist-style questions (e.g. reasons for not being active).
+  mentioned_value_labels <- function(ref = "lphya39") {
     c(
-      make_missing_value_labels(ref = ref),
-      make_value_labels("not mentioned" = 0, "mentioned" = 1)
+      standard_missing_codes(ref = ref),
+      value_labels("not mentioned" = 0, "mentioned" = 1)
     )
   }
 
-  value_labels_indicate_numeric_variable <- function(value_labels) {
-    # LASA046 uses value labels on continuous/count variables only to document
-    # negative missing-reason codes (e.g. -3 wrong skip, -2 routing, -1 asked).
-    # If every labelled code is negative, interpret the substantive values as
-    # numeric rather than categorical when to_numeric = TRUE.
-    if (is.null(value_labels) || length(value_labels) == 0L) {
+  # Does this variable's codebook consist *only* of negative missing-reason
+  # codes (e.g. -3 wrong skip, -2 routing, -1 asked)? LASA046 uses value
+  # labels this way for continuous/count variables (minutes, # times, etc.),
+  # where the substantive answer itself is an unlabelled non-negative number.
+  # Such variables are candidates for `to_numeric = TRUE` restoration.
+  is_codebook_numeric <- function(value_label_map) {
+    if (is.null(value_label_map) || length(value_label_map) == 0L) {
       return(FALSE)
     }
-
-    codes <- as.numeric(unname(value_labels))
+    codes <- as.numeric(unname(value_label_map))
     all(!is.na(codes) & is.finite(codes) & codes < 0)
   }
 
-  convert_negative_codes_to_na_numeric <- function(x) {
-    # Strip SPSS/haven value-label and user-missing attributes by coercing to an
-    # ordinary numeric vector, then make every negative observed code missing.
-    # This also catches an unexpected negative code that was not explicitly
-    # labelled in the codebook.
+  # Strips SPSS/haven value-label attributes and coerces a variable back to
+  # an ordinary numeric vector, replacing every negative observed code with
+  # NA. This also catches an unexpected negative code that the codebook did
+  # not explicitly label. Used when to_numeric = TRUE.
+  restore_plain_numeric <- function(x) {
     values <- as.numeric(x)
     values[!is.na(values) & values < 0] <- NA_real_
     values
   }
 
-  convert_to_factor_with_value_labels <- function(x, value_labels) {
-    # Convert a numeric SPSS/haven variable to a factor while preserving every
-    # observed value. Codes with a value label use that label as their factor
-    # level; observed codes without a value label use the numeric code itself.
-    # Codebook-labelled values are retained as levels even when unobserved.
-
-    if (!is.numeric(x) && !is.integer(x)) {
-      stop(
-        "Cannot apply LASA046 numeric value labels as factor levels to a ",
-        "non-numeric variable (class: ", paste(class(x), collapse = "/"), ")."
-      )
-    }
-
+  # Converts a numeric variable to a factor using its value labels as level
+  # text, while preserving every observed value: codes with a value label
+  # use that label, and observed codes with no codebook label keep the
+  # numeric code itself as their level text. Used when to_factor = TRUE.
+  convert_to_labelled_factor <- function(x, value_label_map) {
     values <- as.numeric(x)
-    label_codes <- as.numeric(unname(value_labels))
-    label_text <- names(value_labels)
+    label_codes <- as.numeric(unname(value_label_map))
+    label_text <- names(value_label_map)
 
-    # A value-label vector should have one label per numeric code. If a code is
-    # accidentally repeated, retain the first definition rather than creating
-    # duplicate factor specifications.
+    # Guard against an (unexpected) repeated code in the value-label vector,
+    # keeping only its first definition so factor() doesn't error out.
     keep <- !duplicated(label_codes)
     label_codes <- label_codes[keep]
     label_text <- label_text[keep]
@@ -323,25 +331,24 @@ apply_lasa046_labels <- function(data,
       character(1)
     )
 
-    # factor() would merge two distinct codes if their displayed labels happened
-    # to be identical. This should not occur in LASA046, but disambiguate such a
-    # case defensively so no numeric value is lost.
+    # factor() would silently merge two distinct codes if their text
+    # happened to collide. Not expected in LASA046, but disambiguate
+    # defensively so no numeric value is ever lost.
     if (anyDuplicated(level_text)) {
-      duplicated_text <- unique(level_text[duplicated(level_text) | duplicated(level_text, fromLast = TRUE)])
-      for (txt in duplicated_text) {
-        ii <- which(level_text == txt)
-        level_text[ii] <- paste0(txt, " [", level_codes[ii], "]")
+      collided <- unique(level_text[duplicated(level_text) | duplicated(level_text, fromLast = TRUE)])
+      for (txt in collided) {
+        i <- which(level_text == txt)
+        level_text[i] <- paste0(txt, " [", level_codes[i], "]")
       }
     }
 
-    factor(
-      values,
-      levels = level_codes,
-      labels = level_text
-    )
+    factor(values, levels = level_codes, labels = level_text)
   }
 
-  sports_old_common <- make_value_labels(
+  # Sport-type codes used in waves B-G, before the questionnaire's sport
+  # list was redesigned. Waves 2B/F/G add "golf" as an extra category;
+  # waves B-E do not have it.
+  legacy_sports_common <- value_labels(
     "distance walking" = 1,
     "distance cycling" = 2,
     "gymnastics" = 3,
@@ -360,17 +367,22 @@ apply_lasa046_labels <- function(data,
     "winter sports" = 16
   )
 
-  get_legacy_sport_value_labels <- function(wave) {
+  # Returns the legacy (pre-wave-H) sport-type value labels for the given
+  # wave. Waves outside B-G have no legacy sport coding (they use
+  # `new_sports_value_labels` instead, defined below).
+  legacy_sports_value_labels <- function(wave) {
     if (wave %in% c("B", "C", "D", "E")) {
-      c(sports_old_common, make_value_labels("other sports" = 17))
+      c(legacy_sports_common, value_labels("other sports" = 17))
     } else if (wave %in% c("2B", "F", "G")) {
-      c(sports_old_common, make_value_labels("golf" = 17, "other sports" = 18))
+      c(legacy_sports_common, value_labels("golf" = 17, "other sports" = 18))
     } else {
       numeric(0)
     }
   }
 
-  sports_new <- make_value_labels(
+  # Sport-type codes used from wave H onward, after the questionnaire's
+  # sport list was redesigned into a two-level (category: sub-type) scheme.
+  new_sports_value_labels <- value_labels(
     "walking / hiking: long distance hiking" = 11,
     "walking / hiking: nordic walking" = 12,
     "walking / hiking: speed walking" = 13,
@@ -411,501 +423,243 @@ apply_lasa046_labels <- function(data,
     "other sports: other" = 114
   )
 
-  # ---- Robust variable-name matching --------------------------------------
+  # ---- Matching / labelling audit bookkeeping -------------------------------
 
-  # Every valid main-file suffix is protected from fuzzy matching to another
-  # variable. This prevents, for example, a missing LPHYA01 from being matched
-  # to a correctly named LPHYA02 merely because their edit distance is one.
-  all_main_suffixes <- c(
-    sprintf("lphya%02d", 1:50),
-    "lphyasp", "lspin1", "lspin2", "lspin3"
-  )
-
-  mb_suffixes <- c(
-    "lphya07", "lphya08", "lphya09",
-    "lphya11", "lphya12", "lphya13",
-    "lphya21", "lphya22", "lphya23", "lphya24",
-    "lphya37", "lphya38"
-  )
-
-  protected_suffixes <- if (wave == "MB") mb_suffixes else all_main_suffixes
-  protected_names <- .lasa046_normalize_variable_name(paste0(prefix, protected_suffixes))
-
-  # name_corrections is a named character vector:
-  #   c(lphya08 = "BLPYA08", lphya31 = "BPHY31")
-  if (!is.null(name_corrections)) {
-    if (is.null(names(name_corrections)) || any(names(name_corrections) == "")) {
-      stop(
-        "'name_corrections' must be a named character vector, e.g. ",
-        "c(lphya08 = 'BLPYA08')."
-      )
-    }
-    correction_keys <- tolower(names(name_corrections))
-  } else {
-    correction_keys <- character(0)
-  }
-
-  used_columns <- integer(0)
+  # Every row logged here becomes one line of the "label_report" attribute
+  # returned by lasa_label_report(). `rename_plan` collects the (old name ->
+  # canonical name) pairs to apply at the very end when
+  # standardize_names = TRUE, so renaming never interferes with matching.
   report_rows <- list()
   rename_plan <- character(0)
 
-  append_label_report_row <- function(suffix, expected, matched = NA_character_,
-                         method, edit_distance = NA_integer_, note = NA_character_,
-                         standardized_to = NA_character_) {
+  record_match_result <- function(suffix, expected_name, matched_name, method) {
     report_rows[[length(report_rows) + 1L]] <<- data.frame(
       suffix = suffix,
-      expected = expected,
-      matched = matched,
+      expected_name = expected_name,
+      matched_name = if (is.na(matched_name)) NA_character_ else matched_name,
       method = method,
-      edit_distance = edit_distance,
-      standardized_to = standardized_to,
-      note = note,
       stringsAsFactors = FALSE
     )
+    invisible(NULL)
   }
 
-  queue_standardized_variable_name <- function(idx, expected) {
-    if (isTRUE(standardize_names)) {
-      rename_plan[as.character(idx)] <<- expected
-    }
-  }
+  # Looks up a single LASA046 column, attaches its variable/value labels,
+  # applies the to_factor / to_numeric transformation (if requested), and
+  # queues it for renaming (if standardize_names = TRUE). Matching is tried,
+  # in order: (1) an explicit name_corrections override, (2) an exact
+  # (case-sensitive) name match, (3) a case-insensitive name match. A
+  # variable that cannot be matched by any of these is left untouched and
+  # recorded as "not found" -- this is expected behaviour, since not every
+  # LASA046 wave contains every variable.
+  label_variable <- function(suffix, variable_label, value_label_map = NULL) {
+    expected_name <- paste0(prefix, suffix)
 
-  match_respondent_id_column <- function() {
-    nms <- names(data)
-    if (length(nms) == 0L) {
-      return(list(
-        idx = NA_integer_, expected = "respnr", method = "not found",
-        distance = NA_integer_, note = "The data set has no columns."
-      ))
-    }
+    if (tolower(suffix) %in% correction_keys) {
+      # An explicit manual correction takes priority over automatic matching.
+      actual_name <- name_corrections[[match(tolower(suffix), correction_keys)]]
+      idx <- match(tolower(actual_name), tolower(names(data)))
 
-    expected <- "respnr"
-    actual <- nms[[1L]]
-    actual_norm <- .lasa046_normalize_variable_name(actual)
-    expected_norm <- .lasa046_normalize_variable_name(expected)
-
-    # Explicit correction for the respondent identifier. The respondent number
-    # is structurally required to be the first column; a correction pointing to
-    # another column is therefore rejected.
-    key <- match("respnr", correction_keys)
-    if (!is.na(key)) {
-      requested <- unname(name_corrections[[key]])
-      idx <- match(requested, nms)
-      if (is.na(idx)) idx <- match(tolower(requested), tolower(nms))
       if (is.na(idx)) {
-        return(list(
-          idx = 1L, expected = expected, method = "position assumed",
-          distance = as.integer(utils::adist(expected_norm, actual_norm)),
-          note = paste0(
-            "Manual correction '", requested,
-            "' was not found; first column '", actual,
-            "' retained as respondent identifier by position."
-          )
-        ))
+        record_match_result(suffix, expected_name, matched_name = actual_name, method = "manual_not_found")
+        return(invisible(NULL))
       }
-      if (idx != 1L) {
-        stop(
-          "The LASA respondent identifier must be the first column, but the ",
-          "manual correction for 'respnr' points to column ", idx, " ('",
-          nms[[idx]], "')."
-        )
-      }
-      return(list(
-        idx = 1L, expected = expected, method = "manual", distance = 0L,
-        note = NA_character_
-      ))
-    }
-
-    if (identical(actual, expected)) {
-      return(list(idx = 1L, expected = expected, method = "exact",
-                  distance = 0L, note = NA_character_))
-    }
-    if (tolower(actual) == expected) {
-      return(list(idx = 1L, expected = expected,
-                  method = "case-insensitive exact", distance = 0L,
-                  note = NA_character_))
-    }
-    if (actual_norm == expected_norm) {
-      return(list(idx = 1L, expected = expected, method = "normalized exact",
-                  distance = 0L, note = NA_character_))
-    }
-
-    distance <- as.integer(utils::adist(expected_norm, actual_norm))
-    if (isTRUE(fuzzy_match) && distance <= as.integer(max_edit_distance)) {
-      return(list(
-        idx = 1L, expected = expected, method = "fuzzy", distance = distance,
-        note = paste0(
-          "Unique fuzzy match: respnr -> ", actual,
-          " (edit distance ", distance, "; first column)."
-        )
-      ))
-    }
-
-    # The file structure supplies an additional invariant: column 1 is the
-    # respondent number. Use it as a final fallback even for a larger typo.
-    list(
-      idx = 1L, expected = expected, method = "position assumed",
-      distance = distance,
-      note = paste0(
-        "First column '", actual,
-        "' assumed to be respondent identifier by LASA file position."
-      )
-    )
-  }
-
-  # Process and reserve the respondent identifier before matching LAPAQ items.
-  respnr_info <- match_respondent_id_column()
-  if (!is.na(respnr_info$idx)) {
-    original_respnr_name <- names(data)[respnr_info$idx]
-    used_columns <- unique(c(used_columns, respnr_info$idx))
-    queue_standardized_variable_name(respnr_info$idx, "respnr")
-    append_label_report_row(
-      suffix = "respnr", expected = "respnr",
-      matched = original_respnr_name, method = respnr_info$method,
-      edit_distance = respnr_info$distance, note = respnr_info$note,
-      standardized_to = if (isTRUE(standardize_names)) "respnr" else NA_character_
-    )
-  }
-
-  match_lasa046_variable_column <- function(suffix) {
-    expected <- paste0(prefix, suffix)
-    nms <- names(data)
-    nms_lower <- tolower(nms)
-    nms_norm <- .lasa046_normalize_variable_name(nms)
-    expected_lower <- tolower(expected)
-    expected_norm <- .lasa046_normalize_variable_name(expected)
-
-    # 1. Explicit manual correction has highest priority.
-    key <- match(tolower(suffix), correction_keys)
-    if (!is.na(key)) {
-      requested <- unname(name_corrections[[key]])
-      idx <- match(requested, nms)
-      if (is.na(idx)) idx <- match(tolower(requested), nms_lower)
-      if (is.na(idx)) {
-        return(list(
-          idx = NA_integer_, expected = expected, method = "manual_not_found",
-          distance = NA_integer_,
-          note = paste0("Manual correction '", requested, "' is not in the dataset.")
-        ))
-      }
-      if (idx %in% used_columns) {
-        return(list(
-          idx = NA_integer_, expected = expected, method = "manual_conflict",
-          distance = NA_integer_,
-          note = paste0("Manual correction '", requested, "' was already used.")
-        ))
-      }
-      return(list(
-        idx = idx, expected = expected, method = "manual", distance = 0L,
-        note = NA_character_
-      ))
-    }
-
-    # 2. Exact spelling/case.
-    idx <- match(expected, nms)
-    if (!is.na(idx) && !(idx %in% used_columns)) {
-      return(list(
-        idx = idx, expected = expected, method = "exact", distance = 0L,
-        note = NA_character_
-      ))
-    }
-
-    # 3. Case-insensitive exact match.
-    hits <- which(nms_lower == expected_lower & !(seq_along(nms) %in% used_columns))
-    if (length(hits) == 1L) {
-      return(list(
-        idx = hits, expected = expected, method = "case-insensitive exact",
-        distance = 0L, note = NA_character_
-      ))
-    }
-    if (length(hits) > 1L) {
-      return(list(
-        idx = NA_integer_, expected = expected, method = "ambiguous",
-        distance = 0L,
-        note = paste("Multiple case-insensitive matches:", paste(nms[hits], collapse = ", "))
-      ))
-    }
-
-    # 4. Normalized exact match: ignores punctuation/underscores and case.
-    hits <- which(nms_norm == expected_norm & !(seq_along(nms) %in% used_columns))
-    if (length(hits) == 1L) {
-      return(list(
-        idx = hits, expected = expected, method = "normalized exact",
-        distance = 0L, note = NA_character_
-      ))
-    }
-    if (length(hits) > 1L) {
-      return(list(
-        idx = NA_integer_, expected = expected, method = "ambiguous",
-        distance = 0L,
-        note = paste("Multiple normalized matches:", paste(nms[hits], collapse = ", "))
-      ))
-    }
-
-    # 5. Conservative fuzzy matching for likely typing errors.
-    if (isTRUE(fuzzy_match)) {
-      candidate_idx <- setdiff(seq_along(nms), used_columns)
-
-      # Never fuzzy-match to a column that is itself a correctly formed LASA046
-      # variable name for another suffix.
-      is_protected_other <- nms_norm[candidate_idx] %in%
-        protected_names[protected_names != expected_norm]
-      candidate_idx <- candidate_idx[!is_protected_other]
-
-      if (length(candidate_idx) > 0L) {
-        d <- as.integer(utils::adist(expected_norm, nms_norm[candidate_idx]))
-        min_d <- min(d)
-        best <- candidate_idx[d == min_d]
-
-        if (min_d <= as.integer(max_edit_distance) && length(best) == 1L) {
-          return(list(
-            idx = best, expected = expected, method = "fuzzy",
-            distance = min_d,
-            note = paste0(
-              "Unique fuzzy match: ", expected, " -> ", nms[best],
-              " (edit distance ", min_d, ")."
-            )
-          ))
-        }
-
-        if (min_d <= as.integer(max_edit_distance) && length(best) > 1L) {
-          return(list(
-            idx = NA_integer_, expected = expected, method = "ambiguous fuzzy",
-            distance = min_d,
-            note = paste(
-              "Multiple equally close fuzzy matches:",
-              paste(nms[best], collapse = ", ")
-            )
-          ))
-        }
-      }
-    }
-
-    list(
-      idx = NA_integer_, expected = expected, method = "not found",
-      distance = NA_integer_, note = NA_character_
-    )
-  }
-
-  apply_metadata_to_variable <- function(suffix, variable_label, value_labels = NULL) {
-    match_info <- match_lasa046_variable_column(suffix)
-
-    if (is.na(match_info$idx)) {
-      append_label_report_row(
-        suffix = suffix, expected = match_info$expected,
-        method = match_info$method, edit_distance = match_info$distance,
-        note = match_info$note
-      )
-      return(invisible(NULL))
-    }
-
-    idx <- match_info$idx
-    x <- data[[idx]]
-
-    codebook_numeric <- value_labels_indicate_numeric_variable(value_labels)
-
-    if (isTRUE(to_numeric) && codebook_numeric) {
-      # to_numeric takes precedence over to_factor for variables whose only
-      # codebook value labels are negative missing-reason codes.
-      x <- convert_negative_codes_to_na_numeric(x)
-      attr(x, "label") <- variable_label
-
-    } else if (!is.null(value_labels) && isTRUE(to_factor)) {
-      x <- convert_to_factor_with_value_labels(x, value_labels)
-      # factor() removes the original SPSS/haven attributes, so re-apply the
-      # variable label after conversion. Value labels are now the factor levels.
-      attr(x, "label") <- variable_label
+      method <- "manual correction"
 
     } else {
-      attr(x, "label") <- variable_label
+      idx <- match(expected_name, names(data))
 
-      if (!is.null(value_labels)) {
-        attr(x, "labels") <- value_labels
+      if (!is.na(idx)) {
+        method <- "exact"
+      } else {
+        idx <- match(tolower(expected_name), tolower(names(data)))
+
+        if (!is.na(idx)) {
+          method <- "case-insensitive exact"
+        } else {
+          record_match_result(suffix, expected_name, matched_name = NA_character_, method = "not found")
+          return(invisible(NULL))
+        }
       }
+    }
+
+    matched_name <- names(data)[idx]
+    x <- data[[idx]]
+    attr(x, "label") <- variable_label
+
+    if (!is.null(value_label_map)) {
+      attr(x, "labels") <- value_label_map
+    }
+
+    # Reshape the variable if requested. to_numeric takes precedence: a
+    # variable whose codebook consists only of negative missing codes is
+    # always restored to plain numeric, never converted to a factor.
+    if (isTRUE(to_numeric) && is_codebook_numeric(value_label_map)) {
+      x <- restore_plain_numeric(x)
+      attr(x, "label") <- variable_label
+    } else if (isTRUE(to_factor) && !is.null(value_label_map) && length(value_label_map) > 0L) {
+      x <- convert_to_labelled_factor(x, value_label_map)
+      attr(x, "label") <- variable_label
     }
 
     data[[idx]] <<- x
-    used_columns <<- c(used_columns, idx)
-    original_name <- names(data)[idx]
-    queue_standardized_variable_name(idx, match_info$expected)
 
-    append_label_report_row(
-      suffix = suffix, expected = match_info$expected, matched = original_name,
-      method = match_info$method, edit_distance = match_info$distance,
-      note = match_info$note,
-      standardized_to = if (isTRUE(standardize_names)) match_info$expected else NA_character_
-    )
+    record_match_result(suffix, expected_name, matched_name = matched_name, method = method)
+
+    if (isTRUE(standardize_names)) {
+      rename_plan[[matched_name]] <<- tolower(expected_name)
+    }
 
     invisible(NULL)
   }
 
-  finalize_label_application <- function() {
-    report <- if (length(report_rows)) {
+  # Assembles the matching audit, applies the queued column renames (if
+  # standardize_names = TRUE), attaches the audit as the generic
+  # "label_report" attribute, and returns the finished data. Called once at
+  # every exit point of this function (the wave == "MB" early return, and
+  # the normal end-of-function return) so both paths get identical treatment.
+  finalize_labelled_data <- function() {
+    label_report <- if (length(report_rows) > 0L) {
       do.call(rbind, report_rows)
     } else {
       data.frame(
-        suffix = character(), expected = character(), matched = character(),
-        method = character(), edit_distance = integer(),
-        standardized_to = character(), note = character(),
+        suffix = character(0), expected_name = character(0),
+        matched_name = character(0), method = character(0),
         stringsAsFactors = FALSE
       )
     }
 
-    # Mark rows that deserve review. Fuzzy matches are retained as successful
-    # matches but are still flagged in the audit; failed/ambiguous matches and
-    # position-based respondent-number assumptions are also flagged.
-    review_methods <- c(
-      "fuzzy", "not found", "ambiguous", "ambiguous fuzzy",
-      "manual_not_found", "manual_conflict", "position assumed"
-    )
-    report$problem <- report$method %in% review_methods
-
     if (isTRUE(standardize_names) && length(rename_plan) > 0L) {
-      new_names <- names(data)
-      rename_idx <- as.integer(names(rename_plan))
-      new_names[rename_idx] <- unname(rename_plan)
+      old_names <- names(rename_plan)
+      new_names <- unname(rename_plan)
 
-      duplicated_names <- unique(new_names[duplicated(new_names)])
-      if (length(duplicated_names) > 0L) {
+      if (anyDuplicated(new_names)) {
+        duplicated_names <- unique(new_names[duplicated(new_names)])
         stop(
-          "standardize_names = TRUE would create duplicate column name(s): ",
+          "standardize_names = TRUE would create duplicate column names: ",
           paste(duplicated_names, collapse = ", "),
-          ". Resolve the conflicting source names before standardizing."
+          ". Resolve the conflict with 'name_corrections' or by renaming ",
+          "the source column(s) before calling apply_lasa046_labels().",
+          call. = FALSE
         )
       }
 
-      names(data) <- new_names
+      idx <- match(old_names, names(data))
+      names(data)[idx] <- new_names
+
+      label_report$standardized_to <- new_names[match(label_report$matched_name, old_names)]
+    } else {
+      label_report$standardized_to <- NA_character_
     }
 
-    attr(data, "label_report") <- report
-    attr(data, "LASA_wave") <- wave
-    attr(data, "LASA_names_standardized") <- isTRUE(standardize_names)
-    attr(data, "LASA_file_code") <- "046"
-
-    fuzzy_rows <- report$method == "fuzzy"
-    if (any(fuzzy_rows)) {
-      for (i in which(fuzzy_rows)) {
-        message("LASA046: ", report$note[i])
-      }
-    }
-
-    warning_methods <- c(
-      "not found", "ambiguous", "ambiguous fuzzy",
-      "manual_not_found", "manual_conflict", "position assumed"
-    )
-    warning_rows <- report$method %in% warning_methods
-
-    if (isTRUE(warn_unmatched) && any(warning_rows)) {
-      warning(
-        sum(warning_rows),
-        " LASA046 variable-name match(es) require attention. ",
-        "Run lasa_label_report(data, problems_only = TRUE) for details.",
-        call. = FALSE
-      )
-    }
-
+    rownames(label_report) <- NULL
+    attr(data, "label_report") <- label_report
     data
   }
 
   # ---- LASMB046 has a small, wave-specific subset --------------------------
+  # The replenishment-cohort "MB" file only contains a handful of the full
+  # LASA046 items, so it is handled as an early return rather than folded
+  # into the main variable list below.
   if (wave == "MB") {
 
-    apply_metadata_to_variable(
+    label_variable(
       "lphya07", "Walking outside:last two weeks",
       c(
-        make_missing_value_labels(
+        standard_missing_codes(
           ref = "lphya06",
           include_interview_terminated = TRUE,
           include_short_interview = TRUE
         ),
-        make_value_labels("no" = 1, "yes" = 2)
+        value_labels("no" = 1, "yes" = 2)
       )
     )
 
-    apply_metadata_to_variable(
+    label_variable(
       "lphya08", "Walking outside: #times last two weeks",
-      make_missing_value_labels(ref = "lphya07")
+      standard_missing_codes(ref = "lphya07")
     )
 
-    apply_metadata_to_variable(
+    label_variable(
       "lphya09", "Walking: time in minutes",
-      make_missing_value_labels(ref = "lphya07")
+      standard_missing_codes(ref = "lphya07")
     )
 
-    apply_metadata_to_variable(
+    label_variable(
       "lphya11", "Bicycling: last two weeks",
       c(
-        make_missing_value_labels(
+        standard_missing_codes(
           ref = NULL,
           include_interview_terminated = TRUE,
           include_short_interview = TRUE
         ),
-        make_value_labels("no" = 1, "yes" = 2)
+        value_labels("no" = 1, "yes" = 2)
       )
     )
 
-    apply_metadata_to_variable(
+    label_variable(
       "lphya12", "Bicycling: # times last two weeks",
-      make_missing_value_labels(ref = "lphya11")
+      standard_missing_codes(ref = "lphya11")
     )
 
-    apply_metadata_to_variable(
+    label_variable(
       "lphya13", "Bicycling: time in minutes",
-      make_missing_value_labels(ref = "lphya11")
+      standard_missing_codes(ref = "lphya11")
     )
 
-    apply_metadata_to_variable(
+    label_variable(
       "lphya21", "Sport 1: past two weeks yes/no",
       c(
-        make_missing_value_labels(
+        standard_missing_codes(
           ref = NULL,
           include_interview_terminated = TRUE,
           include_short_interview = TRUE
         ),
-        make_value_labels("no" = 1, "yes" = 2)
+        value_labels("no" = 1, "yes" = 2)
       )
     )
 
-    apply_metadata_to_variable(
+    label_variable(
       "lphya22", "Sport 1: past two weeks",
-      c(make_missing_value_labels(ref = "lphya21"), sports_new)
+      c(standard_missing_codes(ref = "lphya21"), new_sports_value_labels)
     )
 
-    apply_metadata_to_variable(
+    label_variable(
       "lphya23", "Sport 1: # times past two weeks",
-      make_missing_value_labels(ref = "lphya21")
+      standard_missing_codes(ref = "lphya21")
     )
 
-    apply_metadata_to_variable(
+    label_variable(
       "lphya24", "Sport 1: time in minutes",
-      make_missing_value_labels(ref = "lphya23")
+      standard_missing_codes(ref = "lphya23")
     )
 
-    apply_metadata_to_variable(
+    label_variable(
       "lphya37", "Heavy household: # days past two weeks",
-      make_missing_value_labels(
+      standard_missing_codes(
         ref = NULL,
         include_interview_terminated = TRUE,
         include_short_interview = TRUE
       )
     )
 
-    apply_metadata_to_variable(
+    label_variable(
       "lphya38", "Heavy household: time in minutes",
-      make_missing_value_labels(ref = "lphya36")
+      standard_missing_codes(ref = "lphya36")
     )
 
-    return(finalize_label_application())
+    return(finalize_labelled_data())
   }
 
   # ---- Main LASA 046 variables, in numeric order ---------------------------
 
   # LPHYA01
-  apply_metadata_to_variable(
+  label_variable(
     "lphya01", "Physical condition respondent: observation",
     c(
-      make_missing_value_labels(
+      standard_missing_codes(
         ref = NULL,
+        # From wave H onward the "wrong skip" value label text changes from
+        # "na, wrong skip" to "not done, wrong skip" in the documentation.
         wrong_skip_label = if (wave %in% c("H", "3B", "I", "J", "K")) {
           "not done, wrong skip"
         } else {
@@ -914,7 +668,7 @@ apply_lasa046_labels <- function(data,
         include_interview_terminated = TRUE,
         include_short_interview = TRUE
       ),
-      make_value_labels(
+      value_labels(
         "respondent bedridden" = 1,
         "respondent in elec. wheelchair" = 2,
         "respondent in mech. wheelchair" = 3,
@@ -924,139 +678,131 @@ apply_lasa046_labels <- function(data,
   )
 
   # LPHYA02
-  apply_metadata_to_variable(
+  label_variable(
     "lphya02", "Wheelchair go outside",
-    make_yes_no_value_labels(ref = "lphya01")
+    yes_no_value_labels(ref = "lphya01")
   )
 
   # LPHYA03
-  apply_metadata_to_variable(
+  label_variable(
     "lphya03", "Wheelchair go outside: last two weeks",
-    make_yes_no_value_labels(ref = "lphya02")
+    yes_no_value_labels(ref = "lphya02")
   )
 
   # LPHYA04
-  apply_metadata_to_variable(
+  label_variable(
     "lphya04", "Wheelchair go outside: #times last two weeks",
-    make_missing_value_labels(ref = "lphya03")
+    standard_missing_codes(ref = "lphya03")
   )
 
   # LPHYA05
-  apply_metadata_to_variable(
+  label_variable(
     "lphya05", "Wheelchair: time in minutes",
-    make_missing_value_labels(ref = "lphya03")
+    standard_missing_codes(ref = "lphya03")
   )
 
   # LPHYA06
-  apply_metadata_to_variable(
+  label_variable(
     "lphya06", "Walking outside",
-    make_yes_no_value_labels(ref = "lphya01")
+    yes_no_value_labels(ref = "lphya01")
   )
 
   # LPHYA07
-  apply_metadata_to_variable(
+  label_variable(
     "lphya07", "Walking outside:last two weeks",
-    make_yes_no_value_labels(ref = "lphya06")
+    yes_no_value_labels(ref = "lphya06")
   )
 
   # LPHYA08
-  apply_metadata_to_variable(
+  label_variable(
     "lphya08", "Walking outside: #times last two weeks",
-    make_missing_value_labels(ref = "lphya07")
+    standard_missing_codes(ref = "lphya07")
   )
 
   # LPHYA09
-  apply_metadata_to_variable(
+  label_variable(
     "lphya09", "Walking: time in minutes",
-    make_missing_value_labels(ref = "lphya07")
+    standard_missing_codes(ref = "lphya07")
   )
 
   # LPHYA10
-  apply_metadata_to_variable(
+  label_variable(
     "lphya10", "Bicycling",
-    make_yes_no_value_labels(ref = "lphya01")
+    yes_no_value_labels(ref = "lphya01")
   )
 
   # LPHYA11
-  apply_metadata_to_variable(
+  label_variable(
     "lphya11", "Bicycling: last two weeks",
-    make_yes_no_value_labels(ref = "lphya10")
+    yes_no_value_labels(ref = "lphya10")
   )
 
   # LPHYA12
-  apply_metadata_to_variable(
+  label_variable(
     "lphya12", "Bicycling: # times last two weeks",
-    make_missing_value_labels(ref = "lphya11")
+    standard_missing_codes(ref = "lphya11")
   )
 
   # LPHYA13
-  apply_metadata_to_variable(
+  label_variable(
     "lphya13", "Bicycling: time in minutes",
-    make_missing_value_labels(ref = "lphya11")
+    standard_missing_codes(ref = "lphya11")
   )
 
   # LPHYA14 (not in I/J/K)
-  if (wave %in% c("B", "C", "D", "E", "2B", "F", "G", "H", "3B")) {
-    apply_metadata_to_variable(
-      "lphya14", "Have garden: yes/no",
-      make_yes_no_value_labels(ref = "lphya01")
-    )
-  }
+  label_variable(
+    "lphya14", "Have garden: yes/no",
+    yes_no_value_labels(ref = "lphya01")
+  )
 
   # LPHYA15
-  apply_metadata_to_variable(
+  label_variable(
     "lphya15", "Gardening: yes/no",
-    make_yes_no_value_labels(
+    yes_no_value_labels(
       ref = if (wave %in% c("I", "J", "K")) "lphya01" else "lphya14"
     )
   )
 
   # LPHYA16 (not in I/J/K)
-  if (wave %in% c("B", "C", "D", "E", "2B", "F", "G", "H", "3B")) {
-    apply_metadata_to_variable(
-      "lphya16", "Gardening: # months a year",
-      make_missing_value_labels(ref = "lphya15")
-    )
-  }
+  label_variable(
+    "lphya16", "Gardening: # months a year",
+    standard_missing_codes(ref = "lphya15")
+  )
 
   # LPHYA17
-  apply_metadata_to_variable(
+  label_variable(
     "lphya17", "Gardening: last two weeks",
-    make_yes_no_value_labels(ref = "lphya15")
+    yes_no_value_labels(ref = "lphya15")
   )
 
   # LPHYA18
-  apply_metadata_to_variable(
+  label_variable(
     "lphya18", "Gardening: # last two weeks",
-    make_missing_value_labels(ref = "lphya17")
+    standard_missing_codes(ref = "lphya17")
   )
 
   # LPHYA19
-  apply_metadata_to_variable(
+  label_variable(
     "lphya19", "Gardening: time in minutes",
-    make_missing_value_labels(ref = "lphya17")
+    standard_missing_codes(ref = "lphya17")
   )
 
   # LPHYA20 (not in I/J/K)
-  if (wave %in% c("B", "C", "D", "E", "2B", "F", "G", "H", "3B")) {
-    apply_metadata_to_variable(
-      "lphya20", "Gardening: digging last two weeks",
-      make_yes_no_value_labels(ref = "lphya17")
-    )
-  }
+  label_variable(
+    "lphya20", "Gardening: digging last two weeks",
+    yes_no_value_labels(ref = "lphya17")
+  )
 
   # LPHYASP (H/3B/I/J/K only)
-  if (wave %in% c("H", "3B", "I", "J", "K")) {
-    apply_metadata_to_variable(
-      "lphyasp", "Sport: yes/no",
-      make_yes_no_value_labels(ref = "lphya01")
-    )
-  }
+  label_variable(
+    "lphyasp", "Sport: yes/no",
+    yes_no_value_labels(ref = "lphya01")
+  )
 
   # LPHYA21
-  apply_metadata_to_variable(
+  label_variable(
     "lphya21", "Sport 1: past two weeks yes/no",
-    make_yes_no_value_labels(
+    yes_no_value_labels(
       ref = if (wave %in% c("H", "3B", "I", "J", "K")) {
         "lphyasp"
       } else {
@@ -1066,206 +812,222 @@ apply_lasa046_labels <- function(data,
   )
 
   # LPHYA22
-  apply_metadata_to_variable(
+  label_variable(
     "lphya22", "Sport 1: past two weeks",
     c(
-      make_missing_value_labels(ref = "lphya21"),
-      if (wave %in% c("H", "3B", "I", "J", "K")) sports_new else get_legacy_sport_value_labels(wave)
+      standard_missing_codes(ref = "lphya21"),
+      if (wave %in% c("H", "3B", "I", "J", "K")) {
+        new_sports_value_labels
+      } else {
+        legacy_sports_value_labels(wave)
+      }
     )
   )
 
   # LPHYA23
-  apply_metadata_to_variable(
+  label_variable(
     "lphya23", "Sport 1: # times past two weeks",
-    make_missing_value_labels(ref = "lphya21")
+    standard_missing_codes(ref = "lphya21")
   )
 
   # LPHYA24
-  apply_metadata_to_variable(
+  label_variable(
     "lphya24", "Sport 1: time in minutes",
-    make_missing_value_labels(ref = "lphya23")
+    standard_missing_codes(ref = "lphya23")
   )
 
   # LPHYA25
-  apply_metadata_to_variable(
+  label_variable(
     "lphya25", "Sport 2: yes/no",
-    make_yes_no_value_labels(ref = "lphya21")
+    yes_no_value_labels(ref = "lphya21")
   )
 
   # LPHYA26
-  apply_metadata_to_variable(
+  label_variable(
     "lphya26", "Sport 2: past two weeks",
     c(
-      make_missing_value_labels(ref = "lphya25"),
-      if (wave %in% c("H", "3B", "I", "J", "K")) sports_new else get_legacy_sport_value_labels(wave)
+      standard_missing_codes(ref = "lphya25"),
+      if (wave %in% c("H", "3B", "I", "J", "K")) {
+        new_sports_value_labels
+      } else {
+        legacy_sports_value_labels(wave)
+      }
     )
   )
 
   # LPHYA27
-  apply_metadata_to_variable(
+  label_variable(
     "lphya27", "Sport 2: # times past two weeks",
-    make_missing_value_labels(ref = "lphya25")
+    standard_missing_codes(ref = "lphya25")
   )
 
   # LPHYA28
-  apply_metadata_to_variable(
+  label_variable(
     "lphya28", "Sport 2 : time in minutes",
-    make_missing_value_labels(ref = "lphya27")
+    standard_missing_codes(ref = "lphya27")
   )
 
-  # LPHYA29-LPHYA30 (B/C/D/E/2B/F/G only)
-  if (wave %in% c("B", "C", "D", "E", "2B", "F", "G")) {
-    apply_metadata_to_variable(
-      "lphya29", "Sport: sweating past two weeks yes/no",
-      c(
-        make_missing_value_labels(ref = "lphya21"),
-        make_value_labels("no" = 1, "yes" = 2, "do not know" = 3)
-      )
+  # LPHYA29 (B/C/D/E/2B/F/G only)
+  label_variable(
+    "lphya29", "Sport: sweating past two weeks yes/no",
+    c(
+      standard_missing_codes(ref = "lphya21"),
+      value_labels("no" = 1, "yes" = 2, "do not know" = 3)
     )
+  )
 
-    apply_metadata_to_variable(
-      "lphya30", "Sport: #times sweating past two weeks",
-      make_missing_value_labels(ref = "lphya29")
-    )
-  }
+  # LPHYA30 (B/C/D/E/2B/F/G only)
+  label_variable(
+    "lphya30", "Sport: #times sweating past two weeks",
+    standard_missing_codes(ref = "lphya29")
+  )
 
-  # LSPIN1 (3B only)
+  # LSPIN1 (3B only) - most intensive sport, introduced in wave 3B
   if (wave == "3B") {
-    apply_metadata_to_variable(
+    label_variable(
       "lspin1", "Sport: most intensive",
       c(
-        make_value_labels("sport: most intensive" = -3),
-        setNames(-2, paste0("na, see ", make_reference_variable_name("lphya22"), " & ", make_reference_variable_name("lphya26"))),
-        make_value_labels("na, asked" = -1),
-        sports_new
+        value_labels("sport: most intensive" = -3),
+        setNames(
+          -2,
+          paste0(
+            "na, see ", skip_reference_var("lphya22"), " & ",
+            skip_reference_var("lphya26")
+          )
+        ),
+        value_labels("na, asked" = -1),
+        new_sports_value_labels
       )
     )
   }
 
   # LSPIN2 (3B only)
   if (wave == "3B") {
-    apply_metadata_to_variable(
+    label_variable(
       "lspin2", "Most intensive sport: # times past two weeks",
-      make_missing_value_labels(ref = "lspin1")
+      standard_missing_codes(ref = "lspin1")
     )
   }
 
   # LSPIN3 (3B only)
   if (wave == "3B") {
-    apply_metadata_to_variable(
+    label_variable(
       "lspin3", "Most intensive sport: time in minutes",
-      make_missing_value_labels(ref = "lspin2")
+      standard_missing_codes(ref = "lspin2")
     )
   }
 
   # LPHYA31
-  apply_metadata_to_variable(
+  label_variable(
     "lphya31", "Light household: yes/no",
-    make_yes_no_value_labels(ref = "lphya01")
+    yes_no_value_labels(ref = "lphya01")
   )
 
   # LPHYA32
-  apply_metadata_to_variable(
+  label_variable(
     "lphya32", "Light household: past two weeks yes/no",
     c(
-      make_missing_value_labels(ref = "lphya31"),
-      make_value_labels("no" = 1, "yes" = 2, "do not know" = 3, "refusal" = 4)
+      standard_missing_codes(ref = "lphya31"),
+      value_labels("no" = 1, "yes" = 2, "do not know" = 3, "refusal" = 4)
     )
   )
 
   # LPHYA33
-  apply_metadata_to_variable(
+  label_variable(
     "lphya33", "Light household: # days past two weeks",
-    make_missing_value_labels(ref = "lphya32")
+    standard_missing_codes(ref = "lphya32")
   )
 
   # LPHYA34
-  apply_metadata_to_variable(
+  label_variable(
     "lphya34", "Light household: time in minutes",
-    make_missing_value_labels(ref = "lphya32")
+    standard_missing_codes(ref = "lphya32")
   )
 
   # LPHYA35
-  apply_metadata_to_variable(
+  label_variable(
     "lphya35", "Heavy household: yes/no",
-    make_yes_no_value_labels(ref = "lphya01")
+    yes_no_value_labels(ref = "lphya01")
   )
 
   # LPHYA36
-  apply_metadata_to_variable(
+  label_variable(
     "lphya36", "Heavy household: past two weeks yes/no",
     c(
-      make_missing_value_labels(ref = "lphya35"),
-      make_value_labels("no" = 1, "yes" = 2, "do not know" = 3, "refusal" = 4)
+      standard_missing_codes(ref = "lphya35"),
+      value_labels("no" = 1, "yes" = 2, "do not know" = 3, "refusal" = 4)
     )
   )
 
   # LPHYA37
-  apply_metadata_to_variable(
+  label_variable(
     "lphya37", "Heavy household: # days past two weeks",
-    make_missing_value_labels(ref = "lphya36")
+    standard_missing_codes(ref = "lphya36")
   )
 
   # LPHYA38
-  apply_metadata_to_variable(
+  label_variable(
     "lphya38", "Heavy household: time in minutes",
-    make_missing_value_labels(ref = "lphya36")
+    standard_missing_codes(ref = "lphya36")
   )
 
   # LPHYA39
-  apply_metadata_to_variable(
+  label_variable(
     "lphya39", "Past two weeks normal: yes/no",
-    make_yes_no_value_labels(ref = "lphya01")
+    yes_no_value_labels(ref = "lphya01")
   )
 
   # LPHYA40
-  apply_metadata_to_variable(
+  label_variable(
     "lphya40", "not normal: sick",
-    make_mentioned_value_labels(ref = "lphya39")
+    mentioned_value_labels(ref = "lphya39")
   )
 
   # LPHYA41
-  apply_metadata_to_variable(
+  label_variable(
     "lphya41", "not normal: depressed",
-    make_mentioned_value_labels(ref = "lphya39")
+    mentioned_value_labels(ref = "lphya39")
   )
 
   # LPHYA42
-  apply_metadata_to_variable(
+  label_variable(
     "lphya42", "not normal: bad weather",
-    make_mentioned_value_labels(ref = "lphya39")
+    mentioned_value_labels(ref = "lphya39")
   )
 
   # LPHYA43
-  apply_metadata_to_variable(
+  label_variable(
     "lphya43", "not normal: family affairs",
-    make_mentioned_value_labels(ref = "lphya39")
+    mentioned_value_labels(ref = "lphya39")
   )
 
   # LPHYA44
-  apply_metadata_to_variable(
+  label_variable(
     "lphya44", "not normal: vacation",
-    make_mentioned_value_labels(ref = "lphya39")
+    mentioned_value_labels(ref = "lphya39")
   )
 
-  # LPHYA45: meaning changes from wave F onwards
-  apply_metadata_to_variable(
+  # LPHYA45: meaning changes from wave F onwards (free-text "other reason"
+  # in waves B-2B; becomes "cleaning/repairs" checklist item from F onward).
+  label_variable(
     "lphya45",
     if (wave %in% c("B", "C", "D", "E", "2B")) {
       "not normal: other reason"
     } else {
       "not normal: cleaning/repairs"
     },
-    make_mentioned_value_labels(ref = "lphya39")
+    mentioned_value_labels(ref = "lphya39")
   )
 
-  # LPHYA46: meaning/coding changes from wave F onwards
+  # LPHYA46: meaning/coding changes from wave F onwards. In waves B-2B this
+  # is a coded free-text "other reason" field; from wave F onward it becomes
+  # a simple "good weather" checklist item (see LPHYA47-50 below).
   if (wave %in% c("B", "C", "D", "E", "2B")) {
 
-    lphya46_old <- c(
-      setNames(-2, paste0("na, see ", make_reference_variable_name("lphya45"))),
-      if (wave %in% c("D", "E", "2B")) make_value_labels("-to be coded-" = 0) else numeric(0),
-      make_value_labels(
+    lphya46_legacy_value_labels <- c(
+      setNames(-2, paste0("na, see ", skip_reference_var("lphya45"))),
+      if (wave %in% c("D", "E", "2B")) value_labels("-to be coded-" = 0) else numeric(0),
+      value_labels(
         "visit from friend/family" = 1,
         "positive activities" = 2,
         "illness partner" = 3,
@@ -1279,42 +1041,42 @@ apply_lasa046_labels <- function(data,
       )
     )
 
-    apply_metadata_to_variable(
+    label_variable(
       "lphya46", "not normal: other reasons coded",
-      lphya46_old
+      lphya46_legacy_value_labels
     )
 
   } else {
 
-    apply_metadata_to_variable(
+    label_variable(
       "lphya46", "not normal: good weather",
-      make_mentioned_value_labels(ref = "lphya39")
+      mentioned_value_labels(ref = "lphya39")
     )
   }
 
-  # LPHYA47-LPHYA50 (F/G/H/3B/I/J/K only)
-  if (wave %in% c("F", "G", "H", "3B", "I", "J", "K")) {
-    apply_metadata_to_variable(
-      "lphya47", "not normal: season break",
-      make_mentioned_value_labels(ref = "lphya39")
-    )
+  # LPHYA47 (F/G/H/3B/I/J/K only)
+  label_variable(
+    "lphya47", "not normal: season break",
+    mentioned_value_labels(ref = "lphya39")
+  )
 
   # LPHYA48 (F/G/H/3B/I/J/K only)
-  apply_metadata_to_variable(
+  label_variable(
     "lphya48", "not normal: sickness partner/others",
-    make_mentioned_value_labels(ref = "lphya39")
+    mentioned_value_labels(ref = "lphya39")
   )
 
   # LPHYA49 (F/G/H/3B/I/J/K only)
-  apply_metadata_to_variable(
+  label_variable(
     "lphya49", "not normal: other reason",
-    make_mentioned_value_labels(ref = "lphya39")
+    mentioned_value_labels(ref = "lphya39")
   )
 
-  # LPHYA50 (F/G/H/3B/I/J/K only)
-  lphya50_vl <- c(
-    setNames(-2, paste0("na, see ", make_reference_variable_name("lphya49"))),
-    make_value_labels(
+  # LPHYA50 (F/G/H/3B/I/J/K only) - coded free-text "other reason", with a
+  # COVID-19 category added starting wave K.
+  lphya50_value_labels <- c(
+    setNames(-2, paste0("na, see ", skip_reference_var("lphya49"))),
+    value_labels(
       "visit from friend/family" = 1,
       "positive activities" = 2,
       "illness partner" = 3,
@@ -1326,14 +1088,44 @@ apply_lasa046_labels <- function(data,
       "rebuilding" = 9,
       "other" = 10
     ),
-    if (wave == "K") make_value_labels("COVID19" = 11) else numeric(0)
+    if (wave == "K") value_labels("COVID19" = 11) else numeric(0)
   )
 
-  apply_metadata_to_variable(
+  label_variable(
     "lphya50", "not normal: other reasons coded",
-    lphya50_vl
+    lphya50_value_labels
   )
-  }
 
-  finalize_label_application()
+  finalize_labelled_data()
 }
+
+# ---------------------------------------------------------------------------
+# Optional quick checks after applying labels
+# ---------------------------------------------------------------------------
+# attr(dat$bphya01, "label")   # variable label
+# attr(dat$bphya01, "labels")  # value labels
+#
+# If you use the labelled package:
+# labelled::var_label(dat$bphya01)
+# labelled::val_labels(dat$bphya01)
+#
+# With to_factor = TRUE (and to_numeric = FALSE for that variable):
+# levels(dat$bphya01)
+# Codes with codebook value labels appear under those labels; observed
+# codes without a codebook label remain present, using the numeric code
+# itself as the level text.
+#
+# With to_numeric = TRUE:
+# dat <- apply_lasa046_labels(dat, wave = "B", to_numeric = TRUE)
+# Count/continuous variables (identified because every codebook value label
+# is a negative missing-reason code) become ordinary numeric vectors, all
+# negative values become NA, and the variable label is retained.
+#
+# With standardize_names = TRUE:
+# dat <- apply_lasa046_labels(dat, wave = "B", standardize_names = TRUE)
+# names(dat)
+# Matched activity variables are renamed to their canonical lowercase LASA
+# documentation names, e.g. "blphya01", "blphya02", etc.
+#
+# To inspect which variables could not be matched:
+# lasa_label_report(dat, problems_only = TRUE)

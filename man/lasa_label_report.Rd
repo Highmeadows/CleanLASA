@@ -17,15 +17,14 @@ column is available, common non-exact/failure methods are used.}
 }
 \value{
 A data frame containing the variable-name matching audit. The
-returned report retains LASA context in the attributes \code{"LASA_wave"},
-\code{"LASA_file_code"}, \code{"LASA_source_file"}, and \code{"LASA_label_function"} when
-those are available on \code{data}.
+returned report retains LASA context in the attributes \code{"LASA_wave"} and
+\code{"LASA_file_code"} when those are available on \code{data}.
 }
 \description{
 Returns the generic variable-name matching audit attached by a LASA
 file-specific label function. The function is independent of the LASA file
-code and therefore works for any future \verb{apply_*_labels()} implementation
-that stores its audit in the \code{"label_report"} attribute.
+code and therefore works for any \verb{apply_*_labels()} implementation that
+stores its audit in the \code{"label_report"} attribute.
 }
 \details{
 File-specific labelling functions should store their matching audit as
@@ -33,15 +32,17 @@ File-specific labelling functions should store their matching audit as
 \code{attr(data, "LASA_wave")}. This avoids embedding a particular LASA file code
 in the attribute names and lets one reporting function serve all LASA files.
 
-For consistency across future label implementations, reports should ideally
+For consistency across label implementations, reports should ideally
 contain a \code{method} column using values such as \code{"exact"},
-\code{"case-insensitive exact"}, \code{"normalized exact"}, \code{"fuzzy"},
-\code{"not found"}, or \code{"ambiguous"}; alternatively they may provide a logical
-\code{problem} column.
+\code{"case-insensitive exact"}, \code{"manual correction"}, \code{"manual_not_found"},
+\code{"not found"}, \code{"fuzzy"}, or \code{"ambiguous"}; alternatively they may provide
+a logical \code{problem} column. When a report was produced with
+\code{standardize_names = TRUE}, it may also contain a \code{standardized_to}
+column recording each matched column's renamed (canonical) name.
 }
 \examples{
 dat <- data.frame(RespNr = 1:2, BLPHYA07 = c(1, 2))
-dat <- apply_lasa046_labels(dat, wave = "B", warn_unmatched = FALSE)
+dat <- apply_lasa046_labels(dat, wave = "B")
 lasa_label_report(dat, problems_only = TRUE)
 }
 \seealso{

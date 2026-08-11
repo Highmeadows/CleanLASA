@@ -1,14 +1,38 @@
 # Generic LASA SPSS reader, label-function dispatcher, and label audit tools
 #
 # This file is data-file independent. File-specific metadata implementations
-# live in functions such as `apply_lasa046_labels()`, `apply_lasa004_labels()`,
-# `apply_lasa_fi_labels()`, and `apply_lasa_oa_labels()`.
+# live in functions such as `apply_lasa046_labels()`, `apply_lasa011_labels()`,
+# `apply_lasaz004_labels()`, `apply_lasazoa_labels()`, and
+# `apply_lasaFI_labels()`.
+#
+# Shared parameter contract
+# --------------------------------------------------------------------------
+# Every `apply_*_labels()` function in this package is expected to accept the
+# same four "reshaping" arguments, in addition to `data` and a wave/file-code
+# identifying argument (see apply_lasa046_labels() for the canonical
+# implementation):
+#
+#   * name_corrections  - named character vector overriding automatic column
+#                          matching for specific variables.
+#   * to_factor         - convert categorical (value-labelled) variables to
+#                          factors instead of leaving them numeric.
+#   * to_numeric        - restore count/continuous variables to plain
+#                          numeric (dropping their missing-code value
+#                          labels), converting negative codes to NA.
+#   * standardize_names - rename matched columns to their canonical
+#                          lowercase LASA documentation name.
+#
+# read_lasa_sav() below declares these four arguments explicitly (rather
+# than leaving them implicit inside `...`) so they are documented and
+# discoverable in one place, and forwards them automatically to whichever
+# file-specific function it dispatches to.
 
 #' Assert that a value is a single, non-missing TRUE/FALSE
 #'
 #' Small internal validator shared by the argument-checking code in this
-#' file, so the same error message format is used everywhere a scalar
-#' logical argument is required.
+#' file and by every `apply_*_labels()` function in the package, so the same
+#' error message format is used everywhere a scalar logical argument (such
+#' as `to_factor`, `to_numeric`, or `standardize_names`) is required.
 #'
 #' @param x The value to check.
 #' @param name Character scalar: the argument name to use in the error
@@ -17,10 +41,40 @@
 #' @return Invisibly `NULL`. Called for its side effect of raising an error
 #'   when `x` is not a scalar logical.
 #' @keywords internal
-.lasa_validate_scalar_logical <- function(x, name) {
+.lasa_assert_scalar_logical <- function(x, name) {
   if (length(x) != 1L || is.na(x) || !is.logical(x)) {
     stop("'", name, "' must be TRUE or FALSE.", call. = FALSE)
   }
+  invisible(NULL)
+}
+
+#' Assert that a value is a valid `name_corrections` argument
+#'
+#' Shared validator for the `name_corrections` argument used by
+#' [read_lasa_sav()] and by every `apply_*_labels()` function in this
+#' package family (see [apply_lasa046_labels()] for the canonical example).
+#' A valid `name_corrections` is either `NULL`, or a named character vector
+#' mapping canonical LASA variable suffixes to the actual column names found
+#' in a user's data, for example `c(lphya08 = "BLPYA08")`.
+#'
+#' @param x The value to check.
+#'
+#' @return Invisibly `NULL`. Called for its side effect of raising an error
+#'   when `x` is neither `NULL` nor a validly named character vector.
+#' @keywords internal
+.lasa_assert_name_corrections <- function(x) {
+  if (is.null(x)) {
+    return(invisible(NULL))
+  }
+
+  if (!is.character(x) || is.null(names(x)) || any(names(x) == "")) {
+    stop(
+      "'name_corrections' must be NULL or a named character vector, e.g. ",
+      "c(lphya08 = 'BLPYA08').",
+      call. = FALSE
+    )
+  }
+
   invisible(NULL)
 }
 
@@ -39,7 +93,7 @@
 #' @return A named list with `wave`, `file_code`, `file_name`, and
 #'   `apply_function`.
 #' @keywords internal
-.lasa_parse_datafile_name <- function(path) {
+.lasa_parse_filename <- function(path) {
   if (length(path) != 1L || is.na(path) || !nzchar(path)) {
     stop("'path' must be a single non-empty file path.", call. = FALSE)
   }
@@ -96,7 +150,7 @@
     file_code_lower
   }
 
-  apply_function <- .lasa_label_function_name_from_file_code(file_code)
+  apply_function <- .lasa_apply_function_name(file_code)
 
   list(
     wave = wave,
@@ -116,7 +170,7 @@
 #'
 #' @return Character scalar containing the expected function name.
 #' @keywords internal
-.lasa_label_function_name_from_file_code <- function(file_code) {
+.lasa_apply_function_name <- function(file_code) {
   code <- tolower(file_code)
 
   # The three osteoarthritis algorithm files are one logical data-file family
@@ -134,83 +188,11 @@
   }
 }
 
-#' Validate arguments forwarded to a LASA label function
-#'
-#' Internal helper used by [read_lasa_sav()] to make forwarding through `...`
-#' explicit and predictable. All forwarded arguments must be named. When the
-#' selected label function does not declare `...`, every forwarded argument is
-#' checked against that function's formal arguments before `do.call()` is used.
-#'
-#' @param args Named list of user-supplied arguments from `...`.
-#' @param label_fun The selected file-specific label function.
-#' @param label_fun_name Character scalar naming `label_fun`, used in messages.
-#'
-#' @return Invisibly `NULL`; called for validation side effects.
-#' @keywords internal
-.lasa_validate_forwarded_label_arguments <- function(args,
-                                                label_fun,
-                                                label_fun_name) {
-  if (length(args) == 0L) {
-    return(invisible(NULL))
-  }
-
-  arg_names <- names(args)
-  if (is.null(arg_names) || any(!nzchar(arg_names))) {
-    stop(
-      "All arguments supplied through `...` to read_lasa_sav() must be named.",
-      call. = FALSE
-    )
-  }
-
-  if (anyDuplicated(arg_names)) {
-    duplicated_args <- unique(arg_names[duplicated(arg_names)])
-    stop(
-      "Argument(s) supplied more than once through `...`: ",
-      paste(duplicated_args, collapse = ", "),
-      ".",
-      call. = FALSE
-    )
-  }
-
-  reserved <- intersect(arg_names, c("data", "wave", "file_code"))
-  if (length(reserved) > 0L) {
-    stop(
-      "Do not supply ",
-      paste(reserved, collapse = ", "),
-      " through `...`; these arguments are derived by read_lasa_sav().",
-      call. = FALSE
-    )
-  }
-
-  formal_names <- names(formals(label_fun))
-
-  # A file-specific implementation that declares `...` explicitly accepts
-  # additional named arguments and is responsible for validating them.
-  if ("..." %in% formal_names) {
-    return(invisible(NULL))
-  }
-
-  unsupported <- setdiff(arg_names, formal_names)
-  if (length(unsupported) > 0L) {
-    stop(
-      "The selected label function `", label_fun_name, "()` does not support ",
-      "the following argument(s) supplied through `...`: ",
-      paste(unsupported, collapse = ", "),
-      ". Supported file-specific arguments are: ",
-      paste(setdiff(formal_names, c("data", "wave", "file_code")), collapse = ", "),
-      ".",
-      call. = FALSE
-    )
-  }
-
-  invisible(NULL)
-}
-
 #' Read and label a LASA SPSS data file
 #'
 #' Reads a LASA `.sav` file, identifies its wave and file code from the file
-#' name, finds the corresponding file-specific `apply_*_labels()` function, and
-#' applies that function to the imported data.
+#' name, finds the corresponding file-specific `apply_*_labels()` function,
+#' and applies that function to the imported data.
 #'
 #' @param path Path to a LASA SPSS `.sav` file. LASA file names are parsed
 #'   case-insensitively.
@@ -218,14 +200,34 @@
 #'   so SPSS user-defined missing codes remain available to the file-specific
 #'   labelling function before any requested conversion to `NA`.
 #' @param read_sav_args Optional named list of additional arguments passed to
-#'   [haven::read_sav()], for example `list(encoding = "UTF-8")`. Do not include
-#'   `file` or `user_na`; those are controlled by `path` and `user_na`.
-#' @param ... Named arguments forwarded unchanged to the selected
-#'   file-specific label function. For LASA 046, supported options include
-#'   `fuzzy_match`, `max_edit_distance`, `name_corrections`, `warn_unmatched`,
-#'   `to_factor`, `to_numeric`, and `standardize_names`. Other file-specific
-#'   implementations may expose a different set of options. Unsupported
-#'   arguments are detected before the label function is called.
+#'   [haven::read_sav()], for example `list(encoding = "UTF-8")`. Do not
+#'   include `file` or `user_na`; those are controlled by `path` and
+#'   `user_na`.
+#' @param name_corrections Optional named character vector of manual column
+#'   overrides, forwarded to the selected file-specific label function when
+#'   it declares a `name_corrections` argument (every `apply_*_labels()`
+#'   function in this package does; see [apply_lasa046_labels()] for
+#'   details). Names are canonical variable suffixes (without the wave
+#'   prefix); values are the actual column names found in the imported data,
+#'   for example `c(lphya08 = "BLPYA08")`. Use this when a column in the
+#'   `.sav` file does not exactly or case-insensitively match its documented
+#'   LASA name.
+#' @param to_factor Logical, default `FALSE`. Forwarded to the selected
+#'   file-specific label function. When `TRUE`, categorical variables are
+#'   converted to factors using their SPSS value labels as level text,
+#'   instead of being left numeric with value-label attributes attached.
+#' @param to_numeric Logical, default `FALSE`. Forwarded to the selected
+#'   file-specific label function. When `TRUE`, count/continuous variables
+#'   (those whose only codebook value labels are negative missing-reason
+#'   codes) are restored to plain numeric, with negative codes converted to
+#'   `NA`. Takes precedence over `to_factor` for those variables.
+#' @param standardize_names Logical, default `FALSE`. Forwarded to the
+#'   selected file-specific label function. When `TRUE`, every successfully
+#'   matched column is renamed to its canonical lowercase LASA documentation
+#'   name (e.g. `blphya01`).
+#' @param ... Additional named arguments forwarded to the selected
+#'   file-specific label function, for file-specific parameters that fall
+#'   outside the four shared reshaping arguments listed above.
 #'
 #' @details
 #' The dispatcher follows the LASA filename convention:
@@ -247,26 +249,38 @@
 #' `apply_lasa_fi_labels()`. The OA files `oa1`, `oa2`, and `oa3` are a
 #' hard-coded family and all map to `apply_lasa_oa_labels()`.
 #'
-#' The selected function must already be available in the package namespace or
-#' current R session. The wrapper always supplies `data`. It supplies `wave`
-#' when that argument exists in the selected function's formal arguments
-#' (checked via `formals()`), and supplies `file_code` when that argument
-#' exists. This permits shared implementations such as a future
-#' `apply_lasa_oa_labels(data, file_code, ...)` while retaining the standard
-#' wave-aware interface used by `apply_lasa046_labels(data, wave, ...)`.
+#' Every `apply_*_labels()` function in this package shares the same
+#' parameter contract: `data`, a wave- and/or file-code-identifying
+#' argument, and the four reshaping arguments documented above
+#' (`name_corrections`, `to_factor`, `to_numeric`, `standardize_names`; see
+#' [apply_lasa046_labels()] for the canonical implementation).
+#' `read_lasa_sav()` declares those four reshaping arguments explicitly, with
+#' the defaults shown above, so callers can discover and use them without
+#' needing to know which file-specific function is ultimately dispatched to.
+#' The selected function must already be available in the package namespace
+#' or current R session. `read_lasa_sav()` inspects that function's formal
+#' arguments (via `formals()`) and:
 #'
-#' Arguments supplied through `...` are reserved for the selected label
-#' function, not for [haven::read_sav()]. They are validated against that
-#' function's formal arguments and then passed through with `do.call()`. For
-#' example, when file 046 is detected, `to_factor = TRUE`,
-#' `to_numeric = TRUE`, `standardize_names = TRUE`, and `name_corrections =`
-#' `...` are passed directly to [apply_lasa046_labels()]. Additional SPSS
-#' import options belong in `read_sav_args`.
+#' * always supplies `data`;
+#' * supplies `wave` and/or `file_code` when the function declares them;
+#' * supplies `name_corrections`, `to_factor`, `to_numeric`, and
+#'   `standardize_names` when the function declares them, and otherwise
+#'   warns -- rather than silently ignoring the request -- if the caller
+#'   supplied a non-default value for one of these;
+#' * forwards any further named arguments from `...` unchanged, for
+#'   file-specific parameters that fall outside the shared contract.
+#'
+#' This permits shared implementations such as a future
+#' `apply_lasa_oa_labels(data, file_code, name_corrections, to_factor,
+#' to_numeric, standardize_names, ...)` to coexist with wave-aware ones such
+#' as `apply_lasa046_labels(data, wave, name_corrections, to_factor,
+#' to_numeric, standardize_names)`.
 #'
 #' After labelling, generic provenance attributes are attached:
 #' `"LASA_wave"`, `"LASA_file_code"`, `"LASA_source_file"`, and
 #' `"LASA_label_function"`. File-specific functions should attach their
-#' variable-name audit under the generic `"label_report"` attribute.
+#' variable-name matching audit under the generic `"label_report"`
+#' attribute; retrieve it with [lasa_label_report()].
 #'
 #' @return The object returned by the selected file-specific label function,
 #'   with generic LASA provenance attributes attached.
@@ -277,16 +291,26 @@
 #' @examples
 #' \dontrun{
 #' # Automatically dispatches to apply_lasa046_labels()
-#' dat_e <- read_lasa_sav(
-#'   "LASAE046.SAV",
-#'   to_factor = TRUE,
-#'   to_numeric = TRUE,
-#'   standardize_names = TRUE,
-#'   name_corrections = c(lphya08 = "ELPYA08")
-#' )
+#' dat_e <- read_lasa_sav("LASAE046.SAV")
 #'
 #' # Also dispatches to apply_lasa046_labels(), with wave = "3B"
 #' dat_3b <- read_lasa_sav("LAS3B046.SAV")
+#'
+#' # The four shared reshaping arguments are available directly on
+#' # read_lasa_sav(), without needing to know they live on
+#' # apply_lasa046_labels() specifically:
+#' dat_h <- read_lasa_sav(
+#'   "LASAH046.SAV",
+#'   to_factor = TRUE,
+#'   to_numeric = TRUE,
+#'   standardize_names = TRUE
+#' )
+#'
+#' # Manually correct a mistyped column name:
+#' dat_b <- read_lasa_sav(
+#'   "LASAB046.SAV",
+#'   name_corrections = c(lphya08 = "BLPYA08")
+#' )
 #'
 #' # Dispatches to apply_lasa004_labels() once that function exists
 #' dat_z004 <- read_lasa_sav("LASAZ004.SAV")
@@ -298,6 +322,10 @@
 read_lasa_sav <- function(path,
                           user_na = TRUE,
                           read_sav_args = list(),
+                          name_corrections = NULL,
+                          to_factor = FALSE,
+                          to_numeric = FALSE,
+                          standardize_names = FALSE,
                           ...) {
   if (!requireNamespace("haven", quietly = TRUE)) {
     stop(
@@ -307,7 +335,11 @@ read_lasa_sav <- function(path,
     )
   }
 
-  .lasa_validate_scalar_logical(user_na, "user_na")
+  .lasa_assert_scalar_logical(user_na, "user_na")
+  .lasa_assert_scalar_logical(to_factor, "to_factor")
+  .lasa_assert_scalar_logical(to_numeric, "to_numeric")
+  .lasa_assert_scalar_logical(standardize_names, "standardize_names")
+  .lasa_assert_name_corrections(name_corrections)
 
   if (!is.list(read_sav_args)) {
     stop("'read_sav_args' must be a list.", call. = FALSE)
@@ -329,7 +361,7 @@ read_lasa_sav <- function(path,
     }
   }
 
-  info <- .lasa_parse_datafile_name(path)
+  info <- .lasa_parse_filename(path)
 
   label_fun <- get0(
     info$apply_function,
@@ -348,20 +380,30 @@ read_lasa_sav <- function(path,
     )
   }
 
-  # Validate file-specific options before reading the potentially large SPSS
-  # file, so misspelled/unsupported `...` arguments fail early.
-  user_label_args <- list(...)
-  .lasa_validate_forwarded_label_arguments(
-    args = user_label_args,
-    label_fun = label_fun,
-    label_fun_name = info$apply_function
-  )
-
   read_call <- c(
     list(file = path, user_na = user_na),
     read_sav_args
   )
   data <- do.call(haven::read_sav, read_call)
+
+  # Arguments left over in `...` are, by construction, anything the caller
+  # supplied that isn't one of read_lasa_sav()'s own named parameters (which
+  # now include the four shared reshaping arguments) -- i.e. genuinely
+  # file-specific extras meant for the dispatched label function.
+  user_label_args <- list(...)
+  if (length(user_label_args) > 0L) {
+    dot_names <- names(user_label_args)
+    if (!is.null(dot_names)) {
+      reserved_label_args <- intersect(dot_names, c("data", "wave", "file_code"))
+      if (length(reserved_label_args) > 0L) {
+        stop(
+          "Do not supply ", paste(reserved_label_args, collapse = ", "),
+          " through `...`; these arguments are derived by read_lasa_sav().",
+          call. = FALSE
+        )
+      }
+    }
+  }
 
   # Only pass `wave` / `file_code` through to the label function if it
   # actually declares that argument. This lets wave-aware implementations
@@ -376,6 +418,39 @@ read_lasa_sav <- function(path,
   }
   if ("file_code" %in% formal_names) {
     label_call$file_code <- info$file_code
+  }
+
+  # The four reshaping arguments shared by every apply_*_labels() function in
+  # this package (see the "Shared parameter contract" note at the top of
+  # this file, and apply_lasa046_labels() for the canonical implementation).
+  # As with wave/file_code above, an argument is only forwarded if the
+  # selected function declares it. If the caller asked for a non-default
+  # value that the function does not support, warn rather than silently
+  # dropping the request, since that combination is most likely a mistake.
+  common_reshaping_args <- list(
+    name_corrections = name_corrections,
+    to_factor = to_factor,
+    to_numeric = to_numeric,
+    standardize_names = standardize_names
+  )
+  common_reshaping_defaults <- list(
+    name_corrections = NULL,
+    to_factor = FALSE,
+    to_numeric = FALSE,
+    standardize_names = FALSE
+  )
+
+  for (arg_name in names(common_reshaping_args)) {
+    if (arg_name %in% formal_names) {
+      label_call[[arg_name]] <- common_reshaping_args[[arg_name]]
+    } else if (!identical(common_reshaping_args[[arg_name]], common_reshaping_defaults[[arg_name]])) {
+      warning(
+        "'", arg_name, "' was supplied but ", info$apply_function,
+        "() does not declare that argument, so it is ignored for '",
+        info$file_name, "'.",
+        call. = FALSE
+      )
+    }
   }
 
   label_call <- c(label_call, user_label_args)
@@ -396,8 +471,8 @@ read_lasa_sav <- function(path,
 #'
 #' Returns the generic variable-name matching audit attached by a LASA
 #' file-specific label function. The function is independent of the LASA file
-#' code and therefore works for any future `apply_*_labels()` implementation
-#' that stores its audit in the `"label_report"` attribute.
+#' code and therefore works for any `apply_*_labels()` implementation that
+#' stores its audit in the `"label_report"` attribute.
 #'
 #' @param data A data object previously processed by a LASA file-specific label
 #'   function or by [read_lasa_sav()].
@@ -412,26 +487,27 @@ read_lasa_sav <- function(path,
 #' `attr(data, "LASA_wave")`. This avoids embedding a particular LASA file code
 #' in the attribute names and lets one reporting function serve all LASA files.
 #'
-#' For consistency across future label implementations, reports should ideally
+#' For consistency across label implementations, reports should ideally
 #' contain a `method` column using values such as `"exact"`,
-#' `"case-insensitive exact"`, `"normalized exact"`, `"fuzzy"`,
-#' `"not found"`, or `"ambiguous"`; alternatively they may provide a logical
-#' `problem` column.
+#' `"case-insensitive exact"`, `"manual correction"`, `"manual_not_found"`,
+#' `"not found"`, `"fuzzy"`, or `"ambiguous"`; alternatively they may provide
+#' a logical `problem` column. When a report was produced with
+#' `standardize_names = TRUE`, it may also contain a `standardized_to`
+#' column recording each matched column's renamed (canonical) name.
 #'
 #' @return A data frame containing the variable-name matching audit. The
-#'   returned report retains LASA context in the attributes `"LASA_wave"`,
-#'   `"LASA_file_code"`, `"LASA_source_file"`, and `"LASA_label_function"` when
-#'   those are available on `data`.
+#'   returned report retains LASA context in the attributes `"LASA_wave"` and
+#'   `"LASA_file_code"` when those are available on `data`.
 #'
 #' @seealso [read_lasa_sav()], [apply_lasa046_labels()]
 #' @export
 #'
 #' @examples
 #' dat <- data.frame(RespNr = 1:2, BLPHYA07 = c(1, 2))
-#' dat <- apply_lasa046_labels(dat, wave = "B", warn_unmatched = FALSE)
+#' dat <- apply_lasa046_labels(dat, wave = "B")
 #' lasa_label_report(dat, problems_only = TRUE)
 lasa_label_report <- function(data, problems_only = FALSE) {
-  .lasa_validate_scalar_logical(problems_only, "problems_only")
+  .lasa_assert_scalar_logical(problems_only, "problems_only")
 
   report <- attr(data, "label_report", exact = TRUE)
 
@@ -487,7 +563,5 @@ lasa_label_report <- function(data, problems_only = FALSE) {
   rownames(report) <- NULL
   attr(report, "LASA_wave") <- attr(data, "LASA_wave", exact = TRUE)
   attr(report, "LASA_file_code") <- attr(data, "LASA_file_code", exact = TRUE)
-  attr(report, "LASA_source_file") <- attr(data, "LASA_source_file", exact = TRUE)
-  attr(report, "LASA_label_function") <- attr(data, "LASA_label_function", exact = TRUE)
   report
 }

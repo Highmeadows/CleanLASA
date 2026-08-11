@@ -2,149 +2,125 @@
 % Please edit documentation in R/apply_LASA046_labels.R
 \name{apply_lasa046_labels}
 \alias{apply_lasa046_labels}
-\title{Apply LASA 046 variable labels, value labels, and optional harmonisation}
+\title{Apply LASA046 (LAPAQ / Physical Activity) SPSS labels}
 \usage{
 apply_lasa046_labels(
   data,
   wave,
-  fuzzy_match = TRUE,
-  max_edit_distance = 1L,
   name_corrections = NULL,
-  warn_unmatched = TRUE,
   to_factor = FALSE,
   to_numeric = FALSE,
   standardize_names = FALSE
 )
 }
 \arguments{
-\item{data}{A data frame or tibble containing one LASA 046 data file.}
+\item{data}{A data frame or tibble imported from a LASA046 \code{.sav} file
+(for example via \code{haven::read_sav()}), containing wave-prefixed
+variables such as \code{blphya01}, \code{clphya01}, etc.}
 
-\item{wave}{Character scalar identifying the LASA measurement wave. Supported
-values are \code{"B"}, \code{"C"}, \code{"D"}, \code{"E"}, \code{"2B"}, \code{"F"}, \code{"G"}, \code{"H"},
-\code{"3B"}, \code{"MB"}, \code{"I"}, \code{"J"}, and \code{"K"}. Matching is case-insensitive.
-The wave must be supplied explicitly because B, 2B, 3B, and MB all use a
-\code{b} variable-name prefix while some labels and coding rules differ.}
+\item{wave}{Character scalar identifying the LASA wave, matched
+case-insensitively. One of \code{"B"}, \code{"C"}, \code{"D"}, \code{"E"}, \code{"2B"}, \code{"F"},
+\code{"G"}, \code{"H"}, \code{"3B"}, \code{"MB"}, \code{"I"}, \code{"J"}, or \code{"K"}.}
 
-\item{fuzzy_match}{Logical scalar. If \code{TRUE} (default), permit conservative
-fuzzy matching for likely variable-name typing errors after exact,
-case-insensitive, and punctuation-insensitive matching have failed.}
+\item{name_corrections}{Optional named character vector for explicit name
+overrides, used when a column in \code{data} does not exactly or
+case-insensitively match its expected LASA046 name (e.g. a typo
+introduced during data entry or export). Names are canonical LASA046
+suffixes (without the wave prefix), and values are the actual column
+names found in \code{data}, for example \code{c(lphya08 = "BLPYA08")}. A
+correction that points to a column not present in \code{data} is recorded as
+\code{"manual_not_found"} in the matching audit rather than raising an error.}
 
-\item{max_edit_distance}{Non-negative integer giving the maximum edit
-distance accepted for automatic fuzzy matching. Defaults to \code{1}.}
+\item{to_factor}{Logical. If \code{FALSE} (default), categorical variables
+remain numeric with SPSS-style value-label attributes. If \code{TRUE}, every
+categorical variable's value labels are used as factor levels; any
+observed value that has no codebook label is retained as its own level
+(labelled with the numeric code) rather than being converted to \code{NA}.
+Ignored for a given variable when \code{to_numeric} applies to it instead
+(see below).}
 
-\item{name_corrections}{Optional named character vector for explicit
-variable-name corrections. Vector names are canonical LASA suffixes (or
-\code{"respnr"}) and values are the corresponding column names in \code{data}, for
-example \code{c(lphya08 = "BLPYA08", respnr = "RespNrr")}. Explicit
-corrections take precedence over automatic matching.}
+\item{to_numeric}{Logical. If \code{FALSE} (default), count/continuous
+variables keep their SPSS-style missing-reason value-label attributes.
+If \code{TRUE}, every variable whose codebook value labels consist
+exclusively of negative missing-reason codes (e.g. -1, -2, -3) is
+restored to an ordinary numeric vector: all negative values become \code{NA}
+and all remaining values are kept as numeric. This takes precedence
+over \code{to_factor} for these variables.}
 
-\item{warn_unmatched}{Logical scalar. If \code{TRUE} (default), issue a warning
-when an expected variable cannot be matched confidently, a match is
-ambiguous, a manual correction fails, or the respondent identifier has to
-be inferred from first-column position. Successful fuzzy matches are
-reported by message and in the audit but do not by themselves trigger this
-warning.}
-
-\item{to_factor}{Logical scalar. If \code{FALSE} (default), variables with
-substantive value labels remain numeric/haven-labelled and receive
-SPSS-style \code{"labels"} attributes. If \code{TRUE}, those variables are converted
-to factors using the LASA value labels as factor-level labels. Any observed
-value without a codebook value label is retained as its own factor level
-rather than being converted to \code{NA}.}
-
-\item{to_numeric}{Logical scalar. If \code{FALSE} (default), count, duration, and
-other numeric variables retain their documented negative missing-reason
-value labels. If \code{TRUE}, a variable is treated as substantive numeric when
-every value label documented for it is a negative missing-reason code.
-Such variables are converted to ordinary numeric vectors, every observed
-value below zero is replaced by \code{NA}, and all non-negative values are
-retained. For these variables \code{to_numeric = TRUE} takes precedence over
-\code{to_factor = TRUE}.}
-
-\item{standardize_names}{Logical scalar. If \code{FALSE} (default), the original
-source column names are retained. If \code{TRUE}, every successfully matched
-LASA 046 variable is renamed to the canonical lowercase LASA documentation
-name for the supplied wave (for example \code{blphya01}, \code{clphya26}, or
-\code{klphya50}) and the first-column respondent identifier is renamed
-\code{respnr}. Unmatched non-046 columns are left unchanged.}
+\item{standardize_names}{Logical. If \code{FALSE} (default), original column
+names in \code{data} are left unchanged. If \code{TRUE}, every successfully
+matched LASA046 column is renamed to its canonical lowercase
+documentation name, such as \code{blphya01}, \code{clphya26}, or \code{klphya50}.
+Renaming happens only after all variables have been matched, so it
+cannot affect matching decisions; the function stops with an
+informative error if renaming would create duplicate column names.}
 }
 \value{
-\code{data} with LASA 046 variable metadata applied and, depending on the
-requested options, variables converted to factors/numeric vectors and/or
-names harmonised. The object carries the generic attributes
-\code{"label_report"}, \code{"LASA_wave"}, \code{"LASA_file_code"}, and
-\code{"LASA_names_standardized"}.
+\code{data}, with \code{label} and \code{labels} attributes added to every
+matched LASA046 column (transformed to a factor or plain numeric where
+\code{to_factor}/\code{to_numeric} apply), and optionally renamed when
+\code{standardize_names = TRUE}. A variable-name matching audit is attached
+as the generic \code{"label_report"} attribute; retrieve it with
+\code{\link[=lasa_label_report]{lasa_label_report()}}.
 }
 \description{
-Applies metadata documented for LASA file 046 (LAPAQ / Physical activity)
-to a single LASA wave data set. The function is designed for data imported
-from SPSS with \code{\link[haven:read_spss]{haven::read_sav()}} but can be used on an equivalent data
-frame or tibble already present in R.
+Attaches SPSS-style variable labels (\code{attr(x, "label")}) and value labels
+(\code{attr(x, "labels")}) to a LASA046 (LAPAQ physical activity questionnaire)
+data frame, using the coding scheme documented for the requested wave.
+By default variables are left numeric; optional arguments allow converting
+categorical variables to factors, restoring count/continuous variables to
+plain numeric, correcting mismatched column names, and standardizing
+column names to the canonical LASA documentation spelling.
 }
 \details{
-\strong{Variable-name matching.} Matching proceeds in the following order:
-\enumerate{
-\item explicit \code{name_corrections};
-\item exact name;
-\item case-insensitive exact name;
-\item normalized exact name, ignoring punctuation/underscores;
-\item optionally, a unique fuzzy match within \code{max_edit_distance}.
-}
+LASA046 variable names, wording, and value codings change across waves
+(for example, the sport-type coding scheme was redesigned starting at
+wave H, and several items only exist in a subset of waves). \code{wave} must be
+supplied explicitly because several waves share the same variable-name
+prefix (\code{"b"} for B, 2B, 3B, and MB) but use different labels/codings.
 
-Fuzzy matching is deliberately conservative. Correctly formed LASA 046
-names belonging to another questionnaire item are protected from being
-selected merely because their edit distance is small.
+Column matching tries, in order: (1) an explicit override in
+\code{name_corrections}, (2) an exact (case-sensitive) name match, (3) a
+case-insensitive name match. A LASA046 variable that cannot be matched by
+any of these is left unlabelled and recorded as \code{"not found"} in the
+matching audit rather than raising an error, since not every wave's file
+contains every variable.
 
-\strong{Respondent number.} The first column is expected to contain the
-respondent number. Capitalization and minor spelling variants of \code{respnr}
-are handled by the same matching logic. Because first-column position is a
-structural invariant of these files, the first column is used as a final
-fallback when its name cannot be matched; this is flagged in the audit.
-
-\strong{Numeric versus categorical conversion.} \code{to_numeric} does not simply
-convert every labelled variable to numeric. A variable is identified as a
-substantive numeric variable only when all of its codebook value labels are
-negative missing-reason codes. This distinguishes variables such as numbers
-of occasions and minutes from categorical variables whose substantive codes
-have labels such as \code{"no"}, \code{"yes"}, or sport categories.
-
-When both \code{to_factor = TRUE} and \code{to_numeric = TRUE}, numeric/count/duration
-variables become ordinary numeric vectors with negative codes set to \code{NA},
-while categorical variables become factors.
-
-\strong{Name harmonisation.} Canonical renaming is performed only after all
-matching is complete, so changing an earlier column name cannot alter later
-matching decisions. The function stops rather than creating duplicate names
-if a canonical name would collide with another column.
-
-\strong{Audit and provenance.} The returned object contains a generic matching
-audit in \code{attr(x, "label_report")}. It also receives \code{"LASA_wave"},
-\code{"LASA_file_code"}, and \code{"LASA_names_standardized"} attributes. These generic
-names are shared with other future LASA label implementations and can be
-inspected through \code{\link[=lasa_label_report]{lasa_label_report()}}.
+\code{name_corrections}, \code{to_factor}, \code{to_numeric}, and \code{standardize_names} are
+part of a parameter contract shared by every \verb{apply_*_labels()} function
+in this package (see the header comment in \code{lasa_io.R}). Because
+\code{\link[=read_lasa_sav]{read_lasa_sav()}} forwards these same four arguments automatically when
+dispatching to this function, they can be supplied either directly to
+\code{apply_lasa046_labels()} or through \code{read_lasa_sav()} -- both forms behave
+identically.
 }
 \examples{
-dat <- data.frame(
-  RespNr = c(101, 102, 103),
-  BLPHYA07 = c(1, 2, -1),
-  BLPYA08 = c(4, -1, 7)
+\dontrun{
+dat_b  <- apply_lasa046_labels(dat_b, wave = "B")
+dat_2b <- apply_lasa046_labels(dat_2b, wave = "2B")
+
+# Convert categorical variables to factors, restore count variables to
+# plain numeric, and use canonical column names:
+dat_h <- apply_lasa046_labels(
+  dat_h, wave = "H",
+  to_factor = TRUE, to_numeric = TRUE, standardize_names = TRUE
 )
 
-dat <- apply_lasa046_labels(
-  dat,
-  wave = "B",
-  fuzzy_match = TRUE,
-  to_factor = TRUE,
-  to_numeric = TRUE,
-  standardize_names = TRUE,
-  warn_unmatched = FALSE
+# Manually correct a mistyped column name:
+dat_3b <- apply_lasa046_labels(
+  dat_3b, wave = "3B",
+  name_corrections = c(lphya08 = "BLPYA08")
 )
 
-names(dat)[1:3]
-levels(dat$blphya07)
-dat$blphya08
-lasa_label_report(dat, problems_only = TRUE)
+# Equivalently, via read_lasa_sav():
+dat_h <- read_lasa_sav(
+  "LASAH046.SAV",
+  to_factor = TRUE, to_numeric = TRUE, standardize_names = TRUE
+)
+
+lasa_label_report(dat_h, problems_only = TRUE)
+}
 }
 \seealso{
-\code{\link[=read_lasa_sav]{read_lasa_sav()}}, \code{\link[=lasa_label_report]{lasa_label_report()}}
+\code{\link[=lasa_label_report]{lasa_label_report()}}, \code{\link[=read_lasa_sav]{read_lasa_sav()}}
 }
