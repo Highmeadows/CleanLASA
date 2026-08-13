@@ -62,8 +62,7 @@ file-specific label function. When \code{TRUE}, the wave-letter prefix is
 removed from matched column names (e.g. \code{blphya01} becomes \code{lphya01})
 and a new \code{"LASA_wave"} column, filled with the file's wave code (e.g.
 \code{"B"}, \code{"2B"}, \code{"3B"}), is inserted right after the (also standardized)
-\code{"respnr"} column. Always treated as \code{TRUE} when \verb{standardize_names =
-TRUE}, even if \code{split_wavecode} itself was left at its default.}
+\code{"respnr"} column. Always treated as \code{TRUE} when \code{standardize_names = TRUE}, even if \code{split_wavecode} itself was left at its default.}
 
 \item{...}{Additional named arguments forwarded to the selected
 file-specific label function, for file-specific parameters that fall
@@ -140,7 +139,7 @@ dat_e <- read_lasa_sav("LASAE046.SAV")
 # Also dispatches to apply_lasa046_labels(), with wave = "3B"
 dat_3b <- read_lasa_sav("LAS3B046.SAV")
 
-# The five shared reshaping arguments are available directly on
+# The four shared reshaping arguments are available directly on
 # read_lasa_sav(), without needing to know they live on
 # apply_lasa046_labels() specifically:
 dat_h <- read_lasa_sav(

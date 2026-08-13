@@ -106,8 +106,11 @@ test_that("waves F onward receive all seven household-composition labels", {
     attr(out$FHHNCH, "labels"),
     c("na, see FNUPERS" = -2)
   )
-  expect_equal(nrow(lasa_label_report(out)), 7L)
-  expect_false(any(lasa_label_report(out)$method == "not found"))
+  # +1 for the always-recorded "respnr" audit row (see .lasa_label_engine()).
+  expect_equal(nrow(lasa_label_report(out)), 8L)
+  documented_report <- lasa_label_report(out)
+  documented_report <- documented_report[documented_report$suffix != "respnr", ]
+  expect_false(any(documented_report$method == "not found"))
 })
 
 test_that("modern b-prefix waves use their own LASA011 schema", {
@@ -174,7 +177,9 @@ test_that("matching, corrections, and standardization mirror LASA046", {
   )
   report <- lasa_label_report(out)
 
-  expect_true(all(c("fnupers", "fhhpart") %in% names(out)))
+  # standardize_names = TRUE always implies split_wavecode = TRUE, so the
+  # wave code is stripped from the canonical name too.
+  expect_true(all(c("nupers", "hhpart") %in% names(out)))
   expect_equal(
     report$method[report$suffix == "nupers"],
     "manual correction"
@@ -185,20 +190,25 @@ test_that("matching, corrections, and standardization mirror LASA046", {
   )
   expect_equal(
     report$standardized_to[report$suffix == "nupers"],
-    "fnupers"
+    "nupers"
   )
 })
 
 test_that("unmatched and invalid LASA011 inputs are reported", {
   out <- apply_lasa011_labels(data.frame(other = 1), wave = "K")
-  expect_equal(nrow(lasa_label_report(out, problems_only = TRUE)), 7L)
+  # +1 for the always-recorded "respnr" audit row (see .lasa_label_engine()).
+  expect_equal(nrow(lasa_label_report(out, problems_only = TRUE)), 8L)
 
   manual <- apply_lasa011_labels(
     data.frame(other = 1),
     wave = "B",
     name_corrections = c(nupers = "missing_column")
   )
-  expect_equal(lasa_label_report(manual)$method, "manual_not_found")
+  manual_report <- lasa_label_report(manual)
+  expect_identical(
+    manual_report$method[manual_report$suffix == "nupers"],
+    "manual_not_found"
+  )
 
   expect_error(
     apply_lasa011_labels(data.frame(), wave = "A"),
@@ -217,6 +227,29 @@ test_that("read_lasa_sav dispatches LASA011 files", {
 
   expect_identical(attr(out, "LASA_file_code"), "011")
   expect_identical(attr(out, "LASA_label_function"), "apply_lasa011_labels")
-  expect_true(all(c("fnupers", "fhhpart") %in% names(out)))
-  expect_identical(attr(out$fnupers, "label"), "# other persons in household")
+  # standardize_names = TRUE always implies split_wavecode = TRUE, so the
+  # wave code is stripped from the canonical name too.
+  expect_true(all(c("nupers", "hhpart") %in% names(out)))
+  expect_identical(attr(out$nupers, "label"), "# other persons in household")
+})
+
+test_that("original SPSS value coding survives to_numeric/to_factor reshaping", {
+  data <- data.frame(FNUPERS = c(-3, -2, -1, 0, 4))
+  out <- apply_lasa011_labels(data, wave = "F", to_numeric = TRUE)
+
+  expect_identical(unname(attr(out$FNUPERS, "original_values")), c(-3, -2, -1, 0, 4))
+  expect_false(is.null(attr(out$FNUPERS, "original_labels")))
+})
+
+test_that("split_wavecode splits the wave code into LASA_wave", {
+  data <- data.frame(RespNr = 1:2, FNUPERS = c(1, -2))
+  out <- apply_lasa011_labels(data, wave = "F", split_wavecode = TRUE)
+
+  expect_true("LASA_wave" %in% names(out))
+  expect_true(all(out$LASA_wave == "F"))
+  expect_identical(names(out)[[2]], "LASA_wave")
+  expect_true("nupers" %in% names(out))
+  # respnr is matched (to position LASA_wave) but not renamed, since
+  # standardize_names = FALSE.
+  expect_true("RespNr" %in% names(out))
 })

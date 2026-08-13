@@ -5,10 +5,12 @@ test_that("apply_lasa014_labels has the shared LASA label-function interface", {
   )
   expect_identical(
     formals(apply_lasa014_labels)[c(
-      "name_corrections", "to_factor", "to_numeric", "standardize_names"
+      "name_corrections", "to_factor", "to_numeric", "standardize_names",
+      "split_wavecode"
     )],
     formals(apply_lasa046_labels)[c(
-      "name_corrections", "to_factor", "to_numeric", "standardize_names"
+      "name_corrections", "to_factor", "to_numeric", "standardize_names",
+      "split_wavecode"
     )]
   )
 })
@@ -53,12 +55,14 @@ test_that("LASA014 reshaping and name standardization match shared behaviour", {
     standardize_names = TRUE
   )
 
-  expect_true(is.factor(out$bhindep))
-  expect_true(is.factor(out$bmomonth))
-  expect_equal(as.numeric(out$bmoyear), c(1990, NA_real_))
-  expect_true(is.factor(out$bfdoorc))
-  expect_true(all(c("monastery", "unknown") %in% levels(out$bfdoorc)))
-  expect_identical(attr(out$bmoyear, "label"), "Moved since last interview: year")
+  # standardize_names = TRUE always implies split_wavecode = TRUE, so the
+  # wave code is stripped from the canonical name too.
+  expect_true(is.factor(out$hindep))
+  expect_true(is.factor(out$momonth))
+  expect_equal(as.numeric(out$moyear), c(1990, NA_real_))
+  expect_true(is.factor(out$fdoorc))
+  expect_true(all(c("monastery", "unknown") %in% levels(out$fdoorc)))
+  expect_identical(attr(out$moyear, "label"), "Moved since last interview: year")
 
   report <- lasa_label_report(out)
   expect_true(all(report$standardized_to[!is.na(report$matched_name)] %in% names(out)))
@@ -171,9 +175,12 @@ test_that("LASA014 matching audit is complete and has no duplicate variables", {
   for (wave in waves) {
     out <- apply_lasa014_labels(data.frame(respnr = integer()), wave = wave)
     report <- lasa_label_report(out)
-    expect_gt(nrow(report), 0L, info = wave)
+    expect_gt(nrow(report), 0L)
     expect_false(anyDuplicated(report$expected_name) > 0L, info = wave)
-    expect_setequal(report$suffix, expected_suffixes[[wave]], info = wave)
+    # "respnr" is always audited too (see .lasa_label_engine()) but is not
+    # part of LASA014's own documented variable layout.
+    documented_suffixes <- report$suffix[report$suffix != "respnr"]
+    expect_setequal(documented_suffixes, expected_suffixes[[wave]])
   }
 })
 
@@ -186,7 +193,9 @@ test_that("LASA014 supports manual corrections and dispatcher naming", {
     standardize_names = TRUE
   )
 
-  expect_true("bmomonth" %in% names(out))
+  # standardize_names = TRUE always implies split_wavecode = TRUE, so the
+  # wave code is stripped from the canonical name too.
+  expect_true("momonth" %in% names(out))
   report <- lasa_label_report(out)
   row <- report[report$suffix == "momonth", , drop = FALSE]
   expect_identical(row$method, "manual correction")
@@ -195,6 +204,31 @@ test_that("LASA014 supports manual corrections and dispatcher naming", {
     .lasa_parse_filename("LAS3B014.SAV")$apply_function,
     "apply_lasa014_labels"
   )
+})
+
+test_that("original SPSS value coding survives to_numeric/to_factor reshaping", {
+  # BFDOORC's codes are all negative but are substantive "constructed"
+  # categories, not missing-reason codes, so LASA014's stricter
+  # is_codebook_numeric() keeps it categorical even with to_numeric = TRUE.
+  data <- data.frame(BFDOORC = c(-3, -2, -1))
+  out <- apply_lasa014_labels(data, wave = "B", to_numeric = TRUE, to_factor = TRUE)
+
+  expect_true(is.factor(out$BFDOORC))
+  expect_identical(unname(attr(out$BFDOORC, "original_values")), c(-3, -2, -1))
+  expect_false(is.null(attr(out$BFDOORC, "original_labels")))
+})
+
+test_that("split_wavecode splits the wave code into LASA_wave", {
+  data <- data.frame(RespNr = 1:2, BHINDEP = c(1, 2))
+  out <- apply_lasa014_labels(data, wave = "B", split_wavecode = TRUE)
+
+  expect_true("LASA_wave" %in% names(out))
+  expect_true(all(out$LASA_wave == "B"))
+  expect_identical(names(out)[[2]], "LASA_wave")
+  expect_true("hindep" %in% names(out))
+  # respnr is matched (to position LASA_wave) but not renamed, since
+  # standardize_names = FALSE.
+  expect_true("RespNr" %in% names(out))
 })
 
 test_that("LASA014 validates its wave and shared arguments", {

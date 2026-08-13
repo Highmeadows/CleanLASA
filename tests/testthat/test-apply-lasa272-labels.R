@@ -31,9 +31,14 @@ test_that("LASA272 labels every documented variable in every supported wave", {
     }
 
     report <- attr(out, "label_report", exact = TRUE)
-    expect_equal(nrow(report), 12L, info = wave)
-    expect_true(all(report$method == "exact"), info = wave)
-    expect_equal(report$expected_name, paste0(prefix, lasa272_suffixes), info = wave)
+    documented_rows <- report[report$suffix != "respnr", , drop = FALSE]
+    # +1 for the always-recorded "respnr" audit row (see .lasa_label_engine()).
+    expect_equal(nrow(report), 13L, info = wave)
+    expect_true(all(documented_rows$method == "exact"), info = wave)
+    expect_equal(
+      documented_rows$expected_name, paste0(prefix, lasa272_suffixes),
+      info = wave
+    )
   }
 })
 
@@ -141,15 +146,19 @@ test_that("LASA272 matching, corrections, and standardized names mirror LASA046"
     standardize_names = TRUE
   )
 
-  expect_true(all(c("cfadied", "cillpart", "unrelated") %in% names(out)))
-  expect_identical(attr(out$cfadied, "label"), "father died")
-  expect_identical(attr(out$cillpart, "label"), "illness partner/spouse")
+  # standardize_names = TRUE always implies split_wavecode = TRUE, so the
+  # wave code is stripped from the canonical name too.
+  expect_true(all(c("fadied", "illpart", "unrelated") %in% names(out)))
+  expect_identical(attr(out$fadied, "label"), "father died")
+  expect_identical(attr(out$illpart, "label"), "illness partner/spouse")
 
   report <- attr(out, "label_report", exact = TRUE)
   expect_identical(report$method[report$suffix == "fadied"], "case-insensitive exact")
   expect_identical(report$method[report$suffix == "illpart"], "manual correction")
-  expect_identical(report$standardized_to[report$suffix == "illpart"], "cillpart")
-  expect_equal(sum(report$method == "not found"), 10L)
+  expect_identical(report$standardized_to[report$suffix == "illpart"], "illpart")
+  # 10 undocumented LASA272 suffixes + the always-recorded "respnr" row
+  # (see .lasa_label_engine()), which is also "not found" here.
+  expect_equal(sum(report$method == "not found"), 11L)
 })
 
 test_that("LASA272 factor conversion retains undocumented observed values", {
@@ -164,6 +173,27 @@ test_that("LASA272 factor conversion retains undocumented observed values", {
   expect_s3_class(out$cfadied, "factor")
   expect_true("99" %in% levels(out$cfadied))
   expect_identical(attr(out$cfadied, "label"), "father died")
+})
+
+test_that("original SPSS value coding survives to_numeric/to_factor reshaping", {
+  data <- data.frame(cfadied = c(-1, 1, 2))
+  out <- apply_lasa272_labels(data, wave = "C", to_factor = TRUE)
+
+  expect_identical(unname(attr(out$cfadied, "original_values")), c(-1, 1, 2))
+  expect_false(is.null(attr(out$cfadied, "original_labels")))
+})
+
+test_that("split_wavecode splits the wave code into LASA_wave", {
+  data <- data.frame(RespNr = 1:3, cfadied = c(-1, 1, 2))
+  out <- apply_lasa272_labels(data, wave = "C", split_wavecode = TRUE)
+
+  expect_true("LASA_wave" %in% names(out))
+  expect_true(all(out$LASA_wave == "C"))
+  expect_identical(names(out)[[2]], "LASA_wave")
+  expect_true("fadied" %in% names(out))
+  # respnr is matched (to position LASA_wave) but not renamed, since
+  # standardize_names = FALSE.
+  expect_true("RespNr" %in% names(out))
 })
 
 test_that("LASA272 rejects unsupported waves and invalid shared arguments", {

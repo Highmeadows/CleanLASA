@@ -29,7 +29,8 @@ test_that("wave B variable and value labels follow the LASA034 codebook", {
 
   report <- lasa_label_report(labelled)
   expect_true(all(c("suffix", "expected_name", "matched_name", "method") %in% names(report)))
-  expect_equal(nrow(report), 38L)
+  # +1 for the always-recorded "respnr" audit row (see .lasa_label_engine()).
+  expect_equal(nrow(report), 39L)
 })
 
 test_that("LASA034 applies wave-specific performance-test codings", {
@@ -76,7 +77,8 @@ test_that("LASA034 only audits variables documented for the selected wave", {
   k_suffixes <- attr(wave_k, "label_report")$suffix
   expect_false(any(c("walk04a", "walk05", "walk08", "tandem2") %in% k_suffixes))
   expect_true(all(c("tandem1", "tandem3", "tandem4") %in% k_suffixes))
-  expect_equal(length(k_suffixes), 34L)
+  # +1 for the always-recorded "respnr" audit row (see .lasa_label_engine()).
+  expect_equal(length(k_suffixes), 35L)
 })
 
 test_that("LASA034 supports reshaping, standardization, and manual corrections", {
@@ -95,11 +97,14 @@ test_that("LASA034 supports reshaping, standardization, and manual corrections",
     standardize_names = TRUE
   )
 
-  expect_true(is.factor(labelled$bcardig1))
-  expect_true(all(c("completed without help", "not done") %in% levels(labelled$bcardig1)))
-  expect_type(labelled$bwalk04, "double")
-  expect_equal(labelled$bwalk04, c(12.5, NA_real_))
-  expect_identical(attr(labelled$bwalk04, "label"), "Walking: time in seconds")
+  # standardize_names = TRUE always implies split_wavecode = TRUE, so the
+  # wave code is stripped from the canonical name too.
+  expect_true(is.factor(labelled$cardig1))
+  expect_true(all(c("completed without help", "not done") %in% levels(labelled$cardig1)))
+  expect_type(labelled$walk04, "double")
+  expect_equal(labelled$walk04, c(12.5, NA_real_), ignore_attr = TRUE)
+  expect_identical(attr(labelled$walk04, "label"), "Walking: time in seconds")
+  expect_identical(unname(attr(labelled$walk04, "original_values")), c(12.5, -6))
 
   report <- attr(labelled, "label_report")
   expect_identical(
@@ -108,8 +113,21 @@ test_that("LASA034 supports reshaping, standardization, and manual corrections",
   )
   expect_identical(
     report$standardized_to[report$suffix == "cardig1"],
-    "bcardig1"
+    "cardig1"
   )
+})
+
+test_that("split_wavecode splits the wave code into LASA_wave", {
+  data <- data.frame(RespNr = 1:2, HWALK07 = c(-6, 10))
+  out <- apply_lasa034_labels(data, wave = "H", split_wavecode = TRUE)
+
+  expect_true("LASA_wave" %in% names(out))
+  expect_true(all(out$LASA_wave == "H"))
+  expect_identical(names(out)[[2]], "LASA_wave")
+  expect_true("walk07" %in% names(out))
+  # respnr is matched (to position LASA_wave) but not renamed, since
+  # standardize_names = FALSE.
+  expect_true("RespNr" %in% names(out))
 })
 
 test_that("LASA034 validates its wave and shared arguments", {
