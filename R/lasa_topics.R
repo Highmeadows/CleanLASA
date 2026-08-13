@@ -1221,21 +1221,6 @@ lasa_topics <- function(
   best[[1L]]
 }
 
-.lasa_urls_from_rows <- function(rows) {
-  url_text <- rows$varinfo_url[!is.na(rows$varinfo_url)]
-  urls <- unlist(strsplit(url_text, ";", fixed = TRUE), use.names = FALSE)
-  unique(trimws(urls[nzchar(trimws(urls))]))
-}
-
-.lasa_canonical_varinfo_url <- function(urls, normalized_filecode) {
-  if (length(urls) == 0L || !nzchar(normalized_filecode)) {
-    return(character())
-  }
-
-  expected_basename <- paste0("lasa", normalized_filecode, "_varinfo.pdf")
-  urls[tolower(basename(urls)) == expected_basename]
-}
-
 .lasa_validate_scalar_character <- function(x, argument) {
   if (!is.character(x) || length(x) != 1L || is.na(x) || !nzchar(trimws(x))) {
     stop(

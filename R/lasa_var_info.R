@@ -73,9 +73,7 @@ lasa_var_info <- function(
   }
 
   rstudio_viewer <- getOption("viewer")
-  use_rstudio_viewer <-
-    identical(viewer, "rstudio") #||
-  #(identical(viewer, "auto") && is.function(rstudio_viewer))
+  use_rstudio_viewer <- identical(viewer, "rstudio")
 
   if (use_rstudio_viewer && is.function(rstudio_viewer)) {
     viewer_succeeded <- tryCatch(

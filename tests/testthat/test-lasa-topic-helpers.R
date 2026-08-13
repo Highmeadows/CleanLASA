@@ -44,15 +44,3 @@ test_that("topic matching is case-insensitive, partial, and fuzzy", {
   )
   expect_equal(typo, "Physical activity")
 })
-
-test_that("canonical PDF URLs are preferred for ambiguous file codes", {
-  urls <- c(
-    "https://lasa-vu.nl/uploads/LASA035_headtrauma_varinfo.pdf",
-    "https://lasa-vu.nl/uploads/LASA035_varinfo.pdf"
-  )
-
-  expect_equal(
-    .lasa_canonical_varinfo_url(urls, "035"),
-    urls[[2L]]
-  )
-})
