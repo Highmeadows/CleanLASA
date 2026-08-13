@@ -24,7 +24,7 @@ varinfo_fixture <- data.frame(
 
 test_that("lasa_var_info resolves file-code and filename variations", {
   local_mocked_bindings(
-    lasa_topics = function(...) varinfo_fixture
+    .lasa_topic_index = function(...) varinfo_fixture
   )
 
   expected <- varinfo_fixture$varinfo_url[[1L]]
@@ -48,7 +48,7 @@ test_that("lasa_var_info resolves file-code and filename variations", {
 
 test_that("lasa_var_info resolves exact, incomplete, and fuzzy topic names", {
   local_mocked_bindings(
-    lasa_topics = function(...) varinfo_fixture
+    .lasa_topic_index = function(...) varinfo_fixture
   )
 
   expected <- varinfo_fixture$varinfo_url[[1L]]
@@ -73,7 +73,7 @@ test_that("lasa_var_info resolves exact, incomplete, and fuzzy topic names", {
 
 test_that("lasa_var_info reports missing online documentation", {
   local_mocked_bindings(
-    lasa_topics = function(...) varinfo_fixture
+    .lasa_topic_index = function(...) varinfo_fixture
   )
 
   expect_error(
@@ -91,7 +91,7 @@ test_that("lasa_var_info reports missing online documentation", {
 
 test_that("lasa_var_info rejects an unknown topic or file code", {
   local_mocked_bindings(
-    lasa_topics = function(...) varinfo_fixture
+    .lasa_topic_index = function(...) varinfo_fixture
   )
 
   expect_error(
@@ -109,7 +109,7 @@ test_that("lasa_var_info prefers a canonical PDF for an exact file code", {
   )
 
   local_mocked_bindings(
-    lasa_topics = function(...) fixture
+    .lasa_topic_index = function(...) fixture
   )
 
   expect_equal(

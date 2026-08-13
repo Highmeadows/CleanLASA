@@ -39,10 +39,12 @@ Invisibly returns the HTTPS URL of the matched variable-information
 PDF.
 }
 \description{
-Searches the live \href{https://lasa-vu.nl/en/topic-table/}{LASA topic overview}
+Searches the \href{https://lasa-vu.nl/en/topic-table/}{LASA topic overview}
 and opens the variable-information PDF linked by LASA. The documentation is
 opened from the LASA website; no PDF files are read from or bundled with the
-package.
+package. The underlying topic table is cached the same way as in
+\code{\link[=lasa_topics]{lasa_topics()}} (in-session and on disk); \code{refresh = TRUE} rebuilds it from
+the live site first.
 }
 \details{
 \code{filecode} may be a LASA file code, a LASA data-file name, or a topic name.

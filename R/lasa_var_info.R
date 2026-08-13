@@ -1,9 +1,11 @@
 #' Open LASA variable information
 #'
-#' Searches the live [LASA topic overview](https://lasa-vu.nl/en/topic-table/)
+#' Searches the [LASA topic overview](https://lasa-vu.nl/en/topic-table/)
 #' and opens the variable-information PDF linked by LASA. The documentation is
 #' opened from the LASA website; no PDF files are read from or bundled with the
-#' package.
+#' package. The underlying topic table is cached the same way as in
+#' [lasa_topics()] (in-session and on disk); `refresh = TRUE` rebuilds it from
+#' the live site first.
 #'
 #' `filecode` may be a LASA file code, a LASA data-file name, or a topic name.
 #' File-code matching ignores case, spaces, underscores, hyphens, an optional
@@ -58,14 +60,7 @@ lasa_var_info <- function(
   .lasa_var_info_validate_distance(max_edit_distance)
   .lasa_var_info_validate_flag(refresh, "refresh")
 
-  if (!exists("lasa_topics", mode = "function")) {
-    stop(
-      "`lasa_topics()` is unavailable. Reinstall the current version of CleanLASA.",
-      call. = FALSE
-    )
-  }
-
-  topic_index <- lasa_topics(topic = "all", refresh = refresh)
+  topic_index <- .lasa_topic_index(refresh = refresh)
   varinfo_url <- .lasa_var_info_resolve(
     query = filecode,
     topic_index = topic_index,
@@ -80,7 +75,7 @@ lasa_var_info <- function(
   rstudio_viewer <- getOption("viewer")
   use_rstudio_viewer <-
     identical(viewer, "rstudio") #||
-    #(identical(viewer, "auto") && is.function(rstudio_viewer))
+  #(identical(viewer, "auto") && is.function(rstudio_viewer))
 
   if (use_rstudio_viewer && is.function(rstudio_viewer)) {
     viewer_succeeded <- tryCatch(
