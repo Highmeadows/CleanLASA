@@ -10,7 +10,8 @@ apply_lasa046_labels(
   name_corrections = NULL,
   to_factor = FALSE,
   to_numeric = FALSE,
-  standardize_names = FALSE
+  standardize_names = FALSE,
+  split_wavecode = FALSE
 )
 }
 \arguments{
@@ -48,19 +49,38 @@ and all remaining values are kept as numeric. This takes precedence
 over \code{to_factor} for these variables.}
 
 \item{standardize_names}{Logical. If \code{FALSE} (default), original column
-names in \code{data} are left unchanged. If \code{TRUE}, every successfully
-matched LASA046 column is renamed to its canonical lowercase
-documentation name, such as \code{blphya01}, \code{clphya26}, or \code{klphya50}.
-Renaming happens only after all variables have been matched, so it
-cannot affect matching decisions; the function stops with an
-informative error if renaming would create duplicate column names.}
+names in \code{data} are left unchanged (except for any renaming triggered
+by \code{split_wavecode}, see below). If \code{TRUE}, every successfully matched
+LASA046 column is renamed to its canonical lowercase documentation name
+with the wave code removed, such as \code{lphya01}, \code{lphya26}, or \code{lphya50},
+the \code{"respnr"} column (in any capitalization) is renamed to \code{"respnr"},
+and \code{split_wavecode} is always treated as \code{TRUE} as well (see below),
+regardless of what was passed for \code{split_wavecode}. Renaming happens
+only after all variables have been matched, so it cannot affect
+matching decisions; the function stops with an informative error if
+renaming would create duplicate column names.}
+
+\item{split_wavecode}{Logical. If \code{FALSE} (default) and
+\code{standardize_names = FALSE}, no wave-code splitting occurs. If \code{TRUE},
+every successfully matched LASA046 column is renamed to its canonical
+name with the wave-letter prefix removed (e.g. \code{blphya01} becomes
+\code{lphya01}), and a new \code{"LASA_wave"} column, filled with \code{wave}, is
+inserted right after the \code{"respnr"} column (matched but not renamed
+unless \code{standardize_names = TRUE}; inserted at the front of \code{data} if
+no \code{"respnr"}-like column is found). Always treated as \code{TRUE} when
+\code{standardize_names = TRUE}, even if \code{split_wavecode} itself was left at
+its default.}
 }
 \value{
 \code{data}, with \code{label} and \code{labels} attributes added to every
 matched LASA046 column (transformed to a factor or plain numeric where
-\code{to_factor}/\code{to_numeric} apply), and optionally renamed when
-\code{standardize_names = TRUE}. A variable-name matching audit is attached
-as the generic \code{"label_report"} attribute; retrieve it with
+\code{to_factor}/\code{to_numeric} apply), plus reference \code{labels_original} /
+\code{values_original} attributes preserving the original SPSS value coding
+regardless of that reshaping. Columns are optionally renamed when
+\code{standardize_names = TRUE}, and a new \code{"LASA_wave"} column is added
+after \code{"respnr"} when \code{standardize_names = TRUE} or \verb{split_wavecode =
+TRUE}. A variable-name matching audit is attached as the generic
+\code{"label_report"} attribute; retrieve it with
 \code{\link[=lasa_label_report]{lasa_label_report()}}.
 }
 \description{
@@ -86,13 +106,25 @@ any of these is left unlabelled and recorded as \code{"not found"} in the
 matching audit rather than raising an error, since not every wave's file
 contains every variable.
 
-\code{name_corrections}, \code{to_factor}, \code{to_numeric}, and \code{standardize_names} are
-part of a parameter contract shared by every \verb{apply_*_labels()} function
-in this package (see the header comment in \code{lasa_io.R}). Because
-\code{\link[=read_lasa_sav]{read_lasa_sav()}} forwards these same four arguments automatically when
-dispatching to this function, they can be supplied either directly to
-\code{apply_lasa046_labels()} or through \code{read_lasa_sav()} -- both forms behave
-identically.
+\code{name_corrections}, \code{to_factor}, \code{to_numeric}, \code{standardize_names}, and
+\code{split_wavecode} are part of a parameter contract shared by every
+\verb{apply_*_labels()} function in this package (see the header comment in
+\code{lasa_io.R}). Because \code{\link[=read_lasa_sav]{read_lasa_sav()}} forwards these same five
+arguments automatically when dispatching to this function, they can be
+supplied either directly to \code{apply_lasa046_labels()} or through
+\code{read_lasa_sav()} -- both forms behave identically.
+
+Regardless of \code{to_factor}/\code{to_numeric}, every matched column also keeps
+its original SPSS value coding available as reference attributes --
+\code{attr(x, "labels_original")} (the codebook: value labels keyed by their
+numeric code) and \code{attr(x, "values_original")} (the raw numeric values as
+imported, before any \code{to_factor}/\code{to_numeric} reshaping) -- so R output
+can be cross-checked against another program's (e.g. SPSS) coding no
+matter which shape the column was converted to.
+
+The \code{"respnr"} (respondent number) column, present in essentially every
+LASA data file under inconsistent capitalization (e.g. \code{"RespNr"}), is
+also matched and, when \code{standardize_names = TRUE}, renamed to \code{"respnr"}.
 }
 \examples{
 \dontrun{
@@ -100,11 +132,15 @@ dat_b  <- apply_lasa046_labels(dat_b, wave = "B")
 dat_2b <- apply_lasa046_labels(dat_2b, wave = "2B")
 
 # Convert categorical variables to factors, restore count variables to
-# plain numeric, and use canonical column names:
+# plain numeric, and use canonical column names (this also splits the
+# wave code into its own "LASA_wave" column):
 dat_h <- apply_lasa046_labels(
   dat_h, wave = "H",
   to_factor = TRUE, to_numeric = TRUE, standardize_names = TRUE
 )
+
+# Split the wave code into "LASA_wave" without fully standardizing names:
+dat_2b <- apply_lasa046_labels(dat_2b, wave = "2B", split_wavecode = TRUE)
 
 # Manually correct a mistyped column name:
 dat_3b <- apply_lasa046_labels(
