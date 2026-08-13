@@ -74,14 +74,12 @@ its default.}
 \value{
 \code{data}, with \code{label} and \code{labels} attributes added to every
 matched LASA046 column (transformed to a factor or plain numeric where
-\code{to_factor}/\code{to_numeric} apply), plus reference \code{labels_original} /
-\code{values_original} attributes preserving the original SPSS value coding
+\code{to_factor}/\code{to_numeric} apply), plus reference \code{original_labels} /
+\code{original_values} attributes preserving the original SPSS value coding
 regardless of that reshaping. Columns are optionally renamed when
 \code{standardize_names = TRUE}, and a new \code{"LASA_wave"} column is added
-after \code{"respnr"} when \code{standardize_names = TRUE} or \verb{split_wavecode =
-TRUE}. A variable-name matching audit is attached as the generic
-\code{"label_report"} attribute; retrieve it with
-\code{\link[=lasa_label_report]{lasa_label_report()}}.
+after \code{"respnr"} when \code{standardize_names = TRUE} or \code{split_wavecode = TRUE}. A variable-name matching audit is attached as the generic
+\code{"label_report"} attribute; retrieve it with \code{\link[=lasa_label_report]{lasa_label_report()}}.
 }
 \description{
 Attaches SPSS-style variable labels (\code{attr(x, "label")}) and value labels
@@ -116,8 +114,8 @@ supplied either directly to \code{apply_lasa046_labels()} or through
 
 Regardless of \code{to_factor}/\code{to_numeric}, every matched column also keeps
 its original SPSS value coding available as reference attributes --
-\code{attr(x, "labels_original")} (the codebook: value labels keyed by their
-numeric code) and \code{attr(x, "values_original")} (the raw numeric values as
+\code{attr(x, "original_labels")} (the codebook: value labels keyed by their
+numeric code) and \code{attr(x, "original_values")} (the raw numeric values as
 imported, before any \code{to_factor}/\code{to_numeric} reshaping) -- so R output
 can be cross-checked against another program's (e.g. SPSS) coding no
 matter which shape the column was converted to.

@@ -178,6 +178,389 @@
   data[, new_order, drop = FALSE]
 }
 
+#' Is a codebook's value-label map made up only of missing-reason codes?
+#'
+#' Default numeric-eligibility classifier shared by every `apply_*_labels()`
+#' function's `.lasa_label_engine()` instance (see below). A variable
+#' qualifies for `to_numeric` restoration when every one of its codebook
+#' value labels is a negative code (e.g. -1, -2, -3), which is how this
+#' package's LASA codebooks mark count/continuous variables whose only
+#' labelled values are missing-reason codes.
+#'
+#' Some file-specific implementations use a stricter or looser rule (for
+#' example, requiring the label text itself to look like a missing-reason
+#' label) and supply their own function of the same signature to
+#' `.lasa_label_engine(is_codebook_numeric = ...)` instead of this default.
+#'
+#' @param value_label_map A named numeric vector of SPSS value labels
+#'   (names = label text, values = numeric codes), or `NULL`.
+#'
+#' @return `TRUE` if `value_label_map` is non-empty and every code in it is
+#'   negative; `FALSE` otherwise.
+#' @keywords internal
+.lasa_is_codebook_numeric <- function(value_label_map) {
+  if (is.null(value_label_map) || length(value_label_map) == 0L) {
+    return(FALSE)
+  }
+  codes <- as.numeric(unname(value_label_map))
+  all(!is.na(codes) & is.finite(codes) & codes < 0)
+}
+
+#' Restore a value-labelled variable to plain numeric
+#'
+#' Shared `to_numeric = TRUE` transformation used by every
+#' `apply_*_labels()` function's `.lasa_label_engine()` instance. Strips any
+#' value-label attributes and coerces `x` to an ordinary numeric vector,
+#' replacing every negative observed value with `NA` -- including a
+#' negative code the codebook did not explicitly label.
+#'
+#' @param x A (possibly value-labelled) vector.
+#'
+#' @return A plain numeric vector, the same length as `x`, with negative
+#'   values replaced by `NA_real_`.
+#' @keywords internal
+.lasa_restore_plain_numeric <- function(x) {
+  values <- as.numeric(x)
+  values[!is.na(values) & values < 0] <- NA_real_
+  values
+}
+
+#' Convert a value-labelled variable to a factor
+#'
+#' Shared `to_factor = TRUE` transformation used by every
+#' `apply_*_labels()` function's `.lasa_label_engine()` instance. Converts
+#' `x` to a factor using `value_label_map`'s names as level text for coded
+#' values; an observed value with no codebook label keeps its own numeric
+#' code (as text) as its level, rather than becoming `NA`. Colliding level
+#' text (e.g. two different codes that happen to share a label) is
+#' disambiguated by appending the numeric code in brackets.
+#'
+#' @param x A (possibly value-labelled) vector.
+#' @param value_label_map A named numeric vector of SPSS value labels
+#'   (names = label text, values = numeric codes).
+#'
+#' @return A factor the same length as `x`.
+#' @keywords internal
+.lasa_convert_to_labelled_factor <- function(x, value_label_map) {
+  values <- as.numeric(x)
+  label_codes <- as.numeric(unname(value_label_map))
+  label_text <- names(value_label_map)
+
+  # Guard against an (unexpected) repeated code in the value-label vector,
+  # keeping only its first definition so factor() doesn't error out.
+  keep <- !duplicated(label_codes)
+  label_codes <- label_codes[keep]
+  label_text <- label_text[keep]
+
+  observed_codes <- unique(values[!is.na(values)])
+  level_codes <- sort(unique(c(label_codes, observed_codes)))
+
+  level_text <- vapply(
+    level_codes,
+    function(code) {
+      i <- match(code, label_codes)
+      if (!is.na(i)) label_text[[i]] else as.character(code)
+    },
+    character(1)
+  )
+
+  # factor() would silently merge two distinct codes if their text happened
+  # to collide. Disambiguate defensively so no numeric value is ever lost.
+  if (anyDuplicated(level_text)) {
+    collided <- unique(level_text[duplicated(level_text) | duplicated(level_text, fromLast = TRUE)])
+    for (txt in collided) {
+      i <- which(level_text == txt)
+      level_text[i] <- paste0(txt, " [", level_codes[i], "]")
+    }
+  }
+
+  factor(values, levels = level_codes, labels = level_text)
+}
+
+#' Build a shared column-matching / labelling / reshaping engine
+#'
+#' Internal constructor used by every `apply_*_labels()` function in this
+#' package (see [apply_lasa046_labels()] for the canonical implementation).
+#' Centralizes the generic, file-independent parts of a LASA labelling
+#' function -- column matching, value/variable-label attachment, the
+#' `to_factor`/`to_numeric` reshape, original-value-coding preservation,
+#' the `standardize_names`/`split_wavecode` renaming and `"LASA_wave"`
+#' column insertion, `"respnr"` standardization, and the `"label_report"`
+#' matching audit -- so file-specific `apply_*_labels()` implementations
+#' only need to supply their own wave-specific variable names, labels, and
+#' value-label maps.
+#'
+#' A typical file-specific implementation looks like:
+#'
+#' ```
+#' apply_lasaXXX_labels <- function(data, wave, name_corrections = NULL,
+#'                                   to_factor = FALSE, to_numeric = FALSE,
+#'                                   standardize_names = FALSE,
+#'                                   split_wavecode = FALSE) {
+#'   wave <- toupper(wave)
+#'   prefix <- ...                       # derive from wave, file-specific
+#'
+#'   engine <- .lasa_label_engine(
+#'     data = data, wave = wave, prefix = prefix,
+#'     fn_name = "apply_lasaXXX_labels",
+#'     name_corrections = name_corrections, to_factor = to_factor,
+#'     to_numeric = to_numeric, standardize_names = standardize_names,
+#'     split_wavecode = split_wavecode
+#'   )
+#'   label_variable <- engine$label_variable
+#'
+#'   label_variable("suffix1", "Variable label", value_label_map)
+#'   ...                                  # remaining wave-specific variables
+#'
+#'   engine$finalize()
+#' }
+#' ```
+#'
+#' @param data A data frame or tibble to label.
+#' @param wave Character scalar: the LASA wave code (already upper-cased by
+#'   the caller), used to fill the `"LASA_wave"` column when
+#'   `split_wavecode` applies.
+#' @param prefix Character scalar: the wave-specific lowercase variable-name
+#'   prefix (e.g. `"b"`), used to build each variable's expected column
+#'   name as `paste0(prefix, suffix)`.
+#' @param fn_name Character scalar: the calling function's name (e.g.
+#'   `"apply_lasa046_labels"`), used in error messages.
+#' @param name_corrections,to_factor,to_numeric,standardize_names,split_wavecode
+#'   The five shared reshaping arguments documented at the top of this file.
+#'   Already validated by the caller.
+#' @param is_codebook_numeric Function of one argument (a value-label map)
+#'   returning `TRUE` when a variable so labelled qualifies for `to_numeric`
+#'   restoration. Defaults to [.lasa_is_codebook_numeric()]; a file-specific
+#'   implementation may supply a stricter/looser rule.
+#'
+#' @return A list with two functions:
+#'   * `label_variable(suffix, variable_label, value_label_map = NULL, force_numeric = NULL)` --
+#'     matches, labels, and (if requested) reshapes one column. `force_numeric`
+#'     overrides `is_codebook_numeric()`'s auto-detection for this call when
+#'     not `NULL` (`TRUE`/`FALSE`), for variables whose numeric/categorical
+#'     nature cannot be inferred from their value-label map alone.
+#'   * `finalize()` -- standardizes `"respnr"`, applies queued renames,
+#'     inserts `"LASA_wave"` when applicable, attaches the `"label_report"`
+#'     attribute, and returns the finished data. Call this once, in place of
+#'     a hand-written `finalize_labelled_data()`.
+#' @keywords internal
+.lasa_label_engine <- function(data,
+                               wave,
+                               prefix,
+                               fn_name,
+                               name_corrections = NULL,
+                               to_factor = FALSE,
+                               to_numeric = FALSE,
+                               standardize_names = FALSE,
+                               split_wavecode = FALSE,
+                               is_codebook_numeric = .lasa_is_codebook_numeric) {
+  # standardize_names always implies split_wavecode, per the shared
+  # reshaping-argument contract documented at the top of this file: whenever
+  # names are standardized, the wave code is also split into its own
+  # "LASA_wave" column and stripped from matched variable names.
+  effective_split_wavecode <- isTRUE(standardize_names) || isTRUE(split_wavecode)
+
+  # Lower-cased lookup keys for name_corrections, e.g. c(lphya08 = "BLPYA08")
+  # -> correction_keys = "lphya08". Empty when no corrections were supplied.
+  correction_keys <- if (is.null(name_corrections)) {
+    character(0)
+  } else {
+    tolower(names(name_corrections))
+  }
+
+  # Every row logged here becomes one line of the "label_report" attribute
+  # returned by lasa_label_report(). `rename_plan` collects the (old name ->
+  # canonical name) pairs to apply at the very end when renaming applies, so
+  # renaming never interferes with matching.
+  report_rows <- list()
+  rename_plan <- character(0)
+
+  record_match_result <- function(suffix, expected_name, matched_name, method) {
+    report_rows[[length(report_rows) + 1L]] <<- data.frame(
+      suffix = suffix,
+      expected_name = expected_name,
+      matched_name = if (is.na(matched_name)) NA_character_ else matched_name,
+      method = method,
+      stringsAsFactors = FALSE
+    )
+    invisible(NULL)
+  }
+
+  # Looks up a single LASA column, attaches its variable/value labels,
+  # applies the to_factor / to_numeric transformation (if requested),
+  # preserves the original SPSS value coding as reference attributes, and
+  # queues it for renaming (if standardize_names/split_wavecode apply).
+  # Matching is tried, in order: (1) an explicit name_corrections override,
+  # (2) an exact (case-sensitive) name match, (3) a case-insensitive name
+  # match. A variable that cannot be matched by any of these is left
+  # untouched and recorded as "not found" -- this is expected behaviour,
+  # since not every wave's file contains every documented variable.
+  label_variable <- function(suffix,
+                             variable_label,
+                             value_label_map = NULL,
+                             force_numeric = NULL) {
+    expected_name <- paste0(prefix, suffix)
+
+    if (tolower(suffix) %in% correction_keys) {
+      # An explicit manual correction takes priority over automatic matching.
+      actual_name <- name_corrections[[match(tolower(suffix), correction_keys)]]
+      idx <- match(tolower(actual_name), tolower(names(data)))
+
+      if (is.na(idx)) {
+        record_match_result(suffix, expected_name, matched_name = actual_name, method = "manual_not_found")
+        return(invisible(NULL))
+      }
+      method <- "manual correction"
+    } else {
+      idx <- match(expected_name, names(data))
+
+      if (!is.na(idx)) {
+        method <- "exact"
+      } else {
+        idx <- match(tolower(expected_name), tolower(names(data)))
+
+        if (!is.na(idx)) {
+          method <- "case-insensitive exact"
+        } else {
+          record_match_result(suffix, expected_name, matched_name = NA_character_, method = "not found")
+          return(invisible(NULL))
+        }
+      }
+    }
+
+    matched_name <- names(data)[idx]
+    x <- data[[idx]]
+
+    # Capture the raw SPSS-coded values exactly as imported, before any
+    # to_factor/to_numeric reshaping below, so the original coding can
+    # always be recovered afterwards regardless of the requested shape.
+    original_values <- suppressWarnings(as.numeric(x))
+
+    attr(x, "label") <- variable_label
+
+    if (!is.null(value_label_map)) {
+      attr(x, "labels") <- value_label_map
+    }
+
+    # Reshape the variable if requested. to_numeric takes precedence: a
+    # variable that qualifies as numeric (whether via force_numeric or
+    # is_codebook_numeric()) is always restored to plain numeric, never
+    # converted to a factor.
+    numeric_eligible <- if (!is.null(force_numeric)) {
+      isTRUE(force_numeric)
+    } else {
+      is_codebook_numeric(value_label_map)
+    }
+
+    if (isTRUE(to_numeric) && numeric_eligible) {
+      x <- .lasa_restore_plain_numeric(x)
+      attr(x, "label") <- variable_label
+    } else if (isTRUE(to_factor) && !is.null(value_label_map) && length(value_label_map) > 0L) {
+      x <- .lasa_convert_to_labelled_factor(x, value_label_map)
+      attr(x, "label") <- variable_label
+    }
+
+    # Preserve the original SPSS value coding as reference attributes,
+    # regardless of the shape produced above (imported as-is, to_numeric, or
+    # to_factor), so R output can always be cross-checked against another
+    # program's (e.g. SPSS) original coding.
+    if (!is.null(value_label_map)) {
+      attr(x, "original_labels") <- value_label_map
+    }
+    attr(x, "original_values") <- original_values
+
+    data[[idx]] <<- x
+
+    record_match_result(suffix, expected_name, matched_name = matched_name, method = method)
+
+    if (isTRUE(effective_split_wavecode)) {
+      # split_wavecode (directly requested, or implied by standardize_names)
+      # renames to the bare suffix, with the wave-letter prefix removed.
+      rename_plan[[matched_name]] <<- tolower(suffix)
+    }
+
+    invisible(NULL)
+  }
+
+  # Assembles the matching audit, standardizes "respnr", applies the queued
+  # column renames (if standardize_names/split_wavecode apply), inserts the
+  # "LASA_wave" column (if split_wavecode applies), attaches the audit as
+  # the generic "label_report" attribute, and returns the finished data.
+  finalize <- function() {
+    # respnr is common to essentially every LASA file and is not part of
+    # the wave-prefixed variable list a file-specific function supplies, so
+    # it is matched (and, when standardize_names = TRUE, renamed) here.
+    respnr_result <- .lasa_standardize_respnr(data, standardize_names = standardize_names)
+    data <<- respnr_result$data
+    record_match_result(
+      "respnr", "respnr",
+      matched_name = respnr_result$matched_name,
+      method = respnr_result$method
+    )
+
+    label_report <- if (length(report_rows) > 0L) {
+      do.call(rbind, report_rows)
+    } else {
+      data.frame(
+        suffix = character(0), expected_name = character(0),
+        matched_name = character(0), method = character(0),
+        stringsAsFactors = FALSE
+      )
+    }
+
+    if (isTRUE(effective_split_wavecode) && length(rename_plan) > 0L) {
+      old_names <- names(rename_plan)
+      new_names <- unname(rename_plan)
+
+      # Duplicate targets among the renamed columns themselves, or a
+      # renamed column colliding with an existing column that is not being
+      # renamed, are both treated as conflicts.
+      unchanged_names <- names(data)[!names(data) %in% old_names]
+      conflicting_names <- intersect(new_names, unchanged_names)
+      duplicate_targets <- unique(new_names[duplicated(new_names)])
+      conflicts <- unique(c(conflicting_names, duplicate_targets))
+
+      if (length(conflicts) > 0L) {
+        stop(
+          "standardize_names/split_wavecode = TRUE would create duplicate ",
+          "column names: ", paste(conflicts, collapse = ", "),
+          ". Resolve the conflict with 'name_corrections' or by renaming ",
+          "the source column(s) before calling ", fn_name, "().",
+          call. = FALSE
+        )
+      }
+
+      idx <- match(old_names, names(data))
+      names(data)[idx] <<- new_names
+
+      label_report$standardized_to <- new_names[match(label_report$matched_name, old_names)]
+    } else {
+      label_report$standardized_to <- NA_character_
+    }
+
+    if (isTRUE(standardize_names) && !is.na(respnr_result$matched_name)) {
+      label_report$standardized_to[label_report$suffix == "respnr"] <- respnr_result$respnr_name
+    }
+
+    # split_wavecode (directly requested, or implied by standardize_names)
+    # adds the generic "LASA_wave" column right after "respnr".
+    if (isTRUE(effective_split_wavecode)) {
+      data <<- .lasa_insert_wave_column(data, wave = wave, respnr_name = respnr_result$respnr_name)
+    }
+
+    rownames(label_report) <- NULL
+    attr(data, "label_report") <- label_report
+    # Attach the wave directly, so this provenance attribute is available
+    # even when a file-specific apply_*_labels() function is called on its
+    # own, without going through read_lasa_sav() (which sets the same
+    # attribute again, redundantly but harmlessly, once dispatching).
+    attr(data, "LASA_wave") <- wave
+    data
+  }
+
+  list(label_variable = label_variable, finalize = finalize)
+}
+
 #' Parse a LASA data-file name
 #'
 #' Internal helper used by [read_lasa_sav()] to derive the LASA wave and file

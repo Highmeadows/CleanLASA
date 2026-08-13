@@ -48,7 +48,8 @@ test_that("wave B receives its four-category coding and item subset", {
   expect_null(attr(out$BADL2A, "label"))
 
   report <- attr(out, "label_report")
-  expect_equal(nrow(report), 12L)
+  # +1 for the always-recorded "respnr" audit row (see .lasa_label_engine()).
+  expect_equal(nrow(report), 13L)
   expect_false("badl2a" %in% report$expected_name)
 })
 
@@ -96,10 +97,12 @@ test_that("post-B waves receive the five-category coding", {
 })
 
 test_that("each wave exposes the documented variable layout", {
+  # +1 to every count for the always-recorded "respnr" audit row (see
+  # .lasa_label_engine()).
   expected_counts <- c(
-    B = 12L, C = 30L, D = 30L, E = 30L, `2B` = 35L,
-    F = 35L, G = 35L, H = 28L, `3B` = 28L, MB = 14L,
-    I = 28L, J = 28L, K = 28L
+    B = 13L, C = 31L, D = 31L, E = 31L, `2B` = 36L,
+    F = 36L, G = 36L, H = 29L, `3B` = 29L, MB = 15L,
+    I = 29L, J = 29L, K = 29L
   )
 
   for (wave in names(expected_counts)) {
@@ -119,7 +122,8 @@ test_that("each wave exposes the documented variable layout", {
     apply_lasa030_labels(data.frame(respnr = 1), wave = "MB"),
     "label_report"
   )
-  expect_true(all(grepl("^badl[1-7][ab]$", mb_report$expected_name)))
+  mb_adl_names <- mb_report$expected_name[mb_report$suffix != "respnr"]
+  expect_true(all(grepl("^badl[1-7][ab]$", mb_adl_names)))
 })
 
 test_that("factor conversion retains undocumented observed values", {
@@ -147,13 +151,49 @@ test_that("manual corrections and standardized names are audited", {
     standardize_names = TRUE
   )
 
-  expect_true("badl4a" %in% names(out))
-  expect_identical(attr(out$badl4a, "label"), "Toenails: cutting own")
+  # standardize_names = TRUE always implies split_wavecode = TRUE, so the
+  # wave code is stripped from the canonical name too.
+  expect_true("adl4a" %in% names(out))
+  expect_identical(attr(out$adl4a, "label"), "Toenails: cutting own")
 
   row <- attr(out, "label_report")
   row <- row[row$suffix == "adl4a", , drop = FALSE]
   expect_identical(row$method, "manual correction")
-  expect_identical(row$standardized_to, "badl4a")
+  expect_identical(row$standardized_to, "adl4a")
+})
+
+test_that("original SPSS value coding survives to_numeric/to_factor reshaping", {
+  data <- data.frame(FADL1A = c(-5, 1, 5))
+
+  out_numeric <- apply_lasa030_labels(data, wave = "F", to_numeric = TRUE)
+  expect_identical(unname(attr(out_numeric$FADL1A, "original_values")), c(-5, 1, 5))
+  expect_false(is.null(attr(out_numeric$FADL1A, "original_labels")))
+
+  out_factor <- apply_lasa030_labels(data, wave = "F", to_factor = TRUE)
+  expect_identical(unname(attr(out_factor$FADL1A, "original_values")), c(-5, 1, 5))
+  expect_false(is.null(attr(out_factor$FADL1A, "original_labels")))
+})
+
+test_that("split_wavecode splits the wave code into LASA_wave", {
+  data <- data.frame(RespNr = 1:2, `2BADL1A` = c(1, 4), check.names = FALSE)
+  out <- apply_lasa030_labels(data, wave = "2B", split_wavecode = TRUE)
+
+  expect_true("LASA_wave" %in% names(out))
+  expect_true(all(out$LASA_wave == "2B"))
+  expect_identical(names(out)[[2]], "LASA_wave")
+  # respnr is matched (to position LASA_wave) but not renamed, since
+  # standardize_names = FALSE.
+  expect_true("RespNr" %in% names(out))
+})
+
+test_that("standardize_names standardizes respnr and adds LASA_wave", {
+  data <- data.frame(RespNr = 1:2, BADL1A = c(1, 4))
+  out <- apply_lasa030_labels(data, wave = "B", standardize_names = TRUE)
+
+  expect_true("respnr" %in% names(out))
+  expect_true("LASA_wave" %in% names(out))
+  expect_identical(names(out)[[2]], "LASA_wave")
+  expect_true(all(out$LASA_wave == "B"))
 })
 
 test_that("to_numeric does not strip categorical LASA030 labels", {

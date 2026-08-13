@@ -10,18 +10,18 @@ lasa046_fixture <- function() {
 
 test_that("original SPSS value coding is preserved regardless of reshaping", {
   as_is <- apply_lasa046_labels(lasa046_fixture(), wave = "B")
-  expect_identical(unname(attr(as_is$BLPHYA07, "values_original")), c(1, 2, -1))
-  expect_false(is.null(attr(as_is$BLPHYA07, "labels_original")))
+  expect_identical(unname(attr(as_is$BLPHYA07, "original_values")), c(1, 2, -1))
+  expect_false(is.null(attr(as_is$BLPHYA07, "original_labels")))
 
   numeric_shaped <- apply_lasa046_labels(lasa046_fixture(), wave = "B", to_numeric = TRUE)
   expect_true(is.na(numeric_shaped$BLPHYA08[[1]]))
-  expect_identical(unname(attr(numeric_shaped$BLPHYA08, "values_original")), c(-1, 5, 10))
-  expect_false(is.null(attr(numeric_shaped$BLPHYA08, "labels_original")))
+  expect_identical(unname(attr(numeric_shaped$BLPHYA08, "original_values")), c(-1, 5, 10))
+  expect_false(is.null(attr(numeric_shaped$BLPHYA08, "original_labels")))
 
   factor_shaped <- apply_lasa046_labels(lasa046_fixture(), wave = "B", to_factor = TRUE)
   expect_true(is.factor(factor_shaped$BLPHYA01))
-  expect_identical(unname(attr(factor_shaped$BLPHYA01, "values_original")), c(1, 4, 2))
-  expect_false(is.null(attr(factor_shaped$BLPHYA01, "labels_original")))
+  expect_identical(unname(attr(factor_shaped$BLPHYA01, "original_values")), c(1, 4, 2))
+  expect_false(is.null(attr(factor_shaped$BLPHYA01, "original_labels")))
 })
 
 test_that("standardize_names always implies split_wavecode", {

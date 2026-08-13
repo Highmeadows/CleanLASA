@@ -26,6 +26,12 @@
 #' function's scope. The `bospec1`-`bospec6` items are included for wave 2B,
 #' because the codebook explicitly places them in LAS2B014 for that wave.
 #'
+#' Regardless of `to_factor`/`to_numeric`, every matched column also keeps
+#' its original SPSS value coding available as reference attributes --
+#' `attr(x, "original_labels")` and `attr(x, "original_values")` -- and the
+#' `"respnr"` column (in any capitalization) is matched and, when
+#' `standardize_names = TRUE`, renamed to `"respnr"`.
+#'
 #' @param data A data frame or tibble imported from a LASA014 `.sav` file.
 #' @param wave Character scalar identifying the LASA wave, matched
 #'   case-insensitively. One of `"B"`, `"C"`, `"D"`, `"E"`, `"2B"`, `"F"`,
@@ -40,12 +46,26 @@
 #' @param to_numeric Logical. If `TRUE`, count/continuous variables whose
 #'   labels consist only of negative missing-reason codes are converted to
 #'   plain numeric and negative values are replaced with `NA`. This takes
-#'   precedence over `to_factor` for those variables.
+#'   precedence over `to_factor` for those variables. LASA014's "constructed"
+#'   variables (e.g. `fdoorc`, `nroomsc`) use negative codes for substantive
+#'   categories rather than missing reasons, so they are never restored to
+#'   numeric even when all their codes are negative.
 #' @param standardize_names Logical. If `TRUE`, matched columns are renamed to
-#'   their canonical lowercase LASA014 documentation names.
+#'   their canonical lowercase LASA014 documentation names with the wave code
+#'   removed, `"respnr"` (in any capitalization) is renamed to `"respnr"`,
+#'   and `split_wavecode` is always treated as `TRUE` as well, regardless of
+#'   what was passed for `split_wavecode`.
+#' @param split_wavecode Logical. If `TRUE`, matched columns are renamed with
+#'   the wave-letter prefix removed (e.g. `bhindep` becomes `hindep`), and a
+#'   new `"LASA_wave"` column, filled with `wave`, is inserted right after
+#'   `"respnr"`. Always treated as `TRUE` when `standardize_names = TRUE`.
 #'
 #' @return `data`, with variable/value labels applied and a generic
-#'   `"label_report"` attribute containing the name-matching audit.
+#'   `"label_report"` attribute containing the name-matching audit, plus
+#'   reference `original_labels`/`original_values` attributes preserving the
+#'   original SPSS value coding regardless of `to_factor`/`to_numeric`
+#'   reshaping. A new `"LASA_wave"` column is added after `"respnr"` when
+#'   `standardize_names = TRUE` or `split_wavecode = TRUE`.
 #'
 #' @seealso [apply_lasa046_labels()], [read_lasa_sav()], [lasa_label_report()]
 #' @export
@@ -64,7 +84,8 @@ apply_lasa014_labels <- function(data,
                                  name_corrections = NULL,
                                  to_factor = FALSE,
                                  to_numeric = FALSE,
-                                 standardize_names = FALSE) {
+                                 standardize_names = FALSE,
+                                 split_wavecode = FALSE) {
 
   wave <- toupper(wave)
   wave_prefix <- c(
@@ -85,13 +106,39 @@ apply_lasa014_labels <- function(data,
   .lasa_assert_scalar_logical(to_factor, "to_factor")
   .lasa_assert_scalar_logical(to_numeric, "to_numeric")
   .lasa_assert_scalar_logical(standardize_names, "standardize_names")
+  .lasa_assert_scalar_logical(split_wavecode, "split_wavecode")
   .lasa_assert_name_corrections(name_corrections)
 
-  correction_keys <- if (is.null(name_corrections)) {
-    character(0)
-  } else {
-    tolower(names(name_corrections))
+  # LASA014 uses negative codes for both missing-reason labels (e.g. "na,
+  # wrong skip") *and* substantive "constructed/derived" categories (e.g.
+  # "monastery" = -3, "institution" = -2, "unknown" = -1 for the *c-suffixed
+  # variables). Unlike the package's default is_codebook_numeric() rule (all
+  # codes negative), LASA014 additionally requires the label text itself to
+  # look like a missing-reason label, so a "constructed" categorical
+  # variable is never mistaken for a to_numeric-eligible count variable.
+  is_codebook_numeric <- function(value_label_map) {
+    if (is.null(value_label_map) || length(value_label_map) == 0L) {
+      return(FALSE)
+    }
+    codes <- as.numeric(unname(value_label_map))
+    labels <- tolower(names(value_label_map))
+    all(!is.na(codes) & is.finite(codes) & codes < 0) &&
+      all(grepl("^(na\\b|wrong skip\\b)", labels))
   }
+
+  engine <- .lasa_label_engine(
+    data = data,
+    wave = wave,
+    prefix = prefix,
+    fn_name = "apply_lasa014_labels",
+    name_corrections = name_corrections,
+    to_factor = to_factor,
+    to_numeric = to_numeric,
+    standardize_names = standardize_names,
+    split_wavecode = split_wavecode,
+    is_codebook_numeric = is_codebook_numeric
+  )
+  label_variable <- engine$label_variable
 
   value_labels <- function(...) c(...)
 
@@ -226,164 +273,6 @@ apply_lasa014_labels <- function(data,
     no = 3
   )
 
-  is_codebook_numeric <- function(value_label_map) {
-    if (is.null(value_label_map) || length(value_label_map) == 0L) {
-      return(FALSE)
-    }
-    codes <- as.numeric(unname(value_label_map))
-    labels <- tolower(names(value_label_map))
-    all(!is.na(codes) & is.finite(codes) & codes < 0) &&
-      all(grepl("^(na\\b|wrong skip\\b)", labels))
-  }
-
-  restore_plain_numeric <- function(x) {
-    values <- as.numeric(x)
-    values[!is.na(values) & values < 0] <- NA_real_
-    values
-  }
-
-  convert_to_labelled_factor <- function(x, value_label_map) {
-    values <- as.numeric(x)
-    label_codes <- as.numeric(unname(value_label_map))
-    label_text <- names(value_label_map)
-    keep <- !duplicated(label_codes)
-    label_codes <- label_codes[keep]
-    label_text <- label_text[keep]
-    observed_codes <- unique(values[!is.na(values)])
-    level_codes <- sort(unique(c(label_codes, observed_codes)))
-    level_text <- vapply(
-      level_codes,
-      function(code) {
-        i <- match(code, label_codes)
-        if (!is.na(i)) label_text[[i]] else as.character(code)
-      },
-      character(1)
-    )
-    if (anyDuplicated(level_text)) {
-      collided <- unique(level_text[
-        duplicated(level_text) | duplicated(level_text, fromLast = TRUE)
-      ])
-      for (txt in collided) {
-        i <- which(level_text == txt)
-        level_text[i] <- paste0(txt, " [", level_codes[i], "]")
-      }
-    }
-    factor(values, levels = level_codes, labels = level_text)
-  }
-
-  report_rows <- list()
-  rename_plan <- character(0)
-
-  record_match_result <- function(suffix, expected_name, matched_name, method) {
-    report_rows[[length(report_rows) + 1L]] <<- data.frame(
-      suffix = suffix,
-      expected_name = expected_name,
-      matched_name = if (is.na(matched_name)) NA_character_ else matched_name,
-      method = method,
-      stringsAsFactors = FALSE
-    )
-    invisible(NULL)
-  }
-
-  label_variable <- function(suffix, variable_label, value_label_map = NULL) {
-    expected_name <- paste0(prefix, suffix)
-
-    if (tolower(suffix) %in% correction_keys) {
-      actual_name <- name_corrections[[match(tolower(suffix), correction_keys)]]
-      idx <- match(tolower(actual_name), tolower(names(data)))
-      if (is.na(idx)) {
-        record_match_result(
-          suffix, expected_name, actual_name, "manual_not_found"
-        )
-        return(invisible(NULL))
-      }
-      method <- "manual correction"
-    } else {
-      idx <- match(expected_name, names(data))
-      if (!is.na(idx)) {
-        method <- "exact"
-      } else {
-        idx <- match(tolower(expected_name), tolower(names(data)))
-        if (!is.na(idx)) {
-          method <- "case-insensitive exact"
-        } else {
-          record_match_result(
-            suffix, expected_name, NA_character_, "not found"
-          )
-          return(invisible(NULL))
-        }
-      }
-    }
-
-    matched_name <- names(data)[idx]
-    x <- data[[idx]]
-    attr(x, "label") <- variable_label
-    if (!is.null(value_label_map)) {
-      attr(x, "labels") <- value_label_map
-    }
-
-    if (isTRUE(to_numeric) && is_codebook_numeric(value_label_map)) {
-      x <- restore_plain_numeric(x)
-      attr(x, "label") <- variable_label
-    } else if (
-      isTRUE(to_factor) &&
-        !is.null(value_label_map) &&
-        length(value_label_map) > 0L
-    ) {
-      x <- convert_to_labelled_factor(x, value_label_map)
-      attr(x, "label") <- variable_label
-    }
-    data[[idx]] <<- x
-
-    record_match_result(
-      suffix, expected_name, matched_name = matched_name, method = method
-    )
-    if (isTRUE(standardize_names)) {
-      rename_plan[[matched_name]] <<- tolower(expected_name)
-    }
-    invisible(NULL)
-  }
-
-  finalize_labelled_data <- function() {
-    label_report <- if (length(report_rows) > 0L) {
-      do.call(rbind, report_rows)
-    } else {
-      data.frame(
-        suffix = character(0),
-        expected_name = character(0),
-        matched_name = character(0),
-        method = character(0),
-        stringsAsFactors = FALSE
-      )
-    }
-
-    if (isTRUE(standardize_names) && length(rename_plan) > 0L) {
-      old_names <- names(rename_plan)
-      new_names <- unname(rename_plan)
-      if (anyDuplicated(new_names)) {
-        duplicated_names <- unique(new_names[duplicated(new_names)])
-        stop(
-          "standardize_names = TRUE would create duplicate column names: ",
-          paste(duplicated_names, collapse = ", "),
-          ". Resolve the conflict with 'name_corrections' or rename the ",
-          "source column(s) before calling apply_lasa014_labels().",
-          call. = FALSE
-        )
-      }
-      idx <- match(old_names, names(data))
-      names(data)[idx] <- new_names
-      label_report$standardized_to <- new_names[
-        match(label_report$matched_name, old_names)
-      ]
-    } else {
-      label_report$standardized_to <- NA_character_
-    }
-
-    rownames(label_report) <- NULL
-    attr(data, "label_report") <- label_report
-    data
-  }
-
   label_many <- function(definitions, value_label_map) {
     for (suffix in names(definitions)) {
       label_variable(suffix, definitions[[suffix]], value_label_map)
@@ -517,7 +406,7 @@ apply_lasa014_labels <- function(data,
         value_labels(`not mentioned` = 0, mentioned = 1)
       )
     )
-    return(finalize_labelled_data())
+    return(engine$finalize())
   }
 
   # ---- LASAC014 through LASAG014 ------------------------------------------
@@ -629,7 +518,7 @@ apply_lasa014_labels <- function(data,
       "satis", "How (dis)satisfied with housing condition",
       c(missing_codes(code2 = "na, routing"), satisfaction_labels)
     )
-    return(finalize_labelled_data())
+    return(engine$finalize())
   }
 
   # ---- LAS2B014 ------------------------------------------------------------
@@ -714,7 +603,7 @@ apply_lasa014_labels <- function(data,
       "satis", "How (dis)satisfied with housing condition",
       c(missing_codes(code2 = see("hindep")), satisfaction_labels)
     )
-    return(finalize_labelled_data())
+    return(engine$finalize())
   }
 
   # ---- LASAH014 ------------------------------------------------------------
@@ -779,7 +668,7 @@ apply_lasa014_labels <- function(data,
       "satis", "How (dis)satisfied with housing condition",
       c(missing_codes(code2 = "na, routing"), satisfaction_labels)
     )
-    return(finalize_labelled_data())
+    return(engine$finalize())
   }
 
   # ---- LAS3B014 ------------------------------------------------------------
@@ -817,7 +706,7 @@ apply_lasa014_labels <- function(data,
       "satis", "How (dis)satisfied with housing condition",
       c(missing_codes(code2 = NULL), satisfaction_labels)
     )
-    return(finalize_labelled_data())
+    return(engine$finalize())
   }
 
   # ---- LASMB014 ------------------------------------------------------------
@@ -837,7 +726,7 @@ apply_lasa014_labels <- function(data,
         )
       )
     )
-    return(finalize_labelled_data())
+    return(engine$finalize())
   }
 
   # ---- LASAI014 through LASAK014 ------------------------------------------
@@ -905,7 +794,7 @@ apply_lasa014_labels <- function(data,
     "satis", "How (dis)satisfied with housing condition",
     c(missing_codes(code2 = "na, routing"), satisfaction_labels)
   )
-  finalize_labelled_data()
+  engine$finalize()
 }
 
 # Internal metadata helper for the compact H/3B/I/J/K special-adjustment

@@ -14,6 +14,12 @@
 #' case-insensitive exact match. Variables that cannot be matched are left
 #' unchanged and recorded in the `"label_report"` attribute.
 #'
+#' Regardless of `to_factor`/`to_numeric`, every matched column also keeps
+#' its original SPSS value coding available as reference attributes --
+#' `attr(x, "original_labels")` and `attr(x, "original_values")` -- and the
+#' `"respnr"` column (in any capitalization) is matched and, when
+#' `standardize_names = TRUE`, renamed to `"respnr"`.
+#'
 #' @param data A data frame or tibble imported from a LASA272 `.sav` file,
 #'   containing wave-prefixed variables such as `cfadied`, `dfadied`, or
 #'   `kfadied`.
@@ -36,12 +42,26 @@
 #'   all include substantive response codes, so this option normally leaves
 #'   them labelled (or converts them to factors when `to_factor = TRUE`).
 #' @param standardize_names Logical. If `FALSE` (default), original column
-#'   names are retained. If `TRUE`, matched columns are renamed to their
-#'   canonical lowercase LASA272 names, such as `cfadied` or `killpart`.
+#'   names are retained (except for any renaming triggered by
+#'   `split_wavecode`, see below). If `TRUE`, matched columns are renamed to
+#'   their canonical lowercase LASA272 names with the wave code removed,
+#'   such as `fadied` or `killpart`, `"respnr"` (in any capitalization) is
+#'   renamed to `"respnr"`, and `split_wavecode` is always treated as `TRUE`
+#'   as well, regardless of what was passed for `split_wavecode`.
+#' @param split_wavecode Logical. If `FALSE` (default) and
+#'   `standardize_names = FALSE`, no wave-code splitting occurs. If `TRUE`,
+#'   matched columns are renamed with the wave-letter prefix removed (e.g.
+#'   `cfadied` becomes `fadied`), and a new `"LASA_wave"` column, filled with
+#'   `wave`, is inserted right after `"respnr"`. Always treated as `TRUE`
+#'   when `standardize_names = TRUE`.
 #'
 #' @return `data`, with variable and value labels applied to matched LASA272
-#'   columns, optional factor conversion and name standardization, and a
-#'   `"label_report"` attribute retrievable with [lasa_label_report()].
+#'   columns, optional factor conversion and name standardization, plus
+#'   reference `original_labels`/`original_values` attributes preserving the
+#'   original SPSS value coding regardless of that reshaping. A new
+#'   `"LASA_wave"` column is added after `"respnr"` when `standardize_names =
+#'   TRUE` or `split_wavecode = TRUE`. A `"label_report"` attribute is
+#'   retrievable with [lasa_label_report()].
 #'
 #' @seealso [lasa_label_report()], [read_lasa_sav()],
 #'   [apply_lasa046_labels()]
@@ -65,14 +85,16 @@ apply_lasa272_labels <- function(data,
                                  name_corrections = NULL,
                                  to_factor = FALSE,
                                  to_numeric = FALSE,
-                                 standardize_names = FALSE) {
+                                 standardize_names = FALSE,
+                                 split_wavecode = FALSE) {
   wave <- toupper(wave)
   supported_waves <- c("C", "D", "E", "F", "G", "H", "I", "J", "K")
 
   if (!wave %in% supported_waves) {
     stop(
       "Unknown LASA 272 wave: ", wave,
-      ". Use one of: ", paste(supported_waves, collapse = ", "), "."
+      ". Use one of: ", paste(supported_waves, collapse = ", "), ".",
+      call. = FALSE
     )
   }
 
@@ -81,173 +103,23 @@ apply_lasa272_labels <- function(data,
   .lasa_assert_scalar_logical(to_factor, "to_factor")
   .lasa_assert_scalar_logical(to_numeric, "to_numeric")
   .lasa_assert_scalar_logical(standardize_names, "standardize_names")
+  .lasa_assert_scalar_logical(split_wavecode, "split_wavecode")
   .lasa_assert_name_corrections(name_corrections)
 
-  correction_keys <- if (is.null(name_corrections)) {
-    character(0)
-  } else {
-    tolower(names(name_corrections))
-  }
+  engine <- .lasa_label_engine(
+    data = data,
+    wave = wave,
+    prefix = prefix,
+    fn_name = "apply_lasa272_labels",
+    name_corrections = name_corrections,
+    to_factor = to_factor,
+    to_numeric = to_numeric,
+    standardize_names = standardize_names,
+    split_wavecode = split_wavecode
+  )
+  label_variable <- engine$label_variable
 
   value_labels <- function(...) c(...)
-
-  is_codebook_numeric <- function(value_label_map) {
-    if (is.null(value_label_map) || length(value_label_map) == 0L) {
-      return(FALSE)
-    }
-    codes <- as.numeric(unname(value_label_map))
-    all(!is.na(codes) & is.finite(codes) & codes < 0)
-  }
-
-  restore_plain_numeric <- function(x) {
-    values <- as.numeric(x)
-    values[!is.na(values) & values < 0] <- NA_real_
-    values
-  }
-
-  convert_to_labelled_factor <- function(x, value_label_map) {
-    values <- as.numeric(x)
-    label_codes <- as.numeric(unname(value_label_map))
-    label_text <- names(value_label_map)
-
-    keep <- !duplicated(label_codes)
-    label_codes <- label_codes[keep]
-    label_text <- label_text[keep]
-
-    observed_codes <- unique(values[!is.na(values)])
-    level_codes <- sort(unique(c(label_codes, observed_codes)))
-    level_text <- vapply(
-      level_codes,
-      function(code) {
-        i <- match(code, label_codes)
-        if (!is.na(i)) label_text[[i]] else as.character(code)
-      },
-      character(1)
-    )
-
-    if (anyDuplicated(level_text)) {
-      collided <- unique(
-        level_text[duplicated(level_text) | duplicated(level_text, fromLast = TRUE)]
-      )
-      for (txt in collided) {
-        i <- which(level_text == txt)
-        level_text[i] <- paste0(txt, " [", level_codes[i], "]")
-      }
-    }
-
-    factor(values, levels = level_codes, labels = level_text)
-  }
-
-  report_rows <- list()
-  rename_plan <- character(0)
-
-  record_match_result <- function(suffix, expected_name, matched_name, method) {
-    report_rows[[length(report_rows) + 1L]] <<- data.frame(
-      suffix = suffix,
-      expected_name = expected_name,
-      matched_name = if (is.na(matched_name)) NA_character_ else matched_name,
-      method = method,
-      stringsAsFactors = FALSE
-    )
-    invisible(NULL)
-  }
-
-  label_variable <- function(suffix, variable_label, value_label_map) {
-    expected_name <- paste0(prefix, suffix)
-
-    if (tolower(suffix) %in% correction_keys) {
-      actual_name <- name_corrections[[match(tolower(suffix), correction_keys)]]
-      idx <- match(tolower(actual_name), tolower(names(data)))
-
-      if (is.na(idx)) {
-        record_match_result(
-          suffix, expected_name, matched_name = actual_name,
-          method = "manual_not_found"
-        )
-        return(invisible(NULL))
-      }
-      method <- "manual correction"
-    } else {
-      idx <- match(expected_name, names(data))
-
-      if (!is.na(idx)) {
-        method <- "exact"
-      } else {
-        idx <- match(tolower(expected_name), tolower(names(data)))
-
-        if (!is.na(idx)) {
-          method <- "case-insensitive exact"
-        } else {
-          record_match_result(
-            suffix, expected_name, matched_name = NA_character_,
-            method = "not found"
-          )
-          return(invisible(NULL))
-        }
-      }
-    }
-
-    matched_name <- names(data)[idx]
-    x <- data[[idx]]
-    attr(x, "label") <- variable_label
-    attr(x, "labels") <- value_label_map
-
-    if (isTRUE(to_numeric) && is_codebook_numeric(value_label_map)) {
-      x <- restore_plain_numeric(x)
-      attr(x, "label") <- variable_label
-    } else if (isTRUE(to_factor) && length(value_label_map) > 0L) {
-      x <- convert_to_labelled_factor(x, value_label_map)
-      attr(x, "label") <- variable_label
-    }
-
-    data[[idx]] <<- x
-    record_match_result(suffix, expected_name, matched_name, method)
-
-    if (isTRUE(standardize_names)) {
-      rename_plan[[matched_name]] <<- tolower(expected_name)
-    }
-
-    invisible(NULL)
-  }
-
-  finalize_labelled_data <- function() {
-    label_report <- if (length(report_rows) > 0L) {
-      do.call(rbind, report_rows)
-    } else {
-      data.frame(
-        suffix = character(0), expected_name = character(0),
-        matched_name = character(0), method = character(0),
-        stringsAsFactors = FALSE
-      )
-    }
-
-    if (isTRUE(standardize_names) && length(rename_plan) > 0L) {
-      old_names <- names(rename_plan)
-      new_names <- unname(rename_plan)
-
-      if (anyDuplicated(new_names)) {
-        duplicated_names <- unique(new_names[duplicated(new_names)])
-        stop(
-          "standardize_names = TRUE would create duplicate column names: ",
-          paste(duplicated_names, collapse = ", "),
-          ". Resolve the conflict with 'name_corrections' or by renaming ",
-          "the source column(s) before calling apply_lasa272_labels().",
-          call. = FALSE
-        )
-      }
-
-      idx <- match(old_names, names(data))
-      names(data)[idx] <- new_names
-      label_report$standardized_to <-
-        new_names[match(label_report$matched_name, old_names)]
-    } else {
-      label_report$standardized_to <- NA_character_
-    }
-
-    rownames(label_report) <- NULL
-    attr(data, "label_report") <- label_report
-    data
-  }
 
   parent_death_labels <- function() {
     if (wave == "C") {
@@ -573,5 +445,5 @@ apply_lasa272_labels <- function(data,
   label_variable("conflic", variable_labels[["conflic"]], other_event_labels())
   label_variable("financ", variable_labels[["financ"]], other_event_labels())
 
-  finalize_labelled_data()
+  engine$finalize()
 }
