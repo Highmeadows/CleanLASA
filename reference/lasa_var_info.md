@@ -1,10 +1,13 @@
 # Open LASA variable information
 
-Searches the live [LASA topic
-overview](https://lasa-vu.nl/en/topic-table/) and opens the
-variable-information PDF linked by LASA. The documentation is opened
-from the LASA website; no PDF files are read from or bundled with the
-package.
+Searches the [LASA topic overview](https://lasa-vu.nl/en/topic-table/)
+and opens the variable-information PDF linked by LASA. The documentation
+is opened from the LASA website; no PDF files are read from or bundled
+with the package. The underlying topic table is cached the same way as
+in
+[`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md)
+(in-session and on disk); `refresh = TRUE` rebuilds it from the live
+site first.
 
 ## Usage
 
