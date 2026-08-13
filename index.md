@@ -42,24 +42,81 @@ data <- read_lasa_sav("lasazoa1.sav") # LASA wave Z file oa1
 data <- read_lasa_sav("LASAJFI.sav") # LASA wave J file FI
 ```
 
-For LASA046 files specifically,
-[`apply_lasa046_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa046_labels.md)
-applies all SPSS variable- and value-labels and imports the data
-correctly. The current version supports waves: `B`, `C`, `D`, `E`, `2B`,
-`F`, `G`, `H`, `MB`, `3B`, `I`, `J`, `K`
+Each LASA data file is handled by its own file-specific
+`apply_lasa[file_code]_labels()` function, which
+[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
+dispatches to automatically. The package currently supports:
+
+| File code | Function | Topic |
+|----|----|----|
+| 011 | [`apply_lasa011_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa011_labels.md) | Household composition |
+| 014 | [`apply_lasa014_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa014_labels.md) | Residence characteristics / relocation |
+| 030 | [`apply_lasa030_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa030_labels.md) | Functional limitations and ADL |
+| 034 | [`apply_lasa034_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa034_labels.md) | Physical performance tests |
+| 046 | [`apply_lasa046_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa046_labels.md) | Physical activity (LAPAQ) |
+| 272 | [`apply_lasa272_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa272_labels.md) | Negative life events |
+
+Each of these can also be called directly, on a data frame already
+imported with
+[`haven::read_sav()`](https://haven.tidyverse.org/reference/read_spss.html),
+when you’d rather skip the filename auto-detection in
+[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md):
 
 ``` r
 
-# Specifically for LASA046 (Physical Activity), datapath should be in this format:
-data <- apply_lasa046_labels("path/to/LASA[wave]046.sav")
+# Specifically for LASA046 (Physical Activity):
+raw <- haven::read_sav("LASAC046.sav", user_na = TRUE)
+data <- apply_lasa046_labels(raw, wave = "C")
 
-# Examples
-data <- apply_lasa046_labels("LASAC046.sav")
-data <- apply_lasa046_labels("LASMB046.sav")
-data <- apply_lasa046_labels("LAS3B046.sav")
+# wave must be supplied explicitly, since it can't be inferred from data
+# alone (unlike read_lasa_sav(), which reads it from the file name):
+data_mb <- apply_lasa046_labels(haven::read_sav("LASMB046.sav"), wave = "MB")
+data_3b <- apply_lasa046_labels(haven::read_sav("LAS3B046.sav"), wave = "3B")
 ```
 
 In the future, similar functions will be built for other datafiles.
+
+### Shared arguments
+
+Every `apply_lasa*_labels()` function – and
+[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md),
+which forwards them automatically – accepts the same five reshaping
+arguments:
+
+- `name_corrections` – manually point a canonical suffix
+  (e.g. `lphya08`) at a differently-named source column, for a known
+  typo/renaming in the data.
+- `to_factor` – convert categorical variables to factors, using their
+  SPSS value labels as levels.
+- `to_numeric` – restore count/continuous variables to plain numeric,
+  converting negative (missing-reason) codes to `NA`.
+- `standardize_names` – rename every matched column to its canonical
+  lowercase LASA name with the wave code removed (e.g. `lphya01`), and
+  standardize `"respnr"` (in any capitalization) to `"respnr"`. Always
+  implies `split_wavecode = TRUE` as well.
+- `split_wavecode` – move the wave-letter prefix out of variable names
+  (e.g. `blphya01` becomes `lphya01`) and into a new `"LASA_wave"`
+  column, inserted right after `"respnr"` and filled with the file’s
+  wave code (e.g. `"B"`, `"2B"`, `"3B"`).
+
+``` r
+
+# Rename columns to their canonical names and split the wave code into its
+# own column, all in one call:
+data <- read_lasa_sav("LASAB046.sav", standardize_names = TRUE)
+names(data)[1:3]
+#> [1] "respnr"    "LASA_wave" "lphya01"
+
+# split_wavecode also works on its own, without fully standardizing names:
+data <- read_lasa_sav("LASAB046.sav", split_wavecode = TRUE)
+```
+
+Regardless of these arguments, every matched column also keeps its
+original SPSS value coding available as reference attributes –
+`attr(x, "original_labels")` (the codebook) and
+`attr(x, "original_values")` (the raw imported values) – so R output can
+always be cross-checked against another program’s (e.g. SPSS) coding,
+even after `to_numeric`/ `to_factor` reshaping.
 
 After importing, you can check whether any variables could not be
 matched to the LASA documentation using
@@ -120,7 +177,12 @@ url <- lasa_var_info("046", open = FALSE)
 | Function | Description |
 |----|----|
 | [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md) | Wrapper function that identifies the LASA datafile type and calls the correct import/cleaning function |
-| [`apply_lasa046_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa046_labels.md) | Applies SPSS variable- and value-labels for LASA046 data files and imports them correctly; works across all waves |
+| [`apply_lasa011_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa011_labels.md) | Applies SPSS variable- and value-labels for LASA011 (household composition) data files; works across all waves |
+| [`apply_lasa014_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa014_labels.md) | Applies SPSS variable- and value-labels for LASA014 (residence characteristics / relocation) data files; works across all waves |
+| [`apply_lasa030_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa030_labels.md) | Applies SPSS variable- and value-labels for LASA030 (functional limitations and ADL) data files; works across all waves |
+| [`apply_lasa034_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa034_labels.md) | Applies SPSS variable- and value-labels for LASA034 (physical performance tests) data files; works across all waves |
+| [`apply_lasa046_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa046_labels.md) | Applies SPSS variable- and value-labels for LASA046 (physical activity) data files and imports them correctly; works across all waves |
+| [`apply_lasa272_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa272_labels.md) | Applies SPSS variable- and value-labels for LASA272 (negative life events) data files; works across waves C-K |
 | [`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md) | Returns variables that could not be matched to the corresponding LASA documentation |
 | [`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md) | Searches the LASA topic overview for topics, themes, and file codes |
 | [`lasa_var_info()`](https://highmeadows.github.io/CleanLASA/reference/lasa_var_info.md) | Finds and opens a topic’s or file code’s variable-information PDF from the LASA website |

@@ -124,8 +124,7 @@ file-specific label function. When <code>TRUE</code>, the wave-letter prefix is
 removed from matched column names (e.g. <code>blphya01</code> becomes <code>lphya01</code>)
 and a new <code>"LASA_wave"</code> column, filled with the file's wave code (e.g.
 <code>"B"</code>, <code>"2B"</code>, <code>"3B"</code>), is inserted right after the (also standardized)
-<code>"respnr"</code> column. Always treated as <code>TRUE</code> when <code>standardize_names =
-TRUE</code>, even if <code>split_wavecode</code> itself was left at its default.</p></dd>
+<code>"respnr"</code> column. Always treated as <code>TRUE</code> when <code>standardize_names = TRUE</code>, even if <code>split_wavecode</code> itself was left at its default.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -198,7 +197,7 @@ attribute; retrieve it with <code><a href="lasa_label_report.html">lasa_label_re
 <span class="r-in"><span><span class="co"># Also dispatches to apply_lasa046_labels(), with wave = "3B"</span></span></span>
 <span class="r-in"><span><span class="va">dat_3b</span> <span class="op">&lt;-</span> <span class="fu">read_lasa_sav</span><span class="op">(</span><span class="st">"LAS3B046.SAV"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># The five shared reshaping arguments are available directly on</span></span></span>
+<span class="r-in"><span><span class="co"># The four shared reshaping arguments are available directly on</span></span></span>
 <span class="r-in"><span><span class="co"># read_lasa_sav(), without needing to know they live on</span></span></span>
 <span class="r-in"><span><span class="co"># apply_lasa046_labels() specifically:</span></span></span>
 <span class="r-in"><span><span class="va">dat_h</span> <span class="op">&lt;-</span> <span class="fu">read_lasa_sav</span><span class="op">(</span></span></span>

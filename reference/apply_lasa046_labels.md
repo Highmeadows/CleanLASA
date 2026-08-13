@@ -100,8 +100,8 @@ apply_lasa046_labels(
 
 `data`, with `label` and `labels` attributes added to every matched
 LASA046 column (transformed to a factor or plain numeric where
-`to_factor`/`to_numeric` apply), plus reference `labels_original` /
-`values_original` attributes preserving the original SPSS value coding
+`to_factor`/`to_numeric` apply), plus reference `original_labels` /
+`original_values` attributes preserving the original SPSS value coding
 regardless of that reshaping. Columns are optionally renamed when
 `standardize_names = TRUE`, and a new `"LASA_wave"` column is added
 after `"respnr"` when `standardize_names = TRUE` or
@@ -138,8 +138,8 @@ this function, they can be supplied either directly to
 
 Regardless of `to_factor`/`to_numeric`, every matched column also keeps
 its original SPSS value coding available as reference attributes –
-`attr(x, "labels_original")` (the codebook: value labels keyed by their
-numeric code) and `attr(x, "values_original")` (the raw numeric values
+`attr(x, "original_labels")` (the codebook: value labels keyed by their
+numeric code) and `attr(x, "original_values")` (the raw numeric values
 as imported, before any `to_factor`/`to_numeric` reshaping) – so R
 output can be cross-checked against another program's (e.g. SPSS) coding
 no matter which shape the column was converted to.

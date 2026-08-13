@@ -179,7 +179,7 @@ dat_e <- read_lasa_sav("LASAE046.SAV")
 # Also dispatches to apply_lasa046_labels(), with wave = "3B"
 dat_3b <- read_lasa_sav("LAS3B046.SAV")
 
-# The five shared reshaping arguments are available directly on
+# The four shared reshaping arguments are available directly on
 # read_lasa_sav(), without needing to know they live on
 # apply_lasa046_labels() specifically:
 dat_h <- read_lasa_sav(

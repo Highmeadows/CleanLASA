@@ -148,14 +148,12 @@ its default.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p><code>data</code>, with <code>label</code> and <code>labels</code> attributes added to every
 matched LASA046 column (transformed to a factor or plain numeric where
-<code>to_factor</code>/<code>to_numeric</code> apply), plus reference <code>labels_original</code> /
-<code>values_original</code> attributes preserving the original SPSS value coding
+<code>to_factor</code>/<code>to_numeric</code> apply), plus reference <code>original_labels</code> /
+<code>original_values</code> attributes preserving the original SPSS value coding
 regardless of that reshaping. Columns are optionally renamed when
 <code>standardize_names = TRUE</code>, and a new <code>"LASA_wave"</code> column is added
-after <code>"respnr"</code> when <code>standardize_names = TRUE</code> or <code>split_wavecode =
-TRUE</code>. A variable-name matching audit is attached as the generic
-<code>"label_report"</code> attribute; retrieve it with
-<code><a href="lasa_label_report.html">lasa_label_report()</a></code>.</p>
+after <code>"respnr"</code> when <code>standardize_names = TRUE</code> or <code>split_wavecode = TRUE</code>. A variable-name matching audit is attached as the generic
+<code>"label_report"</code> attribute; retrieve it with <code><a href="lasa_label_report.html">lasa_label_report()</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -179,8 +177,8 @@ supplied either directly to <code>apply_lasa046_labels()</code> or through
 <code><a href="read_lasa_sav.html">read_lasa_sav()</a></code> – both forms behave identically.</p>
 <p>Regardless of <code>to_factor</code>/<code>to_numeric</code>, every matched column also keeps
 its original SPSS value coding available as reference attributes –
-<code>attr(x, "labels_original")</code> (the codebook: value labels keyed by their
-numeric code) and <code>attr(x, "values_original")</code> (the raw numeric values as
+<code>attr(x, "original_labels")</code> (the codebook: value labels keyed by their
+numeric code) and <code>attr(x, "original_values")</code> (the raw numeric values as
 imported, before any <code>to_factor</code>/<code>to_numeric</code> reshaping) – so R output
 can be cross-checked against another program's (e.g. SPSS) coding no
 matter which shape the column was converted to.</p>
