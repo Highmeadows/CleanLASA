@@ -3,8 +3,9 @@
 The goal of CleanLASA is to make it easy to import and clean LASA
 (Longitudinal Aging Study Amsterdam) SPSS data files in R. It applies
 the correct variable and value labels from the LASA documentation,
-handles differences between waves, and flags any variables that could
-not be matched to the documentation so they can be checked manually.
+handles differences between waves, flags any variables that could not be
+matched to the documentation so they can be checked manually, and helps
+you find and open the right LASA documentation for a topic or file code.
 
 ## Installation
 
@@ -73,6 +74,47 @@ This returns the set of “faulty” variables — ones that couldn’t be
 matched to their corresponding documentation — so you can inspect and
 resolve them before analysis.
 
+## Finding topics and documentation
+
+[`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md)
+searches the [LASA topic overview](https://lasa-vu.nl/en/topic-table/)
+for topics, themes, and file codes:
+
+``` r
+
+# Browse everything
+lasa_topics()
+
+# Search by topic name (fuzzy matching handles typos and partial names)
+lasa_topics(topic = "physical act")
+
+# Search by theme or subtheme
+lasa_topics(theme = "cognitive")
+lasa_topics(theme = "memory")
+```
+
+The table is built from the live LASA website the first time it’s
+needed, then cached — both for the rest of the session and on disk — so
+it doesn’t have to be rebuilt every session. Use `refresh = TRUE` to
+check the live site for anything new, such as a newly added wave or file
+code.
+
+Once you’ve found a topic or file code,
+[`lasa_var_info()`](https://highmeadows.github.io/CleanLASA/reference/lasa_var_info.md)
+opens its variable-information PDF directly from the LASA website (no
+PDFs are bundled with the package):
+
+``` r
+
+lasa_var_info("046")               # by file code
+lasa_var_info("LASA046")           # file code variations are recognized
+lasa_var_info("Physical activity") # or by topic name
+lasa_var_info("physical act")      # fuzzy matching handles typos too
+
+# Get the URL without opening it
+url <- lasa_var_info("046", open = FALSE)
+```
+
 ## Functions
 
 | Function | Description |
@@ -80,7 +122,8 @@ resolve them before analysis.
 | [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md) | Wrapper function that identifies the LASA datafile type and calls the correct import/cleaning function |
 | [`apply_lasa046_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa046_labels.md) | Applies SPSS variable- and value-labels for LASA046 data files and imports them correctly; works across all waves |
 | [`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md) | Returns variables that could not be matched to the corresponding LASA documentation |
-| [`lasa_var_info()`](https://highmeadows.github.io/CleanLASA/reference/lasa_var_info.md) | Returns the LASA documentation of the corresponding datafile in an external pdf viewer |
+| [`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md) | Searches the LASA topic overview for topics, themes, and file codes |
+| [`lasa_var_info()`](https://highmeadows.github.io/CleanLASA/reference/lasa_var_info.md) | Finds and opens a topic’s or file code’s variable-information PDF from the LASA website |
 
 ## Documentation
 

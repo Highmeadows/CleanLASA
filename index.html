@@ -55,7 +55,7 @@
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>The goal of CleanLASA is to make it easy to import and clean LASA (Longitudinal Aging Study Amsterdam) SPSS data files in R. It applies the correct variable and value labels from the LASA documentation, handles differences between waves, and flags any variables that could not be matched to the documentation so they can be checked manually.</p>
+<p>The goal of CleanLASA is to make it easy to import and clean LASA (Longitudinal Aging Study Amsterdam) SPSS data files in R. It applies the correct variable and value labels from the LASA documentation, handles differences between waves, flags any variables that could not be matched to the documentation so they can be checked manually, and helps you find and open the right LASA documentation for a topic or file code.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -98,6 +98,31 @@
 <p>This returns the set of “faulty” variables — ones that couldn’t be matched to their corresponding documentation — so you can inspect and resolve them before analysis.</p>
 </div>
 <div class="section level2">
+<h2 id="finding-topics-and-documentation">Finding topics and documentation<a class="anchor" aria-label="anchor" href="#finding-topics-and-documentation"></a>
+</h2>
+<p><code><a href="reference/lasa_topics.html">lasa_topics()</a></code> searches the <a href="https://lasa-vu.nl/en/topic-table/" class="external-link">LASA topic overview</a> for topics, themes, and file codes:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Browse everything</span></span>
+<span><span class="fu"><a href="reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Search by topic name (fuzzy matching handles typos and partial names)</span></span>
+<span><span class="fu"><a href="reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"physical act"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Search by theme or subtheme</span></span>
+<span><span class="fu"><a href="reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="st">"cognitive"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="st">"memory"</span><span class="op">)</span></span></code></pre></div>
+<p>The table is built from the live LASA website the first time it’s needed, then cached — both for the rest of the session and on disk — so it doesn’t have to be rebuilt every session. Use <code>refresh = TRUE</code> to check the live site for anything new, such as a newly added wave or file code.</p>
+<p>Once you’ve found a topic or file code, <code><a href="reference/lasa_var_info.html">lasa_var_info()</a></code> opens its variable-information PDF directly from the LASA website (no PDFs are bundled with the package):</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span><span class="op">)</span>               <span class="co"># by file code</span></span>
+<span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"LASA046"</span><span class="op">)</span>           <span class="co"># file code variations are recognized</span></span>
+<span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"Physical activity"</span><span class="op">)</span> <span class="co"># or by topic name</span></span>
+<span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"physical act"</span><span class="op">)</span>      <span class="co"># fuzzy matching handles typos too</span></span>
+<span></span>
+<span><span class="co"># Get the URL without opening it</span></span>
+<span><span class="va">url</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
 </h2>
 <table class="table">
@@ -123,8 +148,12 @@
 <td>Returns variables that could not be matched to the corresponding LASA documentation</td>
 </tr>
 <tr>
+<td><code><a href="reference/lasa_topics.html">lasa_topics()</a></code></td>
+<td>Searches the LASA topic overview for topics, themes, and file codes</td>
+</tr>
+<tr>
 <td><code><a href="reference/lasa_var_info.html">lasa_var_info()</a></code></td>
-<td>Returns the LASA documentation of the corresponding datafile in an external pdf viewer</td>
+<td>Finds and opens a topic’s or file code’s variable-information PDF from the LASA website</td>
 </tr>
 </tbody>
 </table>
