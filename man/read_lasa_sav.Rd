@@ -12,6 +12,7 @@ read_lasa_sav(
   to_factor = FALSE,
   to_numeric = FALSE,
   standardize_names = FALSE,
+  split_wavecode = FALSE,
   ...
 )
 }
@@ -52,11 +53,21 @@ codes) are restored to plain numeric, with negative codes converted to
 \item{standardize_names}{Logical, default \code{FALSE}. Forwarded to the
 selected file-specific label function. When \code{TRUE}, every successfully
 matched column is renamed to its canonical lowercase LASA documentation
-name (e.g. \code{blphya01}).}
+name with the wave code removed (e.g. \code{lphya01}), and \code{split_wavecode}
+is always treated as \code{TRUE} as well (see below), regardless of what was
+passed for \code{split_wavecode}.}
+
+\item{split_wavecode}{Logical, default \code{FALSE}. Forwarded to the selected
+file-specific label function. When \code{TRUE}, the wave-letter prefix is
+removed from matched column names (e.g. \code{blphya01} becomes \code{lphya01})
+and a new \code{"LASA_wave"} column, filled with the file's wave code (e.g.
+\code{"B"}, \code{"2B"}, \code{"3B"}), is inserted right after the (also standardized)
+\code{"respnr"} column. Always treated as \code{TRUE} when \verb{standardize_names =
+TRUE}, even if \code{split_wavecode} itself was left at its default.}
 
 \item{...}{Additional named arguments forwarded to the selected
 file-specific label function, for file-specific parameters that fall
-outside the four shared reshaping arguments listed above.}
+outside the five shared reshaping arguments listed above.}
 }
 \value{
 The object returned by the selected file-specific label function,
@@ -90,29 +101,30 @@ hard-coded family and all map to \code{apply_lasa_oa_labels()}.
 
 Every \verb{apply_*_labels()} function in this package shares the same
 parameter contract: \code{data}, a wave- and/or file-code-identifying
-argument, and the four reshaping arguments documented above
-(\code{name_corrections}, \code{to_factor}, \code{to_numeric}, \code{standardize_names}; see
-\code{\link[=apply_lasa046_labels]{apply_lasa046_labels()}} for the canonical implementation).
-\code{read_lasa_sav()} declares those four reshaping arguments explicitly, with
-the defaults shown above, so callers can discover and use them without
-needing to know which file-specific function is ultimately dispatched to.
-The selected function must already be available in the package namespace
-or current R session. \code{read_lasa_sav()} inspects that function's formal
-arguments (via \code{formals()}) and:
+argument, and the five reshaping arguments documented above
+(\code{name_corrections}, \code{to_factor}, \code{to_numeric}, \code{standardize_names},
+\code{split_wavecode}; see \code{\link[=apply_lasa046_labels]{apply_lasa046_labels()}} for the canonical
+implementation). \code{read_lasa_sav()} declares those five reshaping
+arguments explicitly, with the defaults shown above, so callers can
+discover and use them without needing to know which file-specific
+function is ultimately dispatched to. The selected function must already
+be available in the package namespace or current R session.
+\code{read_lasa_sav()} inspects that function's formal arguments (via
+\code{formals()}) and:
 \itemize{
 \item always supplies \code{data};
 \item supplies \code{wave} and/or \code{file_code} when the function declares them;
-\item supplies \code{name_corrections}, \code{to_factor}, \code{to_numeric}, and
-\code{standardize_names} when the function declares them, and otherwise
-warns -- rather than silently ignoring the request -- if the caller
-supplied a non-default value for one of these;
+\item supplies \code{name_corrections}, \code{to_factor}, \code{to_numeric},
+\code{standardize_names}, and \code{split_wavecode} when the function declares
+them, and otherwise warns -- rather than silently ignoring the request
+-- if the caller supplied a non-default value for one of these;
 \item forwards any further named arguments from \code{...} unchanged, for
 file-specific parameters that fall outside the shared contract.
 }
 
 This permits shared implementations such as a future
-\code{apply_lasa_oa_labels(data, file_code, name_corrections, to_factor, to_numeric, standardize_names, ...)} to coexist with wave-aware ones such
-as \code{apply_lasa046_labels(data, wave, name_corrections, to_factor, to_numeric, standardize_names)}.
+\code{apply_lasa_oa_labels(data, file_code, name_corrections, to_factor, to_numeric, standardize_names, split_wavecode, ...)} to coexist with
+wave-aware ones such as \code{apply_lasa046_labels(data, wave, name_corrections, to_factor, to_numeric, standardize_names, split_wavecode)}.
 
 After labelling, generic provenance attributes are attached:
 \code{"LASA_wave"}, \code{"LASA_file_code"}, \code{"LASA_source_file"}, and
@@ -128,7 +140,7 @@ dat_e <- read_lasa_sav("LASAE046.SAV")
 # Also dispatches to apply_lasa046_labels(), with wave = "3B"
 dat_3b <- read_lasa_sav("LAS3B046.SAV")
 
-# The four shared reshaping arguments are available directly on
+# The five shared reshaping arguments are available directly on
 # read_lasa_sav(), without needing to know they live on
 # apply_lasa046_labels() specifically:
 dat_h <- read_lasa_sav(
@@ -137,6 +149,10 @@ dat_h <- read_lasa_sav(
   to_numeric = TRUE,
   standardize_names = TRUE
 )
+
+# split_wavecode = TRUE moves the wave code out of variable names and
+# into its own "LASA_wave" column, without fully standardizing names:
+dat_2b <- read_lasa_sav("LAS2B046.SAV", split_wavecode = TRUE)
 
 # Manually correct a mistyped column name:
 dat_b <- read_lasa_sav(
