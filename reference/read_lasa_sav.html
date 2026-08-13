@@ -55,6 +55,7 @@ and applies that function to the imported data.</p>
 <span>  to_factor <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  to_numeric <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  standardize_names <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  split_wavecode <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -112,13 +113,25 @@ codes) are restored to plain numeric, with negative codes converted to
 <dd><p>Logical, default <code>FALSE</code>. Forwarded to the
 selected file-specific label function. When <code>TRUE</code>, every successfully
 matched column is renamed to its canonical lowercase LASA documentation
-name (e.g. <code>blphya01</code>).</p></dd>
+name with the wave code removed (e.g. <code>lphya01</code>), and <code>split_wavecode</code>
+is always treated as <code>TRUE</code> as well (see below), regardless of what was
+passed for <code>split_wavecode</code>.</p></dd>
+
+
+<dt id="arg-split-wavecode">split_wavecode<a class="anchor" aria-label="anchor" href="#arg-split-wavecode"></a></dt>
+<dd><p>Logical, default <code>FALSE</code>. Forwarded to the selected
+file-specific label function. When <code>TRUE</code>, the wave-letter prefix is
+removed from matched column names (e.g. <code>blphya01</code> becomes <code>lphya01</code>)
+and a new <code>"LASA_wave"</code> column, filled with the file's wave code (e.g.
+<code>"B"</code>, <code>"2B"</code>, <code>"3B"</code>), is inserted right after the (also standardized)
+<code>"respnr"</code> column. Always treated as <code>TRUE</code> when <code>standardize_names =
+TRUE</code>, even if <code>split_wavecode</code> itself was left at its default.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional named arguments forwarded to the selected
 file-specific label function, for file-specific parameters that fall
-outside the four shared reshaping arguments listed above.</p></dd>
+outside the five shared reshaping arguments listed above.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -145,25 +158,26 @@ If the file code starts with a letter, the expected function is
 hard-coded family and all map to <code>apply_lasa_oa_labels()</code>.</p>
 <p>Every <code>apply_*_labels()</code> function in this package shares the same
 parameter contract: <code>data</code>, a wave- and/or file-code-identifying
-argument, and the four reshaping arguments documented above
-(<code>name_corrections</code>, <code>to_factor</code>, <code>to_numeric</code>, <code>standardize_names</code>; see
-<code><a href="apply_lasa046_labels.html">apply_lasa046_labels()</a></code> for the canonical implementation).
-<code>read_lasa_sav()</code> declares those four reshaping arguments explicitly, with
-the defaults shown above, so callers can discover and use them without
-needing to know which file-specific function is ultimately dispatched to.
-The selected function must already be available in the package namespace
-or current R session. <code>read_lasa_sav()</code> inspects that function's formal
-arguments (via <code><a href="https://rdrr.io/r/base/formals.html" class="external-link">formals()</a></code>) and:</p><ul><li><p>always supplies <code>data</code>;</p></li>
+argument, and the five reshaping arguments documented above
+(<code>name_corrections</code>, <code>to_factor</code>, <code>to_numeric</code>, <code>standardize_names</code>,
+<code>split_wavecode</code>; see <code><a href="apply_lasa046_labels.html">apply_lasa046_labels()</a></code> for the canonical
+implementation). <code>read_lasa_sav()</code> declares those five reshaping
+arguments explicitly, with the defaults shown above, so callers can
+discover and use them without needing to know which file-specific
+function is ultimately dispatched to. The selected function must already
+be available in the package namespace or current R session.
+<code>read_lasa_sav()</code> inspects that function's formal arguments (via
+<code><a href="https://rdrr.io/r/base/formals.html" class="external-link">formals()</a></code>) and:</p><ul><li><p>always supplies <code>data</code>;</p></li>
 <li><p>supplies <code>wave</code> and/or <code>file_code</code> when the function declares them;</p></li>
-<li><p>supplies <code>name_corrections</code>, <code>to_factor</code>, <code>to_numeric</code>, and
-<code>standardize_names</code> when the function declares them, and otherwise
-warns – rather than silently ignoring the request – if the caller
-supplied a non-default value for one of these;</p></li>
+<li><p>supplies <code>name_corrections</code>, <code>to_factor</code>, <code>to_numeric</code>,
+<code>standardize_names</code>, and <code>split_wavecode</code> when the function declares
+them, and otherwise warns – rather than silently ignoring the request
+– if the caller supplied a non-default value for one of these;</p></li>
 <li><p>forwards any further named arguments from <code>...</code> unchanged, for
 file-specific parameters that fall outside the shared contract.</p></li>
 </ul><p>This permits shared implementations such as a future
-<code>apply_lasa_oa_labels(data, file_code, name_corrections, to_factor, to_numeric, standardize_names, ...)</code> to coexist with wave-aware ones such
-as <code>apply_lasa046_labels(data, wave, name_corrections, to_factor, to_numeric, standardize_names)</code>.</p>
+<code>apply_lasa_oa_labels(data, file_code, name_corrections, to_factor, to_numeric, standardize_names, split_wavecode, ...)</code> to coexist with
+wave-aware ones such as <code>apply_lasa046_labels(data, wave, name_corrections, to_factor, to_numeric, standardize_names, split_wavecode)</code>.</p>
 <p>After labelling, generic provenance attributes are attached:
 <code>"LASA_wave"</code>, <code>"LASA_file_code"</code>, <code>"LASA_source_file"</code>, and
 <code>"LASA_label_function"</code>. File-specific functions should attach their
@@ -184,7 +198,7 @@ attribute; retrieve it with <code><a href="lasa_label_report.html">lasa_label_re
 <span class="r-in"><span><span class="co"># Also dispatches to apply_lasa046_labels(), with wave = "3B"</span></span></span>
 <span class="r-in"><span><span class="va">dat_3b</span> <span class="op">&lt;-</span> <span class="fu">read_lasa_sav</span><span class="op">(</span><span class="st">"LAS3B046.SAV"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># The four shared reshaping arguments are available directly on</span></span></span>
+<span class="r-in"><span><span class="co"># The five shared reshaping arguments are available directly on</span></span></span>
 <span class="r-in"><span><span class="co"># read_lasa_sav(), without needing to know they live on</span></span></span>
 <span class="r-in"><span><span class="co"># apply_lasa046_labels() specifically:</span></span></span>
 <span class="r-in"><span><span class="va">dat_h</span> <span class="op">&lt;-</span> <span class="fu">read_lasa_sav</span><span class="op">(</span></span></span>
@@ -193,6 +207,10 @@ attribute; retrieve it with <code><a href="lasa_label_report.html">lasa_label_re
 <span class="r-in"><span>  to_numeric <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>  standardize_names <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># split_wavecode = TRUE moves the wave code out of variable names and</span></span></span>
+<span class="r-in"><span><span class="co"># into its own "LASA_wave" column, without fully standardizing names:</span></span></span>
+<span class="r-in"><span><span class="va">dat_2b</span> <span class="op">&lt;-</span> <span class="fu">read_lasa_sav</span><span class="op">(</span><span class="st">"LAS2B046.SAV"</span>, split_wavecode <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Manually correct a mistyped column name:</span></span></span>
 <span class="r-in"><span><span class="va">dat_b</span> <span class="op">&lt;-</span> <span class="fu">read_lasa_sav</span><span class="op">(</span></span></span>

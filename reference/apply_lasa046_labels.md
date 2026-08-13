@@ -18,7 +18,8 @@ apply_lasa046_labels(
   name_corrections = NULL,
   to_factor = FALSE,
   to_numeric = FALSE,
-  standardize_names = FALSE
+  standardize_names = FALSE,
+  split_wavecode = FALSE
 )
 ```
 
@@ -71,20 +72,41 @@ apply_lasa046_labels(
 - standardize_names:
 
   Logical. If `FALSE` (default), original column names in `data` are
-  left unchanged. If `TRUE`, every successfully matched LASA046 column
-  is renamed to its canonical lowercase documentation name, such as
-  `blphya01`, `clphya26`, or `klphya50`. Renaming happens only after all
-  variables have been matched, so it cannot affect matching decisions;
-  the function stops with an informative error if renaming would create
-  duplicate column names.
+  left unchanged (except for any renaming triggered by `split_wavecode`,
+  see below). If `TRUE`, every successfully matched LASA046 column is
+  renamed to its canonical lowercase documentation name with the wave
+  code removed, such as `lphya01`, `lphya26`, or `lphya50`, the
+  `"respnr"` column (in any capitalization) is renamed to `"respnr"`,
+  and `split_wavecode` is always treated as `TRUE` as well (see below),
+  regardless of what was passed for `split_wavecode`. Renaming happens
+  only after all variables have been matched, so it cannot affect
+  matching decisions; the function stops with an informative error if
+  renaming would create duplicate column names.
+
+- split_wavecode:
+
+  Logical. If `FALSE` (default) and `standardize_names = FALSE`, no
+  wave-code splitting occurs. If `TRUE`, every successfully matched
+  LASA046 column is renamed to its canonical name with the wave-letter
+  prefix removed (e.g. `blphya01` becomes `lphya01`), and a new
+  `"LASA_wave"` column, filled with `wave`, is inserted right after the
+  `"respnr"` column (matched but not renamed unless
+  `standardize_names = TRUE`; inserted at the front of `data` if no
+  `"respnr"`-like column is found). Always treated as `TRUE` when
+  `standardize_names = TRUE`, even if `split_wavecode` itself was left
+  at its default.
 
 ## Value
 
 `data`, with `label` and `labels` attributes added to every matched
 LASA046 column (transformed to a factor or plain numeric where
-`to_factor`/`to_numeric` apply), and optionally renamed when
-`standardize_names = TRUE`. A variable-name matching audit is attached
-as the generic `"label_report"` attribute; retrieve it with
+`to_factor`/`to_numeric` apply), plus reference `labels_original` /
+`values_original` attributes preserving the original SPSS value coding
+regardless of that reshaping. Columns are optionally renamed when
+`standardize_names = TRUE`, and a new `"LASA_wave"` column is added
+after `"respnr"` when `standardize_names = TRUE` or
+`split_wavecode = TRUE`. A variable-name matching audit is attached as
+the generic `"label_report"` attribute; retrieve it with
 [`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md).
 
 ## Details
@@ -103,16 +125,29 @@ by any of these is left unlabelled and recorded as `"not found"` in the
 matching audit rather than raising an error, since not every wave's file
 contains every variable.
 
-`name_corrections`, `to_factor`, `to_numeric`, and `standardize_names`
-are part of a parameter contract shared by every `apply_*_labels()`
-function in this package (see the header comment in `lasa_io.R`).
-Because
+`name_corrections`, `to_factor`, `to_numeric`, `standardize_names`, and
+`split_wavecode` are part of a parameter contract shared by every
+`apply_*_labels()` function in this package (see the header comment in
+`lasa_io.R`). Because
 [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
-forwards these same four arguments automatically when dispatching to
+forwards these same five arguments automatically when dispatching to
 this function, they can be supplied either directly to
 `apply_lasa046_labels()` or through
 [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
 – both forms behave identically.
+
+Regardless of `to_factor`/`to_numeric`, every matched column also keeps
+its original SPSS value coding available as reference attributes –
+`attr(x, "labels_original")` (the codebook: value labels keyed by their
+numeric code) and `attr(x, "values_original")` (the raw numeric values
+as imported, before any `to_factor`/`to_numeric` reshaping) – so R
+output can be cross-checked against another program's (e.g. SPSS) coding
+no matter which shape the column was converted to.
+
+The `"respnr"` (respondent number) column, present in essentially every
+LASA data file under inconsistent capitalization (e.g. `"RespNr"`), is
+also matched and, when `standardize_names = TRUE`, renamed to
+`"respnr"`.
 
 ## See also
 
@@ -127,11 +162,15 @@ dat_b  <- apply_lasa046_labels(dat_b, wave = "B")
 dat_2b <- apply_lasa046_labels(dat_2b, wave = "2B")
 
 # Convert categorical variables to factors, restore count variables to
-# plain numeric, and use canonical column names:
+# plain numeric, and use canonical column names (this also splits the
+# wave code into its own "LASA_wave" column):
 dat_h <- apply_lasa046_labels(
   dat_h, wave = "H",
   to_factor = TRUE, to_numeric = TRUE, standardize_names = TRUE
 )
+
+# Split the wave code into "LASA_wave" without fully standardizing names:
+dat_2b <- apply_lasa046_labels(dat_2b, wave = "2B", split_wavecode = TRUE)
 
 # Manually correct a mistyped column name:
 dat_3b <- apply_lasa046_labels(
