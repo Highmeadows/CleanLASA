@@ -2,12 +2,11 @@
 
 Shared validator for the `name_corrections` argument used by
 [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
-and by every `apply_*_labels()` function in this package family (see
-[`apply_lasa046_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa046_labels.md)
-for the canonical example). A valid `name_corrections` is either `NULL`,
-or a named character vector mapping canonical LASA variable suffixes to
-the actual column names found in a user's data, for example
-`c(lphya08 = "BLPYA08")`.
+and
+[`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md).
+A valid `name_corrections` is either `NULL`, or a named character vector
+mapping canonical LASA variable suffixes to the actual column names
+found in a user's data, for example `c(lphya08 = "BLPYA08")`.
 
 ## Usage
 

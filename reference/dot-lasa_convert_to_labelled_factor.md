@@ -1,14 +1,12 @@
 # Convert a value-labelled variable to a factor
 
 Shared `to_factor = TRUE` transformation used by every
-`apply_*_labels()` function's
-[`.lasa_label_engine()`](https://highmeadows.github.io/CleanLASA/reference/dot-lasa_label_engine.md)
-instance. Converts `x` to a factor using `value_label_map`'s names as
-level text for coded values; an observed value with no codebook label
-keeps its own numeric code (as text) as its level, rather than becoming
-`NA`. Colliding level text (e.g. two different codes that happen to
-share a label) is disambiguated by appending the numeric code in
-brackets.
+`apply_*_labels()` function's `.lasa_label_engine()` instance. Converts
+`x` to a factor using `value_label_map`'s names as level text for coded
+values; an observed value with no codebook label keeps its own numeric
+code (as text) as its level, rather than becoming `NA`. Colliding level
+text (e.g. two different codes that happen to share a label) is
+disambiguated by appending the numeric code in brackets.
 
 ## Usage
 

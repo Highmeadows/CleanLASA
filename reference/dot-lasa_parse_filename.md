@@ -19,8 +19,7 @@ convention.
 
 ## Value
 
-A named list with `wave`, `file_code`, `file_name`, and
-`apply_function`.
+A named list with `wave`, `file_code`, and `file_name`.
 
 ## Details
 

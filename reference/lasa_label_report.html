@@ -58,8 +58,8 @@ stores its audit in the <code>"label_report"</code> attribute.</p>
 
 
 <dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
-<dd><p>A data object previously processed by a LASA file-specific label
-function or by <code><a href="read_lasa_sav.html">read_lasa_sav()</a></code>.</p></dd>
+<dd><p>A data object previously labelled by <code><a href="read_lasa_sav.html">read_lasa_sav()</a></code> or
+<code><a href="apply_lasa_labels.html">apply_lasa_labels()</a></code>.</p></dd>
 
 
 <dt id="arg-problems-only">problems_only<a class="anchor" aria-label="anchor" href="#arg-problems-only"></a></dt>
@@ -77,79 +77,30 @@ returned report retains LASA context in the attributes <code>"LASA_wave"</code> 
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>File-specific labelling functions should store their matching audit as
+    <p><code><a href="read_lasa_sav.html">read_lasa_sav()</a></code> and <code><a href="apply_lasa_labels.html">apply_lasa_labels()</a></code> store their matching audit as
 <code>attr(data, "label_report")</code> and the wave identifier as
-<code>attr(data, "LASA_wave")</code>. This avoids embedding a particular LASA file code
-in the attribute names and lets one reporting function serve all LASA files.</p>
-<p>For consistency across label implementations, reports should ideally
-contain a <code>method</code> column using values such as <code>"exact"</code>,
-<code>"case-insensitive exact"</code>, <code>"manual correction"</code>, <code>"manual_not_found"</code>,
-<code>"not found"</code>, <code>"fuzzy"</code>, or <code>"ambiguous"</code>; alternatively they may provide
-a logical <code>problem</code> column. When a report was produced with
-<code>standardize_names = TRUE</code>, it may also contain a <code>standardized_to</code>
-column recording each matched column's renamed (canonical) name.</p>
+<code>attr(data, "LASA_wave")</code>, so one reporting function serves every LASA
+file code.</p>
+<p>The report's <code>method</code> column uses values such as <code>"exact"</code>,
+<code>"case-insensitive exact"</code>, <code>"exact canonical"</code>,
+<code>"case-insensitive canonical"</code>, <code>"manual correction"</code>,
+<code>"manual_not_found"</code>, or <code>"not found"</code> – each optionally suffixed with
+<code>" (manual override)"</code> when the match's label/value labels were patched
+by <code><a href="manual_update_lasa_labels.html">manual_update_lasa_labels()</a></code>. When produced with <code>standardize_names = TRUE</code>, it also contains a <code>standardized_to</code> column recording each matched
+column's renamed (canonical) name.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="read_lasa_sav.html">read_lasa_sav()</a></code>, <code><a href="apply_lasa046_labels.html">apply_lasa046_labels()</a></code></p></div>
+    <div class="dont-index"><p><code><a href="read_lasa_sav.html">read_lasa_sav()</a></code>, <code><a href="apply_lasa_labels.html">apply_lasa_labels()</a></code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>RespNr <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, BLPHYA07 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="apply_lasa046_labels.html">apply_lasa046_labels</a></span><span class="op">(</span><span class="va">dat</span>, wave <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>RespNr <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, BLPHYA07 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="apply_lasa_labels.html">apply_lasa_labels</a></span><span class="op">(</span><span class="va">dat</span>, filecode <span class="op">=</span> <span class="st">"046"</span>, wave <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">lasa_label_report</span><span class="op">(</span><span class="va">dat</span>, problems_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     suffix expected_name matched_name    method standardized_to</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  lphya01      blphya01         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  lphya02      blphya02         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  lphya03      blphya03         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  lphya04      blphya04         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  lphya05      blphya05         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  lphya06      blphya06         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  lphya08      blphya08         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  lphya09      blphya09         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  lphya10      blphya10         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 lphya11      blphya11         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 lphya12      blphya12         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 lphya13      blphya13         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 lphya14      blphya14         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 lphya15      blphya15         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 lphya16      blphya16         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 lphya17      blphya17         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 lphya18      blphya18         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 lphya19      blphya19         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 lphya20      blphya20         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 lphyasp      blphyasp         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 lphya21      blphya21         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22 lphya22      blphya22         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 lphya23      blphya23         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 lphya24      blphya24         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 lphya25      blphya25         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 lphya26      blphya26         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 lphya27      blphya27         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28 lphya28      blphya28         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29 lphya29      blphya29         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30 lphya30      blphya30         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31 lphya31      blphya31         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32 lphya32      blphya32         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33 lphya33      blphya33         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34 lphya34      blphya34         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35 lphya35      blphya35         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36 lphya36      blphya36         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37 lphya37      blphya37         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38 lphya38      blphya38         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39 lphya39      blphya39         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40 lphya40      blphya40         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41 lphya41      blphya41         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42 lphya42      blphya42         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43 lphya43      blphya43         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44 lphya44      blphya44         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45 lphya45      blphya45         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46 lphya46      blphya46         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47 lphya47      blphya47         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48 lphya48      blphya48         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49 lphya49      blphya49         &lt;NA&gt; not found            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50 lphya50      blphya50         &lt;NA&gt; not found            &lt;NA&gt;</span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

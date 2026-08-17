@@ -7,6 +7,13 @@ handles differences between waves, flags any variables that could not be
 matched to the documentation so they can be checked manually, and helps
 you find and open the right LASA documentation for a topic or file code.
 
+Variable and value-label metadata is not hand-transcribed per file code.
+It’s parsed programmatically from LASA’s own variable-information PDFs
+into a single normalized database
+([`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md)),
+bundled with the package and refreshable at any time with
+[`update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/update_lasa_labels.md).
+
 ## Installation
 
 You can install the development version of CleanLASA from
@@ -22,8 +29,8 @@ devtools::install_github("Highmeadows/CleanLASA")
 
 The main entry point is
 [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md),
-which detects which LASA datafile you’re working with and dispatches to
-the correct import/cleaning function automatically:
+which detects which LASA datafile you’re working with (from its file
+name) and labels it using the package’s label database automatically:
 
 ``` r
 
@@ -31,7 +38,7 @@ library(CleanLASA)
 
 # Import and label a LASA .sav file
 
-# importing the data should generally be in this fomrat:
+# importing the data should generally be in this format:
 data <- read_lasa_sav("path/to/LASA[wave][file_code].sav")
 
 # Specific examples:
@@ -39,49 +46,14 @@ data <- read_lasa_sav("LASAB046.sav") # LASA wave B file 046
 data <- read_lasa_sav("LASA_data/LASAZ004.sav") # LASA wave Z file 004
 data <- read_lasa_sav("Documents/Research/data/LAS2B011.sav") # LASA wave 2B file 011
 data <- read_lasa_sav("lasazoa1.sav") # LASA wave Z file oa1
-data <- read_lasa_sav("LASAJFI.sav") # LASA wave J file FI
 ```
-
-Each LASA data file is handled by its own file-specific
-`apply_lasa[file_code]_labels()` function, which
-[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
-dispatches to automatically. The package currently supports:
-
-| File code | Function | Topic |
-|----|----|----|
-| 011 | [`apply_lasa011_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa011_labels.md) | Household composition |
-| 014 | [`apply_lasa014_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa014_labels.md) | Residence characteristics / relocation |
-| 030 | [`apply_lasa030_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa030_labels.md) | Functional limitations and ADL |
-| 034 | [`apply_lasa034_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa034_labels.md) | Physical performance tests |
-| 046 | [`apply_lasa046_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa046_labels.md) | Physical activity (LAPAQ) |
-| 272 | [`apply_lasa272_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa272_labels.md) | Negative life events |
-
-Each of these can also be called directly, on a data frame already
-imported with
-[`haven::read_sav()`](https://haven.tidyverse.org/reference/read_spss.html),
-when you’d rather skip the filename auto-detection in
-[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md):
-
-``` r
-
-# Specifically for LASA046 (Physical Activity):
-raw <- haven::read_sav("LASAC046.sav", user_na = TRUE)
-data <- apply_lasa046_labels(raw, wave = "C")
-
-# wave must be supplied explicitly, since it can't be inferred from data
-# alone (unlike read_lasa_sav(), which reads it from the file name):
-data_mb <- apply_lasa046_labels(haven::read_sav("LASMB046.sav"), wave = "MB")
-data_3b <- apply_lasa046_labels(haven::read_sav("LAS3B046.sav"), wave = "3B")
-```
-
-In the future, similar functions will be built for other datafiles.
 
 ### Shared arguments
 
-Every `apply_lasa*_labels()` function – and
-[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md),
-which forwards them automatically – accepts the same five reshaping
-arguments:
+[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
+(and
+[`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md),
+below) accepts the same five reshaping arguments:
 
 - `name_corrections` – manually point a canonical suffix
   (e.g. `lphya08`) at a differently-named source column, for a known
@@ -131,6 +103,79 @@ This returns the set of “faulty” variables — ones that couldn’t be
 matched to their corresponding documentation — so you can inspect and
 resolve them before analysis.
 
+### Relabelling a data frame directly
+
+[`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
+applies the same labelling engine to any data frame, not only the output
+of
+[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md).
+This is useful after a transformation (e.g. `dplyr::mutate()`) has
+stripped attributes, or when a file was imported some other way:
+
+``` r
+
+data <- read_lasa_sav("LASAB046.sav")
+data <- dplyr::mutate(data, respnr = respnr) # attributes stripped
+data <- apply_lasa_labels(data) # re-labels via stored provenance
+
+# Or supply identity explicitly:
+raw <- haven::read_sav("LASAC046.sav", user_na = TRUE)
+data <- apply_lasa_labels(raw, filecode = "046", wave = "C")
+```
+
+## The label database
+
+[`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md)
+returns the package’s normalized variable/value-label metadata: which
+file codes and waves are covered, what each variable’s documented name,
+label, and value-label codebook are, and where in the source PDF each
+entry came from.
+
+``` r
+
+db <- lasa_label_db()
+subset(db$variables, filecode == "046" & wave == "B")
+```
+
+### Refreshing coverage from LASA’s own documentation
+
+[`update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/update_lasa_labels.md)
+downloads (or reads a local copy of) a LASA variable-information PDF,
+parses it, and merges the result into your local copy of the database –
+replacing only the records that PDF itself documents, never anything
+from an unrelated file code:
+
+``` r
+
+update_lasa_labels(filecode = "046")             # resolve + download + parse
+update_lasa_labels(url = "https://.../LASA162_varinfo.pdf")
+update_lasa_labels(filecode = "046", path = "LASA046_varinfo.pdf") # offline
+```
+
+### Manual corrections
+
+When a PDF is missing, unreachable, or itself wrong or incomplete about
+a variable,
+[`manual_update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/manual_update_lasa_labels.md)
+patches the database directly, without touching or requiring a PDF. A
+later
+[`update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/update_lasa_labels.md)
+refresh of the same file code will not silently discard the correction.
+
+``` r
+
+manual_update_lasa_labels(
+  filecode = "046", wave = "B", variable = "lphya01",
+  val_labels = c(`-5` = "NA, wrong, skip")  # merged into the existing set
+)
+
+manual_update_lasa_labels(
+  filecode = "046", wave = "all", variable = "lphya01",
+  val_labels = c(`-5` = "NA, wrong, skip"),
+  replace_val_labels = TRUE  # replaces the value-label set entirely
+)
+```
+
 ## Finding topics and documentation
 
 [`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md)
@@ -176,13 +221,11 @@ url <- lasa_var_info("046", open = FALSE)
 
 | Function | Description |
 |----|----|
-| [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md) | Wrapper function that identifies the LASA datafile type and calls the correct import/cleaning function |
-| [`apply_lasa011_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa011_labels.md) | Applies SPSS variable- and value-labels for LASA011 (household composition) data files; works across all waves |
-| [`apply_lasa014_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa014_labels.md) | Applies SPSS variable- and value-labels for LASA014 (residence characteristics / relocation) data files; works across all waves |
-| [`apply_lasa030_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa030_labels.md) | Applies SPSS variable- and value-labels for LASA030 (functional limitations and ADL) data files; works across all waves |
-| [`apply_lasa034_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa034_labels.md) | Applies SPSS variable- and value-labels for LASA034 (physical performance tests) data files; works across all waves |
-| [`apply_lasa046_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa046_labels.md) | Applies SPSS variable- and value-labels for LASA046 (physical activity) data files and imports them correctly; works across all waves |
-| [`apply_lasa272_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa272_labels.md) | Applies SPSS variable- and value-labels for LASA272 (negative life events) data files; works across waves C-K |
+| [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md) | Reads a LASA `.sav` file and labels it using [`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md), based on the wave/file code parsed from the file name |
+| [`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md) | Applies [`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md) labels to any data frame, resolving file code/wave explicitly or from stored provenance |
+| [`update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/update_lasa_labels.md) | Downloads (or reads) and parses a LASA variable-information PDF, merging it into the label database |
+| [`manual_update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/manual_update_lasa_labels.md) | Hand-corrects or adds a variable/value label without needing a PDF |
+| [`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md) | Returns the label database currently in effect (bundled snapshot + any local updates) |
 | [`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md) | Returns variables that could not be matched to the corresponding LASA documentation |
 | [`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md) | Searches the LASA topic overview for topics, themes, and file codes |
 | [`lasa_var_info()`](https://highmeadows.github.io/CleanLASA/reference/lasa_var_info.md) | Finds and opens a topic’s or file code’s variable-information PDF from the LASA website |
