@@ -12,8 +12,7 @@ read_lasa_sav(
   to_factor = FALSE,
   to_numeric = FALSE,
   standardize_names = FALSE,
-  split_wavecode = FALSE,
-  ...
+  split_wavecode = FALSE
 )
 }
 \arguments{
@@ -21,64 +20,30 @@ read_lasa_sav(
 case-insensitively.}
 
 \item{user_na}{Logical passed to \code{\link[haven:read_spss]{haven::read_sav()}}. The default is \code{TRUE}
-so SPSS user-defined missing codes remain available to the file-specific
-labelling function before any requested conversion to \code{NA}.}
+so SPSS user-defined missing codes remain available to the labelling
+step before any requested conversion to \code{NA}.}
 
 \item{read_sav_args}{Optional named list of additional arguments passed to
 \code{\link[haven:read_spss]{haven::read_sav()}}, for example \code{list(encoding = "UTF-8")}. Do not
 include \code{file} or \code{user_na}; those are controlled by \code{path} and
 \code{user_na}.}
 
-\item{name_corrections}{Optional named character vector of manual column
-overrides, forwarded to the selected file-specific label function when
-it declares a \code{name_corrections} argument (every \verb{apply_*_labels()}
-function in this package does; see \code{\link[=apply_lasa046_labels]{apply_lasa046_labels()}} for
-details). Names are canonical variable suffixes (without the wave
-prefix); values are the actual column names found in the imported data,
-for example \code{c(lphya08 = "BLPYA08")}. Use this when a column in the
-\code{.sav} file does not exactly or case-insensitively match its documented
-LASA name.}
-
-\item{to_factor}{Logical, default \code{FALSE}. Forwarded to the selected
-file-specific label function. When \code{TRUE}, categorical variables are
-converted to factors using their SPSS value labels as level text,
-instead of being left numeric with value-label attributes attached.}
-
-\item{to_numeric}{Logical, default \code{FALSE}. Forwarded to the selected
-file-specific label function. When \code{TRUE}, count/continuous variables
-(those whose only codebook value labels are negative missing-reason
-codes) are restored to plain numeric, with negative codes converted to
-\code{NA}. Takes precedence over \code{to_factor} for those variables.}
-
-\item{standardize_names}{Logical, default \code{FALSE}. Forwarded to the
-selected file-specific label function. When \code{TRUE}, every successfully
-matched column is renamed to its canonical lowercase LASA documentation
-name with the wave code removed (e.g. \code{lphya01}), and \code{split_wavecode}
-is always treated as \code{TRUE} as well (see below), regardless of what was
-passed for \code{split_wavecode}.}
-
-\item{split_wavecode}{Logical, default \code{FALSE}. Forwarded to the selected
-file-specific label function. When \code{TRUE}, the wave-letter prefix is
-removed from matched column names (e.g. \code{blphya01} becomes \code{lphya01})
-and a new \code{"LASA_wave"} column, filled with the file's wave code (e.g.
-\code{"B"}, \code{"2B"}, \code{"3B"}), is inserted right after the (also standardized)
-\code{"respnr"} column. Always treated as \code{TRUE} when \code{standardize_names = TRUE}, even if \code{split_wavecode} itself was left at its default.}
-
-\item{...}{Additional named arguments forwarded to the selected
-file-specific label function, for file-specific parameters that fall
-outside the five shared reshaping arguments listed above.}
+\item{name_corrections, to_factor, to_numeric, standardize_names, split_wavecode}{The five shared reshaping arguments used throughout this package -- see
+\code{\link[=apply_lasa_labels]{apply_lasa_labels()}} for the full description of each.}
 }
 \value{
-The object returned by the selected file-specific label function,
-with generic LASA provenance attributes attached.
+\code{data} as imported by \code{\link[haven:read_spss]{haven::read_sav()}}, labelled (and
+optionally reshaped/renamed) with generic LASA provenance attributes
+attached.
 }
 \description{
 Reads a LASA \code{.sav} file, identifies its wave and file code from the file
-name, finds the corresponding file-specific \verb{apply_*_labels()} function,
-and applies that function to the imported data.
+name, and labels it using \code{\link[=lasa_label_db]{lasa_label_db()}} -- the package's normalized,
+database-driven variable/value-label metadata -- via the same engine
+\code{\link[=apply_lasa_labels]{apply_lasa_labels()}} uses.
 }
 \details{
-The dispatcher follows the LASA filename convention:
+The file name is parsed against the LASA naming convention:
 \itemize{
 \item regular single-letter waves: \verb{LASA[wave][file_code].SAV}, e.g.
 \code{LASAE046.SAV};
@@ -89,59 +54,28 @@ The dispatcher follows the LASA filename convention:
 case-insensitively.
 }
 
-File-specific label functions are selected by convention. If the file code
-starts with a number, the expected function is
-\verb{apply_lasa[file_code]_labels()}; for example, file 046 maps to
-\code{apply_lasa046_labels()} and file 004 maps to \code{apply_lasa004_labels()}.
-If the file code starts with a letter, the expected function is
-\verb{apply_lasa_[file_code]_labels()}; for example, FI maps to
-\code{apply_lasa_fi_labels()}. The OA files \code{oa1}, \code{oa2}, and \code{oa3} are a
-hard-coded family and all map to \code{apply_lasa_oa_labels()}.
+Column matching, value/variable-label attachment, \code{to_factor}/\code{to_numeric}
+reshaping, and \code{standardize_names}/\code{split_wavecode} renaming are all
+performed by \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}'s underlying engine, looking up
+metadata for the parsed file code/wave in \code{\link[=lasa_label_db]{lasa_label_db()}}. A file code
+with no database coverage yet is labelled as a no-op (every column left
+untouched, \code{"not found"} recorded in the matching audit) rather than an
+error -- refresh coverage with \code{\link[=update_lasa_labels]{update_lasa_labels()}} or
+\code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}.
 
-Every \verb{apply_*_labels()} function in this package shares the same
-parameter contract: \code{data}, a wave- and/or file-code-identifying
-argument, and the five reshaping arguments documented above
-(\code{name_corrections}, \code{to_factor}, \code{to_numeric}, \code{standardize_names},
-\code{split_wavecode}; see \code{\link[=apply_lasa046_labels]{apply_lasa046_labels()}} for the canonical
-implementation). \code{read_lasa_sav()} declares those five reshaping
-arguments explicitly, with the defaults shown above, so callers can
-discover and use them without needing to know which file-specific
-function is ultimately dispatched to. The selected function must already
-be available in the package namespace or current R session.
-\code{read_lasa_sav()} inspects that function's formal arguments (via
-\code{formals()}) and:
-\itemize{
-\item always supplies \code{data};
-\item supplies \code{wave} and/or \code{file_code} when the function declares them;
-\item supplies \code{name_corrections}, \code{to_factor}, \code{to_numeric},
-\code{standardize_names}, and \code{split_wavecode} when the function declares
-them, and otherwise warns -- rather than silently ignoring the request
--- if the caller supplied a non-default value for one of these;
-\item forwards any further named arguments from \code{...} unchanged, for
-file-specific parameters that fall outside the shared contract.
-}
-
-This permits shared implementations such as a future
-\code{apply_lasa_oa_labels(data, file_code, name_corrections, to_factor, to_numeric, standardize_names, split_wavecode, ...)} to coexist with
-wave-aware ones such as \code{apply_lasa046_labels(data, wave, name_corrections, to_factor, to_numeric, standardize_names, split_wavecode)}.
-
-After labelling, generic provenance attributes are attached:
-\code{"LASA_wave"}, \code{"LASA_file_code"}, \code{"LASA_source_file"}, and
-\code{"LASA_label_function"}. File-specific functions should attach their
-variable-name matching audit under the generic \code{"label_report"}
-attribute; retrieve it with \code{\link[=lasa_label_report]{lasa_label_report()}}.
+After labelling, provenance attributes are attached: \code{"LASA_wave"},
+\code{"LASA_file_code"}, and \code{"LASA_source_file"}. This is what lets
+\code{\link[=apply_lasa_labels]{apply_lasa_labels()}} re-label the same object later (e.g. after a
+\code{dplyr::mutate()} strips attributes) without needing \code{filecode}/\code{wave}
+supplied again. The variable-name matching audit is attached as the
+generic \code{"label_report"} attribute; retrieve it with
+\code{\link[=lasa_label_report]{lasa_label_report()}}.
 }
 \examples{
 \dontrun{
-# Automatically dispatches to apply_lasa046_labels()
 dat_e <- read_lasa_sav("LASAE046.SAV")
-
-# Also dispatches to apply_lasa046_labels(), with wave = "3B"
 dat_3b <- read_lasa_sav("LAS3B046.SAV")
 
-# The four shared reshaping arguments are available directly on
-# read_lasa_sav(), without needing to know they live on
-# apply_lasa046_labels() specifically:
 dat_h <- read_lasa_sav(
   "LASAH046.SAV",
   to_factor = TRUE,
@@ -159,14 +93,9 @@ dat_b <- read_lasa_sav(
   name_corrections = c(lphya08 = "BLPYA08")
 )
 
-# Dispatches to apply_lasa004_labels() once that function exists
 dat_z004 <- read_lasa_sav("LASAZ004.SAV")
-
-# Both dispatch to apply_lasa_oa_labels() once that function exists
-oa1 <- read_lasa_sav("LASAzoa1.sav")
-oa2 <- read_lasa_sav("LASAzoa2.sav")
 }
 }
 \seealso{
-\code{\link[=lasa_label_report]{lasa_label_report()}}, \code{\link[=apply_lasa046_labels]{apply_lasa046_labels()}}
+\code{\link[=lasa_label_report]{lasa_label_report()}}, \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}, \code{\link[=lasa_label_db]{lasa_label_db()}}
 }

@@ -15,17 +15,12 @@
 negative; \code{FALSE} otherwise.
 }
 \description{
-Default numeric-eligibility classifier shared by every \verb{apply_*_labels()}
-function's \code{.lasa_label_engine()} instance (see below). A variable
-qualifies for \code{to_numeric} restoration when every one of its codebook
-value labels is a negative code (e.g. -1, -2, -3), which is how this
-package's LASA codebooks mark count/continuous variables whose only
-labelled values are missing-reason codes.
-}
-\details{
-Some file-specific implementations use a stricter or looser rule (for
-example, requiring the label text itself to look like a missing-reason
-label) and supply their own function of the same signature to
-\code{.lasa_label_engine(is_codebook_numeric = ...)} instead of this default.
+A variable qualifies for \code{to_numeric} restoration when every one of its
+codebook value labels is a negative code (e.g. -1, -2, -3), which is how
+this package's LASA codebooks mark count/continuous variables whose only
+labelled values are missing-reason codes. Used by
+\code{data-raw/build_lasa_label_db.R}'s \code{var_type} classification
+(\code{"numeric"} vs. \code{"categorical"}), stored in \code{\link[=lasa_label_db]{lasa_label_db()}} rather
+than re-derived at label-application time.
 }
 \keyword{internal}

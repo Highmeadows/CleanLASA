@@ -10,8 +10,7 @@
 \item{path}{Character string containing a LASA file path or file name.}
 }
 \value{
-A named list with \code{wave}, \code{file_code}, \code{file_name}, and
-\code{apply_function}.
+A named list with \code{wave}, \code{file_code}, and \code{file_name}.
 }
 \description{
 Internal helper used by \code{\link[=read_lasa_sav]{read_lasa_sav()}} to derive the LASA wave and file

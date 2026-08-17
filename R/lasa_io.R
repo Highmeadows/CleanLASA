@@ -1,16 +1,20 @@
-# Generic LASA SPSS reader, label-function dispatcher, and label audit tools
+# Generic LASA SPSS reader and label audit tools.
 #
-# This file is data-file independent. File-specific metadata implementations
-# live in functions such as `apply_lasa046_labels()`, `apply_lasa011_labels()`,
-# `apply_lasaz004_labels()`, `apply_lasazoa_labels()`, and
-# `apply_lasaFI_labels()`.
+# This file is data-file independent: `read_lasa_sav()` reads a LASA `.sav`
+# file, identifies its wave and file code from the file name
+# (`.lasa_parse_filename()`), and labels it via the database-driven engine
+# in `.lasa_apply_labels()` (R/lasa_apply_labels.R), which looks up
+# variable/value-label metadata from `lasa_label_db()` instead of a
+# hand-written, file-specific function. The reshaping helpers below
+# (`.lasa_convert_to_labelled_factor()`, `.lasa_restore_plain_numeric()`,
+# `.lasa_standardize_respnr()`, `.lasa_insert_wave_column()`,
+# `.lasa_is_codebook_numeric()`) are shared by that engine.
 #
 # Shared parameter contract
 # --------------------------------------------------------------------------
-# Every `apply_*_labels()` function in this package is expected to accept the
-# same five "reshaping" arguments, in addition to `data` and a wave/file-code
-# identifying argument (see apply_lasa046_labels() for the canonical
-# implementation):
+# `read_lasa_sav()` and `apply_lasa_labels()` both accept the same five
+# "reshaping" arguments, in addition to `data` and a wave/file-code
+# identifying argument:
 #
 #   * name_corrections  - named character vector overriding automatic column
 #                          matching for specific variables.
@@ -32,11 +36,6 @@
 # original SPSS value coding available as reference attributes ("labels" /
 # an "_original" variant), so R output can be cross-checked against another
 # program's (e.g. SPSS) coding even after to_numeric/to_factor reshaping.
-#
-# read_lasa_sav() below declares these five arguments explicitly (rather
-# than leaving them implicit inside `...`) so they are documented and
-# discoverable in one place, and forwards them automatically to whichever
-# file-specific function it dispatches to.
 
 #' Assert that a value is a single, non-missing TRUE/FALSE
 #'
@@ -62,9 +61,8 @@
 #' Assert that a value is a valid `name_corrections` argument
 #'
 #' Shared validator for the `name_corrections` argument used by
-#' [read_lasa_sav()] and by every `apply_*_labels()` function in this
-#' package family (see [apply_lasa046_labels()] for the canonical example).
-#' A valid `name_corrections` is either `NULL`, or a named character vector
+#' [read_lasa_sav()] and [apply_lasa_labels()]. A valid `name_corrections`
+#' is either `NULL`, or a named character vector
 #' mapping canonical LASA variable suffixes to the actual column names found
 #' in a user's data, for example `c(lphya08 = "BLPYA08")`.
 #'
@@ -180,17 +178,13 @@
 
 #' Is a codebook's value-label map made up only of missing-reason codes?
 #'
-#' Default numeric-eligibility classifier shared by every `apply_*_labels()`
-#' function's `.lasa_label_engine()` instance (see below). A variable
-#' qualifies for `to_numeric` restoration when every one of its codebook
-#' value labels is a negative code (e.g. -1, -2, -3), which is how this
-#' package's LASA codebooks mark count/continuous variables whose only
-#' labelled values are missing-reason codes.
-#'
-#' Some file-specific implementations use a stricter or looser rule (for
-#' example, requiring the label text itself to look like a missing-reason
-#' label) and supply their own function of the same signature to
-#' `.lasa_label_engine(is_codebook_numeric = ...)` instead of this default.
+#' A variable qualifies for `to_numeric` restoration when every one of its
+#' codebook value labels is a negative code (e.g. -1, -2, -3), which is how
+#' this package's LASA codebooks mark count/continuous variables whose only
+#' labelled values are missing-reason codes. Used by
+#' `data-raw/build_lasa_label_db.R`'s `var_type` classification
+#' (`"numeric"` vs. `"categorical"`), stored in [lasa_label_db()] rather
+#' than re-derived at label-application time.
 #'
 #' @param value_label_map A named numeric vector of SPSS value labels
 #'   (names = label text, values = numeric codes), or `NULL`.
@@ -277,290 +271,6 @@
   factor(values, levels = level_codes, labels = level_text)
 }
 
-#' Build a shared column-matching / labelling / reshaping engine
-#'
-#' Internal constructor used by every `apply_*_labels()` function in this
-#' package (see [apply_lasa046_labels()] for the canonical implementation).
-#' Centralizes the generic, file-independent parts of a LASA labelling
-#' function -- column matching, value/variable-label attachment, the
-#' `to_factor`/`to_numeric` reshape, original-value-coding preservation,
-#' the `standardize_names`/`split_wavecode` renaming and `"LASA_wave"`
-#' column insertion, `"respnr"` standardization, and the `"label_report"`
-#' matching audit -- so file-specific `apply_*_labels()` implementations
-#' only need to supply their own wave-specific variable names, labels, and
-#' value-label maps.
-#'
-#' A typical file-specific implementation looks like:
-#'
-#' ```
-#' apply_lasaXXX_labels <- function(data, wave, name_corrections = NULL,
-#'                                   to_factor = FALSE, to_numeric = FALSE,
-#'                                   standardize_names = FALSE,
-#'                                   split_wavecode = FALSE) {
-#'   wave <- toupper(wave)
-#'   prefix <- ...                       # derive from wave, file-specific
-#'
-#'   engine <- .lasa_label_engine(
-#'     data = data, wave = wave, prefix = prefix,
-#'     fn_name = "apply_lasaXXX_labels",
-#'     name_corrections = name_corrections, to_factor = to_factor,
-#'     to_numeric = to_numeric, standardize_names = standardize_names,
-#'     split_wavecode = split_wavecode
-#'   )
-#'   label_variable <- engine$label_variable
-#'
-#'   label_variable("suffix1", "Variable label", value_label_map)
-#'   ...                                  # remaining wave-specific variables
-#'
-#'   engine$finalize()
-#' }
-#' ```
-#'
-#' @param data A data frame or tibble to label.
-#' @param wave Character scalar: the LASA wave code (already upper-cased by
-#'   the caller), used to fill the `"LASA_wave"` column when
-#'   `split_wavecode` applies.
-#' @param prefix Character scalar: the wave-specific lowercase variable-name
-#'   prefix (e.g. `"b"`), used to build each variable's expected column
-#'   name as `paste0(prefix, suffix)`.
-#' @param fn_name Character scalar: the calling function's name (e.g.
-#'   `"apply_lasa046_labels"`), used in error messages.
-#' @param name_corrections,to_factor,to_numeric,standardize_names,split_wavecode
-#'   The five shared reshaping arguments documented at the top of this file.
-#'   Already validated by the caller.
-#' @param is_codebook_numeric Function of one argument (a value-label map)
-#'   returning `TRUE` when a variable so labelled qualifies for `to_numeric`
-#'   restoration. Defaults to [.lasa_is_codebook_numeric()]; a file-specific
-#'   implementation may supply a stricter/looser rule.
-#'
-#' @return A list with two functions:
-#'   * `label_variable(suffix, variable_label, value_label_map = NULL, force_numeric = NULL)` --
-#'     matches, labels, and (if requested) reshapes one column. `force_numeric`
-#'     overrides `is_codebook_numeric()`'s auto-detection for this call when
-#'     not `NULL` (`TRUE`/`FALSE`), for variables whose numeric/categorical
-#'     nature cannot be inferred from their value-label map alone.
-#'   * `finalize()` -- standardizes `"respnr"`, applies queued renames,
-#'     inserts `"LASA_wave"` when applicable, attaches the `"label_report"`
-#'     attribute, and returns the finished data. Call this once, in place of
-#'     a hand-written `finalize_labelled_data()`.
-#' @keywords internal
-.lasa_label_engine <- function(data,
-                               wave,
-                               prefix,
-                               fn_name,
-                               name_corrections = NULL,
-                               to_factor = FALSE,
-                               to_numeric = FALSE,
-                               standardize_names = FALSE,
-                               split_wavecode = FALSE,
-                               is_codebook_numeric = .lasa_is_codebook_numeric) {
-  # standardize_names always implies split_wavecode, per the shared
-  # reshaping-argument contract documented at the top of this file: whenever
-  # names are standardized, the wave code is also split into its own
-  # "LASA_wave" column and stripped from matched variable names.
-  effective_split_wavecode <- isTRUE(standardize_names) || isTRUE(split_wavecode)
-
-  # Lower-cased lookup keys for name_corrections, e.g. c(lphya08 = "BLPYA08")
-  # -> correction_keys = "lphya08". Empty when no corrections were supplied.
-  correction_keys <- if (is.null(name_corrections)) {
-    character(0)
-  } else {
-    tolower(names(name_corrections))
-  }
-
-  # Every row logged here becomes one line of the "label_report" attribute
-  # returned by lasa_label_report(). `rename_plan` collects the (old name ->
-  # canonical name) pairs to apply at the very end when renaming applies, so
-  # renaming never interferes with matching.
-  report_rows <- list()
-  rename_plan <- character(0)
-
-  record_match_result <- function(suffix, expected_name, matched_name, method) {
-    report_rows[[length(report_rows) + 1L]] <<- data.frame(
-      suffix = suffix,
-      expected_name = expected_name,
-      matched_name = if (is.na(matched_name)) NA_character_ else matched_name,
-      method = method,
-      stringsAsFactors = FALSE
-    )
-    invisible(NULL)
-  }
-
-  # Looks up a single LASA column, attaches its variable/value labels,
-  # applies the to_factor / to_numeric transformation (if requested),
-  # preserves the original SPSS value coding as reference attributes, and
-  # queues it for renaming (if standardize_names/split_wavecode apply).
-  # Matching is tried, in order: (1) an explicit name_corrections override,
-  # (2) an exact (case-sensitive) name match, (3) a case-insensitive name
-  # match. A variable that cannot be matched by any of these is left
-  # untouched and recorded as "not found" -- this is expected behaviour,
-  # since not every wave's file contains every documented variable.
-  label_variable <- function(suffix,
-                             variable_label,
-                             value_label_map = NULL,
-                             force_numeric = NULL) {
-    expected_name <- paste0(prefix, suffix)
-
-    if (tolower(suffix) %in% correction_keys) {
-      # An explicit manual correction takes priority over automatic matching.
-      actual_name <- name_corrections[[match(tolower(suffix), correction_keys)]]
-      idx <- match(tolower(actual_name), tolower(names(data)))
-
-      if (is.na(idx)) {
-        record_match_result(suffix, expected_name, matched_name = actual_name, method = "manual_not_found")
-        return(invisible(NULL))
-      }
-      method <- "manual correction"
-    } else {
-      idx <- match(expected_name, names(data))
-
-      if (!is.na(idx)) {
-        method <- "exact"
-      } else {
-        idx <- match(tolower(expected_name), tolower(names(data)))
-
-        if (!is.na(idx)) {
-          method <- "case-insensitive exact"
-        } else {
-          record_match_result(suffix, expected_name, matched_name = NA_character_, method = "not found")
-          return(invisible(NULL))
-        }
-      }
-    }
-
-    matched_name <- names(data)[idx]
-    x <- data[[idx]]
-
-    # Capture the raw SPSS-coded values exactly as imported, before any
-    # to_factor/to_numeric reshaping below, so the original coding can
-    # always be recovered afterwards regardless of the requested shape.
-    original_values <- suppressWarnings(as.numeric(x))
-
-    attr(x, "label") <- variable_label
-
-    if (!is.null(value_label_map)) {
-      attr(x, "labels") <- value_label_map
-    }
-
-    # Reshape the variable if requested. to_numeric takes precedence: a
-    # variable that qualifies as numeric (whether via force_numeric or
-    # is_codebook_numeric()) is always restored to plain numeric, never
-    # converted to a factor.
-    numeric_eligible <- if (!is.null(force_numeric)) {
-      isTRUE(force_numeric)
-    } else {
-      is_codebook_numeric(value_label_map)
-    }
-
-    if (isTRUE(to_numeric) && numeric_eligible) {
-      x <- .lasa_restore_plain_numeric(x)
-      attr(x, "label") <- variable_label
-    } else if (isTRUE(to_factor) && !is.null(value_label_map) && length(value_label_map) > 0L) {
-      x <- .lasa_convert_to_labelled_factor(x, value_label_map)
-      attr(x, "label") <- variable_label
-    }
-
-    # Preserve the original SPSS value coding as reference attributes,
-    # regardless of the shape produced above (imported as-is, to_numeric, or
-    # to_factor), so R output can always be cross-checked against another
-    # program's (e.g. SPSS) original coding.
-    if (!is.null(value_label_map)) {
-      attr(x, "original_labels") <- value_label_map
-    }
-    attr(x, "original_values") <- original_values
-
-    data[[idx]] <<- x
-
-    record_match_result(suffix, expected_name, matched_name = matched_name, method = method)
-
-    if (isTRUE(effective_split_wavecode)) {
-      # split_wavecode (directly requested, or implied by standardize_names)
-      # renames to the bare suffix, with the wave-letter prefix removed.
-      rename_plan[[matched_name]] <<- tolower(suffix)
-    }
-
-    invisible(NULL)
-  }
-
-  # Assembles the matching audit, standardizes "respnr", applies the queued
-  # column renames (if standardize_names/split_wavecode apply), inserts the
-  # "LASA_wave" column (if split_wavecode applies), attaches the audit as
-  # the generic "label_report" attribute, and returns the finished data.
-  finalize <- function() {
-    # respnr is common to essentially every LASA file and is not part of
-    # the wave-prefixed variable list a file-specific function supplies, so
-    # it is matched (and, when standardize_names = TRUE, renamed) here.
-    respnr_result <- .lasa_standardize_respnr(data, standardize_names = standardize_names)
-    data <<- respnr_result$data
-    record_match_result(
-      "respnr", "respnr",
-      matched_name = respnr_result$matched_name,
-      method = respnr_result$method
-    )
-
-    label_report <- if (length(report_rows) > 0L) {
-      do.call(rbind, report_rows)
-    } else {
-      data.frame(
-        suffix = character(0), expected_name = character(0),
-        matched_name = character(0), method = character(0),
-        stringsAsFactors = FALSE
-      )
-    }
-
-    if (isTRUE(effective_split_wavecode) && length(rename_plan) > 0L) {
-      old_names <- names(rename_plan)
-      new_names <- unname(rename_plan)
-
-      # Duplicate targets among the renamed columns themselves, or a
-      # renamed column colliding with an existing column that is not being
-      # renamed, are both treated as conflicts.
-      unchanged_names <- names(data)[!names(data) %in% old_names]
-      conflicting_names <- intersect(new_names, unchanged_names)
-      duplicate_targets <- unique(new_names[duplicated(new_names)])
-      conflicts <- unique(c(conflicting_names, duplicate_targets))
-
-      if (length(conflicts) > 0L) {
-        stop(
-          "standardize_names/split_wavecode = TRUE would create duplicate ",
-          "column names: ", paste(conflicts, collapse = ", "),
-          ". Resolve the conflict with 'name_corrections' or by renaming ",
-          "the source column(s) before calling ", fn_name, "().",
-          call. = FALSE
-        )
-      }
-
-      idx <- match(old_names, names(data))
-      names(data)[idx] <<- new_names
-
-      label_report$standardized_to <- new_names[match(label_report$matched_name, old_names)]
-    } else {
-      label_report$standardized_to <- NA_character_
-    }
-
-    if (isTRUE(standardize_names) && !is.na(respnr_result$matched_name)) {
-      label_report$standardized_to[label_report$suffix == "respnr"] <- respnr_result$respnr_name
-    }
-
-    # split_wavecode (directly requested, or implied by standardize_names)
-    # adds the generic "LASA_wave" column right after "respnr".
-    if (isTRUE(effective_split_wavecode)) {
-      data <<- .lasa_insert_wave_column(data, wave = wave, respnr_name = respnr_result$respnr_name)
-    }
-
-    rownames(label_report) <- NULL
-    attr(data, "label_report") <- label_report
-    # Attach the wave directly, so this provenance attribute is available
-    # even when a file-specific apply_*_labels() function is called on its
-    # own, without going through read_lasa_sav() (which sets the same
-    # attribute again, redundantly but harmlessly, once dispatching).
-    attr(data, "LASA_wave") <- wave
-    data
-  }
-
-  list(label_variable = label_variable, finalize = finalize)
-}
-
 #' Parse a LASA data-file name
 #'
 #' Internal helper used by [read_lasa_sav()] to derive the LASA wave and file
@@ -573,8 +283,7 @@
 #'
 #' @param path Character string containing a LASA file path or file name.
 #'
-#' @return A named list with `wave`, `file_code`, `file_name`, and
-#'   `apply_function`.
+#' @return A named list with `wave`, `file_code`, and `file_name`.
 #' @keywords internal
 .lasa_parse_filename <- function(path) {
   if (length(path) != 1L || is.na(path) || !nzchar(path)) {
@@ -633,96 +342,35 @@
     file_code_lower
   }
 
-  apply_function <- .lasa_apply_function_name(file_code)
-
   list(
     wave = wave,
     file_code = file_code,
-    file_name = file_name,
-    apply_function = apply_function
+    file_name = file_name
   )
-}
-
-#' Determine the label function for a LASA file code
-#'
-#' Internal dispatcher implementing the package naming convention for
-#' file-specific label functions.
-#'
-#' @param file_code LASA file code, such as `"046"`, `"004"`, `"FI"`, or
-#'   `"oa1"`.
-#'
-#' @return Character scalar containing the expected function name.
-#' @keywords internal
-.lasa_apply_function_name <- function(file_code) {
-  code <- tolower(file_code)
-
-  # The three osteoarthritis algorithm files are one logical data-file family
-  # and deliberately share a single label implementation.
-  if (code %in% c("oa1", "oa2", "oa3")) {
-    return("apply_lasa_oa_labels")
-  }
-
-  # File codes beginning with a number have no underscore after `lasa`.
-  # Letter-leading file codes use an underscore for readability.
-  if (grepl("^[0-9]", code)) {
-    paste0("apply_lasa", code, "_labels")
-  } else {
-    paste0("apply_lasa_", code, "_labels")
-  }
 }
 
 #' Read and label a LASA SPSS data file
 #'
 #' Reads a LASA `.sav` file, identifies its wave and file code from the file
-#' name, finds the corresponding file-specific `apply_*_labels()` function,
-#' and applies that function to the imported data.
+#' name, and labels it using [lasa_label_db()] -- the package's normalized,
+#' database-driven variable/value-label metadata -- via the same engine
+#' [apply_lasa_labels()] uses.
 #'
 #' @param path Path to a LASA SPSS `.sav` file. LASA file names are parsed
 #'   case-insensitively.
 #' @param user_na Logical passed to [haven::read_sav()]. The default is `TRUE`
-#'   so SPSS user-defined missing codes remain available to the file-specific
-#'   labelling function before any requested conversion to `NA`.
+#'   so SPSS user-defined missing codes remain available to the labelling
+#'   step before any requested conversion to `NA`.
 #' @param read_sav_args Optional named list of additional arguments passed to
 #'   [haven::read_sav()], for example `list(encoding = "UTF-8")`. Do not
 #'   include `file` or `user_na`; those are controlled by `path` and
 #'   `user_na`.
-#' @param name_corrections Optional named character vector of manual column
-#'   overrides, forwarded to the selected file-specific label function when
-#'   it declares a `name_corrections` argument (every `apply_*_labels()`
-#'   function in this package does; see [apply_lasa046_labels()] for
-#'   details). Names are canonical variable suffixes (without the wave
-#'   prefix); values are the actual column names found in the imported data,
-#'   for example `c(lphya08 = "BLPYA08")`. Use this when a column in the
-#'   `.sav` file does not exactly or case-insensitively match its documented
-#'   LASA name.
-#' @param to_factor Logical, default `FALSE`. Forwarded to the selected
-#'   file-specific label function. When `TRUE`, categorical variables are
-#'   converted to factors using their SPSS value labels as level text,
-#'   instead of being left numeric with value-label attributes attached.
-#' @param to_numeric Logical, default `FALSE`. Forwarded to the selected
-#'   file-specific label function. When `TRUE`, count/continuous variables
-#'   (those whose only codebook value labels are negative missing-reason
-#'   codes) are restored to plain numeric, with negative codes converted to
-#'   `NA`. Takes precedence over `to_factor` for those variables.
-#' @param standardize_names Logical, default `FALSE`. Forwarded to the
-#'   selected file-specific label function. When `TRUE`, every successfully
-#'   matched column is renamed to its canonical lowercase LASA documentation
-#'   name with the wave code removed (e.g. `lphya01`), and `split_wavecode`
-#'   is always treated as `TRUE` as well (see below), regardless of what was
-#'   passed for `split_wavecode`.
-#' @param split_wavecode Logical, default `FALSE`. Forwarded to the selected
-#'   file-specific label function. When `TRUE`, the wave-letter prefix is
-#'   removed from matched column names (e.g. `blphya01` becomes `lphya01`)
-#'   and a new `"LASA_wave"` column, filled with the file's wave code (e.g.
-#'   `"B"`, `"2B"`, `"3B"`), is inserted right after the (also standardized)
-#'   `"respnr"` column. Always treated as `TRUE` when `standardize_names =
-#'   TRUE`, even if `split_wavecode` itself was left at its default.
-#' @param ... Additional named arguments forwarded to the selected
-#'   file-specific label function, for file-specific parameters that fall
-#'   outside the five shared reshaping arguments listed above.
+#' @param name_corrections,to_factor,to_numeric,standardize_names,split_wavecode
+#'   The five shared reshaping arguments used throughout this package -- see
+#'   [apply_lasa_labels()] for the full description of each.
 #'
 #' @details
-#' The dispatcher follows the LASA filename convention:
+#' The file name is parsed against the LASA naming convention:
 #'
 #' * regular single-letter waves: `LASA[wave][file_code].SAV`, e.g.
 #'   `LASAE046.SAV`;
@@ -732,67 +380,35 @@
 #' * file codes contain 2 or 3 alphanumeric characters and are interpreted
 #'   case-insensitively.
 #'
-#' File-specific label functions are selected by convention. If the file code
-#' starts with a number, the expected function is
-#' `apply_lasa[file_code]_labels()`; for example, file 046 maps to
-#' `apply_lasa046_labels()` and file 004 maps to `apply_lasa004_labels()`.
-#' If the file code starts with a letter, the expected function is
-#' `apply_lasa_[file_code]_labels()`; for example, FI maps to
-#' `apply_lasa_fi_labels()`. The OA files `oa1`, `oa2`, and `oa3` are a
-#' hard-coded family and all map to `apply_lasa_oa_labels()`.
+#' Column matching, value/variable-label attachment, `to_factor`/`to_numeric`
+#' reshaping, and `standardize_names`/`split_wavecode` renaming are all
+#' performed by [apply_lasa_labels()]'s underlying engine, looking up
+#' metadata for the parsed file code/wave in [lasa_label_db()]. A file code
+#' with no database coverage yet is labelled as a no-op (every column left
+#' untouched, `"not found"` recorded in the matching audit) rather than an
+#' error -- refresh coverage with [update_lasa_labels()] or
+#' [manual_update_lasa_labels()].
 #'
-#' Every `apply_*_labels()` function in this package shares the same
-#' parameter contract: `data`, a wave- and/or file-code-identifying
-#' argument, and the five reshaping arguments documented above
-#' (`name_corrections`, `to_factor`, `to_numeric`, `standardize_names`,
-#' `split_wavecode`; see [apply_lasa046_labels()] for the canonical
-#' implementation). `read_lasa_sav()` declares those five reshaping
-#' arguments explicitly, with the defaults shown above, so callers can
-#' discover and use them without needing to know which file-specific
-#' function is ultimately dispatched to. The selected function must already
-#' be available in the package namespace or current R session.
-#' `read_lasa_sav()` inspects that function's formal arguments (via
-#' `formals()`) and:
+#' After labelling, provenance attributes are attached: `"LASA_wave"`,
+#' `"LASA_file_code"`, and `"LASA_source_file"`. This is what lets
+#' [apply_lasa_labels()] re-label the same object later (e.g. after a
+#' `dplyr::mutate()` strips attributes) without needing `filecode`/`wave`
+#' supplied again. The variable-name matching audit is attached as the
+#' generic `"label_report"` attribute; retrieve it with
+#' [lasa_label_report()].
 #'
-#' * always supplies `data`;
-#' * supplies `wave` and/or `file_code` when the function declares them;
-#' * supplies `name_corrections`, `to_factor`, `to_numeric`,
-#'   `standardize_names`, and `split_wavecode` when the function declares
-#'   them, and otherwise warns -- rather than silently ignoring the request
-#'   -- if the caller supplied a non-default value for one of these;
-#' * forwards any further named arguments from `...` unchanged, for
-#'   file-specific parameters that fall outside the shared contract.
+#' @return `data` as imported by [haven::read_sav()], labelled (and
+#'   optionally reshaped/renamed) with generic LASA provenance attributes
+#'   attached.
 #'
-#' This permits shared implementations such as a future
-#' `apply_lasa_oa_labels(data, file_code, name_corrections, to_factor,
-#' to_numeric, standardize_names, split_wavecode, ...)` to coexist with
-#' wave-aware ones such as `apply_lasa046_labels(data, wave,
-#' name_corrections, to_factor, to_numeric, standardize_names,
-#' split_wavecode)`.
-#'
-#' After labelling, generic provenance attributes are attached:
-#' `"LASA_wave"`, `"LASA_file_code"`, `"LASA_source_file"`, and
-#' `"LASA_label_function"`. File-specific functions should attach their
-#' variable-name matching audit under the generic `"label_report"`
-#' attribute; retrieve it with [lasa_label_report()].
-#'
-#' @return The object returned by the selected file-specific label function,
-#'   with generic LASA provenance attributes attached.
-#'
-#' @seealso [lasa_label_report()], [apply_lasa046_labels()]
+#' @seealso [lasa_label_report()], [apply_lasa_labels()], [lasa_label_db()]
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' # Automatically dispatches to apply_lasa046_labels()
 #' dat_e <- read_lasa_sav("LASAE046.SAV")
-#'
-#' # Also dispatches to apply_lasa046_labels(), with wave = "3B"
 #' dat_3b <- read_lasa_sav("LAS3B046.SAV")
 #'
-#' # The four shared reshaping arguments are available directly on
-#' # read_lasa_sav(), without needing to know they live on
-#' # apply_lasa046_labels() specifically:
 #' dat_h <- read_lasa_sav(
 #'   "LASAH046.SAV",
 #'   to_factor = TRUE,
@@ -810,12 +426,7 @@
 #'   name_corrections = c(lphya08 = "BLPYA08")
 #' )
 #'
-#' # Dispatches to apply_lasa004_labels() once that function exists
 #' dat_z004 <- read_lasa_sav("LASAZ004.SAV")
-#'
-#' # Both dispatch to apply_lasa_oa_labels() once that function exists
-#' oa1 <- read_lasa_sav("LASAzoa1.sav")
-#' oa2 <- read_lasa_sav("LASAzoa2.sav")
 #' }
 read_lasa_sav <- function(path,
                           user_na = TRUE,
@@ -824,8 +435,7 @@ read_lasa_sav <- function(path,
                           to_factor = FALSE,
                           to_numeric = FALSE,
                           standardize_names = FALSE,
-                          split_wavecode = FALSE,
-                          ...) {
+                          split_wavecode = FALSE) {
   if (!requireNamespace("haven", quietly = TRUE)) {
     stop(
       "Package 'haven' is required to read LASA .sav files. ",
@@ -863,108 +473,26 @@ read_lasa_sav <- function(path,
 
   info <- .lasa_parse_filename(path)
 
-  label_fun <- get0(
-    info$apply_function,
-    mode = "function",
-    inherits = TRUE
-  )
-
-  if (is.null(label_fun)) {
-    stop(
-      "No LASA label function is available for file '", info$file_name,
-      "' (wave ", info$wave, ", file code ", info$file_code, "). ",
-      "Expected function `", info$apply_function, "()`. ",
-      "Create/source that file-specific label function before calling ",
-      "read_lasa_sav().",
-      call. = FALSE
-    )
-  }
-
   read_call <- c(
     list(file = path, user_na = user_na),
     read_sav_args
   )
   data <- do.call(haven::read_sav, read_call)
 
-  # Arguments left over in `...` are, by construction, anything the caller
-  # supplied that isn't one of read_lasa_sav()'s own named parameters (which
-  # now include the four shared reshaping arguments) -- i.e. genuinely
-  # file-specific extras meant for the dispatched label function.
-  user_label_args <- list(...)
-  if (length(user_label_args) > 0L) {
-    dot_names <- names(user_label_args)
-    if (!is.null(dot_names)) {
-      reserved_label_args <- intersect(dot_names, c("data", "wave", "file_code"))
-      if (length(reserved_label_args) > 0L) {
-        stop(
-          "Do not supply ", paste(reserved_label_args, collapse = ", "),
-          " through `...`; these arguments are derived by read_lasa_sav().",
-          call. = FALSE
-        )
-      }
-    }
-  }
-
-  # Only pass `wave` / `file_code` through to the label function if it
-  # actually declares that argument. This lets wave-aware implementations
-  # (e.g. apply_lasa046_labels(data, wave, ...)) and shared, file-code-aware
-  # implementations (e.g. a future apply_lasa_oa_labels(data, file_code, ...))
-  # coexist behind the same read_lasa_sav() entry point.
-  formal_names <- names(formals(label_fun))
-  label_call <- list(data = data)
-
-  if ("wave" %in% formal_names) {
-    label_call$wave <- info$wave
-  }
-  if ("file_code" %in% formal_names) {
-    label_call$file_code <- info$file_code
-  }
-
-  # The five reshaping arguments shared by every apply_*_labels() function in
-  # this package (see the "Shared parameter contract" note at the top of
-  # this file, and apply_lasa046_labels() for the canonical implementation).
-  # As with wave/file_code above, an argument is only forwarded if the
-  # selected function declares it. If the caller asked for a non-default
-  # value that the function does not support, warn rather than silently
-  # dropping the request, since that combination is most likely a mistake.
-  common_reshaping_args <- list(
+  out <- .lasa_apply_labels(
+    data,
+    filecode = info$file_code,
+    wave = info$wave,
     name_corrections = name_corrections,
     to_factor = to_factor,
     to_numeric = to_numeric,
     standardize_names = standardize_names,
     split_wavecode = split_wavecode
   )
-  common_reshaping_defaults <- list(
-    name_corrections = NULL,
-    to_factor = FALSE,
-    to_numeric = FALSE,
-    standardize_names = FALSE,
-    split_wavecode = FALSE
-  )
 
-  for (arg_name in names(common_reshaping_args)) {
-    if (arg_name %in% formal_names) {
-      label_call[[arg_name]] <- common_reshaping_args[[arg_name]]
-    } else if (!identical(common_reshaping_args[[arg_name]], common_reshaping_defaults[[arg_name]])) {
-      warning(
-        "'", arg_name, "' was supplied but ", info$apply_function,
-        "() does not declare that argument, so it is ignored for '",
-        info$file_name, "'.",
-        call. = FALSE
-      )
-    }
-  }
-
-  label_call <- c(label_call, user_label_args)
-  out <- do.call(label_fun, label_call)
-
-  # Attach provenance attributes so the object "remembers" which file and
-  # label function produced it, independent of any file-specific attributes
-  # the label function itself may have set (e.g. "label_report").
-  attr(out, "LASA_wave") <- info$wave
-  attr(out, "LASA_file_code") <- info$file_code
+  # .lasa_apply_labels() already sets "LASA_wave" and "LASA_file_code";
+  # read_lasa_sav() additionally records the source file it read.
   attr(out, "LASA_source_file") <- info$file_name
-  attr(out, "LASA_label_function") <- info$apply_function
 
   out
 }
@@ -976,38 +504,41 @@ read_lasa_sav <- function(path,
 #' code and therefore works for any `apply_*_labels()` implementation that
 #' stores its audit in the `"label_report"` attribute.
 #'
-#' @param data A data object previously processed by a LASA file-specific label
-#'   function or by [read_lasa_sav()].
+#' @param data A data object previously labelled by [read_lasa_sav()] or
+#'   [apply_lasa_labels()].
 #' @param problems_only Logical. If `FALSE` (default), return the full matching
 #'   audit. If `TRUE`, retain rows requiring attention. If the report has a
 #'   logical `problem` column, that column is used. Otherwise, when a `method`
 #'   column is available, common non-exact/failure methods are used.
 #'
 #' @details
-#' File-specific labelling functions should store their matching audit as
+#' [read_lasa_sav()] and [apply_lasa_labels()] store their matching audit as
 #' `attr(data, "label_report")` and the wave identifier as
-#' `attr(data, "LASA_wave")`. This avoids embedding a particular LASA file code
-#' in the attribute names and lets one reporting function serve all LASA files.
+#' `attr(data, "LASA_wave")`, so one reporting function serves every LASA
+#' file code.
 #'
-#' For consistency across label implementations, reports should ideally
-#' contain a `method` column using values such as `"exact"`,
-#' `"case-insensitive exact"`, `"manual correction"`, `"manual_not_found"`,
-#' `"not found"`, `"fuzzy"`, or `"ambiguous"`; alternatively they may provide
-#' a logical `problem` column. When a report was produced with
-#' `standardize_names = TRUE`, it may also contain a `standardized_to`
-#' column recording each matched column's renamed (canonical) name.
+#' The report's `method` column uses values such as `"exact"`,
+#' `"case-insensitive exact"`, `"exact canonical"`,
+#' `"case-insensitive canonical"`, `"manual correction"`,
+#' `"manual_not_found"`, or `"not found"` -- each optionally suffixed with
+#' `" (manual override)"` when the match's label/value labels were patched
+#' by [manual_update_lasa_labels()]. When produced with `standardize_names =
+#' TRUE`, it also contains a `standardized_to` column recording each matched
+#' column's renamed (canonical) name.
 #'
 #' @return A data frame containing the variable-name matching audit. The
 #'   returned report retains LASA context in the attributes `"LASA_wave"` and
 #'   `"LASA_file_code"` when those are available on `data`.
 #'
-#' @seealso [read_lasa_sav()], [apply_lasa046_labels()]
+#' @seealso [read_lasa_sav()], [apply_lasa_labels()]
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' dat <- data.frame(RespNr = 1:2, BLPHYA07 = c(1, 2))
-#' dat <- apply_lasa046_labels(dat, wave = "B")
+#' dat <- apply_lasa_labels(dat, filecode = "046", wave = "B")
 #' lasa_label_report(dat, problems_only = TRUE)
+#' }
 lasa_label_report <- function(data, problems_only = FALSE) {
   .lasa_assert_scalar_logical(problems_only, "problems_only")
 
