@@ -7,8 +7,8 @@
 lasa_label_report(data, problems_only = FALSE)
 }
 \arguments{
-\item{data}{A data object previously processed by a LASA file-specific label
-function or by \code{\link[=read_lasa_sav]{read_lasa_sav()}}.}
+\item{data}{A data object previously labelled by \code{\link[=read_lasa_sav]{read_lasa_sav()}} or
+\code{\link[=apply_lasa_labels]{apply_lasa_labels()}}.}
 
 \item{problems_only}{Logical. If \code{FALSE} (default), return the full matching
 audit. If \code{TRUE}, retain rows requiring attention. If the report has a
@@ -27,24 +27,26 @@ code and therefore works for any \verb{apply_*_labels()} implementation that
 stores its audit in the \code{"label_report"} attribute.
 }
 \details{
-File-specific labelling functions should store their matching audit as
+\code{\link[=read_lasa_sav]{read_lasa_sav()}} and \code{\link[=apply_lasa_labels]{apply_lasa_labels()}} store their matching audit as
 \code{attr(data, "label_report")} and the wave identifier as
-\code{attr(data, "LASA_wave")}. This avoids embedding a particular LASA file code
-in the attribute names and lets one reporting function serve all LASA files.
+\code{attr(data, "LASA_wave")}, so one reporting function serves every LASA
+file code.
 
-For consistency across label implementations, reports should ideally
-contain a \code{method} column using values such as \code{"exact"},
-\code{"case-insensitive exact"}, \code{"manual correction"}, \code{"manual_not_found"},
-\code{"not found"}, \code{"fuzzy"}, or \code{"ambiguous"}; alternatively they may provide
-a logical \code{problem} column. When a report was produced with
-\code{standardize_names = TRUE}, it may also contain a \code{standardized_to}
-column recording each matched column's renamed (canonical) name.
+The report's \code{method} column uses values such as \code{"exact"},
+\code{"case-insensitive exact"}, \code{"exact canonical"},
+\code{"case-insensitive canonical"}, \code{"manual correction"},
+\code{"manual_not_found"}, or \code{"not found"} -- each optionally suffixed with
+\code{" (manual override)"} when the match's label/value labels were patched
+by \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}. When produced with \code{standardize_names = TRUE}, it also contains a \code{standardized_to} column recording each matched
+column's renamed (canonical) name.
 }
 \examples{
+\dontrun{
 dat <- data.frame(RespNr = 1:2, BLPHYA07 = c(1, 2))
-dat <- apply_lasa046_labels(dat, wave = "B")
+dat <- apply_lasa_labels(dat, filecode = "046", wave = "B")
 lasa_label_report(dat, problems_only = TRUE)
 }
+}
 \seealso{
-\code{\link[=read_lasa_sav]{read_lasa_sav()}}, \code{\link[=apply_lasa046_labels]{apply_lasa046_labels()}}
+\code{\link[=read_lasa_sav]{read_lasa_sav()}}, \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}
 }

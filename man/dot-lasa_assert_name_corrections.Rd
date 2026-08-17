@@ -15,9 +15,8 @@ when \code{x} is neither \code{NULL} nor a validly named character vector.
 }
 \description{
 Shared validator for the \code{name_corrections} argument used by
-\code{\link[=read_lasa_sav]{read_lasa_sav()}} and by every \verb{apply_*_labels()} function in this
-package family (see \code{\link[=apply_lasa046_labels]{apply_lasa046_labels()}} for the canonical example).
-A valid \code{name_corrections} is either \code{NULL}, or a named character vector
+\code{\link[=read_lasa_sav]{read_lasa_sav()}} and \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}. A valid \code{name_corrections}
+is either \code{NULL}, or a named character vector
 mapping canonical LASA variable suffixes to the actual column names found
 in a user's data, for example \code{c(lphya08 = "BLPYA08")}.
 }
