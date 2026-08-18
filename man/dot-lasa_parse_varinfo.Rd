@@ -9,16 +9,10 @@
 \arguments{
 \item{path}{Path to a local \verb{*_varinfo.pdf} file.}
 
-\item{document_id}{Character scalar identifying this document (typically
-the file stem, e.g. \code{"LASA046_varinfo"}). Defaults to the file's own
-basename (without extension).}
+\item{document_id}{Character scalar identifying this document.}
 }
 \value{
-A list with \code{document} (single-row data frame: \code{document_id},
-\code{document_date}, \code{filecodes}), \code{variables}, and \code{value_labels} data
-frames (see R/lasa_label_db.R for the full schema these feed into;
-\code{var_type}/\code{is_missing}/\code{document_id} etc. are filled in by the caller,
-not here -- this function only does the positional PDF extraction).
+A list with \code{document}, \code{variables}, and \code{value_labels}.
 }
 \description{
 Parse one LASA varinfo PDF into structured metadata

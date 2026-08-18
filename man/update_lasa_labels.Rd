@@ -13,42 +13,26 @@ update_lasa_labels(
 )
 }
 \arguments{
-\item{filecode}{Optional LASA file code to resolve a PDF for (e.g.
-\code{"046"}, \code{"z004"}, \code{"zoa1"}, or the bare group prefix \code{"zoa"} when
-unambiguous). Ignored when \code{url} or \code{path} is supplied.}
+\item{filecode}{Optional LASA file code to resolve a PDF for.}
 
-\item{url}{Optional explicit PDF URL, bypassing file-code resolution.}
+\item{url}{Optional explicit PDF URL.}
 
-\item{path}{Optional path to an already-downloaded PDF, bypassing both
-resolution and download -- the only supported way to update the
-database without network access.}
+\item{path}{Optional path to an already-downloaded PDF.}
 
-\item{dry_run}{Logical, default \code{FALSE}. If \code{TRUE}, parse and validate
-as usual and return the same structured result, but never write to
-the database.}
+\item{dry_run}{Logical. Parse and validate but do not save.}
 
-\item{strict}{Logical, default \code{TRUE}. If \code{TRUE}, any row that couldn't
-be unambiguously parsed (wave-prefix expansion failure, an
-unresolved cross-reference, etc.) for a filecode the caller explicitly
-requested blocks the update entirely (the existing database is left
-untouched) rather than silently degrading its coverage. Has no effect
-on rows for other file codes incidentally sharing the same PDF.}
+\item{strict}{Logical. Block an explicitly requested filecode when its
+variable/wave identity cannot be resolved unambiguously.}
 }
 \value{
-Invisibly, a list describing what happened: \code{status}
-(\code{"no_op"}, \code{"inserted"}, or \code{"updated"}), \code{document_id},
-\code{pdf_changed} (\code{FALSE} for an identical-hash no-op), \code{filecodes},
-\code{n_variables}, \code{n_value_labels}, and \code{n_unresolved} (rows carrying a
-\code{parse_note}).
+Invisibly, a list describing the update.
 }
 \description{
 Downloads (or reads, via \code{path}) one LASA varinfo PDF, parses it, and
 merges the result into the user-local label database used by
-\code{\link[=apply_lasa_labels]{apply_lasa_labels()}} and \code{\link[=read_lasa_sav]{read_lasa_sav()}} -- replacing only the
-records this PDF itself owns (its \code{document_id} and every file code it
-documents), never anything recorded by a different document, and never
-a \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}} correction (a separate table, composed
-back on top at lookup time).
+\code{\link[=apply_lasa_labels]{apply_lasa_labels()}} and \code{\link[=read_lasa_sav]{read_lasa_sav()}}. Parsed records owned by the
+document/filecode are replaced transactionally; manual overrides remain
+separate and are composed on top at lookup time.
 }
 \seealso{
 \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}, \code{\link[=lasa_label_db]{lasa_label_db()}}
