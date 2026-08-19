@@ -1,4 +1,6 @@
 ---
+title: "CleanLASA introduction"
+author: "B.Hoogerheide"
 output: 
   html_document: 
     toc: false
@@ -168,7 +170,7 @@ data <- read_lasa_sav(
 )
 
 names(data)[1:4]
-summary(data$LASA_wave)
+unique(data$LASA_wave)
 ```
 
 `split_wavecode = TRUE` can also be used on its own. It renames matched LASA variables to their canonical names and inserts `LASA_wave`, but does not by itself force a differently-capitalized respondent-number column to be renamed to `respnr`.
@@ -180,7 +182,7 @@ data <- read_lasa_sav(
 )
 
 names(data)[1:4]
-summary(data$LASA_wave)
+unique(data$LASA_wave)
 ```
 
 ### Correct a known source-column name

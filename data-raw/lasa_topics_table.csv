@@ -1,391 +1,390 @@
-"theme","subtheme","topic","filecode","waves","has_varinfo","varinfo_file"
-"Biomaterial",,"Adiponectin, leptin and ghrelin","879","G",TRUE,"LASA879_varinfo.pdf"
-"Biomaterial",,"Apolipoprotein E (ApoE)","870","B, 2B",TRUE,"LASA870_varinfo.pdf"
-"Biomaterial",,"Blood collection and overview (routine) measurements","850","B, C, 2B, G, 3B",TRUE,"LASA850_varinfo.pdf"
-"Biomaterial",,"Bone-related hormones and bone turnover","862","C",TRUE,"LASA862_varinfo.pdf"
-"Biomaterial",,"Cholesterol, triglycerides and fructosamin","867","C",TRUE,"LASA867_varinfo.pdf"
-"Biomaterial",,"COLIA1 (Collagen type I α1 Sp1 polymorphism in LASA)","871","C",TRUE,"LASA871_varinfo.pdf"
-"Biomaterial",,"Cortisol (total plasma cortisol, corticosteroid binding globuline, salivary cortisol) - plasma / serum cortisol","864","C",TRUE,"LASA864_varinfo.pdf"
-"Biomaterial",,"Cortisol (total plasma cortisol, corticosteroid binding globuline, salivary cortisol) - Salivary cortisol (non)response","880","E",TRUE,"LASA880_881_882_varinfo.pdf"
-"Biomaterial",,"Cortisol (total plasma cortisol, corticosteroid binding globuline, salivary cortisol) - Salivary cortisol, moment of day","881","E",TRUE,"LASA880_881_882_varinfo.pdf"
-"Biomaterial",,"Cortisol (total plasma cortisol, corticosteroid binding globuline, salivary cortisol) - Salivary cortisol, moment of day (constructed)","882","E",TRUE,"LASA880_881_882_varinfo.pdf"
-"Biomaterial",,"Exome Chip",,"C, G",FALSE,
-"Biomaterial",,"Genetic polymorphisms (VDR, GR, etc) - Glucocorticoid Receptor (GR) SNPs and haplotypes","873","C",TRUE,"LASA873_varinfo.pdf"
-"Biomaterial",,"Genetic polymorphisms (VDR, GR, etc) - Vitamin D Receptor (VDR) SNPs and haplotypes","872","C",TRUE,"LASA872_varinfo.pdf"
-"Biomaterial",,"GWAS data",,"C, 2B, G, 3B",FALSE,
-"Biomaterial",,"Hair cortisol (LASA ancillary study)",,,FALSE,
-"Biomaterial",,"Homocysteine, vitamin B12, MMA","866","C",TRUE,"LASA866_varinfo.pdf"
-"Biomaterial",,"Inflammation factors","861","B, C, 3B",TRUE,"LASA861_varinfo.pdf"
-"Biomaterial",,"Plasma markers of Alzheimer's Disease","868","C, G",TRUE,"LASA868-878_varinfo.pdf"
-"Biomaterial",,"Plasma markers of endothelial dysfunction","878","G",TRUE,"LASA868-878_varinfo.pdf"
-"Biomaterial",,"Response blood sampling / DNA Date blood sampling","851","B, C, 2B, G, 3B",TRUE,"LASA851_varinfo.pdf"
-"Biomaterial",,"Routine measurements (Albumin and cholesterol)","860","B, C, 2B, G, 3B",TRUE,"LASA860_varinfo.pdf"
-"Biomaterial",,"Serum 25-hydroxy-vitamin D (25(OH)D) and parathyroid hormone (PTH)","862","C, 2B, G, 3B",TRUE,"LASA862_varinfo.pdf"
-"Biomaterial",,"Sex hormones","863","C",TRUE,"LASA863_varinfo.pdf"
-"Biomaterial",,"Thyroid function","865","C",TRUE,"LASA865_varinfo.pdf"
-"Biomaterial",,"Vitamin K status","869","2B",TRUE,"LASA869_varinfo.pdf"
-"Care","Adaptations and facilities","Adaptations in the house",,,FALSE,
-"Care","Adaptations and facilities","Use of assistive devices or assistence",,,FALSE,
-"Care","Contact with services","Care and contacts","109","I, J, K",TRUE,"LASA109_varinfo.pdf"
-"Care","Contact with services","Contact with health and social services","044","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA044_varinfo.pdf"
-"Care","Contact with services","Health care in country of origin","068","MB",TRUE,"LASA068_varinfo.pdf"
-"Care","Contact with services","Hospital admission","045","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA045_varinfo.pdf"
-"Care","Contact with services","Hospital admission - tel. proxy","603","C, D, E, F, G, H, I, J, K",TRUE,"LASA603_varinfo.pdf"
-"Care","Contact with services","Hospital admission - tel. respondent","703","C, D, E, F, G, H, I, J, K",TRUE,"LASA703_varinfo.pdf"
-"Care","Contact with services","Outpatient contact with medical specialists last 6 months","045","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA045_varinfo.pdf"
-"Care","Contact with services","Outpatient contact with medical specialists last 6 months - specification of specialist","245","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA045_varinfo.pdf"
-"Care","End of life care and preferences","Advance Care Planning (ACP)","108","I, K",TRUE,"LASA108_varinfo.pdf"
-"Care","End of life care and preferences","Advance Directives","093","D",TRUE,"LASA093_varinfo.pdf"
-"Care","End of life care and preferences","Advance Directives","195","F, G, H, I, J, K",TRUE,"LASA195_varinfo.pdf"
-"Care","End of life care and preferences","Advance Directives - tel. respondent","709","D",TRUE,"LASA709_varinfo.pdf"
-"Care","End of life care and preferences","Decisions in eol situations","148","G",TRUE,"LASA148_varinfo.pdf"
-"Care","End of life care and preferences","End-of-life care: interviews with proxies (LASA ancillary study)",,"E, G",FALSE,
-"Care","End of life care and preferences","Feelings and wishes about life and death","127","I, J, K",TRUE,"LASA127_varinfo.pdf"
-"Care","End of life care and preferences","General eol goals; Subj. life exp.","094","G, H, 3B, I, J, K",TRUE,"LASA094_varinfo.pdf"
-"Care","End of life care and preferences","Last wishes","146","F",TRUE,"LASA146_varinfo.pdf"
-"Care","End of life care and preferences","Opinions about euthanasia and end-of-life (eol) pill","122","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA122_varinfo.pdf"
-"Care","Needs assessment","Needs assessment - Contact with WMO and application for facilities","178","G, H, I, J, K",TRUE,"LASA178_varinfo.pdf"
-"Care","Needs assessment","Needs assessment - medical care indication","189","E, F, G, H, I, J, K",TRUE,"LASA189_varinfo.pdf"
-"Care","Needs assessment","Needs assessment - Medical indication and facilities (tel. proxy)","610","E, F, J, K",TRUE,"LASA610_varinfo.pdf"
-"Care","Needs assessment","Needs assessment - Medical indication and facilities (tel. respondent)","710","E, F, I, J, K",TRUE,"LASA710_varinfo.pdf"
-"Care","Needs assessment","Needs assessment - Use WVG facilities","177","G, H, I, J, K",TRUE,"LASA177_varinfo.pdf"
-"Care","Needs assessment","Needs assessment - Use WVG facilities (tel. proxy)","611","G, H, I, J, K",TRUE,"LASA611_varinfo.pdf"
-"Care","Needs assessment","Needs assessment - Use WVG facilities (tel. respondent)","711","G, H, I, J, K",TRUE,"LASA711_varinfo.pdf"
-"Care","Providing care","Family caregiving to older adults (LASA ancillary study)",,"E",FALSE,
-"Care","Providing care","Providing assistance with personal/household care","142","2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA142_varinfo.pdf"
-"Care","Use of care","Aggr. variables care network","233","H",TRUE,"LASA033_varinfo.pdf"
-"Care","Use of care","Care evaluation","033","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA033_varinfo.pdf"
-"Care","Use of care","Need for care","033","F, G, H, 3B, MB, I, J, K",TRUE,"LASA033_varinfo.pdf"
-"Care","Use of care","Perceived control in health care and scale (LASA ancillary study)",,"H",FALSE,
-"Care","Use of care","Perceived control of care","033","H, 3B, MB, I, J, K",TRUE,"LASA033_varinfo.pdf"
-"Care","Use of care","Personal budget (PGB)","033","H",TRUE,"LASA033_varinfo.pdf"
-"Care","Use of care","Satisfaction with care","033","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA033_varinfo.pdf"
-"Care","Use of care","Transitions in care (LASA ancillary study)*",,,FALSE,
-"Care","Use of care","Use of nursing care","033","H, 3B, MB, I, J, K",TRUE,"LASA033_varinfo.pdf"
-"Care","Use of care","Use of nursing care - tel. proxy","603","H, I, J, K",TRUE,"LASA603_varinfo.pdf"
-"Care","Use of care","Use of nursing care - tel. respondent","703","H, I, J, K",TRUE,"LASA703_varinfo.pdf"
-"Care","Use of care","Use of personal/household care","033","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA033_varinfo.pdf"
-"Care","Use of care","Use of personal/household care - tel. proxy","603","C, D, E, F, G, H, I, J, K",TRUE,"LASA603_varinfo.pdf"
-"Care","Use of care","Use of personal/household care - tel. respondent","703","C, D, E, F, G, H, I, J, K",TRUE,"LASA703_varinfo.pdf"
-"Care","Use of care","Use of respite care by R (for partner)","139","I, J, K",TRUE,"LASA139_varinfo.pdf"
-"Care","Use of care","Use of transport/admin. care","033","H, I, J, K",TRUE,"LASA033_varinfo.pdf"
-"Care","Use of care","Use of transport/admin. care - tel. proxy","603","H, I, J, K",TRUE,"LASA603_varinfo.pdf"
-"Care","Use of care","Use of transport/admin. care - tel. respondent","703","H, I, J, K",TRUE,"LASA703_varinfo.pdf"
-"Care",,"Attitudes about care","032","B",TRUE,"LASA032_varinfo.pdf"
-"Care",,"Attitudes about care","112","B, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA112_varinfo.pdf"
-"Care",,"Attitudes about care","175","J, K",TRUE,"LASA175_varinfo.pdf"
-"Care",,"Filial responsibility expectations","132","D, E, J",TRUE,"LASA132_varinfo.pdf"
-"Care",,"Filial responsibility expectations - scaled","332","D, E, J",TRUE,"LASA132_varinfo.pdf"
-"Care",,"Vignettes about help","074","D",TRUE,"LASA074_varinfo.pdf"
-"Care",,"Vignettes about help","274","D",TRUE,"LASA074_varinfo.pdf"
-"Cognitive","Dementia","Dementia algorithm",,"C, D, E, 2B, F, G, H, I",FALSE,
-"Cognitive","Dementia","Dementia parents","092","D, 2B",TRUE,"LASA092_varinfo.pdf"
-"Cognitive","Dementia","Dementia parents - tel. respondent","702","D",TRUE,"LASA702_varinfo.pdf"
-"Cognitive","Dementia","Dementia partner","139","E, F, G, H, 3B, I, J, K",TRUE,"LASA139_varinfo.pdf"
-"Cognitive","Executive functioning","Executive functioning (Digit span)","020","3B",TRUE,"LASA020_varinfo.pdf"
-"Cognitive","Executive functioning","Executive functioning (Digit span)","166","H, I, J, K",TRUE,"LASA166_varinfo.pdf"
-"Cognitive","Executive functioning","Executive functioning (Digit span)","220","3B",TRUE,"LASA020_varinfo.pdf"
-"Cognitive","Executive functioning","Verbal fluency","165","H, 3B, MB, I, J, K",TRUE,"LASA165_varinfo.pdf"
-"Cognitive","Intelligence and cognition","Crystallized intelligence (GIT ©)","037","C, F, I",FALSE,
-"Cognitive","Intelligence and cognition","Crystallized intelligence (GIT ©) - total scores","237","C, F, I",FALSE,
-"Cognitive","Intelligence and cognition","Fluid intelligence (RAVEN)","022","B, C, D, E, 2B, F, G",TRUE,"LASA022_varinfo.pdf"
-"Cognitive","Intelligence and cognition","Fluid intelligence (RAVEN)","024","B",TRUE,"LASA024_varinfo.pdf"
-"Cognitive","Intelligence and cognition","Fluid intelligence (RAVEN) - scaled Evaluation RAVEN","222","B, C, D, E, 2B, F, G",TRUE,"LASA022_varinfo.pdf"
-"Cognitive","Intelligence and cognition","Head trauma","035","D, E, F, G, H, I, J, K",TRUE,"LASA035_varinfo.pdf"
-"Cognitive","Intelligence and cognition","Head trauma - tel. proxy","602","D, E, F, G, H, I, J, K",TRUE,"LASA602_varinfo.pdf"
-"Cognitive","Intelligence and cognition","Head trauma - tel. respondent","702","D, E, F, G, H, I, J, K",TRUE,"LASA702_varinfo.pdf"
-"Cognitive","Intelligence and cognition","Health literacy","196","K",TRUE,"LASA196_varinfo.pdf"
-"Cognitive","Intelligence and cognition","Informant Quest. of COgn. DEcline (IQCODE) - tel. proxy","607","C, D, E, F, G, H, I, J, K",TRUE,"LASA607_varinfo.pdf"
-"Cognitive","Intelligence and cognition","Informant Quest. of COgn. DEcline (IQCODE) - tel. respondent","707","C",TRUE,"LASA707_varinfo.pdf"
-"Cognitive","Intelligence and cognition","Information processing speed (Coding task)","155","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA155_varinfo.pdf"
-"Cognitive","Intelligence and cognition","Mini-Mental State Examination (MMSE)","021","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA021_varinfo.pdf"
-"Cognitive","Intelligence and cognition","Mini-Mental State Examination (MMSE) - MMSE scaled","221","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA021_varinfo.pdf"
-"Cognitive","Intelligence and cognition","Mini-Mental State Examination (MMSE) - MMSE subtraction/spelling","421","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA021_varinfo.pdf"
-"Cognitive","Intelligence and cognition","Mini-Mental State Examination (MMSE) - tel. respondent","707","C, D, E, F, G, H, I, J, K",TRUE,"LASA707_varinfo.pdf"
-"Cognitive","Memory","Episodic memory (15WT)","156","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA156_varinfo.pdf"
-"Cognitive","Memory","Episodic memory (15WT) - constructed","356","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA156_varinfo.pdf"
-"Cognitive","Memory","Everyday memory","023","B, F",TRUE,"LASA023_varinfo.pdf"
-"Cognitive","Memory","Memory complaints","021","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA021_varinfo.pdf"
-"Cognitive","Memory","Memory complaints - tel. respondent","707","D, E, F, G, H, I, J, K",TRUE,"LASA707_varinfo.pdf"
-"Cognitive","Memory","Memory partner","139","E, F, G, H, 3B, I, J, K",TRUE,"LASA139_varinfo.pdf"
-"Cognitive","Memory","Metamemory","124","B, C, D",TRUE,"LASA124_varinfo.pdf"
-"Cognitive","Memory","Metamemory - scaled","324","B, C, D",TRUE,"LASA124_varinfo.pdf"
-"Demographics","General variables","(Non-)response; more detailed non-response","002","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASAz002_varinfo.pdf"
-"Demographics","General variables","(Non-)response; more detailed non-response","z002","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASAz002_varinfo.pdf"
-"Demographics","General variables","Age at interview","mb008","MB",TRUE,"LASAz008_varinfo.pdf"
-"Demographics","General variables","Age at interview","z008","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASAz008_varinfo.pdf"
-"Demographics","General variables","Education","mb004","MB",TRUE,"LASAz004_varinfo.pdf"
-"Demographics","General variables","Education","z004","B, 2B, 3B",TRUE,"LASAz004_varinfo.pdf"
-"Demographics","General variables","Ethnicity*","mb004","MB",TRUE,"LASAz004_varinfo.pdf"
-"Demographics","General variables","Ethnicity*","z004","B, 2B, 3B",TRUE,"LASAz004_varinfo.pdf"
-"Demographics","General variables","Nationality*","mb004","MB",TRUE,"LASAz004_varinfo.pdf"
-"Demographics","General variables","Nationality*","z004","B, 2B, 3B",TRUE,"LASAz004_varinfo.pdf"
-"Demographics","General variables","Sex","mb004","MB",TRUE,"LASAz004_varinfo.pdf"
-"Demographics","General variables","Sex","z004","B, 2B, 3B",TRUE,"LASAz004_varinfo.pdf"
-"Demographics","General variables","Time of measurement*","mb008","MB",TRUE,"LASAz008_varinfo.pdf"
-"Demographics","General variables","Time of measurement*","z008","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASAz008_varinfo.pdf"
-"Demographics","General variables","Weight factors",,,FALSE,
-"Demographics","Geography","History of domestic addresses*","z052","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASAz052_varinfo.pdf"
-"Demographics","Geography","Urbanization","mb095","MB",TRUE,"LASAz095_varinfo.pdf"
-"Demographics","Geography","Urbanization","z095","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASAz095_varinfo.pdf"
-"Demographics","Living arrangements","Household composition","011","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA011_varinfo.pdf"
-"Demographics","Living arrangements","Housing characteristics",,,FALSE,
-"Demographics","Living arrangements","Marital and partner status","z010","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASAz010_varinfo.pdf"
-"Demographics","Living arrangements","Marital and partner status - tel. proxy","601","C, D, E, F, G, H, I, J, K",FALSE,
-"Demographics","Living arrangements","Marital and partner status - tel. respondent","701","C, D, E, F, G, H, I, J, K",FALSE,
-"Demographics","Living arrangements","Marital and partner status (Migrant Cohort baseline)","mb010","MB",TRUE,"LASAz010_varinfo.pdf"
-"Demographics","Mortality","Mortality and cause of death","z991","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASAz991_varinfo.pdf"
-"Demographics","Mortality","Mortality and cause of death - Specified","z992","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASAz992_varinfo.pdf"
-"Demographics","Mortality","Mortality data","z990","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASAz990_varinfo.pdf"
-"Demographics","Religion","Church affiliation","038","MB",TRUE,"LASA038_varinfo.pdf"
-"Demographics","Religion","Church affiliation","z038","C, D, E, 2B, 3B",TRUE,"LASAz038_varinfo.pdf"
-"Demographics","Religion","Church attendance","038","MB, J, K",TRUE,"LASA038_varinfo.pdf"
-"Demographics","Religion","Church attendance","z038","D, E, 2B, F, G, H, 3B, I",TRUE,"LASAz038_varinfo.pdf"
-"Demographics","Socio-economic status","Health insurance","018","B",TRUE,"LASA018_varinfo.pdf"
-"Demographics","Socio-economic status","Income","017","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA017_varinfo.pdf"
-"Demographics","Socio-economic status","Income - Income specification (wave B only)","217","B",TRUE,"LASA217_varinfo.pdf"
-"Demographics","Socio-economic status","Income and wealth","015","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA015_varinfo.pdf"
-"Demographics","Socio-economic status","Income and wealth - house ownership","017","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA017_varinfo.pdf"
-"Demographics","Socio-economic status","Income and wealth - income","217","B",TRUE,"LASA217_varinfo.pdf"
-"Demographics","Socio-economic status","Income and wealth - income specification","019","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA019_varinfo.pdf"
-"Demographics","Socio-economic status","Income decline / evaluation","019","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA019_varinfo.pdf"
-"Demographics","Socio-economic status","Occupation","016","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA016_varinfo.pdf"
-"Emotional","(In)dependence","Investment in independence","144","F, G, H, I, J, K",TRUE,"LASA144_varinfo.pdf"
-"Emotional","ADHD","ADHD (LASA ancillary study)","179","G",TRUE,"LASA179_varinfo.pdf"
-"Emotional","ADHD","ADHD (LASA ancillary study) - constructed","379","G",TRUE,"LASA179_varinfo.pdf"
-"Emotional","Anxiety","Anxiety diagnoses",,"B, D, E, 2B, G, H, I, J",FALSE,
-"Emotional","Anxiety","Anxiety symptoms","026","B, C, D, E, F, G, H, 3B, MB, I, J, K",TRUE,"LASA026_varinfo.pdf"
-"Emotional","Anxiety","Anxiety symptoms - scaled","226","B, C, D, E, F, G, H, 3B, MB, I, J, K",TRUE,"LASA026_varinfo.pdf"
-"Emotional","Anxiety","Posttraumatic stress (PTSD)","091","D, E",TRUE,"LASA091_varinfo.pdf"
-"Emotional","Anxiety","Posttraumatic stress (PTSD) - scaled","291","D, E",TRUE,"LASA091_varinfo.pdf"
-"Emotional","Depression","Depression diagnoses and depression algorithm",,"J, K",FALSE,
-"Emotional","Depression","Depressive symptoms","025","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA025_varinfo.pdf"
-"Emotional","Depression","Depressive symptoms - scaled","225","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA025_varinfo.pdf"
-"Emotional","Depression","Depressive symptoms - tel. proxy","606","C, D, E",TRUE,"LASA606_varinfo.pdf"
-"Emotional","Depression","Depressive symptoms - tel. respondent","706","C, D, E, F, G, H, I, J, K",TRUE,"LASA706_varinfo.pdf"
-"Emotional","Depression","Depressive symptoms and food-related behaviour (LASA ancillary study)",,,FALSE,
-"Emotional","Depression","Lifetime Psychiatric Disorder (LIDAS)","039","K",TRUE,"LASA039_varinfo.pdf"
-"Emotional","Depression","Mental health problems and food-related behaviour (LASA ancillary study)",,,FALSE,
-"Emotional","Evaluation of life","Awareness of Age-Related Change (AARC-SF)","197","K",TRUE,"LASA197_varinfo.pdf"
-"Emotional","Evaluation of life","Generativity","802","J, K",TRUE,"LASA802_varinfo.pdf"
-"Emotional","Evaluation of life","Important aspects of life","110","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA110_varinfo.pdf"
-"Emotional","Evaluation of life","Satisfaction with life and happiness","110","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA110_varinfo.pdf"
-"Emotional","Evaluation of life","Satisfaction with life and happiness - 'happiness-line'","094","D",TRUE,"LASA094_varinfo.pdf"
-"Emotional","Evaluation of life","Valuation of life","137","E, F",TRUE,"LASA137_varinfo.pdf"
-"Emotional","Evaluation of life","Valuation of life - scaled","337","E, F",TRUE,"LASA137_varinfo.pdf"
-"Emotional","Personality traits","General self-regulation (GSR)","149","G, H",TRUE,"LASA149_varinfo.pdf"
-"Emotional","Personality traits","General self-regulation (GSR) - scaled","349","G, H",TRUE,"LASA149_varinfo.pdf"
-"Emotional","Personality traits","Humor","111","B, D",TRUE,"LASA111_varinfo.pdf"
-"Emotional","Personality traits","Humor - scaled","311","B, D",TRUE,"LASA111_varinfo.pdf"
-"Emotional","Personality traits","Mastery","027","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA027_varinfo.pdf"
-"Emotional","Personality traits","Mastery - scaled","227","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA027_varinfo.pdf"
-"Emotional","Personality traits","Meta-emotion","029","B",TRUE,"LASA029_varinfo.pdf"
-"Emotional","Personality traits","Meta-emotion","143","2B",TRUE,"LASA029_varinfo.pdf"
-"Emotional","Personality traits","Neuroticism and soc. inadequacy","123","B, C, D, E, 2B, 3B",TRUE,"LASA123_varinfo.pdf"
-"Emotional","Personality traits","Neuroticism and soc. inadequacy - scaled","323","B, C, D, E, 2B, 3B",TRUE,"LASA123_varinfo.pdf"
-"Emotional","Personality traits","Perceived self-efficacy","028","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA028_varinfo.pdf"
-"Emotional","Personality traits","Perceived self-efficacy - scaled","228","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA028_varinfo.pdf"
-"Emotional","Personality traits","Self-esteem","027","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA027_varinfo.pdf"
-"Emotional","Personality traits","Self-esteem - scaled","227","C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA027_varinfo.pdf"
-"Emotional","Religiousness","Gerotranscendence (Cosmic transcendence)","038","C, D, E, 2B, F",TRUE,"LASA038_varinfo.pdf"
-"Emotional","Religiousness","Gerotranscendence (Cosmic transcendence) - scaled","238","C, D, E, 2B, F",TRUE,"LASA238_varinfo.pdf"
-"Emotional","Religiousness","Orthodoxy (Main int.)","038","C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA038_varinfo.pdf"
-"Emotional","Religiousness","Orthodoxy (Main int.) - scaled","138","E",TRUE,"LASA138_varinfo.pdf"
-"Emotional","Religiousness","Orthodoxy (Self-adm. quest.)","238","C",TRUE,"LASA238_varinfo.pdf"
-"Emotional","Religiousness","Orthodoxy (Self-adm. quest.) - scaled","338","E",TRUE,"LASA338_varinfo.pdf"
-"Emotional","Religiousness","Praying","038","C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA038_varinfo.pdf"
-"Emotional","Religiousness","Religious coping","105","3B, MB",TRUE,"LASA105_varinfo.pdf"
-"Emotional","Religiousness","Salience of religion","038","C, D, E, 2B",TRUE,"LASA038_varinfo.pdf"
-"Emotional","Religiousness","Salience of religion","110","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA110_varinfo.pdf"
-"Emotional","Religiousness","Salience of religion - scaled","238","C, D, E, 2B",TRUE,"LASA238_varinfo.pdf"
-"Emotional","Religiousness","Salience of religion - tel. proxy","608","C",TRUE,"LASA608_varinfo.pdf"
-"Emotional","Religiousness","Salience of religion - tel. respondent","708","C",TRUE,"LASA708_varinfo.pdf"
-"Emotional","Sexuality","Gender identity","804","J, K",TRUE,"LASA804_varinfo.pdf"
-"Emotional","Sexuality","Sexuality","120","B, E, 2B, F, 3B",TRUE,"LASA120_varinfo.pdf"
-"Emotional","Singing and music","Singing and making music","103","H, I, J",TRUE,"LASA103_varinfo.pdf"
-"Emotional","Sleep","Sleep quality","117","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA117_varinfo.pdf"
-"Emotional","Sleep","Sleep quality - scaled","317","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA317_varinfo.pdf"
-"Emotional","Stress and stressors","(Negative) life events","272","C, D, E, F, G, H, I, J, K",TRUE,"LASA272_varinfo.pdf"
-"Emotional","Stress and stressors","Perceived stress","104","H, 3B",TRUE,"LASA104_varinfo.pdf"
-"Emotional","Stress and stressors","Perceived stress - scaled","304","H, 3B",TRUE,"LASA304_varinfo.pdf"
-"Emotional","Subjective age","Age norms","070","B, C, D, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA070_varinfo.pdf"
-"Emotional","Subjective age","Attitude toward ageing","071","B, K",TRUE,"LASA071_varinfo.pdf"
-"Emotional","Subjective age","Perceived discrimination","169","J, K",TRUE,"LASA169_varinfo.pdf"
-"Emotional","Subjective age","Subjective life expectancy/ subj. age","094","D, E, F, G, H, I, J, K",TRUE,"LASA094_varinfo.pdf"
-"Emotional","Worrying","Worrying","136","E",TRUE,"LASA136_varinfo.pdf"
-"Emotional","Worrying","Worrying - scaled","336","E",TRUE,"LASA336_varinfo.pdf"
-"Physical","Blood pressure","Blood pressure/pulse - retests","151","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA151_varinfo.pdf"
-"Physical","Body composition","Anthropometry - Ankle, Knee and Pulse width","185","C",TRUE,"LASA185_varinfo.pdf"
-"Physical","Body composition","Anthropometry - Calf measurement","161","I, J, K",TRUE,"LASA161_varinfo.pdf"
-"Physical","Body composition","Anthropometry - Calf measurement","171","B, D, E, 2B, F, G, H, 3B",TRUE,"LASA171_varinfo.pdf"
-"Physical","Body composition","Anthropometry - Weight and height","161","B, C, D, E, 2B, F, G, H, 3B, MB",TRUE,"LASA161_varinfo.pdf"
-"Physical","Body composition","Bio-electrical impedance (BIA) (subsample)","172","B",TRUE,"LASA172_varinfo.pdf"
-"Physical","Body composition","Birth weight","134","E, 2B, 3B",TRUE,"LASA134_varinfo.pdf"
-"Physical","Body composition","DXA (LASA ancillary study) - Hip / lumbar spine scan","o41","C, D",FALSE,
-"Physical","Body composition","DXA (LASA ancillary study) - Whole body scan","o42","C, D",FALSE,
-"Physical","Body composition","Perceived body shape","145","F, G, 3B, MB",TRUE,"LASA145_varinfo.pdf"
-"Physical","Body composition","Perceived body shape - scaled","345","F, G, 3B",TRUE,"LASA345_varinfo.pdf"
-"Physical","Body composition","Weight and height:history and weight change","160","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA160_varinfo.pdf"
-"Physical","Body composition","Weight and height:history and weight change - tel. respondent","714","I, J, K",TRUE,"LASA714_varinfo.pdf"
-"Physical","Chronic diseases","Allostatic Load (algorithm)",,"C",FALSE,
-"Physical","Chronic diseases","Aortic calcification (lateral radiographs)","zo22","C, D",FALSE,
-"Physical","Chronic diseases","Back pain","182","C, D, E",TRUE,"LASA182_varinfo.pdf"
-"Physical","Chronic diseases","Bedridden","182","C, D, F, G, H, 3B",TRUE,"LASA182_varinfo.pdf"
-"Physical","Chronic diseases","Cardiovascular diseases (algorithm)","zh01","B, C, D, E, 2B, F, G, H, 3B, MB, I",FALSE,
-"Physical","Chronic diseases","Decubitus (bedsores)","116","B",TRUE,"LASA116_varinfo.pdf"
-"Physical","Chronic diseases","Decubitus (bedsores)","159","B",TRUE,"LASA159_varinfo.pdf"
-"Physical","Chronic diseases","Diabetes mellitus (algorithm)","zdc1","B, C, D, E, F, G, H, I",TRUE,"LASAzdc1_2_3_varinfo.pdf"
-"Physical","Chronic diseases","Diabetes mellitus (algorithm)","zdc2","2B, F, G, H, I",TRUE,"LASAzdc1_2_3_varinfo.pdf"
-"Physical","Chronic diseases","Diabetes mellitus (algorithm)","zdc3","3B, I",TRUE,"LASAzdc1_2_3_varinfo.pdf"
-"Physical","Chronic diseases","GP information","g01","B, C, E, 2B, H, 3B",FALSE,
-"Physical","Chronic diseases","Hyperthyroidism","182","C, D",TRUE,"LASA182_varinfo.pdf"
-"Physical","Chronic diseases","Intrinsic Capacity",,,FALSE,
-"Physical","Chronic diseases","Metabolic syndrome","ch02","C",FALSE,
-"Physical","Chronic diseases","Osteoarthritis hip and knee (algorithm) - cohort 1","zoa1","B, C, D, E, F, G, H, I",TRUE,"LASAzoa1_2_3_varinfo.pdf"
-"Physical","Chronic diseases","Osteoarthritis hip and knee (algorithm) - cohort 2","zoa2","2B, F, G, H, I",TRUE,"LASAzoa1_2_3_varinfo.pdf"
-"Physical","Chronic diseases","Osteoarthritis hip and knee (algorithm) - cohort 3","zoa3","3B, I",TRUE,"LASAzoa1_2_3_varinfo.pdf"
-"Physical","Chronic diseases","Parkinson: early P. related signs","096","3B, MB",TRUE,"LASA096_varinfo.pdf"
-"Physical","Chronic diseases","Rheumatoid Arthritis (algorithm)",,,FALSE,
-"Physical","Chronic diseases","Self-report of chronic diseases","035","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA035_varinfo.pdf"
-"Physical","Chronic diseases","Self-report of chronic diseases - longitudinally cleaned","435","B, C",TRUE,"LASA035_varinfo.pdf"
-"Physical","Chronic diseases","Self-report of chronic diseases - nr. of diseases reported","235","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA035_varinfo.pdf"
-"Physical","Chronic diseases","Self-report of chronic diseases - tel. proxy","602","C, D, E, F, G, H, I, J, K",TRUE,"LASA602_varinfo.pdf"
-"Physical","Chronic diseases","Self-report of chronic diseases - tel. respondent","702","C, D, E, F, G, H, I, J, K",TRUE,"LASA702_varinfo.pdf"
-"Physical","Falling","Dizziness","187","C, D, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA187_varinfo.pdf"
-"Physical","Falling","Falls","187","C, D, 3B, MB, J, K",TRUE,"LASA187_varinfo.pdf"
-"Physical","Falling","Falls - tel. proxy","605","C, D",TRUE,"LASA605_varinfo.pdf"
-"Physical","Falling","Falls - tel. respondent","705","C, D",TRUE,"LASA705_varinfo.pdf"
-"Physical","Falling","Falls: 1y prospective fall calendar (LASA ancillary study)",,"G",FALSE,
-"Physical","Falling","Falls: 3y prospective fall calendar (LASA ancillary study)",,"C",FALSE,
-"Physical","Falling","Falls: circumstances and consequences","187","D, J, K",TRUE,"LASA187_varinfo.pdf"
-"Physical","Falling","Falls: environmental conditions (home)","180","C, D",TRUE,"LASA180_varinfo.pdf"
-"Physical","Falling","Falls: fear of falling (FES: Falls Efficacy Scale)","183","C, D",TRUE,"LASA183_varinfo.pdf"
-"Physical","Falling","Falls: prevention of fall accidents (LASA ancillary study)",,"D",FALSE,
-"Physical","Falling","Foot problems","185","C, D, E, F",TRUE,"LASA185_varinfo.pdf"
-"Physical","Falling","Walking aids","187","D, E, 2B, F, G, H, 3B",TRUE,"LASA187_varinfo.pdf"
-"Physical","Fertility","Fertility (women)","119","B",TRUE,"LASA119_varinfo.pdf"
-"Physical","Fertility","Fertility (women)","181","C, 2B, 3B, MB",TRUE,"LASA181_varinfo.pdf"
-"Physical","Fractures","Fractures","186","C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA186_varinfo.pdf"
-"Physical","Fractures","Fractures - tel. proxy","605","C, D, E, F, G, H, I, J, K",TRUE,"LASA605_varinfo.pdf"
-"Physical","Fractures","Fractures - tel. respondent","705","C, D, E, F, G, H, I, J, K",TRUE,"LASA705_varinfo.pdf"
-"Physical","Fractures","Fractures - total waves B-E","ZFF1","B, C, D, E",FALSE,
-"Physical","Fractures","Quantitative ultrasound of bone","o31","C, G",FALSE,
-"Physical","Fractures","Vertebral deformities","zo22","C, D",FALSE,
-"Physical","Frailty","Various definitions (e.g., frailty phenotype, frailty index)",,"B, C, D, E, 2B, F, G, H, 3B, MB, I, J",FALSE,
-"Physical","Lifestyle","Accelerometry (LASA ancillary studies) - subsample (St. 1) - subsample (St. 2) - subsample (St. 3) - subsample (St. 4)",,,FALSE,
-"Physical","Lifestyle","Alcohol use","153","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA153_varinfo.pdf"
-"Physical","Lifestyle","Alcohol use - scaled","353","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA353_varinfo.pdf"
-"Physical","Lifestyle","Coffee and tea consumption","801","J, K",TRUE,"LASA801_varinfo.pdf"
-"Physical","Lifestyle","Daily Physical Activity","162","J",TRUE,"LASA162_varinfo.pdf"
-"Physical","Lifestyle","Diet and food consumption","118","B, C, D, H, I, J, K",TRUE,"LASA118_varinfo.pdf"
-"Physical","Lifestyle","Diet and food consumption","184","C, D",TRUE,"LASA184_varinfo.pdf"
-"Physical","Lifestyle","Early life physical activity","246","C",TRUE,"LASA246_varinfo.pdf"
-"Physical","Lifestyle","MicMac study (LASA ancillary study)",,"I",FALSE,
-"Physical","Lifestyle","Oral health","126","I, J, K",TRUE,"LASA126_varinfo.pdf"
-"Physical","Lifestyle","Oral health",,"F",FALSE,
-"Physical","Lifestyle","Perceived physical activity (LIVAS)","114","B, C, D, E, 2B, F",TRUE,"LASA114_varinfo.pdf"
-"Physical","Lifestyle","Perceived physical activity (LIVAS) - scaled","314","B, C, D, E, 2B, F",TRUE,"LASA314_varinfo.pdf"
-"Physical","Lifestyle","Physical activity","046","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA046_varinfo.pdf"
-"Physical","Lifestyle","Sedentary behavior","101","G, H, 3B, MB, I, J, K",FALSE,
-"Physical","Lifestyle","Sedentary behavior - longitudinally cleaned","501","G, H, 3B, MB, I, J, K",FALSE,
-"Physical","Lifestyle","Sedentary behavior - scaled","301","G, H, 3B, MB, I, J, K",FALSE,
-"Physical","Lifestyle","Smoking","154","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA154_varinfo.pdf"
-"Physical","Medication/ supplements","Food supplement use","174","I, J, K",TRUE,"LASA174_varinfo.pdf"
-"Physical","Medication/ supplements","Food supplement use - Vitamin D use included","374","I, J, K",TRUE,"LASA374_varinfo.pdf"
-"Physical","Medication/ supplements","Medication and food supplement use","152","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA152_varinfo.pdf"
-"Physical","Medication/ supplements","Medication and food supplement use - types of medication","352","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA352_varinfo.pdf"
-"Physical","Pain","Dealing with pain","188","E",TRUE,"LASA188_varinfo.pdf"
-"Physical","Pain","Pain drawing","188","E",TRUE,"LASA188_varinfo.pdf"
-"Physical","Pain","Subjective pain","115","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA115_varinfo.pdf"
-"Physical","Pain","Subjective pain - scaled","315","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA315_varinfo.pdf"
-"Physical","Perception: Hearing","Hearing (self-report)","031","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA031_varinfo.pdf"
-"Physical","Perception: Hearing","Hearing (self-report) - tel. proxy","604","C, D, E, F, G, H, I, J, K",TRUE,"LASA604_varinfo.pdf"
-"Physical","Perception: Hearing","Hearing (self-report) - tel. respondent","704","C, D, E, F, G, H, I, J, K",TRUE,"LASA704_varinfo.pdf"
-"Physical","Perception: Hearing","Hearing (self-report) - total scores","231","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA231_varinfo.pdf"
-"Physical","Perception: Hearing","Hearing: SNT questionnaire","194","E, F, G, I",TRUE,"LASA194_varinfo.pdf"
-"Physical","Perception: Hearing","Hearing: SNT technical measures","193","E, F, G, I",TRUE,"LASA193_varinfo.pdf"
-"Physical","Perception: smell","Olfactory function","S00","3B, MB",TRUE,"LASAS00_varinfo.pdf"
-"Physical","Perception: smell","Olfactory function","S01","3B, MB",TRUE,"LASAS01_varinfo.pdf"
-"Physical","Perception: smell","Olfactory function","S02","3B, MB",TRUE,"LASAS02_varinfo.pdf"
-"Physical","Perception: Vision","Vision (self-report)","031","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA031_varinfo.pdf"
-"Physical","Perception: Vision","Vision (self-report) - tel. proxy","604","C, D, E, F, G, H, I, J, K",TRUE,"LASA604_varinfo.pdf"
-"Physical","Perception: Vision","Vision (self-report) - tel. respondent","704","C, D, E, F, G, H, I, J, K",TRUE,"LASA704_varinfo.pdf"
-"Physical","Perception: Vision","Vision (self-report) - total scores","231","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA231_varinfo.pdf"
-"Physical","Perception: Vision","Vision: contrast sensitivity","157","B, C, D, E, 2B, F",TRUE,"LASA157_varinfo.pdf"
-"Physical","Perception: Vision","Visual acuity test","191","E, F, G, H, 3B",TRUE,"LASA191_varinfo.pdf"
-"Physical","Perception: Vision","Visual acuity test - Vision-related quality of life","192","E, F, G, H",TRUE,"LASA192_varinfo.pdf"
-"Physical","Physical functioning","Funct. limitations (ADL)","030","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA030_varinfo.pdf"
-"Physical","Physical functioning","Funct. limitations (ADL) - constructed (sum scores)","230","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA230_varinfo.pdf"
-"Physical","Physical functioning","Funct. limitations (ADL) - limitations in joint mobility (medical interview)","183","C, D, E",TRUE,"LASA183_varinfo.pdf"
-"Physical","Physical functioning","Funct. limitations (ADL) - tel. proxy","603","C, D, E, F, G, H, I, J, K",TRUE,"LASA603_varinfo.pdf"
-"Physical","Physical functioning","Funct. limitations (ADL) - tel. respondent","703","C, D, E, F, G, H, I, J, K",TRUE,"LASA703_varinfo.pdf"
-"Physical","Physical functioning","Global Activity Limitations","033","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA033_varinfo.pdf"
-"Physical","Physical functioning","Global Activity Limitations - tel. respondent","703","C, D, E, F, G, H, I, J, K",TRUE,"LASA703_varinfo.pdf"
-"Physical","Physical functioning","Grip strength","161","C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA161_varinfo.pdf"
-"Physical","Physical functioning","Partner relationship","139","E, F, G, H, 3B, I, J, K",TRUE,"LASA139_varinfo.pdf"
-"Physical","Physical functioning","Peak Flow","158","B, C, D, E, G, H",TRUE,"LASA158_varinfo.pdf"
-"Physical","Physical functioning","Physical performance","034","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA034_varinfo.pdf"
-"Physical","Physical functioning","Spirometry (post bronchodilator)","168","3B",TRUE,"LASA168_varinfo.pdf"
-"Physical","Quality of life","EuroQol","135","E, F, G, H, 3B, I",TRUE,"LASA135_varinfo.pdf"
-"Physical","Quality of life","EuroQol - scaled","335","E, F, G, H, 3B, I",TRUE,"LASA335_varinfo.pdf"
-"Physical","Quality of life","Qualeffo-41","o80","E",TRUE,"LASAo80_varinfo.pdf"
-"Physical","Quality of life","Qualeffo-41 - (non)response","o81","E",TRUE,"LASAo81_varinfo.pdf"
-"Physical","Quality of life","Qualeffo-41 - Qualeffo scores","o82","E",TRUE,"LASAo82_varinfo.pdf"
-"Physical","Quality of life","Self-rated health","036","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA036_varinfo.pdf"
-"Physical","Quality of life","Self-rated health - GHPQ","113","B, C, D, E, 2B, F, G, H, 3B",TRUE,"LASA113_varinfo.pdf"
-"Physical","Quality of life","Self-rated health - GHPQ: scaled","313","B, C, D, E, 2B, F, G, H, 3B",TRUE,"LASA313_varinfo.pdf"
-"Physical","Quality of life","Self-rated health - tel. proxy","602","C, D, E, F, G, H, I, J, K",TRUE,"LASA602_varinfo.pdf"
-"Physical","Quality of life","Self-rated health - tel. respondent","702","C, D, E, F, G, H, I, J, K",TRUE,"LASA702_varinfo.pdf"
-"Physical","Quality of life","SF-12 Health Survey","133","D, E, F, G, H, 3B, I, J, K",TRUE,"LASA133_varinfo.pdf"
-"Physical","Quality of life","SF-12 Health Survey - scaled","333","D, E, F, G, H, 3B, I, J, K",TRUE,"LASA333_varinfo.pdf"
-"Physical","Quality of life","SF-12 Health Survey - scaled (Am.)","533","D, E, F, G, H, 3B, I, J, K",TRUE,"LASA533_varinfo.pdf"
-"Physical","Quality of life","WHO Quality of Life","133","I, J, K",TRUE,"LASA133_varinfo.pdf"
-"Social","Affiliation","Need for affiliation","078","B, E",TRUE,"LASA078_varinfo.pdf"
-"Social","Affiliation","Need for affiliation","141","2B, G",TRUE,"LASA141_varinfo.pdf"
-"Social","Affiliation","Need for affiliation - scaled","278","B, E",TRUE,"LASA078_varinfo.pdf"
-"Social","Affiliation","Need for affiliation - scaled","341","2B, G",TRUE,"LASA141_varinfo.pdf"
-"Social","Housing","House ownership","015","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA015_varinfo.pdf"
-"Social","Housing","Housing characteristics - tel. proxy","601","C, D, E, F, G, H, I, J, K",TRUE,"LASA601_varinfo.pdf"
-"Social","Housing","Housing characteristics - tel. respondent","701","C, D, E, F, G, H, I, J, K",TRUE,"LASA701_varinfo.pdf"
-"Social","Housing","Housing characteristics and adaptations","014","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA014_varinfo.pdf"
-"Social","Housing","Neighborhood characteristics","015","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA015_varinfo.pdf"
-"Social","Housing","Neighborhood characteristics","095","K",FALSE,
-"Social","Housing","Neighborhood characteristics","z095","B, C, D, E, 2B, F, G, H, 3B, MB, I, J",TRUE,"LASAz095_varinfo.pdf"
-"Social","Housing","Neighborhood problems","170","J, K",FALSE,
-"Social","Housing","Pets in household","012","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA012_varinfo.pdf"
-"Social","Housing","Relocation","014","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA014_varinfo.pdf"
-"Social","Housing","Relocation","015","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA015_varinfo.pdf"
-"Social","Housing","Relocation - tel. proxy","601","C, D, E, F, G, H, I, J, K",TRUE,"LASA601_varinfo.pdf"
-"Social","Housing","Relocation - tel. respondent","701","C, D, E, F, G, H, I, J, K",TRUE,"LASA701_varinfo.pdf"
-"Social","Housing","Residence in 1944","013","B",TRUE,"LASA013_varinfo.pdf"
-"Social","Loneliness","Existential loneliness","173","J",TRUE,"LASA173_varinfo.pdf"
-"Social","Loneliness","Loneliness","073","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA073_varinfo.pdf"
-"Social","Loneliness","Loneliness - scaled","273","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA073_varinfo.pdf"
-"Social","Loneliness","Loneliness - tel. respondent","712","H, I, J, K",TRUE,"LASA712_varinfo.pdf"
-"Social","Partner relationship","Relationship quality","139","E, F, G, H, 3B, I, J, K",TRUE,"LASA139_varinfo.pdf"
-"Social","Relationships between generations","Children","048","C, E, 2B, F, 3B, MB, I",TRUE,"LASA048_varinfo.pdf"
-"Social","Relationships between generations","Children","248","E, 2B, F, 3B, MB",TRUE,"LASA048_varinfo.pdf"
-"Social","Relationships between generations","Filial responsibility expectations","132","D, E, J",TRUE,"LASA132_varinfo.pdf"
-"Social","Relationships between generations","Filial responsibility expectations - scaled","332","D, E, J",TRUE,"LASA132_varinfo.pdf"
-"Social","Relationships between generations","Grandchildren","049","F",TRUE,"LASA049_varinfo.pdf"
-"Social","Relationships between generations","Parental data","140","2B, 3B",TRUE,"LASA140_varinfo.pdf"
-"Social","Relationships between generations","Vignettes about help","074","D",TRUE,"LASA074_varinfo.pdf"
-"Social","Relationships between generations","Vignettes about help - total scores","274","D",TRUE,"LASA074_varinfo.pdf"
-"Social","Social network","Contact network","167","3B, MB, I",TRUE,"LASA167_varinfo.pdf"
-"Social","Social network","Personal network","047","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA047_varinfo.pdf"
-"Social","Social network","Personal network - network size","247","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA247_varinfo.pdf"
-"Social","Social norms","Donorship","128","I, J",TRUE,"LASA128_varinfo.pdf"
-"Social","Social norms","Social desirability","130","C, F",TRUE,"LASA130_varinfo.pdf"
-"Social","Social norms","Social desirability - scaled","330","C, F",TRUE,"LASA330_varinfo.pdf"
-"Social","Social norms","Social identity","131","D, E",TRUE,"LASA131_varinfo.pdf"
-"Social","Social norms","Social identity - scaled","331","D, E",TRUE,"LASA331_varinfo.pdf"
-"Social","Social norms","Ties with country of origin","069","MB",TRUE,"LASA069_varinfo.pdf"
-"Social","Social norms","Values and norms","122","B, C, D, E, 2B, F, G, H, 3B, I, J, K",TRUE,"LASA122_varinfo.pdf"
-"Social","Social participation","Environmental influence","121","B, C, D",TRUE,"LASA121_varinfo.pdf"
-"Social","Social participation","Social participation","070","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA070_varinfo.pdf"
-"Social","Social participation","Social participation","125","B, C, D, E, 2B, F, G",TRUE,"LASA125_varinfo.pdf"
-"Work",,"General Population Job ExposureMatrix (GPJEM)","016","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA016_varinfo.pdf"
-"Work",,"Perception of work conditions","106","3B, MB, I, J, K",TRUE,"LASA106_varinfo.pdf"
-"Work",,"Work (Employment) and Retirement","016","B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K",TRUE,"LASA016_varinfo.pdf"
-"Work",,"Work (Employment) and Retirement - tel. respondent*","713","I, J, K",TRUE,"LASA713_varinfo.pdf"
-"Work",,"Work and Retirement characteristics",,,FALSE,
+"theme,""subtheme"",""topic"",""filecode"",""waves"",""has_varinfo"",""varinfo_file""";
+"Biomaterial,,""Adiponectin, leptin and ghrelin"",""879"",""G"",TRUE,""LASA879_varinfo.pdf""";
+"Biomaterial,,""Apolipoprotein E (ApoE)"",""870"",""B, 2B"",TRUE,""LASA870_varinfo.pdf""";
+"Biomaterial,,""Blood collection and overview (routine) measurements"",""850"",""B, C, 2B, G, 3B"",TRUE,""LASA850_varinfo.pdf""";
+"Biomaterial,,""Bone-related hormones and bone turnover"",""862"",""C"",TRUE,""LASA862_varinfo.pdf""";
+"Biomaterial,,""Cholesterol, triglycerides and fructosamin"",""867"",""C"",TRUE,""LASA867_varinfo.pdf""";
+"Biomaterial,,""COLIA1 (Collagen type I α1 Sp1 polymorphism in LASA)"",""871"",""C"",TRUE,""LASA871_varinfo.pdf""";
+"Biomaterial,,""Cortisol (total plasma cortisol, corticosteroid binding globuline, salivary cortisol) - plasma / serum cortisol"",""864"",""C"",TRUE,""LASA864_varinfo.pdf""";
+"Biomaterial,,""Cortisol (total plasma cortisol, corticosteroid binding globuline, salivary cortisol) - Salivary cortisol (non)response"",""880"",""E"",TRUE,""LASA880_881_882_varinfo.pdf""";
+"Biomaterial,,""Cortisol (total plasma cortisol, corticosteroid binding globuline, salivary cortisol) - Salivary cortisol, moment of day"",""881"",""E"",TRUE,""LASA880_881_882_varinfo.pdf""";
+"Biomaterial,,""Cortisol (total plasma cortisol, corticosteroid binding globuline, salivary cortisol) - Salivary cortisol, moment of day (constructed)"",""882"",""E"",TRUE,""LASA880_881_882_varinfo.pdf""";
+"Biomaterial,,""Exome Chip"",,""C, G"",FALSE,";
+"Biomaterial,,""Genetic polymorphisms (VDR, GR, etc) - Glucocorticoid Receptor (GR) SNPs and haplotypes"",""873"",""C"",TRUE,""LASA873_varinfo.pdf""";
+"Biomaterial,,""Genetic polymorphisms (VDR, GR, etc) - Vitamin D Receptor (VDR) SNPs and haplotypes"",""872"",""C"",TRUE,""LASA872_varinfo.pdf""";
+"Biomaterial,,""GWAS data"",,""C, 2B, G, 3B"",FALSE,";
+"Biomaterial,,""Hair cortisol (LASA ancillary study)"",,,FALSE,";
+"Biomaterial,,""Homocysteine, vitamin B12, MMA"",""866"",""C"",TRUE,""LASA866_varinfo.pdf""";
+"Biomaterial,,""Inflammation factors"",""861"",""B, C, 3B"",TRUE,""LASA861_varinfo.pdf""";
+"Biomaterial,,""Plasma markers of Alzheimer's Disease"",""868"",""C, G"",TRUE,""LASA868-878_varinfo.pdf""";
+"Biomaterial,,""Plasma markers of endothelial dysfunction"",""878"",""G"",TRUE,""LASA868-878_varinfo.pdf""";
+"Biomaterial,,""Response blood sampling / DNA Date blood sampling"",""851"",""B, C, 2B, G, 3B"",TRUE,""LASA851_varinfo.pdf""";
+"Biomaterial,,""Routine measurements (Albumin and cholesterol)"",""860"",""B, C, 2B, G, 3B"",TRUE,""LASA860_varinfo.pdf""";
+"Biomaterial,,""Serum 25-hydroxy-vitamin D (25(OH)D) and parathyroid hormone (PTH)"",""862"",""C, 2B, G, 3B"",TRUE,""LASA862_varinfo.pdf""";
+"Biomaterial,,""Sex hormones"",""863"",""C"",TRUE,""LASA863_varinfo.pdf""";
+"Biomaterial,,""Thyroid function"",""865"",""C"",TRUE,""LASA865_varinfo.pdf""";
+"Biomaterial,,""Vitamin K status"",""869"",""2B"",TRUE,""LASA869_varinfo.pdf""";
+"Care,""Adaptations and facilities"",""Adaptations in the house"",,,FALSE,";
+"Care,""Adaptations and facilities"",""Use of assistive devices or assistence"",,,FALSE,";
+"Care,""Contact with services"",""Care and contacts"",""109"",""I, J, K"",TRUE,""LASA109_varinfo.pdf""";
+"Care,""Contact with services"",""Contact with health and social services"",""044"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA044_varinfo.pdf""";
+"Care,""Contact with services"",""Health care in country of origin"",""068"",""MB"",TRUE,""LASA068_varinfo.pdf""";
+"Care,""Contact with services"",""Hospital admission"",""045"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA045_varinfo.pdf""";
+"Care,""Contact with services"",""Hospital admission - tel. proxy"",""603"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA603_varinfo.pdf""";
+"Care,""Contact with services"",""Hospital admission - tel. respondent"",""703"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA703_varinfo.pdf""";
+"Care,""Contact with services"",""Outpatient contact with medical specialists last 6 months"",""045"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA045_varinfo.pdf""";
+"Care,""Contact with services"",""Outpatient contact with medical specialists last 6 months - specification of specialist"",""245"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA045_varinfo.pdf""";
+"Care,""End of life care and preferences"",""Advance Care Planning (ACP)"",""108"",""I, K"",TRUE,""LASA108_varinfo.pdf""";
+"Care,""End of life care and preferences"",""Advance Directives"",""093"",""D"",TRUE,""LASA093_varinfo.pdf""";
+"Care,""End of life care and preferences"",""Advance Directives"",""195"",""F, G, H, I, J, K"",TRUE,""LASA195_varinfo.pdf""";
+"Care,""End of life care and preferences"",""Advance Directives - tel. respondent"",""709"",""D"",TRUE,""LASA709_varinfo.pdf""";
+"Care,""End of life care and preferences"",""Decisions in eol situations"",""148"",""G"",TRUE,""LASA148_varinfo.pdf""";
+"Care,""End of life care and preferences"",""End-of-life care: interviews with proxies (LASA ancillary study)"",,""E, G"",FALSE,";
+"Care,""End of life care and preferences"",""Feelings and wishes about life and death"",""127"",""I, J, K"",TRUE,""LASA127_varinfo.pdf""";
+"Care,""End of life care and preferences"",""General eol goals";" Subj. life exp."",""094"",""G, H, 3B, I, J, K"",TRUE,""LASA094_varinfo.pdf"""
+"Care,""End of life care and preferences"",""Last wishes"",""146"",""F"",TRUE,""LASA146_varinfo.pdf""";
+"Care,""End of life care and preferences"",""Opinions about euthanasia and end-of-life (eol) pill"",""122"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA122_varinfo.pdf""";
+"Care,""Needs assessment"",""Needs assessment - Contact with WMO and application for facilities"",""178"",""G, H, I, J, K"",TRUE,""LASA178_varinfo.pdf""";
+"Care,""Needs assessment"",""Needs assessment - medical care indication"",""189"",""E, F, G, H, I, J, K"",TRUE,""LASA189_varinfo.pdf""";
+"Care,""Needs assessment"",""Needs assessment - Medical indication and facilities (tel. proxy)"",""610"",""E, F, J, K"",TRUE,""LASA610_varinfo.pdf""";
+"Care,""Needs assessment"",""Needs assessment - Medical indication and facilities (tel. respondent)"",""710"",""E, F, I, J, K"",TRUE,""LASA710_varinfo.pdf""";
+"Care,""Needs assessment"",""Needs assessment - Use WVG facilities"",""177"",""G, H, I, J, K"",TRUE,""LASA177_varinfo.pdf""";
+"Care,""Needs assessment"",""Needs assessment - Use WVG facilities (tel. proxy)"",""611"",""G, H, I, J, K"",TRUE,""LASA611_varinfo.pdf""";
+"Care,""Needs assessment"",""Needs assessment - Use WVG facilities (tel. respondent)"",""711"",""G, H, I, J, K"",TRUE,""LASA711_varinfo.pdf""";
+"Care,""Providing care"",""Family caregiving to older adults (LASA ancillary study)"",,""E"",FALSE,";
+"Care,""Providing care"",""Providing assistance with personal/household care"",""142"",""2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA142_varinfo.pdf""";
+"Care,""Use of care"",""Aggr. variables care network"",""233"",""H"",TRUE,""LASA033_varinfo.pdf""";
+"Care,""Use of care"",""Care evaluation"",""033"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA033_varinfo.pdf""";
+"Care,""Use of care"",""Need for care"",""033"",""F, G, H, 3B, MB, I, J, K"",TRUE,""LASA033_varinfo.pdf""";
+"Care,""Use of care"",""Perceived control in health care and scale (LASA ancillary study)"",,""H"",FALSE,";
+"Care,""Use of care"",""Perceived control of care"",""033"",""H, 3B, MB, I, J, K"",TRUE,""LASA033_varinfo.pdf""";
+"Care,""Use of care"",""Personal budget (PGB)"",""033"",""H"",TRUE,""LASA033_varinfo.pdf""";
+"Care,""Use of care"",""Satisfaction with care"",""033"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA033_varinfo.pdf""";
+"Care,""Use of care"",""Transitions in care (LASA ancillary study)*"",,,FALSE,";
+"Care,""Use of care"",""Use of nursing care"",""033"",""H, 3B, MB, I, J, K"",TRUE,""LASA033_varinfo.pdf""";
+"Care,""Use of care"",""Use of nursing care - tel. proxy"",""603"",""H, I, J, K"",TRUE,""LASA603_varinfo.pdf""";
+"Care,""Use of care"",""Use of nursing care - tel. respondent"",""703"",""H, I, J, K"",TRUE,""LASA703_varinfo.pdf""";
+"Care,""Use of care"",""Use of personal/household care"",""033"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA033_varinfo.pdf""";
+"Care,""Use of care"",""Use of personal/household care - tel. proxy"",""603"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA603_varinfo.pdf""";
+"Care,""Use of care"",""Use of personal/household care - tel. respondent"",""703"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA703_varinfo.pdf""";
+"Care,""Use of care"",""Use of respite care by R (for partner)"",""139"",""I, J, K"",TRUE,""LASA139_varinfo.pdf""";
+"Care,""Use of care"",""Use of transport/admin. care"",""033"",""H, I, J, K"",TRUE,""LASA033_varinfo.pdf""";
+"Care,""Use of care"",""Use of transport/admin. care - tel. proxy"",""603"",""H, I, J, K"",TRUE,""LASA603_varinfo.pdf""";
+"Care,""Use of care"",""Use of transport/admin. care - tel. respondent"",""703"",""H, I, J, K"",TRUE,""LASA703_varinfo.pdf""";
+"Care,,""Attitudes about care"",""032"",""B"",TRUE,""LASA032_varinfo.pdf""";
+"Care,,""Attitudes about care"",""112"",""B, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA112_varinfo.pdf""";
+"Care,,""Attitudes about care"",""175"",""J, K"",TRUE,""LASA175_varinfo.pdf""";
+"Care,,""Filial responsibility expectations"",""132"",""D, E, J"",TRUE,""LASA132_varinfo.pdf""";
+"Care,,""Filial responsibility expectations - scaled"",""332"",""D, E, J"",TRUE,""LASA132_varinfo.pdf""";
+"Care,,""Vignettes about help"",""074"",""D"",TRUE,""LASA074_varinfo.pdf""";
+"Care,,""Vignettes about help"",""274"",""D"",TRUE,""LASA074_varinfo.pdf""";
+"Cognitive,""Dementia"",""Dementia algorithm"",,""C, D, E, 2B, F, G, H, I"",FALSE,";
+"Cognitive,""Dementia"",""Dementia parents"",""092"",""D, 2B"",TRUE,""LASA092_varinfo.pdf""";
+"Cognitive,""Dementia"",""Dementia parents - tel. respondent"",""702"",""D"",TRUE,""LASA702_varinfo.pdf""";
+"Cognitive,""Dementia"",""Dementia partner"",""139"",""E, F, G, H, 3B, I, J, K"",TRUE,""LASA139_varinfo.pdf""";
+"Cognitive,""Executive functioning"",""Executive functioning (Digit span)"",""020"",""3B"",TRUE,""LASA020_varinfo.pdf""";
+"Cognitive,""Executive functioning"",""Executive functioning (Digit span)"",""166"",""H, I, J, K"",TRUE,""LASA166_varinfo.pdf""";
+"Cognitive,""Executive functioning"",""Executive functioning (Digit span)"",""220"",""3B"",TRUE,""LASA020_varinfo.pdf""";
+"Cognitive,""Executive functioning"",""Verbal fluency"",""165"",""H, 3B, MB, I, J, K"",TRUE,""LASA165_varinfo.pdf""";
+"Cognitive,""Intelligence and cognition"",""Crystallized intelligence (GIT ©)"",""037"",""C, F, I"",FALSE,";
+"Cognitive,""Intelligence and cognition"",""Crystallized intelligence (GIT ©) - total scores"",""237"",""C, F, I"",FALSE,";
+"Cognitive,""Intelligence and cognition"",""Fluid intelligence (RAVEN)"",""022"",""B, C, D, E, 2B, F, G"",TRUE,""LASA022_varinfo.pdf""";
+"Cognitive,""Intelligence and cognition"",""Fluid intelligence (RAVEN)"",""024"",""B"",TRUE,""LASA024_varinfo.pdf""";
+"Cognitive,""Intelligence and cognition"",""Fluid intelligence (RAVEN) - scaled Evaluation RAVEN"",""222"",""B, C, D, E, 2B, F, G"",TRUE,""LASA022_varinfo.pdf""";
+"Cognitive,""Intelligence and cognition"",""Head trauma"",""035"",""D, E, F, G, H, I, J, K"",TRUE,""LASA035_varinfo.pdf""";
+"Cognitive,""Intelligence and cognition"",""Head trauma - tel. proxy"",""602"",""D, E, F, G, H, I, J, K"",TRUE,""LASA602_varinfo.pdf""";
+"Cognitive,""Intelligence and cognition"",""Head trauma - tel. respondent"",""702"",""D, E, F, G, H, I, J, K"",TRUE,""LASA702_varinfo.pdf""";
+"Cognitive,""Intelligence and cognition"",""Health literacy"",""196"",""K"",TRUE,""LASA196_varinfo.pdf""";
+"Cognitive,""Intelligence and cognition"",""Informant Quest. of COgn. DEcline (IQCODE) - tel. proxy"",""607"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA607_varinfo.pdf""";
+"Cognitive,""Intelligence and cognition"",""Informant Quest. of COgn. DEcline (IQCODE) - tel. respondent"",""707"",""C"",TRUE,""LASA707_varinfo.pdf""";
+"Cognitive,""Intelligence and cognition"",""Information processing speed (Coding task)"",""155"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA155_varinfo.pdf""";
+"Cognitive,""Intelligence and cognition"",""Mini-Mental State Examination (MMSE)"",""021"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA021_varinfo.pdf""";
+"Cognitive,""Intelligence and cognition"",""Mini-Mental State Examination (MMSE) - MMSE scaled"",""221"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA021_varinfo.pdf""";
+"Cognitive,""Intelligence and cognition"",""Mini-Mental State Examination (MMSE) - MMSE subtraction/spelling"",""421"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA021_varinfo.pdf""";
+"Cognitive,""Intelligence and cognition"",""Mini-Mental State Examination (MMSE) - tel. respondent"",""707"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA707_varinfo.pdf""";
+"Cognitive,""Memory"",""Episodic memory (15WT)"",""156"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA156_varinfo.pdf""";
+"Cognitive,""Memory"",""Episodic memory (15WT) - constructed"",""356"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA156_varinfo.pdf""";
+"Cognitive,""Memory"",""Everyday memory"",""023"",""B, F"",TRUE,""LASA023_varinfo.pdf""";
+"Cognitive,""Memory"",""Memory complaints"",""021"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA021_varinfo.pdf""";
+"Cognitive,""Memory"",""Memory complaints - tel. respondent"",""707"",""D, E, F, G, H, I, J, K"",TRUE,""LASA707_varinfo.pdf""";
+"Cognitive,""Memory"",""Memory partner"",""139"",""E, F, G, H, 3B, I, J, K"",TRUE,""LASA139_varinfo.pdf""";
+"Cognitive,""Memory"",""Metamemory"",""124"",""B, C, D"",TRUE,""LASA124_varinfo.pdf""";
+"Cognitive,""Memory"",""Metamemory - scaled"",""324"",""B, C, D"",TRUE,""LASA124_varinfo.pdf""";
+"Demographics,""General variables"",""(Non-)response";" more detailed non-response"",""z002"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASAz002_varinfo.pdf"""
+"Demographics,""General variables"",""Age at interview"",""mb008"",""MB"",TRUE,""LASAz008_varinfo.pdf""";
+"Demographics,""General variables"",""Age at interview"",""z008"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASAz008_varinfo.pdf""";
+"Demographics,""General variables"",""Education"",""mb004"",""MB"",TRUE,""LASAz004_varinfo.pdf""";
+"Demographics,""General variables"",""Education"",""z004"",""B, 2B, 3B"",TRUE,""LASAz004_varinfo.pdf""";
+"Demographics,""General variables"",""Ethnicity*"",""mb004"",""MB"",TRUE,""LASAz004_varinfo.pdf""";
+"Demographics,""General variables"",""Ethnicity*"",""z004"",""B, 2B, 3B"",TRUE,""LASAz004_varinfo.pdf""";
+"Demographics,""General variables"",""Nationality*"",""mb004"",""MB"",TRUE,""LASAz004_varinfo.pdf""";
+"Demographics,""General variables"",""Nationality*"",""z004"",""B, 2B, 3B"",TRUE,""LASAz004_varinfo.pdf""";
+"Demographics,""General variables"",""Sex"",""mb004"",""MB"",TRUE,""LASAz004_varinfo.pdf""";
+"Demographics,""General variables"",""Sex"",""z004"",""B, 2B, 3B"",TRUE,""LASAz004_varinfo.pdf""";
+"Demographics,""General variables"",""Time of measurement*"",""mb008"",""MB"",TRUE,""LASAz008_varinfo.pdf""";
+"Demographics,""General variables"",""Time of measurement*"",""z008"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASAz008_varinfo.pdf""";
+"Demographics,""General variables"",""Weight factors"",,,FALSE,";
+"Demographics,""Geography"",""History of domestic addresses*"",""z052"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASAz052_varinfo.pdf""";
+"Demographics,""Geography"",""Urbanization"",""mb095"",""MB"",TRUE,""LASAz095_varinfo.pdf""";
+"Demographics,""Geography"",""Urbanization"",""z095"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASAz095_varinfo.pdf""";
+"Demographics,""Living arrangements"",""Household composition"",""011"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA011_varinfo.pdf""";
+"Demographics,""Living arrangements"",""Housing characteristics"",,,FALSE,";
+"Demographics,""Living arrangements"",""Marital and partner status"",""z010"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASAz010_varinfo.pdf""";
+"Demographics,""Living arrangements"",""Marital and partner status - tel. proxy"",""601"",""C, D, E, F, G, H, I, J, K"",FALSE,";
+"Demographics,""Living arrangements"",""Marital and partner status - tel. respondent"",""701"",""C, D, E, F, G, H, I, J, K"",FALSE,";
+"Demographics,""Living arrangements"",""Marital and partner status (Migrant Cohort baseline)"",""mb010"",""MB"",TRUE,""LASAz010_varinfo.pdf""";
+"Demographics,""Mortality"",""Mortality and cause of death"",""z991"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASAz991_varinfo.pdf""";
+"Demographics,""Mortality"",""Mortality and cause of death - Specified"",""z992"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASAz992_varinfo.pdf""";
+"Demographics,""Mortality"",""Mortality data"",""z990"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASAz990_varinfo.pdf""";
+"Demographics,""Religion"",""Church affiliation"",""038"",""MB"",TRUE,""LASA038_varinfo.pdf""";
+"Demographics,""Religion"",""Church affiliation"",""z038"",""C, D, E, 2B, 3B"",TRUE,""LASAz038_varinfo.pdf""";
+"Demographics,""Religion"",""Church attendance"",""038"",""MB, J, K"",TRUE,""LASA038_varinfo.pdf""";
+"Demographics,""Religion"",""Church attendance"",""z038"",""D, E, 2B, F, G, H, 3B, I"",TRUE,""LASAz038_varinfo.pdf""";
+"Demographics,""Socio-economic status"",""Health insurance"",""018"",""B"",TRUE,""LASA018_varinfo.pdf""";
+"Demographics,""Socio-economic status"",""Income"",""017"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA017_varinfo.pdf""";
+"Demographics,""Socio-economic status"",""Income - Income specification (wave B only)"",""217"",""B"",TRUE,""LASA217_varinfo.pdf""";
+"Demographics,""Socio-economic status"",""Income and wealth"",""015"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA015_varinfo.pdf""";
+"Demographics,""Socio-economic status"",""Income and wealth - house ownership"",""017"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA017_varinfo.pdf""";
+"Demographics,""Socio-economic status"",""Income and wealth - income"",""217"",""B"",TRUE,""LASA217_varinfo.pdf""";
+"Demographics,""Socio-economic status"",""Income and wealth - income specification"",""019"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA019_varinfo.pdf""";
+"Demographics,""Socio-economic status"",""Income decline / evaluation"",""019"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA019_varinfo.pdf""";
+"Demographics,""Socio-economic status"",""Occupation"",""016"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA016_varinfo.pdf""";
+"Emotional,""(In)dependence"",""Investment in independence"",""144"",""F, G, H, I, J, K"",TRUE,""LASA144_varinfo.pdf""";
+"Emotional,""ADHD"",""ADHD (LASA ancillary study)"",""179"",""G"",TRUE,""LASA179_varinfo.pdf""";
+"Emotional,""ADHD"",""ADHD (LASA ancillary study) - constructed"",""379"",""G"",TRUE,""LASA179_varinfo.pdf""";
+"Emotional,""Anxiety"",""Anxiety diagnoses"",,""B, D, E, 2B, G, H, I, J"",FALSE,";
+"Emotional,""Anxiety"",""Anxiety symptoms"",""026"",""B, C, D, E, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA026_varinfo.pdf""";
+"Emotional,""Anxiety"",""Anxiety symptoms - scaled"",""226"",""B, C, D, E, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA026_varinfo.pdf""";
+"Emotional,""Anxiety"",""Posttraumatic stress (PTSD)"",""091"",""D, E"",TRUE,""LASA091_varinfo.pdf""";
+"Emotional,""Anxiety"",""Posttraumatic stress (PTSD) - scaled"",""291"",""D, E"",TRUE,""LASA091_varinfo.pdf""";
+"Emotional,""Depression"",""Depression diagnoses and depression algorithm"",,""J, K"",FALSE,";
+"Emotional,""Depression"",""Depressive symptoms"",""025"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA025_varinfo.pdf""";
+"Emotional,""Depression"",""Depressive symptoms - scaled"",""225"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA025_varinfo.pdf""";
+"Emotional,""Depression"",""Depressive symptoms - tel. proxy"",""606"",""C, D, E"",TRUE,""LASA606_varinfo.pdf""";
+"Emotional,""Depression"",""Depressive symptoms - tel. respondent"",""706"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA706_varinfo.pdf""";
+"Emotional,""Depression"",""Depressive symptoms and food-related behaviour (LASA ancillary study)"",,,FALSE,";
+"Emotional,""Depression"",""Lifetime Psychiatric Disorder (LIDAS)"",""039"",""K"",TRUE,""LASA039_varinfo.pdf""";
+"Emotional,""Depression"",""Mental health problems and food-related behaviour (LASA ancillary study)"",,,FALSE,";
+"Emotional,""Evaluation of life"",""Awareness of Age-Related Change (AARC-SF)"",""197"",""K"",TRUE,""LASA197_varinfo.pdf""";
+"Emotional,""Evaluation of life"",""Generativity"",""802"",""J, K"",TRUE,""LASA802_varinfo.pdf""";
+"Emotional,""Evaluation of life"",""Important aspects of life"",""110"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA110_varinfo.pdf""";
+"Emotional,""Evaluation of life"",""Satisfaction with life and happiness"",""110"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA110_varinfo.pdf""";
+"Emotional,""Evaluation of life"",""Satisfaction with life and happiness - 'happiness-line'"",""094"",""D"",TRUE,""LASA094_varinfo.pdf""";
+"Emotional,""Evaluation of life"",""Valuation of life"",""137"",""E, F"",TRUE,""LASA137_varinfo.pdf""";
+"Emotional,""Evaluation of life"",""Valuation of life - scaled"",""337"",""E, F"",TRUE,""LASA137_varinfo.pdf""";
+"Emotional,""Personality traits"",""General self-regulation (GSR)"",""149"",""G, H"",TRUE,""LASA149_varinfo.pdf""";
+"Emotional,""Personality traits"",""General self-regulation (GSR) - scaled"",""349"",""G, H"",TRUE,""LASA149_varinfo.pdf""";
+"Emotional,""Personality traits"",""Humor"",""111"",""B, D"",TRUE,""LASA111_varinfo.pdf""";
+"Emotional,""Personality traits"",""Humor - scaled"",""311"",""B, D"",TRUE,""LASA111_varinfo.pdf""";
+"Emotional,""Personality traits"",""Mastery"",""027"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA027_varinfo.pdf""";
+"Emotional,""Personality traits"",""Mastery - scaled"",""227"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA027_varinfo.pdf""";
+"Emotional,""Personality traits"",""Meta-emotion"",""029"",""B"",TRUE,""LASA029_varinfo.pdf""";
+"Emotional,""Personality traits"",""Meta-emotion"",""143"",""2B"",TRUE,""LASA029_varinfo.pdf""";
+"Emotional,""Personality traits"",""Neuroticism and soc. inadequacy"",""123"",""B, C, D, E, 2B, 3B"",TRUE,""LASA123_varinfo.pdf""";
+"Emotional,""Personality traits"",""Neuroticism and soc. inadequacy - scaled"",""323"",""B, C, D, E, 2B, 3B"",TRUE,""LASA123_varinfo.pdf""";
+"Emotional,""Personality traits"",""Perceived self-efficacy"",""028"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA028_varinfo.pdf""";
+"Emotional,""Personality traits"",""Perceived self-efficacy - scaled"",""228"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA028_varinfo.pdf""";
+"Emotional,""Personality traits"",""Self-esteem"",""027"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA027_varinfo.pdf""";
+"Emotional,""Personality traits"",""Self-esteem - scaled"",""227"",""C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA027_varinfo.pdf""";
+"Emotional,""Religiousness"",""Gerotranscendence (Cosmic transcendence)"",""038"",""C, D, E, 2B, F"",TRUE,""LASA038_varinfo.pdf""";
+"Emotional,""Religiousness"",""Gerotranscendence (Cosmic transcendence) - scaled"",""238"",""C, D, E, 2B, F"",TRUE,""LASA238_varinfo.pdf""";
+"Emotional,""Religiousness"",""Orthodoxy (Main int.)"",""038"",""C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA038_varinfo.pdf""";
+"Emotional,""Religiousness"",""Orthodoxy (Main int.) - scaled"",""138"",""E"",TRUE,""LASA138_varinfo.pdf""";
+"Emotional,""Religiousness"",""Orthodoxy (Self-adm. quest.)"",""238"",""C"",TRUE,""LASA238_varinfo.pdf""";
+"Emotional,""Religiousness"",""Orthodoxy (Self-adm. quest.) - scaled"",""338"",""E"",TRUE,""LASA338_varinfo.pdf""";
+"Emotional,""Religiousness"",""Praying"",""038"",""C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA038_varinfo.pdf""";
+"Emotional,""Religiousness"",""Religious coping"",""105"",""3B, MB"",TRUE,""LASA105_varinfo.pdf""";
+"Emotional,""Religiousness"",""Salience of religion"",""038"",""C, D, E, 2B"",TRUE,""LASA038_varinfo.pdf""";
+"Emotional,""Religiousness"",""Salience of religion"",""110"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA110_varinfo.pdf""";
+"Emotional,""Religiousness"",""Salience of religion - scaled"",""238"",""C, D, E, 2B"",TRUE,""LASA238_varinfo.pdf""";
+"Emotional,""Religiousness"",""Salience of religion - tel. proxy"",""608"",""C"",TRUE,""LASA608_varinfo.pdf""";
+"Emotional,""Religiousness"",""Salience of religion - tel. respondent"",""708"",""C"",TRUE,""LASA708_varinfo.pdf""";
+"Emotional,""Sexuality"",""Gender identity"",""804"",""J, K"",TRUE,""LASA804_varinfo.pdf""";
+"Emotional,""Sexuality"",""Sexuality"",""120"",""B, E, 2B, F, 3B"",TRUE,""LASA120_varinfo.pdf""";
+"Emotional,""Singing and music"",""Singing and making music"",""103"",""H, I, J"",TRUE,""LASA103_varinfo.pdf""";
+"Emotional,""Sleep"",""Sleep quality"",""117"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA117_varinfo.pdf""";
+"Emotional,""Sleep"",""Sleep quality - scaled"",""317"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA317_varinfo.pdf""";
+"Emotional,""Stress and stressors"",""(Negative) life events"",""272"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA272_varinfo.pdf""";
+"Emotional,""Stress and stressors"",""Perceived stress"",""104"",""H, 3B"",TRUE,""LASA104_varinfo.pdf""";
+"Emotional,""Stress and stressors"",""Perceived stress - scaled"",""304"",""H, 3B"",TRUE,""LASA304_varinfo.pdf""";
+"Emotional,""Subjective age"",""Age norms"",""070"",""B, C, D, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA070_varinfo.pdf""";
+"Emotional,""Subjective age"",""Attitude toward ageing"",""071"",""B, K"",TRUE,""LASA071_varinfo.pdf""";
+"Emotional,""Subjective age"",""Perceived discrimination"",""169"",""J, K"",TRUE,""LASA169_varinfo.pdf""";
+"Emotional,""Subjective age"",""Subjective life expectancy/ subj. age"",""094"",""D, E, F, G, H, I, J, K"",TRUE,""LASA094_varinfo.pdf""";
+"Emotional,""Worrying"",""Worrying"",""136"",""E"",TRUE,""LASA136_varinfo.pdf""";
+"Emotional,""Worrying"",""Worrying - scaled"",""336"",""E"",TRUE,""LASA336_varinfo.pdf""";
+"Physical,""Blood pressure"",""Blood pressure/pulse - retests"",""151"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA151_varinfo.pdf""";
+"Physical,""Body composition"",""Anthropometry - Ankle, Knee and Pulse width"",""185"",""C"",TRUE,""LASA185_varinfo.pdf""";
+"Physical,""Body composition"",""Anthropometry - Calf measurement"",""161"",""I, J, K"",TRUE,""LASA161_varinfo.pdf""";
+"Physical,""Body composition"",""Anthropometry - Calf measurement"",""171"",""B, D, E, 2B, F, G, H, 3B"",TRUE,""LASA171_varinfo.pdf""";
+"Physical,""Body composition"",""Anthropometry - Weight and height"",""161"",""B, C, D, E, 2B, F, G, H, 3B, MB"",TRUE,""LASA161_varinfo.pdf""";
+"Physical,""Body composition"",""Bio-electrical impedance (BIA) (subsample)"",""172"",""B"",TRUE,""LASA172_varinfo.pdf""";
+"Physical,""Body composition"",""Birth weight"",""134"",""E, 2B, 3B"",TRUE,""LASA134_varinfo.pdf""";
+"Physical,""Body composition"",""DXA (LASA ancillary study) - Hip / lumbar spine scan"",""o41"",""C, D"",FALSE,";
+"Physical,""Body composition"",""DXA (LASA ancillary study) - Whole body scan"",""o42"",""C, D"",FALSE,";
+"Physical,""Body composition"",""Perceived body shape"",""145"",""F, G, 3B, MB"",TRUE,""LASA145_varinfo.pdf""";
+"Physical,""Body composition"",""Perceived body shape - scaled"",""345"",""F, G, 3B"",TRUE,""LASA345_varinfo.pdf""";
+"Physical,""Body composition"",""Weight and height:history and weight change"",""160"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA160_varinfo.pdf""";
+"Physical,""Body composition"",""Weight and height:history and weight change - tel. respondent"",""714"",""I, J, K"",TRUE,""LASA714_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Allostatic Load (algorithm)"",,""C"",FALSE,";
+"Physical,""Chronic diseases"",""Aortic calcification (lateral radiographs)"",""zo22"",""C, D"",FALSE,";
+"Physical,""Chronic diseases"",""Back pain"",""182"",""C, D, E"",TRUE,""LASA182_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Bedridden"",""182"",""C, D, F, G, H, 3B"",TRUE,""LASA182_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Cardiovascular diseases (algorithm)"",""zh01"",""B, C, D, E, 2B, F, G, H, 3B, MB, I"",FALSE,";
+"Physical,""Chronic diseases"",""Decubitus (bedsores)"",""116"",""B"",TRUE,""LASA116_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Decubitus (bedsores)"",""159"",""B"",TRUE,""LASA159_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Diabetes mellitus (algorithm)"",""zdc1"",""B, C, D, E, F, G, H, I"",TRUE,""LASAzdc1_2_3_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Diabetes mellitus (algorithm)"",""zdc2"",""2B, F, G, H, I"",TRUE,""LASAzdc1_2_3_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Diabetes mellitus (algorithm)"",""zdc3"",""3B, I"",TRUE,""LASAzdc1_2_3_varinfo.pdf""";
+"Physical,""Chronic diseases"",""GP information"",""g01"",""B, C, E, 2B, H, 3B"",FALSE,";
+"Physical,""Chronic diseases"",""Hyperthyroidism"",""182"",""C, D"",TRUE,""LASA182_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Intrinsic Capacity"",,,FALSE,";
+"Physical,""Chronic diseases"",""Metabolic syndrome"",""ch02"",""C"",FALSE,";
+"Physical,""Chronic diseases"",""Osteoarthritis hip and knee (algorithm) - cohort 1"",""zoa1"",""B, C, D, E, F, G, H, I"",TRUE,""LASAzoa1_2_3_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Osteoarthritis hip and knee (algorithm) - cohort 2"",""zoa2"",""2B, F, G, H, I"",TRUE,""LASAzoa1_2_3_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Osteoarthritis hip and knee (algorithm) - cohort 3"",""zoa3"",""3B, I"",TRUE,""LASAzoa1_2_3_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Parkinson: early P. related signs"",""096"",""3B, MB"",TRUE,""LASA096_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Rheumatoid Arthritis (algorithm)"",,,FALSE,";
+"Physical,""Chronic diseases"",""Self-report of chronic diseases"",""035"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA035_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Self-report of chronic diseases - longitudinally cleaned"",""435"",""B, C"",TRUE,""LASA035_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Self-report of chronic diseases - nr. of diseases reported"",""235"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA035_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Self-report of chronic diseases - tel. proxy"",""602"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA602_varinfo.pdf""";
+"Physical,""Chronic diseases"",""Self-report of chronic diseases - tel. respondent"",""702"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA702_varinfo.pdf""";
+"Physical,""Falling"",""Dizziness"",""187"",""C, D, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA187_varinfo.pdf""";
+"Physical,""Falling"",""Falls"",""187"",""C, D, 3B, MB, J, K"",TRUE,""LASA187_varinfo.pdf""";
+"Physical,""Falling"",""Falls - tel. proxy"",""605"",""C, D"",TRUE,""LASA605_varinfo.pdf""";
+"Physical,""Falling"",""Falls - tel. respondent"",""705"",""C, D"",TRUE,""LASA705_varinfo.pdf""";
+"Physical,""Falling"",""Falls: 1y prospective fall calendar (LASA ancillary study)"",,""G"",FALSE,";
+"Physical,""Falling"",""Falls: 3y prospective fall calendar (LASA ancillary study)"",,""C"",FALSE,";
+"Physical,""Falling"",""Falls: circumstances and consequences"",""187"",""D, J, K"",TRUE,""LASA187_varinfo.pdf""";
+"Physical,""Falling"",""Falls: environmental conditions (home)"",""180"",""C, D"",TRUE,""LASA180_varinfo.pdf""";
+"Physical,""Falling"",""Falls: fear of falling (FES: Falls Efficacy Scale)"",""183"",""C, D"",TRUE,""LASA183_varinfo.pdf""";
+"Physical,""Falling"",""Falls: prevention of fall accidents (LASA ancillary study)"",,""D"",FALSE,";
+"Physical,""Falling"",""Foot problems"",""185"",""C, D, E, F"",TRUE,""LASA185_varinfo.pdf""";
+"Physical,""Falling"",""Walking aids"",""187"",""D, E, 2B, F, G, H, 3B"",TRUE,""LASA187_varinfo.pdf""";
+"Physical,""Fertility"",""Fertility (women)"",""119"",""B"",TRUE,""LASA119_varinfo.pdf""";
+"Physical,""Fertility"",""Fertility (women)"",""181"",""C, 2B, 3B, MB"",TRUE,""LASA181_varinfo.pdf""";
+"Physical,""Fractures"",""Fractures"",""186"",""C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA186_varinfo.pdf""";
+"Physical,""Fractures"",""Fractures - tel. proxy"",""605"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA605_varinfo.pdf""";
+"Physical,""Fractures"",""Fractures - tel. respondent"",""705"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA705_varinfo.pdf""";
+"Physical,""Fractures"",""Fractures - total waves B-E"",""ZFF1"",""B, C, D, E"",FALSE,";
+"Physical,""Fractures"",""Quantitative ultrasound of bone"",""o31"",""C, G"",FALSE,";
+"Physical,""Fractures"",""Vertebral deformities"",""zo22"",""C, D"",FALSE,";
+"Physical,""Frailty"",""Various definitions (e.g., frailty phenotype, frailty index)"",,""B, C, D, E, 2B, F, G, H, 3B, MB, I, J"",FALSE,";
+"Physical,""Lifestyle"",""Accelerometry (LASA ancillary studies) - subsample (St. 1) - subsample (St. 2) - subsample (St. 3) - subsample (St. 4)"",,,FALSE,";
+"Physical,""Lifestyle"",""Alcohol use"",""153"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA153_varinfo.pdf""";
+"Physical,""Lifestyle"",""Alcohol use - scaled"",""353"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA353_varinfo.pdf""";
+"Physical,""Lifestyle"",""Coffee and tea consumption"",""801"",""J, K"",TRUE,""LASA801_varinfo.pdf""";
+"Physical,""Lifestyle"",""Daily Physical Activity"",""162"",""J"",TRUE,""LASA162_varinfo.pdf""";
+"Physical,""Lifestyle"",""Diet and food consumption"",""118"",""B, C, D, H, I, J, K"",TRUE,""LASA118_varinfo.pdf""";
+"Physical,""Lifestyle"",""Diet and food consumption"",""184"",""C, D"",TRUE,""LASA184_varinfo.pdf""";
+"Physical,""Lifestyle"",""Early life physical activity"",""246"",""C"",TRUE,""LASA246_varinfo.pdf""";
+"Physical,""Lifestyle"",""MicMac study (LASA ancillary study)"",,""I"",FALSE,";
+"Physical,""Lifestyle"",""Oral health"",""126"",""I, J, K"",TRUE,""LASA126_varinfo.pdf""";
+"Physical,""Lifestyle"",""Oral health"",,""F"",FALSE,";
+"Physical,""Lifestyle"",""Perceived physical activity (LIVAS)"",""114"",""B, C, D, E, 2B, F"",TRUE,""LASA114_varinfo.pdf""";
+"Physical,""Lifestyle"",""Perceived physical activity (LIVAS) - scaled"",""314"",""B, C, D, E, 2B, F"",TRUE,""LASA314_varinfo.pdf""";
+"Physical,""Lifestyle"",""Physical activity"",""046"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA046_varinfo.pdf""";
+"Physical,""Lifestyle"",""Sedentary behavior"",""101"",""G, H, 3B, MB, I, J, K"",FALSE,";
+"Physical,""Lifestyle"",""Sedentary behavior - longitudinally cleaned"",""501"",""G, H, 3B, MB, I, J, K"",FALSE,";
+"Physical,""Lifestyle"",""Sedentary behavior - scaled"",""301"",""G, H, 3B, MB, I, J, K"",FALSE,";
+"Physical,""Lifestyle"",""Smoking"",""154"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA154_varinfo.pdf""";
+"Physical,""Medication/ supplements"",""Food supplement use"",""174"",""I, J, K"",TRUE,""LASA174_varinfo.pdf""";
+"Physical,""Medication/ supplements"",""Food supplement use - Vitamin D use included"",""374"",""I, J, K"",TRUE,""LASA374_varinfo.pdf""";
+"Physical,""Medication/ supplements"",""Medication and food supplement use"",""152"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA152_varinfo.pdf""";
+"Physical,""Medication/ supplements"",""Medication and food supplement use - types of medication"",""352"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA352_varinfo.pdf""";
+"Physical,""Pain"",""Dealing with pain"",""188"",""E"",TRUE,""LASA188_varinfo.pdf""";
+"Physical,""Pain"",""Pain drawing"",""188"",""E"",TRUE,""LASA188_varinfo.pdf""";
+"Physical,""Pain"",""Subjective pain"",""115"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA115_varinfo.pdf""";
+"Physical,""Pain"",""Subjective pain - scaled"",""315"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA315_varinfo.pdf""";
+"Physical,""Perception: Hearing"",""Hearing (self-report)"",""031"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA031_varinfo.pdf""";
+"Physical,""Perception: Hearing"",""Hearing (self-report) - tel. proxy"",""604"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA604_varinfo.pdf""";
+"Physical,""Perception: Hearing"",""Hearing (self-report) - tel. respondent"",""704"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA704_varinfo.pdf""";
+"Physical,""Perception: Hearing"",""Hearing (self-report) - total scores"",""231"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA231_varinfo.pdf""";
+"Physical,""Perception: Hearing"",""Hearing: SNT questionnaire"",""194"",""E, F, G, I"",TRUE,""LASA194_varinfo.pdf""";
+"Physical,""Perception: Hearing"",""Hearing: SNT technical measures"",""193"",""E, F, G, I"",TRUE,""LASA193_varinfo.pdf""";
+"Physical,""Perception: smell"",""Olfactory function"",""S00"",""3B, MB"",TRUE,""LASAS00_varinfo.pdf""";
+"Physical,""Perception: smell"",""Olfactory function"",""S01"",""3B, MB"",TRUE,""LASAS01_varinfo.pdf""";
+"Physical,""Perception: smell"",""Olfactory function"",""S02"",""3B, MB"",TRUE,""LASAS02_varinfo.pdf""";
+"Physical,""Perception: Vision"",""Vision (self-report)"",""031"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA031_varinfo.pdf""";
+"Physical,""Perception: Vision"",""Vision (self-report) - tel. proxy"",""604"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA604_varinfo.pdf""";
+"Physical,""Perception: Vision"",""Vision (self-report) - tel. respondent"",""704"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA704_varinfo.pdf""";
+"Physical,""Perception: Vision"",""Vision (self-report) - total scores"",""231"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA231_varinfo.pdf""";
+"Physical,""Perception: Vision"",""Vision: contrast sensitivity"",""157"",""B, C, D, E, 2B, F"",TRUE,""LASA157_varinfo.pdf""";
+"Physical,""Perception: Vision"",""Visual acuity test"",""191"",""E, F, G, H, 3B"",TRUE,""LASA191_varinfo.pdf""";
+"Physical,""Perception: Vision"",""Visual acuity test - Vision-related quality of life"",""192"",""E, F, G, H"",TRUE,""LASA192_varinfo.pdf""";
+"Physical,""Physical functioning"",""Funct. limitations (ADL)"",""030"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA030_varinfo.pdf""";
+"Physical,""Physical functioning"",""Funct. limitations (ADL) - constructed (sum scores)"",""230"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA230_varinfo.pdf""";
+"Physical,""Physical functioning"",""Funct. limitations (ADL) - limitations in joint mobility (medical interview)"",""183"",""C, D, E"",TRUE,""LASA183_varinfo.pdf""";
+"Physical,""Physical functioning"",""Funct. limitations (ADL) - tel. proxy"",""603"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA603_varinfo.pdf""";
+"Physical,""Physical functioning"",""Funct. limitations (ADL) - tel. respondent"",""703"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA703_varinfo.pdf""";
+"Physical,""Physical functioning"",""Global Activity Limitations"",""033"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA033_varinfo.pdf""";
+"Physical,""Physical functioning"",""Global Activity Limitations - tel. respondent"",""703"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA703_varinfo.pdf""";
+"Physical,""Physical functioning"",""Grip strength"",""161"",""C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA161_varinfo.pdf""";
+"Physical,""Physical functioning"",""Partner relationship"",""139"",""E, F, G, H, 3B, I, J, K"",TRUE,""LASA139_varinfo.pdf""";
+"Physical,""Physical functioning"",""Peak Flow"",""158"",""B, C, D, E, G, H"",TRUE,""LASA158_varinfo.pdf""";
+"Physical,""Physical functioning"",""Physical performance"",""034"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA034_varinfo.pdf""";
+"Physical,""Physical functioning"",""Spirometry (post bronchodilator)"",""168"",""3B"",TRUE,""LASA168_varinfo.pdf""";
+"Physical,""Quality of life"",""EuroQol"",""135"",""E, F, G, H, 3B, I"",TRUE,""LASA135_varinfo.pdf""";
+"Physical,""Quality of life"",""EuroQol - scaled"",""335"",""E, F, G, H, 3B, I"",TRUE,""LASA335_varinfo.pdf""";
+"Physical,""Quality of life"",""Qualeffo-41"",""o80"",""E"",TRUE,""LASAo80_varinfo.pdf""";
+"Physical,""Quality of life"",""Qualeffo-41 - (non)response"",""o81"",""E"",TRUE,""LASAo81_varinfo.pdf""";
+"Physical,""Quality of life"",""Qualeffo-41 - Qualeffo scores"",""o82"",""E"",TRUE,""LASAo82_varinfo.pdf""";
+"Physical,""Quality of life"",""Self-rated health"",""036"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA036_varinfo.pdf""";
+"Physical,""Quality of life"",""Self-rated health - GHPQ"",""113"",""B, C, D, E, 2B, F, G, H, 3B"",TRUE,""LASA113_varinfo.pdf""";
+"Physical,""Quality of life"",""Self-rated health - GHPQ: scaled"",""313"",""B, C, D, E, 2B, F, G, H, 3B"",TRUE,""LASA313_varinfo.pdf""";
+"Physical,""Quality of life"",""Self-rated health - tel. proxy"",""602"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA602_varinfo.pdf""";
+"Physical,""Quality of life"",""Self-rated health - tel. respondent"",""702"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA702_varinfo.pdf""";
+"Physical,""Quality of life"",""SF-12 Health Survey"",""133"",""D, E, F, G, H, 3B, I, J, K"",TRUE,""LASA133_varinfo.pdf""";
+"Physical,""Quality of life"",""SF-12 Health Survey - scaled"",""333"",""D, E, F, G, H, 3B, I, J, K"",TRUE,""LASA333_varinfo.pdf""";
+"Physical,""Quality of life"",""SF-12 Health Survey - scaled (Am.)"",""533"",""D, E, F, G, H, 3B, I, J, K"",TRUE,""LASA533_varinfo.pdf""";
+"Physical,""Quality of life"",""WHO Quality of Life"",""133"",""I, J, K"",TRUE,""LASA133_varinfo.pdf""";
+"Social,""Affiliation"",""Need for affiliation"",""078"",""B, E"",TRUE,""LASA078_varinfo.pdf""";
+"Social,""Affiliation"",""Need for affiliation"",""141"",""2B, G"",TRUE,""LASA141_varinfo.pdf""";
+"Social,""Affiliation"",""Need for affiliation - scaled"",""278"",""B, E"",TRUE,""LASA078_varinfo.pdf""";
+"Social,""Affiliation"",""Need for affiliation - scaled"",""341"",""2B, G"",TRUE,""LASA141_varinfo.pdf""";
+"Social,""Housing"",""House ownership"",""015"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA015_varinfo.pdf""";
+"Social,""Housing"",""Housing characteristics - tel. proxy"",""601"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA601_varinfo.pdf""";
+"Social,""Housing"",""Housing characteristics - tel. respondent"",""701"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA701_varinfo.pdf""";
+"Social,""Housing"",""Housing characteristics and adaptations"",""014"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA014_varinfo.pdf""";
+"Social,""Housing"",""Neighborhood characteristics"",""015"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA015_varinfo.pdf""";
+"Social,""Housing"",""Neighborhood characteristics"",""095"",""K"",FALSE,";
+"Social,""Housing"",""Neighborhood characteristics"",""z095"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J"",TRUE,""LASAz095_varinfo.pdf""";
+"Social,""Housing"",""Neighborhood problems"",""170"",""J, K"",FALSE,";
+"Social,""Housing"",""Pets in household"",""012"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA012_varinfo.pdf""";
+"Social,""Housing"",""Relocation"",""014"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA014_varinfo.pdf""";
+"Social,""Housing"",""Relocation"",""015"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA015_varinfo.pdf""";
+"Social,""Housing"",""Relocation - tel. proxy"",""601"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA601_varinfo.pdf""";
+"Social,""Housing"",""Relocation - tel. respondent"",""701"",""C, D, E, F, G, H, I, J, K"",TRUE,""LASA701_varinfo.pdf""";
+"Social,""Housing"",""Residence in 1944"",""013"",""B"",TRUE,""LASA013_varinfo.pdf""";
+"Social,""Loneliness"",""Existential loneliness"",""173"",""J"",TRUE,""LASA173_varinfo.pdf""";
+"Social,""Loneliness"",""Loneliness"",""073"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA073_varinfo.pdf""";
+"Social,""Loneliness"",""Loneliness - scaled"",""273"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA073_varinfo.pdf""";
+"Social,""Loneliness"",""Loneliness - tel. respondent"",""712"",""H, I, J, K"",TRUE,""LASA712_varinfo.pdf""";
+"Social,""Partner relationship"",""Relationship quality"",""139"",""E, F, G, H, 3B, I, J, K"",TRUE,""LASA139_varinfo.pdf""";
+"Social,""Relationships between generations"",""Children"",""048"",""C, E, 2B, F, 3B, MB, I"",TRUE,""LASA048_varinfo.pdf""";
+"Social,""Relationships between generations"",""Children"",""248"",""E, 2B, F, 3B, MB"",TRUE,""LASA048_varinfo.pdf""";
+"Social,""Relationships between generations"",""Filial responsibility expectations"",""132"",""D, E, J"",TRUE,""LASA132_varinfo.pdf""";
+"Social,""Relationships between generations"",""Filial responsibility expectations - scaled"",""332"",""D, E, J"",TRUE,""LASA132_varinfo.pdf""";
+"Social,""Relationships between generations"",""Grandchildren"",""049"",""F"",TRUE,""LASA049_varinfo.pdf""";
+"Social,""Relationships between generations"",""Parental data"",""140"",""2B, 3B"",TRUE,""LASA140_varinfo.pdf""";
+"Social,""Relationships between generations"",""Vignettes about help"",""074"",""D"",TRUE,""LASA074_varinfo.pdf""";
+"Social,""Relationships between generations"",""Vignettes about help - total scores"",""274"",""D"",TRUE,""LASA074_varinfo.pdf""";
+"Social,""Social network"",""Contact network"",""167"",""3B, MB, I"",TRUE,""LASA167_varinfo.pdf""";
+"Social,""Social network"",""Personal network"",""047"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA047_varinfo.pdf""";
+"Social,""Social network"",""Personal network - network size"",""247"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA247_varinfo.pdf""";
+"Social,""Social norms"",""Donorship"",""128"",""I, J"",TRUE,""LASA128_varinfo.pdf""";
+"Social,""Social norms"",""Social desirability"",""130"",""C, F"",TRUE,""LASA130_varinfo.pdf""";
+"Social,""Social norms"",""Social desirability - scaled"",""330"",""C, F"",TRUE,""LASA330_varinfo.pdf""";
+"Social,""Social norms"",""Social identity"",""131"",""D, E"",TRUE,""LASA131_varinfo.pdf""";
+"Social,""Social norms"",""Social identity - scaled"",""331"",""D, E"",TRUE,""LASA331_varinfo.pdf""";
+"Social,""Social norms"",""Ties with country of origin"",""069"",""MB"",TRUE,""LASA069_varinfo.pdf""";
+"Social,""Social norms"",""Values and norms"",""122"",""B, C, D, E, 2B, F, G, H, 3B, I, J, K"",TRUE,""LASA122_varinfo.pdf""";
+"Social,""Social participation"",""Environmental influence"",""121"",""B, C, D"",TRUE,""LASA121_varinfo.pdf""";
+"Social,""Social participation"",""Social participation"",""070"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA070_varinfo.pdf""";
+"Social,""Social participation"",""Social participation"",""125"",""B, C, D, E, 2B, F, G"",TRUE,""LASA125_varinfo.pdf""";
+"Work,,""General Population Job ExposureMatrix (GPJEM)"",""016"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA016_varinfo.pdf""";
+"Work,,""Perception of work conditions"",""106"",""3B, MB, I, J, K"",TRUE,""LASA106_varinfo.pdf""";
+"Work,,""Work (Employment) and Retirement"",""016"",""B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K"",TRUE,""LASA016_varinfo.pdf""";
+"Work,,""Work (Employment) and Retirement - tel. respondent*"",""713"",""I, J, K"",TRUE,""LASA713_varinfo.pdf""";
+"Work,,""Work and Retirement characteristics"",,,FALSE,";
