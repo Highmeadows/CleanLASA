@@ -1,0 +1,16 @@
+Plan B Batch 005
+Completed filecodes: 092, 093, 094, 096, 103, 104, 105, 106, 108, 109
+Skipped/non-counting this batch: 095 (has_varinfo=FALSE); 097-100 (no buildable base mapping); 101 (has_varinfo=FALSE); 102 (no buildable base mapping); 107 (no buildable base mapping)
+Next canonical scan point: 110
+Pending historical unresolved: 027, 049
+Pending alphanumeric later: z002
+092: variable_rows=5; value_rows=46; z_conflicts=0
+093: variable_rows=39; value_rows=252; z_conflicts=0
+094: variable_rows=31; value_rows=140; z_conflicts=1
+096: variable_rows=22; value_rows=140; z_conflicts=0
+103: variable_rows=53; value_rows=198; z_conflicts=0
+104: variable_rows=20; value_rows=180; z_conflicts=0
+105: variable_rows=6; value_rows=72; z_conflicts=0
+106: variable_rows=115; value_rows=1015; z_conflicts=0
+108: variable_rows=83; value_rows=440; z_conflicts=33
+109: variable_rows=39; value_rows=320; z_conflicts=0

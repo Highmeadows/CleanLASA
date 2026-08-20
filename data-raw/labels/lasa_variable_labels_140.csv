@@ -1,0 +1,13 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+140,2B,bqmo_ch,qmo_ch,Mother church member during youth R?,Mother church member during youth R?,
+140,2B,bqfa_ch,qfa_ch,Father church member during youth R?,Father church member during youth R?,
+140,2B,bqmo_emp,qmo_emp,Mother employed during youth R?,Mother employed during youth R?,
+140,2B,bqmo_vol,qmo_vol,Mother volunteer work during youth R?,Mother volunteer work during youth R?,
+140,2B,bqparsep,qparsep,Parents ever separated/divorced?,Parents ever separated/divorced?,
+140,2B,bqparsey,qparsey,Year parents separated/divorced,Year parents separated/divorced,
+140,3B,bqfa_ch,qfa_ch,Father church member during youth R?,Father church member during youth R?,
+140,3B,bqmo_ch,qmo_ch,Mother church member during youth R?,Mother church member during youth R?,
+140,3B,bqmo_emp,qmo_emp,Mother employed during youth R?,Mother employed during youth R?,
+140,3B,bqmo_vol,qmo_vol,Mother volunteer work during youth R?,Mother volunteer work during youth R?,
+140,3B,bqparsep,qparsep,Parents ever separated/divorced?,Parents ever separated/divorced?,
+140,3B,bqparsey,qparsey,Year parents separated/divorced,Year parents separated/divorced,

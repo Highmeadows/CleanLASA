@@ -1,0 +1,18 @@
+Plan B Batch 013 — Processed Filecodes
+
+188
+189
+191
+192
+195
+196
+197
+220
+221
+222
+
+Next numeric scan point: 223
+Historical/current unresolved: 027, 049, 172, 183, 193, 194, 217
+Skipped without mapping: 190, 198-216, 218-219
+Alphanumeric phase: pending until numeric exhaustion
+No commit/push performed.

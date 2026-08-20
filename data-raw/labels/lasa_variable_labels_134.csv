@@ -1,0 +1,8 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+134,E,eqbwght,qbwght,weight at birth in grams,weight at birth in grams,
+134,2B,bqbwght,qbwght,weight at birth in grams,weight at birth in grams,
+134,3B,bqbwght,qbwght,weight at birth in grams,weight at birth in grams,
+134,E,eqbwghts,qbwghts,weight at birth in grams: source,weight at birth in grams: source,
+134,2B,bqbwghts,qbwghts,weight at birth in grams: source,weight at birth in grams: source,
+134,3B,bqbwghts,qbwghts,weight at birth in grams: source,weight at birth in grams: source,
+134,3B,bqbwghtw,qbwghtw,weight at birth in grams: which source,weight at birth in grams: which source,

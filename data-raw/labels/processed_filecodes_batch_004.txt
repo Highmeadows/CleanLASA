@@ -1,0 +1,17 @@
+Plan B Batch 004
+Completed filecodes: 047, 048, 068, 069, 070, 071, 073, 074, 078, 091
+Unresolved this batch: 049 (mapped LASA049_varinfo.pdf is absent from codebook/)
+Skipped/no buildable mapping while scanning: 050-067, 072, 075-077, 079-090
+Next canonical scan point: 092
+Pending historical unresolved: 027, 049
+Pending alphanumeric later: z002
+047: variable_rows=188; value_rows=2745; z_conflicts=0
+048: variable_rows=81; value_rows=772; z_conflicts=47
+068: variable_rows=16; value_rows=96; z_conflicts=0
+069: variable_rows=20; value_rows=172; z_conflicts=0
+070: variable_rows=933; value_rows=5388; z_conflicts=19
+071: variable_rows=8; value_rows=64; z_conflicts=0
+073: variable_rows=123; value_rows=827; z_conflicts=0
+074: variable_rows=52; value_rows=490; z_conflicts=0
+078: variable_rows=12; value_rows=126; z_conflicts=6
+091: variable_rows=46; value_rows=414; z_conflicts=0

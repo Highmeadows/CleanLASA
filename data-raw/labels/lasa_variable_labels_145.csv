@@ -1,0 +1,10 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+145,F,fqcshape,qcshape,current body shape,current body shape,
+145,F,fqishape,qishape,ideal body shape,ideal body shape,
+145,G,gqcshape,qcshape,current body shape,current body shape,
+145,G,gqishape,qishape,ideal body shape,ideal body shape,
+145,3B,bqcshape,qcshape,current body shape,current body shape,
+145,3B,bqishape,qishape,ideal body shape,ideal body shape,
+145,3B,bqshap40,qshap40,Body shape at 40,Body shape at 40,
+145,MB,bmcshape,mcshape,current body shape,current body shape,
+145,MB,bmshap40,mshap40,Body shape at 40,Body shape at 40,

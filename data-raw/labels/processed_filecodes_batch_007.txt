@@ -1,0 +1,5 @@
+Batch 007 completed filecodes: 031, 120, 121, 122, 123, 124, 125, 126, 127, 128
+Backfill queue after Batch 007: empty
+Next canonical numeric scan point: 129
+Historical unresolved still includes 027 and 049; both PDFs were rechecked and remain absent.
+Pending alphanumeric after numeric exhaustion: z002

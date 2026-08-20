@@ -1,0 +1,9 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+159,B,bmdecu01,mdecu01,Decubitus: reported No/Yes,Decubitus: reported No/Yes,
+159,B,bmdecu02,mdecu02,reported decubitus medical interview,reported decubitus medical interview,
+159,B,bmdecu03,mdecu03,Decubitus: most severe reported,Decubitus: most severe reported,
+159,B,bmdecu04,mdecu04,Decubitus: stadium observed,Decubitus: stadium observed,
+159,B,bmdecu05,mdecu05,Decubitus: treatment at home by,Decubitus: treatment at home by,
+159,B,bmdecu06,mdecu06,Decubitus: treatment at nursing home by,Decubitus: treatment at nursing home by,
+159,B,bmdecu07,mdecu07,Decubitus: present past year,Decubitus: present past year,
+159,B,bmdecu08,mdecu08,Decubitus: past year how often,Decubitus: past year how often,
