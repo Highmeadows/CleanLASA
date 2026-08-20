@@ -19,6 +19,7 @@ with package updates; local, one-off corrections are also possible with
 
 ## Installation
 
+WARNING! The project is stil heavily work-in-progress, so installing is currently not recommended.
 You can install the development version of CleanLASA from
 [GitHub](https://github.com/) with:
 
