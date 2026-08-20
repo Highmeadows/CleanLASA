@@ -7,16 +7,16 @@
 lasa_label_db()
 }
 \value{
-A list with \code{documents}, \code{variables}, \code{value_labels}, and
-\code{manual_overrides} (itself a list of \code{variables}/\code{value_labels}) --
+A list with \code{variables}, \code{value_labels}, \code{value_labels_harmonized},
+and \code{manual_overrides} (itself a list of \code{variables}/\code{value_labels}) --
 see the package README for the full schema.
 }
 \description{
 Returns the label metadata database currently in effect: the bundled
 snapshot shipped with the package, layered with any local updates from
-\code{\link[=update_lasa_labels]{update_lasa_labels()}} or \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}. Useful for
-checking which file codes/waves are covered before calling
-\code{\link[=apply_lasa_labels]{apply_lasa_labels()}}, or for auditing a manual correction.
+\code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}. Useful for checking which file codes/waves
+are covered before calling \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}, or for auditing a
+manual correction.
 }
 \examples{
 db <- lasa_label_db()
@@ -24,6 +24,5 @@ nrow(db$variables)
 subset(db$variables, filecode == "046" & wave == "B")
 }
 \seealso{
-\code{\link[=apply_lasa_labels]{apply_lasa_labels()}}, \code{\link[=update_lasa_labels]{update_lasa_labels()}},
-\code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}
+\code{\link[=apply_lasa_labels]{apply_lasa_labels()}}, \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}
 }

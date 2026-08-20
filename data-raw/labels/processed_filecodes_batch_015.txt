@@ -1,5 +1,0 @@
-Plan B Batch 015 — Processed Filecodes
-Completed: 245, 248, 272, 273, 274
-Unresolved encountered: 238, 246, 247
-Skipped/nonbuildable before completion: 236, 237, 239–244, 249–271
-Next numeric scan point: 275

@@ -9,11 +9,22 @@
 
 ## Builds the named numeric value-label vector (names = label text, values
 ## = numeric code) for one variable from its value_labels rows, dropping
-## any row whose code couldn't be parsed (value_numeric NA) -- those are
-## already flagged via parse_note and must never be silently coerced into
-## a fabricated numeric code.
+## any row with no numeric code (value_numeric NA) -- never silently
+## coerced into a fabricated numeric code.
 .lasa_apply_value_map <- function(value_labels, variable_name) {
   rows <- value_labels[value_labels$variable_name == variable_name & !is.na(value_labels$value_numeric), , drop = FALSE]
+  if (nrow(rows) == 0L) return(NULL)
+  stats::setNames(rows$value_numeric, rows$value_label)
+}
+
+## Same idea as .lasa_apply_value_map(), but for the cross-wave-standardized
+## `value_labels_harmonized` table, keyed by `canonical_name` (no wave).
+.lasa_apply_value_map_harmonized <- function(value_labels_harmonized, canonical_name) {
+  rows <- value_labels_harmonized[
+    value_labels_harmonized$canonical_name == canonical_name & !is.na(value_labels_harmonized$value_numeric),
+    ,
+    drop = FALSE
+  ]
   if (nrow(rows) == 0L) return(NULL)
   stats::setNames(rows$value_numeric, rows$value_label)
 }
@@ -40,6 +51,7 @@
   labels <- .lasa_get_labels(db, filecode, wave)
   vars <- labels$variables
   vals <- labels$value_labels
+  vals_harmonized <- labels$value_labels_harmonized
 
   correction_keys <- if (is.null(name_corrections)) character(0) else tolower(names(name_corrections))
 
@@ -112,9 +124,13 @@
     x <- data[[idx]]
     original_values <- suppressWarnings(as.numeric(x))
     value_map <- .lasa_apply_value_map(vals, vname)
+    harmonized_value_map <- .lasa_apply_value_map_harmonized(vals_harmonized, cname)
 
     attr(x, "label") <- row$variable_label
+    attr(x, "canonical_name") <- cname
+    attr(x, "harmonized_label") <- row$harmonized_var_label
     if (!is.null(value_map)) attr(x, "labels") <- value_map
+    if (!is.null(harmonized_value_map)) attr(x, "labels_harmonized") <- harmonized_value_map
 
     numeric_eligible <- identical(row$var_type, "numeric")
     if (isTRUE(to_numeric) && numeric_eligible) {
@@ -124,6 +140,9 @@
       x <- .lasa_convert_to_labelled_factor(x, value_map)
       attr(x, "label") <- row$variable_label
     }
+    attr(x, "canonical_name") <- cname
+    attr(x, "harmonized_label") <- row$harmonized_var_label
+    if (!is.null(harmonized_value_map)) attr(x, "labels_harmonized") <- harmonized_value_map
 
     if (!is.null(value_map)) attr(x, "original_labels") <- value_map
     attr(x, "original_values") <- original_values
@@ -227,10 +246,17 @@
 #'
 #' @return `data`, labelled (and optionally reshaped/renamed) exactly as
 #'   [read_lasa_sav()] would, with `"label_report"`, `"LASA_wave"`, and
-#'   `"LASA_file_code"` attributes (re-)attached.
+#'   `"LASA_file_code"` attributes (re-)attached. Each labelled column also
+#'   carries `"label"` (the wave-specific variable label), `"labels"` (its
+#'   value labels, SPSS/haven-style), `"canonical_name"` (the wave-stripped
+#'   variable name), `"harmonized_label"` (the cross-wave-consistent
+#'   variable label), and, where the database documents one,
+#'   `"labels_harmonized"` (the cross-wave-standardized value labels) --
+#'   groundwork for a future `standardize_names`/`standardize_labels` pair
+#'   of arguments, not yet implemented.
 #'
 #' @seealso [read_lasa_sav()], [lasa_label_report()], [lasa_label_db()],
-#'   [update_lasa_labels()], [manual_update_lasa_labels()]
+#'   [manual_update_lasa_labels()]
 #' @export
 #'
 #' @examples

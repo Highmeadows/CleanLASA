@@ -11,10 +11,11 @@ not be matched to the documentation so they can be checked manually,
 and helps you find and open the right LASA documentation for a topic
 or file code.
 
-Variable and value-label metadata is not hand-transcribed per file code.
-It's parsed programmatically from LASA's own variable-information PDFs
-into a single normalized database (`lasa_label_db()`), bundled with the
-package and refreshable at any time with `update_lasa_labels()`.
+Variable and value-label metadata lives in a single normalized database
+(`lasa_label_db()`), bundled with the package and transcribed from LASA's
+own variable-information documentation. Coverage grows and gets corrected
+with package updates; local, one-off corrections are also possible with
+`manual_update_lasa_labels()`.
 
 ## Installation
 
@@ -117,34 +118,36 @@ data <- apply_lasa_labels(raw, filecode = "046", wave = "C")
 ## The label database
 
 `lasa_label_db()` returns the package's normalized variable/value-label
-metadata: which file codes and waves are covered, what each variable's
-documented name, label, and value-label codebook are, and where in the
-source PDF each entry came from.
+metadata: which file codes and waves are covered, and each variable's
+documented name, wave-specific label, cross-wave-consistent
+("harmonized") label, and value-label codebook. Unlike earlier releases,
+this metadata is not parsed from PDFs at build or run time -- it is
+hardcoded, hand-maintained R (`data-raw/labels/`), transcribed from
+LASA's own variable-information documentation and shipped with the
+package. A new package release is how coverage grows or gets corrected.
 
 ``` r
 db <- lasa_label_db()
 subset(db$variables, filecode == "046" & wave == "B")
 ```
 
-### Refreshing coverage from LASA's own documentation
-
-`update_lasa_labels()` downloads (or reads a local copy of) a LASA
-variable-information PDF, parses it, and merges the result into your
-local copy of the database -- replacing only the records that PDF itself
-documents, never anything from an unrelated file code:
-
-``` r
-update_lasa_labels(filecode = "046")             # resolve + download + parse
-update_lasa_labels(url = "https://.../LASA162_varinfo.pdf")
-update_lasa_labels(filecode = "046", path = "LASA046_varinfo.pdf") # offline
-```
+The database has three parts: `variables` (one row per file
+code/wave/variable), `value_labels` (that variable's value labels as
+documented for that specific wave), and `value_labels_harmonized` (the
+same variable's value labels standardized across every wave that
+documents it, independent of wave -- useful when combining waves that
+coded the same concept slightly differently). `apply_lasa_labels()` and
+`read_lasa_sav()` attach all of this to each labelled column as
+attributes: `"label"`, `"labels"`, `"canonical_name"`,
+`"harmonized_label"`, and (where documented) `"labels_harmonized"`.
 
 ### Manual corrections
 
-When a PDF is missing, unreachable, or itself wrong or incomplete about a
-variable, `manual_update_lasa_labels()` patches the database directly,
-without touching or requiring a PDF. A later `update_lasa_labels()`
-refresh of the same file code will not silently discard the correction.
+When the bundled database is itself wrong or incomplete about a
+variable, or you want a custom label, `manual_update_lasa_labels()`
+patches your local copy of the database directly. A later package update
+will not silently discard the correction -- it only replaces the bundled
+base layer the correction is composed on top of.
 
 ``` r
 manual_update_lasa_labels(
@@ -203,8 +206,7 @@ url <- lasa_var_info("046", open = FALSE)
 |---|---|
 | `read_lasa_sav()` | Reads a LASA `.sav` file and labels it using `lasa_label_db()`, based on the wave/file code parsed from the file name |
 | `apply_lasa_labels()` | Applies `lasa_label_db()` labels to any data frame, resolving file code/wave explicitly or from stored provenance |
-| `update_lasa_labels()` | Downloads (or reads) and parses a LASA variable-information PDF, merging it into the label database |
-| `manual_update_lasa_labels()` | Hand-corrects or adds a variable/value label without needing a PDF |
+| `manual_update_lasa_labels()` | Hand-corrects or adds a variable/value label in your local copy of the database |
 | `lasa_label_db()` | Returns the label database currently in effect (bundled snapshot + any local updates) |
 | `lasa_label_report()` | Returns variables that could not be matched to the corresponding LASA documentation |
 | `lasa_topics()` | Searches the LASA topic overview for topics, themes, and file codes |

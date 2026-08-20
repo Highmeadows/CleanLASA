@@ -259,9 +259,9 @@ For the wave, `apply_lasa_labels()` can also use a single-valued `LASA_wave` col
 
 `lasa_label_db()` returns the metadata database currently in effect. It is a list with four main components:
 
-- `documents`: provenance for parsed variable-information PDFs, including source URL, filename, retrieval time, hash, and parser version;
-- `variables`: one row per file-code/wave/variable combination, including the wave-specific name, canonical name, variable label, and variable type;
-- `value_labels`: the long-format value/code label definitions; and
+- `variables`: one row per file-code/wave/variable combination, including the wave-specific name, canonical name, wave-specific variable label, cross-wave-consistent ("harmonized") variable label, and variable type;
+- `value_labels`: the long-format value/code label definitions, as documented for that specific wave;
+- `value_labels_harmonized`: the same variable's value labels standardized across every wave that documents it (no `wave` column -- it applies regardless of wave), for combining data across waves that coded the same concept slightly differently; and
 - `manual_overrides`: separately stored hand-authored corrections for variables and value labels.
 
 ```{r inspect-db, eval=FALSE}
@@ -272,66 +272,16 @@ subset(db$variables, filecode == "046" & wave == "B")
 
 # Inspect the corresponding value-label rows
 subset(db$value_labels, filecode == "046" & wave == "B")
+
+# The cross-wave-standardized value labels for the same variable
+subset(db$value_labels_harmonized, filecode == "046" & canonical_name == "lphya01")
 ```
 
-The package ships with a bundled snapshot. If you refresh or manually correct metadata, `CleanLASA` writes a full updated snapshot to the package-specific user data directory and uses that user-local database in preference to the bundled copy on subsequent calls. This means updates persist across R sessions without modifying the installed package library.
+The package ships with a bundled snapshot, transcribed from LASA's own variable-information documentation; coverage grows and gets corrected with package updates. If you record a manual correction (below), `CleanLASA` writes a full updated snapshot to the package-specific user data directory and uses that user-local database in preference to the bundled copy on subsequent calls. This means corrections persist across R sessions without modifying the installed package library.
 
-## 8. Refresh labels from LASA documentation
+## 8. Record a manual metadata correction
 
-`update_lasa_labels()` updates the user-local database from a variable-information PDF. This is particularly usefull for when an existing documentation file is updated on the LASA website, or when an entirely new documentation file becomes available. There are three ways to identify the source.
-
-### Resolve a PDF from a LASA file code
-
-```{r update-filecode, eval=FALSE}
-update_lasa_labels(filecode = "046")
-
-# Shared-document group prefixes can also resolve when unambiguous
-update_lasa_labels(filecode = "zoa")
-```
-
-The resolver first tries the current LASA topic index. If the live site is not available, a bundled offline manifest can still identify the expected PDF; when that fallback has no downloadable URL, provide a local `path` instead.
-
-### Supply a PDF URL directly
-
-This method is preferred when the PDF is not hosted on www.lasa-vu.nl/en/topics, but on another web adres. 
-
-```{r update-url, eval=FALSE}
-update_lasa_labels(
-  url = "https://example.org/LASA999_varinfo.pdf"
-)
-```
-
-### Parse an already-downloaded PDF
-
-This methods works best for downloaded files and work-in-progress files. However, when working with unofficial pdf files, the function expects the same format to extract information. 
-
-```{r update-path, eval=FALSE}
-update_lasa_labels(
-  path = "documentation/LASA046_varinfo.pdf"
-)
-```
-
-Before writing anything, the PDF is hashed, parsed, and the resulting database is validated. If the same document hash is already stored, the update is a no-op. Updating a PDF replaces the PDF-derived records owned by that document or its represented file codes rather than indefinitely appending stale metadata. Manual overrides are stored separately and remain layered on top.
-
-Use `dry_run = TRUE` to parse and validate without saving:
-
-```{r update-dry-run, eval=FALSE}
-result <- update_lasa_labels(
-  filecode = "046",
-  dry_run = TRUE
-)
-
-result$status
-result$n_variables
-result$n_value_labels
-result$n_unresolved
-```
-
-`strict = TRUE` is the default and is intended to prevent an explicitly requested file code from being updated when required metadata cannot be resolved unambiguously by the parser. This is implemented to prevent errors in the local database, and should not be changed unless you are absulotely certain of what you are doing.
-
-## 9. Record a manual metadata correction
-
-`manual_update_lasa_labels()` is an escape hatch for a source-document error, an unresolved parser case, or a variable/value label that needs a deliberate local correction. The correction is stored in a separate override layer, so a later PDF refresh does not silently remove it.
+`manual_update_lasa_labels()` is an escape hatch for a source-document error or a variable/value label that needs a deliberate local correction. The correction is stored in a separate override layer, so a later package update does not silently remove it -- it only replaces the bundled base layer the correction is composed on top of.
 
 Merge one corrected value label into the existing set:
 With `replace_val_labels=FALSE` (the default), supplied value labels are appended to the existing documentation.
@@ -390,7 +340,7 @@ manual_update_lasa_labels(
 )
 ```
 
-## 10. A complete analysis-oriented workflow
+## 9. A complete analysis-oriented workflow
 
 For most analyses, the package can be used with a small number of steps:
 
@@ -416,7 +366,7 @@ problems <- lasa_label_report(data, problems_only = TRUE)
 problems
 ```
 
-If the required file code is not yet covered by the active label database, `read_lasa_sav()` does not dispatch to a file-specific labelling function or invent metadata. Refresh the database with `update_lasa_labels()` (or add a deliberate correction with `manual_update_lasa_labels()`) and import/apply the labels again.
+If the required file code is not yet covered by the active label database, `read_lasa_sav()` does not dispatch to a file-specific labelling function or invent metadata. Add a deliberate correction with `manual_update_lasa_labels()`, or wait for a package update that adds coverage, and import/apply the labels again.
 
 ## Function summary
 
@@ -428,7 +378,6 @@ If the required file code is not yet covered by the active label database, `read
 | `apply_lasa_labels()` | Apply the same LASA labelling engine to an existing data frame |
 | `lasa_label_report()` | Inspect the full matching audit or only entries requiring attention |
 | `lasa_label_db()` | Inspect the active bundled + user-local label metadata database |
-| `update_lasa_labels()` | Parse a varinfo PDF and transactionally refresh PDF-derived metadata |
 | `manual_update_lasa_labels()` | Add or correct metadata in a persistent manual override layer |
 
 Together, these functions make the LASA documentation part of the R data workflow: topics and source documents remain discoverable, imported variables retain their documented meaning, transformations remain auditable, and the metadata layer can be refreshed without maintaining separate file-specific labelling functions.

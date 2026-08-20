@@ -7,28 +7,26 @@ local_synthetic_db <- function(env = parent.frame()) {
   testthat::local_mocked_bindings(.lasa_label_db_path = function() tmp, .env = env)
 
   db <- .lasa_empty_label_db()
-  db$documents <- rbind(db$documents, data.frame(
-    document_id = "doc1", source_url = NA_character_, pdf_filename = "x.pdf",
-    document_date = as.Date(NA), retrieved_at = Sys.time(), sha256 = "abc",
-    parser_version = "1.0", filecodes = "999", stringsAsFactors = FALSE
-  ))
   db$variables <- rbind(db$variables, data.frame(
     filecode = "999", wave = c("B", "B", "B"),
     variable_name = c("bfoo01", "bfoo02", "bfoo03"),
     canonical_name = c("foo01", "foo02", "foo03"),
     variable_label = c("Question one", "Question two (numeric)", "Question three"),
-    document_id = "doc1", source_page = 1L, source_row = 1:3,
-    source_condition = NA_character_, parse_note = NA_character_,
+    harmonized_var_label = c("Harmonized question one", "Harmonized question two", "Harmonized question three"),
     var_type = c("categorical", "numeric", "categorical"),
     stringsAsFactors = FALSE
   ))
   db$value_labels <- rbind(db$value_labels, data.frame(
     filecode = "999", wave = c("B", "B", "B"),
     variable_name = c("bfoo01", "bfoo01", "bfoo02"),
-    value_raw = c("1", "2", "-1"), value_numeric = c(1, 2, -1),
+    value_numeric = c(1, 2, -1),
     value_label = c("no", "yes", "na, asked"), is_missing = c(FALSE, FALSE, TRUE),
-    document_id = "doc1", source_page = 1L, source_row = c(1L, 1L, 2L),
-    source_condition = NA_character_, parse_note = NA_character_,
+    stringsAsFactors = FALSE
+  ))
+  db$value_labels_harmonized <- rbind(db$value_labels_harmonized, data.frame(
+    filecode = "999", canonical_name = c("foo01", "foo01"),
+    value_numeric = c(1, 2),
+    value_label = c("harmonized no", "harmonized yes"), is_missing = FALSE,
     stringsAsFactors = FALSE
   ))
   .lasa_save_label_db(db)
@@ -52,6 +50,25 @@ test_that("label/labels/original_labels/original_values are attached", {
   expect_equal(unname(attr(out$BFOO01, "labels")), c(1, 2))
   expect_equal(unname(attr(out$BFOO01, "original_values")), c(1, 2, 1))
   expect_false(is.null(attr(out$BFOO01, "original_labels")))
+})
+
+test_that("canonical_name/harmonized_label/labels_harmonized are attached", {
+  local_synthetic_db()
+  out <- .lasa_apply_labels(fixture(), filecode = "999", wave = "B")
+
+  expect_equal(attr(out$BFOO01, "canonical_name"), "foo01")
+  expect_equal(attr(out$BFOO01, "harmonized_label"), "Harmonized question one")
+  expect_equal(
+    unname(attr(out$BFOO01, "labels_harmonized")),
+    c(1, 2)
+  )
+  expect_equal(
+    names(attr(out$BFOO01, "labels_harmonized")),
+    c("harmonized no", "harmonized yes")
+  )
+  # foo02 has no value_labels_harmonized rows at all -- attribute is absent, not an empty vector.
+  expect_null(attr(out$BFOO02, "labels_harmonized"))
+  expect_equal(attr(out$BFOO02, "canonical_name"), "foo02")
 })
 
 test_that("to_numeric restores numeric-classified variables and converts negatives to NA", {

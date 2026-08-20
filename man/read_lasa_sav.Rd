@@ -60,8 +60,8 @@ performed by \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}'s underlying 
 metadata for the parsed file code/wave in \code{\link[=lasa_label_db]{lasa_label_db()}}. A file code
 with no database coverage yet is labelled as a no-op (every column left
 untouched, \code{"not found"} recorded in the matching audit) rather than an
-error -- refresh coverage with \code{\link[=update_lasa_labels]{update_lasa_labels()}} or
-\code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}.
+error -- add coverage with \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}, or wait for a
+package update.
 
 After labelling, provenance attributes are attached: \code{"LASA_wave"},
 \code{"LASA_file_code"}, and \code{"LASA_source_file"}. This is what lets

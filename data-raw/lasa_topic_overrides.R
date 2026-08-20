@@ -24,12 +24,6 @@
 ## the *current, auto-derived* topic text in `old_topic_contains` to
 ## identify the right one, plus the corrected topic and a source note.
 ## Then re-run this script to rebuild R/sysdata.rda.
-##
-## R/sysdata.rda also holds `lasa_offline_topics_table` (built by
-## `data-raw/build_lasa_offline_topics_table.R`). Because
-## `usethis::use_data(internal = TRUE)` replaces the *entire* sysdata.rda
-## with only the objects named in its call, this script's own call loads
-## that object first so re-running this script alone doesn't drop it.
 
 lasa_topic_overrides <- data.frame(
   filecode = character(), theme = character(), subtheme = character(),
@@ -259,16 +253,7 @@ lasa_topic_wave_splits <- data.frame(
   stringsAsFactors = FALSE
 )
 
-.sysdata_env <- new.env()
-if (file.exists("R/sysdata.rda")) {
-  load("R/sysdata.rda", envir = .sysdata_env)
-}
-if (exists("lasa_offline_topics_table", envir = .sysdata_env)) {
-  lasa_offline_topics_table <- get("lasa_offline_topics_table", envir = .sysdata_env)
-}
-rm(.sysdata_env)
-
 usethis::use_data(
-  lasa_topic_overrides, lasa_topic_code_aliases, lasa_topic_wave_splits, lasa_offline_topics_table,
+  lasa_topic_overrides, lasa_topic_code_aliases, lasa_topic_wave_splits,
   internal = TRUE, overwrite = TRUE
 )

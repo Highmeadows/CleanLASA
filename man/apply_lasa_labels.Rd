@@ -30,7 +30,14 @@ recovered from \code{data}'s provenance (see Details).}
 \value{
 \code{data}, labelled (and optionally reshaped/renamed) exactly as
 \code{\link[=read_lasa_sav]{read_lasa_sav()}} would, with \code{"label_report"}, \code{"LASA_wave"}, and
-\code{"LASA_file_code"} attributes (re-)attached.
+\code{"LASA_file_code"} attributes (re-)attached. Each labelled column also
+carries \code{"label"} (the wave-specific variable label), \code{"labels"} (its
+value labels, SPSS/haven-style), \code{"canonical_name"} (the wave-stripped
+variable name), \code{"harmonized_label"} (the cross-wave-consistent
+variable label), and, where the database documents one,
+\code{"labels_harmonized"} (the cross-wave-standardized value labels) --
+groundwork for a future \code{standardize_names}/\code{standardize_labels} pair
+of arguments, not yet implemented.
 }
 \description{
 Attaches SPSS-style variable and value labels to a data frame using the
@@ -68,5 +75,5 @@ dat <- apply_lasa_labels(dat) # re-applies via stored provenance
 }
 \seealso{
 \code{\link[=read_lasa_sav]{read_lasa_sav()}}, \code{\link[=lasa_label_report]{lasa_label_report()}}, \code{\link[=lasa_label_db]{lasa_label_db()}},
-\code{\link[=update_lasa_labels]{update_lasa_labels()}}, \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}
+\code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}
 }

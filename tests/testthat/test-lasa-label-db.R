@@ -22,9 +22,19 @@ test_that("validation catches value_labels rows with no matching variable", {
   db$value_labels$filecode <- "046"
   db$value_labels$wave <- "B"
   db$value_labels$variable_name <- "blphya01"
-  db$value_labels$value_raw <- "1"
+  db$value_labels$value_numeric <- 1
   problems <- .lasa_validate_label_db(db)
   expect_true(any(grepl("not present in 'variables'", problems)))
+})
+
+test_that("validation catches value_labels_harmonized rows with no matching variable", {
+  db <- .lasa_empty_label_db()
+  db$value_labels_harmonized <- db$value_labels_harmonized[0, ][1, ]
+  db$value_labels_harmonized$filecode <- "046"
+  db$value_labels_harmonized$canonical_name <- "lphya01"
+  db$value_labels_harmonized$value_numeric <- 1
+  problems <- .lasa_validate_label_db(db)
+  expect_true(any(grepl("value_labels_harmonized.*not present in 'variables'", problems)))
 })
 
 test_that("manual_overrides compose on top of base rows: merge vs. replace", {
@@ -32,16 +42,13 @@ test_that("manual_overrides compose on top of base rows: merge vs. replace", {
   db$variables <- rbind(db$variables, data.frame(
     filecode = "046", wave = "B", variable_name = "blphya01",
     canonical_name = "lphya01", variable_label = "orig label",
-    document_id = "doc1", source_page = 1L, source_row = 1L,
-    source_condition = NA_character_, parse_note = NA_character_,
+    harmonized_var_label = "Physical condition respondent",
     var_type = "categorical", stringsAsFactors = FALSE
   ))
   db$value_labels <- rbind(db$value_labels, data.frame(
     filecode = "046", wave = "B", variable_name = "blphya01",
-    value_raw = c("0", "1", "2"), value_numeric = c(0, 1, 2),
+    value_numeric = c(0, 1, 2),
     value_label = c("Don't know", "No", "Yes"), is_missing = FALSE,
-    document_id = "doc1", source_page = 1L, source_row = 1L,
-    source_condition = NA_character_, parse_note = NA_character_,
     stringsAsFactors = FALSE
   ))
 
@@ -52,17 +59,17 @@ test_that("manual_overrides compose on top of base rows: merge vs. replace", {
   ))
   db$manual_overrides$value_labels <- rbind(db$manual_overrides$value_labels, data.frame(
     filecode = "046", wave = "B", variable_name = "blphya01",
-    value_raw = "-5", value_numeric = -5, value_label = "NA, wrong, skip",
+    value_numeric = -5, value_label = "NA, wrong, skip",
     is_missing = TRUE, applied_at = Sys.time(), note = NA_character_,
     stringsAsFactors = FALSE
   ))
 
   merged <- .lasa_get_labels(db, "046", "B")
-  expect_setequal(merged$value_labels$value_raw, c("0", "1", "2", "-5"))
+  expect_setequal(merged$value_labels$value_numeric, c(0, 1, 2, -5))
 
   db$manual_overrides$variables$replace_value_labels <- TRUE
   replaced <- .lasa_get_labels(db, "046", "B")
-  expect_identical(replaced$value_labels$value_raw, "-5")
+  expect_identical(replaced$value_labels$value_numeric, -5)
 })
 
 test_that("manual variable_label override wins and is flagged manual_override", {
@@ -70,8 +77,7 @@ test_that("manual variable_label override wins and is flagged manual_override", 
   db$variables <- rbind(db$variables, data.frame(
     filecode = "046", wave = "B", variable_name = "blphya01",
     canonical_name = "lphya01", variable_label = "orig label",
-    document_id = "doc1", source_page = 1L, source_row = 1L,
-    source_condition = NA_character_, parse_note = NA_character_,
+    harmonized_var_label = "Physical condition respondent",
     var_type = "categorical", stringsAsFactors = FALSE
   ))
   db$manual_overrides$variables <- rbind(db$manual_overrides$variables, data.frame(
@@ -85,19 +91,34 @@ test_that("manual variable_label override wins and is flagged manual_override", 
   expect_true(out$variables$manual_override)
 })
 
+test_that(".lasa_get_labels() scopes value_labels_harmonized by filecode only (not wave)", {
+  db <- .lasa_empty_label_db()
+  db$variables <- rbind(db$variables, data.frame(
+    filecode = "046", wave = "B", variable_name = "blphya01",
+    canonical_name = "lphya01", variable_label = "l", harmonized_var_label = "h",
+    var_type = "categorical", stringsAsFactors = FALSE
+  ))
+  db$value_labels_harmonized <- rbind(db$value_labels_harmonized, data.frame(
+    filecode = "046", canonical_name = "lphya01",
+    value_numeric = c(1, 2), value_label = c("No", "Yes"), is_missing = FALSE,
+    stringsAsFactors = FALSE
+  ))
+  out <- .lasa_get_labels(db, "046", "B")
+  expect_equal(nrow(out$value_labels_harmonized), 2L)
+})
+
 test_that("lasa_label_db() returns the currently active (bundled) database", {
   db <- lasa_label_db()
   expect_true(.lasa_is_label_db_shaped(db))
   expect_gt(nrow(db$variables), 0L)
+  expect_gt(nrow(db$value_labels), 0L)
 })
 
 test_that("filecode/wave normalization is applied when looking up labels", {
   db <- .lasa_empty_label_db()
   db$variables <- rbind(db$variables, data.frame(
     filecode = "046", wave = "B", variable_name = "blphya01",
-    canonical_name = "lphya01", variable_label = "l",
-    document_id = "doc1", source_page = 1L, source_row = 1L,
-    source_condition = NA_character_, parse_note = NA_character_,
+    canonical_name = "lphya01", variable_label = "l", harmonized_var_label = "h",
     var_type = "categorical", stringsAsFactors = FALSE
   ))
   out <- .lasa_get_labels(db, "LASA046", "b")
