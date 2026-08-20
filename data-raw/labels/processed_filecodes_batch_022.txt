@@ -1,0 +1,43 @@
+Plan B batch 022 checkpoint
+
+Completed filecodes:
+705, 706, 707, 708, 711
+
+Numeric scan:
+- Scan resumed at 705.
+- 705, 706, 707 and 708 were fully extractable from the current varinfo source material.
+- 709 is present in the current repository, but the available extraction did not expose enough exact varinfo text to build it without guessing.
+- 710 is present in the current repository, but only its E/F section could be verified completely; later-wave varinfo content was not sufficiently retrievable.
+- To reach five completed filecodes without fabricating metadata, the scan continued to 711, whose complete current varinfo metadata was retrievable.
+- Priority retry order for next batch: 709, 710, then continue from 712.
+
+Validated row counts (variable rows, value rows including Z):
+- 705: 100, 844
+- 706: 165, 922
+- 707: 119, 573
+- 708: 2, 24
+- 711: 55, 198
+
+Repository source PDF blob SHA-1:
+- LASA705_varinfo.pdf: 2ea437b52a71abf856e3fca3a9795f3baee76a40
+- LASA706_varinfo.pdf: c95fbe2165251f432f2b8eef9d932a5d466fcf1f
+- LASA707_varinfo.pdf: cc82c892e89fa192ddfaec7f98d7a313903b2fe9
+- LASA708_varinfo.pdf: 595acc587d227620298ac4d4a78fca8f091af7d5
+- LASA711_varinfo.pdf: 7f0d67cfc1bc8675cd7208ac6bef6d5a9f8fce89
+
+Material source/audit notes:
+- 705: the source lists value -1 twice for TRBOT2 ('no first fracture' and 'asked, no answer'). Both source definitions are retained and explicitly flagged.
+- 705: from wave H onward, the source additionally documents TRBOTPH value 1 as 'no' while also listing 'yes, family physician' at value 1. Both definitions are retained rather than silently correcting the PDF.
+- 707: the current varinfo source spells the second wave-C IQCODE variable CTPCOGD2 while the surrounding respondent variables use CTR-. The varinfo spelling is preserved verbatim; it was not silently corrected.
+- 707: continuous/scale endpoint descriptors such as low/minimum and high/maximum are retained in value_raw with blank value_label, per Plan B rules.
+- 706: the wave-C depressive-affect score documents only its missing-value code; no undocumented numeric endpoints were invented.
+
+Unresolved/skipped filecodes:
+- 709: current varinfo exists, exact text extraction insufficient for safe construction.
+- 710: current varinfo exists, later-wave sections not sufficiently retrievable for safe construction.
+
+Authoritative-source policy:
+The current topic mapping and current matched varinfo source material were used as metadata truth.
+Previously generated label CSVs and existing label-database/functions were not used as metadata evidence.
+
+No repository commit or push performed.
