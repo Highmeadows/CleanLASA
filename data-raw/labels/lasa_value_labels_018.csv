@@ -1,0 +1,11 @@
+filecode,wave,canonical_name,variable_type,value_raw,value_numeric,value_label,is_missing,conflicts
+018,B,hinsura,categorical,no insurance(-5),-5,no insurance,TRUE,
+018,B,hinsura,categorical,"na, do not know(-1)",-1,"na, do not know",TRUE,
+018,B,hinsura,categorical,sick-fund: mandatory(1),1,sick-fund: mandatory,FALSE,
+018,B,hinsura,categorical,sick-fund: voluntary(2),2,sick-fund: voluntary,FALSE,
+018,B,hinsura,categorical,private Insurance(3),3,private Insurance,FALSE,
+018,Z,hinsura,categorical,-5,-5,no insurance,TRUE,
+018,Z,hinsura,categorical,-1,-1,"not available, do not know",TRUE,
+018,Z,hinsura,categorical,1,1,sick-fund: mandatory,FALSE,
+018,Z,hinsura,categorical,2,2,sick-fund: voluntary,FALSE,
+018,Z,hinsura,categorical,3,3,private insurance,FALSE,

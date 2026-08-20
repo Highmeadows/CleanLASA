@@ -1,0 +1,5 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+013,B,bcity,city,Residence 1944: City,Residence 1944: City,
+013,B,bprovinc,provinc,Residence 1944: Province (Holland only),Residence 1944: Province (Holland only),
+013,B,bcountry,country,Residence 1944: Country,Residence 1944: Country,
+013,B,bremarks,remarks,Residence 1944: Special remarks,Residence 1944: Special remarks,
