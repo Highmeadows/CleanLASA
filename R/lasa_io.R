@@ -386,8 +386,8 @@
 #' metadata for the parsed file code/wave in [lasa_label_db()]. A file code
 #' with no database coverage yet is labelled as a no-op (every column left
 #' untouched, `"not found"` recorded in the matching audit) rather than an
-#' error -- refresh coverage with [update_lasa_labels()] or
-#' [manual_update_lasa_labels()].
+#' error -- add coverage with [manual_update_lasa_labels()], or wait for a
+#' package update.
 #'
 #' After labelling, provenance attributes are attached: `"LASA_wave"`,
 #' `"LASA_file_code"`, and `"LASA_source_file"`. This is what lets

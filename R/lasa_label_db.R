@@ -2,45 +2,48 @@
 # precedence over the bundled snapshot, integrity validation, and the
 # manual-override composition rule used by `.lasa_apply_labels()`.
 #
+# The database is built entirely from hardcoded R (data-raw/labels/*.R,
+# assembled by data-raw/build_lasa_label_db.R) transcribed from LASA's own
+# variable-information documentation -- there is no PDF-parsing step and no
+# "documents" provenance table; label updates ship with new package
+# releases instead of being fetched at runtime.
+#
 # Schema (see the package README and `?lasa_label_db` for the full
 # picture):
-#   documents         one row per parsed varinfo PDF (document_id,
-#                      source_url, pdf_filename, document_date,
-#                      retrieved_at, sha256, parser_version, filecodes)
-#   variables         one row per (filecode, wave, variable_name):
-#                      canonical_name, variable_label, var_type,
-#                      document_id, source_page/row/condition, parse_note
-#   value_labels      one row per (filecode, wave, variable_name,
-#                      value_raw): value_numeric, value_label, is_missing,
-#                      document_id, source_page/row/condition, parse_note
+#   variables                 one row per (filecode, wave, variable_name):
+#                              canonical_name, variable_label (wave-specific
+#                              text), harmonized_var_label (cross-wave-
+#                              consistent text), var_type
+#   value_labels               one row per (filecode, wave, variable_name,
+#                              value_numeric): value_label, is_missing --
+#                              the value labels as documented for that wave
+#   value_labels_harmonized    one row per (filecode, canonical_name,
+#                              value_numeric): value_label, is_missing --
+#                              the cross-wave-standardized value labels for
+#                              that variable, independent of wave
 #   manual_overrides$variables     hand-authored patch rows, written only
-#                      by manual_update_lasa_labels()
+#                              by manual_update_lasa_labels()
 #   manual_overrides$value_labels  ditto, for individual value-label rows
 
 #' An empty, correctly-shaped `lasa_label_db` object
 #' @keywords internal
 .lasa_empty_label_db <- function() {
   list(
-    documents = data.frame(
-      document_id = character(0), source_url = character(0),
-      pdf_filename = character(0), document_date = as.Date(character(0)),
-      retrieved_at = as.POSIXct(character(0)), sha256 = character(0),
-      parser_version = character(0), filecodes = character(0),
-      stringsAsFactors = FALSE
-    ),
     variables = data.frame(
       filecode = character(0), wave = character(0), variable_name = character(0),
       canonical_name = character(0), variable_label = character(0),
-      document_id = character(0), source_page = integer(0), source_row = integer(0),
-      source_condition = character(0), parse_note = character(0),
-      var_type = character(0), stringsAsFactors = FALSE
+      harmonized_var_label = character(0), var_type = character(0),
+      stringsAsFactors = FALSE
     ),
     value_labels = data.frame(
       filecode = character(0), wave = character(0), variable_name = character(0),
-      value_raw = character(0), value_numeric = numeric(0), value_label = character(0),
-      is_missing = logical(0), document_id = character(0),
-      source_page = integer(0), source_row = integer(0), source_condition = character(0),
-      parse_note = character(0), stringsAsFactors = FALSE
+      value_numeric = numeric(0), value_label = character(0), is_missing = logical(0),
+      stringsAsFactors = FALSE
+    ),
+    value_labels_harmonized = data.frame(
+      filecode = character(0), canonical_name = character(0),
+      value_numeric = numeric(0), value_label = character(0), is_missing = logical(0),
+      stringsAsFactors = FALSE
     ),
     manual_overrides = list(
       variables = data.frame(
@@ -51,7 +54,7 @@
       ),
       value_labels = data.frame(
         filecode = character(0), wave = character(0), variable_name = character(0),
-        value_raw = character(0), value_numeric = numeric(0), value_label = character(0),
+        value_numeric = numeric(0), value_label = character(0),
         is_missing = logical(0), applied_at = as.POSIXct(character(0)), note = character(0),
         stringsAsFactors = FALSE
       )
@@ -60,11 +63,10 @@
 }
 
 ## CRAN-recommended, cross-platform per-package user data directory. This
-## is where update_lasa_labels()/manual_update_lasa_labels() persist a
-## modified snapshot of the database, taking precedence over the bundled
-## one on every subsequent load -- so a user's PDF refresh or hand
-## correction survives across sessions without needing to reinstall the
-## package.
+## is where manual_update_lasa_labels() persists a modified snapshot of the
+## database, taking precedence over the bundled one on every subsequent
+## load -- so a hand correction survives across sessions without needing to
+## reinstall the package.
 .lasa_label_db_path <- function() {
   file.path(tools::R_user_dir("CleanLASA", which = "data"), "lasa_label_db.rds")
 }
@@ -93,7 +95,9 @@
 }
 
 .lasa_is_label_db_shaped <- function(db) {
-  is.list(db) && all(c("documents", "variables", "value_labels", "manual_overrides") %in% names(db))
+  is.list(db) && all(
+    c("variables", "value_labels", "value_labels_harmonized", "manual_overrides") %in% names(db)
+  )
 }
 
 ## Atomically persists `db` as the user-local snapshot (temp file + rename,
@@ -122,17 +126,12 @@
     ))
   }
 
-  ## A NA value_raw marks a row the parser couldn't resolve (an unparsed
-  ## code, an unresolved "see table ..." reference) -- several such rows
-  ## can legitimately coexist for one variable, so they are exempted from
-  ## the uniqueness check rather than flagged as colliding real data.
   key_val_variable <- with(db$value_labels, paste(filecode, wave, variable_name, sep = "\r"))
-  key_val_full <- with(db$value_labels, paste(filecode, wave, variable_name, value_raw, sep = "\r"))
-  resolved <- !is.na(db$value_labels$value_raw)
-  if (anyDuplicated(key_val_full[resolved]) > 0L) {
+  key_val_full <- with(db$value_labels, paste(filecode, wave, variable_name, value_numeric, sep = "\r"))
+  if (anyDuplicated(key_val_full) > 0L) {
     problems <- c(problems, sprintf(
-      "%d duplicate (filecode, wave, variable_name, value_raw) key(s) in 'value_labels'.",
-      sum(duplicated(key_val_full[resolved]))
+      "%d duplicate (filecode, wave, variable_name, value_numeric) key(s) in 'value_labels'.",
+      sum(duplicated(key_val_full))
     ))
   }
 
@@ -144,29 +143,44 @@
     ))
   }
 
-  known_documents <- db$documents$document_id
-  orphan_docs <- !db$variables$document_id %in% known_documents & nrow(db$variables) > 0L
-  if (any(orphan_docs)) {
+  key_harmonized <- with(
+    db$value_labels_harmonized, paste(filecode, canonical_name, value_numeric, sep = "\r")
+  )
+  if (anyDuplicated(key_harmonized) > 0L) {
     problems <- c(problems, sprintf(
-      "%d row(s) in 'variables' reference a document_id not present in 'documents'.",
-      sum(orphan_docs)
+      "%d duplicate (filecode, canonical_name, value_numeric) key(s) in 'value_labels_harmonized'.",
+      sum(duplicated(key_harmonized))
+    ))
+  }
+
+  known_canonical <- with(db$variables, paste(filecode, canonical_name, sep = "\r"))
+  key_harmonized_var <- with(
+    db$value_labels_harmonized, paste(filecode, canonical_name, sep = "\r")
+  )
+  orphan_harmonized <- !key_harmonized_var %in% known_canonical & nrow(db$value_labels_harmonized) > 0L
+  if (any(orphan_harmonized)) {
+    problems <- c(problems, sprintf(
+      "%d row(s) in 'value_labels_harmonized' reference a (filecode, canonical_name) not present in 'variables'.",
+      sum(orphan_harmonized)
     ))
   }
 
   problems
 }
 
-## Composes the base (PDF-parsed) rows for one (filecode, wave) key with
-## any manual_overrides on top -- see the "manual_update_lasa_labels()"
-## section of the package design notes for the full worked example this
-## implements. Never mutates the base tables; the result is what
-## .lasa_apply_labels() consumes.
+## Composes the base (hardcoded) rows for one (filecode, wave) key with any
+## manual_overrides on top -- see the "manual_update_lasa_labels()" section
+## of the package design notes for the full worked example this implements.
+## Never mutates the base tables; the result is what .lasa_apply_labels()
+## consumes.
 ##
-## @return A list with `variables` and `value_labels` data frames scoped
-##   to `filecode`/`wave`, `variable_label` overridden where a manual
-##   override applies, and value labels merged or fully replaced per
-##   variable according to each override's `replace_value_labels` flag.
-##   Also attaches a logical `manual_override` column to both, so callers
+## @return A list with `variables`, `value_labels` (both scoped to
+##   `filecode`/`wave`), and `value_labels_harmonized` (scoped to
+##   `filecode` only -- it applies across waves) data frames.
+##   `variable_label` is overridden where a manual override applies, and
+##   value labels merged or fully replaced per variable according to each
+##   override's `replace_value_labels` flag. Also attaches a logical
+##   `manual_override` column to `variables`/`value_labels`, so callers
 ##   (the label_report's `method` column) can record when a match came
 ##   from a manual patch.
 .lasa_get_labels <- function(db, filecode, wave) {
@@ -185,6 +199,11 @@
     ,
     drop = FALSE
   ]
+  harmonized <- db$value_labels_harmonized[
+    .lasa_normalize_filecode(db$value_labels_harmonized$filecode) == normalized_filecode,
+    ,
+    drop = FALSE
+  ]
   vars$manual_override <- rep(FALSE, nrow(vars))
   vals$manual_override <- rep(FALSE, nrow(vals))
 
@@ -198,7 +217,7 @@
   ]
 
   if (nrow(mo_var_rows) == 0L) {
-    return(list(variables = vars, value_labels = vals))
+    return(list(variables = vars, value_labels = vals, value_labels_harmonized = harmonized))
   }
 
   ## variable_label overrides: upsert by variable_name (last-applied wins
@@ -223,7 +242,7 @@
     }
   }
 
-  ## value_labels: merge (upsert by value_raw) or fully replace, per
+  ## value_labels: merge (upsert by value_numeric) or fully replace, per
   ## variable, according to that variable's `replace_value_labels` flag.
   for (i in seq_len(nrow(mo_var_rows))) {
     row <- mo_var_rows[i, ]
@@ -236,13 +255,8 @@
     ]
     if (nrow(patch_rows) == 0L) next
     patch_rows <- patch_rows[order(patch_rows$applied_at), , drop = FALSE]
-    patch_rows <- patch_rows[!duplicated(patch_rows$value_raw, fromLast = TRUE), , drop = FALSE]
+    patch_rows <- patch_rows[!duplicated(patch_rows$value_numeric, fromLast = TRUE), , drop = FALSE]
     patch_rows$manual_override <- TRUE
-    patch_rows$document_id <- NA_character_
-    patch_rows$source_page <- NA_integer_
-    patch_rows$source_row <- NA_integer_
-    patch_rows$source_condition <- NA_character_
-    patch_rows$parse_note <- NA_character_
     patch_rows$applied_at <- NULL
     patch_rows$note <- NULL
 
@@ -252,29 +266,28 @@
     if (isTRUE(row$replace_value_labels)) {
       this_var_rows <- patch_rows
     } else {
-      keep <- !this_var_rows$value_raw %in% patch_rows$value_raw
+      keep <- !this_var_rows$value_numeric %in% patch_rows$value_numeric
       this_var_rows <- rbind(this_var_rows[keep, , drop = FALSE], patch_rows)
     }
     vals <- rbind(other_rows, this_var_rows)
   }
 
-  list(variables = vars, value_labels = vals)
+  list(variables = vars, value_labels = vals, value_labels_harmonized = harmonized)
 }
 
 #' Inspect the active LASA label database
 #'
 #' Returns the label metadata database currently in effect: the bundled
 #' snapshot shipped with the package, layered with any local updates from
-#' [update_lasa_labels()] or [manual_update_lasa_labels()]. Useful for
-#' checking which file codes/waves are covered before calling
-#' [apply_lasa_labels()], or for auditing a manual correction.
+#' [manual_update_lasa_labels()]. Useful for checking which file codes/waves
+#' are covered before calling [apply_lasa_labels()], or for auditing a
+#' manual correction.
 #'
-#' @return A list with `documents`, `variables`, `value_labels`, and
-#'   `manual_overrides` (itself a list of `variables`/`value_labels`) --
+#' @return A list with `variables`, `value_labels`, `value_labels_harmonized`,
+#'   and `manual_overrides` (itself a list of `variables`/`value_labels`) --
 #'   see the package README for the full schema.
 #'
-#' @seealso [apply_lasa_labels()], [update_lasa_labels()],
-#'   [manual_update_lasa_labels()]
+#' @seealso [apply_lasa_labels()], [manual_update_lasa_labels()]
 #' @export
 #'
 #' @examples

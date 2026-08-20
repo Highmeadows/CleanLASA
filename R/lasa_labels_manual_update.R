@@ -1,10 +1,10 @@
-# manual_update_lasa_labels(): a hand-authored patch layer for when
-# automatic PDF parsing fails or a varinfo PDF's own documentation is
-# incomplete/wrong. Bypasses PDF retrieval entirely; writes to the same
-# user-local database update_lasa_labels() writes to, in a separate
+# manual_update_lasa_labels(): a hand-authored patch layer for when the
+# bundled label database itself is wrong, incomplete, or a user wants a
+# custom label. Writes a user-local database snapshot, in a separate
 # manual_overrides table composed back on top at read time (see
-# .lasa_get_labels() in lasa_label_db.R) -- so a PDF refresh never
-# silently clobbers a hand correction.
+# .lasa_get_labels() in lasa_label_db.R) -- so a future package update never
+# silently clobbers a hand correction (it only replaces the bundled base
+# layer the override is composed on top of).
 
 ## Finds candidate base rows (db$variables) matching `variable` either as
 ## a wave-specific `variable_name` or as a `canonical_name`, optionally
@@ -26,7 +26,7 @@
 }
 
 ## Normalizes `val_labels` (a named vector, possibly numeric- or
-## backtick-named) into a data frame of value_raw/value_label/is_missing.
+## backtick-named) into a data frame of value_numeric/value_label/is_missing.
 .lasa_manual_parse_val_labels <- function(val_labels) {
   if (is.null(names(val_labels)) || any(!nzchar(names(val_labels)))) {
     stop(
@@ -39,7 +39,6 @@
     stop("Every name in 'val_labels' must be a valid numeric code (quote/backtick negative codes).", call. = FALSE)
   }
   data.frame(
-    value_raw = as.character(codes),
     value_numeric = codes,
     value_label = unname(as.character(val_labels)),
     is_missing = codes < 0,
@@ -49,14 +48,12 @@
 
 #' Manually correct or add LASA variable/value labels
 #'
-#' A hand-authored escape hatch for when automatic PDF retrieval/parsing
-#' fails, or a varinfo PDF's own documentation is itself incomplete or
-#' wrong. Writes directly to the user-local label database used by
-#' [apply_lasa_labels()] and [read_lasa_sav()], without downloading or
-#' parsing any PDF. Overrides are stored separately from PDF-derived data
-#' and are composed back on top of it at lookup time, so a later
-#' [update_lasa_labels()] refresh of the same file code never silently
-#' discards a correction recorded here.
+#' A hand-authored escape hatch for when the bundled [lasa_label_db()] is
+#' itself incomplete or wrong, or a user wants a custom label. Writes
+#' directly to the user-local label database used by [apply_lasa_labels()]
+#' and [read_lasa_sav()]. Overrides are stored separately from the bundled
+#' data and are composed back on top of it at lookup time, so a later
+#' package update never silently discards a correction recorded here.
 #'
 #' @param filecode Optional LASA file code (e.g. `"046"`, `"zoa1"`,
 #'   `"z004"`). Required when `variable`/`wave` match more than one file
@@ -83,7 +80,7 @@
 #'   `wave` (the resolved wave(s)), `variable_name`, and which of
 #'   `variable_label`/`value_labels` were updated.
 #'
-#' @seealso [update_lasa_labels()], [lasa_label_db()]
+#' @seealso [lasa_label_db()], [apply_lasa_labels()]
 #' @export
 #'
 #' @examples
@@ -229,18 +226,18 @@ manual_update_lasa_labels <- function(filecode = NULL,
       out$applied_at <- now
       out$note <- NA_character_
       out[c(
-        "filecode", "wave", "variable_name", "value_raw", "value_numeric",
+        "filecode", "wave", "variable_name", "value_numeric",
         "value_label", "is_missing", "applied_at", "note"
       )]
     }))
 
     key_existing_v <- with(
       mo$value_labels,
-      paste(.lasa_normalize_filecode(filecode), toupper(wave), variable_name, value_raw, sep = "\r")
+      paste(.lasa_normalize_filecode(filecode), toupper(wave), variable_name, value_numeric, sep = "\r")
     )
     key_new_v <- with(
       value_rows,
-      paste(.lasa_normalize_filecode(filecode), toupper(wave), variable_name, value_raw, sep = "\r")
+      paste(.lasa_normalize_filecode(filecode), toupper(wave), variable_name, value_numeric, sep = "\r")
     )
     mo$value_labels <- rbind(mo$value_labels[!key_existing_v %in% key_new_v, , drop = FALSE], value_rows)
     rownames(mo$value_labels) <- NULL

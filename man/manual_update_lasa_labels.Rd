@@ -45,14 +45,12 @@ Invisibly, a list describing what was recorded: \code{filecode},
 \code{variable_label}/\code{value_labels} were updated.
 }
 \description{
-A hand-authored escape hatch for when automatic PDF retrieval/parsing
-fails, or a varinfo PDF's own documentation is itself incomplete or
-wrong. Writes directly to the user-local label database used by
-\code{\link[=apply_lasa_labels]{apply_lasa_labels()}} and \code{\link[=read_lasa_sav]{read_lasa_sav()}}, without downloading or
-parsing any PDF. Overrides are stored separately from PDF-derived data
-and are composed back on top of it at lookup time, so a later
-\code{\link[=update_lasa_labels]{update_lasa_labels()}} refresh of the same file code never silently
-discards a correction recorded here.
+A hand-authored escape hatch for when the bundled \code{\link[=lasa_label_db]{lasa_label_db()}} is
+itself incomplete or wrong, or a user wants a custom label. Writes
+directly to the user-local label database used by \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}
+and \code{\link[=read_lasa_sav]{read_lasa_sav()}}. Overrides are stored separately from the bundled
+data and are composed back on top of it at lookup time, so a later
+package update never silently discards a correction recorded here.
 }
 \examples{
 \dontrun{
@@ -70,5 +68,5 @@ manual_update_lasa_labels(
 }
 }
 \seealso{
-\code{\link[=update_lasa_labels]{update_lasa_labels()}}, \code{\link[=lasa_label_db]{lasa_label_db()}}
+\code{\link[=lasa_label_db]{lasa_label_db()}}, \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}
 }

@@ -7,40 +7,44 @@
 \format{
 A list with four elements:
 \describe{
-\item{documents}{One row per parsed varinfo PDF: \code{document_id},
-\code{source_url}, \code{pdf_filename}, \code{document_date}, \code{retrieved_at},
-\code{sha256}, \code{parser_version}, \code{filecodes} (semicolon-joined).}
 \item{variables}{One row per (\code{filecode}, \code{wave}, \code{variable_name}):
-\code{canonical_name}, \code{variable_label}, \code{var_type}
-(\code{"categorical"}/\code{"numeric"}/\code{"date"}/\code{"unresolved"}), \code{document_id},
-\code{source_page}/\code{source_row}/\code{source_condition} (provenance within the
-PDF), \code{parse_note} (non-\code{NA} when this row needed manual review).}
+\code{canonical_name} (the wave-stripped name), \code{variable_label} (the
+wave-specific text), \code{harmonized_var_label} (a cross-wave-consistent
+description of the same variable), \code{var_type}
+(\code{"numeric"}/\code{"categorical"}/\code{"text"}/\code{"date"}).}
 \item{value_labels}{One row per (\code{filecode}, \code{wave}, \code{variable_name},
-\code{value_raw}): \code{value_numeric}, \code{value_label}, \code{is_missing}, plus the
-same \code{document_id}/provenance/\code{parse_note} columns as \code{variables}.}
+\code{value_numeric}): \code{value_label}, \code{is_missing} -- the value labels as
+documented for that wave.}
+\item{value_labels_harmonized}{One row per (\code{filecode},
+\code{canonical_name}, \code{value_numeric}): \code{value_label}, \code{is_missing} --
+the cross-wave-standardized value labels for that variable,
+independent of wave (used where a variable's coding was harmonized
+across waves that documented it slightly differently).}
 \item{manual_overrides}{A list of \code{variables}/\code{value_labels} patch
 tables; empty in the bundled snapshot -- populated only in a user's
 local copy by \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}.}
 }
 }
 \source{
-Parsed from LASA variable-information PDFs
-(\url{https://lasa-vu.nl/en/topic-table/}) by
+Transcribed from LASA's own variable-information documentation
+(\url{https://lasa-vu.nl/en/topic-table/}) into
+\verb{data-raw/labels/variables_<filecode>.R}, assembled by
 \code{data-raw/build_lasa_label_db.R}.
 }
 \usage{
 lasa_label_db_bundled
 }
 \description{
-The package's own snapshot of the label database, built by
-\code{data-raw/build_lasa_label_db.R} from every LASA variable-information PDF
-available at build time. \code{\link[=read_lasa_sav]{read_lasa_sav()}} and \code{\link[=apply_lasa_labels]{apply_lasa_labels()}} use
-this snapshot automatically, layered with any local updates recorded by
-\code{\link[=update_lasa_labels]{update_lasa_labels()}} or \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}. Not usually
-accessed directly -- call \code{\link[=lasa_label_db]{lasa_label_db()}} instead, which returns this
-same schema layered with any local updates.
+The package's own snapshot of the label database, assembled by
+\code{data-raw/build_lasa_label_db.R} from hardcoded, hand-maintained R
+(\code{data-raw/labels/value_label_sets.R} and \verb{data-raw/labels/variables_ <filecode>.R}), transcribed from LASA's own variable-information
+documentation. \code{\link[=read_lasa_sav]{read_lasa_sav()}} and \code{\link[=apply_lasa_labels]{apply_lasa_labels()}} use this
+snapshot automatically, layered with any local corrections recorded by
+\code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}. Not usually accessed directly -- call
+\code{\link[=lasa_label_db]{lasa_label_db()}} instead, which returns this same schema layered with
+any local updates.
 }
 \seealso{
-\code{\link[=lasa_label_db]{lasa_label_db()}}, \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}, \code{\link[=update_lasa_labels]{update_lasa_labels()}}
+\code{\link[=lasa_label_db]{lasa_label_db()}}, \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}, \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}
 }
 \keyword{datasets}

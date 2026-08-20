@@ -57,10 +57,10 @@ test_that("NAMESPACE exports the new generic functions and no old ones", {
   exports <- sub("^export\\((.*)\\)$", "\\1", grep("^export\\(", lines, value = TRUE))
 
   expect_true("apply_lasa_labels" %in% exports)
-  expect_true("update_lasa_labels" %in% exports)
   expect_true("manual_update_lasa_labels" %in% exports)
   expect_true("lasa_label_db" %in% exports)
   expect_true("read_lasa_sav" %in% exports)
+  expect_false("update_lasa_labels" %in% exports)
 
   stale <- grep("^apply_lasa[a-zA-Z0-9_]*_labels$", exports, perl = TRUE, value = TRUE)
   stale <- setdiff(stale, "apply_lasa_labels")

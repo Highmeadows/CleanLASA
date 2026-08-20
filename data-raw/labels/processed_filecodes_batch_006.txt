@@ -1,5 +1,0 @@
-Batch 006 completed filecodes: 110, 111, 112, 113, 114, 115, 116, 117, 118, 119
-Next canonical scan point: 120
-Backfill queue: 031
-Next action: backfill 031 first, then resume at 120
-Historical unresolved still includes 027 and 049.
