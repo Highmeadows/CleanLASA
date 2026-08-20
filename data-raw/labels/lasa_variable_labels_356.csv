@@ -1,0 +1,70 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+356,B,bmwtt1,mwtt1,number of words correct: trial 1,Number of words correct: trial 1,
+356,B,bmwtt2,mwtt2,number of words correct: trial 2,Number of words correct: trial 2,
+356,B,bmwtt3,mwtt3,number of words correct: trial 3,Number of words correct: trial 3,
+356,B,bmwtdr,mwtdr,number of words delayed recall,Number of words correct: delayed recall,
+356,B,bmtotal,mtotal,"learning/memory: total of 1, 2 and 3",Learning/memory total across trials 1-3,
+356,B,bmtmax,mtmax,"maximum score: Highest on 1, 2, 3",Maximum score across trials 1-3,
+356,B,bmdelta,mdelta,learning effect highest-lowest,Learning effect: highest-lowest trial score,
+356,B,bmret1pc,mret1pc,retention 1: bmwtdr/bmwtt3,Retention 1,"Cross-wave variable-label conflict: B,C (delayed recall / trial 3), D,E,2B,F,G,H,3B,I,J,K (delayed recall - trial 3); Source variable-name conflict: B maps bmret1pc to both retention 1 and retention 2"
+356,B,bmret1pc,mret2pc,retention 2: bmwtdr/bmtmax,Retention 2,"Cross-wave variable-label conflict: B,C (delayed recall / maximum trial score), D,E,2B,F,G,H,3B,I,J,K (delayed recall - maximum trial score); Source variable-name conflict: B maps bmret1pc to both retention 1 and retention 2"
+356,B,bmrecal,mrecal,15 word test time interval in minutes,15-word test time interval in minutes,
+356,C,cmwtt1,mwtt1,number of words correct: trial 1,Number of words correct: trial 1,
+356,C,cmwtt2,mwtt2,number of words correct: trial 2,Number of words correct: trial 2,
+356,C,cmwtt3,mwtt3,number of words correct: trial 3,Number of words correct: trial 3,
+356,C,cmwtdr,mwtdr,number of words delayed recall,Number of words correct: delayed recall,
+356,C,cmtotal,mtotal,"learning/memory: total of 1, 2 and 3",Learning/memory total across trials 1-3,
+356,C,cmtmax,mtmax,"maximum score: highest on 1, 2, 3",Maximum score across trials 1-3,
+356,C,cmdelta,mdelta,learning effect highest-lowest,Learning effect: highest-lowest trial score,
+356,C,cmret1pc,mret1pc,retention 1: cmwtdr/cmwtt3,Retention 1,"Cross-wave variable-label conflict: B,C (delayed recall / trial 3), D,E,2B,F,G,H,3B,I,J,K (delayed recall - trial 3); Source variable-name conflict: C maps cmret1pc to both retention 1 and retention 2"
+356,C,cmret1pc,mret2pc,retention 2: cmwtdr/cmtmax,Retention 2,"Cross-wave variable-label conflict: B,C (delayed recall / maximum trial score), D,E,2B,F,G,H,3B,I,J,K (delayed recall - maximum trial score); Source variable-name conflict: C maps cmret1pc to both retention 1 and retention 2"
+356,D,dmtotal,mtotal,"learning/memory: total of 1, 2 and 3",Learning/memory total across trials 1-3,
+356,D,dmtmax,mtmax,"maximum score: highest on 1, 2, 3",Maximum score across trials 1-3,
+356,D,dmdelta,mdelta,learning highest-lowest,Learning effect: highest-lowest trial score,
+356,D,dmret1pc,mret1pc,retention 1: dmwtdr - dmwtt3,Retention 1,"Cross-wave variable-label conflict: B,C (delayed recall / trial 3), D,E,2B,F,G,H,3B,I,J,K (delayed recall - trial 3)"
+356,D,dmret2pc,mret2pc,retention 2: dmwtdr - dmtmax,Retention 2,"Cross-wave variable-label conflict: B,C (delayed recall / maximum trial score), D,E,2B,F,G,H,3B,I,J,K (delayed recall - maximum trial score)"
+356,E,emtotal,mtotal,"learning/memory: total of 1, 2 and 3",Learning/memory total across trials 1-3,
+356,E,emtmax,mtmax,"maximum score: highest on 1, 2, 3",Maximum score across trials 1-3,
+356,E,emdelta,mdelta,learning highest-lowest,Learning effect: highest-lowest trial score,
+356,E,emret1pc,mret1pc,retention 1: emwtdr - emwtt3,Retention 1,"Cross-wave variable-label conflict: B,C (delayed recall / trial 3), D,E,2B,F,G,H,3B,I,J,K (delayed recall - trial 3)"
+356,E,emret2pc,mret2pc,retention 2: emwtdr - emtmax,Retention 2,"Cross-wave variable-label conflict: B,C (delayed recall / maximum trial score), D,E,2B,F,G,H,3B,I,J,K (delayed recall - maximum trial score)"
+356,2B,bmtotal,mtotal,"learning/memory: total of 1, 2 and 3",Learning/memory total across trials 1-3,
+356,2B,bmtmax,mtmax,"maximum score: highest on 1, 2, 3",Maximum score across trials 1-3,
+356,2B,bmdelta,mdelta,learning highest-lowest,Learning effect: highest-lowest trial score,
+356,2B,bmret1pc,mret1pc,retention 1: bmwtdr - bmwtt3,Retention 1,"Cross-wave variable-label conflict: B,C (delayed recall / trial 3), D,E,2B,F,G,H,3B,I,J,K (delayed recall - trial 3)"
+356,2B,bmret2pc,mret2pc,retention 2: bmwtdr - bmtmax,Retention 2,"Cross-wave variable-label conflict: B,C (delayed recall / maximum trial score), D,E,2B,F,G,H,3B,I,J,K (delayed recall - maximum trial score)"
+356,F,fmtotal,mtotal,"learning/memory: total of 1, 2 and 3",Learning/memory total across trials 1-3,
+356,F,fmtmax,mtmax,"maximum score: highest on 1, 2, 3",Maximum score across trials 1-3,
+356,F,fmdelta,mdelta,learning highest-lowest,Learning effect: highest-lowest trial score,
+356,F,fmret1pc,mret1pc,retention 1: fmwtdr - fmwtt3,Retention 1,"Cross-wave variable-label conflict: B,C (delayed recall / trial 3), D,E,2B,F,G,H,3B,I,J,K (delayed recall - trial 3)"
+356,F,fmret2pc,mret2pc,retention 2: fmwtdr - fmtmax,Retention 2,"Cross-wave variable-label conflict: B,C (delayed recall / maximum trial score), D,E,2B,F,G,H,3B,I,J,K (delayed recall - maximum trial score)"
+356,G,gmtotal,mtotal,"learning/memory: total of 1, 2 and 3",Learning/memory total across trials 1-3,
+356,G,gmtmax,mtmax,"maximum score: highest on 1, 2, 3",Maximum score across trials 1-3,
+356,G,gmdelta,mdelta,learning highest-lowest,Learning effect: highest-lowest trial score,
+356,G,gmret1pc,mret1pc,retention 1: gmwtdr - gmwtt3,Retention 1,"Cross-wave variable-label conflict: B,C (delayed recall / trial 3), D,E,2B,F,G,H,3B,I,J,K (delayed recall - trial 3)"
+356,G,gmret2pc,mret2pc,retention 2: gmwtdr - gmtmax,Retention 2,"Cross-wave variable-label conflict: B,C (delayed recall / maximum trial score), D,E,2B,F,G,H,3B,I,J,K (delayed recall - maximum trial score)"
+356,H,hmtotal,mtotal,"learning/memory: total of 1, 2 and 3",Learning/memory total across trials 1-3,
+356,H,hmtmax,mtmax,"maximum score: highest on 1, 2, 3",Maximum score across trials 1-3,
+356,H,hmdelta,mdelta,learning highest-lowest,Learning effect: highest-lowest trial score,
+356,H,hmret1pc,mret1pc,retention 1: hmwtdr - hmwtt3,Retention 1,"Cross-wave variable-label conflict: B,C (delayed recall / trial 3), D,E,2B,F,G,H,3B,I,J,K (delayed recall - trial 3)"
+356,H,hmret2pc,mret2pc,retention 2: hmwtdr - hmtmax,Retention 2,"Cross-wave variable-label conflict: B,C (delayed recall / maximum trial score), D,E,2B,F,G,H,3B,I,J,K (delayed recall - maximum trial score)"
+356,3B,bmtotal,mtotal,"learning/memory: total of 1, 2 and 3",Learning/memory total across trials 1-3,
+356,3B,bmtmax,mtmax,"maximum score: highest on 1, 2, 3",Maximum score across trials 1-3,
+356,3B,bmdelta,mdelta,learning highest-lowest,Learning effect: highest-lowest trial score,
+356,3B,bmret1pc,mret1pc,retention 1: bmwtdr - bmwtt3,Retention 1,"Cross-wave variable-label conflict: B,C (delayed recall / trial 3), D,E,2B,F,G,H,3B,I,J,K (delayed recall - trial 3)"
+356,3B,bmret2pc,mret2pc,retention 2: bmwtdr - bmtmax,Retention 2,"Cross-wave variable-label conflict: B,C (delayed recall / maximum trial score), D,E,2B,F,G,H,3B,I,J,K (delayed recall - maximum trial score)"
+356,I,imtotal,mtotal,"learning/memory: total of 1, 2 and 3",Learning/memory total across trials 1-3,
+356,I,imtmax,mtmax,"maximum score: highest on 1, 2, 3",Maximum score across trials 1-3,
+356,I,imdelta,mdelta,learning highest-lowest,Learning effect: highest-lowest trial score,
+356,I,imret1pc,mret1pc,retention 1: imwtdr - imwtt3,Retention 1,"Cross-wave variable-label conflict: B,C (delayed recall / trial 3), D,E,2B,F,G,H,3B,I,J,K (delayed recall - trial 3)"
+356,I,imret2pc,mret2pc,retention 2: imwtdr - imtmax,Retention 2,"Cross-wave variable-label conflict: B,C (delayed recall / maximum trial score), D,E,2B,F,G,H,3B,I,J,K (delayed recall - maximum trial score)"
+356,J,jmtotal,mtotal,"learning/memory: total of 1, 2 and 3",Learning/memory total across trials 1-3,
+356,J,jmtmax,mtmax,"maximum score: highest on 1, 2, 3",Maximum score across trials 1-3,
+356,J,jmdelta,mdelta,learning highest-lowest,Learning effect: highest-lowest trial score,
+356,J,jmret1pc,mret1pc,retention 1: jmwtdr - jmwtt3,Retention 1,"Cross-wave variable-label conflict: B,C (delayed recall / trial 3), D,E,2B,F,G,H,3B,I,J,K (delayed recall - trial 3)"
+356,J,jmret2pc,mret2pc,retention 2: jmwtdr - jmtmax,Retention 2,"Cross-wave variable-label conflict: B,C (delayed recall / maximum trial score), D,E,2B,F,G,H,3B,I,J,K (delayed recall - maximum trial score)"
+356,K,kmtotal,mtotal,"learning/memory: total of 1, 2 and 3",Learning/memory total across trials 1-3,
+356,K,kmtmax,mtmax,"maximum score: highest on 1, 2, 3",Maximum score across trials 1-3,
+356,K,kmdelta,mdelta,learning highest-lowest,Learning effect: highest-lowest trial score,
+356,K,kmret1pc,mret1pc,retention 1: kmwtdr - kmwtt3,Retention 1,"Cross-wave variable-label conflict: B,C (delayed recall / trial 3), D,E,2B,F,G,H,3B,I,J,K (delayed recall - trial 3)"
+356,K,kmret2pc,mret2pc,retention 2: kmwtdr - kmtmax,Retention 2,"Cross-wave variable-label conflict: B,C (delayed recall / maximum trial score), D,E,2B,F,G,H,3B,I,J,K (delayed recall - maximum trial score)"

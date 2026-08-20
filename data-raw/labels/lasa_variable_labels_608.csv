@@ -1,0 +1,3 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+608,C,ctprel09,tprel09,Influences daily life,Influences daily life,
+608,C,ctprel10,tprel10,Role in important decisions,Role in important decisions,Source correction: varinfo typography reads CTPREI10; questionnaire identifies the variable as CTPREL10.

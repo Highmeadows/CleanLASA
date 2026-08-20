@@ -1,0 +1,35 @@
+Plan B batch 018 corrected checkpoint
+
+Originally listed batch 018 filecodes:
+379, 421, 435, 601, 602
+
+Corrected completion status:
+- 379: completed
+- 421: completed
+- 435: completed
+- 601: completed
+- 602: NOT COMPLETED
+
+Reason:
+The variable-label CSV for filecode 602 was not successfully returned/available, so filecode 602 must be treated as incomplete and rebuilt from source.
+
+Batch 018 completed filecodes after correction:
+379, 421, 435, 601
+
+Outstanding priority filecode:
+602
+
+Next batch rule:
+The next Plan B batch must begin by rebuilding filecode 602 from the authoritative current source PDF.
+After 602, continue the numeric scan from 612 and add the next four buildable filecodes.
+
+Batch 019 completed:
+333, 533, 603, 604, 605
+
+Batch 020 completed:
+606, 607, 608, 610, 611
+
+Next numeric scan point after the priority rebuild:
+612
+
+No repository commit or push performed.

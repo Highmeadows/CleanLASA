@@ -1,0 +1,11 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+349,G,gqgsr,qgsr,general self-regulation scale score,General self-regulation scale score,
+349,G,gqgsrsu,qgsrsu,strategy use GSR-subscale score,General self-regulation strategy-use subscale score,
+349,G,gqgsrmk,qgsrmk,metastrategy-knowledge GSR-subscale score,General self-regulation metastrategy-knowledge subscale score,
+349,G,gqgsracp,qgsracp,action and coping planning GSR-subscale score,General self-regulation action-and-coping-planning subscale score,
+349,G,gqmisgsr,qmisgsr,missing values general self-regulation,Number of missing general self-regulation items,
+349,H,hqgsr,qgsr,general self-regulation scale score,General self-regulation scale score,
+349,H,hqgsrsu,qgsrsu,strategy use GSR-subscale score,General self-regulation strategy-use subscale score,
+349,H,hqgsrmk,qgsrmk,metastrategy-knowledge GSR-subscale score,General self-regulation metastrategy-knowledge subscale score,
+349,H,hqgsracp,qgsracp,action and coping planning GSR-subscale score,General self-regulation action-and-coping-planning subscale score,
+349,H,hqmisgsr,qmisgsr,missing values general self-regulation,Number of missing general self-regulation items,

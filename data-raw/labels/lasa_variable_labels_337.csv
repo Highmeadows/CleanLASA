@@ -1,0 +1,9 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+337,E,eqvall,qvall,value of late life scale score,Valuation of late life scale score,
+337,E,eqres,qres,resilience vall-subscale score,Valuation of late life resilience subscale score,
+337,E,eqamb,qamb,ambition vall-subscale score,Valuation of late life ambition subscale score,
+337,E,eqzest,qzest,zest for life vall-subscale score,Valuation of late life zest-for-life subscale score,
+337,F,fqvall,qvall,value of late life scale score,Valuation of late life scale score,
+337,F,fqres,qres,resilience vall-subscale score,Valuation of late life resilience subscale score,
+337,F,fqamb,qamb,ambition vall-subscale score,Valuation of late life ambition subscale score,
+337,F,fqzest,qzest,zest for life vall-subscale score,Valuation of late life zest-for-life subscale score,

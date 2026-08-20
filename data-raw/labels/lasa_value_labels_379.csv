@@ -1,0 +1,10 @@
+filecode,wave,canonical_name,variable_type,value_raw,value_numeric,value_label,is_missing,conflicts
+379,G,madint,numeric,"na, section not done(-5)",-5,"na, section not done",TRUE,
+379,G,madint,numeric,not able to [cognitive](-4),-4,not able to [cognitive],TRUE,Source coding conflict: G maps -4 to both not able to [cognitive] and too many missings
+379,G,madint,numeric,too many missings(-4),-4,too many missings,TRUE,Source coding conflict: G maps -4 to both not able to [cognitive] and too many missings
+379,G,madint,numeric,low [min=0](0),0,,FALSE,
+379,G,madint,numeric,high [max=9](9),9,,FALSE,
+379,Z,madint,numeric,-5,-5,"na, section not done",TRUE,
+379,Z,madint,numeric,-4,-4,score unavailable,TRUE,Source coding conflict: G maps -4 to not able to [cognitive] / too many missings
+379,Z,madint,numeric,0,0,,FALSE,
+379,Z,madint,numeric,9,9,,FALSE,

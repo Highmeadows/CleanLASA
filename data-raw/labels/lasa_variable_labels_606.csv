@@ -1,0 +1,13 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+606,C,ctpces01,tpces01,1. Last week: bothered,1. Last week: bothered,
+606,C,ctpces06,tpces06,6. Last week: depressed,6. Last week: depressed,
+606,C,ctpces10,tpces10,10. Last week: fearful,10. Last week: fearful,
+606,C,ctpces14,tpces14,14. Last week: lonely,14. Last week: lonely,
+606,D,dtpces01,tpces01,1. Last week: bothered,1. Last week: bothered,
+606,D,dtpces06,tpces06,6. Last week: depressed,6. Last week: depressed,
+606,D,dtpces10,tpces10,10. Last week: fearful,10. Last week: fearful,
+606,D,dtpces14,tpces14,14. Last week: lonely,14. Last week: lonely,
+606,E,etpces01,tpces01,1. Last week: bothered,1. Last week: bothered,
+606,E,etpces06,tpces06,6. Last week: depressed,6. Last week: depressed,
+606,E,etpces10,tpces10,10. Last week: fearful,10. Last week: fearful,
+606,E,etpces14,tpces14,14. Last week: lonely,14. Last week: lonely,

@@ -1,0 +1,10 @@
+filecode,wave,canonical_name,variable_type,value_raw,value_numeric,value_label,is_missing,conflicts
+341,2B,qan,numeric,no valid data(-1),-1,no valid data,TRUE,
+341,2B,qan,numeric,low affiliation need(6),6,,FALSE,
+341,2B,qan,numeric,strong affiliation need(18),18,,FALSE,
+341,G,qan,numeric,no valid data(-1),-1,no valid data,TRUE,
+341,G,qan,numeric,low affiliation need(6),6,,FALSE,
+341,G,qan,numeric,strong affiliation need(18),18,,FALSE,
+341,Z,qan,numeric,-1,-1,no valid data,TRUE,
+341,Z,qan,numeric,6,6,,FALSE,
+341,Z,qan,numeric,18,18,,FALSE,
