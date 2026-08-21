@@ -1,0 +1,8 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+868,C,cmsap,msap,serum amyloid P component,serum amyloid P component,
+868,G,gmnflight,mnflight,Neurofilament Light (pg/mL),Neurofilament Light (pg/mL),
+868,G,gmgfap,mgfap,Glial Fibrillary Acidic Protein (pg/mL),Glial Fibrillary Acidic Protein (pg/mL),
+868,G,gmab1_40,mab1_40,Amyloid-Beta 1 – 40 (pg/mL),Amyloid-Beta 1 – 40 (pg/mL),
+868,G,gmab1_42,mab1_42,Amyloid-Beta 1 – 42 (pg/mL),Amyloid-Beta 1 – 42 (pg/mL),
+868,G,gmp_tau181,mp_tau181,Phosphorylated - Tau181 (pg/mL),Phosphorylated - Tau181 (pg/mL),
+868,G,selg868,selg868,Selection g868: APO E4 allele present,Selection g868: APO E4 allele present,

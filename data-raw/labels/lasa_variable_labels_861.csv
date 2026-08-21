@@ -1,0 +1,17 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+861,B,bmil6,mil6,B: interleukin-6 pg/mL,interleukin-6 concentration,Cross-wave wording/units differ.
+861,B,bmhscrp,mhscrp,B: C-reactive protein ug/mL,C-reactive protein concentration,Cross-wave wording/units differ.
+861,B,bmact,mact,B: a1-antichymotrypsin % NMP 02,B: a1-antichymotrypsin % NMP 02,
+861,C,cmil6,mil6,C: interleukin-6 pg/mL,interleukin-6 concentration,Cross-wave wording/units differ.
+861,C,cmhscrp,mhscrp,C: C-reactive protein ug/mL,C-reactive protein concentration,Cross-wave wording/units differ.
+861,C,cmact,mact,C: a1-antichymotrypsin % NMP 02,C: a1-antichymotrypsin % NMP 02,
+861,3B,bmil6,mil6,serum: interleukin-6 pg/mL,interleukin-6 concentration,Cross-wave wording/units differ.
+861,3B,bmhscrp,mhscrp,serum: C-reactive protein mg/L,C-reactive protein concentration,Cross-wave wording/units differ.
+861,3B,BMREM861,mrem861,remarks about determination,remarks about determination,
+861,G,gmcrp,mcrp,C-Reactive Protein (µg/mL),C-Reactive Protein (µg/mL),
+861,G,gmsaa,msaa,Serum Amyloid A (µg/mL),Serum Amyloid A (µg/mL),
+861,G,gmil1b,mil1b,Interleukin-1 beta (pg/mL),Interleukin-1 beta (pg/mL),
+861,G,gmil6,mil6,Interleukin-6 (pg/mL),interleukin-6 concentration,Cross-wave wording/units differ.
+861,G,gmil8,mil8,Interleukin-8 (pg/mL),Interleukin-8 (pg/mL),
+861,G,gmtnfa,mtnfa,Tumor Necrosis Factor - alpha (pg/mL),Tumor Necrosis Factor - alpha (pg/mL),
+861,G,selg861,selg861,Selection g861: APO E4 allele present,Selection g861: APO E4 allele present,

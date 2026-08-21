@@ -1,0 +1,7 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+mb004,MB,sex,sex,sex respondent,sex respondent,
+mb004,MB,byear,byear,birthyear of respondent,birthyear of respondent,
+mb004,MB,bycohort,bycohort,5-years-cohort birthyear,5-years-cohort birthyear,
+mb004,MB,migcoh,migcoh,migrant cohort,migrant cohort,
+mb004,MB,aethnic,aethnic,ethnic identification,ethnic identification,
+mb004,MB,aeducat,aeducat,education level attained (categorical),education level attained (categorical),

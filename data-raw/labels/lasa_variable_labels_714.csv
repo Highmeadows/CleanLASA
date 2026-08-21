@@ -1,0 +1,23 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+714,I,itrvar142,trvar142,Weight change last 6 months,Weight change last 6 months,Current varinfo PDF documents LASAI714/LASAJ714 only; no K-wave metadata were fabricated although current topic documentation also mentions K.
+714,I,itrvar143G,trvar143G,Weight gain kilogram,Weight gain kilogram,
+714,I,itrvar143L,trvar143L,Weight loss kilogram,Weight loss kilogram,
+714,I,itrvar144G,trvar144G,Weight gain reason,Weight gain reason,
+714,I,itrvar144L,trvar144L,Weight loss reason,Weight loss reason,
+714,I,itrvac144,trvac144,Weight change other reason: coded,Weight change other reason: coded,
+714,I,itrvc144G,trvc144G,Reason weight gain (constructed),Reason weight gain (constructed),
+714,I,itrvc144L,trvc144L,Reason weight loss (constructed),Reason weight loss (constructed),
+714,I,itrestw,trestw,Estimation body weight,Estimation body weight,
+714,I,itrmed155,trmed155,Weight: self-report,Weight: self-report,
+714,J,jtrvar142,trvar142,Weight change last 6 months,Weight change last 6 months,Current varinfo PDF documents LASAI714/LASAJ714 only; no K-wave metadata were fabricated although current topic documentation also mentions K.
+714,J,jtrvar143G,trvar143G,Weight gain kilogram,Weight gain kilogram,
+714,J,jtrvar143L,trvar143L,Weight loss kilogram,Weight loss kilogram,
+714,J,jtrvar144G,trvar144G,Weight gain reason,Weight gain reason,
+714,J,jtrvar144L,trvar144L,Weight loss reason,Weight loss reason,
+714,J,jtrvac144,trvac144,Weight change other reason: coded,Weight change other reason: coded,
+714,J,jtrvc144G,trvc144G,Reason weight gain (constructed),Reason weight gain (constructed),
+714,J,jtrvc144L,trvc144L,Reason weight loss (constructed),Reason weight loss (constructed),
+714,J,jtrestw,trestw,Estimation body weight,Estimation body weight,
+714,J,jtrmed155,trmed155,Weight: self-report,Weight: self-report,
+714,I,itrapp6m,trapp6m,Appetite last 6 months,Appetite last 6 months,Current varinfo PDF documents LASAI714/LASAJ714 only; no K-wave metadata were fabricated although current topic documentation also mentions K.
+714,J,jtrapp7d,trapp7d,Appetite last 7 days,Appetite last 7 days,Current varinfo PDF documents LASAI714/LASAJ714 only; no K-wave metadata were fabricated although current topic documentation also mentions K.

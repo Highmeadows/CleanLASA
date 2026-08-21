@@ -1,0 +1,4 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+869,2B,bmucmgp,mucmgp,dp-ucMGP (pMol/l),dp-ucMGP (pMol/l),
+869,2B,bmcmgp,mcmgp,dp-cMGP (pMol/l),dp-cMGP (pMol/l),
+869,2B,bmlabrem,mlabrem,remarks VITAK lab,remarks VITAK lab,

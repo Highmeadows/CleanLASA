@@ -1,0 +1,5 @@
+filecode,wave,canonical_name,variable_type,value_raw,value_numeric,value_label,is_missing,conflicts
+871,C,ms012,categorical,no determination(-1),-1,no determination,TRUE,
+871,Z,ms012,categorical,-1,-1,no determination,TRUE,
+871,C,ms01,categorical,no determination(-1),-1,no determination,TRUE,
+871,Z,ms01,categorical,-1,-1,no determination,TRUE,

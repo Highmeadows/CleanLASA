@@ -1,0 +1,7 @@
+filecode,wave,canonical_name,variable_type,value_raw,value_numeric,value_label,is_missing,conflicts
+866,C,mhcy,numeric,no determination(-1),-1,no determination,TRUE,
+866,Z,mhcy,numeric,-1,-1,no determination,TRUE,
+866,C,mmma,numeric,no determination(-1),-1,no determination,TRUE,
+866,Z,mmma,numeric,-1,-1,no determination,TRUE,
+866,C,mvb12,numeric,no determination(-1),-1,no determination,TRUE,
+866,Z,mvb12,numeric,-1,-1,no determination,TRUE,

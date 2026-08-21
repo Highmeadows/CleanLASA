@@ -1,0 +1,69 @@
+filecode,wave,canonical_name,variable_type,value_raw,value_numeric,value_label,is_missing,conflicts
+zoa2,2B,oak,categorical,missing(-9),-9,missing,TRUE,
+zoa2,2B,oak,categorical,no(0),0,no,FALSE,
+zoa2,2B,oak,categorical,possible(1),1,possible,FALSE,
+zoa2,2B,oak,categorical,yes(2),2,yes,FALSE,
+zoa2,2B,oah,categorical,missing(-9),-9,missing,TRUE,
+zoa2,2B,oah,categorical,no(0),0,no,FALSE,
+zoa2,2B,oah,categorical,possible(1),1,possible,FALSE,
+zoa2,2B,oah,categorical,yes(2),2,yes,FALSE,
+zoa2,F,oak,categorical,missing(-9),-9,missing,TRUE,
+zoa2,F,oak,categorical,no(0),0,no,FALSE,
+zoa2,F,oak,categorical,possible(1),1,possible,FALSE,
+zoa2,F,oak,categorical,yes(2),2,yes,FALSE,
+zoa2,F,oak,categorical,dropout(8),8,dropout,FALSE,
+zoa2,F,oak,categorical,dropout at previous waves(9),9,dropout at previous waves,FALSE,
+zoa2,F,oah,categorical,missing(-9),-9,missing,TRUE,
+zoa2,F,oah,categorical,no(0),0,no,FALSE,
+zoa2,F,oah,categorical,possible(1),1,possible,FALSE,
+zoa2,F,oah,categorical,yes(2),2,yes,FALSE,
+zoa2,F,oah,categorical,dropout(8),8,dropout,FALSE,
+zoa2,F,oah,categorical,dropout at previous waves(9),9,dropout at previous waves,FALSE,
+zoa2,G,oak,categorical,missing(-9),-9,missing,TRUE,
+zoa2,G,oak,categorical,no(0),0,no,FALSE,
+zoa2,G,oak,categorical,possible(1),1,possible,FALSE,
+zoa2,G,oak,categorical,yes(2),2,yes,FALSE,
+zoa2,G,oak,categorical,dropout(8),8,dropout,FALSE,
+zoa2,G,oak,categorical,dropout at previous waves(9),9,dropout at previous waves,FALSE,
+zoa2,G,oah,categorical,missing(-9),-9,missing,TRUE,
+zoa2,G,oah,categorical,no(0),0,no,FALSE,
+zoa2,G,oah,categorical,possible(1),1,possible,FALSE,
+zoa2,G,oah,categorical,yes(2),2,yes,FALSE,
+zoa2,G,oah,categorical,dropout(8),8,dropout,FALSE,
+zoa2,G,oah,categorical,dropout at previous waves(9),9,dropout at previous waves,FALSE,
+zoa2,H,oak,categorical,missing(-9),-9,missing,TRUE,
+zoa2,H,oak,categorical,no(0),0,no,FALSE,
+zoa2,H,oak,categorical,possible(1),1,possible,FALSE,
+zoa2,H,oak,categorical,yes(2),2,yes,FALSE,
+zoa2,H,oak,categorical,dropout(8),8,dropout,FALSE,
+zoa2,H,oak,categorical,dropout at previous waves(9),9,dropout at previous waves,FALSE,
+zoa2,H,oah,categorical,missing(-9),-9,missing,TRUE,
+zoa2,H,oah,categorical,no(0),0,no,FALSE,
+zoa2,H,oah,categorical,possible(1),1,possible,FALSE,
+zoa2,H,oah,categorical,yes(2),2,yes,FALSE,
+zoa2,H,oah,categorical,dropout(8),8,dropout,FALSE,
+zoa2,H,oah,categorical,dropout at previous waves(9),9,dropout at previous waves,FALSE,
+zoa2,I,oak,categorical,missing(-9),-9,missing,TRUE,
+zoa2,I,oak,categorical,no(0),0,no,FALSE,
+zoa2,I,oak,categorical,possible(1),1,possible,FALSE,
+zoa2,I,oak,categorical,yes(2),2,yes,FALSE,
+zoa2,I,oak,categorical,dropout(8),8,dropout,FALSE,
+zoa2,I,oak,categorical,dropout at previous waves(9),9,dropout at previous waves,FALSE,
+zoa2,I,oah,categorical,missing(-9),-9,missing,TRUE,"Source cross-reference anomaly: IOAH is documented as ""see COAK"", although COAK belongs to the zoa1 section; the surrounding zoa2 I-wave knee/hip pair uses the same OA status coding."
+zoa2,I,oah,categorical,no(0),0,no,FALSE,"Source cross-reference anomaly: IOAH is documented as ""see COAK"", although COAK belongs to the zoa1 section; the surrounding zoa2 I-wave knee/hip pair uses the same OA status coding."
+zoa2,I,oah,categorical,possible(1),1,possible,FALSE,"Source cross-reference anomaly: IOAH is documented as ""see COAK"", although COAK belongs to the zoa1 section; the surrounding zoa2 I-wave knee/hip pair uses the same OA status coding."
+zoa2,I,oah,categorical,yes(2),2,yes,FALSE,"Source cross-reference anomaly: IOAH is documented as ""see COAK"", although COAK belongs to the zoa1 section; the surrounding zoa2 I-wave knee/hip pair uses the same OA status coding."
+zoa2,I,oah,categorical,dropout(8),8,dropout,FALSE,"Source cross-reference anomaly: IOAH is documented as ""see COAK"", although COAK belongs to the zoa1 section; the surrounding zoa2 I-wave knee/hip pair uses the same OA status coding."
+zoa2,I,oah,categorical,dropout at previous waves(9),9,dropout at previous waves,FALSE,"Source cross-reference anomaly: IOAH is documented as ""see COAK"", although COAK belongs to the zoa1 section; the surrounding zoa2 I-wave knee/hip pair uses the same OA status coding."
+zoa2,Z,oak,categorical,-9,-9,missing,TRUE,
+zoa2,Z,oak,categorical,0,0,no,FALSE,
+zoa2,Z,oak,categorical,1,1,possible,FALSE,
+zoa2,Z,oak,categorical,2,2,yes,FALSE,
+zoa2,Z,oak,categorical,8,8,dropout,FALSE,
+zoa2,Z,oak,categorical,9,9,dropout at previous waves,FALSE,
+zoa2,Z,oah,categorical,-9,-9,missing,TRUE,"Source cross-reference anomaly: IOAH is documented as ""see COAK"", although COAK belongs to the zoa1 section; the surrounding zoa2 I-wave knee/hip pair uses the same OA status coding."
+zoa2,Z,oah,categorical,0,0,no,FALSE,"Source cross-reference anomaly: IOAH is documented as ""see COAK"", although COAK belongs to the zoa1 section; the surrounding zoa2 I-wave knee/hip pair uses the same OA status coding."
+zoa2,Z,oah,categorical,1,1,possible,FALSE,"Source cross-reference anomaly: IOAH is documented as ""see COAK"", although COAK belongs to the zoa1 section; the surrounding zoa2 I-wave knee/hip pair uses the same OA status coding."
+zoa2,Z,oah,categorical,2,2,yes,FALSE,"Source cross-reference anomaly: IOAH is documented as ""see COAK"", although COAK belongs to the zoa1 section; the surrounding zoa2 I-wave knee/hip pair uses the same OA status coding."
+zoa2,Z,oah,categorical,8,8,dropout,FALSE,"Source cross-reference anomaly: IOAH is documented as ""see COAK"", although COAK belongs to the zoa1 section; the surrounding zoa2 I-wave knee/hip pair uses the same OA status coding."
+zoa2,Z,oah,categorical,9,9,dropout at previous waves,FALSE,"Source cross-reference anomaly: IOAH is documented as ""see COAK"", although COAK belongs to the zoa1 section; the surrounding zoa2 I-wave knee/hip pair uses the same OA status coding."

@@ -1,0 +1,9 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+z991,B,zpcod,zpcod,primary cause of death,primary cause of death,Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z991,B,zscod1,zscod1,first secondary cause of death,first secondary cause of death,Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z991,B,zscod2,zscod2,second secondary cause of death,second secondary cause of death,Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z991,B,zscod3,zscod3,third secondary cause of death,third secondary cause of death,Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z991,B,zecdmi,zecdmi,external cause of death: main injury,external cause of death: main injury,Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z991,B,zecdl,zecdl,external cause of death: location,external cause of death: location,Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z991,B,zdedate_y,zdedate_y,"date of death, year part","date of death, year part",Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z991,B,zdeceas17,zdeceas17,respondent deceased before 2018,respondent deceased before 2018,Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.

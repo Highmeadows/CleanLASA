@@ -1,0 +1,18 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+862,C,cmvitd25,mvitd25,"serum: 25-hydroxyvitamin D (25(OH)D), nmol/L","serum: 25-hydroxyvitamin D (25(OH)D), nmol/L",
+862,C,cmvitd25st,mvitd25st,"serum: 25-hydroxyvitamin D (25(OH)D), nmol/L, ODIN-standardized","serum: 25-hydroxyvitamin D (25(OH)D), nmol/L, ODIN-standardized",
+862,C,cmpth,mpth,serum: parathyroid hormone (PTH),serum: parathyroid hormone (PTH),
+862,C,cmigf1,migf1,serum: insuline-like growth factor-1 (IGF-1),serum: insuline-like growth factor-1 (IGF-1),
+862,C,cmost,most,serum: osteocalcin (OC),serum: osteocalcin (OC),
+862,C,cmdpd,mdpd,urine: deoxypyridinoline (DPD),urine: deoxypyridinoline (DPD),
+862,C,cmcreat,mcreat,urine: creatinine (mmol/l),creatinine,Canonical mcreat changes specimen: urine creatinine in C and serum creatinine in 3B.
+862,C,cmdpdcre,mdpdcre,urine: deoxypyridinoline/creatinine ratio,urine: deoxypyridinoline/creatinine ratio,
+862,2B,bmvitd25,mvitd25,"serum: 25-hydroxyvitamin D (25(OH)D), nmol/L","serum: 25-hydroxyvitamin D (25(OH)D), nmol/L",
+862,2B,bmvitd25st,mvitd25st,"serum: 25-hydroxyvitamin D (25(OH)D), nmol/L, ODIN-standardized","serum: 25-hydroxyvitamin D (25(OH)D), nmol/L, ODIN-standardized",
+862,2B,bmpth,mpth,"serum: parathyroid hormone (PTH), pmol/L","serum: parathyroid hormone (PTH), pmol/L",
+862,G,gmvitd25,mvitd25,"serum: 25-hydroxyvitamin D (25(OH)D), nmol/L","serum: 25-hydroxyvitamin D (25(OH)D), nmol/L",
+862,G,gmvitd25st,mvitd25st,"serum: 25-hydroxyvitamin D (25(OH)D), nmol/L, ODIN-standardized","serum: 25-hydroxyvitamin D (25(OH)D), nmol/L, ODIN-standardized",
+862,G,gmpth,mpth,"serum: parathyroid hormone (PTH), pmol/L","serum: parathyroid hormone (PTH), pmol/L",
+862,3B,bmvitd25,mvitd25,serum: 25-hydroxyvitamin D (25(OH)D) (nmol/l),serum: 25-hydroxyvitamin D (25(OH)D) (nmol/l),
+862,3B,bmcreat,mcreat,serum: creatinine (umol/L),creatinine,Canonical mcreat changes specimen: urine creatinine in C and serum creatinine in 3B.
+862,3B,BMREM862,mrem862,remarks about determination,remarks about determination,

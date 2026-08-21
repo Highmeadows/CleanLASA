@@ -1,0 +1,11 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+238,C,ccort_int,cort_int,ORTHODOXY SCALE SCORE,Orthodoxy Scale Score,
+238,C,csal_int,sal_int,SALIENCE SCALE SCORE,Salience Scale Score,
+238,C,ccos_int,cos_int,COSMIC TRANSCENDENCE SCALE SCORE,Cosmic Transcendence Scale Score,
+238,D,dsal_int,sal_int,SALIENCE SCALE SCORE,Salience Scale Score,
+238,D,dcos_int,cos_int,COSMIC TRANSCENDENCE SCALE SCORE,Cosmic Transcendence Scale Score,
+238,E,esal_int,sal_int,SALIENCE SCALE SCORE,Salience Scale Score,
+238,E,ecos_int,cos_int,COSMIC TRANSCENDENCE SCALE SCORE,Cosmic Transcendence Scale Score,
+238,2B,bsal_int,sal_int,SALIENCE SCALE SCORE,Salience Scale Score,
+238,2B,bcos_int,cos_int,COSMIC TRANSCENDENCE SCALE SCORE,Cosmic Transcendence Scale Score,
+238,F,fcos_int,cos_int,COSMIC TRANSCENDENCE SCALE SCORE,Cosmic Transcendence Scale Score,

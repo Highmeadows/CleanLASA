@@ -1,0 +1,16 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+850,B,bmlab,mlab,laboratorium analyses,laboratory/place of blood sampling or analyses,Variable label differs across waves for the laboratory/place-of-sampling variable; harmonized label is wave-neutral.
+850,C,cmlab,mlab,laboratorium analyses,laboratory/place of blood sampling or analyses,Variable label differs across waves for the laboratory/place-of-sampling variable; harmonized label is wave-neutral.
+850,C,cmdna,mdna,DNA sample available,DNA sample available,
+850,2B,bmbsstat,mbsstat,status of blood sampling,status of blood sampling,
+850,2B,bmlab,mlab,(place of) laboratorium analyses,laboratory/place of blood sampling or analyses,Variable label differs across waves for the laboratory/place-of-sampling variable; harmonized label is wave-neutral.
+850,2B,bmdna,mdna,DNA sample available,DNA sample available,
+850,G,gmbsstat,mbsstat,status of blood sampling,status of blood sampling,
+850,G,gmlab,mlab,(place of) laboratorium analyses,laboratory/place of blood sampling or analyses,Variable label differs across waves for the laboratory/place-of-sampling variable; harmonized label is wave-neutral.
+850,G,gmdna,mdna,DNA sample available,DNA sample available,
+850,3B,bmbsstat,mbsstat,status of blood sampling,status of blood sampling,
+850,3B,bmlab,mlab,place of blood sampling,laboratory/place of blood sampling or analyses,Variable label differs across waves for the laboratory/place-of-sampling variable; harmonized label is wave-neutral.
+850,3B,bmserum,mserum,serum sample available,serum sample available,
+850,3B,bmedta,medta,edta sample available,edta sample available,
+850,3B,bmapro,mapro,aprotinine sample available,aprotinine sample available,
+850,3B,bmdna,mdna,DNA sample available,DNA sample available,

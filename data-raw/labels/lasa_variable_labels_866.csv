@@ -1,0 +1,4 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+866,C,cmhcy,mhcy,homocysteine (µMol/l),homocysteine (µMol/l),
+866,C,cmmma,mmma,methylmalonic acid (µMol/l),methylmalonic acid (µMol/l),
+866,C,cmvb12,mvb12,vitamin b12 (pMol/l),vitamin b12 (pMol/l),

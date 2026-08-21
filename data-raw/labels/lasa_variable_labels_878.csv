@@ -1,0 +1,5 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+878,G,gmsicam_1,msicam_1,Soluble Intercellular Adhesion molecule-1 (ng/mL),Soluble Intercellular Adhesion molecule-1 (ng/mL),
+878,G,gmsvcam_1,msvcam_1,Soluble Vascular Cell Adhesion molecule-1 (ng/mL),Soluble Vascular Cell Adhesion molecule-1 (ng/mL),
+878,G,gmse_selectin,mse_selectin,Soluble E-selectin (ng/mL),Soluble E-selectin (ng/mL),
+878,G,selg878,selg878,Selection g878: APO E4 allele present,Selection g878: APO E4 allele present,

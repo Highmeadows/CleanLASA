@@ -1,0 +1,6 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+867,C,cmchol2,mchol2,Blood: total cholesterol mmol/L,Blood: total cholesterol mmol/L,
+867,C,cmfructo,mfructo,Blood: fructosamin umol/L,Blood: fructosamin umol/L,
+867,C,cmhdl2,mhdl2,Blood: hdl-cholesterol mmol/L,Blood: hdl-cholesterol mmol/L,
+867,C,cmldl2,mldl2,Blood: ldl-cholesterol mmol/l,Blood: ldl-cholesterol mmol/l,
+867,C,cmtrigl2,mtrigl2,Blood: triglycerids mmol/L,Blood: triglycerids mmol/L,

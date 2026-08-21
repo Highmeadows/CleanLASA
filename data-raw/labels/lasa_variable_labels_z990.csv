@@ -1,0 +1,14 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+z990,B,deceas,deceas,respondent deceased?,respondent deceased?,Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z990,B,cdcertnr,cdcertnr,death certificate number known?,death certificate number known?,Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z990,B,cdplace,cdplace,death place known?,death place known?,Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z990,B,lasadata,lasadata,participation lasa baseline,participation lasa baseline,Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z990,B,GBAdata,gbadata,GBA data available,GBA data available,Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z990,B,de_date,de_date,date of death,date of death,Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z990,B,dedate,dedate,date of death (yyyymmdd),date of death (yyyymmdd),Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z990,B,dedate_d,dedate_d,"date of death, day part","date of death, day part",Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z990,B,dedate_m,dedate_m,"date of death, month part","date of death, month part",Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z990,B,dedate_y,dedate_y,"date of death, year part","date of death, year part",Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z990,B,de_age,de_age,age at death,age at death,Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z990,B,de210815,de210815,"death status at August 15, 2021","death status at August 15, 2021",Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.
+z990,B,followup,followup,followup from baseline to 15-8-2021 (days),followup from baseline to 15-8-2021 (days),Integrated cross-wave file with invariant columns; B is used as the conservative real-row wave assignment.

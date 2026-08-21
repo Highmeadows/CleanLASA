@@ -1,0 +1,4 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+865,C,cmtsh2,mtsh2,thyroid-stimulating hormone (mU/l),thyroid-stimulating hormone (mU/l),
+865,C,cmft4,mft4,free T4 (pmol/l),free T4 (pmol/l),
+865,C,cmft3,mft3,free T3 (pmol/l),free T3 (pmol/l),

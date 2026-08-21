@@ -1,0 +1,4 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+864,C,cmco,mco,serum: total cortisol (nmol/L),serum: total cortisol (nmol/L),
+864,C,cmcbg,mcbg,corticosteroid binding globuline (mg/L),corticosteroid binding globuline (mg/L),
+864,C,cmfcort,mfcort,free cortisol (nmol/l),free cortisol (nmol/l),

@@ -1,0 +1,2 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+336,E,eqworry,qworry,Worry-scale Low-High,Worry scale,Source endpoint anomaly: the PDF documents the low endpoint as -16 although the LASA topic documentation describes the PSWQ-16 range as 16-80. The PDF value is preserved; Plan B's fixed negative-value missingness rule therefore marks -16 as missing.

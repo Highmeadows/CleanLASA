@@ -1,0 +1,10 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+zdc2,2B,b_DM,DM,2B wave: diabetes mellitus,diabetes mellitus status,
+zdc2,F,f_DM,DM,"diabetes at F wave, dropouts defined",diabetes mellitus status,
+zdc2,F,f_alg_DM_ruw,alg_DM_ruw,"DM at F, unadjusted for DM status at previous waves",diabetes mellitus status unadjusted for previous-wave status,
+zdc2,G,g_DM,DM,"diabetes at G wave, dropouts defined",diabetes mellitus status,
+zdc2,G,g_alg_DM_ruw,alg_DM_ruw,"DM at G, unadjusted for DM status at previous waves",diabetes mellitus status unadjusted for previous-wave status,
+zdc2,H,h_DM,DM,"diabetes at H wave, dropouts defined",diabetes mellitus status,
+zdc2,H,h_alg_DM_ruw,alg_DM_ruw,"DM at H, unadjusted for DM status at previous waves",diabetes mellitus status unadjusted for previous-wave status,
+zdc2,I,i_DM,DM,"diabetes at I wave, dropouts defined",diabetes mellitus status,
+zdc2,I,i_alg_DM_ruw,alg_DM_ruw,"DM at I, unadjusted for DM status at previous waves",diabetes mellitus status unadjusted for previous-wave status,

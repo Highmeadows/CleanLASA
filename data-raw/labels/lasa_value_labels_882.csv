@@ -1,0 +1,5 @@
+filecode,wave,canonical_name,variable_type,value_raw,value_numeric,value_label,is_missing,conflicts
+882,E,cortwac,numeric,"insufficient volume(-2,00)",-2,insufficient volume,TRUE,
+882,Z,cortwac,numeric,-2,-2,insufficient volume,TRUE,
+882,E,corteve,numeric,"insufficient volume(-2,00)",-2,insufficient volume,TRUE,
+882,Z,corteve,numeric,-2,-2,insufficient volume,TRUE,

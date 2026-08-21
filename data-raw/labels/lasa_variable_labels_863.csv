@@ -1,0 +1,10 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+863,C,cmshbg,mshbg,sex hormone binding globulin (nmol/l),sex hormone binding globulin (nmol/l),
+863,C,cmlh,mlh,luteinizing hormone (u/l),luteinizing hormone (u/l),
+863,C,cmfsh,mfsh,follicle-stimulating hormone (u/l),follicle-stimulating hormone (u/l),
+863,C,cmest,mest,total estradiol (pmol/l),total estradiol (pmol/l),
+863,C,cmtes,mtes,total testosterone (nmol/l),total testosterone (nmol/l),
+863,C,cmtes_ng,mtes_ng,total testosterone (ng/dl),total testosterone (ng/dl),
+863,C,cmftc,mftc,free fraction testosterone,free fraction testosterone,
+863,C,cmftcp,mftcp,percentage free fraction testosterone,percentage free fraction testosterone,
+863,C,cmbiotes,mbiotes,bioavailable testosterone,bioavailable testosterone,

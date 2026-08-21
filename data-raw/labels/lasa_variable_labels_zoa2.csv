@@ -1,0 +1,11 @@
+filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
+zoa2,2B,b2oak,oak,symptomatic knee OA at 2B,Symptomatic knee osteoarthritis,
+zoa2,2B,b2oah,oah,symptomatic hip OA at 2B,Symptomatic hip osteoarthritis,
+zoa2,F,foak,oak,symptomatic knee OA at F,Symptomatic knee osteoarthritis,
+zoa2,F,foah,oah,symptomatic hip OA at F,Symptomatic hip osteoarthritis,
+zoa2,G,goak,oak,symptomatic knee OA at G,Symptomatic knee osteoarthritis,
+zoa2,G,goah,oah,symptomatic hip OA at G,Symptomatic hip osteoarthritis,
+zoa2,H,hoak,oak,symptomatic knee OA at H,Symptomatic knee osteoarthritis,
+zoa2,H,hoah,oah,symptomatic hip OA at H,Symptomatic hip osteoarthritis,
+zoa2,I,ioak,oak,symptomatic knee OA at I,Symptomatic knee osteoarthritis,
+zoa2,I,ioah,oah,symptomatic hip OA at I,Symptomatic hip osteoarthritis,"Source cross-reference anomaly: IOAH is documented as ""see COAK"", although COAK belongs to the zoa1 section; the surrounding zoa2 I-wave knee/hip pair uses the same OA status coding."
