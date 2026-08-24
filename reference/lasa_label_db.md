@@ -29,147 +29,147 @@ the package README for the full schema.
 ``` r
 db <- lasa_label_db()
 nrow(db$variables)
-#> [1] 18963
+#> [1] 23780
 subset(db$variables, filecode == "046" & wave == "B")
 #>      filecode wave variable_name canonical_name
-#> 8953      046    B      blphya01        lphya01
-#> 8954      046    B      blphya02        lphya02
-#> 8955      046    B      blphya03        lphya03
-#> 8956      046    B      blphya04        lphya04
-#> 8957      046    B      blphya05        lphya05
-#> 8958      046    B      blphya06        lphya06
-#> 8959      046    B      blphya07        lphya07
-#> 8960      046    B      blphya08        lphya08
-#> 8961      046    B      blphya09        lphya09
-#> 8962      046    B      blphya10        lphya10
-#> 8963      046    B      blphya11        lphya11
-#> 8964      046    B      blphya12        lphya12
-#> 8965      046    B      blphya13        lphya13
-#> 8966      046    B      blphya14        lphya14
-#> 8967      046    B      blphya15        lphya15
-#> 8968      046    B      blphya16        lphya16
-#> 8969      046    B      blphya17        lphya17
-#> 8970      046    B      blphya18        lphya18
-#> 8971      046    B      blphya19        lphya19
-#> 8972      046    B      blphya20        lphya20
-#> 8973      046    B      blphya21        lphya21
-#> 8974      046    B      blphya22        lphya22
-#> 8975      046    B      blphya23        lphya23
-#> 8976      046    B      blphya24        lphya24
-#> 8977      046    B      blphya25        lphya25
-#> 8978      046    B      blphya26        lphya26
-#> 8979      046    B      blphya27        lphya27
-#> 8980      046    B      blphya28        lphya28
-#> 8981      046    B      blphya29        lphya29
-#> 8982      046    B      blphya30        lphya30
-#> 8983      046    B      blphya31        lphya31
-#> 8984      046    B      blphya32        lphya32
-#> 8985      046    B      blphya33        lphya33
-#> 8986      046    B      blphya34        lphya34
-#> 8987      046    B      blphya35        lphya35
-#> 8988      046    B      blphya36        lphya36
-#> 8989      046    B      blphya37        lphya37
-#> 8990      046    B      blphya38        lphya38
-#> 8991      046    B      blphya39        lphya39
-#> 8992      046    B      blphya40        lphya40
-#> 8993      046    B      blphya41        lphya41
-#> 8994      046    B      blphya42        lphya42
-#> 8995      046    B      blphya43        lphya43
-#> 8996      046    B      blphya44        lphya44
-#> 8997      046    B      blphya45        lphya45
-#> 8998      046    B      blphya46        lphya46
+#> 9014      046    B      blphya01        lphya01
+#> 9015      046    B      blphya02        lphya02
+#> 9016      046    B      blphya03        lphya03
+#> 9017      046    B      blphya04        lphya04
+#> 9018      046    B      blphya05        lphya05
+#> 9019      046    B      blphya06        lphya06
+#> 9020      046    B      blphya07        lphya07
+#> 9021      046    B      blphya08        lphya08
+#> 9022      046    B      blphya09        lphya09
+#> 9023      046    B      blphya10        lphya10
+#> 9024      046    B      blphya11        lphya11
+#> 9025      046    B      blphya12        lphya12
+#> 9026      046    B      blphya13        lphya13
+#> 9027      046    B      blphya14        lphya14
+#> 9028      046    B      blphya15        lphya15
+#> 9029      046    B      blphya16        lphya16
+#> 9030      046    B      blphya17        lphya17
+#> 9031      046    B      blphya18        lphya18
+#> 9032      046    B      blphya19        lphya19
+#> 9033      046    B      blphya20        lphya20
+#> 9034      046    B      blphya21        lphya21
+#> 9035      046    B      blphya22        lphya22
+#> 9036      046    B      blphya23        lphya23
+#> 9037      046    B      blphya24        lphya24
+#> 9038      046    B      blphya25        lphya25
+#> 9039      046    B      blphya26        lphya26
+#> 9040      046    B      blphya27        lphya27
+#> 9041      046    B      blphya28        lphya28
+#> 9042      046    B      blphya29        lphya29
+#> 9043      046    B      blphya30        lphya30
+#> 9044      046    B      blphya31        lphya31
+#> 9045      046    B      blphya32        lphya32
+#> 9046      046    B      blphya33        lphya33
+#> 9047      046    B      blphya34        lphya34
+#> 9048      046    B      blphya35        lphya35
+#> 9049      046    B      blphya36        lphya36
+#> 9050      046    B      blphya37        lphya37
+#> 9051      046    B      blphya38        lphya38
+#> 9052      046    B      blphya39        lphya39
+#> 9053      046    B      blphya40        lphya40
+#> 9054      046    B      blphya41        lphya41
+#> 9055      046    B      blphya42        lphya42
+#> 9056      046    B      blphya43        lphya43
+#> 9057      046    B      blphya44        lphya44
+#> 9058      046    B      blphya45        lphya45
+#> 9059      046    B      blphya46        lphya46
 #>                                    variable_label
-#> 8953   Physical condition respondent: observation
-#> 8954                        Wheelchair go outside
-#> 8955        Wheelchair go outside: last two weeks
-#> 8956 Wheelchair go outside: #times last two weeks
-#> 8957                  Wheelchair: time in minutes
-#> 8958                              Walking outside
-#> 8959               Walking outside:last two weeks
-#> 8960       Walking outside: #times last two weeks
-#> 8961                     Walking: time in minutes
-#> 8962                                    Bicycling
-#> 8963                    Bicycling: last two weeks
-#> 8964            Bicycling: # times last two weeks
-#> 8965                   Bicycling: time in minutes
-#> 8966                          Have garden: yes/no
-#> 8967                            Gardening: yes/no
-#> 8968                   Gardening: # months a year
-#> 8969                    Gardening: last two weeks
-#> 8970                  Gardening: # last two weeks
-#> 8971                   Gardening: time in minutes
-#> 8972            Gardening: digging last two weeks
-#> 8973               Sport 1: past two weeks yes/no
-#> 8974                      Sport 1: past two weeks
-#> 8975              Sport 1: # times past two weeks
-#> 8976                     Sport 1: time in minutes
-#> 8977                              Sport 2: yes/no
-#> 8978                      Sport 2: past two weeks
-#> 8979              Sport 2: # times past two weeks
-#> 8980                    Sport 2 : time in minutes
-#> 8981        Sport: sweating past two weeks yes/no
-#> 8982        Sport: #times sweating past two weeks
-#> 8983                      Light household: yes/no
-#> 8984       Light household: past two weeks yes/no
-#> 8985       Light household: # days past two weeks
-#> 8986             Light household: time in minutes
-#> 8987                      Heavy household: yes/no
-#> 8988       Heavy household: past two weeks yes/no
-#> 8989       Heavy household: # days past two weeks
-#> 8990             Heavy household: time in minutes
-#> 8991                Past two weeks normal: yes/no
-#> 8992                             not normal: sick
-#> 8993                        not normal: depressed
-#> 8994                      not normal: bad weather
-#> 8995                   not normal: family affairs
-#> 8996                         not normal: vacation
-#> 8997                     not normal: other reason
-#> 8998              not normal: other reasons coded
+#> 9014   Physical condition respondent: observation
+#> 9015                        Wheelchair go outside
+#> 9016        Wheelchair go outside: last two weeks
+#> 9017 Wheelchair go outside: #times last two weeks
+#> 9018                  Wheelchair: time in minutes
+#> 9019                              Walking outside
+#> 9020               Walking outside:last two weeks
+#> 9021       Walking outside: #times last two weeks
+#> 9022                     Walking: time in minutes
+#> 9023                                    Bicycling
+#> 9024                    Bicycling: last two weeks
+#> 9025            Bicycling: # times last two weeks
+#> 9026                   Bicycling: time in minutes
+#> 9027                          Have garden: yes/no
+#> 9028                            Gardening: yes/no
+#> 9029                   Gardening: # months a year
+#> 9030                    Gardening: last two weeks
+#> 9031                  Gardening: # last two weeks
+#> 9032                   Gardening: time in minutes
+#> 9033            Gardening: digging last two weeks
+#> 9034               Sport 1: past two weeks yes/no
+#> 9035                      Sport 1: past two weeks
+#> 9036              Sport 1: # times past two weeks
+#> 9037                     Sport 1: time in minutes
+#> 9038                              Sport 2: yes/no
+#> 9039                      Sport 2: past two weeks
+#> 9040              Sport 2: # times past two weeks
+#> 9041                    Sport 2 : time in minutes
+#> 9042        Sport: sweating past two weeks yes/no
+#> 9043        Sport: #times sweating past two weeks
+#> 9044                      Light household: yes/no
+#> 9045       Light household: past two weeks yes/no
+#> 9046       Light household: # days past two weeks
+#> 9047             Light household: time in minutes
+#> 9048                      Heavy household: yes/no
+#> 9049       Heavy household: past two weeks yes/no
+#> 9050       Heavy household: # days past two weeks
+#> 9051             Heavy household: time in minutes
+#> 9052                Past two weeks normal: yes/no
+#> 9053                             not normal: sick
+#> 9054                        not normal: depressed
+#> 9055                      not normal: bad weather
+#> 9056                   not normal: family affairs
+#> 9057                         not normal: vacation
+#> 9058                     not normal: other reason
+#> 9059              not normal: other reasons coded
 #>                              harmonized_var_label    var_type
-#> 8953   Physical condition respondent: observation categorical
-#> 8954                        Wheelchair go outside categorical
-#> 8955        Wheelchair go outside: last two weeks categorical
-#> 8956 Wheelchair go outside: #times last two weeks     numeric
-#> 8957                  Wheelchair: time in minutes     numeric
-#> 8958                              Walking outside categorical
-#> 8959               Walking outside:last two weeks categorical
-#> 8960       Walking outside: #times last two weeks     numeric
-#> 8961                     Walking: time in minutes     numeric
-#> 8962                                    Bicycling categorical
-#> 8963                    Bicycling: last two weeks categorical
-#> 8964            Bicycling: # times last two weeks     numeric
-#> 8965                   Bicycling: time in minutes     numeric
-#> 8966                          Have garden: yes/no categorical
-#> 8967                            Gardening: yes/no categorical
-#> 8968                   Gardening: # months a year     numeric
-#> 8969                    Gardening: last two weeks categorical
-#> 8970                  Gardening: # last two weeks     numeric
-#> 8971                   Gardening: time in minutes     numeric
-#> 8972            Gardening: digging last two weeks categorical
-#> 8973               Sport 1: past two weeks yes/no categorical
-#> 8974                      Sport 1: past two weeks categorical
-#> 8975              Sport 1: # times past two weeks     numeric
-#> 8976                     Sport 1: time in minutes     numeric
-#> 8977                              Sport 2: yes/no categorical
-#> 8978                      Sport 2: past two weeks categorical
-#> 8979              Sport 2: # times past two weeks     numeric
-#> 8980                    Sport 2 : time in minutes     numeric
-#> 8981        Sport: sweating past two weeks yes/no categorical
-#> 8982        Sport: #times sweating past two weeks     numeric
-#> 8983                      Light household: yes/no categorical
-#> 8984       Light household: past two weeks yes/no categorical
-#> 8985       Light household: # days past two weeks     numeric
-#> 8986             Light household: time in minutes     numeric
-#> 8987                      Heavy household: yes/no categorical
-#> 8988       Heavy household: past two weeks yes/no categorical
-#> 8989       Heavy household: # days past two weeks     numeric
-#> 8990             Heavy household: time in minutes     numeric
-#> 8991                Past two weeks normal: yes/no categorical
-#> 8992                             not normal: sick categorical
-#> 8993                        not normal: depressed categorical
-#> 8994                      not normal: bad weather categorical
-#> 8995                   not normal: family affairs categorical
-#> 8996                         not normal: vacation categorical
-#> 8997                 not normal: cleaning/repairs categorical
-#> 8998                     not normal: good weather categorical
+#> 9014   Physical condition respondent: observation categorical
+#> 9015                        Wheelchair go outside categorical
+#> 9016        Wheelchair go outside: last two weeks categorical
+#> 9017 Wheelchair go outside: #times last two weeks     numeric
+#> 9018                  Wheelchair: time in minutes     numeric
+#> 9019                              Walking outside categorical
+#> 9020               Walking outside:last two weeks categorical
+#> 9021       Walking outside: #times last two weeks     numeric
+#> 9022                     Walking: time in minutes     numeric
+#> 9023                                    Bicycling categorical
+#> 9024                    Bicycling: last two weeks categorical
+#> 9025            Bicycling: # times last two weeks     numeric
+#> 9026                   Bicycling: time in minutes     numeric
+#> 9027                          Have garden: yes/no categorical
+#> 9028                            Gardening: yes/no categorical
+#> 9029                   Gardening: # months a year     numeric
+#> 9030                    Gardening: last two weeks categorical
+#> 9031                  Gardening: # last two weeks     numeric
+#> 9032                   Gardening: time in minutes     numeric
+#> 9033            Gardening: digging last two weeks categorical
+#> 9034               Sport 1: past two weeks yes/no categorical
+#> 9035                      Sport 1: past two weeks categorical
+#> 9036              Sport 1: # times past two weeks     numeric
+#> 9037                     Sport 1: time in minutes     numeric
+#> 9038                              Sport 2: yes/no categorical
+#> 9039                      Sport 2: past two weeks categorical
+#> 9040              Sport 2: # times past two weeks     numeric
+#> 9041                    Sport 2 : time in minutes     numeric
+#> 9042        Sport: sweating past two weeks yes/no categorical
+#> 9043        Sport: #times sweating past two weeks     numeric
+#> 9044                      Light household: yes/no categorical
+#> 9045       Light household: past two weeks yes/no categorical
+#> 9046       Light household: # days past two weeks     numeric
+#> 9047             Light household: time in minutes     numeric
+#> 9048                      Heavy household: yes/no categorical
+#> 9049       Heavy household: past two weeks yes/no categorical
+#> 9050       Heavy household: # days past two weeks     numeric
+#> 9051             Heavy household: time in minutes     numeric
+#> 9052                Past two weeks normal: yes/no categorical
+#> 9053                             not normal: sick categorical
+#> 9054                        not normal: depressed categorical
+#> 9055                      not normal: bad weather categorical
+#> 9056                   not normal: family affairs categorical
+#> 9057                         not normal: vacation categorical
+#> 9058                 not normal: cleaning/repairs categorical
+#> 9059                     not normal: good weather categorical
 ```

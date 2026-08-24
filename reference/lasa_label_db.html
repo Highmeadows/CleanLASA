@@ -71,149 +71,149 @@ see the package README for the full schema.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu">lasa_label_db</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">db</span><span class="op">$</span><span class="va">variables</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 18963</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 23780</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">db</span><span class="op">$</span><span class="va">variables</span>, <span class="va">filecode</span> <span class="op">==</span> <span class="st">"046"</span> <span class="op">&amp;</span> <span class="va">wave</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      filecode wave variable_name canonical_name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8953      046    B      blphya01        lphya01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8954      046    B      blphya02        lphya02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8955      046    B      blphya03        lphya03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8956      046    B      blphya04        lphya04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8957      046    B      blphya05        lphya05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8958      046    B      blphya06        lphya06</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8959      046    B      blphya07        lphya07</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8960      046    B      blphya08        lphya08</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8961      046    B      blphya09        lphya09</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8962      046    B      blphya10        lphya10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8963      046    B      blphya11        lphya11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8964      046    B      blphya12        lphya12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8965      046    B      blphya13        lphya13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8966      046    B      blphya14        lphya14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8967      046    B      blphya15        lphya15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8968      046    B      blphya16        lphya16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8969      046    B      blphya17        lphya17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8970      046    B      blphya18        lphya18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8971      046    B      blphya19        lphya19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8972      046    B      blphya20        lphya20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8973      046    B      blphya21        lphya21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8974      046    B      blphya22        lphya22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8975      046    B      blphya23        lphya23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8976      046    B      blphya24        lphya24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8977      046    B      blphya25        lphya25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8978      046    B      blphya26        lphya26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8979      046    B      blphya27        lphya27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8980      046    B      blphya28        lphya28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8981      046    B      blphya29        lphya29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8982      046    B      blphya30        lphya30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8983      046    B      blphya31        lphya31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8984      046    B      blphya32        lphya32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8985      046    B      blphya33        lphya33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8986      046    B      blphya34        lphya34</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8987      046    B      blphya35        lphya35</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8988      046    B      blphya36        lphya36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8989      046    B      blphya37        lphya37</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8990      046    B      blphya38        lphya38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8991      046    B      blphya39        lphya39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8992      046    B      blphya40        lphya40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8993      046    B      blphya41        lphya41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8994      046    B      blphya42        lphya42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8995      046    B      blphya43        lphya43</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8996      046    B      blphya44        lphya44</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8997      046    B      blphya45        lphya45</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8998      046    B      blphya46        lphya46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9014      046    B      blphya01        lphya01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9015      046    B      blphya02        lphya02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9016      046    B      blphya03        lphya03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9017      046    B      blphya04        lphya04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9018      046    B      blphya05        lphya05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9019      046    B      blphya06        lphya06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9020      046    B      blphya07        lphya07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9021      046    B      blphya08        lphya08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9022      046    B      blphya09        lphya09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9023      046    B      blphya10        lphya10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9024      046    B      blphya11        lphya11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9025      046    B      blphya12        lphya12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9026      046    B      blphya13        lphya13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9027      046    B      blphya14        lphya14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9028      046    B      blphya15        lphya15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9029      046    B      blphya16        lphya16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9030      046    B      blphya17        lphya17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9031      046    B      blphya18        lphya18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9032      046    B      blphya19        lphya19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9033      046    B      blphya20        lphya20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9034      046    B      blphya21        lphya21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9035      046    B      blphya22        lphya22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9036      046    B      blphya23        lphya23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9037      046    B      blphya24        lphya24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9038      046    B      blphya25        lphya25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9039      046    B      blphya26        lphya26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9040      046    B      blphya27        lphya27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9041      046    B      blphya28        lphya28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9042      046    B      blphya29        lphya29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9043      046    B      blphya30        lphya30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9044      046    B      blphya31        lphya31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9045      046    B      blphya32        lphya32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9046      046    B      blphya33        lphya33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9047      046    B      blphya34        lphya34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9048      046    B      blphya35        lphya35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9049      046    B      blphya36        lphya36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9050      046    B      blphya37        lphya37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9051      046    B      blphya38        lphya38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9052      046    B      blphya39        lphya39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9053      046    B      blphya40        lphya40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9054      046    B      blphya41        lphya41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9055      046    B      blphya42        lphya42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9056      046    B      blphya43        lphya43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9057      046    B      blphya44        lphya44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9058      046    B      blphya45        lphya45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9059      046    B      blphya46        lphya46</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                    variable_label</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8953   Physical condition respondent: observation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8954                        Wheelchair go outside</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8955        Wheelchair go outside: last two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8956 Wheelchair go outside: #times last two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8957                  Wheelchair: time in minutes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8958                              Walking outside</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8959               Walking outside:last two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8960       Walking outside: #times last two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8961                     Walking: time in minutes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8962                                    Bicycling</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8963                    Bicycling: last two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8964            Bicycling: # times last two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8965                   Bicycling: time in minutes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8966                          Have garden: yes/no</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8967                            Gardening: yes/no</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8968                   Gardening: # months a year</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8969                    Gardening: last two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8970                  Gardening: # last two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8971                   Gardening: time in minutes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8972            Gardening: digging last two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8973               Sport 1: past two weeks yes/no</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8974                      Sport 1: past two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8975              Sport 1: # times past two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8976                     Sport 1: time in minutes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8977                              Sport 2: yes/no</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8978                      Sport 2: past two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8979              Sport 2: # times past two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8980                    Sport 2 : time in minutes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8981        Sport: sweating past two weeks yes/no</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8982        Sport: #times sweating past two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8983                      Light household: yes/no</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8984       Light household: past two weeks yes/no</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8985       Light household: # days past two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8986             Light household: time in minutes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8987                      Heavy household: yes/no</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8988       Heavy household: past two weeks yes/no</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8989       Heavy household: # days past two weeks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8990             Heavy household: time in minutes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8991                Past two weeks normal: yes/no</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8992                             not normal: sick</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8993                        not normal: depressed</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8994                      not normal: bad weather</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8995                   not normal: family affairs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8996                         not normal: vacation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8997                     not normal: other reason</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8998              not normal: other reasons coded</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9014   Physical condition respondent: observation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9015                        Wheelchair go outside</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9016        Wheelchair go outside: last two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9017 Wheelchair go outside: #times last two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9018                  Wheelchair: time in minutes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9019                              Walking outside</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9020               Walking outside:last two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9021       Walking outside: #times last two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9022                     Walking: time in minutes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9023                                    Bicycling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9024                    Bicycling: last two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9025            Bicycling: # times last two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9026                   Bicycling: time in minutes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9027                          Have garden: yes/no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9028                            Gardening: yes/no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9029                   Gardening: # months a year</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9030                    Gardening: last two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9031                  Gardening: # last two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9032                   Gardening: time in minutes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9033            Gardening: digging last two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9034               Sport 1: past two weeks yes/no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9035                      Sport 1: past two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9036              Sport 1: # times past two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9037                     Sport 1: time in minutes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9038                              Sport 2: yes/no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9039                      Sport 2: past two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9040              Sport 2: # times past two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9041                    Sport 2 : time in minutes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9042        Sport: sweating past two weeks yes/no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9043        Sport: #times sweating past two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9044                      Light household: yes/no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9045       Light household: past two weeks yes/no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9046       Light household: # days past two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9047             Light household: time in minutes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9048                      Heavy household: yes/no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9049       Heavy household: past two weeks yes/no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9050       Heavy household: # days past two weeks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9051             Heavy household: time in minutes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9052                Past two weeks normal: yes/no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9053                             not normal: sick</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9054                        not normal: depressed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9055                      not normal: bad weather</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9056                   not normal: family affairs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9057                         not normal: vacation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9058                     not normal: other reason</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9059              not normal: other reasons coded</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                              harmonized_var_label    var_type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8953   Physical condition respondent: observation categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8954                        Wheelchair go outside categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8955        Wheelchair go outside: last two weeks categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8956 Wheelchair go outside: #times last two weeks     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8957                  Wheelchair: time in minutes     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8958                              Walking outside categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8959               Walking outside:last two weeks categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8960       Walking outside: #times last two weeks     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8961                     Walking: time in minutes     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8962                                    Bicycling categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8963                    Bicycling: last two weeks categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8964            Bicycling: # times last two weeks     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8965                   Bicycling: time in minutes     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8966                          Have garden: yes/no categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8967                            Gardening: yes/no categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8968                   Gardening: # months a year     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8969                    Gardening: last two weeks categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8970                  Gardening: # last two weeks     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8971                   Gardening: time in minutes     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8972            Gardening: digging last two weeks categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8973               Sport 1: past two weeks yes/no categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8974                      Sport 1: past two weeks categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8975              Sport 1: # times past two weeks     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8976                     Sport 1: time in minutes     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8977                              Sport 2: yes/no categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8978                      Sport 2: past two weeks categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8979              Sport 2: # times past two weeks     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8980                    Sport 2 : time in minutes     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8981        Sport: sweating past two weeks yes/no categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8982        Sport: #times sweating past two weeks     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8983                      Light household: yes/no categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8984       Light household: past two weeks yes/no categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8985       Light household: # days past two weeks     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8986             Light household: time in minutes     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8987                      Heavy household: yes/no categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8988       Heavy household: past two weeks yes/no categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8989       Heavy household: # days past two weeks     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8990             Heavy household: time in minutes     numeric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8991                Past two weeks normal: yes/no categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8992                             not normal: sick categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8993                        not normal: depressed categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8994                      not normal: bad weather categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8995                   not normal: family affairs categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8996                         not normal: vacation categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8997                 not normal: cleaning/repairs categorical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8998                     not normal: good weather categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9014   Physical condition respondent: observation categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9015                        Wheelchair go outside categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9016        Wheelchair go outside: last two weeks categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9017 Wheelchair go outside: #times last two weeks     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9018                  Wheelchair: time in minutes     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9019                              Walking outside categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9020               Walking outside:last two weeks categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9021       Walking outside: #times last two weeks     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9022                     Walking: time in minutes     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9023                                    Bicycling categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9024                    Bicycling: last two weeks categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9025            Bicycling: # times last two weeks     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9026                   Bicycling: time in minutes     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9027                          Have garden: yes/no categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9028                            Gardening: yes/no categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9029                   Gardening: # months a year     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9030                    Gardening: last two weeks categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9031                  Gardening: # last two weeks     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9032                   Gardening: time in minutes     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9033            Gardening: digging last two weeks categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9034               Sport 1: past two weeks yes/no categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9035                      Sport 1: past two weeks categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9036              Sport 1: # times past two weeks     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9037                     Sport 1: time in minutes     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9038                              Sport 2: yes/no categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9039                      Sport 2: past two weeks categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9040              Sport 2: # times past two weeks     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9041                    Sport 2 : time in minutes     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9042        Sport: sweating past two weeks yes/no categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9043        Sport: #times sweating past two weeks     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9044                      Light household: yes/no categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9045       Light household: past two weeks yes/no categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9046       Light household: # days past two weeks     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9047             Light household: time in minutes     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9048                      Heavy household: yes/no categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9049       Heavy household: past two weeks yes/no categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9050       Heavy household: # days past two weeks     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9051             Heavy household: time in minutes     numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9052                Past two weeks normal: yes/no categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9053                             not normal: sick categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9054                        not normal: depressed categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9055                      not normal: bad weather categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9056                   not normal: family affairs categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9057                         not normal: vacation categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9058                 not normal: cleaning/repairs categorical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9059                     not normal: good weather categorical</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
