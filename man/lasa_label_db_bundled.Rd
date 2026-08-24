@@ -28,7 +28,7 @@ local copy by \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels(
 \source{
 Transcribed from LASA's own variable-information documentation
 (\url{https://lasa-vu.nl/en/topic-table/}) into
-\verb{data-raw/labels/variables_<filecode>.R}, assembled by
+\verb{data-raw/variable_<filecode>.R}, assembled by
 \code{data-raw/build_lasa_label_db.R}.
 }
 \usage{
@@ -37,7 +37,8 @@ lasa_label_db_bundled
 \description{
 The package's own snapshot of the label database, assembled by
 \code{data-raw/build_lasa_label_db.R} from hardcoded, hand-maintained R
-(\code{data-raw/labels/value_label_sets.R} and \verb{data-raw/labels/variables_ <filecode>.R}), transcribed from LASA's own variable-information
+(\code{data-raw/label_db_helpers.R} and \verb{data-raw/variable_<filecode>.R}),
+transcribed from LASA's own variable-information
 documentation. \code{\link[=read_lasa_sav]{read_lasa_sav()}} and \code{\link[=apply_lasa_labels]{apply_lasa_labels()}} use this
 snapshot automatically, layered with any local corrections recorded by
 \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}. Not usually accessed directly -- call

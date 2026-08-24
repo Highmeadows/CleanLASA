@@ -2,8 +2,8 @@
 # precedence over the bundled snapshot, integrity validation, and the
 # manual-override composition rule used by `.lasa_apply_labels()`.
 #
-# The database is built entirely from hardcoded R (data-raw/labels/*.R,
-# assembled by data-raw/build_lasa_label_db.R) transcribed from LASA's own
+# The database is built entirely from hardcoded R (data-raw/*.R, assembled
+# by data-raw/build_lasa_label_db.R) transcribed from LASA's own
 # variable-information documentation -- there is no PDF-parsing step and no
 # "documents" provenance table; label updates ship with new package
 # releases instead of being fetched at runtime.

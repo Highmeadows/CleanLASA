@@ -1,5 +1,5 @@
 ## LASA filecode 031 -- variable names, variable labels, value labels,
-## and variable types. Sourced after data-raw/labels/label_db_helpers.R.
+## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
 ## To add a wave: add its documented variables to variable_labels_list
 ## and (if it has value labels) value_labels_list below. To add a new
