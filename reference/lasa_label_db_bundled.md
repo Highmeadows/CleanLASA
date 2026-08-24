@@ -2,9 +2,8 @@
 
 The package's own snapshot of the label database, assembled by
 `data-raw/build_lasa_label_db.R` from hardcoded, hand-maintained R
-(`data-raw/labels/value_label_sets.R` and
-`data-raw/labels/variables_ <filecode>.R`), transcribed from LASA's own
-variable-information documentation.
+(`data-raw/label_db_helpers.R` and `data-raw/variable_<filecode>.R`),
+transcribed from LASA's own variable-information documentation.
 [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
 and
 [`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
@@ -56,7 +55,7 @@ A list with four elements:
 
 Transcribed from LASA's own variable-information documentation
 (<https://lasa-vu.nl/en/topic-table/>) into
-`data-raw/labels/variables_<filecode>.R`, assembled by
+`data-raw/variable_<filecode>.R`, assembled by
 `data-raw/build_lasa_label_db.R`.
 
 ## See also
