@@ -1,6 +1,6 @@
 ## Shared constants and helper functions for the per-filecode label
-## database builders (data-raw/labels/variable_<filecode>.R). Sourced
-## once, before any of those scripts, by data-raw/build_lasa_label_db.R.
+## database builders (data-raw/variable_<filecode>.R). Sourced once,
+## before any of those scripts, by data-raw/build_lasa_label_db.R.
 ##
 ## Format each variable_<fc>.R builds: four "wide" tables -- one row per
 ## LASA wave documented for that filecode (plus a synthetic "all" row

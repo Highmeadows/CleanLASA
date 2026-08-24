@@ -2,22 +2,19 @@
 ##
 ## Every variable and value label is hardcoded, hand-maintained R. Source
 ## of the labels:
-##   * data-raw/labels/label_db_helpers.R  shared constants (wave_prefix,
-##                                         identifier column names) and
-##                                         helper functions
-##                                         (.override_label(),
-##                                         .replace_labels(),
-##                                         .replace_in_list(), and the
-##                                         four .lasa_build_*_table()
-##                                         table constructors)
-##   * data-raw/labels/variable_<fc>.R     one file per filecode: four
-##                                         "wide" tables (one row per
-##                                         wave + a synthetic "all" row
-##                                         for the cross-wave-harmonized
-##                                         values, one column per
-##                                         canonical variable name) --
-##                                         see label_db_helpers.R's
-##                                         header comment for the shape.
+##   * data-raw/label_db_helpers.R  shared constants (wave_prefix,
+##                                 identifier column names) and helper
+##                                 functions (.override_label(),
+##                                 .replace_labels(), .replace_in_list(),
+##                                 and the four .lasa_build_*_table()
+##                                 table constructors)
+##   * data-raw/variable_<fc>.R     one file per filecode: four "wide"
+##                                 tables (one row per wave + a synthetic
+##                                 "all" row for the cross-wave-harmonized
+##                                 values, one column per canonical
+##                                 variable name) -- see
+##                                 label_db_helpers.R's header comment
+##                                 for the shape.
 ##
 ## This script *flattens* those wide, per-filecode tables into the long,
 ## normalized shape `R/lasa_label_db.R` and the rest of the package
@@ -26,8 +23,8 @@
 ## changed, only how it's produced.
 ##
 ## To add a wave to an existing filecode, or add a brand-new filecode:
-## edit (or add) the relevant `data-raw/labels/variable_<fc>.R` file
-## directly, then re-run this script.
+## edit (or add) the relevant `data-raw/variable_<fc>.R` file directly,
+## then re-run this script.
 ##
 ## Run from the package root.
 
@@ -35,13 +32,13 @@ Sys.setlocale("LC_CTYPE", "C.UTF-8") # guards UTF-8 label text if this ever read
 
 devtools::load_all(".", quiet = TRUE)
 
-labels_dir <- file.path("data-raw", "labels")
+labels_dir <- "data-raw"
 helpers_path <- file.path(labels_dir, "label_db_helpers.R")
 if (!file.exists(helpers_path)) stop("Missing ", helpers_path, call. = FALSE)
 
 fc_scripts <- sort(list.files(labels_dir, pattern = "^variable_.*\\.R$", full.names = TRUE))
 if (length(fc_scripts) == 0L) {
-  stop("No data-raw/labels/variable_<filecode>.R scripts found.", call. = FALSE)
+  stop("No data-raw/variable_<filecode>.R scripts found.", call. = FALSE)
 }
 cat(length(fc_scripts), "filecode script(s) found in", labels_dir, "\n")
 

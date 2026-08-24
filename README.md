@@ -123,7 +123,7 @@ metadata: which file codes and waves are covered, and each variable's
 documented name, wave-specific label, cross-wave-consistent
 ("harmonized") label, and value-label codebook. Unlike earlier releases,
 this metadata is not parsed from PDFs at build or run time -- it is
-hardcoded, hand-maintained R (`data-raw/labels/`), transcribed from
+hardcoded, hand-maintained R (`data-raw/`), transcribed from
 LASA's own variable-information documentation and shipped with the
 package. A new package release is how coverage grows or gets corrected.
 
