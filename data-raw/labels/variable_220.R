@@ -1,0 +1,65 @@
+## LASA filecode 220 -- variable names, variable labels, value labels,
+## and variable types. Sourced after data-raw/labels/label_db_helpers.R.
+##
+## To add a wave: add its documented variables to variable_labels_list
+## and (if it has value labels) value_labels_list below. To add a new
+## variable: add it to harmonized_labels/standardized_value_labels/
+## var_types_vec and to the wave(s) that document it.
+
+harmonized_labels <- c(
+  dsbsp = "WAIS Digit Span backward span",
+  dsbw = "WAIS Digit Span number of correct backward items",
+  dsfsp = "WAIS Digit Span forward span",
+  dsfw = "WAIS Digit Span number of correct forward items",
+  dstot = "WAIS Digit Span total number of correct items",
+  rmds = "Reason for missing Digit Span score"
+)
+
+variable_labels_list <- list(
+  Wave_3B_labels = .replace_labels(
+    harmonized_labels,
+    dsbsp = "WAIS Digit Span: Span backwards",
+    dsbw = "WAIS Digit Span: number of correct backward items",
+    dsfsp = "WAIS Digit Span: Span forwards",
+    dsfw = "WAIS Digit Span: number of correct forward items",
+    dstot = "WAIS Digit Span: total number of correct items",
+    rmds = "reason missing Digit Span"
+  ),
+  Harmonized_labels = harmonized_labels
+)
+
+standardized_value_labels <- list(
+  dsbsp = c(`-2` = "no score, see BRMDS", `-1` = "no score, too many missings"),
+  dsbw = c(`-2` = "no score, see BRMDS", `-1` = "no score, too many missings"),
+  dsfsp = c(`-2` = "no score, see BRMDS", `-1` = "no score, too many missings"),
+  dsfw = c(`-2` = "no score, see BRMDS", `-1` = "no score, too many missings"),
+  dstot = c(`-2` = "no score, see BRMDS", `-1` = "no score, too many missings"),
+  rmds = c(
+    `-2` = "valid score",
+    `1` = "short interview",
+    `2` = "interview terminated",
+    `3` = "too many missings",
+    `4` = "language problem"
+  )
+)
+
+value_labels_list <- list(
+  Wave_3B_labels = standardized_value_labels,
+  Harmonized_labels = standardized_value_labels
+)
+
+var_types_vec <- c(
+  dsbsp = "numeric",
+  dsbw = "numeric",
+  dsfsp = "numeric",
+  dsfw = "numeric",
+  dstot = "numeric",
+  rmds = "categorical"
+)
+
+.lasa_fc_220 <- list(
+  variables = .lasa_build_name_table(variable_labels_list, filecode = "220", waves = .lasa_wave_rows()),
+  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "220", waves = .lasa_wave_rows()),
+  value_labels = .lasa_build_value_table(value_labels_list, filecode = "220", waves = .lasa_wave_rows()),
+  variable_types = .lasa_build_type_table(var_types_vec, filecode = "220", waves = .lasa_wave_rows())
+)
