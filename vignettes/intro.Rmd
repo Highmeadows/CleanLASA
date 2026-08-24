@@ -12,6 +12,7 @@ cache: true
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  eval = FALSE,
   comment = "#>"
 )
 
@@ -86,13 +87,13 @@ By default, an interactive R session opens the PDF using the requested viewer. N
 
 ```{r import, eval=FALSE}
 # Regular LASA wave: LASA + wave + file code
-physical_activity_b <- read_lasa_sav("data/LASAB046.sav")
+physical_activity_b <- read_lasa_sav("LASAB046.sav")
 
 # Information stored in a Z file
-sex <- read_lasa_sav("data/LASAZ004.sav")
+sex <- read_lasa_sav("LASAZ004.sav")
 
 # Replenishment/migrant-cohort waves use LAS2B/LAS3B/LAS4B/LASMB
-physical_activity_3b <- read_lasa_sav("data/LAS3B046.sav")
+physical_activity_3b <- read_lasa_sav("LAS3B046.sav")
 ```
 
 The filename parser is case-insensitive. Regular single-letter waves follow `LASA[wave][filecode].sav`; waves `2B`, `3B`, `4B`, and `MB` follow `LAS[wave][filecode].sav`.
@@ -101,7 +102,7 @@ By default, `user_na = TRUE` is passed to `haven::read_sav()` so SPSS user-defin
 
 ```{r import-extra, eval=FALSE}
 data <- read_lasa_sav(
-  "data/LASAB046.sav",
+  "LASAB046.sav",
   read_sav_args = list(encoding = "UTF-8")
 )
 ```
@@ -115,13 +116,21 @@ After import, the returned object carries LASA provenance attributes for the wav
 The default behavior preserves the imported values while attaching the variable label (`attr(x, "label")`) and, where documented, the SPSS value-label map (`attr(x, "labels")`). Several arguments can additionally reshape the result for analysis.
 
 ```{r raw_data}
-data <- haven::read_sav("../data/LASAB046.sav")
+data <- haven::read_sav("LASAB046.sav")
 ```
 
 ```{r collapse=TRUE}
 summary(data$blphya01)
+#>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#> -5.000   4.000   4.000   3.476   4.000   4.000 
 
 attr(data$blphya01, "labels")
+#> Na, interview terminated      Na, short interview           Na, wrong skip
+#>                       -5                       -4                       -3
+#>                  Na, see                Na, asked     Respondent bedridden
+#>                       -2                       -1                        1
+#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 
+#>                        2                        3                        4 
 ```
 
 ### Convert labelled categories to factors
@@ -130,12 +139,24 @@ Use `to_factor = TRUE` when you want documented value labels represented as R fa
 
 ```{r factors}
 data <- read_lasa_sav(
-  "../data/LASAB046.sav",
+  "LASAB046.sav",
   to_factor = TRUE
 )
 summary(data$blphya01)
+#> Na, interview terminated      Na, short interview           Na, wrong skip
+#>                       13                      175                        0
+#>                  Na, see                Na, asked     Respondent bedridden
+#>                        0                        4                       20
+#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 
+#>                        5                       20                     2870 
 
 attr(data$blphya01, "original_labels")
+#> Na, interview terminated      Na, short interview           Na, wrong skip
+#>                       -5                       -4                       -3
+#>                  Na, see                Na, asked     Respondent bedridden
+#>                       -2                       -1                        1
+#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 
+#>                        2                        3                        4 
 ```
 
 Observed values that do not have a documented codebook label are retained as their numeric code (represented as text) rather than silently converted to `NA`.
@@ -146,12 +167,20 @@ The label database classifies variables whose codebook contains no categorical c
 
 ```{r numeric}
 data <- read_lasa_sav(
-  "../data/LASAB046.sav",
+  "LASAB046.sav",
   to_numeric = TRUE
 )
 summary(data$blphya01)
+#>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#> -5.000   4.000   4.000   3.476   4.000   4.000 
 
 attr(data$blphya01, "original_labels")
+#> Na, interview terminated      Na, short interview           Na, wrong skip
+#>                       -5                       -4                       -3
+#>                  Na, see                Na, asked     Respondent bedridden
+#>                       -2                       -1                        1
+#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 
+#>                        2                        3                        4 
 ```
 
 
@@ -165,33 +194,39 @@ LASA variable names often contain a wave-specific prefix. For example, a variabl
 
 ```{r standardize, collapse=TRUE}
 data <- read_lasa_sav(
-  "../data/LASAB046.sav",
+  "LASAB046.sav",
   standardize_names = TRUE
 )
 
 names(data)[1:4]
+#> "respnr"    "LASA_wave" "lphya01"   "lphya02" 
+
 unique(data$LASA_wave)
+#> "B"
 ```
 
 `split_wavecode = TRUE` can also be used on its own. It renames matched LASA variables to their canonical names and inserts `LASA_wave`, but does not by itself force a differently-capitalized respondent-number column to be renamed to `respnr`.
 
-```{r split-wave, eval=TRUE}
+```{r split-wave, eval=FALSE}
 data <- read_lasa_sav(
-  "../data/LASAB046.sav",
+  "LASAB046.sav",
   split_wavecode = TRUE
 )
 
 names(data)[1:4]
+#> "respnr"    "LASA_wave" "blphya01"   "blphya02" 
+
 unique(data$LASA_wave)
+#> "B"
 ```
 
 ### Correct a known source-column name
 
-If a source file contains a known typo or nonstandard column name, use `name_corrections` to map a documented wave-specific or canonical variable name to the actual source column:
+If a source file contains a known typo or nonstandard column name, use `name_corrections` to map a documented wave-specific or canonical variable name to the actual source column, which would otherwise not import correctly. This can be done with the specification `canonical_name = "nonstandard name in the datafile"`:
 
 ```{r name-corrections, eval=FALSE}
 data <- read_lasa_sav(
-  "../data/LASAB046.sav",
+  "LASAB046.sav",
   name_corrections = c(lphya08 = "BLPYA08")
 )
 ```
@@ -231,7 +266,7 @@ This is useful before analysis when you want to verify that expected variables w
 `apply_lasa_labels()` exposes the same database-driven label engine without reading a file. This is useful if you imported a `.sav` file yourself or need to re-apply metadata after transformations.
 
 ```{r apply-labels, eval=FALSE}
-raw <- haven::read_sav("data/LASAC046.sav", user_na = TRUE)
+raw <- haven::read_sav("LASAC046.sav", user_na = TRUE)
 
 data <- apply_lasa_labels(
   raw,
@@ -246,7 +281,7 @@ data <- apply_lasa_labels(
 When `data` already carries the `LASA_file_code` and `LASA_wave` provenance attributes created by `read_lasa_sav()` or a previous `apply_lasa_labels()` call, those arguments can usually be omitted:
 
 ```{r reapply-labels, eval=FALSE}
-data <- read_lasa_sav("../data/LASAB046.sav")
+data <- read_lasa_sav("LASAB046.sav")
 
 # ...perform transformations that may remove column attributes...
 
@@ -355,7 +390,7 @@ lasa_var_info("046")
 
 # 3. Import the LASA file, convert analysis variables, and standardize names
 data <- read_lasa_sav(
-  "../data/LASAB046.sav",
+  "LASAB046.sav",
   to_factor = TRUE,
   to_numeric = TRUE,
   standardize_names = TRUE
