@@ -1,7 +1,0 @@
-filecode,wave,canonical_name,variable_type,value_raw,value_numeric,value_label,is_missing,conflicts
-336,E,qworry,numeric,no valid data(-1),-1,no valid data,TRUE,
-336,E,qworry,numeric,low(-16),-16,,TRUE,Source endpoint anomaly: the PDF documents the low endpoint as -16 although the LASA topic documentation describes the PSWQ-16 range as 16-80. The PDF value is preserved; Plan B's fixed negative-value missingness rule therefore marks -16 as missing.
-336,E,qworry,numeric,high(80),80,,FALSE,
-336,Z,qworry,numeric,-1,-1,no valid data,TRUE,
-336,Z,qworry,numeric,-16,-16,,TRUE,Source endpoint anomaly: the PDF documents the low endpoint as -16 although the LASA topic documentation describes the PSWQ-16 range as 16-80. The PDF value is preserved; Plan B's fixed negative-value missingness rule therefore marks -16 as missing.
-336,Z,qworry,numeric,80,80,,FALSE,

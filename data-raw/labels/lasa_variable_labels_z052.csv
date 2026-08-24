@@ -1,4 +1,0 @@
-filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
-z052,B,sample,sample,description of sample 1992 - 2002 - 2012,sample cohort,The PDF abbreviates the Statistics Netherlands municipality/country coding table with ellipses; only codes/labels explicitly printed in the PDF are represented.
-z052,B,b052record,052record,municipality at birth / after 1st move / in 1944 / at age 45 years / of current residence,domestic-address record type,
-z052,B,bMunicipality,municipality,municipality (coding Statistics Netherlands) or country,municipality or country (Statistics Netherlands coding),The PDF abbreviates the Statistics Netherlands municipality/country coding table with ellipses; only codes/labels explicitly printed in the PDF are represented.

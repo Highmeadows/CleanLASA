@@ -1,5 +1,0 @@
-filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
-mb010,MB,bmarst,marst,marital status,marital status,
-mb010,MB,bpartst,partst,partner status,partner status,
-mb010,MB,bsepar,separ,why not living with spouse (for married and with registered partnership),why not living with spouse (for married and with registered partnership),
-mb010,MB,bpartner,partner,"partner status (none, co-residing, residing outside the household)","partner status (none, co-residing, residing outside the household)",

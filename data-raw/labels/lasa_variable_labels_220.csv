@@ -1,7 +1,0 @@
-filecode,wave,variable_name,canonical_name,variable_label,harmonized_var_label,conflicts
-220,3B,BDSTOT,dstot,WAIS Digit Span: total number of correct items,WAIS Digit Span total number of correct items,
-220,3B,BDSFW,dsfw,WAIS Digit Span: number of correct forward items,WAIS Digit Span number of correct forward items,
-220,3B,BDSBW,dsbw,WAIS Digit Span: number of correct backward items,WAIS Digit Span number of correct backward items,
-220,3B,BDSFSP,dsfsp,WAIS Digit Span: Span forwards,WAIS Digit Span forward span,
-220,3B,BDSBSP,dsbsp,WAIS Digit Span: Span backwards,WAIS Digit Span backward span,
-220,3B,BRMDS,rmds,reason missing Digit Span,Reason for missing Digit Span score,
