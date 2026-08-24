@@ -1,17 +1,15 @@
 # Manually correct or add LASA variable/value labels
 
-A hand-authored escape hatch for when automatic PDF retrieval/parsing
-fails, or a varinfo PDF's own documentation is itself incomplete or
-wrong. Writes directly to the user-local label database used by
+A hand-authored escape hatch for when the bundled
+[`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md)
+is itself incomplete or wrong, or a user wants a custom label. Writes
+directly to the user-local label database used by
 [`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
 and
-[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md),
-without downloading or parsing any PDF. Overrides are stored separately
-from PDF-derived data and are composed back on top of it at lookup time,
-so a later
-[`update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/update_lasa_labels.md)
-refresh of the same file code never silently discards a correction
-recorded here.
+[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md).
+Overrides are stored separately from the bundled data and are composed
+back on top of it at lookup time, so a later package update never
+silently discards a correction recorded here.
 
 ## Usage
 
@@ -74,8 +72,8 @@ resolved wave(s)), `variable_name`, and which of
 
 ## See also
 
-[`update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/update_lasa_labels.md),
-[`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md)
+[`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md),
+[`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
 
 ## Examples
 

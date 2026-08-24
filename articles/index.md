@@ -2,4 +2,5 @@
 
 ### All vignettes
 
-- [intro](https://highmeadows.github.io/CleanLASA/articles/intro.md):
+- [CleanLASA
+  introduction](https://highmeadows.github.io/CleanLASA/articles/intro.md):

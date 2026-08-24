@@ -18,5 +18,3 @@
   : Manually correct or add LASA variable/value labels
 - [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
   : Read and label a LASA SPSS data file
-- [`update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/update_lasa_labels.md)
-  : Refresh the LASA label database from a variable-information PDF

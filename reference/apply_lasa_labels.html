@@ -34,7 +34,7 @@ single-valued &quot;LASA_wave&quot; column."></head><body>
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/intro.html">intro</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/intro.html">CleanLASA introduction</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -104,7 +104,14 @@ recovered from <code>data</code>'s provenance (see Details).</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p><code>data</code>, labelled (and optionally reshaped/renamed) exactly as
 <code><a href="read_lasa_sav.html">read_lasa_sav()</a></code> would, with <code>"label_report"</code>, <code>"LASA_wave"</code>, and
-<code>"LASA_file_code"</code> attributes (re-)attached.</p>
+<code>"LASA_file_code"</code> attributes (re-)attached. Each labelled column also
+carries <code>"label"</code> (the wave-specific variable label), <code>"labels"</code> (its
+value labels, SPSS/haven-style), <code>"canonical_name"</code> (the wave-stripped
+variable name), <code>"harmonized_label"</code> (the cross-wave-consistent
+variable label), and, where the database documents one,
+<code>"labels_harmonized"</code> (the cross-wave-standardized value labels) –
+groundwork for a future <code>standardize_names</code>/<code>standardize_labels</code> pair
+of arguments, not yet implemented.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -125,7 +132,7 @@ case-insensitive match against the canonical name.</p>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="read_lasa_sav.html">read_lasa_sav()</a></code>, <code><a href="lasa_label_report.html">lasa_label_report()</a></code>, <code><a href="lasa_label_db.html">lasa_label_db()</a></code>,
-<code><a href="update_lasa_labels.html">update_lasa_labels()</a></code>, <code><a href="manual_update_lasa_labels.html">manual_update_lasa_labels()</a></code></p></div>
+<code><a href="manual_update_lasa_labels.html">manual_update_lasa_labels()</a></code></p></div>
     </div>
 
     <div class="section level2">

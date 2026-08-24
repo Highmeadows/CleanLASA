@@ -57,7 +57,14 @@ apply_lasa_labels(
 `data`, labelled (and optionally reshaped/renamed) exactly as
 [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
 would, with `"label_report"`, `"LASA_wave"`, and `"LASA_file_code"`
-attributes (re-)attached.
+attributes (re-)attached. Each labelled column also carries `"label"`
+(the wave-specific variable label), `"labels"` (its value labels,
+SPSS/haven-style), `"canonical_name"` (the wave-stripped variable name),
+`"harmonized_label"` (the cross-wave-consistent variable label), and,
+where the database documents one, `"labels_harmonized"` (the
+cross-wave-standardized value labels) – groundwork for a future
+`standardize_names`/`standardize_labels` pair of arguments, not yet
+implemented.
 
 ## Details
 
@@ -81,7 +88,6 @@ case-insensitive match against the canonical name.
 [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md),
 [`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md),
 [`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md),
-[`update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/update_lasa_labels.md),
 [`manual_update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/manual_update_lasa_labels.md)
 
 ## Examples

@@ -1,6 +1,560 @@
-# intro
+# CleanLASA introduction
+
+## Overview
+
+`CleanLASA` is designed to make LASA (Longitudinal Aging Study
+Amsterdam) SPSS data easier to find, import, document, and prepare for
+analysis in R. The package connects three parts of the LASA workflow
+that otherwise require substantial manual work:
+
+1.  finding the relevant LASA topic, file code, measurement waves, and
+    variable documentation;
+2.  importing LASA `.sav` files while applying the correct wave-specific
+    variable and value labels; and
+3.  auditing, refreshing, or manually correcting the metadata used for
+    labelling.
+
+The central import function is
+[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md).
+It identifies the LASA wave and file code from the file name and then
+applies metadata from the package’s normalized label database. The same
+labelling engine is available separately through
+[`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
+when data have already been imported.
+
+A typical workflow is therefore:
+
+``` text
+find topic/file code -> inspect LASA documentation -> import .sav file
+        -> apply/reshape labels -> inspect matching audit -> analyse data
+```
+
+The examples involving LASA data files or the live LASA website are not
+run when this vignette is built, because LASA data are not distributed
+with the package and website access may not be available during package
+installation.
+
+## 1. Find topics, file codes, and waves
+
+Use
+[`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md)
+to search the LASA topic overview. With no arguments it returns the
+complete topic index; searches can instead be restricted by topic,
+theme, or subtheme.
+
+``` r
+
+# Browse the complete LASA topic index
+lasa_topics()
+
+# Search by topic name; partial and small fuzzy matches are supported
+lasa_topics(topic = "physical act")
+
+# Search a theme or subtheme
+lasa_topics(theme = "cognitive")
+lasa_topics(theme = "memory")
+```
+
+The returned data frame contains one row per topic/file-code
+combination, with columns for `theme`, `subtheme`, `topic`, `filecode`,
+`waves`, and `has_varinfo`. This makes it possible to identify not only
+the relevant file code, but also the waves in which that topic is
+available and whether LASA links a variable-information PDF for it.
+
+The topic table is retrieved from the LASA website and cached both for
+the current R session and on disk. Set `refresh = TRUE` when you
+explicitly want to rebuild the cache from the current live topic table:
+
+``` r
+
+lasa_topics(topic = "physical activity", refresh = TRUE)
+```
+
+## 2. Open the corresponding variable-information PDF
+
+After identifying a topic or file code,
+[`lasa_var_info()`](https://highmeadows.github.io/CleanLASA/reference/lasa_var_info.md)
+resolves the variable-information PDF linked by LASA. It accepts common
+variations of a file code as well as topic names.
+
+``` r
+
+# By file code
+lasa_var_info("046")
+lasa_var_info("LASA046")
+
+# By topic name
+lasa_var_info("Physical activity")
+lasa_var_info("physical act")
+
+# Retrieve the URL without opening the PDF
+url <- lasa_var_info("046", open = FALSE)
+```
+
+By default, an interactive R session opens the PDF using the requested
+viewer. No LASA variable-information PDFs are bundled with `CleanLASA`;
+this function resolves the document from the LASA topic index.
+
+## 3. Import and label a LASA SPSS file
+
+[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
+is the main entry point for analysis data. It reads the file with
+[`haven::read_sav()`](https://haven.tidyverse.org/reference/read_spss.html),
+derives the LASA wave and file code from the file name, retrieves the
+corresponding metadata from
+[`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md),
+and applies variable and value labels.
+
+``` r
+
+# Regular LASA wave: LASA + wave + file code
+physical_activity_b <- read_lasa_sav("LASAB046.sav")
+
+# Information stored in a Z file
+sex <- read_lasa_sav("LASAZ004.sav")
+
+# Replenishment/migrant-cohort waves use LAS2B/LAS3B/LAS4B/LASMB
+physical_activity_3b <- read_lasa_sav("LAS3B046.sav")
+```
+
+The filename parser is case-insensitive. Regular single-letter waves
+follow `LASA[wave][filecode].sav`; waves `2B`, `3B`, `4B`, and `MB`
+follow `LAS[wave][filecode].sav`.
+
+By default, `user_na = TRUE` is passed to
+[`haven::read_sav()`](https://haven.tidyverse.org/reference/read_spss.html)
+so SPSS user-defined missing codes remain available while labels and
+optional conversions are applied. Additional
+[`haven::read_sav()`](https://haven.tidyverse.org/reference/read_spss.html)
+arguments can be supplied through `read_sav_args`:
+
+``` r
+
+data <- read_lasa_sav(
+  "LASAB046.sav",
+  read_sav_args = list(encoding = "UTF-8")
+)
+```
+
+Do not include `file` or `user_na` inside `read_sav_args`; those are
+controlled by `path` and `user_na` directly.
+
+After import, the returned object carries LASA provenance attributes for
+the wave, file code, and source filename. The labelling audit is stored
+separately as the `label_report` attribute.
+
+## 4. Choose how labelled variables are represented
+
+The default behavior preserves the imported values while attaching the
+variable label (`attr(x, "label")`) and, where documented, the SPSS
+value-label map (`attr(x, "labels")`). Several arguments can
+additionally reshape the result for analysis.
+
+``` r
+
+data <- haven::read_sav("LASAB046.sav")
+```
+
+``` r
+
+summary(data$blphya01)
+#>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#> -5.000   4.000   4.000   3.476   4.000   4.000 
+
+attr(data$blphya01, "labels")
+#> Na, interview terminated      Na, short interview           Na, wrong skip
+#>                       -5                       -4                       -3
+#>                  Na, see                Na, asked     Respondent bedridden
+#>                       -2                       -1                        1
+#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 
+#>                        2                        3                        4 
+```
+
+### Convert labelled categories to factors
+
+Use `to_factor = TRUE` when you want documented value labels represented
+as R factor levels:
+
+``` r
+
+data <- read_lasa_sav(
+  "LASAB046.sav",
+  to_factor = TRUE
+)
+summary(data$blphya01)
+#> Na, interview terminated      Na, short interview           Na, wrong skip
+#>                       13                      175                        0
+#>                  Na, see                Na, asked     Respondent bedridden
+#>                        0                        4                       20
+#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 
+#>                        5                       20                     2870 
+
+attr(data$blphya01, "original_labels")
+#> Na, interview terminated      Na, short interview           Na, wrong skip
+#>                       -5                       -4                       -3
+#>                  Na, see                Na, asked     Respondent bedridden
+#>                       -2                       -1                        1
+#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 
+#>                        2                        3                        4 
+```
+
+Observed values that do not have a documented codebook label are
+retained as their numeric code (represented as text) rather than
+silently converted to `NA`.
+
+### Restore count/continuous variables to plain numeric
+
+The label database classifies variables whose codebook contains no
+categorical codes (or only negative missing-reason codes) as numeric.
+With `to_numeric = TRUE`, those variables are restored to ordinary
+numeric vectors and negative observed codes are converted to `NA`:
+
+``` r
+
+data <- read_lasa_sav(
+  "LASAB046.sav",
+  to_numeric = TRUE
+)
+summary(data$blphya01)
+#>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#> -5.000   4.000   4.000   3.476   4.000   4.000 
+
+attr(data$blphya01, "original_labels")
+#> Na, interview terminated      Na, short interview           Na, wrong skip
+#>                       -5                       -4                       -3
+#>                  Na, see                Na, asked     Respondent bedridden
+#>                       -2                       -1                        1
+#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 
+#>                        2                        3                        4 
+```
+
+`to_factor` and `to_numeric` can be used together. In that workflow,
+numeric-classified variables are restored to numeric while other
+variables with value-label maps can be represented as factors.
+
+### Standardize variable names and separate the wave code
+
+LASA variable names often contain a wave-specific prefix. For example, a
+variable may be documented as `blphya01` in wave B but have the
+canonical name `lphya01` in the label database.
+
+`standardize_names = TRUE` renames matched variables to their canonical
+lowercase names, standardizes the respondent-number column to `respnr`,
+and also implies `split_wavecode = TRUE`. A new `LASA_wave` column is
+inserted immediately after `respnr` when that identifier is present.
+
+``` r
+
+data <- read_lasa_sav(
+  "LASAB046.sav",
+  standardize_names = TRUE
+)
+
+names(data)[1:4]
+#> "respnr"    "LASA_wave" "lphya01"   "lphya02" 
+
+unique(data$LASA_wave)
+#> "B"
+```
+
+`split_wavecode = TRUE` can also be used on its own. It renames matched
+LASA variables to their canonical names and inserts `LASA_wave`, but
+does not by itself force a differently-capitalized respondent-number
+column to be renamed to `respnr`.
+
+``` r
+
+data <- read_lasa_sav(
+  "LASAB046.sav",
+  split_wavecode = TRUE
+)
+
+names(data)[1:4]
+#> "respnr"    "LASA_wave" "blphya01"   "blphya02" 
+
+unique(data$LASA_wave)
+#> "B"
+```
+
+### Correct a known source-column name
+
+If a source file contains a known typo or nonstandard column name, use
+`name_corrections` to map a documented wave-specific or canonical
+variable name to the actual source column, which would otherwise not
+import correctly. This can be done with the specification
+`canonical_name = "nonstandard name in the datafile"`:
+
+``` r
+
+data <- read_lasa_sav(
+  "LASAB046.sav",
+  name_corrections = c(lphya08 = "BLPYA08")
+)
+```
+
+This override is used before the automatic exact/case-insensitive
+matching steps.
+
+### Preserve the original coding for reference
+
+For matched variables, `CleanLASA` stores the original imported values
+in the `original_values` attribute. When a documented value-label map
+exists, it is also retained in `original_labels`. These reference
+attributes remain available after factor/numeric reshaping, which makes
+it possible to compare the transformed R representation with the
+original SPSS coding.
+
+``` r
+
+attr(data$lphya01, "original_values")
+attr(data$lphya01, "original_labels")
+```
+
+## 5. Audit how variables were matched
+
+Every call to
+[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
+or
+[`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
+attaches a variable matching audit. Retrieve it with
+[`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md):
+
+``` r
+
+report <- lasa_label_report(data)
+report
+```
+
+By default, this returns the **full** audit, including successful
+matches and documented variables that were not found in the data. The
+`method` column records how a match was made, for example `exact`,
+`case-insensitive exact`, `exact canonical`, `manual correction`, or
+`not found`.
+
+To focus only on entries that may require attention, use:
+
+``` r
+
+lasa_label_report(data, problems_only = TRUE)
+```
+
+This is useful before analysis when you want to verify that expected
+variables were matched correctly. Columns in your data that are not
+documented for the selected file code/wave (for example newly created
+analysis variables) are not modified by the label engine.
+
+## 6. Apply LASA labels to an existing data frame
+
+[`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
+exposes the same database-driven label engine without reading a file.
+This is useful if you imported a `.sav` file yourself or need to
+re-apply metadata after transformations.
+
+``` r
+
+raw <- haven::read_sav("LASAC046.sav", user_na = TRUE)
+
+data <- apply_lasa_labels(
+  raw,
+  filecode = "046",
+  wave = "C",
+  to_factor = TRUE,
+  to_numeric = TRUE,
+  standardize_names = TRUE
+)
+```
+
+When `data` already carries the `LASA_file_code` and `LASA_wave`
+provenance attributes created by
+[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
+or a previous
+[`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
+call, those arguments can usually be omitted:
+
+``` r
+
+data <- read_lasa_sav("LASAB046.sav")
+
+# ...perform transformations that may remove column attributes...
+
+data <- apply_lasa_labels(data)
+```
+
+For the wave,
+[`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
+can also use a single-valued `LASA_wave` column. Supplying `filecode`
+and `wave` explicitly is the most robust option for data frames that did
+not originate from
+[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md).
+
+## 7. Inspect the label database
+
+[`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md)
+returns the metadata database currently in effect. It is a list with
+four main components:
+
+- `variables`: one row per file-code/wave/variable combination,
+  including the wave-specific name, canonical name, wave-specific
+  variable label, cross-wave-consistent (“harmonized”) variable label,
+  and variable type;
+- `value_labels`: the long-format value/code label definitions, as
+  documented for that specific wave;
+- `value_labels_harmonized`: the same variable’s value labels
+  standardized across every wave that documents it (no `wave` column –
+  it applies regardless of wave), for combining data across waves that
+  coded the same concept slightly differently; and
+- `manual_overrides`: separately stored hand-authored corrections for
+  variables and value labels.
+
+``` r
+
+db <- lasa_label_db()
+
+# Which wave-B variables are currently known for file code 046?
+subset(db$variables, filecode == "046" & wave == "B")
+
+# Inspect the corresponding value-label rows
+subset(db$value_labels, filecode == "046" & wave == "B")
+
+# The cross-wave-standardized value labels for the same variable
+subset(db$value_labels_harmonized, filecode == "046" & canonical_name == "lphya01")
+```
+
+The package ships with a bundled snapshot, transcribed from LASA’s own
+variable-information documentation; coverage grows and gets corrected
+with package updates. If you record a manual correction (below),
+`CleanLASA` writes a full updated snapshot to the package-specific user
+data directory and uses that user-local database in preference to the
+bundled copy on subsequent calls. This means corrections persist across
+R sessions without modifying the installed package library.
+
+## 8. Record a manual metadata correction
+
+[`manual_update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/manual_update_lasa_labels.md)
+is an escape hatch for a source-document error or a variable/value label
+that needs a deliberate local correction. The correction is stored in a
+separate override layer, so a later package update does not silently
+remove it – it only replaces the bundled base layer the correction is
+composed on top of.
+
+Merge one corrected value label into the existing set: With
+`replace_val_labels=FALSE` (the default), supplied value labels are
+appended to the existing documentation.
+
+``` r
+
+manual_update_lasa_labels(
+  filecode = "046",
+  wave = "B",
+  variable = "lphya01",
+  val_labels = c(`-5` = "NA, wrong, skip")
+)
+```
+
+Or replace the complete value-label set for the variable across all
+waves in which that canonical variable is represented: With
+`replace_val_labels=TRUE`, the value labels in the label database are
+overridden with the supplied values, thus ignoring the original value
+labels.
+
+``` r
+
+manual_update_lasa_labels(
+  filecode = "046",
+  wave = "all",
+  variable = "lphya01",
+  val_labels = c(`-5` = "NA, wrong, skip"),
+  replace_val_labels = TRUE
+)
+```
+
+The same function can replace a variable label through `var_label` to
+replace the existing variable labels.
+
+``` r
+
+manual_update_lasa_labels(
+  filecode = "046",
+  wave = "B",
+  variable = "lphya01",
+  var_label = "New label"
+)
+```
+
+Both functionalities can also be combines and/or applied across multiple
+waves at once: This updates the local database, and can subsequently be
+applied to the loaded dataframes with
+[`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
+
+``` r
+
+manual_update_lasa_labels(
+  filecode = "046",
+  wave = "all", # update all waves. Currently B-K
+  variable = "lphya01",
+  var_label = "New label",
+  val_labels = c(`-5` = "NA, wrong, skip")
+)
+
+manual_update_lasa_labels(
+  filecode = "046",
+  wave = c("B", "C", "D"), # only update specified waves.  
+  variable = "lphya01",
+  var_label = "New label",
+  val_labels = c(`-5` = "NA, wrong, skip")
+)
+```
+
+## 9. A complete analysis-oriented workflow
+
+For most analyses, the package can be used with a small number of steps:
 
 ``` r
 
 library(CleanLASA)
+
+# 1. Find the relevant LASA topic and file code
+lasa_topics(topic = "physical activity")
+
+# 2. Inspect the official variable-information document if needed
+lasa_var_info("046")
+
+# 3. Import the LASA file, convert analysis variables, and standardize names
+data <- read_lasa_sav(
+  "LASAB046.sav",
+  to_factor = TRUE,
+  to_numeric = TRUE,
+  standardize_names = TRUE
+)
+
+# 4. Check only matching problems before analysis
+problems <- lasa_label_report(data, problems_only = TRUE)
+problems
 ```
+
+If the required file code is not yet covered by the active label
+database,
+[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
+does not dispatch to a file-specific labelling function or invent
+metadata. Add a deliberate correction with
+[`manual_update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/manual_update_lasa_labels.md),
+or wait for a package update that adds coverage, and import/apply the
+labels again.
+
+## Function summary
+
+| Function | Main purpose |
+|----|----|
+| [`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md) | Search LASA topics, themes/subthemes, file codes, and available waves |
+| [`lasa_var_info()`](https://highmeadows.github.io/CleanLASA/reference/lasa_var_info.md) | Resolve and open the LASA variable-information PDF for a file code or topic |
+| [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md) | Read a LASA `.sav` file, identify wave/file code, and apply database-backed labels |
+| [`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md) | Apply the same LASA labelling engine to an existing data frame |
+| [`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md) | Inspect the full matching audit or only entries requiring attention |
+| [`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md) | Inspect the active bundled + user-local label metadata database |
+| [`manual_update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/manual_update_lasa_labels.md) | Add or correct metadata in a persistent manual override layer |
+
+Together, these functions make the LASA documentation part of the R data
+workflow: topics and source documents remain discoverable, imported
+variables retain their documented meaning, transformations remain
+auditable, and the metadata layer can be refreshed without maintaining
+separate file-specific labelling functions.
