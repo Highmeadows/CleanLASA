@@ -6,7 +6,6 @@
 \usage{
 lasa_var_info(
   filecode,
-  viewer = c("auto", "rstudio", "system"),
   open = interactive(),
   fuzzy_match = TRUE,
   max_edit_distance = 2L,
@@ -18,12 +17,11 @@ lasa_var_info(
 as \code{"046"}, \code{"LASA046"}, \code{"LASA 046"}, \code{"lasa_046"}, or
 \code{"Physical activity"}.}
 
-\item{viewer}{Where to open the PDF. One of \code{"auto"}, \code{"rstudio"}, or
-\code{"system"}. \code{"auto"} uses the system's webbrowser as PDF viewer.}
-
 \item{open}{Logical. Should the PDF be opened? The default is \code{TRUE} in an
 interactive R session and \code{FALSE} otherwise. If \code{FALSE}, the URL is
-returned without being opened.}
+returned without being opened. When opened, it is always opened in the
+system's default web browser -- the RStudio Viewer does not render
+hosted PDFs/HTML reliably, so it is not used here.}
 
 \item{fuzzy_match}{Logical. If \code{TRUE}, allow small typographical errors in
 topic names.}
@@ -31,20 +29,21 @@ topic names.}
 \item{max_edit_distance}{Maximum edit distance allowed for fuzzy topic-name
 matching.}
 
-\item{refresh}{Logical. If \code{TRUE}, refresh the cached LASA topic table before
-searching it.}
+\item{refresh}{Logical. If \code{TRUE}, refresh the cached varinfo-link lookup
+before searching it.}
 }
 \value{
 Invisibly returns the HTTPS URL of the matched variable-information
 PDF.
 }
 \description{
-Searches the \href{https://lasa-vu.nl/en/topic-table/}{LASA topic overview}
-and opens the variable-information PDF linked by LASA. The documentation is
-opened from the LASA website; no PDF files are read from or bundled with the
-package. The underlying topic table is cached the same way as in
-\code{\link[=lasa_topics]{lasa_topics()}} (in-session and on disk); \code{refresh = TRUE} rebuilds it from
-the live site first.
+Searches the package's bundled LASA topic database (see \code{\link[=lasa_topics]{lasa_topics()}})
+to resolve a file code or topic name, then scrapes the
+\href{https://lasa-vu.nl/en/topic-table/}{LASA topic overview} live to find and
+open the variable-information PDF LASA links for it. The documentation is
+opened from the LASA website; no PDF files are read from or bundled with
+the package. The live lookup is cached (in-session and on disk);
+\code{refresh = TRUE} rebuilds it from the live site first.
 }
 \details{
 \code{filecode} may be a LASA file code, a LASA data-file name, or a topic name.

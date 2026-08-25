@@ -165,9 +165,8 @@ manual_update_lasa_labels(
 
 ## Finding topics and documentation
 
-`lasa_topics()` searches the [LASA topic
-overview](https://lasa-vu.nl/en/topic-table/) for topics, themes, and
-file codes:
+`lasa_topics()` searches the package's bundled LASA topic database for
+topics, themes, and file codes:
 
 ``` r
 # Browse everything
@@ -181,15 +180,15 @@ lasa_topics(theme = "cognitive")
 lasa_topics(theme = "memory")
 ```
 
-The table is built from the live LASA website the first time it's
-needed, then cached — both for the rest of the session and on disk —
-so it doesn't have to be rebuilt every session. Use `refresh = TRUE`
-to check the live site for anything new, such as a newly added wave
-or file code.
+This table is hand-maintained (see `data-raw/lasa_topic_database.R` in
+the package source), not scraped, so it updates only when the package
+itself does — but that also makes it directly editable: adding a new
+file code or updating which waves an existing one is available in
+(e.g. a newly released wave) is a one-line change to that file.
 
-Once you've found a topic or file code, `lasa_var_info()` opens its
-variable-information PDF directly from the LASA website (no PDFs are
-bundled with the package):
+Once you've found a topic or file code, `lasa_var_info()` resolves and
+opens its variable-information PDF, scraped live from the LASA website
+(no PDFs are bundled with the package):
 
 ``` r
 lasa_var_info("046")               # by file code
@@ -201,6 +200,12 @@ lasa_var_info("physical act")      # fuzzy matching handles typos too
 url <- lasa_var_info("046", open = FALSE)
 ```
 
+The PDF is always opened in the system's default web browser (the
+RStudio Viewer does not render hosted PDFs reliably). The live lookup
+itself is cached, both for the rest of the session and on disk, so it
+doesn't have to be rebuilt every session; use `refresh = TRUE` to check
+the live site for a changed link.
+
 ## Functions
 
 | Function | Description |
@@ -210,8 +215,8 @@ url <- lasa_var_info("046", open = FALSE)
 | `manual_update_lasa_labels()` | Hand-corrects or adds a variable/value label in your local copy of the database |
 | `lasa_label_db()` | Returns the label database currently in effect (bundled snapshot + any local updates) |
 | `lasa_label_report()` | Returns variables that could not be matched to the corresponding LASA documentation |
-| `lasa_topics()` | Searches the LASA topic overview for topics, themes, and file codes |
-| `lasa_var_info()` | Finds and opens a topic's or file code's variable-information PDF from the LASA website |
+| `lasa_topics()` | Searches the bundled LASA topic database for topics, themes, and file codes |
+| `lasa_var_info()` | Finds and opens a topic's or file code's variable-information PDF, resolved live from the LASA website |
 
 ## Documentation
 

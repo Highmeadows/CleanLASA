@@ -6,19 +6,6 @@ test_that("LASA file-code variations are normalized", {
   expect_equal(.lasa_normalize_filecode("LASAz004"), "z004")
 })
 
-test_that("file codes are extracted from LASA wave cells", {
-  expect_equal(
-    .lasa_extract_filecodes("030 230 603 703"),
-    c("030", "230", "603", "703")
-  )
-  expect_equal(
-    .lasa_extract_filecodes("zoa1 zoa2 zoa3"),
-    c("zoa1", "zoa2", "zoa3")
-  )
-  expect_equal(.lasa_extract_filecodes("-"), character())
-  expect_equal(.lasa_extract_filecodes("X"), character())
-})
-
 test_that("topic matching is case-insensitive, partial, and fuzzy", {
   candidates <- c(
     "Physical activity",
