@@ -14,8 +14,7 @@ write_lasa_sav <- function(data, filename) {
   path <- tempfile(fileext = ".sav")
   haven::write_sav(data, path)
   # Written into R's session tempdir, which is cleaned up automatically;
-  # no explicit removal needed here (matches the package's existing test
-  # fixtures, e.g. test-apply-lasa046-labels.R).
+  # no explicit removal needed here.
   newpath <- file.path(dirname(path), filename)
   # overwrite = TRUE: several tests in this file reuse the same LASA file
   # name (e.g. "LASAB046.SAV") in the shared session tempdir with
@@ -27,33 +26,47 @@ write_lasa_sav <- function(data, filename) {
 
 test_that("read_lasa_sav labels via the database-driven engine (no dispatch table)", {
   path <- write_lasa_sav(lasa046_fixture(), "LASAB046.SAV")
-  dat <- read_lasa_sav(path)
-  expect_false(is.null(attr(dat$BLPHYA01, "label")))
+  dat <- read_lasa_sav(path, standardize = FALSE)
+  expect_false(is.null(attr(dat$blphya01, "label")))
   expect_equal(attr(dat, "LASA_wave"), "B")
   expect_equal(attr(dat, "LASA_file_code"), "046")
   expect_equal(attr(dat, "LASA_source_file"), "LASAB046.SAV")
 })
 
-test_that("reshaping arguments are forwarded correctly", {
+test_that("defaults standardize names/labels, factor/numeric-convert, and add a Wave column", {
   path <- write_lasa_sav(lasa046_fixture("H"), "LASAH046.SAV")
-  dat <- read_lasa_sav(path, to_factor = TRUE, to_numeric = TRUE, standardize_names = TRUE)
-  expect_true(is.factor(dat$lphya01))
-  expect_true("LASA_wave" %in% names(dat))
-  expect_true(all(dat$LASA_wave == "H"))
+  dat <- read_lasa_sav(path)
+  expect_true("lphya01" %in% names(dat))
+  expect_true("Wave" %in% names(dat))
+  expect_true(all(dat$Wave == "H"))
+  expect_equal(match("Wave", names(dat)), match("respnr", names(dat)) + 1L)
 })
 
-test_that("split_wavecode works without standardize_names", {
+test_that("to_factor/to_numeric can be turned off", {
+  path <- write_lasa_sav(lasa046_fixture("H"), "LASAH046.SAV")
+  dat <- read_lasa_sav(path, to_factor = FALSE, to_numeric = FALSE, standardize = FALSE)
+  expect_false(is.factor(dat$hlphya01))
+})
+
+test_that("add_wavecode works without .standardize_names", {
   path <- write_lasa_sav(lasa046_fixture("B"), "LAS2B046.SAV")
-  dat <- read_lasa_sav(path, split_wavecode = TRUE)
-  expect_true("RespNr" %in% names(dat))
-  expect_true(all(dat$LASA_wave == "2B"))
+  dat <- read_lasa_sav(path, .standardize_names = FALSE, add_wavecode = TRUE)
+  # names are lowercased by read_lasa_sav() regardless of standardization
+  expect_true("respnr" %in% names(dat))
+  expect_true(all(dat$Wave == "2B"))
+})
+
+test_that("filecode/wave arguments override the parsed file name", {
+  path <- write_lasa_sav(lasa046_fixture("B"), "notlasa.sav")
+  dat <- read_lasa_sav(path, filecode = "046", wave = "B", standardize = FALSE)
+  expect_false(is.null(attr(dat$blphya01, "label")))
 })
 
 test_that("provenance is sufficient for a later apply_lasa_labels() call", {
   path <- write_lasa_sav(lasa046_fixture("C"), "LASAC046.SAV")
-  dat <- read_lasa_sav(path)
-  dat2 <- apply_lasa_labels(dat)
-  expect_false(is.null(attr(dat2$CLPHYA01, "label")))
+  dat <- read_lasa_sav(path, standardize = FALSE)
+  dat2 <- apply_lasa_labels(dat, standardize = FALSE)
+  expect_false(is.null(attr(dat2$clphya01, "label")))
 })
 
 test_that("an unrecognized file name errors clearly", {
@@ -65,6 +78,31 @@ test_that("name_corrections is forwarded through read_lasa_sav", {
   fixture <- lasa046_fixture()
   names(fixture)[names(fixture) == "BLPHYA07"] <- "BLPYA07_TYPO"
   path <- write_lasa_sav(fixture, "LASAB046.SAV")
-  dat <- read_lasa_sav(path, name_corrections = c(lphya07 = "BLPYA07_TYPO"))
-  expect_false(is.null(attr(dat$BLPYA07_TYPO, "label")))
+  dat <- read_lasa_sav(path, name_corrections = c(lphya07 = "BLPYA07_TYPO"), standardize = FALSE)
+  expect_false(is.null(attr(dat$blpya07_typo, "label")))
+})
+
+test_that("fuzzy_matching absorbs a typo without name_corrections", {
+  fixture <- lasa046_fixture()
+  # doubled "a": close to blphya07 (distance 1) but at least distance 2
+  # from every other "blphyaNN" sibling, so this is a clean, unambiguous
+  # fuzzy match (unlike a deleted digit, which tends to tie with an
+  # adjacent-numbered sibling in this densely-packed naming family).
+  names(fixture)[names(fixture) == "BLPHYA07"] <- "BLPHYAA07"
+  path <- write_lasa_sav(fixture, "LASAB046.SAV")
+  dat <- read_lasa_sav(path, standardize = FALSE)
+  report <- lasa_label_report(dat)
+  row <- report[report$suffix == "blphya07" & !is.na(report$suffix), ]
+  expect_equal(row$method, "fuzzy")
+  expect_equal(row$edit_distance, 1L)
+})
+
+test_that("fuzzy_matching = FALSE leaves a typo unmatched and reported", {
+  fixture <- lasa046_fixture()
+  names(fixture)[names(fixture) == "BLPHYA07"] <- "BLPHYAA07"
+  path <- write_lasa_sav(fixture, "LASAB046.SAV")
+  dat <- read_lasa_sav(path, fuzzy_matching = FALSE, standardize = FALSE)
+  report <- lasa_label_report(dat)
+  row <- report[report$suffix == "blphya07" & !is.na(report$suffix), ]
+  expect_equal(row$method, "not found")
 })

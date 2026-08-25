@@ -11,9 +11,8 @@ lasa_label_report(data, problems_only = FALSE)
 \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}.}
 
 \item{problems_only}{Logical. If \code{FALSE} (default), return the full matching
-audit. If \code{TRUE}, retain rows requiring attention. If the report has a
-logical \code{problem} column, that column is used. Otherwise, when a \code{method}
-column is available, common non-exact/failure methods are used.}
+audit. If \code{TRUE}, retain rows requiring attention: unmatched in either
+direction, or matched only via a fuzzy/ambiguous method.}
 }
 \value{
 A data frame containing the variable-name matching audit. The
@@ -21,24 +20,32 @@ returned report retains LASA context in the attributes \code{"LASA_wave"} and
 \code{"LASA_file_code"} when those are available on \code{data}.
 }
 \description{
-Returns the generic variable-name matching audit attached by a LASA
-file-specific label function. The function is independent of the LASA file
-code and therefore works for any \verb{apply_*_labels()} implementation that
-stores its audit in the \code{"label_report"} attribute.
+Returns the generic variable-name matching audit attached by
+\code{\link[=apply_lasa_labels]{apply_lasa_labels()}}/\code{\link[=read_lasa_sav]{read_lasa_sav()}}. The audit is bidirectional: it
+covers both documented variables not found in the data, and data
+columns not documented in the label database.
 }
 \details{
 \code{\link[=read_lasa_sav]{read_lasa_sav()}} and \code{\link[=apply_lasa_labels]{apply_lasa_labels()}} store their matching audit as
 \code{attr(data, "label_report")} and the wave identifier as
-\code{attr(data, "LASA_wave")}, so one reporting function serves every LASA
-file code.
+\code{attr(data, "LASA_wave")}.
 
-The report's \code{method} column uses values such as \code{"exact"},
+The report's \code{direction} column is one of \code{"matched"},
+\code{"documented_not_in_data"} (a database variable wasn't found in \code{data}
+-- possibly fixable with \code{name_corrections}), or \code{"data_not_documented"}
+(a column in \code{data} didn't match anything in the database). Neither
+direction is ever an error -- unmatched variables are always left
+untouched.
+
+The \code{method} column records how a match was made: \code{"exact"},
 \code{"case-insensitive exact"}, \code{"exact canonical"},
-\code{"case-insensitive canonical"}, \code{"manual correction"},
-\code{"manual_not_found"}, or \code{"not found"} -- each optionally suffixed with
-\code{" (manual override)"} when the match's label/value labels were patched
-by \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}. When produced with \code{standardize_names = TRUE}, it also contains a \code{standardized_to} column recording each matched
-column's renamed (canonical) name.
+\code{"case-insensitive canonical"}, \code{"fuzzy"}, \code{"manual correction"},
+\code{"manual_not_found"}, \code{"ambiguous fuzzy"}, \code{"not found"}, or
+\code{"undocumented column"} -- each optionally suffixed with \code{" (manual override)"} when the match's label/value labels were patched by
+\code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}. A \code{"fuzzy"}/\code{"ambiguous fuzzy"} row also
+has a non-\code{NA} \code{edit_distance}. When produced with \code{.standardize_names}
+effectively \code{TRUE}, matched rows also have a \code{standardized_to} column
+recording the matched column's renamed (canonical) name.
 }
 \examples{
 \dontrun{

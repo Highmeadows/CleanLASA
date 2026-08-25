@@ -16,12 +16,12 @@
 A factor the same length as \code{x}.
 }
 \description{
-Shared \code{to_factor = TRUE} transformation used by every
-\verb{apply_*_labels()} function's \code{.lasa_label_engine()} instance. Converts
-\code{x} to a factor using \code{value_label_map}'s names as level text for coded
-values; an observed value with no codebook label keeps its own numeric
-code (as text) as its level, rather than becoming \code{NA}. Colliding level
-text (e.g. two different codes that happen to share a label) is
-disambiguated by appending the numeric code in brackets.
+Shared \code{to_factor = TRUE} transformation used by \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}'s
+engine. Converts \code{x} to a factor using \code{value_label_map}'s names as
+level text for coded values; an observed value with no codebook label
+keeps its own numeric code (as text) as its level, rather than becoming
+\code{NA}. Colliding level text (e.g. two different codes that happen to
+share a label) is disambiguated by appending the numeric code in
+brackets.
 }
 \keyword{internal}

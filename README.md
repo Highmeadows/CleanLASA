@@ -51,53 +51,66 @@ data <- read_lasa_sav("lasazoa1.sav") # LASA wave Z file oa1
 
 ### Shared arguments
 
-`read_lasa_sav()` (and `apply_lasa_labels()`, below) accepts the same five
-reshaping arguments:
+`read_lasa_sav()` is a thin wrapper: identification (file code/wave) and
+reading the `.sav` file happens there, but all matching, transforming, and
+standardizing is done by `apply_lasa_labels()`, which both functions share.
 
+- `filecode`/`wave` -- manual override for the LASA file code/wave, for a
+  file name that doesn't follow the documented convention (`read_lasa_sav()`
+  only).
 - `name_corrections` -- manually point a canonical suffix (e.g. `lphya08`)
   at a differently-named source column, for a known typo/renaming in the
   data.
-- `to_factor` -- convert categorical variables to factors, using their SPSS
-  value labels as levels.
-- `to_numeric` -- restore count/continuous variables to plain numeric,
-  converting negative (missing-reason) codes to `NA`.
-- `standardize_names` -- rename every matched column to its canonical
-  lowercase LASA name with the wave code removed (e.g. `lphya01`), and
-  standardize `"respnr"` (in any capitalization) to `"respnr"`. Always
-  implies `split_wavecode = TRUE` as well.
-- `split_wavecode` -- move the wave-letter prefix out of variable names
-  (e.g. `blphya01` becomes `lphya01`) and into a new `"LASA_wave"` column,
-  inserted right after `"respnr"` and filled with the file's wave code
-  (e.g. `"B"`, `"2B"`, `"3B"`).
+- `fuzzy_matching` (default `TRUE`) -- when exact/canonical matching fails,
+  fall back to an edit-distance match against the data's own column names,
+  absorbing most typos without needing `name_corrections`.
+- `to_factor`/`to_numeric` (default `TRUE`) -- convert categorical variables
+  to factors using their SPSS value labels as levels, and restore
+  count/continuous variables to plain numeric, converting negative
+  (missing-reason) codes to `NA`.
+- `standardize` (default `TRUE`) -- overarching switch for the three
+  switches below; each can also be set independently.
+  - `.standardize_names` -- rename every matched column to its canonical
+    lowercase LASA name with the wave code removed (e.g. `lphya01`), and
+    standardize `"respnr"` (in any capitalization) to `"respnr"`. Implies
+    `add_wavecode = TRUE`.
+  - `.standardize_var_labels` -- use the cross-wave-consistent ("harmonized")
+    variable label as the active `"label"`, instead of the wave-specific one.
+  - `.standardize_val_labels` -- use the harmonized value labels as the
+    active `"labels"` (and for `to_factor` level text), where documented.
+- `add_wavecode` (default `FALSE`) -- insert a `"Wave"` column, filled with
+  the file's already-identified wave code (e.g. `"B"`, `"2B"`, `"3B"`),
+  right after `"respnr"`.
 
 ``` r
-# Rename columns to their canonical names and split the wave code into its
-# own column, all in one call:
-data <- read_lasa_sav("LASAB046.sav", standardize_names = TRUE)
+# Rename columns to their canonical names, harmonize labels, and insert a
+# "Wave" column, all in one call -- this is also the default:
+data <- read_lasa_sav("LASAB046.sav")
 names(data)[1:3]
-#> [1] "respnr"    "LASA_wave" "lphya01"
+#> [1] "respnr"  "Wave"    "lphya01"
 
-# split_wavecode also works on its own, without fully standardizing names:
-data <- read_lasa_sav("LASAB046.sav", split_wavecode = TRUE)
+# add_wavecode also works on its own, without fully standardizing names:
+data <- read_lasa_sav("LASAB046.sav", .standardize_names = FALSE, add_wavecode = TRUE)
 ```
 
 Regardless of these arguments, every matched column also keeps its
-original SPSS value coding available as reference attributes --
-`attr(x, "original_labels")` (the codebook) and `attr(x, "original_values")`
-(the raw imported values) -- so R output can always be cross-checked
-against another program's (e.g. SPSS) coding, even after `to_numeric`/
-`to_factor` reshaping.
+wave-specific label/value labels available as reference attributes --
+`attr(x, "wave_label")` and `attr(x, "labels_wave")` -- so R output can
+always be cross-checked against another program's (e.g. SPSS) coding, even
+after `to_numeric`/`to_factor` reshaping or harmonized-label standardization.
 
-After importing, you can check whether any variables could not be
-matched to the LASA documentation using `lasa_label_report()`:
+After importing, you can check the variable-name matching audit --
+in both directions: documented variables not found in the data, and data
+columns not documented in the label database -- using `lasa_label_report()`:
 
 ``` r
 lasa_label_report(data)
+lasa_label_report(data, problems_only = TRUE)
 ```
 
-This returns the set of "faulty" variables — ones that couldn't be
-matched to their corresponding documentation — so you can inspect and
-resolve them before analysis.
+Neither direction ever breaks `read_lasa_sav()`/`apply_lasa_labels()`; an
+unmatched variable is simply left alone and reported here, often fixable
+with `name_corrections`.
 
 ### Relabelling a data frame directly
 
@@ -139,8 +152,11 @@ same variable's value labels standardized across every wave that
 documents it, independent of wave -- useful when combining waves that
 coded the same concept slightly differently). `apply_lasa_labels()` and
 `read_lasa_sav()` attach all of this to each labelled column as
-attributes: `"label"`, `"labels"`, `"canonical_name"`,
-`"harmonized_label"`, and (where documented) `"labels_harmonized"`.
+attributes: `"label"`/`"labels"` (the *active* variable label/value labels
+-- wave-specific unless `.standardize_var_labels`/`.standardize_val_labels`
+is on), `"wave_label"`/`"labels_wave"` (always the wave-specific versions),
+`"canonical_name"`, `"harmonized_label"`, and (where documented)
+`"labels_harmonized"`.
 
 ### Manual corrections
 

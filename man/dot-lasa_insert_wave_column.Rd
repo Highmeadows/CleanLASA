@@ -2,7 +2,7 @@
 % Please edit documentation in R/lasa_io.R
 \name{.lasa_insert_wave_column}
 \alias{.lasa_insert_wave_column}
-\title{Insert the generic "LASA_wave" column}
+\title{Insert the "Wave" column}
 \usage{
 .lasa_insert_wave_column(data, wave, respnr_name = NA_character_)
 }
@@ -12,21 +12,19 @@
 \item{wave}{Character scalar: the LASA wave code to fill the new column
 with, e.g. \code{"B"}, \code{"2B"}, \code{"3B"}.}
 
-\item{respnr_name}{The name of the respondent-number column in \code{data}, as
-returned by \code{\link[=.lasa_standardize_respnr]{.lasa_standardize_respnr()}}, or \code{NA_character_} if none was
-found.}
+\item{respnr_name}{The name of the respondent-number column in \code{data}
+(its \emph{final}, post-rename name), or \code{NA_character_} if none was
+matched.}
 }
 \value{
-\code{data} with a new \code{"LASA_wave"} column inserted.
+\code{data} with a new \code{"Wave"} column inserted.
 }
 \description{
-Internal helper shared by every \verb{apply_*_labels()} function in this
-package. Used when \code{split_wavecode = TRUE} (which is always the effective
-setting when \code{standardize_names = TRUE}, per the shared parameter
-contract -- see the header comment of this file). Adds a \code{"LASA_wave"}
-column filled with \code{wave}, positioned immediately after the
-respondent-number column identified by \code{\link[=.lasa_standardize_respnr]{.lasa_standardize_respnr()}}. If
-that column could not be found, \code{"LASA_wave"} is inserted at the very
-front of \code{data} instead.
+Internal helper used by \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}'s engine when
+\code{add_wavecode = TRUE} (always the effective setting when
+\code{.standardize_names} is effectively \code{TRUE}). Adds a \code{"Wave"} column
+filled with \code{wave}, positioned immediately after the respondent-number
+column. If that column could not be matched, \code{"Wave"} is inserted at the
+very front of \code{data} instead.
 }
 \keyword{internal}
