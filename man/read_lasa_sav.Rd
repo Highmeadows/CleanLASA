@@ -6,18 +6,34 @@
 \usage{
 read_lasa_sav(
   path,
-  user_na = TRUE,
-  read_sav_args = list(),
+  filecode = NULL,
+  wave = NULL,
   name_corrections = NULL,
-  to_factor = FALSE,
-  to_numeric = FALSE,
-  standardize_names = FALSE,
-  split_wavecode = FALSE
+  fuzzy_matching = TRUE,
+  standardize = TRUE,
+  .standardize_names = NULL,
+  .standardize_var_labels = NULL,
+  .standardize_val_labels = NULL,
+  add_wavecode = FALSE,
+  to_factor = TRUE,
+  to_numeric = TRUE,
+  user_na = TRUE,
+  read_sav_args = list()
 )
 }
 \arguments{
 \item{path}{Path to a LASA SPSS \code{.sav} file. LASA file names are parsed
 case-insensitively.}
+
+\item{filecode}{Optional manual override for the LASA file code, for a
+file name that doesn't follow the documented convention. If omitted,
+derived from \code{path}.}
+
+\item{wave}{Optional manual override for the LASA wave code (e.g. useful
+for a nonstandard baseline wave). If omitted, derived from \code{path}.}
+
+\item{name_corrections, fuzzy_matching, standardize, .standardize_names, .standardize_var_labels, .standardize_val_labels, add_wavecode, to_factor, to_numeric}{The shared reshaping arguments used throughout this package -- see
+\code{\link[=apply_lasa_labels]{apply_lasa_labels()}} for the full description of each.}
 
 \item{user_na}{Logical passed to \code{\link[haven:read_spss]{haven::read_sav()}}. The default is \code{TRUE}
 so SPSS user-defined missing codes remain available to the labelling
@@ -27,9 +43,6 @@ step before any requested conversion to \code{NA}.}
 \code{\link[haven:read_spss]{haven::read_sav()}}, for example \code{list(encoding = "UTF-8")}. Do not
 include \code{file} or \code{user_na}; those are controlled by \code{path} and
 \code{user_na}.}
-
-\item{name_corrections, to_factor, to_numeric, standardize_names, split_wavecode}{The five shared reshaping arguments used throughout this package -- see
-\code{\link[=apply_lasa_labels]{apply_lasa_labels()}} for the full description of each.}
 }
 \value{
 \code{data} as imported by \code{\link[haven:read_spss]{haven::read_sav()}}, labelled (and
@@ -39,8 +52,9 @@ attached.
 \description{
 Reads a LASA \code{.sav} file, identifies its wave and file code from the file
 name, and labels it using \code{\link[=lasa_label_db]{lasa_label_db()}} -- the package's normalized,
-database-driven variable/value-label metadata -- via the same engine
-\code{\link[=apply_lasa_labels]{apply_lasa_labels()}} uses.
+database-driven variable/value-label metadata -- via \code{\link[=apply_lasa_labels]{apply_lasa_labels()}},
+which does all of the actual matching/transforming/standardizing work.
+\code{read_lasa_sav()} is a thin wrapper around it.
 }
 \details{
 The file name is parsed against the LASA naming convention:
@@ -54,11 +68,16 @@ The file name is parsed against the LASA naming convention:
 case-insensitively.
 }
 
-Column matching, value/variable-label attachment, \code{to_factor}/\code{to_numeric}
-reshaping, and \code{standardize_names}/\code{split_wavecode} renaming are all
-performed by \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}'s underlying engine, looking up
-metadata for the parsed file code/wave in \code{\link[=lasa_label_db]{lasa_label_db()}}. A file code
-with no database coverage yet is labelled as a no-op (every column left
+\code{filecode}/\code{wave} override the parsed values when supplied -- the place
+to correct a nonstandard file name or a baseline wave that doesn't
+follow the usual convention.
+
+After identification, \code{read_lasa_sav()} reads the file with
+\code{\link[haven:read_spss]{haven::read_sav()}}, lowercases every column name, and forwards
+everything else to \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}, which performs all column
+matching, value/variable-label attachment, \code{to_factor}/\code{to_numeric}
+reshaping, standardization, and \code{add_wavecode}. A file code with no
+database coverage yet is labelled as a no-op (every column left
 untouched, \code{"not found"} recorded in the matching audit) rather than an
 error -- add coverage with \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}, or wait for a
 package update.
@@ -76,16 +95,15 @@ generic \code{"label_report"} attribute; retrieve it with
 dat_e <- read_lasa_sav("LASAE046.SAV")
 dat_3b <- read_lasa_sav("LAS3B046.SAV")
 
-dat_h <- read_lasa_sav(
-  "LASAH046.SAV",
-  to_factor = TRUE,
-  to_numeric = TRUE,
-  standardize_names = TRUE
-)
+# to_factor/to_numeric/standardize default to TRUE.
+dat_h <- read_lasa_sav("LASAH046.SAV")
 
-# split_wavecode = TRUE moves the wave code out of variable names and
-# into its own "LASA_wave" column, without fully standardizing names:
-dat_2b <- read_lasa_sav("LAS2B046.SAV", split_wavecode = TRUE)
+# add_wavecode = TRUE without full name standardization:
+dat_2b <- read_lasa_sav(
+  "LAS2B046.SAV",
+  .standardize_names = FALSE,
+  add_wavecode = TRUE
+)
 
 # Manually correct a mistyped column name:
 dat_b <- read_lasa_sav(

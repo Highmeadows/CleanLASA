@@ -113,7 +113,7 @@ After import, the returned object carries LASA provenance attributes for the wav
 
 ## 4. Choose how labelled variables are represented
 
-The default behavior preserves the imported values while attaching the variable label (`attr(x, "label")`) and, where documented, the SPSS value-label map (`attr(x, "labels")`). Several arguments can additionally reshape the result for analysis.
+By default, `read_lasa_sav()`/`apply_lasa_labels()` do all of this at once: categorical variables become factors (`to_factor`), count/continuous variables are restored to plain numeric (`to_numeric`), variable names are standardized to their canonical form and a `"Wave"` column is added (`standardize`, which implies `add_wavecode`), and harmonized variable/value labels become the active ones. Each of these can be turned off individually.
 
 ```{r raw_data}
 data <- haven::read_sav("LASAB046.sav")
@@ -121,102 +121,85 @@ data <- haven::read_sav("LASAB046.sav")
 
 ```{r collapse=TRUE}
 summary(data$blphya01)
-#>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#> -5.000   4.000   4.000   3.476   4.000   4.000 
+#>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
+#> -5.000   4.000   4.000   3.476   4.000   4.000
 
 attr(data$blphya01, "labels")
 #> Na, interview terminated      Na, short interview           Na, wrong skip
 #>                       -5                       -4                       -3
 #>                  Na, see                Na, asked     Respondent bedridden
 #>                       -2                       -1                        1
-#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 
-#>                        2                        3                        4 
+#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3
+#>                        2                        3                        4
 ```
 
 ### Convert labelled categories to factors
 
-Use `to_factor = TRUE` when you want documented value labels represented as R factor levels:
+`to_factor` defaults to `TRUE`, so documented value labels are represented as R factor levels without any extra argument:
 
 ```{r factors}
-data <- read_lasa_sav(
-  "LASAB046.sav",
-  to_factor = TRUE
-)
-summary(data$blphya01)
+data <- read_lasa_sav("LASAB046.sav")
+summary(data$lphya01)
 #> Na, interview terminated      Na, short interview           Na, wrong skip
 #>                       13                      175                        0
 #>                  Na, see                Na, asked     Respondent bedridden
 #>                        0                        4                       20
-#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 
-#>                        5                       20                     2870 
+#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3
+#>                        5                       20                     2870
 
-attr(data$blphya01, "original_labels")
+attr(data$lphya01, "labels_wave")
 #> Na, interview terminated      Na, short interview           Na, wrong skip
 #>                       -5                       -4                       -3
 #>                  Na, see                Na, asked     Respondent bedridden
 #>                       -2                       -1                        1
-#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 
-#>                        2                        3                        4 
+#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3
+#>                        2                        3                        4
 ```
 
-Observed values that do not have a documented codebook label are retained as their numeric code (represented as text) rather than silently converted to `NA`.
+Observed values that do not have a documented codebook label are retained as their numeric code (represented as text) rather than silently converted to `NA`. Set `to_factor = FALSE` to keep the variable numeric/character instead.
 
 ### Restore count/continuous variables to plain numeric
 
-The label database classifies variables whose codebook contains no categorical codes (or only negative missing-reason codes) as numeric. With `to_numeric = TRUE`, those variables are restored to ordinary numeric vectors and negative observed codes are converted to `NA`:
+The label database classifies variables whose codebook contains no categorical codes (or only negative missing-reason codes) as numeric. `to_numeric` defaults to `TRUE`: those variables are restored to ordinary numeric vectors and negative observed codes are converted to `NA`, with no extra argument needed:
 
 ```{r numeric}
-data <- read_lasa_sav(
-  "LASAB046.sav",
-  to_numeric = TRUE
-)
-summary(data$blphya01)
-#>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#> -5.000   4.000   4.000   3.476   4.000   4.000 
-
-attr(data$blphya01, "original_labels")
-#> Na, interview terminated      Na, short interview           Na, wrong skip
-#>                       -5                       -4                       -3
-#>                  Na, see                Na, asked     Respondent bedridden
-#>                       -2                       -1                        1
-#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 
-#>                        2                        3                        4 
+data <- read_lasa_sav("LASAB046.sav")
+summary(data$lphya01)
+#>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
+#> -5.000   4.000   4.000   3.476   4.000   4.000
 ```
 
-
-`to_factor` and `to_numeric` can be used together. In that workflow, numeric-classified variables are restored to numeric while other variables with value-label maps can be represented as factors.
+`to_factor` and `to_numeric` don't conflict: numeric-classified variables are restored to numeric while other variables with value-label maps are represented as factors, in the same call.
 
 ### Standardize variable names and separate the wave code
 
 LASA variable names often contain a wave-specific prefix. For example, a variable may be documented as `blphya01` in wave B but have the canonical name `lphya01` in the label database.
 
-`standardize_names = TRUE` renames matched variables to their canonical lowercase names, standardizes the respondent-number column to `respnr`, and also implies `split_wavecode = TRUE`. A new `LASA_wave` column is inserted immediately after `respnr` when that identifier is present.
+`standardize` (default `TRUE`) is the overarching switch for three independent sub-switches -- `.standardize_names` (rename matched variables to their canonical lowercase names, and standardize the respondent-number column to `respnr`), `.standardize_var_labels`, and `.standardize_val_labels` (use the harmonized, cross-wave-consistent variable/value labels as the active ones). `.standardize_names = TRUE` implies `add_wavecode = TRUE`: a `"Wave"` column is inserted immediately after `respnr`.
 
 ```{r standardize, collapse=TRUE}
-data <- read_lasa_sav(
-  "LASAB046.sav",
-  standardize_names = TRUE
-)
+data <- read_lasa_sav("LASAB046.sav") # standardize = TRUE by default
 
 names(data)[1:4]
-#> "respnr"    "LASA_wave" "lphya01"   "lphya02" 
+#> "respnr"    "Wave"      "lphya01"   "lphya02"
 
-unique(data$LASA_wave)
+unique(data$Wave)
 #> "B"
 ```
 
-`split_wavecode = TRUE` can also be used on its own. It renames matched LASA variables to their canonical names and inserts `LASA_wave`, but does not by itself force a differently-capitalized respondent-number column to be renamed to `respnr`.
+`add_wavecode = TRUE` can also be used on its own, without renaming variables to their canonical names:
 
-```{r split-wave, eval=FALSE}
+```{r add-wavecode, eval=FALSE}
 data <- read_lasa_sav(
   "LASAB046.sav",
-  split_wavecode = TRUE
+  .standardize_names = FALSE,
+  add_wavecode = TRUE
 )
 
 names(data)[1:4]
-#> "respnr"    "LASA_wave" "blphya01"   "blphya02" 
+#> "respnr"    "Wave"      "blphya01"  "blphya02"
 
-unique(data$LASA_wave)
+unique(data$Wave)
 #> "B"
 ```
 
@@ -231,15 +214,17 @@ data <- read_lasa_sav(
 )
 ```
 
-This override is used before the automatic exact/case-insensitive matching steps.
+This override is used before the automatic exact/case-insensitive/fuzzy matching steps.
+
+`fuzzy_matching` (default `TRUE`) handles many typos automatically, without needing `name_corrections` at all: when a variable can't be found by exact or canonical-name matching, an edit-distance match against the data's own unclaimed column names is tried. A unique close match is used (and recorded as `"fuzzy"` in the matching audit, see below); an ambiguous one (e.g. two equally-close candidates) is left unmatched rather than guessed.
 
 ### Preserve the original coding for reference
 
-For matched variables, `CleanLASA` stores the original imported values in the `original_values` attribute. When a documented value-label map exists, it is also retained in `original_labels`. These reference attributes remain available after factor/numeric reshaping, which makes it possible to compare the transformed R representation with the original SPSS coding.
+For matched variables, `CleanLASA` keeps the wave-specific variable label and value-label map available as reference attributes -- `"wave_label"` and `"labels_wave"` -- regardless of `.standardize_var_labels`/`.standardize_val_labels`. These remain available after factor/numeric reshaping too, which makes it possible to compare the transformed R representation with the original SPSS coding.
 
 ```{r original-coding, eval=FALSE}
-attr(data$lphya01, "original_values")
-attr(data$lphya01, "original_labels")
+attr(data$lphya01, "wave_label")
+attr(data$lphya01, "labels_wave")
 ```
 
 ## 5. Audit how variables were matched
@@ -251,7 +236,7 @@ report <- lasa_label_report(data)
 report
 ```
 
-By default, this returns the **full** audit, including successful matches and documented variables that were not found in the data. The `method` column records how a match was made, for example `exact`, `case-insensitive exact`, `exact canonical`, `manual correction`, or `not found`.
+By default, this returns the **full**, bidirectional audit: successful matches, documented variables that were not found in the data (`direction = "documented_not_in_data"`), and data columns that don't correspond to any documented variable (`direction = "data_not_documented"`). The `method` column records how a match was made, for example `exact`, `case-insensitive exact`, `exact canonical`, `fuzzy`, `manual correction`, `not found`, or `undocumented column`. Neither direction is ever an error -- an unmatched variable is simply left untouched and reported.
 
 To focus only on entries that may require attention, use:
 
@@ -259,7 +244,7 @@ To focus only on entries that may require attention, use:
 lasa_label_report(data, problems_only = TRUE)
 ```
 
-This is useful before analysis when you want to verify that expected variables were matched correctly. Columns in your data that are not documented for the selected file code/wave (for example newly created analysis variables) are not modified by the label engine.
+This is useful before analysis when you want to verify that expected variables were matched correctly (and often fixable with `name_corrections`), and to spot columns in your data that aren't documented for the selected file code/wave (for example newly created analysis variables, or a column the label database genuinely doesn't cover). Either way, those columns are never modified by the label engine.
 
 ## 6. Apply LASA labels to an existing data frame
 
@@ -271,11 +256,8 @@ raw <- haven::read_sav("LASAC046.sav", user_na = TRUE)
 data <- apply_lasa_labels(
   raw,
   filecode = "046",
-  wave = "C",
-  to_factor = TRUE,
-  to_numeric = TRUE,
-  standardize_names = TRUE
-)
+  wave = "C"
+) # to_factor/to_numeric/standardize all default to TRUE
 ```
 
 When `data` already carries the `LASA_file_code` and `LASA_wave` provenance attributes created by `read_lasa_sav()` or a previous `apply_lasa_labels()` call, those arguments can usually be omitted:
@@ -288,7 +270,7 @@ data <- read_lasa_sav("LASAB046.sav")
 data <- apply_lasa_labels(data)
 ```
 
-For the wave, `apply_lasa_labels()` can also use a single-valued `LASA_wave` column. Supplying `filecode` and `wave` explicitly is the most robust option for data frames that did not originate from `read_lasa_sav()`.
+For the wave, `apply_lasa_labels()` can also use a single-valued `Wave` column (the column `add_wavecode`/`.standardize_names` inserts). Supplying `filecode` and `wave` explicitly is the most robust option for data frames that did not originate from `read_lasa_sav()`.
 
 ## 7. Inspect the label database
 
@@ -388,13 +370,9 @@ lasa_topics(topic = "physical activity")
 # 2. Inspect the official variable-information document if needed
 lasa_var_info("046")
 
-# 3. Import the LASA file, convert analysis variables, and standardize names
-data <- read_lasa_sav(
-  "LASAB046.sav",
-  to_factor = TRUE,
-  to_numeric = TRUE,
-  standardize_names = TRUE
-)
+# 3. Import the LASA file -- to_factor/to_numeric/standardize (names,
+#    variable labels, value labels) all default to TRUE
+data <- read_lasa_sav("LASAB046.sav")
 
 # 4. Check only matching problems before analysis
 problems <- lasa_label_report(data, problems_only = TRUE)

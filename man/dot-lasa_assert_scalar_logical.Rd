@@ -20,6 +20,6 @@ when \code{x} is not a scalar logical.
 Small internal validator shared by the argument-checking code in this
 file and by every \verb{apply_*_labels()} function in the package, so the same
 error message format is used everywhere a scalar logical argument (such
-as \code{to_factor}, \code{to_numeric}, or \code{standardize_names}) is required.
+as \code{to_factor}, \code{to_numeric}, or \code{fuzzy_matching}) is required.
 }
 \keyword{internal}

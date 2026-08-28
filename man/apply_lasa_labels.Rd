@@ -9,10 +9,14 @@ apply_lasa_labels(
   filecode = NULL,
   wave = NULL,
   name_corrections = NULL,
-  to_factor = FALSE,
-  to_numeric = FALSE,
-  standardize_names = FALSE,
-  split_wavecode = FALSE
+  fuzzy_matching = TRUE,
+  standardize = TRUE,
+  .standardize_names = NULL,
+  .standardize_var_labels = NULL,
+  .standardize_val_labels = NULL,
+  add_wavecode = FALSE,
+  to_factor = TRUE,
+  to_numeric = TRUE
 )
 }
 \arguments{
@@ -24,47 +28,99 @@ omitted, recovered from \code{data}'s provenance (see Details).}
 \item{wave}{Optional LASA wave code (e.g. \code{"B"}, \code{"2B"}). If omitted,
 recovered from \code{data}'s provenance (see Details).}
 
-\item{name_corrections, to_factor, to_numeric, standardize_names, split_wavecode}{The same five shared reshaping arguments used throughout this package
-(see \code{\link[=read_lasa_sav]{read_lasa_sav()}}).}
+\item{name_corrections}{Optional named character vector overriding
+automatic column matching for specific variables, in the format
+\code{canonical_name = "faulty_or_nonstandard_name"}, e.g.
+\code{c(lphya08 = "BLPYA08")}.}
+
+\item{fuzzy_matching}{Logical, default \code{TRUE}. When a variable isn't
+found by exact or canonical-name matching, try an edit-distance match
+(via \code{\link[utils:adist]{utils::adist()}}) against the data columns not already claimed
+by another variable, absorbing most typos. A unique best match within
+the distance threshold is used (recorded as \code{"fuzzy"} in the
+\code{\link[=lasa_label_report]{lasa_label_report()}} audit); a tie is left unmatched (\code{"ambiguous fuzzy"}) rather than guessed.}
+
+\item{standardize}{Logical, default \code{TRUE}. Overarching switch for
+\code{.standardize_names}, \code{.standardize_var_labels}, and
+\code{.standardize_val_labels}: each defaults to following \code{standardize},
+but can be set independently.}
+
+\item{.standardize_names}{Logical or \code{NULL} (default). If \code{TRUE},
+matched columns are renamed to their canonical (wave-stripped)
+lowercase name; if \code{NULL}, follows \code{standardize}. Implies
+\code{add_wavecode = TRUE}.}
+
+\item{.standardize_var_labels}{Logical or \code{NULL} (default). If \code{TRUE},
+the harmonized (cross-wave-consistent) variable label is attached as
+the active \code{"label"} instead of the wave-specific one; if \code{NULL},
+follows \code{standardize}. The wave-specific label is always available
+separately as \code{"wave_label"}.}
+
+\item{.standardize_val_labels}{Logical or \code{NULL} (default). If \code{TRUE},
+the harmonized value-label set is used as the active \code{"labels"} (and
+for \code{to_factor} level text) instead of the wave-specific one, where
+one is documented; if \code{NULL}, follows \code{standardize}. The wave-specific
+value labels are always available separately as \code{"labels_wave"}.}
+
+\item{add_wavecode}{Logical, default \code{FALSE}. If \code{TRUE}, inserts a
+\code{"Wave"} column (filled with the already-resolved \code{wave}) right after
+\code{"respnr"}. Forced to \code{TRUE} whenever \code{.standardize_names} is
+effectively \code{TRUE}.}
+
+\item{to_factor}{Logical, default \code{TRUE}. Convert categorical
+(value-labelled) variables to factors using the active value labels
+as levels, instead of leaving them numeric/character.}
+
+\item{to_numeric}{Logical, default \code{TRUE}. Restore count/continuous
+variables (per the database's \code{var_type}) to plain numeric, converting
+negative codes to \code{NA}.}
 }
 \value{
-\code{data}, labelled (and optionally reshaped/renamed) exactly as
-\code{\link[=read_lasa_sav]{read_lasa_sav()}} would, with \code{"label_report"}, \code{"LASA_wave"}, and
-\code{"LASA_file_code"} attributes (re-)attached. Each labelled column also
-carries \code{"label"} (the wave-specific variable label), \code{"labels"} (its
-value labels, SPSS/haven-style), \code{"canonical_name"} (the wave-stripped
-variable name), \code{"harmonized_label"} (the cross-wave-consistent
-variable label), and, where the database documents one,
-\code{"labels_harmonized"} (the cross-wave-standardized value labels) --
-groundwork for a future \code{standardize_names}/\code{standardize_labels} pair
-of arguments, not yet implemented.
+\code{data}, labelled (and optionally reshaped/renamed) with
+\code{"label_report"}, \code{"variable.labels"}, \code{"LASA_wave"}, and
+\code{"LASA_file_code"} attributes (re-)attached. Each matched column also
+carries \code{"label"}/\code{"labels"} (the \emph{active} variable label / value
+labels -- wave-specific unless the corresponding standardize switch
+is on), \code{"wave_label"}/\code{"labels_wave"} (always the wave-specific
+versions), \code{"canonical_name"} (the wave-stripped variable name), and,
+where the database documents them, \code{"harmonized_label"}/
+\code{"labels_harmonized"} (the cross-wave-consistent versions).
 }
 \description{
-Attaches SPSS-style variable and value labels to a data frame using the
-package's normalized \code{\link[=lasa_label_db]{lasa_label_db()}}, instead of a file-specific
-\verb{apply_lasa*_labels()} function. Works on any data frame, not only one
-produced by \code{\link[=read_lasa_sav]{read_lasa_sav()}}: pass \code{filecode}/\code{wave} explicitly, or let
-them be recovered automatically from \code{data}'s own \code{"LASA_file_code"}/
+The engine behind \code{\link[=read_lasa_sav]{read_lasa_sav()}}: attaches SPSS-style variable and
+value labels to a data frame using the package's normalized
+\code{\link[=lasa_label_db]{lasa_label_db()}}. Works on any data frame, not only one produced by
+\code{\link[=read_lasa_sav]{read_lasa_sav()}}: pass \code{filecode}/\code{wave} explicitly, or let them be
+recovered automatically from \code{data}'s own \code{"LASA_file_code"}/
 \code{"LASA_wave"} provenance attributes (set by \code{\link[=read_lasa_sav]{read_lasa_sav()}} and by
 this function itself, so labelling can be safely re-applied after a
 transformation like \code{dplyr::mutate()} strips attributes) or from a
-single-valued \code{"LASA_wave"} column.
+single-valued \code{"Wave"} column.
 }
 \details{
 Identity (file code and wave) is resolved in priority order: (1) the
 \code{filecode}/\code{wave} arguments, if supplied; (2) \code{data}'s own
 \code{"LASA_file_code"}/\code{"LASA_wave"} attributes; (3) a single-valued
-\code{"LASA_wave"} column in \code{data} (for the wave only -- \code{filecode} must
-still come from elsewhere); (4) a best-effort guess from \code{data}'s own
-object name, when it happens to follow the LASA file-naming convention
-(e.g. a data frame literally named \code{LASAB046}) -- never required, and
-not something to rely on.
+\code{"Wave"} column in \code{data} (for the wave only -- \code{filecode} must still
+come from elsewhere); (4) a best-effort guess from \code{data}'s own object
+name, when it happens to follow the LASA file-naming convention (e.g. a
+data frame literally named \code{LASAB046}) -- never required, and not
+something to rely on.
 
 Column matching tries, in order: (1) an explicit \code{name_corrections}
 override, (2) an exact (case-sensitive) match against the wave-specific
 documented name, (3) a case-insensitive match against that name, (4) an
 exact match against the canonical (wave-stripped) name, (5) a
-case-insensitive match against the canonical name.
+case-insensitive match against the canonical name, (6) when
+\code{fuzzy_matching = TRUE}, an edit-distance match against the data
+columns not already claimed. \code{"respnr"} is matched through this same
+chain (it isn't a documented database variable, so it's always matched
+by name rather than canonical/value-label lookups).
+
+Unmatched variables in either direction (documented but absent from
+\code{data}, or present in \code{data} but undocumented) are never an error --
+they're left alone and recorded in the \code{"label_report"} attribute; see
+\code{\link[=lasa_label_report]{lasa_label_report()}}.
 }
 \examples{
 \dontrun{

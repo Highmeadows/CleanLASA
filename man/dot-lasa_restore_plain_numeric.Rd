@@ -14,10 +14,9 @@ A plain numeric vector, the same length as \code{x}, with negative
 values replaced by \code{NA_real_}.
 }
 \description{
-Shared \code{to_numeric = TRUE} transformation used by every
-\verb{apply_*_labels()} function's \code{.lasa_label_engine()} instance. Strips any
-value-label attributes and coerces \code{x} to an ordinary numeric vector,
-replacing every negative observed value with \code{NA} -- including a
-negative code the codebook did not explicitly label.
+Shared \code{to_numeric = TRUE} transformation used by \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}'s
+engine. Strips any value-label attributes and coerces \code{x} to an ordinary
+numeric vector, replacing every negative observed value with \code{NA} --
+including a negative code the codebook did not explicitly label.
 }
 \keyword{internal}
