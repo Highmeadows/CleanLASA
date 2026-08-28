@@ -11,7 +11,12 @@ from the LASA website – use
 ## Usage
 
 ``` r
-lasa_topics(topic = "all", theme = NULL, fuzzy_match = TRUE, max_edit_distance = 2L)
+lasa_topics(
+  topic = "all",
+  theme = NULL,
+  fuzzy_match = TRUE,
+  max_edit_distance = 2L
+)
 ```
 
 ## Arguments
