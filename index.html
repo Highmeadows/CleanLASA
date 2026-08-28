@@ -85,33 +85,45 @@
 <div class="section level3">
 <h3 id="shared-arguments">Shared arguments<a class="anchor" aria-label="anchor" href="#shared-arguments"></a>
 </h3>
-<p><code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code> (and <code><a href="reference/apply_lasa_labels.html">apply_lasa_labels()</a></code>, below) accepts the same five reshaping arguments:</p>
+<p><code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code> is a thin wrapper: identification (file code/wave) and reading the <code>.sav</code> file happens there, but all matching, transforming, and standardizing is done by <code><a href="reference/apply_lasa_labels.html">apply_lasa_labels()</a></code>, which both functions share.</p>
 <ul>
+<li>
+<code>filecode</code>/<code>wave</code> – manual override for the LASA file code/wave, for a file name that doesn’t follow the documented convention (<code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code> only).</li>
 <li>
 <code>name_corrections</code> – manually point a canonical suffix (e.g. <code>lphya08</code>) at a differently-named source column, for a known typo/renaming in the data.</li>
 <li>
-<code>to_factor</code> – convert categorical variables to factors, using their SPSS value labels as levels.</li>
+<code>fuzzy_matching</code> (default <code>TRUE</code>) – when exact/canonical matching fails, fall back to an edit-distance match against the data’s own column names, absorbing most typos without needing <code>name_corrections</code>.</li>
 <li>
-<code>to_numeric</code> – restore count/continuous variables to plain numeric, converting negative (missing-reason) codes to <code>NA</code>.</li>
+<code>to_factor</code>/<code>to_numeric</code> (default <code>TRUE</code>) – convert categorical variables to factors using their SPSS value labels as levels, and restore count/continuous variables to plain numeric, converting negative (missing-reason) codes to <code>NA</code>.</li>
 <li>
-<code>standardize_names</code> – rename every matched column to its canonical lowercase LASA name with the wave code removed (e.g. <code>lphya01</code>), and standardize <code>"respnr"</code> (in any capitalization) to <code>"respnr"</code>. Always implies <code>split_wavecode = TRUE</code> as well.</li>
+<code>standardize</code> (default <code>TRUE</code>) – overarching switch for the three switches below; each can also be set independently.
+<ul>
 <li>
-<code>split_wavecode</code> – move the wave-letter prefix out of variable names (e.g. <code>blphya01</code> becomes <code>lphya01</code>) and into a new <code>"LASA_wave"</code> column, inserted right after <code>"respnr"</code> and filled with the file’s wave code (e.g. <code>"B"</code>, <code>"2B"</code>, <code>"3B"</code>).</li>
+<code>.standardize_names</code> – rename every matched column to its canonical lowercase LASA name with the wave code removed (e.g. <code>lphya01</code>), and standardize <code>"respnr"</code> (in any capitalization) to <code>"respnr"</code>. Implies <code>add_wavecode = TRUE</code>.</li>
+<li>
+<code>.standardize_var_labels</code> – use the cross-wave-consistent (“harmonized”) variable label as the active <code>"label"</code>, instead of the wave-specific one.</li>
+<li>
+<code>.standardize_val_labels</code> – use the harmonized value labels as the active <code>"labels"</code> (and for <code>to_factor</code> level text), where documented.</li>
+</ul>
+</li>
+<li>
+<code>add_wavecode</code> (default <code>FALSE</code>) – insert a <code>"Wave"</code> column, filled with the file’s already-identified wave code (e.g. <code>"B"</code>, <code>"2B"</code>, <code>"3B"</code>), right after <code>"respnr"</code>.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Rename columns to their canonical names and split the wave code into its</span></span>
-<span><span class="co"># own column, all in one call:</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span>, standardize_names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Rename columns to their canonical names, harmonize labels, and insert a</span></span>
+<span><span class="co"># "Wave" column, all in one call -- this is also the default:</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] "respnr"    "LASA_wave" "lphya01"</span></span>
+<span><span class="co">#&gt; [1] "respnr"  "Wave"    "lphya01"</span></span>
 <span></span>
-<span><span class="co"># split_wavecode also works on its own, without fully standardizing names:</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span>, split_wavecode <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>Regardless of these arguments, every matched column also keeps its original SPSS value coding available as reference attributes – <code>attr(x, "original_labels")</code> (the codebook) and <code>attr(x, "original_values")</code> (the raw imported values) – so R output can always be cross-checked against another program’s (e.g. SPSS) coding, even after <code>to_numeric</code>/ <code>to_factor</code> reshaping.</p>
-<p>After importing, you can check whether any variables could not be matched to the LASA documentation using <code><a href="reference/lasa_label_report.html">lasa_label_report()</a></code>:</p>
+<span><span class="co"># add_wavecode also works on its own, without fully standardizing names:</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span>, .standardize_names <span class="op">=</span> <span class="cn">FALSE</span>, add_wavecode <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>Regardless of these arguments, every matched column also keeps its wave-specific label/value labels available as reference attributes – <code>attr(x, "wave_label")</code> and <code>attr(x, "labels_wave")</code> – so R output can always be cross-checked against another program’s (e.g. SPSS) coding, even after <code>to_numeric</code>/<code>to_factor</code> reshaping or harmonized-label standardization.</p>
+<p>After importing, you can check the variable-name matching audit – in both directions: documented variables not found in the data, and data columns not documented in the label database – using <code><a href="reference/lasa_label_report.html">lasa_label_report()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/lasa_label_report.html">lasa_label_report</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
-<p>This returns the set of “faulty” variables — ones that couldn’t be matched to their corresponding documentation — so you can inspect and resolve them before analysis.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/lasa_label_report.html">lasa_label_report</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/lasa_label_report.html">lasa_label_report</a></span><span class="op">(</span><span class="va">data</span>, problems_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>Neither direction ever breaks <code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code>/<code><a href="reference/apply_lasa_labels.html">apply_lasa_labels()</a></code>; an unmatched variable is simply left alone and reported here, often fixable with <code>name_corrections</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="relabelling-a-data-frame-directly">Relabelling a data frame directly<a class="anchor" aria-label="anchor" href="#relabelling-a-data-frame-directly"></a>
@@ -134,7 +146,7 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lasa_label_db.html">lasa_label_db</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">db</span><span class="op">$</span><span class="va">variables</span>, <span class="va">filecode</span> <span class="op">==</span> <span class="st">"046"</span> <span class="op">&amp;</span> <span class="va">wave</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">)</span></span></code></pre></div>
-<p>The database has three parts: <code>variables</code> (one row per file code/wave/variable), <code>value_labels</code> (that variable’s value labels as documented for that specific wave), and <code>value_labels_harmonized</code> (the same variable’s value labels standardized across every wave that documents it, independent of wave – useful when combining waves that coded the same concept slightly differently). <code><a href="reference/apply_lasa_labels.html">apply_lasa_labels()</a></code> and <code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code> attach all of this to each labelled column as attributes: <code>"label"</code>, <code>"labels"</code>, <code>"canonical_name"</code>, <code>"harmonized_label"</code>, and (where documented) <code>"labels_harmonized"</code>.</p>
+<p>The database has three parts: <code>variables</code> (one row per file code/wave/variable), <code>value_labels</code> (that variable’s value labels as documented for that specific wave), and <code>value_labels_harmonized</code> (the same variable’s value labels standardized across every wave that documents it, independent of wave – useful when combining waves that coded the same concept slightly differently). <code><a href="reference/apply_lasa_labels.html">apply_lasa_labels()</a></code> and <code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code> attach all of this to each labelled column as attributes: <code>"label"</code>/<code>"labels"</code> (the <em>active</em> variable label/value labels – wave-specific unless <code>.standardize_var_labels</code>/<code>.standardize_val_labels</code> is on), <code>"wave_label"</code>/<code>"labels_wave"</code> (always the wave-specific versions), <code>"canonical_name"</code>, <code>"harmonized_label"</code>, and (where documented) <code>"labels_harmonized"</code>.</p>
 <div class="section level3">
 <h3 id="manual-corrections">Manual corrections<a class="anchor" aria-label="anchor" href="#manual-corrections"></a>
 </h3>

@@ -3,7 +3,7 @@
 Small internal validator shared by the argument-checking code in this
 file and by every `apply_*_labels()` function in the package, so the
 same error message format is used everywhere a scalar logical argument
-(such as `to_factor`, `to_numeric`, or `standardize_names`) is required.
+(such as `to_factor`, `to_numeric`, or `fuzzy_matching`) is required.
 
 ## Usage
 

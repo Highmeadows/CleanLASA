@@ -185,81 +185,75 @@ stored separately as the <code>label_report</code> attribute.</p>
 <div class="section level2">
 <h2 id="choose-how-labelled-variables-are-represented">4. Choose how labelled variables are represented<a class="anchor" aria-label="anchor" href="#choose-how-labelled-variables-are-represented"></a>
 </h2>
-<p>The default behavior preserves the imported values while attaching
-the variable label (<code>attr(x, "label")</code>) and, where
-documented, the SPSS value-label map (<code>attr(x, "labels")</code>).
-Several arguments can additionally reshape the result for analysis.</p>
+<p>By default,
+<code><a href="../reference/read_lasa_sav.html">read_lasa_sav()</a></code>/<code><a href="../reference/apply_lasa_labels.html">apply_lasa_labels()</a></code> do all of
+this at once: categorical variables become factors
+(<code>to_factor</code>), count/continuous variables are restored to
+plain numeric (<code>to_numeric</code>), variable names are standardized
+to their canonical form and a <code>"Wave"</code> column is added
+(<code>standardize</code>, which implies <code>add_wavecode</code>), and
+harmonized variable/value labels become the active ones. Each of these
+can be turned off individually.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">read_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">blphya01</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt; -5.000   4.000   4.000   3.476   4.000   4.000 </span></span>
+<span><span class="co">#&gt;   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.</span></span>
+<span><span class="co">#&gt; -5.000   4.000   4.000   3.476   4.000   4.000</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">blphya01</span>, <span class="st">"labels"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Na, interview terminated      Na, short interview           Na, wrong skip</span></span>
 <span><span class="co">#&gt;                       -5                       -4                       -3</span></span>
 <span><span class="co">#&gt;                  Na, see                Na, asked     Respondent bedridden</span></span>
 <span><span class="co">#&gt;                       -2                       -1                        1</span></span>
-<span><span class="co">#&gt; Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 </span></span>
-<span><span class="co">#&gt;                        2                        3                        4 </span></span></code></pre></div>
+<span><span class="co">#&gt; Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3</span></span>
+<span><span class="co">#&gt;                        2                        3                        4</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="convert-labelled-categories-to-factors">Convert labelled categories to factors<a class="anchor" aria-label="anchor" href="#convert-labelled-categories-to-factors"></a>
 </h3>
-<p>Use <code>to_factor = TRUE</code> when you want documented value
-labels represented as R factor levels:</p>
+<p><code>to_factor</code> defaults to <code>TRUE</code>, so documented
+value labels are represented as R factor levels without any extra
+argument:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span></span>
-<span>  <span class="st">"LASAB046.sav"</span>,</span>
-<span>  to_factor <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">blphya01</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">lphya01</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Na, interview terminated      Na, short interview           Na, wrong skip</span></span>
 <span><span class="co">#&gt;                       13                      175                        0</span></span>
 <span><span class="co">#&gt;                  Na, see                Na, asked     Respondent bedridden</span></span>
 <span><span class="co">#&gt;                        0                        4                       20</span></span>
-<span><span class="co">#&gt; Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 </span></span>
-<span><span class="co">#&gt;                        5                       20                     2870 </span></span>
+<span><span class="co">#&gt; Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3</span></span>
+<span><span class="co">#&gt;                        5                       20                     2870</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">blphya01</span>, <span class="st">"original_labels"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">lphya01</span>, <span class="st">"labels_wave"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Na, interview terminated      Na, short interview           Na, wrong skip</span></span>
 <span><span class="co">#&gt;                       -5                       -4                       -3</span></span>
 <span><span class="co">#&gt;                  Na, see                Na, asked     Respondent bedridden</span></span>
 <span><span class="co">#&gt;                       -2                       -1                        1</span></span>
-<span><span class="co">#&gt; Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 </span></span>
-<span><span class="co">#&gt;                        2                        3                        4 </span></span></code></pre></div>
+<span><span class="co">#&gt; Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3</span></span>
+<span><span class="co">#&gt;                        2                        3                        4</span></span></code></pre></div>
 <p>Observed values that do not have a documented codebook label are
 retained as their numeric code (represented as text) rather than
-silently converted to <code>NA</code>.</p>
+silently converted to <code>NA</code>. Set
+<code>to_factor = FALSE</code> to keep the variable numeric/character
+instead.</p>
 </div>
 <div class="section level3">
 <h3 id="restore-countcontinuous-variables-to-plain-numeric">Restore count/continuous variables to plain numeric<a class="anchor" aria-label="anchor" href="#restore-countcontinuous-variables-to-plain-numeric"></a>
 </h3>
 <p>The label database classifies variables whose codebook contains no
 categorical codes (or only negative missing-reason codes) as numeric.
-With <code>to_numeric = TRUE</code>, those variables are restored to
-ordinary numeric vectors and negative observed codes are converted to
-<code>NA</code>:</p>
+<code>to_numeric</code> defaults to <code>TRUE</code>: those variables
+are restored to ordinary numeric vectors and negative observed codes are
+converted to <code>NA</code>, with no extra argument needed:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span></span>
-<span>  <span class="st">"LASAB046.sav"</span>,</span>
-<span>  to_numeric <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">blphya01</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt; -5.000   4.000   4.000   3.476   4.000   4.000 </span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">blphya01</span>, <span class="st">"original_labels"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Na, interview terminated      Na, short interview           Na, wrong skip</span></span>
-<span><span class="co">#&gt;                       -5                       -4                       -3</span></span>
-<span><span class="co">#&gt;                  Na, see                Na, asked     Respondent bedridden</span></span>
-<span><span class="co">#&gt;                       -2                       -1                        1</span></span>
-<span><span class="co">#&gt; Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3 </span></span>
-<span><span class="co">#&gt;                        2                        3                        4 </span></span></code></pre></div>
-<p><code>to_factor</code> and <code>to_numeric</code> can be used
-together. In that workflow, numeric-classified variables are restored to
-numeric while other variables with value-label maps can be represented
-as factors.</p>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">lphya01</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.</span></span>
+<span><span class="co">#&gt; -5.000   4.000   4.000   3.476   4.000   4.000</span></span></code></pre></div>
+<p><code>to_factor</code> and <code>to_numeric</code> don’t conflict:
+numeric-classified variables are restored to numeric while other
+variables with value-label maps are represented as factors, in the same
+call.</p>
 </div>
 <div class="section level3">
 <h3 id="standardize-variable-names-and-separate-the-wave-code">Standardize variable names and separate the wave code<a class="anchor" aria-label="anchor" href="#standardize-variable-names-and-separate-the-wave-code"></a>
@@ -268,38 +262,37 @@ as factors.</p>
 example, a variable may be documented as <code>blphya01</code> in wave B
 but have the canonical name <code>lphya01</code> in the label
 database.</p>
-<p><code>standardize_names = TRUE</code> renames matched variables to
-their canonical lowercase names, standardizes the respondent-number
-column to <code>respnr</code>, and also implies
-<code>split_wavecode = TRUE</code>. A new <code>LASA_wave</code> column
-is inserted immediately after <code>respnr</code> when that identifier
-is present.</p>
+<p><code>standardize</code> (default <code>TRUE</code>) is the
+overarching switch for three independent sub-switches –
+<code>.standardize_names</code> (rename matched variables to their
+canonical lowercase names, and standardize the respondent-number column
+to <code>respnr</code>), <code>.standardize_var_labels</code>, and
+<code>.standardize_val_labels</code> (use the harmonized,
+cross-wave-consistent variable/value labels as the active ones).
+<code>.standardize_names = TRUE</code> implies
+<code>add_wavecode = TRUE</code>: a <code>"Wave"</code> column is
+inserted immediately after <code>respnr</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span></span>
-<span>  <span class="st">"LASAB046.sav"</span>,</span>
-<span>  standardize_names <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span> <span class="co"># standardize = TRUE by default</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
-<span><span class="co">#&gt; "respnr"    "LASA_wave" "lphya01"   "lphya02" </span></span>
+<span><span class="co">#&gt; "respnr"    "Wave"      "lphya01"   "lphya02"</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">LASA_wave</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">Wave</span><span class="op">)</span></span>
 <span><span class="co">#&gt; "B"</span></span></code></pre></div>
-<p><code>split_wavecode = TRUE</code> can also be used on its own. It
-renames matched LASA variables to their canonical names and inserts
-<code>LASA_wave</code>, but does not by itself force a
-differently-capitalized respondent-number column to be renamed to
-<code>respnr</code>.</p>
+<p><code>add_wavecode = TRUE</code> can also be used on its own, without
+renaming variables to their canonical names:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span></span>
 <span>  <span class="st">"LASAB046.sav"</span>,</span>
-<span>  split_wavecode <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  .standardize_names <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  add_wavecode <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
-<span><span class="co">#&gt; "respnr"    "LASA_wave" "blphya01"   "blphya02" </span></span>
+<span><span class="co">#&gt; "respnr"    "Wave"      "blphya01"  "blphya02"</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">LASA_wave</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">Wave</span><span class="op">)</span></span>
 <span><span class="co">#&gt; "B"</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -315,22 +308,30 @@ otherwise not import correctly. This can be done with the specification
 <span>  <span class="st">"LASAB046.sav"</span>,</span>
 <span>  name_corrections <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>lphya08 <span class="op">=</span> <span class="st">"BLPYA08"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>This override is used before the automatic exact/case-insensitive
-matching steps.</p>
+<p>This override is used before the automatic
+exact/case-insensitive/fuzzy matching steps.</p>
+<p><code>fuzzy_matching</code> (default <code>TRUE</code>) handles many
+typos automatically, without needing <code>name_corrections</code> at
+all: when a variable can’t be found by exact or canonical-name matching,
+an edit-distance match against the data’s own unclaimed column names is
+tried. A unique close match is used (and recorded as
+<code>"fuzzy"</code> in the matching audit, see below); an ambiguous one
+(e.g. two equally-close candidates) is left unmatched rather than
+guessed.</p>
 </div>
 <div class="section level3">
 <h3 id="preserve-the-original-coding-for-reference">Preserve the original coding for reference<a class="anchor" aria-label="anchor" href="#preserve-the-original-coding-for-reference"></a>
 </h3>
-<p>For matched variables, <code>CleanLASA</code> stores the original
-imported values in the <code>original_values</code> attribute. When a
-documented value-label map exists, it is also retained in
-<code>original_labels</code>. These reference attributes remain
-available after factor/numeric reshaping, which makes it possible to
-compare the transformed R representation with the original SPSS
-coding.</p>
+<p>For matched variables, <code>CleanLASA</code> keeps the wave-specific
+variable label and value-label map available as reference attributes –
+<code>"wave_label"</code> and <code>"labels_wave"</code> – regardless of
+<code>.standardize_var_labels</code>/<code>.standardize_val_labels</code>.
+These remain available after factor/numeric reshaping too, which makes
+it possible to compare the transformed R representation with the
+original SPSS coding.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">lphya01</span>, <span class="st">"original_values"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">lphya01</span>, <span class="st">"original_labels"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">lphya01</span>, <span class="st">"wave_label"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">lphya01</span>, <span class="st">"labels_wave"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -342,19 +343,27 @@ Retrieve it with <code><a href="../reference/lasa_label_report.html">lasa_label_
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">report</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lasa_label_report.html">lasa_label_report</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="va">report</span></span></code></pre></div>
-<p>By default, this returns the <strong>full</strong> audit, including
-successful matches and documented variables that were not found in the
-data. The <code>method</code> column records how a match was made, for
-example <code>exact</code>, <code>case-insensitive exact</code>,
-<code>exact canonical</code>, <code>manual correction</code>, or
-<code>not found</code>.</p>
+<p>By default, this returns the <strong>full</strong>, bidirectional
+audit: successful matches, documented variables that were not found in
+the data (<code>direction = "documented_not_in_data"</code>), and data
+columns that don’t correspond to any documented variable
+(<code>direction = "data_not_documented"</code>). The
+<code>method</code> column records how a match was made, for example
+<code>exact</code>, <code>case-insensitive exact</code>,
+<code>exact canonical</code>, <code>fuzzy</code>,
+<code>manual correction</code>, <code>not found</code>, or
+<code>undocumented column</code>. Neither direction is ever an error –
+an unmatched variable is simply left untouched and reported.</p>
 <p>To focus only on entries that may require attention, use:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/lasa_label_report.html">lasa_label_report</a></span><span class="op">(</span><span class="va">data</span>, problems_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>This is useful before analysis when you want to verify that expected
-variables were matched correctly. Columns in your data that are not
-documented for the selected file code/wave (for example newly created
-analysis variables) are not modified by the label engine.</p>
+variables were matched correctly (and often fixable with
+<code>name_corrections</code>), and to spot columns in your data that
+aren’t documented for the selected file code/wave (for example newly
+created analysis variables, or a column the label database genuinely
+doesn’t cover). Either way, those columns are never modified by the
+label engine.</p>
 </div>
 <div class="section level2">
 <h2 id="apply-lasa-labels-to-an-existing-data-frame">6. Apply LASA labels to an existing data frame<a class="anchor" aria-label="anchor" href="#apply-lasa-labels-to-an-existing-data-frame"></a>
@@ -369,11 +378,8 @@ transformations.</p>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/apply_lasa_labels.html">apply_lasa_labels</a></span><span class="op">(</span></span>
 <span>  <span class="va">raw</span>,</span>
 <span>  filecode <span class="op">=</span> <span class="st">"046"</span>,</span>
-<span>  wave <span class="op">=</span> <span class="st">"C"</span>,</span>
-<span>  to_factor <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  to_numeric <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  standardize_names <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span>  wave <span class="op">=</span> <span class="st">"C"</span></span>
+<span><span class="op">)</span> <span class="co"># to_factor/to_numeric/standardize all default to TRUE</span></span></code></pre></div>
 <p>When <code>data</code> already carries the
 <code>LASA_file_code</code> and <code>LASA_wave</code> provenance
 attributes created by <code><a href="../reference/read_lasa_sav.html">read_lasa_sav()</a></code> or a previous
@@ -386,9 +392,10 @@ omitted:</p>
 <span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/apply_lasa_labels.html">apply_lasa_labels</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
 <p>For the wave, <code><a href="../reference/apply_lasa_labels.html">apply_lasa_labels()</a></code> can also use a
-single-valued <code>LASA_wave</code> column. Supplying
-<code>filecode</code> and <code>wave</code> explicitly is the most
-robust option for data frames that did not originate from
+single-valued <code>Wave</code> column (the column
+<code>add_wavecode</code>/<code>.standardize_names</code> inserts).
+Supplying <code>filecode</code> and <code>wave</code> explicitly is the
+most robust option for data frames that did not originate from
 <code><a href="../reference/read_lasa_sav.html">read_lasa_sav()</a></code>.</p>
 </div>
 <div class="section level2">
@@ -510,13 +517,9 @@ steps:</p>
 <span><span class="co"># 2. Inspect the official variable-information document if needed</span></span>
 <span><span class="fu"><a href="../reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># 3. Import the LASA file, convert analysis variables, and standardize names</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span></span>
-<span>  <span class="st">"LASAB046.sav"</span>,</span>
-<span>  to_factor <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  to_numeric <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  standardize_names <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
+<span><span class="co"># 3. Import the LASA file -- to_factor/to_numeric/standardize (names,</span></span>
+<span><span class="co">#    variable labels, value labels) all default to TRUE</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 4. Check only matching problems before analysis</span></span>
 <span><span class="va">problems</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lasa_label_report.html">lasa_label_report</a></span><span class="op">(</span><span class="va">data</span>, problems_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>

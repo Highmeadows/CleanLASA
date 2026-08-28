@@ -1,14 +1,12 @@
-# Insert the generic "LASA_wave" column
+# Insert the "Wave" column
 
-Internal helper shared by every `apply_*_labels()` function in this
-package. Used when `split_wavecode = TRUE` (which is always the
-effective setting when `standardize_names = TRUE`, per the shared
-parameter contract – see the header comment of this file). Adds a
-`"LASA_wave"` column filled with `wave`, positioned immediately after
-the respondent-number column identified by
-[`.lasa_standardize_respnr()`](https://highmeadows.github.io/CleanLASA/reference/dot-lasa_standardize_respnr.md).
-If that column could not be found, `"LASA_wave"` is inserted at the very
-front of `data` instead.
+Internal helper used by
+[`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)'s
+engine when `add_wavecode = TRUE` (always the effective setting when
+`.standardize_names` is effectively `TRUE`). Adds a `"Wave"` column
+filled with `wave`, positioned immediately after the respondent-number
+column. If that column could not be matched, `"Wave"` is inserted at the
+very front of `data` instead.
 
 ## Usage
 
@@ -29,10 +27,9 @@ front of `data` instead.
 
 - respnr_name:
 
-  The name of the respondent-number column in `data`, as returned by
-  [`.lasa_standardize_respnr()`](https://highmeadows.github.io/CleanLASA/reference/dot-lasa_standardize_respnr.md),
-  or `NA_character_` if none was found.
+  The name of the respondent-number column in `data` (its *final*,
+  post-rename name), or `NA_character_` if none was matched.
 
 ## Value
 
-`data` with a new `"LASA_wave"` column inserted.
+`data` with a new `"Wave"` column inserted.

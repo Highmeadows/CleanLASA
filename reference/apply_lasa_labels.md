@@ -1,10 +1,11 @@
 # Apply LASA variable/value labels from the label database
 
-Attaches SPSS-style variable and value labels to a data frame using the
+The engine behind
+[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md):
+attaches SPSS-style variable and value labels to a data frame using the
 package's normalized
-[`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md),
-instead of a file-specific `apply_lasa*_labels()` function. Works on any
-data frame, not only one produced by
+[`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md).
+Works on any data frame, not only one produced by
 [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md):
 pass `filecode`/`wave` explicitly, or let them be recovered
 automatically from `data`'s own `"LASA_file_code"`/ `"LASA_wave"`
@@ -12,7 +13,7 @@ provenance attributes (set by
 [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
 and by this function itself, so labelling can be safely re-applied after
 a transformation like `dplyr::mutate()` strips attributes) or from a
-single-valued `"LASA_wave"` column.
+single-valued `"Wave"` column.
 
 ## Usage
 
@@ -22,10 +23,14 @@ apply_lasa_labels(
   filecode = NULL,
   wave = NULL,
   name_corrections = NULL,
-  to_factor = FALSE,
-  to_numeric = FALSE,
-  standardize_names = FALSE,
-  split_wavecode = FALSE
+  fuzzy_matching = TRUE,
+  standardize = TRUE,
+  .standardize_names = NULL,
+  .standardize_var_labels = NULL,
+  .standardize_val_labels = NULL,
+  add_wavecode = FALSE,
+  to_factor = TRUE,
+  to_numeric = TRUE
 )
 ```
 
@@ -45,43 +50,108 @@ apply_lasa_labels(
   Optional LASA wave code (e.g. `"B"`, `"2B"`). If omitted, recovered
   from `data`'s provenance (see Details).
 
-- name_corrections, to_factor, to_numeric, standardize_names,
-  split_wavecode:
+- name_corrections:
 
-  The same five shared reshaping arguments used throughout this package
-  (see
-  [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)).
+  Optional named character vector overriding automatic column matching
+  for specific variables, in the format
+  `canonical_name = "faulty_or_nonstandard_name"`, e.g.
+  `c(lphya08 = "BLPYA08")`.
+
+- fuzzy_matching:
+
+  Logical, default `TRUE`. When a variable isn't found by exact or
+  canonical-name matching, try an edit-distance match (via
+  [`utils::adist()`](https://rdrr.io/r/utils/adist.html)) against the
+  data columns not already claimed by another variable, absorbing most
+  typos. A unique best match within the distance threshold is used
+  (recorded as `"fuzzy"` in the
+  [`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md)
+  audit); a tie is left unmatched (`"ambiguous fuzzy"`) rather than
+  guessed.
+
+- standardize:
+
+  Logical, default `TRUE`. Overarching switch for `.standardize_names`,
+  `.standardize_var_labels`, and `.standardize_val_labels`: each
+  defaults to following `standardize`, but can be set independently.
+
+- .standardize_names:
+
+  Logical or `NULL` (default). If `TRUE`, matched columns are renamed to
+  their canonical (wave-stripped) lowercase name; if `NULL`, follows
+  `standardize`. Implies `add_wavecode = TRUE`.
+
+- .standardize_var_labels:
+
+  Logical or `NULL` (default). If `TRUE`, the harmonized
+  (cross-wave-consistent) variable label is attached as the active
+  `"label"` instead of the wave-specific one; if `NULL`, follows
+  `standardize`. The wave-specific label is always available separately
+  as `"wave_label"`.
+
+- .standardize_val_labels:
+
+  Logical or `NULL` (default). If `TRUE`, the harmonized value-label set
+  is used as the active `"labels"` (and for `to_factor` level text)
+  instead of the wave-specific one, where one is documented; if `NULL`,
+  follows `standardize`. The wave-specific value labels are always
+  available separately as `"labels_wave"`.
+
+- add_wavecode:
+
+  Logical, default `FALSE`. If `TRUE`, inserts a `"Wave"` column (filled
+  with the already-resolved `wave`) right after `"respnr"`. Forced to
+  `TRUE` whenever `.standardize_names` is effectively `TRUE`.
+
+- to_factor:
+
+  Logical, default `TRUE`. Convert categorical (value-labelled)
+  variables to factors using the active value labels as levels, instead
+  of leaving them numeric/character.
+
+- to_numeric:
+
+  Logical, default `TRUE`. Restore count/continuous variables (per the
+  database's `var_type`) to plain numeric, converting negative codes to
+  `NA`.
 
 ## Value
 
-`data`, labelled (and optionally reshaped/renamed) exactly as
-[`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
-would, with `"label_report"`, `"LASA_wave"`, and `"LASA_file_code"`
-attributes (re-)attached. Each labelled column also carries `"label"`
-(the wave-specific variable label), `"labels"` (its value labels,
-SPSS/haven-style), `"canonical_name"` (the wave-stripped variable name),
-`"harmonized_label"` (the cross-wave-consistent variable label), and,
-where the database documents one, `"labels_harmonized"` (the
-cross-wave-standardized value labels) – groundwork for a future
-`standardize_names`/`standardize_labels` pair of arguments, not yet
-implemented.
+`data`, labelled (and optionally reshaped/renamed) with
+`"label_report"`, `"variable.labels"`, `"LASA_wave"`, and
+`"LASA_file_code"` attributes (re-)attached. Each matched column also
+carries `"label"`/`"labels"` (the *active* variable label / value labels
+– wave-specific unless the corresponding standardize switch is on),
+`"wave_label"`/`"labels_wave"` (always the wave-specific versions),
+`"canonical_name"` (the wave-stripped variable name), and, where the
+database documents them, `"harmonized_label"`/ `"labels_harmonized"`
+(the cross-wave-consistent versions).
 
 ## Details
 
 Identity (file code and wave) is resolved in priority order: (1) the
 `filecode`/`wave` arguments, if supplied; (2) `data`'s own
 `"LASA_file_code"`/`"LASA_wave"` attributes; (3) a single-valued
-`"LASA_wave"` column in `data` (for the wave only – `filecode` must
-still come from elsewhere); (4) a best-effort guess from `data`'s own
-object name, when it happens to follow the LASA file-naming convention
-(e.g. a data frame literally named `LASAB046`) – never required, and not
+`"Wave"` column in `data` (for the wave only – `filecode` must still
+come from elsewhere); (4) a best-effort guess from `data`'s own object
+name, when it happens to follow the LASA file-naming convention (e.g. a
+data frame literally named `LASAB046`) – never required, and not
 something to rely on.
 
 Column matching tries, in order: (1) an explicit `name_corrections`
 override, (2) an exact (case-sensitive) match against the wave-specific
 documented name, (3) a case-insensitive match against that name, (4) an
 exact match against the canonical (wave-stripped) name, (5) a
-case-insensitive match against the canonical name.
+case-insensitive match against the canonical name, (6) when
+`fuzzy_matching = TRUE`, an edit-distance match against the data columns
+not already claimed. `"respnr"` is matched through this same chain (it
+isn't a documented database variable, so it's always matched by name
+rather than canonical/value-label lookups).
+
+Unmatched variables in either direction (documented but absent from
+`data`, or present in `data` but undocumented) are never an error –
+they're left alone and recorded in the `"label_report"` attribute; see
+[`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md).
 
 ## See also
 

@@ -4,22 +4,29 @@ Reads a LASA `.sav` file, identifies its wave and file code from the
 file name, and labels it using
 [`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md)
 – the package's normalized, database-driven variable/value-label
-metadata – via the same engine
-[`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
-uses.
+metadata – via
+[`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md),
+which does all of the actual matching/transforming/standardizing work.
+`read_lasa_sav()` is a thin wrapper around it.
 
 ## Usage
 
 ``` r
 read_lasa_sav(
   path,
-  user_na = TRUE,
-  read_sav_args = list(),
+  filecode = NULL,
+  wave = NULL,
   name_corrections = NULL,
-  to_factor = FALSE,
-  to_numeric = FALSE,
-  standardize_names = FALSE,
-  split_wavecode = FALSE
+  fuzzy_matching = TRUE,
+  standardize = TRUE,
+  .standardize_names = NULL,
+  .standardize_var_labels = NULL,
+  .standardize_val_labels = NULL,
+  add_wavecode = FALSE,
+  to_factor = TRUE,
+  to_numeric = TRUE,
+  user_na = TRUE,
+  read_sav_args = list()
 )
 ```
 
@@ -29,6 +36,25 @@ read_lasa_sav(
 
   Path to a LASA SPSS `.sav` file. LASA file names are parsed
   case-insensitively.
+
+- filecode:
+
+  Optional manual override for the LASA file code, for a file name that
+  doesn't follow the documented convention. If omitted, derived from
+  `path`.
+
+- wave:
+
+  Optional manual override for the LASA wave code (e.g. useful for a
+  nonstandard baseline wave). If omitted, derived from `path`.
+
+- name_corrections, fuzzy_matching, standardize, .standardize_names,
+  .standardize_var_labels, .standardize_val_labels, add_wavecode,
+  to_factor, to_numeric:
+
+  The shared reshaping arguments used throughout this package – see
+  [`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
+  for the full description of each.
 
 - user_na:
 
@@ -44,13 +70,6 @@ read_lasa_sav(
   [`haven::read_sav()`](https://haven.tidyverse.org/reference/read_spss.html),
   for example `list(encoding = "UTF-8")`. Do not include `file` or
   `user_na`; those are controlled by `path` and `user_na`.
-
-- name_corrections, to_factor, to_numeric, standardize_names,
-  split_wavecode:
-
-  The five shared reshaping arguments used throughout this package – see
-  [`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
-  for the full description of each.
 
 ## Value
 
@@ -74,12 +93,16 @@ The file name is parsed against the LASA naming convention:
 - file codes contain 2 or 3 alphanumeric characters and are interpreted
   case-insensitively.
 
-Column matching, value/variable-label attachment,
-`to_factor`/`to_numeric` reshaping, and
-`standardize_names`/`split_wavecode` renaming are all performed by
-[`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)'s
-underlying engine, looking up metadata for the parsed file code/wave in
-[`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md).
+`filecode`/`wave` override the parsed values when supplied – the place
+to correct a nonstandard file name or a baseline wave that doesn't
+follow the usual convention.
+
+After identification, `read_lasa_sav()` reads the file with
+[`haven::read_sav()`](https://haven.tidyverse.org/reference/read_spss.html),
+lowercases every column name, and forwards everything else to
+[`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md),
+which performs all column matching, value/variable-label attachment,
+`to_factor`/`to_numeric` reshaping, standardization, and `add_wavecode`.
 A file code with no database coverage yet is labelled as a no-op (every
 column left untouched, `"not found"` recorded in the matching audit)
 rather than an error – add coverage with
@@ -108,16 +131,15 @@ if (FALSE) { # \dontrun{
 dat_e <- read_lasa_sav("LASAE046.SAV")
 dat_3b <- read_lasa_sav("LAS3B046.SAV")
 
-dat_h <- read_lasa_sav(
-  "LASAH046.SAV",
-  to_factor = TRUE,
-  to_numeric = TRUE,
-  standardize_names = TRUE
-)
+# to_factor/to_numeric/standardize default to TRUE.
+dat_h <- read_lasa_sav("LASAH046.SAV")
 
-# split_wavecode = TRUE moves the wave code out of variable names and
-# into its own "LASA_wave" column, without fully standardizing names:
-dat_2b <- read_lasa_sav("LAS2B046.SAV", split_wavecode = TRUE)
+# add_wavecode = TRUE without full name standardization:
+dat_2b <- read_lasa_sav(
+  "LAS2B046.SAV",
+  .standardize_names = FALSE,
+  add_wavecode = TRUE
+)
 
 # Manually correct a mistyped column name:
 dat_b <- read_lasa_sav(
