@@ -4,7 +4,12 @@
 \alias{lasa_topics}
 \title{Search the LASA topic table}
 \usage{
-lasa_topics(topic = "all", theme = NULL, fuzzy_match = TRUE, max_edit_distance = 2L)
+lasa_topics(
+  topic = "all",
+  theme = NULL,
+  fuzzy_match = TRUE,
+  max_edit_distance = 2L
+)
 }
 \arguments{
 \item{topic}{A topic search term. Use \code{"all"} (the default) to return every
