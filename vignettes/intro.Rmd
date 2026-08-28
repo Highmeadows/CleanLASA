@@ -168,6 +168,10 @@ attr(data$lphya01, "labels_wave")
 
 Observed values that do not have a documented codebook label are retained as their numeric code (represented as text) rather than silently converted to `NA`. Set `to_factor = FALSE` to keep the variable numeric/character instead.
 
+### Variables whose coding is inconsistent across waves
+
+Some variables' coding genuinely differs by wave -- a binary code's polarity flipped, or an income variable's brackets were redefined -- so no single cross-wave value label could be written for them. The label database marks these `var_type == "text"` and documents no harmonized value labels at all for them; `to_factor` recodes such a variable to its wave-specific label text (a character vector) instead of a factor, so waves whose numeric codes disagree but whose label text agrees (`0 = "no", 1 = "yes"` in one wave, `1 = "no", 2 = "yes"` in another) still merge correctly on the text itself.
+
 ### Restore count/continuous variables to plain numeric
 
 The label database classifies variables whose codebook contains no categorical codes (or only negative missing-reason codes) as numeric. `to_numeric` defaults to `TRUE`: those variables are restored to ordinary numeric vectors and negative observed codes are converted to `NA`, with no extra argument needed:
@@ -288,7 +292,7 @@ For the wave, `apply_lasa_labels()` can also use a single-valued `Wave` column (
 
 - `variables`: one row per file-code/wave/variable combination, including the wave-specific name, canonical name, wave-specific variable label, cross-wave-consistent ("harmonized") variable label, and variable type;
 - `value_labels`: the long-format value/code label definitions, as documented for that specific wave;
-- `value_labels_harmonized`: the same variable's value labels standardized across every wave that documents it (no `wave` column -- it applies regardless of wave), for combining data across waves that coded the same concept slightly differently; and
+- `value_labels_harmonized`: the same variable's value labels standardized across every wave that documents it (no `wave` column -- it applies regardless of wave), for combining data across waves that coded the same concept slightly differently -- absent entirely for a variable whose coding is inconsistent across waves (`var_type == "text"` in `variables`); and
 - `manual_overrides`: separately stored hand-authored corrections for variables and value labels.
 
 ```{r inspect-db, eval=FALSE}

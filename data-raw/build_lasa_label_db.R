@@ -71,6 +71,7 @@ variables_list <- vector("list", length(fc_objects))
 value_labels_list <- vector("list", length(fc_objects))
 harmonized_list <- vector("list", length(fc_objects))
 names(variables_list) <- names(fc_objects)
+n_placeholder_total <- 0L # (filecode, canonical_name) pairs downgraded to var_type "text"
 
 for (fc in names(fc_objects)) {
   obj <- fc_objects[[fc]]
@@ -83,6 +84,23 @@ for (fc in names(fc_objects)) {
   all_row <- which(vt$LASA_Wave == "all")
   real_rows <- which(vt$LASA_Wave != "all")
 
+  # A canonical name whose harmonized/"all" value-label vector contains a
+  # placeholder label (its per-code meaning differs by wave, so no real
+  # cross-wave label could be written) gets no harmonized value labels at
+  # all, and is reclassified "text" so apply_lasa_labels() represents it
+  # as wave-specific label text instead of numeric/factor -- the numeric
+  # codes themselves aren't comparable across waves, but the label text
+  # they resolve to still is (e.g. 0=no/1=yes vs. 1=no/2=yes).
+  placeholder_cns <- character(0)
+  for (cn in canonical_cols) {
+    vec <- vv[[cn]][[all_row]]
+    if (is.null(vec) || length(vec) == 0L) next
+    if (any(label_env$.lasa_is_placeholder_category_label(unname(vec)))) {
+      placeholder_cns <- c(placeholder_cns, cn)
+    }
+  }
+  n_placeholder_total <- n_placeholder_total + length(placeholder_cns)
+
   # --- variables: one row per (wave, canonical_name) with a documented name ---
   var_rows <- list()
   for (i in real_rows) {
@@ -93,7 +111,7 @@ for (fc in names(fc_objects)) {
       var_rows[[length(var_rows) + 1L]] <- data.frame(
         filecode = fc, wave = wave, variable_name = vname, canonical_name = cn,
         variable_label = vl[i, cn], harmonized_var_label = vl[all_row, cn],
-        var_type = vty[i, cn],
+        var_type = if (cn %in% placeholder_cns) "text" else vty[i, cn],
         stringsAsFactors = FALSE
       )
     }
@@ -134,6 +152,7 @@ for (fc in names(fc_objects)) {
   # --- value_labels_harmonized: one row per (canonical_name, code), from the "all" row ---
   hz_rows <- list()
   for (cn in canonical_cols) {
+    if (cn %in% placeholder_cns) next
     vec <- vv[[cn]][[all_row]]
     if (is.null(vec) || length(vec) == 0L) next
     codes <- suppressWarnings(as.numeric(names(vec)))
@@ -180,7 +199,8 @@ cat(
   " filecodes:  ", length(fc_objects), "\n",
   " variables:  ", nrow(lasa_label_db_bundled$variables), "\n",
   " value_labels:", nrow(lasa_label_db_bundled$value_labels), "\n",
-  " value_labels_harmonized:", nrow(lasa_label_db_bundled$value_labels_harmonized), "\n"
+  " value_labels_harmonized:", nrow(lasa_label_db_bundled$value_labels_harmonized), "\n",
+  " variables downgraded to text (inconsistent harmonized coding):", n_placeholder_total, "\n"
 )
 
 usethis::use_data(

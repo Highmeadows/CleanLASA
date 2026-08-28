@@ -151,8 +151,18 @@
     x <- attach_attrs(x)
 
     numeric_eligible <- identical(row$var_type, "numeric")
+    text_eligible <- identical(row$var_type, "text")
     if (isTRUE(to_numeric) && numeric_eligible) {
       x <- .lasa_restore_plain_numeric(x)
+      x <- attach_attrs(x)
+    } else if (isTRUE(to_factor) && text_eligible && !is.null(value_map)) {
+      # Wave-specific label text, never harmonized: this variable's value
+      # coding is inconsistent across waves (var_type == "text", see
+      # data-raw/build_lasa_label_db.R), so only its wave-specific label
+      # text -- not its numeric codes -- is safe to compare/merge across
+      # waves. Deliberately uses value_map, not active_value_map, so this
+      # is immune to .standardize_val_labels/standardize.
+      x <- .lasa_convert_to_labelled_text(x, value_map)
       x <- attach_attrs(x)
     } else if (isTRUE(to_factor) && !is.null(active_value_map)) {
       x <- .lasa_convert_to_labelled_factor(x, active_value_map)
@@ -433,7 +443,10 @@
 #'   effectively `TRUE`.
 #' @param to_factor Logical, default `TRUE`. Convert categorical
 #'   (value-labelled) variables to factors using the active value labels
-#'   as levels, instead of leaving them numeric/character.
+#'   as levels, instead of leaving them numeric/character. A variable whose
+#'   value coding is inconsistent across waves (database `var_type ==
+#'   "text"`) is instead recoded to its wave-specific label text
+#'   (character), never a factor -- see Details.
 #' @param to_numeric Logical, default `TRUE`. Restore count/continuous
 #'   variables (per the database's `var_type`) to plain numeric, converting
 #'   negative codes to `NA`.
@@ -463,6 +476,15 @@
 #' they're left alone and recorded in the `"label_report"` attribute; see
 #' [lasa_label_report()].
 #'
+#' A variable's value coding sometimes genuinely differs by wave (e.g. a
+#' binary code's polarity flipped, or an income variable's brackets were
+#' redefined) so no single cross-wave value label could be written; the
+#' database marks such a variable `var_type == "text"` and documents no
+#' harmonized value labels for it at all. `to_factor` then recodes it to
+#' its wave-specific label text (character) instead of a factor, so waves
+#' whose numeric codes disagree but whose label text agrees (e.g.
+#' `0 = "no", 1 = "yes"` vs. `1 = "no", 2 = "yes"`) still merge correctly.
+#'
 #' @return `data`, labelled (and optionally reshaped/renamed) with
 #'   `"label_report"`, `"variable.labels"`, `"LASA_wave"`, and
 #'   `"LASA_file_code"` attributes (re-)attached. Each matched column also
@@ -471,7 +493,8 @@
 #'   is on), `"wave_label"`/`"labels_wave"` (always the wave-specific
 #'   versions), `"canonical_name"` (the wave-stripped variable name), and,
 #'   where the database documents them, `"harmonized_label"`/
-#'   `"labels_harmonized"` (the cross-wave-consistent versions).
+#'   `"labels_harmonized"` (the cross-wave-consistent versions -- never
+#'   present for a `var_type == "text"` variable).
 #'
 #' @seealso [read_lasa_sav()], [lasa_label_report()], [lasa_label_db()],
 #'   [manual_update_lasa_labels()]

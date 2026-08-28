@@ -67,7 +67,11 @@ standardizing is done by `apply_lasa_labels()`, which both functions share.
 - `to_factor`/`to_numeric` (default `TRUE`) -- convert categorical variables
   to factors using their SPSS value labels as levels, and restore
   count/continuous variables to plain numeric, converting negative
-  (missing-reason) codes to `NA`.
+  (missing-reason) codes to `NA`. A variable whose value coding is
+  inconsistent across waves (e.g. a binary code's polarity flipped, or an
+  income variable's brackets were redefined) is instead recoded to its
+  wave-specific label text (character), never a factor -- see "The label
+  database" below.
 - `standardize` (default `TRUE`) -- overarching switch for the three
   switches below; each can also be set independently.
   - `.standardize_names` -- rename every matched column to its canonical
@@ -157,6 +161,15 @@ attributes: `"label"`/`"labels"` (the *active* variable label/value labels
 is on), `"wave_label"`/`"labels_wave"` (always the wave-specific versions),
 `"canonical_name"`, `"harmonized_label"`, and (where documented)
 `"labels_harmonized"`.
+
+Some variables' coding genuinely differs by wave -- a binary code's
+polarity flipped, or an income variable's brackets were redefined -- so no
+single cross-wave value label could be written for them. `variables` marks
+these `var_type == "text"` and documents no harmonized value labels at all
+for them; `to_factor` recodes such a variable to its wave-specific label
+text (character) instead of a factor, so waves whose numeric codes
+disagree but whose label text agrees (`0 = "no", 1 = "yes"` vs.
+`1 = "no", 2 = "yes"`) still merge correctly.
 
 ### Manual corrections
 
