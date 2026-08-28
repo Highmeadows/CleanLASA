@@ -111,15 +111,1324 @@ edit <code>data-raw/lasa_topic_database.R</code> directly and re-run it.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">lasa_topics</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .lasa_topic_database():</span> object 'lasa_topic_database' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            theme                          subtheme</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25   Biomaterial                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26          Care        Adaptations and facilities</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27          Care        Adaptations and facilities</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28          Care             Contact with services</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29          Care             Contact with services</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30          Care             Contact with services</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31          Care             Contact with services</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32          Care             Contact with services</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33          Care             Contact with services</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34          Care             Contact with services</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35          Care             Contact with services</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36          Care  End of life care and preferences</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37          Care  End of life care and preferences</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38          Care  End of life care and preferences</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39          Care  End of life care and preferences</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40          Care  End of life care and preferences</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41          Care  End of life care and preferences</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42          Care  End of life care and preferences</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43          Care  End of life care and preferences</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44          Care  End of life care and preferences</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45          Care  End of life care and preferences</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46          Care                  Needs assessment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47          Care                  Needs assessment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48          Care                  Needs assessment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49          Care                  Needs assessment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50          Care                  Needs assessment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51          Care                  Needs assessment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52          Care                  Needs assessment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53          Care                    Providing care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54          Care                    Providing care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72          Care                       Use of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73          Care                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74          Care                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75          Care                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76          Care                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77          Care                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78          Care                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79          Care                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80     Cognitive                          Dementia</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81     Cognitive                          Dementia</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82     Cognitive                          Dementia</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83     Cognitive                          Dementia</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84     Cognitive             Executive functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85     Cognitive             Executive functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86     Cognitive             Executive functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87     Cognitive             Executive functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88     Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89     Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90     Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91     Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92     Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93     Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94     Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95     Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96     Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97     Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98     Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99     Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100    Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 101    Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 102    Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 103    Cognitive        Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 104    Cognitive                            Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 105    Cognitive                            Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 106    Cognitive                            Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 107    Cognitive                            Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108    Cognitive                            Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 109    Cognitive                            Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 110    Cognitive                            Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 111    Cognitive                            Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 112 Demographics                 General variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 113 Demographics                 General variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 114 Demographics                 General variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 115 Demographics                 General variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 116 Demographics                 General variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 117 Demographics                 General variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118 Demographics                 General variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 119 Demographics                 General variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 120 Demographics                 General variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 121 Demographics                 General variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 122 Demographics                 General variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 123 Demographics                 General variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 124 Demographics                 General variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 125 Demographics                 General variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 126 Demographics                         Geography</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 127 Demographics                         Geography</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 128 Demographics                         Geography</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 129 Demographics               Living arrangements</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 130 Demographics               Living arrangements</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 131 Demographics               Living arrangements</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 132 Demographics               Living arrangements</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 133 Demographics               Living arrangements</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 134 Demographics               Living arrangements</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 135 Demographics                         Mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136 Demographics                         Mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 137 Demographics                         Mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 138 Demographics                          Religion</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 139 Demographics                          Religion</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 140 Demographics                          Religion</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 141 Demographics                          Religion</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 142 Demographics             Socio-economic status</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 143 Demographics             Socio-economic status</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 144 Demographics             Socio-economic status</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 145 Demographics             Socio-economic status</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 146 Demographics             Socio-economic status</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 147 Demographics             Socio-economic status</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 148 Demographics             Socio-economic status</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 149 Demographics             Socio-economic status</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 150 Demographics             Socio-economic status</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 151    Emotional                    (In)dependence</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 152    Emotional                              ADHD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 153    Emotional                              ADHD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 154    Emotional                           Anxiety</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 155    Emotional                           Anxiety</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 156    Emotional                           Anxiety</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 157    Emotional                           Anxiety</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 158    Emotional                           Anxiety</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 159    Emotional                        Depression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 160    Emotional                        Depression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 161    Emotional                        Depression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 162    Emotional                        Depression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 163    Emotional                        Depression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 164    Emotional                        Depression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 165    Emotional                        Depression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 166    Emotional                        Depression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 167    Emotional                Evaluation of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 168    Emotional                Evaluation of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 169    Emotional                Evaluation of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 170    Emotional                Evaluation of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 171    Emotional                Evaluation of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 172    Emotional                Evaluation of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 173    Emotional                Evaluation of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 174    Emotional                Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 175    Emotional                Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 176    Emotional                Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 177    Emotional                Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 178    Emotional                Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 179    Emotional                Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 180    Emotional                Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 181    Emotional                Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 182    Emotional                Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 183    Emotional                Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 184    Emotional                Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 185    Emotional                Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 186    Emotional                Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 187    Emotional                Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 188    Emotional                     Religiousness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 189    Emotional                     Religiousness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 190    Emotional                     Religiousness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 191    Emotional                     Religiousness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 192    Emotional                     Religiousness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 193    Emotional                     Religiousness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 194    Emotional                     Religiousness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 195    Emotional                     Religiousness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 196    Emotional                     Religiousness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 197    Emotional                     Religiousness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 198    Emotional                     Religiousness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 199    Emotional                     Religiousness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 200    Emotional                     Religiousness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 201    Emotional                         Sexuality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 202    Emotional                         Sexuality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 203    Emotional                 Singing and music</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 204    Emotional                             Sleep</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 205    Emotional                             Sleep</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 206    Emotional              Stress and stressors</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 207    Emotional              Stress and stressors</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 208    Emotional              Stress and stressors</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 209    Emotional                    Subjective age</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 210    Emotional                    Subjective age</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 211    Emotional                    Subjective age</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 212    Emotional                    Subjective age</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 213    Emotional                          Worrying</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 214    Emotional                          Worrying</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 215     Physical                    Blood pressure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 216     Physical                  Body composition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 217     Physical                  Body composition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 218     Physical                  Body composition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 219     Physical                  Body composition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 220     Physical                  Body composition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 221     Physical                  Body composition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 222     Physical                  Body composition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 223     Physical                  Body composition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 224     Physical                  Body composition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 225     Physical                  Body composition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 226     Physical                  Body composition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 227     Physical                  Body composition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 228     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 229     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 230     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 231     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 232     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 233     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 234     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 235     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 236     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 237     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 238     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 239     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 240     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 241     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 242     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 243     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 244     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 245     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 246     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 247     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 248     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 249     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 250     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 251     Physical                  Chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 252     Physical                           Falling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 253     Physical                           Falling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 254     Physical                           Falling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 255     Physical                           Falling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 256     Physical                           Falling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 257     Physical                           Falling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 258     Physical                           Falling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 259     Physical                           Falling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 260     Physical                           Falling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 261     Physical                           Falling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 262     Physical                           Falling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 263     Physical                           Falling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 264     Physical                         Fertility</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 265     Physical                         Fertility</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 266     Physical                         Fractures</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 267     Physical                         Fractures</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 268     Physical                         Fractures</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 269     Physical                         Fractures</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 270     Physical                         Fractures</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 271     Physical                         Fractures</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 272     Physical                           Frailty</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 273     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 274     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 275     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 276     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 277     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 278     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 279     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 280     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 281     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 282     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 283     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 284     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 285     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 286     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 287     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 288     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 289     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 290     Physical                         Lifestyle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 291     Physical           Medication/ supplements</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 292     Physical           Medication/ supplements</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 293     Physical           Medication/ supplements</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 294     Physical           Medication/ supplements</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 295     Physical                              Pain</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 296     Physical                              Pain</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 297     Physical                              Pain</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 298     Physical                              Pain</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 299     Physical               Perception: Hearing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 300     Physical               Perception: Hearing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 301     Physical               Perception: Hearing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 302     Physical               Perception: Hearing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 303     Physical               Perception: Hearing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 304     Physical               Perception: Hearing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 305     Physical                Perception: Vision</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 306     Physical                Perception: Vision</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 307     Physical                Perception: Vision</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 308     Physical                Perception: Vision</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 309     Physical                Perception: Vision</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 310     Physical                Perception: Vision</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 311     Physical                Perception: Vision</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 312     Physical                 Perception: smell</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 313     Physical                 Perception: smell</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 314     Physical                 Perception: smell</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 315     Physical              Physical functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 316     Physical              Physical functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 317     Physical              Physical functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 318     Physical              Physical functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 319     Physical              Physical functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 320     Physical              Physical functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 321     Physical              Physical functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 322     Physical              Physical functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 323     Physical              Physical functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 324     Physical              Physical functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 325     Physical              Physical functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 326     Physical              Physical functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 327     Physical                   Quality of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 328     Physical                   Quality of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 329     Physical                   Quality of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 330     Physical                   Quality of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 331     Physical                   Quality of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 332     Physical                   Quality of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 333     Physical                   Quality of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 334     Physical                   Quality of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 335     Physical                   Quality of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 336     Physical                   Quality of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 337     Physical                   Quality of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 338     Physical                   Quality of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 339     Physical                   Quality of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 340     Physical                   Quality of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 341       Social                       Affiliation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 342       Social                       Affiliation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 343       Social                       Affiliation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 344       Social                       Affiliation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 345       Social                           Housing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 346       Social                           Housing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 347       Social                           Housing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 348       Social                           Housing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 349       Social                           Housing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 350       Social                           Housing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 351       Social                           Housing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 352       Social                           Housing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 353       Social                           Housing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 354       Social                           Housing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 355       Social                           Housing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 356       Social                           Housing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 357       Social                           Housing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 358       Social                           Housing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 359       Social                        Loneliness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 360       Social                        Loneliness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 361       Social                        Loneliness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 362       Social                        Loneliness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 363       Social              Partner relationship</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 364       Social Relationships between generations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 365       Social Relationships between generations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 366       Social Relationships between generations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 367       Social Relationships between generations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 368       Social Relationships between generations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 369       Social Relationships between generations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 370       Social Relationships between generations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 371       Social Relationships between generations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 372       Social                    Social network</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 373       Social                    Social network</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 374       Social                    Social network</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 375       Social                      Social norms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 376       Social                      Social norms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 377       Social                      Social norms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 378       Social                      Social norms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 379       Social                      Social norms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 380       Social                      Social norms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 381       Social                      Social norms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 382       Social              Social participation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 383       Social              Social participation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 384       Social              Social participation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 385         Work                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 386         Work                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 387         Work                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 388         Work                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 389         Work                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                      topic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                                                                                          Adiponectin, leptin and ghrelin</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                                                                                                  Apolipoprotein E (ApoE)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                                                                                     Blood collection and overview (routine) measurements</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                                                                                  Bone-related hormones and bone turnover</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                                                                     COLIA1 (Collagen type I α1 Sp1 polymorphism in LASA)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                                                                                               Cholesterol, triglycerides and fructosamin</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                  Cortisol (total plasma cortisol, corticosteroid binding globuline, salivary cortisol) - Salivary cortisol (non)response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                 Cortisol (total plasma cortisol, corticosteroid binding globuline, salivary cortisol) - Salivary cortisol, moment of day</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   Cortisol (total plasma cortisol, corticosteroid binding globuline, salivary cortisol) - Salivary cortisol, moment of day (constructed)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                         Cortisol (total plasma cortisol, corticosteroid binding globuline, salivary cortisol) - plasma / serum cortisol</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11                                                                                                                              Exome Chip</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                                                                                                                               GWAS data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13                                                 Genetic polymorphisms (VDR, GR, etc) - Glucocorticoid Receptor (GR) SNPs and haplotypes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14                                                     Genetic polymorphisms (VDR, GR, etc) - Vitamin D Receptor (VDR) SNPs and haplotypes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                                                                                                    Hair cortisol (LASA ancillary study)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16                                                                                                          Homocysteine, vitamin B12, MMA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17                                                                                                                    Inflammation factors</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18                                                                                                   Plasma markers of Alzheimer's Disease</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19                                                                                               Plasma markers of endothelial dysfunction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20                                                                                       Response blood sampling / DNA Date blood sampling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21                                                                                          Routine measurements (Albumin and cholesterol)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22                                                                      Serum 25-hydroxy-vitamin D (25(OH)D) and parathyroid hormone (PTH)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23                                                                                                                            Sex hormones</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24                                                                                                                        Thyroid function</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25                                                                                                                        Vitamin K status</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26                                                                                                                Adaptations in the house</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27                                                                                                  Use of assistive devices or assistence</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28                                                                                                                       Care and contacts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29                                                                                                 Contact with health and social services</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30                                                                                                        Health care in country of origin</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31                                                                                                                      Hospital admission</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32                                                                                                         Hospital admission - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33                                                                                                    Hospital admission - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34                                                                               Outpatient contact with medical specialists last 6 months</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35                                                 Outpatient contact with medical specialists last 6 months - specification of specialist</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36                                                                                                             Advance Care Planning (ACP)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37                                                                                                                      Advance Directives</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38                                                                                                                      Advance Directives</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39                                                                                                    Advance Directives - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40                                                                                                             Decisions in eol situations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41                                                                        End-of-life care: interviews with proxies (LASA ancillary study)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42                                                                                                Feelings and wishes about life and death</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43                                                                                                      General eol goals; Subj. life exp.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44                                                                                                                             Last wishes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45                                                                                    Opinions about euthanasia and end-of-life (eol) pill</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46                                                                      Needs assessment - Contact with WMO and application for facilities</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47                                                                       Needs assessment - Medical indication and facilities (tel. proxy)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48                                                                  Needs assessment - Medical indication and facilities (tel. respondent)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49                                                                                                   Needs assessment - Use WVG facilities</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50                                                                                      Needs assessment - Use WVG facilities (tel. proxy)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51                                                                                 Needs assessment - Use WVG facilities (tel. respondent)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52                                                                                              Needs assessment - medical care indication</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53                                                                                Family caregiving to older adults (LASA ancillary study)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54                                                                                       Providing assistance with personal/household care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55                                                                                                            Aggr. variables care network</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56                                                                                                                         Care evaluation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57                                                                                                                           Need for care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58                                                                       Perceived control in health care and scale (LASA ancillary study)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59                                                                                                               Perceived control of care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60                                                                                                                   Personal budget (PGB)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61                                                                                                                  Satisfaction with care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62                                                                                             Transitions in care (LASA ancillary study)*</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63                                                                                                                     Use of nursing care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64                                                                                                        Use of nursing care - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65                                                                                                   Use of nursing care - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66                                                                                                          Use of personal/household care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67                                                                                             Use of personal/household care - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68                                                                                        Use of personal/household care - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69                                                                                                  Use of respite care by R (for partner)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70                                                                                                            Use of transport/admin. care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71                                                                                               Use of transport/admin. care - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72                                                                                          Use of transport/admin. care - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73                                                                                                                    Attitudes about care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74                                                                                                                    Attitudes about care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75                                                                                                                    Attitudes about care</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76                                                                                                      Filial responsibility expectations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77                                                                                             Filial responsibility expectations - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78                                                                                                                    Vignettes about help</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79                                                                                                                    Vignettes about help</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80                                                                                                                      Dementia algorithm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81                                                                                                                        Dementia parents</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82                                                                                                      Dementia parents - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83                                                                                                                        Dementia partner</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84                                                                                                      Executive functioning (Digit span)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85                                                                                                      Executive functioning (Digit span)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86                                                                                                      Executive functioning (Digit span)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87                                                                                                                          Verbal fluency</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88                                                                                                       Crystallized intelligence (GIT ©)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89                                                                                        Crystallized intelligence (GIT ©) - total scores</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90                                                                                                              Fluid intelligence (RAVEN)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91                                                                                                              Fluid intelligence (RAVEN)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92                                                                                    Fluid intelligence (RAVEN) - scaled Evaluation RAVEN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93                                                                                                                             Head trauma</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94                                                                                                                Head trauma - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95                                                                                                           Head trauma - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96                                                                                                                         Health literacy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97                                                                                 Informant Quest. of COgn. DEcline (IQCODE) - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98                                                                            Informant Quest. of COgn. DEcline (IQCODE) - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99                                                                                              Information processing speed (Coding task)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100                                                                                                   Mini-Mental State Examination (MMSE)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 101                                                                                     Mini-Mental State Examination (MMSE) - MMSE scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 102                                                                       Mini-Mental State Examination (MMSE) - MMSE subtraction/spelling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 103                                                                                 Mini-Mental State Examination (MMSE) - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 104                                                                                                                 Episodic memory (15WT)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 105                                                                                                   Episodic memory (15WT) - constructed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 106                                                                                                                        Everyday memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 107                                                                                                                      Memory complaints</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108                                                                                                    Memory complaints - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 109                                                                                                                         Memory partner</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 110                                                                                                                             Metamemory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 111                                                                                                                    Metamemory - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 112                                                                                             (Non-)response; more detailed non-response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 113                                                                                                                       Age at interview</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 114                                                                                                                       Age at interview</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 115                                                                                                                              Education</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 116                                                                                                                              Education</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 117                                                                                                                             Ethnicity*</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118                                                                                                                             Ethnicity*</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 119                                                                                                                           Nationality*</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 120                                                                                                                           Nationality*</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 121                                                                                                                                    Sex</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 122                                                                                                                                    Sex</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 123                                                                                                                   Time of measurement*</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 124                                                                                                                   Time of measurement*</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 125                                                                                                                         Weight factors</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 126                                                                                                         History of domestic addresses*</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 127                                                                                                                           Urbanization</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 128                                                                                                                           Urbanization</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 129                                                                                                                  Household composition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 130                                                                                                                Housing characteristics</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 131                                                                                                             Marital and partner status</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 132                                                                                   Marital and partner status (Migrant Cohort baseline)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 133                                                                                                Marital and partner status - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 134                                                                                           Marital and partner status - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 135                                                                                                           Mortality and cause of death</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136                                                                                               Mortality and cause of death - Specified</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 137                                                                                                                         Mortality data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 138                                                                                                                     Church affiliation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 139                                                                                                                     Church affiliation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 140                                                                                                                      Church attendance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 141                                                                                                                      Church attendance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 142                                                                                                                       Health insurance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 143                                                                                                                                 Income</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 144                                                                                            Income - Income specification (wave B only)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 145                                                                                                                      Income and wealth</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 146                                                                                                    Income and wealth - house ownership</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 147                                                                                                             Income and wealth - income</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 148                                                                                               Income and wealth - income specification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 149                                                                                                            Income decline / evaluation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 150                                                                                                                             Occupation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 151                                                                                                             Investment in independence</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 152                                                                                                            ADHD (LASA ancillary study)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 153                                                                                              ADHD (LASA ancillary study) - constructed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 154                                                                                                                      Anxiety diagnoses</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 155                                                                                                                       Anxiety symptoms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 156                                                                                                              Anxiety symptoms - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 157                                                                                                            Posttraumatic stress (PTSD)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 158                                                                                                   Posttraumatic stress (PTSD) - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 159                                                                                          Depression diagnoses and depression algorithm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 160                                                                                                                    Depressive symptoms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 161                                                                                                           Depressive symptoms - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 162                                                                                                       Depressive symptoms - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 163                                                                                                  Depressive symptoms - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 164                                                                  Depressive symptoms and food-related behaviour (LASA ancillary study)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 165                                                                                                  Lifetime Psychiatric Disorder (LIDAS)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 166                                                               Mental health problems and food-related behaviour (LASA ancillary study)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 167                                                                                              Awareness of Age-Related Change (AARC-SF)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 168                                                                                                                           Generativity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 169                                                                                                              Important aspects of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 170                                                                                                   Satisfaction with life and happiness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 171                                                                                Satisfaction with life and happiness - 'happiness-line'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 172                                                                                                                      Valuation of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 173                                                                                                             Valuation of life - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 174                                                                                                          General self-regulation (GSR)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 175                                                                                                 General self-regulation (GSR) - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 176                                                                                                                                  Humor</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 177                                                                                                                         Humor - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 178                                                                                                                                Mastery</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 179                                                                                                                       Mastery - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 180                                                                                                                           Meta-emotion</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 181                                                                                                                           Meta-emotion</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 182                                                                                                        Neuroticism and soc. inadequacy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 183                                                                                               Neuroticism and soc. inadequacy - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 184                                                                                                                Perceived self-efficacy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 185                                                                                                       Perceived self-efficacy - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 186                                                                                                                            Self-esteem</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 187                                                                                                                   Self-esteem - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 188                                                                                               Gerotranscendence (Cosmic transcendence)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 189                                                                                      Gerotranscendence (Cosmic transcendence) - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 190                                                                                                                  Orthodoxy (Main int.)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 191                                                                                                         Orthodoxy (Main int.) - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 192                                                                                                           Orthodoxy (Self-adm. quest.)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 193                                                                                                  Orthodoxy (Self-adm. quest.) - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 194                                                                                                                                Praying</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 195                                                                                                                       Religious coping</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 196                                                                                                                   Salience of religion</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 197                                                                                                                   Salience of religion</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 198                                                                                                          Salience of religion - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 199                                                                                                      Salience of religion - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 200                                                                                                 Salience of religion - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 201                                                                                                                        Gender identity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 202                                                                                                                              Sexuality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 203                                                                                                               Singing and making music</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 204                                                                                                                          Sleep quality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 205                                                                                                                 Sleep quality - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 206                                                                                                                 (Negative) life events</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 207                                                                                                                       Perceived stress</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 208                                                                                                              Perceived stress - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 209                                                                                                                              Age norms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 210                                                                                                                 Attitude toward ageing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 211                                                                                                               Perceived discrimination</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 212                                                                                                  Subjective life expectancy/ subj. age</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 213                                                                                                                               Worrying</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 214                                                                                                                      Worrying - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 215                                                                                                         Blood pressure/pulse - retests</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 216                                                                                            Anthropometry - Ankle, Knee and Pulse width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 217                                                                                                       Anthropometry - Calf measurement</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 218                                                                                                       Anthropometry - Calf measurement</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 219                                                                                                      Anthropometry - Weight and height</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 220                                                                                             Bio-electrical impedance (BIA) (subsample)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 221                                                                                                                           Birth weight</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 222                                                                                   DXA (LASA ancillary study) - Hip / lumbar spine scan</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 223                                                                                           DXA (LASA ancillary study) - Whole body scan</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 224                                                                                                                   Perceived body shape</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 225                                                                                                          Perceived body shape - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 226                                                                                            Weight and height:history and weight change</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 227                                                                          Weight and height:history and weight change - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 228                                                                                                            Allostatic Load (algorithm)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 229                                                                                             Aortic calcification (lateral radiographs)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 230                                                                                                                              Back pain</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 231                                                                                                                              Bedridden</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 232                                                                                                    Cardiovascular diseases (algorithm)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 233                                                                                                                   Decubitus (bedsores)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 234                                                                                                                   Decubitus (bedsores)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 235                                                                                                          Diabetes mellitus (algorithm)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 236                                                                                                          Diabetes mellitus (algorithm)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 237                                                                                                          Diabetes mellitus (algorithm)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 238                                                                                                                         GP information</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 239                                                                                                                        Hyperthyroidism</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 240                                                                                                                     Intrinsic Capacity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 241                                                                                                                     Metabolic syndrome</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 242                                                                                     Osteoarthritis hip and knee (algorithm) - cohort 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 243                                                                                     Osteoarthritis hip and knee (algorithm) - cohort 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 244                                                                                     Osteoarthritis hip and knee (algorithm) - cohort 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 245                                                                                                      Parkinson: early P. related signs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 246                                                                                                       Rheumatoid Arthritis (algorithm)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 247                                                                                                        Self-report of chronic diseases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 248                                                                               Self-report of chronic diseases - longitudinally cleaned</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 249                                                                             Self-report of chronic diseases - nr. of diseases reported</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 250                                                                                           Self-report of chronic diseases - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 251                                                                                      Self-report of chronic diseases - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 252                                                                                                                              Dizziness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 253                                                                                                                                  Falls</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 254                                                                                                                     Falls - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 255                                                                                                                Falls - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 256                                                                             Falls: 1y prospective fall calendar (LASA ancillary study)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 257                                                                             Falls: 3y prospective fall calendar (LASA ancillary study)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 258                                                                                                  Falls: circumstances and consequences</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 259                                                                                                 Falls: environmental conditions (home)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 260                                                                                     Falls: fear of falling (FES: Falls Efficacy Scale)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 261                                                                             Falls: prevention of fall accidents (LASA ancillary study)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 262                                                                                                                          Foot problems</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 263                                                                                                                           Walking aids</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 264                                                                                                                      Fertility (women)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 265                                                                                                                      Fertility (women)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 266                                                                                                                              Fractures</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 267                                                                                                                 Fractures - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 268                                                                                                            Fractures - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 269                                                                                                            Fractures - total waves B-E</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 270                                                                                                        Quantitative ultrasound of bone</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 271                                                                                                                  Vertebral deformities</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 272                                                                           Various definitions (e.g., frailty phenotype, frailty index)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 273                 Accelerometry (LASA ancillary studies) - subsample (St. 1) - subsample (St. 2) - subsample (St. 3) - subsample (St. 4)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 274                                                                                                                            Alcohol use</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 275                                                                                                                   Alcohol use - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 276                                                                                                             Coffee and tea consumption</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 277                                                                                                                Daily Physical Activity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 278                                                                                                              Diet and food consumption</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 279                                                                                                              Diet and food consumption</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 280                                                                                                           Early life physical activity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 281                                                                                                    MicMac study (LASA ancillary study)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 282                                                                                                                            Oral health</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 283                                                                                                                            Oral health</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 284                                                                                                    Perceived physical activity (LIVAS)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 285                                                                                           Perceived physical activity (LIVAS) - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 286                                                                                                                      Physical activity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 287                                                                                                                     Sedentary behavior</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 288                                                                                            Sedentary behavior - longitudinally cleaned</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 289                                                                                                            Sedentary behavior - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 290                                                                                                                                Smoking</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 291                                                                                                                    Food supplement use</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 292                                                                                           Food supplement use - Vitamin D use included</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 293                                                                                                     Medication and food supplement use</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 294                                                                               Medication and food supplement use - types of medication</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 295                                                                                                                      Dealing with pain</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 296                                                                                                                           Pain drawing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 297                                                                                                                        Subjective pain</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 298                                                                                                               Subjective pain - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 299                                                                                                                  Hearing (self-report)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 300                                                                                                     Hearing (self-report) - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 301                                                                                                Hearing (self-report) - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 302                                                                                                   Hearing (self-report) - total scores</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 303                                                                                                             Hearing: SNT questionnaire</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 304                                                                                                        Hearing: SNT technical measures</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 305                                                                                                                   Vision (self-report)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 306                                                                                                      Vision (self-report) - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 307                                                                                                 Vision (self-report) - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 308                                                                                                    Vision (self-report) - total scores</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 309                                                                                                           Vision: contrast sensitivity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 310                                                                                                                     Visual acuity test</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 311                                                                                    Visual acuity test - Vision-related quality of life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 312                                                                                                                     Olfactory function</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 313                                                                                                                     Olfactory function</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 314                                                                                                                     Olfactory function</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 315                                                                                                               Funct. limitations (ADL)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 316                                                                                    Funct. limitations (ADL) - constructed (sum scores)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 317                                                           Funct. limitations (ADL) - limitations in joint mobility (medical interview)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 318                                                                                                  Funct. limitations (ADL) - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 319                                                                                             Funct. limitations (ADL) - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 320                                                                                                            Global Activity Limitations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 321                                                                                          Global Activity Limitations - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 322                                                                                                                          Grip strength</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 323                                                                                                                   Partner relationship</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 324                                                                                                                              Peak Flow</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 325                                                                                                                   Physical performance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 326                                                                                                       Spirometry (post bronchodilator)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 327                                                                                                                                EuroQol</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 328                                                                                                                       EuroQol - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 329                                                                                                                            Qualeffo-41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 330                                                                                                            Qualeffo-41 - (non)response</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 331                                                                                                          Qualeffo-41 - Qualeffo scores</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 332                                                                                                                    SF-12 Health Survey</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 333                                                                                                           SF-12 Health Survey - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 334                                                                                                     SF-12 Health Survey - scaled (Am.)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 335                                                                                                                      Self-rated health</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 336                                                                                                               Self-rated health - GHPQ</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 337                                                                                                       Self-rated health - GHPQ: scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 338                                                                                                         Self-rated health - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 339                                                                                                    Self-rated health - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 340                                                                                                                    WHO Quality of Life</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 341                                                                                                                   Need for affiliation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 342                                                                                                                   Need for affiliation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 343                                                                                                          Need for affiliation - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 344                                                                                                          Need for affiliation - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 345                                                                                                                        House ownership</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 346                                                                                                   Housing characteristics - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 347                                                                                              Housing characteristics - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 348                                                                                                Housing characteristics and adaptations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 349                                                                                                           Neighborhood characteristics</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 350                                                                                                           Neighborhood characteristics</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 351                                                                                                           Neighborhood characteristics</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 352                                                                                                                  Neighborhood problems</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 353                                                                                                                      Pets in household</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 354                                                                                                                             Relocation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 355                                                                                                                             Relocation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 356                                                                                                                Relocation - tel. proxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 357                                                                                                           Relocation - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 358                                                                                                                      Residence in 1944</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 359                                                                                                                 Existential loneliness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 360                                                                                                                             Loneliness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 361                                                                                                                    Loneliness - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 362                                                                                                           Loneliness - tel. respondent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 363                                                                                                                   Relationship quality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 364                                                                                                                               Children</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 365                                                                                                                               Children</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 366                                                                                                     Filial responsibility expectations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 367                                                                                            Filial responsibility expectations - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 368                                                                                                                          Grandchildren</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 369                                                                                                                          Parental data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 370                                                                                                                   Vignettes about help</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 371                                                                                                    Vignettes about help - total scores</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 372                                                                                                                        Contact network</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 373                                                                                                                       Personal network</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 374                                                                                                        Personal network - network size</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 375                                                                                                                              Donorship</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 376                                                                                                                    Social desirability</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 377                                                                                                           Social desirability - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 378                                                                                                                        Social identity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 379                                                                                                               Social identity - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 380                                                                                                            Ties with country of origin</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 381                                                                                                                       Values and norms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 382                                                                                                                Environmental influence</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 383                                                                                                                   Social participation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 384                                                                                                                   Social participation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 385                                                                                          General Population Job ExposureMatrix (GPJEM)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 386                                                                                                          Perception of work conditions</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 387                                                                                                       Work (Employment) and Retirement</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 388                                                                                    Work (Employment) and Retirement - tel. respondent*</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 389                                                                                                    Work and Retirement characteristics</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     filecode                                    waves has_varinfo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        879                                        G        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        870                                    B, 2B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        850                          B, C, 2B, G, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4        862                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5        871                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6        867                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7        880                                        E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8        881                                        E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9        882                                        E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10       864                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11      &lt;NA&gt;                                     C, G       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12      &lt;NA&gt;                             C, 2B, G, 3B       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13       873                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14       872                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15      &lt;NA&gt;                                     &lt;NA&gt;       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16       866                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17       861                                 B, C, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18       868                                     C, G        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19       878                                        G        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20       851                          B, C, 2B, G, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21       860                          B, C, 2B, G, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22       862                             C, 2B, G, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23       863                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24       865                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25       869                                       2B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26      &lt;NA&gt;                                     &lt;NA&gt;       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27      &lt;NA&gt;                                     &lt;NA&gt;       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28       109                                  I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29       044 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30       068                                       MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31       045 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32       603                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33       703                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34       045 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35       245 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36       108                                     I, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37       093                                        D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38       195                         F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39       709                                        D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40       148                                        G        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41      &lt;NA&gt;                                     E, G       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42       127                                  I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43       094                        G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44       146                                        F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45       122     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46       178                            G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47       610                               E, F, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48       710                            E, F, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49       177                            G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50       611                            G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51       711                            G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52       189                      E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53      &lt;NA&gt;                                        E       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54       142             2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55       233                                        H        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56       033 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57       033                 F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58      &lt;NA&gt;                                        H       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59       033                       H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60       033                                        H        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61       033 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62      &lt;NA&gt;                                     &lt;NA&gt;       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63       033                       H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64       603                               H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65       703                               H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66       033 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67       603                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68       703                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69       139                                  I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70       033                               H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71       603                               H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72       703                               H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73       032                                        B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74       112          B, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75       175                                     J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76       132                                  D, E, J        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77       332                                  D, E, J        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78       074                                        D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79       274                                        D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80      &lt;NA&gt;                  C, D, E, 2B, F, G, H, I       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81       092                                    D, 2B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82       702                                        D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83       139                  E, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84       020                                       3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85       166                               H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86       220                                       3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87       165                       H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88       037                                  C, F, I       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89       237                                  C, F, I       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90       022                     B, C, D, E, 2B, F, G        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91       024                                        B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92       222                     B, C, D, E, 2B, F, G        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93       035                   D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94       602                   D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95       702                   D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96       196                                        K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97       607                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98       707                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99       155     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100      021 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 101      221 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 102      421 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 103      707                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 104      156     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 105      356     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 106      023                                     B, F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 107      021 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108      707                   D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 109      139                  E, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 110      124                                  B, C, D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 111      324                                  B, C, D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 112     z002     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 113    mb008                                       MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 114     z008     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 115    mb004                                       MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 116     z004                                B, 2B, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 117    mb004                                       MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118     z004                                B, 2B, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 119    mb004                                       MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 120     z004                                B, 2B, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 121    mb004                                       MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 122     z004                                B, 2B, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 123    mb008                                       MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 124     z008     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 125     &lt;NA&gt;                                     &lt;NA&gt;       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 126     z052     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 127    mb095                                       MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 128     z095     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 129      011 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 130     &lt;NA&gt;                                     &lt;NA&gt;       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 131     z010     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 132    mb010                                       MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 133      601                C, D, E, F, G, H, I, J, K       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 134      701                C, D, E, F, G, H, I, J, K       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 135     z991     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136     z992     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 137     z990     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 138      038                                       MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 139     z038                          C, D, E, 2B, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 140      038                                 MB, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 141     z038                 D, E, 2B, F, G, H, 3B, I        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 142      018                                        B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 143      017 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 144      217                                        B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 145      015     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 146      017 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 147      217                                        B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 148      019 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 149      019 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 150      016 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 151      144                         F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 152      179                                        G        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 153      379                                        G        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 154     &lt;NA&gt;                  B, D, E, 2B, G, H, I, J       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 155      026     B, C, D, E, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 156      226     B, C, D, E, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 157      091                                     D, E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 158      291                                     D, E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 159     &lt;NA&gt;                                     J, K       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 160      025 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 161      225 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 162      606                                  C, D, E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 163      706                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 164     &lt;NA&gt;                                     &lt;NA&gt;       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 165      039                                        K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 166     &lt;NA&gt;                                     &lt;NA&gt;       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 167      197                                        K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 168      802                                     J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 169      110     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 170      110     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 171      094                                        D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 172      137                                     E, F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 173      337                                     E, F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 174      149                                     G, H        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 175      349                                     G, H        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 176      111                                     B, D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 177      311                                     B, D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 178      027 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 179      227 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 180      029                                        B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 181      143                                       2B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 182      123                       B, C, D, E, 2B, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 183      323                       B, C, D, E, 2B, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 184      028     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 185      228     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 186      027     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 187      227        C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 188      038                           C, D, E, 2B, F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 189      238                           C, D, E, 2B, F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 190      038        C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 191      138                                        E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 192      238                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 193      338                                        E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 194      038        C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 195      105                                   3B, MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 196      038                              C, D, E, 2B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 197      110     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 198      238                              C, D, E, 2B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 199      608                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 200      708                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 201      804                                     J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 202      120                          B, E, 2B, F, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 203      103                                  H, I, J        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 204      117     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 205      317     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 206      272                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 207      104                                    H, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 208      304                                    H, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 209      070        B, C, D, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 210      071                                     B, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 211      169                                     J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 212      094                   D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 213      136                                        E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 214      336                                        E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 215      151 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 216      185                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 217      161                                  I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 218      171                 B, D, E, 2B, F, G, H, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 219      161          B, C, D, E, 2B, F, G, H, 3B, MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 220      172                                        B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 221      134                                E, 2B, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 222      o41                                     C, D       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 223      o42                                     C, D       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 224      145                             F, G, 3B, MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 225      345                                 F, G, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 226      160 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 227      714                                  I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 228     &lt;NA&gt;                                        C       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 229     zo22                                     C, D       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 230      182                                  C, D, E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 231      182                        C, D, F, G, H, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 232     zh01       B, C, D, E, 2B, F, G, H, 3B, MB, I       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 233      116                                        B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 234      159                                        B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 235     zdc1                   B, C, D, E, F, G, H, I        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 236     zdc2                           2B, F, G, H, I        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 237     zdc3                                    3B, I        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 238      g01                       B, C, E, 2B, H, 3B       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 239      182                                     C, D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 240     &lt;NA&gt;                                     &lt;NA&gt;       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 241     ch02                                        C       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 242     zoa1                   B, C, D, E, F, G, H, I        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 243     zoa2                           2B, F, G, H, I        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 244     zoa3                                    3B, I        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 245      096                                   3B, MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 246     &lt;NA&gt;                                     &lt;NA&gt;       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 247      035 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 248      435                                     B, C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 249      235 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 250      602                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 251      702                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 252      187           C, D, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 253      187                       C, D, 3B, MB, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 254      605                                     C, D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 255      705                                     C, D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 256     &lt;NA&gt;                                        G       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 257     &lt;NA&gt;                                        C       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 258      187                                  D, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 259      180                                     C, D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 260      183                                     C, D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 261     &lt;NA&gt;                                        D       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 262      185                               C, D, E, F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 263      187                    D, E, 2B, F, G, H, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 264      119                                        B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 265      181                            C, 2B, 3B, MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 266      186    C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 267      605                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 268      705                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 269     ZFF1                               B, C, D, E       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 270      o31                                     C, G       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 271     zo22                                     C, D       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 272     &lt;NA&gt;    B, C, D, E, 2B, F, G, H, 3B, MB, I, J       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 273     &lt;NA&gt;                                     &lt;NA&gt;       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 274      153 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 275      353 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 276      801                                     J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 277      162                                        J        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 278      118                      B, C, D, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 279      184                                     C, D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 280      246                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 281     &lt;NA&gt;                                        I       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 282      126                                  I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 283     &lt;NA&gt;                                        F       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 284      114                        B, C, D, E, 2B, F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 285      314                        B, C, D, E, 2B, F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 286      046 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 287      101                    G, H, 3B, MB, I, J, K       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 288      501                    G, H, 3B, MB, I, J, K       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 289      301                    G, H, 3B, MB, I, J, K       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 290      154 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 291      174                                  I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 292      374                                  I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 293      152 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 294      352 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 295      188                                        E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 296      188                                        E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 297      115 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 298      315 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 299      031 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 300      604                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 301      704                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 302      231     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 303      194                               E, F, G, I        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 304      193                               E, F, G, I        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 305      031 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 306      604                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 307      704                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 308      231     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 309      157                        B, C, D, E, 2B, F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 310      191                           E, F, G, H, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 311      192                               E, F, G, H        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 312      S00                                   3B, MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 313      S01                                   3B, MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 314      S02                                   3B, MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 315      030 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 316      230 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 317      183                                  C, D, E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 318      603                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 319      703                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 320      033     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 321      703                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 322      161    C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 323      139                  E, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 324      158                         B, C, D, E, G, H        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 325      034 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 326      168                                       3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 327      135                        E, F, G, H, 3B, I        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 328      335                        E, F, G, H, 3B, I        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 329      o80                                        E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 330      o81                                        E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 331      o82                                        E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 332      133               D, E, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 333      333               D, E, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 334      533               D, E, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 335      036 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 336      113              B, C, D, E, 2B, F, G, H, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 337      313              B, C, D, E, 2B, F, G, H, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 338      602                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 339      702                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 340      133                                  I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 341      078                                     B, E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 342      141                                    2B, G        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 343      278                                     B, E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 344      341                                    2B, G        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 345      015     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 346      601                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 347      701                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 348      014 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 349      015     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 350      095                                        K       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 351     z095    B, C, D, E, 2B, F, G, H, 3B, MB, I, J        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 352      170                                     J, K       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 353      012     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 354      014     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 355      015     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 356      601                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 357      701                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 358      013                                        B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 359      173                                        J        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 360      073 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 361      273 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 362      712                               H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 363      139                  E, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 364      048                   C, E, 2B, F, 3B, MB, I        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 365      248                         E, 2B, F, 3B, MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 366      132                                  D, E, J        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 367      332                                  D, E, J        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 368      049                                        F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 369      140                                   2B, 3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 370      074                                        D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 371      274                                        D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 372      167                                3B, MB, I        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 373      047     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 374      247     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 375      128                                     I, J        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 376      130                                     C, F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 377      330                                     C, F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 378      131                                     D, E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 379      331                                     D, E        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 380      069                                       MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 381      122     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 382      121                                  B, C, D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 383      070 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 384      125                     B, C, D, E, 2B, F, G        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 385      016 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 386      106                          3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 387      016 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 388      713                                  I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 389     &lt;NA&gt;                                     &lt;NA&gt;       FALSE</span>
 <span class="r-in"><span><span class="fu">lasa_topics</span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"Physical"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .lasa_topic_database():</span> object 'lasa_topic_database' not found</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Matching LASA themes/subthemes: Physical (theme); Physical functioning (subtheme). Use `lasa_topics(theme = ...)` to search within one of them.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      theme             subtheme                                        topic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Physical            Lifestyle                            Physical activity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Physical Physical functioning                         Physical performance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Physical            Lifestyle                      Daily Physical Activity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Physical            Lifestyle          Perceived physical activity (LIVAS)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Physical            Lifestyle                 Early life physical activity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Physical            Lifestyle Perceived physical activity (LIVAS) - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   filecode                                    waves has_varinfo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      046 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      034 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      162                                        J        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      114                        B, C, D, E, 2B, F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      246                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      314                        B, C, D, E, 2B, F        TRUE</span>
 <span class="r-in"><span><span class="fu">lasa_topics</span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"physical act"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .lasa_topic_database():</span> object 'lasa_topic_database' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      theme  subtheme                                        topic filecode</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Physical Lifestyle                            Physical activity      046</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Physical Lifestyle                      Daily Physical Activity      162</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Physical Lifestyle          Perceived physical activity (LIVAS)      114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Physical Lifestyle                 Early life physical activity      246</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Physical Lifestyle Perceived physical activity (LIVAS) - scaled      314</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                      waves has_varinfo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                        J        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                        B, C, D, E, 2B, F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                        B, C, D, E, 2B, F        TRUE</span>
 <span class="r-in"><span><span class="fu">lasa_topics</span><span class="op">(</span>theme <span class="op">=</span> <span class="st">"cognitive"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .lasa_topic_database():</span> object 'lasa_topic_database' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        theme                   subtheme</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  Cognitive                   Dementia</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Cognitive                   Dementia</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Cognitive                   Dementia</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Cognitive                   Dementia</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Cognitive      Executive functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  Cognitive      Executive functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  Cognitive      Executive functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  Cognitive      Executive functioning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 Cognitive Intelligence and cognition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25 Cognitive                     Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26 Cognitive                     Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27 Cognitive                     Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28 Cognitive                     Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29 Cognitive                     Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30 Cognitive                     Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31 Cognitive                     Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32 Cognitive                     Memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                               topic filecode</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                                Dementia algorithm     &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                                  Dementia parents      092</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                                Dementia parents - tel. respondent      702</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                                  Dementia partner      139</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                Executive functioning (Digit span)      020</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                                Executive functioning (Digit span)      166</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                                Executive functioning (Digit span)      220</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                                                    Verbal fluency      165</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                                 Crystallized intelligence (GIT ©)      037</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                 Crystallized intelligence (GIT ©) - total scores      237</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11                                       Fluid intelligence (RAVEN)      022</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                                       Fluid intelligence (RAVEN)      024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13             Fluid intelligence (RAVEN) - scaled Evaluation RAVEN      222</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14                                                      Head trauma      035</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                                         Head trauma - tel. proxy      602</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16                                    Head trauma - tel. respondent      702</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17                                                  Health literacy      196</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18          Informant Quest. of COgn. DEcline (IQCODE) - tel. proxy      607</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19     Informant Quest. of COgn. DEcline (IQCODE) - tel. respondent      707</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20                       Information processing speed (Coding task)      155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21                             Mini-Mental State Examination (MMSE)      021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22               Mini-Mental State Examination (MMSE) - MMSE scaled      221</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 Mini-Mental State Examination (MMSE) - MMSE subtraction/spelling      421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24           Mini-Mental State Examination (MMSE) - tel. respondent      707</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25                                           Episodic memory (15WT)      156</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26                             Episodic memory (15WT) - constructed      356</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27                                                  Everyday memory      023</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28                                                Memory complaints      021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29                              Memory complaints - tel. respondent      707</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30                                                   Memory partner      139</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31                                                       Metamemory      124</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32                                              Metamemory - scaled      324</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                       waves has_varinfo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                   C, D, E, 2B, F, G, H, I       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                     D, 2B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                                         D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                   E, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                        3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                                H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                                        3B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                        H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                                   C, F, I       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                                  C, F, I       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11                     B, C, D, E, 2B, F, G        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                                        B        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13                     B, C, D, E, 2B, F, G        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14                   D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                   D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16                   D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17                                        K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19                                        C        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24                C, D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27                                     B, F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29                   D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30                  E, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31                                  B, C, D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32                                  B, C, D        TRUE</span>
 <span class="r-in"><span><span class="fu">lasa_topics</span><span class="op">(</span>theme <span class="op">=</span> <span class="st">"memory"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .lasa_topic_database():</span> object 'lasa_topic_database' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       theme subtheme                                topic filecode</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Cognitive   Memory               Episodic memory (15WT)      156</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Cognitive   Memory Episodic memory (15WT) - constructed      356</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Cognitive   Memory                      Everyday memory      023</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Cognitive   Memory                    Memory complaints      021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Cognitive   Memory  Memory complaints - tel. respondent      707</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Cognitive   Memory                       Memory partner      139</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 Cognitive   Memory                           Metamemory      124</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8 Cognitive   Memory                  Metamemory - scaled      324</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                      waves has_varinfo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     B, C, D, E, 2B, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                                     B, F        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                   D, E, F, G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                  E, F, G, H, 3B, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                                  B, C, D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                                  B, C, D        TRUE</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
