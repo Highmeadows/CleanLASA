@@ -265,6 +265,20 @@ silently converted to <code>NA</code>. Set
 instead.</p>
 </div>
 <div class="section level3">
+<h3 id="variables-whose-coding-is-inconsistent-across-waves">Variables whose coding is inconsistent across waves<a class="anchor" aria-label="anchor" href="#variables-whose-coding-is-inconsistent-across-waves"></a>
+</h3>
+<p>Some variables’ coding genuinely differs by wave – a binary code’s
+polarity flipped, or an income variable’s brackets were redefined – so
+no single cross-wave value label could be written for them. The label
+database marks these <code>var_type == "text"</code> and documents no
+harmonized value labels at all for them; <code>to_factor</code> recodes
+such a variable to its wave-specific label text (a character vector)
+instead of a factor, so waves whose numeric codes disagree but whose
+label text agrees (<code>0 = "no", 1 = "yes"</code> in one wave,
+<code>1 = "no", 2 = "yes"</code> in another) still merge correctly on
+the text itself.</p>
+</div>
+<div class="section level3">
 <h3 id="restore-countcontinuous-variables-to-plain-numeric">Restore count/continuous variables to plain numeric<a class="anchor" aria-label="anchor" href="#restore-countcontinuous-variables-to-plain-numeric"></a>
 </h3>
 <p>The label database classifies variables whose codebook contains no
@@ -443,8 +457,9 @@ definitions, as documented for that specific wave;</li>
 <code>value_labels_harmonized</code>: the same variable’s value
 labels standardized across every wave that documents it (no
 <code>wave</code> column – it applies regardless of wave), for combining
-data across waves that coded the same concept slightly differently;
-and</li>
+data across waves that coded the same concept slightly differently –
+absent entirely for a variable whose coding is inconsistent across waves
+(<code>var_type == "text"</code> in <code>variables</code>); and</li>
 <li>
 <code>manual_overrides</code>: separately stored hand-authored
 corrections for variables and value labels.</li>

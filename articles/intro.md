@@ -228,6 +228,18 @@ retained as their numeric code (represented as text) rather than
 silently converted to `NA`. Set `to_factor = FALSE` to keep the variable
 numeric/character instead.
 
+### Variables whose coding is inconsistent across waves
+
+Some variables’ coding genuinely differs by wave – a binary code’s
+polarity flipped, or an income variable’s brackets were redefined – so
+no single cross-wave value label could be written for them. The label
+database marks these `var_type == "text"` and documents no harmonized
+value labels at all for them; `to_factor` recodes such a variable to its
+wave-specific label text (a character vector) instead of a factor, so
+waves whose numeric codes disagree but whose label text agrees
+(`0 = "no", 1 = "yes"` in one wave, `1 = "no", 2 = "yes"` in another)
+still merge correctly on the text itself.
+
 ### Restore count/continuous variables to plain numeric
 
 The label database classifies variables whose codebook contains no
@@ -431,7 +443,9 @@ four main components:
 - `value_labels_harmonized`: the same variable’s value labels
   standardized across every wave that documents it (no `wave` column –
   it applies regardless of wave), for combining data across waves that
-  coded the same concept slightly differently; and
+  coded the same concept slightly differently – absent entirely for a
+  variable whose coding is inconsistent across waves
+  (`var_type == "text"` in `variables`); and
 - `manual_overrides`: separately stored hand-authored corrections for
   variables and value labels.
 

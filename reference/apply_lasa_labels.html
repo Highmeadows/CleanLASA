@@ -155,7 +155,9 @@ effectively <code>TRUE</code>.</p></dd>
 <dt id="arg-to-factor">to_factor<a class="anchor" aria-label="anchor" href="#arg-to-factor"></a></dt>
 <dd><p>Logical, default <code>TRUE</code>. Convert categorical
 (value-labelled) variables to factors using the active value labels
-as levels, instead of leaving them numeric/character.</p></dd>
+as levels, instead of leaving them numeric/character. A variable whose
+value coding is inconsistent across waves (database <code>var_type == "text"</code>) is instead recoded to its wave-specific label text
+(character), never a factor – see Details.</p></dd>
 
 
 <dt id="arg-to-numeric">to_numeric<a class="anchor" aria-label="anchor" href="#arg-to-numeric"></a></dt>
@@ -174,7 +176,8 @@ labels – wave-specific unless the corresponding standardize switch
 is on), <code>"wave_label"</code>/<code>"labels_wave"</code> (always the wave-specific
 versions), <code>"canonical_name"</code> (the wave-stripped variable name), and,
 where the database documents them, <code>"harmonized_label"</code>/
-<code>"labels_harmonized"</code> (the cross-wave-consistent versions).</p>
+<code>"labels_harmonized"</code> (the cross-wave-consistent versions – never
+present for a <code>var_type == "text"</code> variable).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -199,6 +202,14 @@ by name rather than canonical/value-label lookups).</p>
 <code>data</code>, or present in <code>data</code> but undocumented) are never an error –
 they're left alone and recorded in the <code>"label_report"</code> attribute; see
 <code><a href="lasa_label_report.html">lasa_label_report()</a></code>.</p>
+<p>A variable's value coding sometimes genuinely differs by wave (e.g. a
+binary code's polarity flipped, or an income variable's brackets were
+redefined) so no single cross-wave value label could be written; the
+database marks such a variable <code>var_type == "text"</code> and documents no
+harmonized value labels for it at all. <code>to_factor</code> then recodes it to
+its wave-specific label text (character) instead of a factor, so waves
+whose numeric codes disagree but whose label text agrees (e.g.
+<code>0 = "no", 1 = "yes"</code> vs. <code>1 = "no", 2 = "yes"</code>) still merge correctly.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

@@ -126,7 +126,7 @@ subset(db$variables, filecode == "046" & wave == "B")
 #> 9058                     not normal: other reason
 #> 9059              not normal: other reasons coded
 #>                              harmonized_var_label    var_type
-#> 9014   Physical condition respondent: observation categorical
+#> 9014   Physical condition respondent: observation        text
 #> 9015                        Wheelchair go outside categorical
 #> 9016        Wheelchair go outside: last two weeks categorical
 #> 9017 Wheelchair go outside: #times last two weeks     numeric
@@ -147,11 +147,11 @@ subset(db$variables, filecode == "046" & wave == "B")
 #> 9032                   Gardening: time in minutes     numeric
 #> 9033            Gardening: digging last two weeks categorical
 #> 9034               Sport 1: past two weeks yes/no categorical
-#> 9035                      Sport 1: past two weeks categorical
+#> 9035                      Sport 1: past two weeks        text
 #> 9036              Sport 1: # times past two weeks     numeric
 #> 9037                     Sport 1: time in minutes     numeric
 #> 9038                              Sport 2: yes/no categorical
-#> 9039                      Sport 2: past two weeks categorical
+#> 9039                      Sport 2: past two weeks        text
 #> 9040              Sport 2: # times past two weeks     numeric
 #> 9041                    Sport 2 : time in minutes     numeric
 #> 9042        Sport: sweating past two weeks yes/no categorical
@@ -171,5 +171,5 @@ subset(db$variables, filecode == "046" & wave == "B")
 #> 9056                   not normal: family affairs categorical
 #> 9057                         not normal: vacation categorical
 #> 9058                 not normal: cleaning/repairs categorical
-#> 9059                     not normal: good weather categorical
+#> 9059                     not normal: good weather        text
 ```

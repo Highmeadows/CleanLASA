@@ -107,7 +107,10 @@ apply_lasa_labels(
 
   Logical, default `TRUE`. Convert categorical (value-labelled)
   variables to factors using the active value labels as levels, instead
-  of leaving them numeric/character.
+  of leaving them numeric/character. A variable whose value coding is
+  inconsistent across waves (database `var_type == "text"`) is instead
+  recoded to its wave-specific label text (character), never a factor –
+  see Details.
 
 - to_numeric:
 
@@ -125,7 +128,8 @@ carries `"label"`/`"labels"` (the *active* variable label / value labels
 `"wave_label"`/`"labels_wave"` (always the wave-specific versions),
 `"canonical_name"` (the wave-stripped variable name), and, where the
 database documents them, `"harmonized_label"`/ `"labels_harmonized"`
-(the cross-wave-consistent versions).
+(the cross-wave-consistent versions – never present for a
+`var_type == "text"` variable).
 
 ## Details
 
@@ -152,6 +156,15 @@ Unmatched variables in either direction (documented but absent from
 `data`, or present in `data` but undocumented) are never an error –
 they're left alone and recorded in the `"label_report"` attribute; see
 [`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md).
+
+A variable's value coding sometimes genuinely differs by wave (e.g. a
+binary code's polarity flipped, or an income variable's brackets were
+redefined) so no single cross-wave value label could be written; the
+database marks such a variable `var_type == "text"` and documents no
+harmonized value labels for it at all. `to_factor` then recodes it to
+its wave-specific label text (character) instead of a factor, so waves
+whose numeric codes disagree but whose label text agrees (e.g.
+`0 = "no", 1 = "yes"` vs. `1 = "no", 2 = "yes"`) still merge correctly.
 
 ## See also
 
