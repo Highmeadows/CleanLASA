@@ -202,3 +202,15 @@ resp_identifiers <- c("respnr", "Wave")
   for (w in waves) df[df$LASA_Wave == w, canonical_name] <- unname(var_types_vec)
   df
 }
+
+## A harmonized value label is a human-authored placeholder (e.g. "binary
+## category 1", "coding category 11", "income category 5") when a code's
+## real-world meaning genuinely differs by wave and no single cross-wave
+## label could be written -- the author typed this in as a stand-in rather
+## than leave it blank. Detected purely by its trailing "<...> category
+## <code>" shape; see data-raw/build_lasa_label_db.R for what happens next
+## (the whole variable's harmonized value-label set is dropped and its
+## var_type is reclassified "text").
+.lasa_is_placeholder_category_label <- function(label_text) {
+  grepl("categor(y|ies)\\s+-?\\d+$", label_text, ignore.case = TRUE)
+}

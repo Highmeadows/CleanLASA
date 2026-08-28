@@ -9,8 +9,8 @@
 # thin wrapper: all matching, transforming, standardizing, and
 # `add_wavecode` logic lives in `apply_lasa_labels()`. The reshaping
 # helpers below (`.lasa_convert_to_labelled_factor()`,
-# `.lasa_restore_plain_numeric()`, `.lasa_insert_wave_column()`) are shared
-# by that engine.
+# `.lasa_convert_to_labelled_text()`, `.lasa_restore_plain_numeric()`,
+# `.lasa_insert_wave_column()`) are shared by that engine.
 #
 # Shared parameter contract
 # --------------------------------------------------------------------------
@@ -35,7 +35,12 @@
 #                                resolved wave) right after `"respnr"`.
 #   * to_factor                - convert categorical (value-labelled)
 #                                variables to factors instead of leaving
-#                                them numeric/character.
+#                                them numeric/character. A variable whose
+#                                value coding is inconsistent across waves
+#                                (var_type == "text") is instead recoded to
+#                                its wave-specific label text (character),
+#                                never a factor, so it merges correctly
+#                                across waves despite differing codes.
 #   * to_numeric                - restore count/continuous variables to
 #                                plain numeric (dropping their missing-code
 #                                value labels), converting negative codes
@@ -197,6 +202,40 @@
   }
 
   factor(values, levels = level_codes, labels = level_text)
+}
+
+## Recodes a variable's numeric codes to their wave-specific label TEXT (a
+## character vector), instead of building a factor -- used for variables
+## whose value coding is inconsistent across waves (var_type == "text", see
+## data-raw/build_lasa_label_db.R). Unlike .lasa_convert_to_labelled_factor(),
+## colliding label text across different codes is exactly the point here
+## (e.g. code 0 in one wave and code 1 in another both meaning "no"), so it
+## is never disambiguated.
+##
+## Idempotent: a variable already converted by an earlier apply_lasa_labels()
+## call (e.g. re-labelling read_lasa_sav()'s own output) is already label
+## text, not a numeric code -- left untouched rather than coerced to NA.
+.lasa_convert_to_labelled_text <- function(x, value_label_map) {
+  if (is.character(x)) return(x)
+  values <- as.numeric(x)
+  label_codes <- as.numeric(unname(value_label_map))
+  label_text <- names(value_label_map)
+
+  # Same guard as .lasa_convert_to_labelled_factor(): keep only the first
+  # definition of a repeated code.
+  keep <- !duplicated(label_codes)
+  label_codes <- label_codes[keep]
+  label_text <- label_text[keep]
+
+  vapply(
+    values,
+    function(v) {
+      if (is.na(v)) return(NA_character_)
+      i <- match(v, label_codes)
+      if (!is.na(i)) label_text[[i]] else as.character(v)
+    },
+    character(1)
+  )
 }
 
 #' Parse a LASA data-file name

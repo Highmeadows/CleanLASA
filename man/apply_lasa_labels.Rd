@@ -69,7 +69,9 @@ effectively \code{TRUE}.}
 
 \item{to_factor}{Logical, default \code{TRUE}. Convert categorical
 (value-labelled) variables to factors using the active value labels
-as levels, instead of leaving them numeric/character.}
+as levels, instead of leaving them numeric/character. A variable whose
+value coding is inconsistent across waves (database \code{var_type == "text"}) is instead recoded to its wave-specific label text
+(character), never a factor -- see Details.}
 
 \item{to_numeric}{Logical, default \code{TRUE}. Restore count/continuous
 variables (per the database's \code{var_type}) to plain numeric, converting
@@ -84,7 +86,8 @@ labels -- wave-specific unless the corresponding standardize switch
 is on), \code{"wave_label"}/\code{"labels_wave"} (always the wave-specific
 versions), \code{"canonical_name"} (the wave-stripped variable name), and,
 where the database documents them, \code{"harmonized_label"}/
-\code{"labels_harmonized"} (the cross-wave-consistent versions).
+\code{"labels_harmonized"} (the cross-wave-consistent versions -- never
+present for a \code{var_type == "text"} variable).
 }
 \description{
 The engine behind \code{\link[=read_lasa_sav]{read_lasa_sav()}}: attaches SPSS-style variable and
@@ -121,6 +124,15 @@ Unmatched variables in either direction (documented but absent from
 \code{data}, or present in \code{data} but undocumented) are never an error --
 they're left alone and recorded in the \code{"label_report"} attribute; see
 \code{\link[=lasa_label_report]{lasa_label_report()}}.
+
+A variable's value coding sometimes genuinely differs by wave (e.g. a
+binary code's polarity flipped, or an income variable's brackets were
+redefined) so no single cross-wave value label could be written; the
+database marks such a variable \code{var_type == "text"} and documents no
+harmonized value labels for it at all. \code{to_factor} then recodes it to
+its wave-specific label text (character) instead of a factor, so waves
+whose numeric codes disagree but whose label text agrees (e.g.
+\verb{0 = "no", 1 = "yes"} vs. \verb{1 = "no", 2 = "yes"}) still merge correctly.
 }
 \examples{
 \dontrun{

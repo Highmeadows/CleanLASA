@@ -252,3 +252,83 @@ test_that("fuzzy_matching = FALSE disables the fuzzy step", {
   expect_equal(row$method, "not found")
   expect_null(attr(out$BFOO4, "canonical_name"))
 })
+
+## -- var_type == "text" (inconsistent harmonized coding) ----------------
+
+## Two waves of the same canonical name, "foo06", coded with different (and
+## deliberately flipped) numeric->meaning mappings -- 0=no/1=yes in wave B,
+## 1=no/2=yes in wave C -- modelling the real scenario this fallback exists
+## for (see data-raw/build_lasa_label_db.R's placeholder-label detection):
+## var_type == "text" and zero value_labels_harmonized rows for "foo06".
+local_text_fallback_db <- function(env = parent.frame()) {
+  tmp <- tempfile(fileext = ".rds")
+  testthat::local_mocked_bindings(.lasa_label_db_path = function() tmp, .env = env)
+
+  db <- .lasa_empty_label_db()
+  db$variables <- rbind(db$variables, data.frame(
+    filecode = "997", wave = c("B", "C"),
+    variable_name = c("bfoo06", "cfoo06"),
+    canonical_name = c("foo06", "foo06"),
+    variable_label = c("Question six (B)", "Question six (C)"),
+    harmonized_var_label = c(NA_character_, NA_character_),
+    var_type = c("text", "text"),
+    stringsAsFactors = FALSE
+  ))
+  db$value_labels <- rbind(db$value_labels, data.frame(
+    filecode = "997", wave = c("B", "B", "C", "C"),
+    variable_name = c("bfoo06", "bfoo06", "cfoo06", "cfoo06"),
+    value_numeric = c(0, 1, 1, 2),
+    value_label = c("no", "yes", "no", "yes"), is_missing = FALSE,
+    stringsAsFactors = FALSE
+  ))
+  # No value_labels_harmonized rows at all for "foo06" -- this is the
+  # build-time-suppressed state a placeholder-labelled variable ends up in.
+  .lasa_save_label_db(db)
+  tmp
+}
+
+test_that("var_type == \"text\" recodes to wave-specific label text, never a factor", {
+  local_text_fallback_db()
+  dat <- data.frame(RespNr = 1:3, BFOO06 = c(0, 1, 0), stringsAsFactors = FALSE)
+  out <- .lasa_apply_labels(dat, filecode = "997", wave = "B", standardize = FALSE, to_factor = TRUE)
+
+  expect_type(out$BFOO06, "character")
+  expect_false(is.factor(out$BFOO06))
+  expect_equal(as.vector(out$BFOO06), c("no", "yes", "no"))
+  expect_null(attr(out$BFOO06, "labels_harmonized"))
+  expect_null(attr(out$BFOO06, "harmonized_label"))
+})
+
+test_that("var_type == \"text\" ignores .standardize_val_labels/standardize (nothing harmonized exists)", {
+  local_text_fallback_db()
+  dat <- data.frame(RespNr = 1:3, BFOO06 = c(0, 1, 0), stringsAsFactors = FALSE)
+  out <- .lasa_apply_labels(
+    dat, filecode = "997", wave = "B", standardize = TRUE,
+    .standardize_names = FALSE, .standardize_val_labels = TRUE
+  )
+  expect_equal(unname(attr(out$BFOO06, "labels")), c(0, 1))
+  expect_equal(names(attr(out$BFOO06, "labels")), c("no", "yes"))
+  expect_equal(as.vector(out$BFOO06), c("no", "yes", "no"))
+})
+
+test_that("var_type == \"text\" with to_factor = FALSE leaves the original numeric codes untouched", {
+  local_text_fallback_db()
+  dat <- data.frame(RespNr = 1:3, BFOO06 = c(0, 1, 0), stringsAsFactors = FALSE)
+  out <- .lasa_apply_labels(dat, filecode = "997", wave = "B", standardize = FALSE, to_factor = FALSE)
+  expect_equal(as.vector(out$BFOO06), c(0, 1, 0))
+})
+
+test_that("two waves with disagreeing numeric codes merge correctly once recoded to text", {
+  local_text_fallback_db()
+  dat_b <- data.frame(RespNr = 1:3, BFOO06 = c(0, 1, 0), stringsAsFactors = FALSE) # 0=no, 1=yes
+  dat_c <- data.frame(RespNr = 4:6, CFOO06 = c(1, 2, 1), stringsAsFactors = FALSE) # 1=no, 2=yes
+
+  out_b <- .lasa_apply_labels(dat_b, filecode = "997", wave = "B", .standardize_names = TRUE)
+  out_c <- .lasa_apply_labels(dat_c, filecode = "997", wave = "C", .standardize_names = TRUE)
+
+  expect_equal(as.vector(out_b$foo06), c("no", "yes", "no"))
+  expect_equal(as.vector(out_c$foo06), c("no", "yes", "no"))
+  # Same conceptual answers, opposite numeric codes -- combining on the
+  # text values (not the original codes) is exactly the point.
+  expect_equal(as.vector(c(out_b$foo06, out_c$foo06)), rep(c("no", "yes", "no"), 2))
+})
