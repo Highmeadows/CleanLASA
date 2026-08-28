@@ -125,15 +125,22 @@ harmonized_labels <- c(
   mwalkaid6 = "Walking aid: other specification"
 )
 
-variable_labels_list <- list(
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c("mdizzgup", "mdizzlup", "mdizzoth", "mdizzothsp", "mdizzr", "mdizztrnhd", "mfallf", "mfallly")],
-    mdizzgup = "Dizzy: Yes, getting up",
-    mfallf = "Fall: how often (past year)",
-    mfallly = "Did you fall last year"
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
+    "mdizzgup",
+    "mdizzlup",
+    "mdizzoth",
+    "mdizzothsp",
+    "mdizzr",
+    "mdizztrnhd",
+    "mfallf",
+    "mfallly"
   ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
+  `D` = c(
     "mdizzgup",
     "mdizzlup",
     "mdizzoth",
@@ -215,16 +222,17 @@ variable_labels_list <- list(
     "mwalkaid5m",
     "mwalkaid5y",
     "mwalkaid6"
-  )],
-    mdizzgup = "Dizzy: Yes, getting up",
-    mfallf = "Fall: how often (past year)",
-    mfallfc = "Fall: (constructed) how often past year",
-    mfallly = "Did you fall last year",
-    mfallphc4 = "Fall 1 cons.: sprain",
-    mfallphc6 = "Fall 1 cons.: injury nervous system"
   ),
-  Wave_E_labels = harmonized_labels[c("mwalkaid", "mwalkaid1", "mwalkaid2", "mwalkaid3", "mwalkaid4", "mwalkaid5", "mwalkaid6")],
-  Wave_2B_labels = harmonized_labels[c(
+  `E` = c(
+    "mwalkaid",
+    "mwalkaid1",
+    "mwalkaid2",
+    "mwalkaid3",
+    "mwalkaid4",
+    "mwalkaid5",
+    "mwalkaid6"
+  ),
+  `2B` = c(
     "mdizzgup",
     "mdizzlup",
     "mdizzoth",
@@ -248,8 +256,8 @@ variable_labels_list <- list(
     "mwalkaid5m",
     "mwalkaid5y",
     "mwalkaid6"
-  )],
-  Wave_F_labels = harmonized_labels[c(
+  ),
+  `F` = c(
     "mdizzgup",
     "mdizzlup",
     "mdizzoth",
@@ -263,8 +271,8 @@ variable_labels_list <- list(
     "mwalkaid4",
     "mwalkaid5",
     "mwalkaid6"
-  )],
-  Wave_G_labels = harmonized_labels[c(
+  ),
+  `G` = c(
     "mdizzgup",
     "mdizzlup",
     "mdizzoth",
@@ -278,9 +286,17 @@ variable_labels_list <- list(
     "mwalkaid4",
     "mwalkaid5",
     "mwalkaid6"
-  )],
-  Wave_H_labels = harmonized_labels[c("mdizzr", "mwalkaid", "mwalkaid1", "mwalkaid2", "mwalkaid3", "mwalkaid4", "mwalkaid5")],
-  Wave_3B_labels = harmonized_labels[c(
+  ),
+  `H` = c(
+    "mdizzr",
+    "mwalkaid",
+    "mwalkaid1",
+    "mwalkaid2",
+    "mwalkaid3",
+    "mwalkaid4",
+    "mwalkaid5"
+  ),
+  `3B` = c(
     "mdizzgup",
     "mdizzlup",
     "mdizzoth",
@@ -304,15 +320,15 @@ variable_labels_list <- list(
     "mwalkaid5m",
     "mwalkaid5y",
     "mwalkaid6"
-  )],
-  Wave_MB_labels = .replace_labels(
-    harmonized_labels[c("mfallf", "mfallly")],
-    mfallf = "Fall: how often in the past year",
-    mfallly = "Did you fall in the past year?"
   ),
-  Wave_I_labels = harmonized_labels[c("mdizzr")],
-  Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
+  `MB` = c(
+    "mfallf",
+    "mfallly"
+  ),
+  `I` = c(
+    "mdizzr"
+  ),
+  `J` = c(
     "mdizzr",
     "mfallf",
     "mfallfc",
@@ -325,17 +341,8 @@ variable_labels_list <- list(
     "mfallphc6",
     "mfallphc7",
     "mfallphcyn1"
-  )],
-    mfallf = "Fall: how often since last interview",
-    mfallly = "Did you fall since last interview",
-    mfallphc1 = "Fall 1 consequence: fracture",
-    mfallphc2 = "Fall 1 consequence: open wound",
-    mfallphc3 = "Fall 1 consequence: bruise",
-    mfallphc7 = "Fall 1 consequence: other",
-    mfallphcyn1 = "Fall 1: physical consequencies of last fall"
   ),
-  Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
+  `K` = c(
     "mdizzr",
     "mfallf",
     "mfallfc",
@@ -382,7 +389,49 @@ variable_labels_list <- list(
     "mfallphcyn221",
     "mfallphcyn311",
     "mfallphcyn321"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
+    mdizzgup = "Dizzy: Yes, getting up",
+    mfallf = "Fall: how often (past year)",
+    mfallly = "Did you fall last year"
+  ),
+  Wave_D_labels = .replace_labels(
+    harmonized_labels,
+    mdizzgup = "Dizzy: Yes, getting up",
+    mfallf = "Fall: how often (past year)",
+    mfallfc = "Fall: (constructed) how often past year",
+    mfallly = "Did you fall last year",
+    mfallphc4 = "Fall 1 cons.: sprain",
+    mfallphc6 = "Fall 1 cons.: injury nervous system"
+  ),
+  Wave_E_labels = harmonized_labels,
+  Wave_2B_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_3B_labels = harmonized_labels,
+  Wave_MB_labels = .replace_labels(
+    harmonized_labels,
+    mfallf = "Fall: how often in the past year",
+    mfallly = "Did you fall in the past year?"
+  ),
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = .replace_labels(
+    harmonized_labels,
+    mfallf = "Fall: how often since last interview",
+    mfallly = "Did you fall since last interview",
+    mfallphc1 = "Fall 1 consequence: fracture",
+    mfallphc2 = "Fall 1 consequence: open wound",
+    mfallphc3 = "Fall 1 consequence: bruise",
+    mfallphc7 = "Fall 1 consequence: other",
+    mfallphcyn1 = "Fall 1: physical consequencies of last fall"
+  ),
+  Wave_K_labels = .replace_labels(
+    harmonized_labels,
     mfallf = "Fall: how often since last interview",
     mfallly = "Did you fall since last interview",
     mfallmhlp1 = "Fall 1: medical help fall",
@@ -395,12 +444,35 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "mentioned",
+  `2` = "yes"
+)
+
 standardized_value_labels <- list(
-  mdizzgup = c(`-3` = "na, wrong skip", `-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-  mdizzlup = c(`-3` = "na, wrong skip", `-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-  mdizzoth = c(`-3` = "na, wrong skip", `-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
+  mdizzgup = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see BMDIZZR",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mdizzlup = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see BMDIZZR",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mdizzoth = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see BMDIZZR",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mdizzothsp = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see BMDIZZOTH",
     `0` = "to be coded",
     `1` = "no specific reason",
@@ -411,38 +483,133 @@ standardized_value_labels <- list(
   mdizzr = c(
     `-5` = "na, interview terminated",
     `-2` = "na, interview terminated",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
-  mdizztrnhd = c(`-3` = "na, wrong skip", `-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-  mfalladj = c(`-2` = "na, see DMFALLF", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mfalladj01 = c(`-2` = "na, see DMFALLADJ", `0` = "not mentioned", `1` = "mentioned"),
-  mfalladj02 = c(`-2` = "na, see DMFALLADJ", `0` = "not mentioned", `1` = "mentioned"),
-  mfalladj03 = c(`-2` = "na, see DMFALLADJ", `0` = "not mentioned", `1` = "mentioned"),
-  mfalladj04 = c(`-2` = "na, see DMFALLADJ", `0` = "not mentioned", `1` = "mentioned"),
-  mfalladj05 = c(`-2` = "na, see DMFALLADJ", `0` = "not mentioned", `1` = "mentioned"),
-  mfalladj06 = c(`-2` = "na, see DMFALLADJ", `0` = "not mentioned", `1` = "mentioned"),
-  mfalladj07 = c(`-2` = "na, see DMFALLADJ", `0` = "not mentioned", `1` = "mentioned"),
-  mfalladj08 = c(`-2` = "na, see DMFALLADJ", `0` = "not mentioned", `1` = "mentioned"),
-  mfalladj09 = c(`-2` = "na, see DMFALLADJ", `0` = "not mentioned", `1` = "mentioned"),
-  mfalladj10 = c(`-2` = "na, see DMFALLADJ", `0` = "not mentioned", `1` = "mentioned"),
-  mfalladj11 = c(`-2` = "na, see DMFALLADJ", `0` = "not mentioned", `1` = "mentioned"),
+  mdizztrnhd = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see BMDIZZR",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfalladj = c(
+    `-2` = "na, see DMFALLF",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mfalladj01 = c(
+    `-2` = "na, see DMFALLADJ",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfalladj02 = c(
+    `-2` = "na, see DMFALLADJ",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfalladj03 = c(
+    `-2` = "na, see DMFALLADJ",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfalladj04 = c(
+    `-2` = "na, see DMFALLADJ",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfalladj05 = c(
+    `-2` = "na, see DMFALLADJ",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfalladj06 = c(
+    `-2` = "na, see DMFALLADJ",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfalladj07 = c(
+    `-2` = "na, see DMFALLADJ",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfalladj08 = c(
+    `-2` = "na, see DMFALLADJ",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfalladj09 = c(
+    `-2` = "na, see DMFALLADJ",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfalladj10 = c(
+    `-2` = "na, see DMFALLADJ",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfalladj11 = c(
+    `-2` = "na, see DMFALLADJ",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mfalladj12 = c(`-2` = "na, see DMFALLADJ11", `0` = "to be coded"),
-  mfalldo1 = c(`-2` = "na, see DMFALLLY", `-1` = "na, asked"),
-  mfalldo2 = c(`-2` = "na, see DMFALLC", `-1` = "na, asked"),
-  mfalldoos1 = c(`-2` = "na, see DMFALLDO1", `-1` = "na, asked", `0` = "to be coded"),
-  mfalldoos2 = c(`-2` = "na, see DMFALLDO2", `-1` = "na, asked", `0` = "to be coded"),
-  mfallf = c(`-3` = "na, wrong skip", `-2` = "na, see BMFALLLY", `-1` = "na, asked"),
-  mfallfc = c(`-2` = "na, see DMFALLLY", `-1` = "na, asked", `1` = "1 fall", `2` = "2 falls or more"),
-  mfallhow1 = c(`-2` = "na, see DMFALLLY", `-1` = "na, asked"),
-  mfallhow2 = c(`-2` = "na, see DMFALLC", `-1` = "na, asked"),
-  mfallhowos1 = c(`-2` = "na, see DMFALLHOW1", `-1` = "na, asked", `0` = "to be coded"),
-  mfallhowos2 = c(`-2` = "na, see DMFALLHOW2", `-1` = "na, asked", `0` = "to be coded"),
-  mfallly = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  mfalldo1 = c(
+    `-2` = "na, see DMFALLLY",
+    default_missing_labels[c("-1")]
+  ),
+  mfalldo2 = c(
+    `-2` = "na, see DMFALLC",
+    default_missing_labels[c("-1")]
+  ),
+  mfalldoos1 = c(
+    `-2` = "na, see DMFALLDO1",
+    default_missing_labels[c("-1")],
+    `0` = "to be coded"
+  ),
+  mfalldoos2 = c(
+    `-2` = "na, see DMFALLDO2",
+    default_missing_labels[c("-1")],
+    `0` = "to be coded"
+  ),
+  mfallf = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see BMFALLLY"
+  ),
+  mfallfc = c(
+    `-2` = "na, see DMFALLLY",
+    default_missing_labels[c("-1")],
+    `1` = "1 fall",
+    `2` = "2 falls or more"
+  ),
+  mfallhow1 = c(
+    `-2` = "na, see DMFALLLY",
+    default_missing_labels[c("-1")]
+  ),
+  mfallhow2 = c(
+    `-2` = "na, see DMFALLC",
+    default_missing_labels[c("-1")]
+  ),
+  mfallhowos1 = c(
+    `-2` = "na, see DMFALLHOW1",
+    default_missing_labels[c("-1")],
+    `0` = "to be coded"
+  ),
+  mfallhowos2 = c(
+    `-2` = "na, see DMFALLHOW2",
+    default_missing_labels[c("-1")],
+    `0` = "to be coded"
+  ),
+  mfallly = c(
+    `-5` = "na, interview terminated",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
   mfallmhlp = c(
     `-2` = "na, see JMFALLLY",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes, family doctor",
     `3` = "yes, hospital",
@@ -450,7 +617,7 @@ standardized_value_labels <- list(
   ),
   mfallmhlp1 = c(
     `-2` = "na, see KMFALLPHCN",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
     `1` = "no",
     `2` = "yes, family doctor",
@@ -458,10 +625,14 @@ standardized_value_labels <- list(
     `4` = "yes, family doctor and hospital"
   ),
   mfallmhlp10 = c(`-2` = "na, see DMFALLMHLP9", `0` = "to be coded"),
-  mfallmhlp2 = c(`-2` = "na, see DMFALLMHLPYN1", `0` = "not mentioned", `1` = "mentioned"),
+  mfallmhlp2 = c(
+    `-2` = "na, see DMFALLMHLPYN1",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mfallmhlp21 = c(
     `-2` = "na, see KMFALLPHCN",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes, family doctor",
     `3` = "yes, hospital",
@@ -469,16 +640,20 @@ standardized_value_labels <- list(
   ),
   mfallmhlp22 = c(
     `-2` = "na, see KMFALLPHCN",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes, family doctor",
     `3` = "yes, hospital",
     `4` = "yes, family doctor and hospital"
   ),
-  mfallmhlp3 = c(`-2` = "na, see DMFALLMHLPYN1", `0` = "not mentioned", `1` = "mentioned"),
+  mfallmhlp3 = c(
+    `-2` = "na, see DMFALLMHLPYN1",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mfallmhlp31 = c(
     `-2` = "na, see KMFALLPHCN",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes, family doctor",
     `3` = "yes, hospital",
@@ -486,83 +661,317 @@ standardized_value_labels <- list(
   ),
   mfallmhlp32 = c(
     `-2` = "na, see KMFALLPHCN",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes, family doctor",
     `3` = "yes, hospital",
     `4` = "yes, family doctor and hospital"
   ),
-  mfallmhlp4 = c(`-2` = "na, see DMFALLMHLPYN1", `0` = "not mentioned", `1` = "mentioned"),
+  mfallmhlp4 = c(
+    `-2` = "na, see DMFALLMHLPYN1",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mfallmhlp5 = c(`-2` = "na ,see DMFALLMHLP4", `0` = "to be coded"),
-  mfallmhlp6 = c(`-2` = "na, see DMFALLMHLPYN2", `0` = "not mentioned", `1` = "mentioned"),
-  mfallmhlp7 = c(`-2` = "na, see DMFALLMHLPYN2", `0` = "not mentioned", `1` = "mentioned"),
-  mfallmhlp8 = c(`-2` = "na, see DMFALLMHLPYN2", `0` = "not mentioned", `1` = "mentioned"),
-  mfallmhlp9 = c(`-2` = "na, see DMFALLMHLPYN2", `0` = "not mentioned", `1` = "mentioned"),
-  mfallmhlpyn1 = c(`-2` = "na, see DMFALLLY", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mfallmhlpyn2 = c(`-2` = "na, see DMFALLC", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mfallphc1 = c(`-2` = "na, see JMFALLLY", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc10 = c(`-2` = "na, see DMFALLPHCYN2", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc11 = c(`-2` = "na, see DMFALLPHCYN2", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc12 = c(`-2` = "na, see DMFALLPHCYN2", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc13 = c(`-2` = "na, see DMFALLPHCYN2", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc14 = c(`-2` = "na, see DMFALLPHCYN2", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc15 = c(`-2` = "na, see DMFALLPHCYN2", `0` = "not mentioned", `1` = "mentioned"),
+  mfallmhlp6 = c(
+    `-2` = "na, see DMFALLMHLPYN2",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallmhlp7 = c(
+    `-2` = "na, see DMFALLMHLPYN2",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallmhlp8 = c(
+    `-2` = "na, see DMFALLMHLPYN2",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallmhlp9 = c(
+    `-2` = "na, see DMFALLMHLPYN2",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallmhlpyn1 = c(
+    `-2` = "na, see DMFALLLY",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mfallmhlpyn2 = c(
+    `-2` = "na, see DMFALLC",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mfallphc1 = c(
+    `-2` = "na, see JMFALLLY",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc10 = c(
+    `-2` = "na, see DMFALLPHCYN2",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc11 = c(
+    `-2` = "na, see DMFALLPHCYN2",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc12 = c(
+    `-2` = "na, see DMFALLPHCYN2",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc13 = c(
+    `-2` = "na, see DMFALLPHCYN2",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc14 = c(
+    `-2` = "na, see DMFALLPHCYN2",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc15 = c(
+    `-2` = "na, see DMFALLPHCYN2",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mfallphc16 = c(`-2` = "na, see DMFALLPHC15", `0` = "to be coded"),
-  mfallphc2 = c(`-2` = "na, see JMFALLLY", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc211 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc212 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc213 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc214 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc216 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc217 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc221 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc222 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc223 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc224 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc226 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc227 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc3 = c(`-2` = "na, see JMFALLLY", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc311 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc312 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc313 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc314 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc316 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc317 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc321 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc322 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc323 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc324 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc326 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc327 = c(`-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc4 = c(`-2` = "na, see JMFALLLY", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc5 = c(`-2` = "na, see DMFALLPHCYN1", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc6 = c(`-2` = "na, see JMFALLLY", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphc7 = c(`-2` = "na, see JMFALLLY", `0` = "not mentioned", `1` = "mentioned"),
+  mfallphc2 = c(
+    `-2` = "na, see JMFALLLY",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc211 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc212 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc213 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc214 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc216 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc217 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc221 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc222 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc223 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc224 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc226 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc227 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc3 = c(
+    `-2` = "na, see JMFALLLY",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc311 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc312 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc313 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc314 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc316 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc317 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc321 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc322 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc323 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc324 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc326 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc327 = c(
+    `-2` = "na, see KMFALLPHCN",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc4 = c(
+    `-2` = "na, see JMFALLLY",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc5 = c(
+    `-2` = "na, see DMFALLPHCYN1",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc6 = c(
+    `-2` = "na, see JMFALLLY",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphc7 = c(
+    `-2` = "na, see JMFALLLY",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mfallphc8 = c(`-2` = "na, see DMFALLPHC7", `0` = "to be coded"),
-  mfallphc9 = c(`-2` = "na, see DMFALLPHCYN2", `0` = "not mentioned", `1` = "mentioned"),
-  mfallphcn = c(`-2` = "na, see KMFALLLY", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  mfallphc9 = c(
+    `-2` = "na, see DMFALLPHCYN2",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mfallphcn = c(
+    `-2` = "na, see KMFALLLY",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
   mfallphcnm = c(`-2` = "na, see KMFALLPHCN"),
   mfallphcyn1 = c(
     `-2` = "na, see DMFALLLY",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "na, see KMFALLPHCN",
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
-  mfallphcyn2 = c(`-2` = "na, see DMFALLC", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mfallphcyn211 = c(`-1` = "na, asked", `0` = "na, see KMFALLPHCN", `1` = "no", `2` = "yes"),
-  mfallphcyn221 = c(`-1` = "na, asked", `0` = "na, see KMFALLPHCN", `1` = "no", `2` = "yes"),
-  mfallphcyn311 = c(`-1` = "na, asked", `0` = "na, see KMFALLPHCN", `1` = "no", `2` = "yes"),
-  mfallphcyn321 = c(`-1` = "na, asked", `0` = "na, see KMFALLPHCN", `1` = "no", `2` = "yes"),
-  mfallwh1 = c(`-2` = "na, see DMFALLLY", `-1` = "na, asked"),
-  mfallwh2 = c(`-2` = "na, see DMFALLC", `-1` = "na, asked"),
-  mfallwhos1 = c(`-2` = "na, see DMFALLWH1", `-1` = "na, asked", `0` = "to be coded"),
-  mfallwhos2 = c(`-2` = "na, see DMFALLWH2", `-1` = "na, asked", `0` = "to be coded"),
-  mwalkaid = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mwalkaid1 = c(`-2` = "na, see DMWALKAID", `0` = "not mentioned", `1` = "mentioned"),
+  mfallphcyn2 = c(
+    `-2` = "na, see DMFALLC",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mfallphcyn211 = c(
+    default_missing_labels[c("-1")],
+    `0` = "na, see KMFALLPHCN",
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mfallphcyn221 = c(
+    default_missing_labels[c("-1")],
+    `0` = "na, see KMFALLPHCN",
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mfallphcyn311 = c(
+    default_missing_labels[c("-1")],
+    `0` = "na, see KMFALLPHCN",
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mfallphcyn321 = c(
+    default_missing_labels[c("-1")],
+    `0` = "na, see KMFALLPHCN",
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mfallwh1 = c(
+    `-2` = "na, see DMFALLLY",
+    default_missing_labels[c("-1")]
+  ),
+  mfallwh2 = c(
+    `-2` = "na, see DMFALLC",
+    default_missing_labels[c("-1")]
+  ),
+  mfallwhos1 = c(
+    `-2` = "na, see DMFALLWH1",
+    default_missing_labels[c("-1")],
+    `0` = "to be coded"
+  ),
+  mfallwhos2 = c(
+    `-2` = "na, see DMFALLWH2",
+    default_missing_labels[c("-1")],
+    `0` = "to be coded"
+  ),
+  mwalkaid = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mwalkaid1 = c(
+    `-2` = "na, see DMWALKAID",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mwalkaid1m = c(
     `-2` = "na, see DMWALKAID1",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -576,11 +985,18 @@ standardized_value_labels <- list(
     `11` = "November",
     `12` = "December"
   ),
-  mwalkaid1y = c(`-2` = "na, see DMWALKAID1", `-1` = "na, asked"),
-  mwalkaid2 = c(`-2` = "na, see DMWALKAID", `0` = "not mentioned", `1` = "mentioned"),
+  mwalkaid1y = c(
+    `-2` = "na, see DMWALKAID1",
+    default_missing_labels[c("-1")]
+  ),
+  mwalkaid2 = c(
+    `-2` = "na, see DMWALKAID",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mwalkaid2m = c(
     `-2` = "na, see DMWALKAID2",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -594,11 +1010,18 @@ standardized_value_labels <- list(
     `11` = "November",
     `12` = "December"
   ),
-  mwalkaid2y = c(`-2` = "na, see DMWALKAID2", `-1` = "na, asked"),
-  mwalkaid3 = c(`-2` = "na, see DMWALKAID", `0` = "not mentioned", `1` = "mentioned"),
+  mwalkaid2y = c(
+    `-2` = "na, see DMWALKAID2",
+    default_missing_labels[c("-1")]
+  ),
+  mwalkaid3 = c(
+    `-2` = "na, see DMWALKAID",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mwalkaid3m = c(
     `-2` = "na, see DMWALKAID3",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -612,11 +1035,18 @@ standardized_value_labels <- list(
     `11` = "November",
     `12` = "December"
   ),
-  mwalkaid3y = c(`-2` = "na, see DMWALKAID3", `-1` = "na, asked"),
-  mwalkaid4 = c(`-2` = "na, see DMWALKAID", `0` = "not mentioned", `1` = "mentioned"),
+  mwalkaid3y = c(
+    `-2` = "na, see DMWALKAID3",
+    default_missing_labels[c("-1")]
+  ),
+  mwalkaid4 = c(
+    `-2` = "na, see DMWALKAID",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mwalkaid4m = c(
     `-2` = "na, see DMWALKAID4",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -630,11 +1060,18 @@ standardized_value_labels <- list(
     `11` = "November",
     `12` = "December"
   ),
-  mwalkaid4y = c(`-2` = "na, see DMWALKAID4", `-1` = "na, asked"),
-  mwalkaid5 = c(`-2` = "na, see DMWALKAID", `0` = "not mentioned", `1` = "mentioned"),
+  mwalkaid4y = c(
+    `-2` = "na, see DMWALKAID4",
+    default_missing_labels[c("-1")]
+  ),
+  mwalkaid5 = c(
+    `-2` = "na, see DMWALKAID",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mwalkaid5m = c(
     `-2` = "na, see DMWALKAID5",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -648,13 +1085,16 @@ standardized_value_labels <- list(
     `11` = "November",
     `12` = "December"
   ),
-  mwalkaid5y = c(`-2` = "na, see DMWALKAID5", `-1` = "na, asked"),
+  mwalkaid5y = c(
+    `-2` = "na, see DMWALKAID5",
+    default_missing_labels[c("-1")]
+  ),
   mwalkaid6 = c(`-2` = "na, see DMWALKAID5", `0` = "to be coded")
 )
 
 value_labels_list <- list(
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("mdizzgup", "mdizzlup", "mdizzoth", "mdizzothsp", "mdizzr", "mdizztrnhd", "mfallf", "mfallly")],
+    standardized_value_labels,
     mdizzgup = .replace_labels(
     standardized_value_labels$mdizzgup,
     `-2` = "na, see C/DMDIZZR"
@@ -683,89 +1123,7 @@ value_labels_list <- list(
     mfallf = c(`-3` = "na, wrong skip", `-2` = "na, see C/DFALLLY")
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mdizzgup",
-    "mdizzlup",
-    "mdizzoth",
-    "mdizzothsp",
-    "mdizzr",
-    "mdizztrnhd",
-    "mfalladj",
-    "mfalladj01",
-    "mfalladj02",
-    "mfalladj03",
-    "mfalladj04",
-    "mfalladj05",
-    "mfalladj06",
-    "mfalladj07",
-    "mfalladj08",
-    "mfalladj09",
-    "mfalladj10",
-    "mfalladj11",
-    "mfalladj12",
-    "mfalldo1",
-    "mfalldo2",
-    "mfalldoos1",
-    "mfalldoos2",
-    "mfallf",
-    "mfallfc",
-    "mfallhow1",
-    "mfallhow2",
-    "mfallhowos1",
-    "mfallhowos2",
-    "mfallly",
-    "mfallmhlp1",
-    "mfallmhlp10",
-    "mfallmhlp2",
-    "mfallmhlp3",
-    "mfallmhlp4",
-    "mfallmhlp5",
-    "mfallmhlp6",
-    "mfallmhlp7",
-    "mfallmhlp8",
-    "mfallmhlp9",
-    "mfallmhlpyn1",
-    "mfallmhlpyn2",
-    "mfallphc1",
-    "mfallphc10",
-    "mfallphc11",
-    "mfallphc12",
-    "mfallphc13",
-    "mfallphc14",
-    "mfallphc15",
-    "mfallphc16",
-    "mfallphc2",
-    "mfallphc3",
-    "mfallphc4",
-    "mfallphc5",
-    "mfallphc6",
-    "mfallphc7",
-    "mfallphc8",
-    "mfallphc9",
-    "mfallphcyn1",
-    "mfallphcyn2",
-    "mfallwh1",
-    "mfallwh2",
-    "mfallwhos1",
-    "mfallwhos2",
-    "mwalkaid",
-    "mwalkaid1",
-    "mwalkaid1m",
-    "mwalkaid1y",
-    "mwalkaid2",
-    "mwalkaid2m",
-    "mwalkaid2y",
-    "mwalkaid3",
-    "mwalkaid3m",
-    "mwalkaid3y",
-    "mwalkaid4",
-    "mwalkaid4m",
-    "mwalkaid4y",
-    "mwalkaid5",
-    "mwalkaid5m",
-    "mwalkaid5y",
-    "mwalkaid6"
-  )],
+    standardized_value_labels,
     mdizzgup = .replace_labels(
     standardized_value_labels$mdizzgup,
     `-2` = "na, see C/DMDIZZR"
@@ -820,7 +1178,7 @@ value_labels_list <- list(
     mfallphcyn1 = c(`-2` = "na, see DMFALLLY", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("mwalkaid", "mwalkaid1", "mwalkaid2", "mwalkaid3", "mwalkaid4", "mwalkaid5", "mwalkaid6")],
+    standardized_value_labels,
     mwalkaid1 = .replace_labels(
     standardized_value_labels$mwalkaid1,
     `-2` = "na, see EMWALKAID"
@@ -847,31 +1205,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mdizzgup",
-    "mdizzlup",
-    "mdizzoth",
-    "mdizzothsp",
-    "mdizzr",
-    "mdizztrnhd",
-    "mwalkaid",
-    "mwalkaid1",
-    "mwalkaid1m",
-    "mwalkaid1y",
-    "mwalkaid2",
-    "mwalkaid2m",
-    "mwalkaid2y",
-    "mwalkaid3",
-    "mwalkaid3m",
-    "mwalkaid3y",
-    "mwalkaid4",
-    "mwalkaid4m",
-    "mwalkaid4y",
-    "mwalkaid5",
-    "mwalkaid5m",
-    "mwalkaid5y",
-    "mwalkaid6"
-  )],
+    standardized_value_labels,
     mdizzgup = c(`-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
     mdizzlup = c(`-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
     mdizzoth = c(`-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
@@ -951,21 +1285,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mdizzgup",
-    "mdizzlup",
-    "mdizzoth",
-    "mdizzothsp",
-    "mdizzr",
-    "mdizztrnhd",
-    "mwalkaid",
-    "mwalkaid1",
-    "mwalkaid2",
-    "mwalkaid3",
-    "mwalkaid4",
-    "mwalkaid5",
-    "mwalkaid6"
-  )],
+    standardized_value_labels,
     mdizzgup = c(`-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
     mdizzlup = c(`-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
     mdizzoth = c(`-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
@@ -1005,21 +1325,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mdizzgup",
-    "mdizzlup",
-    "mdizzoth",
-    "mdizzothsp",
-    "mdizzr",
-    "mdizztrnhd",
-    "mwalkaid",
-    "mwalkaid1",
-    "mwalkaid2",
-    "mwalkaid3",
-    "mwalkaid4",
-    "mwalkaid5",
-    "mwalkaid6"
-  )],
+    standardized_value_labels,
     mdizzgup = c(`-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
     mdizzlup = c(`-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
     mdizzoth = c(`-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
@@ -1059,7 +1365,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("mdizzr", "mwalkaid", "mwalkaid1", "mwalkaid2", "mwalkaid3", "mwalkaid4", "mwalkaid5")],
+    standardized_value_labels,
     mdizzr = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
     mwalkaid1 = .replace_labels(
     standardized_value_labels$mwalkaid1,
@@ -1083,30 +1389,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mdizzgup",
-    "mdizzlup",
-    "mdizzoth",
-    "mdizzr",
-    "mdizztrnhd",
-    "mwalkaid",
-    "mwalkaid1",
-    "mwalkaid1m",
-    "mwalkaid1y",
-    "mwalkaid2",
-    "mwalkaid2m",
-    "mwalkaid2y",
-    "mwalkaid3",
-    "mwalkaid3m",
-    "mwalkaid3y",
-    "mwalkaid4",
-    "mwalkaid4m",
-    "mwalkaid4y",
-    "mwalkaid5",
-    "mwalkaid5m",
-    "mwalkaid5y",
-    "mwalkaid6"
-  )],
+    standardized_value_labels,
     mdizzgup = c(`-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
     mdizzlup = c(`-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
     mdizzoth = c(`-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
@@ -1178,29 +1461,16 @@ value_labels_list <- list(
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c("mfallf", "mfallly")],
+    standardized_value_labels,
     mfallf = c(`-2` = "na, see BMFALLLY"),
     mfallly = c(`-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("mdizzr")],
+    standardized_value_labels,
     mdizzr = c(`-2` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mdizzr",
-    "mfallf",
-    "mfallfc",
-    "mfallly",
-    "mfallmhlp",
-    "mfallphc1",
-    "mfallphc2",
-    "mfallphc3",
-    "mfallphc4",
-    "mfallphc6",
-    "mfallphc7",
-    "mfallphcyn1"
-  )],
+    standardized_value_labels,
     mdizzr = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
     mfallf = c(`-2` = "na, see JMFALLLY", `-1` = "na, asked"),
     mfallfc = .replace_labels(
@@ -1211,54 +1481,7 @@ value_labels_list <- list(
     mfallphcyn1 = c(`-2` = "na, see JMFALLLY", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mdizzr",
-    "mfallf",
-    "mfallfc",
-    "mfallly",
-    "mfallmhlp1",
-    "mfallmhlp21",
-    "mfallmhlp22",
-    "mfallmhlp31",
-    "mfallmhlp32",
-    "mfallphc1",
-    "mfallphc2",
-    "mfallphc211",
-    "mfallphc212",
-    "mfallphc213",
-    "mfallphc214",
-    "mfallphc216",
-    "mfallphc217",
-    "mfallphc221",
-    "mfallphc222",
-    "mfallphc223",
-    "mfallphc224",
-    "mfallphc226",
-    "mfallphc227",
-    "mfallphc3",
-    "mfallphc311",
-    "mfallphc312",
-    "mfallphc313",
-    "mfallphc314",
-    "mfallphc316",
-    "mfallphc317",
-    "mfallphc321",
-    "mfallphc322",
-    "mfallphc323",
-    "mfallphc324",
-    "mfallphc326",
-    "mfallphc327",
-    "mfallphc4",
-    "mfallphc6",
-    "mfallphc7",
-    "mfallphcn",
-    "mfallphcnm",
-    "mfallphcyn1",
-    "mfallphcyn211",
-    "mfallphcyn221",
-    "mfallphcyn311",
-    "mfallphcyn321"
-  )],
+    standardized_value_labels,
     mdizzr = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
     mfallf = c(`-2` = "na, see KMFALLLY", `-1` = "na, asked"),
     mfallfc = .replace_labels(
@@ -1422,9 +1645,14 @@ var_types_vec <- c(
   mwalkaid6 = "categorical"
 )
 
-.lasa_fc_187 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "187", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "187", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "187", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "187", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["mdizzothsp"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+
+.lasa_fc_187 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

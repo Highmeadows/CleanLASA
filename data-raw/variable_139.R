@@ -34,8 +34,12 @@ harmonized_labels <- c(
   qptalk = "Partner important conversation"
 )
 
-variable_labels_list <- list(
-  Wave_E_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `E` = c(
     "qpadl1",
     "qpadl2",
     "qpadl3",
@@ -57,8 +61,8 @@ variable_labels_list <- list(
     "qprel7",
     "qprel8",
     "qptalk"
-  )],
-  Wave_F_labels = harmonized_labels[c(
+  ),
+  `F` = c(
     "qpadl1",
     "qpadl2",
     "qpadl3",
@@ -80,8 +84,8 @@ variable_labels_list <- list(
     "qprel7",
     "qprel8",
     "qptalk"
-  )],
-  Wave_G_labels = harmonized_labels[c(
+  ),
+  `G` = c(
     "qpadl1",
     "qpadl2",
     "qpadl3",
@@ -103,8 +107,8 @@ variable_labels_list <- list(
     "qprel7",
     "qprel8",
     "qptalk"
-  )],
-  Wave_H_labels = harmonized_labels[c(
+  ),
+  `H` = c(
     "qpadl1",
     "qpadl2",
     "qpadl3",
@@ -126,8 +130,8 @@ variable_labels_list <- list(
     "qprel7",
     "qprel8",
     "qptalk"
-  )],
-  Wave_3B_labels = harmonized_labels[c(
+  ),
+  `3B` = c(
     "qpadl1",
     "qpadl2",
     "qpadl3",
@@ -149,10 +153,62 @@ variable_labels_list <- list(
     "qprel7",
     "qprel8",
     "qptalk"
-  )],
-  Wave_I_labels = harmonized_labels,
-  Wave_J_labels = harmonized_labels,
-  Wave_K_labels = harmonized_labels[c(
+  ),
+  `I` = c(
+    "qpadl1",
+    "qpadl2",
+    "qpadl3",
+    "qpadl4",
+    "qpadl5",
+    "qpadl6",
+    "qpdeme",
+    "qpdis1",
+    "qpdis2",
+    "qpdis3",
+    "qpdis4",
+    "qpmemo",
+    "qprel1",
+    "qprel2",
+    "qprel3",
+    "qprel4",
+    "qprel5",
+    "qprel6",
+    "qprel7",
+    "qprel8",
+    "qprespc1",
+    "qprespc2",
+    "qprespc3",
+    "qprespc4",
+    "qptalk"
+  ),
+  `J` = c(
+    "qpadl1",
+    "qpadl2",
+    "qpadl3",
+    "qpadl4",
+    "qpadl5",
+    "qpadl6",
+    "qpdeme",
+    "qpdis1",
+    "qpdis2",
+    "qpdis3",
+    "qpdis4",
+    "qpmemo",
+    "qprel1",
+    "qprel2",
+    "qprel3",
+    "qprel4",
+    "qprel5",
+    "qprel6",
+    "qprel7",
+    "qprel8",
+    "qprespc1",
+    "qprespc2",
+    "qprespc3",
+    "qprespc4",
+    "qptalk"
+  ),
+  `K` = c(
     "qpadl1",
     "qpadl2",
     "qpadl3",
@@ -171,7 +227,18 @@ variable_labels_list <- list(
     "qprespc3",
     "qprespc4",
     "qptalk"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_E_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_3B_labels = harmonized_labels,
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
@@ -320,10 +387,30 @@ standardized_value_labels <- list(
   ),
   qprel7 = c(`-2` = "not available", `-1` = "not available", `1` = NA_character_, `10` = NA_character_),
   qprel8 = c(`-2` = "not available", `-1` = "not available", `1` = NA_character_, `10` = NA_character_),
-  qprespc1 = c(`-2` = "not available, routing", `-1` = "not available", `1` = "no", `2` = "yes"),
-  qprespc2 = c(`-2` = "not available, routing", `-1` = "not available", `1` = "no", `2` = "yes"),
-  qprespc3 = c(`-2` = "not available, routing", `-1` = "not available", `1` = "no", `2` = "yes"),
-  qprespc4 = c(`-2` = "not available, routing", `-1` = "not available", `1` = "no", `2` = "yes"),
+  qprespc1 = c(
+    default_missing_labels[c("-2")],
+    `-1` = "not available",
+    `1` = "no",
+    `2` = "yes"
+  ),
+  qprespc2 = c(
+    default_missing_labels[c("-2")],
+    `-1` = "not available",
+    `1` = "no",
+    `2` = "yes"
+  ),
+  qprespc3 = c(
+    default_missing_labels[c("-2")],
+    `-1` = "not available",
+    `1` = "no",
+    `2` = "yes"
+  ),
+  qprespc4 = c(
+    default_missing_labels[c("-2")],
+    `-1` = "not available",
+    `1` = "no",
+    `2` = "yes"
+  ),
   qptalk = c(
     `-2` = "not available",
     `-1` = "not available",
@@ -337,29 +424,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qpadl1",
-    "qpadl2",
-    "qpadl3",
-    "qpadl4",
-    "qpadl5",
-    "qpadl6",
-    "qpdeme",
-    "qpdis1",
-    "qpdis2",
-    "qpdis3",
-    "qpdis4",
-    "qpmemo",
-    "qprel1",
-    "qprel2",
-    "qprel3",
-    "qprel4",
-    "qprel5",
-    "qprel6",
-    "qprel7",
-    "qprel8",
-    "qptalk"
-  )],
+    standardized_value_labels,
     qpadl1 = .replace_labels(
     standardized_value_labels$qpadl1,
     `-2` = "no partner",
@@ -467,29 +532,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qpadl1",
-    "qpadl2",
-    "qpadl3",
-    "qpadl4",
-    "qpadl5",
-    "qpadl6",
-    "qpdeme",
-    "qpdis1",
-    "qpdis2",
-    "qpdis3",
-    "qpdis4",
-    "qpmemo",
-    "qprel1",
-    "qprel2",
-    "qprel3",
-    "qprel4",
-    "qprel5",
-    "qprel6",
-    "qprel7",
-    "qprel8",
-    "qptalk"
-  )],
+    standardized_value_labels,
     qpadl1 = .replace_labels(
     standardized_value_labels$qpadl1,
     `-2` = "no partner",
@@ -597,29 +640,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qpadl1",
-    "qpadl2",
-    "qpadl3",
-    "qpadl4",
-    "qpadl5",
-    "qpadl6",
-    "qpdeme",
-    "qpdis1",
-    "qpdis2",
-    "qpdis3",
-    "qpdis4",
-    "qpmemo",
-    "qprel1",
-    "qprel2",
-    "qprel3",
-    "qprel4",
-    "qprel5",
-    "qprel6",
-    "qprel7",
-    "qprel8",
-    "qptalk"
-  )],
+    standardized_value_labels,
     qpadl1 = .replace_labels(
     standardized_value_labels$qpadl1,
     `-2` = "no partner",
@@ -727,29 +748,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qpadl1",
-    "qpadl2",
-    "qpadl3",
-    "qpadl4",
-    "qpadl5",
-    "qpadl6",
-    "qpdeme",
-    "qpdis1",
-    "qpdis2",
-    "qpdis3",
-    "qpdis4",
-    "qpmemo",
-    "qprel1",
-    "qprel2",
-    "qprel3",
-    "qprel4",
-    "qprel5",
-    "qprel6",
-    "qprel7",
-    "qprel8",
-    "qptalk"
-  )],
+    standardized_value_labels,
     qpadl1 = .replace_labels(
     standardized_value_labels$qpadl1,
     `-2` = "no partner",
@@ -857,29 +856,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qpadl1",
-    "qpadl2",
-    "qpadl3",
-    "qpadl4",
-    "qpadl5",
-    "qpadl6",
-    "qpdeme",
-    "qpdis1",
-    "qpdis2",
-    "qpdis3",
-    "qpdis4",
-    "qpmemo",
-    "qprel1",
-    "qprel2",
-    "qprel3",
-    "qprel4",
-    "qprel5",
-    "qprel6",
-    "qprel7",
-    "qprel8",
-    "qptalk"
-  )],
+    standardized_value_labels,
     qpadl1 = .replace_labels(
     standardized_value_labels$qpadl1,
     `-2` = "no partner",
@@ -1243,26 +1220,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qpadl1",
-    "qpadl2",
-    "qpadl3",
-    "qpadl4",
-    "qpadl5",
-    "qpdeme",
-    "qpmemo",
-    "qprel1",
-    "qprel2",
-    "qprel3",
-    "qprel4",
-    "qprel5",
-    "qprel6",
-    "qprespc1",
-    "qprespc2",
-    "qprespc3",
-    "qprespc4",
-    "qptalk"
-  )],
+    standardized_value_labels,
     qpadl1 = .replace_labels(
     standardized_value_labels$qpadl1,
     `-2` = "no partner",
@@ -1385,9 +1343,12 @@ var_types_vec <- c(
   qptalk = "categorical"
 )
 
-.lasa_fc_139 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "139", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "139", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "139", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "139", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_139 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

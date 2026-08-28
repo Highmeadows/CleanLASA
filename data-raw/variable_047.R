@@ -27,8 +27,12 @@ harmonized_labels <- c(
   sequenc = "sequence questions on support (e=emotional i=instrumental r=received g=given)"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "domain",
     "domtyp",
     "emo_giv",
@@ -46,8 +50,8 @@ variable_labels_list <- list(
     "nwtype",
     "random",
     "sequenc"
-  )],
-  Wave_C_labels = harmonized_labels[c(
+  ),
+  `C` = c(
     "domain",
     "domtyp",
     "emo_giv",
@@ -64,8 +68,8 @@ variable_labels_list <- list(
     "nwtype",
     "random",
     "sequenc"
-  )],
-  Wave_D_labels = harmonized_labels[c(
+  ),
+  `D` = c(
     "domain",
     "domtyp",
     "emo_giv",
@@ -82,8 +86,8 @@ variable_labels_list <- list(
     "nwtype",
     "random",
     "sequenc"
-  )],
-  Wave_E_labels = harmonized_labels[c(
+  ),
+  `E` = c(
     "domain",
     "domtyp",
     "emo_giv",
@@ -100,8 +104,8 @@ variable_labels_list <- list(
     "nwtype",
     "random",
     "sequenc"
-  )],
-  Wave_2B_labels = harmonized_labels[c(
+  ),
+  `2B` = c(
     "domain",
     "domtyp",
     "emo_giv",
@@ -118,8 +122,8 @@ variable_labels_list <- list(
     "nwtype",
     "random",
     "sequenc"
-  )],
-  Wave_F_labels = harmonized_labels[c(
+  ),
+  `F` = c(
     "domain",
     "domtyp",
     "emo_giv",
@@ -136,8 +140,8 @@ variable_labels_list <- list(
     "nwtype",
     "random",
     "sequenc"
-  )],
-  Wave_G_labels = harmonized_labels[c(
+  ),
+  `G` = c(
     "domain",
     "domtyp",
     "emo_giv",
@@ -154,8 +158,8 @@ variable_labels_list <- list(
     "nwtype",
     "random",
     "sequenc"
-  )],
-  Wave_H_labels = harmonized_labels[c(
+  ),
+  `H` = c(
     "domain",
     "domtyp",
     "emo_giv",
@@ -171,8 +175,8 @@ variable_labels_list <- list(
     "nwtrav",
     "nwtype",
     "sequenc"
-  )],
-  Wave_3B_labels = harmonized_labels[c(
+  ),
+  `3B` = c(
     "domain",
     "domtyp",
     "emo_giv",
@@ -188,8 +192,8 @@ variable_labels_list <- list(
     "nwtrav",
     "nwtype",
     "sequenc"
-  )],
-  Wave_I_labels = harmonized_labels[c(
+  ),
+  `I` = c(
     "domain",
     "domtyp",
     "emo_giv",
@@ -205,8 +209,8 @@ variable_labels_list <- list(
     "nwtrav",
     "nwtype",
     "sequenc"
-  )],
-  Wave_J_labels = harmonized_labels[c(
+  ),
+  `J` = c(
     "domain",
     "domtyp",
     "emo_giv",
@@ -222,8 +226,8 @@ variable_labels_list <- list(
     "nwtrav",
     "nwtype",
     "sequenc"
-  )],
-  Wave_K_labels = harmonized_labels[c(
+  ),
+  `K` = c(
     "domain",
     "domtyp",
     "emo_giv",
@@ -239,7 +243,22 @@ variable_labels_list <- list(
     "nwtrav",
     "nwtype",
     "sequenc"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = harmonized_labels,
+  Wave_C_labels = harmonized_labels,
+  Wave_D_labels = harmonized_labels,
+  Wave_E_labels = harmonized_labels,
+  Wave_2B_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_3B_labels = harmonized_labels,
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
@@ -320,7 +339,7 @@ standardized_value_labels <- list(
     `-7` = "not available,rank>10/12",
     `-6` = "not available, routing",
     `-3` = "rcf/sys addition",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "seldom",
     `3` = "sometimes",
@@ -330,7 +349,7 @@ standardized_value_labels <- list(
     `-7` = "not available,rank>10/12",
     `-6` = "not available, routing",
     `-3` = "rcf/sys addition",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "seldom",
     `3` = "sometimes",
@@ -341,7 +360,7 @@ standardized_value_labels <- list(
     `-7` = "not available,rank>10/12",
     `-6` = "not available, routing",
     `-3` = "rcf/sys addition",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "seldom",
     `3` = "sometimes",
@@ -351,7 +370,7 @@ standardized_value_labels <- list(
     `-7` = "not available,rank>10/12",
     `-6` = "not available, routing",
     `-3` = "rcf/sys addition",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "seldom",
     `3` = "sometimes",
@@ -374,7 +393,7 @@ standardized_value_labels <- list(
   nwfreq = c(
     `-6` = "often are you in touch with ...?\"/\"hoe vaak heeft u contact met not available, routing",
     `-3` = "rcf/sys addition",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "...\") yearly or less often",
     `3` = "few times year",
@@ -408,7 +427,7 @@ standardized_value_labels <- list(
     `-6` = "not available, routing",
     `-4` = "not available,miss techn",
     `-3` = "rcf/sys addition",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "w/partner",
     `5` = "no partner"
   ),
@@ -418,7 +437,7 @@ standardized_value_labels <- list(
     `-6` = "not available, routing",
     `-4` = "not available,miss techn",
     `-3` = "rcf/sys addition",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "no time",
     `60` = "1 hour",
     `1440` = ">24 hours"
@@ -503,24 +522,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "domain",
-    "domtyp",
-    "emo_giv",
-    "emo_rec",
-    "freqran",
-    "ins_giv",
-    "ins_rec",
-    "nwfreq",
-    "nwinhh",
-    "nwmsupp",
-    "nwpart",
-    "nwsex",
-    "nwtrav",
-    "nwtype",
-    "random",
-    "sequenc"
-  )],
+    standardized_value_labels,
     domain = .replace_labels(
     standardized_value_labels$domain,
     `9` = "RCF/SYS addition"
@@ -601,23 +603,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "domain",
-    "domtyp",
-    "emo_giv",
-    "emo_rec",
-    "freqran",
-    "ins_giv",
-    "ins_rec",
-    "nwconf",
-    "nwfreq",
-    "nwinhh",
-    "nwsex",
-    "nwtrav",
-    "nwtype",
-    "random",
-    "sequenc"
-  )],
+    standardized_value_labels,
     domain = .replace_labels(
     standardized_value_labels$domain,
     `9` = "RCF/SYS addition"
@@ -686,23 +672,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "domain",
-    "domtyp",
-    "emo_giv",
-    "emo_rec",
-    "freqran",
-    "ins_giv",
-    "ins_rec",
-    "nwconf",
-    "nwfreq",
-    "nwinhh",
-    "nwsex",
-    "nwtrav",
-    "nwtype",
-    "random",
-    "sequenc"
-  )],
+    standardized_value_labels,
     domain = .replace_labels(
     standardized_value_labels$domain,
     `9` = "RCF/SYS addition"
@@ -771,23 +741,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "domain",
-    "domtyp",
-    "emo_giv",
-    "emo_rec",
-    "freqran",
-    "ins_giv",
-    "ins_rec",
-    "nwconf",
-    "nwfreq",
-    "nwinhh",
-    "nwsex",
-    "nwtrav",
-    "nwtype",
-    "random",
-    "sequenc"
-  )],
+    standardized_value_labels,
     domain = .replace_labels(
     standardized_value_labels$domain,
     `9` = "RCF/SYS addition"
@@ -856,23 +810,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "domain",
-    "domtyp",
-    "emo_giv",
-    "emo_rec",
-    "freqran",
-    "ins_giv",
-    "ins_rec",
-    "nwconf",
-    "nwfreq",
-    "nwinhh",
-    "nwsex",
-    "nwtrav",
-    "nwtype",
-    "random",
-    "sequenc"
-  )],
+    standardized_value_labels,
     domain = .replace_labels(
     standardized_value_labels$domain,
     `9` = "RCF/SYS addition"
@@ -941,23 +879,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "domain",
-    "domtyp",
-    "emo_giv",
-    "emo_rec",
-    "freqran",
-    "ins_giv",
-    "ins_rec",
-    "nwconf",
-    "nwfreq",
-    "nwinhh",
-    "nwsex",
-    "nwtrav",
-    "nwtype",
-    "random",
-    "sequenc"
-  )],
+    standardized_value_labels,
     domain = .replace_labels(
     standardized_value_labels$domain,
     `9` = "RCF/SYS addition"
@@ -1026,23 +948,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "domain",
-    "domtyp",
-    "emo_giv",
-    "emo_rec",
-    "freqran",
-    "ins_giv",
-    "ins_rec",
-    "nwconf",
-    "nwfreq",
-    "nwinhh",
-    "nwsex",
-    "nwtrav",
-    "nwtype",
-    "random",
-    "sequenc"
-  )],
+    standardized_value_labels,
     domain = .replace_labels(
     standardized_value_labels$domain,
     `9` = "RCF/SYS addition"
@@ -1111,22 +1017,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "domain",
-    "domtyp",
-    "emo_giv",
-    "emo_rec",
-    "freqran",
-    "ins_giv",
-    "ins_rec",
-    "nwconf",
-    "nwfreq",
-    "nwinhh",
-    "nwsex",
-    "nwtrav",
-    "nwtype",
-    "sequenc"
-  )],
+    standardized_value_labels,
     domain = .replace_labels(
     standardized_value_labels$domain,
     `9` = "RCF/SYS addition"
@@ -1190,22 +1081,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "domain",
-    "domtyp",
-    "emo_giv",
-    "emo_rec",
-    "freqran",
-    "ins_giv",
-    "ins_rec",
-    "nwconf",
-    "nwfreq",
-    "nwinhh",
-    "nwsex",
-    "nwtrav",
-    "nwtype",
-    "sequenc"
-  )],
+    standardized_value_labels,
     domain = .replace_labels(
     standardized_value_labels$domain,
     `9` = "RCF/SYS addition"
@@ -1269,22 +1145,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "domain",
-    "domtyp",
-    "emo_giv",
-    "emo_rec",
-    "freqran",
-    "ins_giv",
-    "ins_rec",
-    "nwconf",
-    "nwfreq",
-    "nwinhh",
-    "nwsex",
-    "nwtrav",
-    "nwtype",
-    "sequenc"
-  )],
+    standardized_value_labels,
     domain = .replace_labels(
     standardized_value_labels$domain,
     `9` = "RCF/SYS addition"
@@ -1348,22 +1209,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "domain",
-    "domtyp",
-    "emo_giv",
-    "emo_rec",
-    "freqran",
-    "ins_giv",
-    "ins_rec",
-    "nwconf",
-    "nwfreq",
-    "nwinhh",
-    "nwsex",
-    "nwtrav",
-    "nwtype",
-    "sequenc"
-  )],
+    standardized_value_labels,
     domain = .replace_labels(
     standardized_value_labels$domain,
     `9` = "RCF/SYS addition"
@@ -1427,22 +1273,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "domain",
-    "domtyp",
-    "emo_giv",
-    "emo_rec",
-    "freqran",
-    "ins_giv",
-    "ins_rec",
-    "nwconf",
-    "nwfreq",
-    "nwinhh",
-    "nwsex",
-    "nwtrav",
-    "nwtype",
-    "sequenc"
-  )],
+    standardized_value_labels,
     domain = .replace_labels(
     standardized_value_labels$domain,
     `9` = "RCF/SYS addition"
@@ -1529,9 +1360,25 @@ var_types_vec <- c(
   sequenc = "categorical"
 )
 
-.lasa_fc_047 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "047", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "047", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "047", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "047", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["nwmem"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["nwmem"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["nwmem"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["nwmem"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["nwmem"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["nwmem"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["nwmem"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["nwmem"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nwmem"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["nwmem"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["nwmem"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["nwmem"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+
+.lasa_fc_047 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

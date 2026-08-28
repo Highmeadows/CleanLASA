@@ -19,6 +19,85 @@ harmonized_labels <- c(
   qseff10 = "Self efficacy 10: active (-)"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "qseff01",
+    "qseff02",
+    "qseff03",
+    "qseff04",
+    "qseff05",
+    "qseff06",
+    "qseff07",
+    "qseff08",
+    "qseff09",
+    "qseff10"
+  ),
+  `C` = c(
+    "qseff01",
+    "qseff02",
+    "qseff03",
+    "qseff04",
+    "qseff05",
+    "qseff06",
+    "qseff07",
+    "qseff08",
+    "qseff09",
+    "qseff10"
+  ),
+  `D` = c(
+    "qseff01",
+    "qseff02",
+    "qseff03",
+    "qseff04",
+    "qseff05",
+    "qseff06",
+    "qseff07",
+    "qseff08",
+    "qseff09",
+    "qseff10"
+  ),
+  `E` = c(
+    "qseff01",
+    "qseff02",
+    "qseff03",
+    "qseff04",
+    "qseff05",
+    "qseff06",
+    "qseff07",
+    "qseff08",
+    "qseff09",
+    "qseff10"
+  ),
+  `2B` = c(
+    "qseff01",
+    "qseff02",
+    "qseff03",
+    "qseff04",
+    "qseff05",
+    "qseff06",
+    "qseff07",
+    "qseff08",
+    "qseff09",
+    "qseff10"
+  ),
+  `F` = c(
+    "qseff01",
+    "qseff02",
+    "qseff03",
+    "qseff04",
+    "qseff05",
+    "qseff06",
+    "qseff07",
+    "qseff08",
+    "qseff09",
+    "qseff10"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
     harmonized_labels,
@@ -417,9 +496,12 @@ var_types_vec <- c(
   qseff10 = "categorical"
 )
 
-.lasa_fc_114 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "114", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "114", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "114", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "114", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_114 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

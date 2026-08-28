@@ -21,8 +21,12 @@ harmonized_labels <- c(
   trvc144L = "Reason weight loss (constructed)"
 )
 
-variable_labels_list <- list(
-  Wave_I_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `I` = c(
     "trapp6m",
     "trestw",
     "trmed155",
@@ -34,8 +38,8 @@ variable_labels_list <- list(
     "trvar144L",
     "trvc144G",
     "trvc144L"
-  )],
-  Wave_J_labels = harmonized_labels[c(
+  ),
+  `J` = c(
     "trapp7d",
     "trestw",
     "trmed155",
@@ -47,16 +51,31 @@ variable_labels_list <- list(
     "trvar144L",
     "trvc144G",
     "trvc144L"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
 standardized_value_labels <- list(
-  trapp6m = c(`-1` = "na, asked", `1` = "good", `2` = "moderate", `3` = "poor"),
-  trapp7d = c(`-1` = "na, asked", `1` = "good", `2` = "moderate", `3` = "poor"),
+  trapp6m = c(
+    default_missing_labels[c("-1")],
+    `1` = "good",
+    `2` = "moderate",
+    `3` = "poor"
+  ),
+  trapp7d = c(
+    default_missing_labels[c("-1")],
+    `1` = "good",
+    `2` = "moderate",
+    `3` = "poor"
+  ),
   trestw = c(
     `-3` = "na, section not done",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "severe underweight",
     `2` = "underweight",
     `3` = "approx. normal weight",
@@ -64,13 +83,24 @@ standardized_value_labels <- list(
     `5` = "severe overweight",
     `6` = "do not know"
   ),
-  trmed155 = c(`-1` = "na, asked"),
+  trmed155 = c(
+    default_missing_labels[c("-1")]
+  ),
   trvac144 = stats::setNames(character(0), character(0)),
-  trvar142 = c(`-1` = "na, asked", `1` = "not changed", `2` = "gained weight", `3` = "lost weight"),
-  trvar143G = c(`-1` = "na, asked"),
-  trvar143L = c(`-1` = "na, asked"),
+  trvar142 = c(
+    default_missing_labels[c("-1")],
+    `1` = "not changed",
+    `2` = "gained weight",
+    `3` = "lost weight"
+  ),
+  trvar143G = c(
+    default_missing_labels[c("-1")]
+  ),
+  trvar143L = c(
+    default_missing_labels[c("-1")]
+  ),
   trvar144G = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "sickness",
     `2` = "eating more or different",
     `3` = "less physical activity",
@@ -79,7 +109,7 @@ standardized_value_labels <- list(
     `6` = "other reason"
   ),
   trvar144L = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "sickness (unintentional)",
     `2` = "diet (intentional)",
     `3` = "other diet (unintentional)",
@@ -91,7 +121,7 @@ standardized_value_labels <- list(
   ),
   trvc144G = c(
     `-2` = "na, see TRVAR144G",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "sickness",
     `2` = "related to eating",
     `3` = "physical inactivity",
@@ -103,7 +133,7 @@ standardized_value_labels <- list(
   ),
   trvc144L = c(
     `-2` = "na, see TRVAR144L",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "sickness (unintentional)",
     `2` = "diet (intentional)",
     `3` = "different diet (unintentional)",
@@ -120,30 +150,8 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_I_labels = standardized_value_labels[c(
-    "trapp6m",
-    "trestw",
-    "trmed155",
-    "trvar142",
-    "trvar143G",
-    "trvar143L",
-    "trvar144G",
-    "trvar144L",
-    "trvc144G",
-    "trvc144L"
-  )],
-  Wave_J_labels = standardized_value_labels[c(
-    "trapp7d",
-    "trestw",
-    "trmed155",
-    "trvar142",
-    "trvar143G",
-    "trvar143L",
-    "trvar144G",
-    "trvar144L",
-    "trvc144G",
-    "trvc144L"
-  )],
+  Wave_I_labels = standardized_value_labels,
+  Wave_J_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -162,9 +170,15 @@ var_types_vec <- c(
   trvc144L = "categorical"
 )
 
-.lasa_fc_714 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "714", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "714", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "714", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "714", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["trvac144"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["trvac144"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+
+.lasa_fc_714 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

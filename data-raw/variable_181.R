@@ -38,9 +38,12 @@ harmonized_labels <- c(
   mmeno85 = "Menopause: hormones # months"
 )
 
-variable_labels_list <- list(
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
     "menno18",
     "mmeno05",
     "mmeno09",
@@ -51,7 +54,82 @@ variable_labels_list <- list(
     "mmeno66",
     "mmeno82",
     "mmeno83"
-  )],
+  ),
+  `2B` = c(
+    "mmenno61",
+    "mmeno01",
+    "mmeno02",
+    "mmeno03",
+    "mmeno04",
+    "mmeno05",
+    "mmeno07",
+    "mmeno08",
+    "mmeno09",
+    "mmeno10",
+    "mmeno11",
+    "mmeno12",
+    "mmeno13",
+    "mmeno14",
+    "mmeno15",
+    "mmeno16",
+    "mmeno62",
+    "mmeno63",
+    "mmeno64",
+    "mmeno81",
+    "mmeno82",
+    "mmeno83",
+    "mmeno84",
+    "mmeno85"
+  ),
+  `3B` = c(
+    "mmenno61",
+    "mmeno01",
+    "mmeno02",
+    "mmeno03",
+    "mmeno04",
+    "mmeno05",
+    "mmeno07",
+    "mmeno08",
+    "mmeno09",
+    "mmeno10",
+    "mmeno11",
+    "mmeno12",
+    "mmeno13",
+    "mmeno14",
+    "mmeno15",
+    "mmeno16",
+    "mmeno62",
+    "mmeno63",
+    "mmeno64",
+    "mmeno65",
+    "mmeno66",
+    "mmeno81",
+    "mmeno82",
+    "mmeno83",
+    "mmeno84",
+    "mmeno85"
+  ),
+  `MB` = c(
+    "mmeno01",
+    "mmeno05",
+    "mmeno09",
+    "mmeno10",
+    "mmeno14",
+    "mmeno61",
+    "mmeno62",
+    "mmeno63",
+    "mmeno64",
+    "mmeno65",
+    "mmeno66",
+    "mmeno82",
+    "mmeno84",
+    "mmeno85"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
     mmeno05 = "Menopause 01: age period stopped",
     mmeno09 = "Menopause 06: hot flushes",
     mmeno62 = "Menopause 03: hysterectomy age",
@@ -60,102 +138,66 @@ variable_labels_list <- list(
     mmeno82 = "Menopause 08: female sex hormones",
     mmeno83 = "Menopause 09: hormones type"
   ),
-  Wave_2B_labels = harmonized_labels[c(
-    "mmenno61",
-    "mmeno01",
-    "mmeno02",
-    "mmeno03",
-    "mmeno04",
-    "mmeno05",
-    "mmeno07",
-    "mmeno08",
-    "mmeno09",
-    "mmeno10",
-    "mmeno11",
-    "mmeno12",
-    "mmeno13",
-    "mmeno14",
-    "mmeno15",
-    "mmeno16",
-    "mmeno62",
-    "mmeno63",
-    "mmeno64",
-    "mmeno81",
-    "mmeno82",
-    "mmeno83",
-    "mmeno84",
-    "mmeno85"
-  )],
-  Wave_3B_labels = harmonized_labels[c(
-    "mmenno61",
-    "mmeno01",
-    "mmeno02",
-    "mmeno03",
-    "mmeno04",
-    "mmeno05",
-    "mmeno07",
-    "mmeno08",
-    "mmeno09",
-    "mmeno10",
-    "mmeno11",
-    "mmeno12",
-    "mmeno13",
-    "mmeno14",
-    "mmeno15",
-    "mmeno16",
-    "mmeno62",
-    "mmeno63",
-    "mmeno64",
-    "mmeno65",
-    "mmeno66",
-    "mmeno81",
-    "mmeno82",
-    "mmeno83",
-    "mmeno84",
-    "mmeno85"
-  )],
+  Wave_2B_labels = harmonized_labels,
+  Wave_3B_labels = harmonized_labels,
   Wave_MB_labels = .replace_labels(
-    harmonized_labels[c(
-    "mmeno01",
-    "mmeno05",
-    "mmeno09",
-    "mmeno10",
-    "mmeno14",
-    "mmeno61",
-    "mmeno62",
-    "mmeno63",
-    "mmeno64",
-    "mmeno65",
-    "mmeno66",
-    "mmeno82",
-    "mmeno84",
-    "mmeno85"
-  )],
+    harmonized_labels,
     mmeno61 = "Menopause: hysterectomy"
   ),
   Harmonized_labels = harmonized_labels
 )
 
 standardized_value_labels <- list(
-  menno18 = c(`-3` = "na, wrong skip", `-2` = "na, see CMMENO82", `-1` = "R does not know age"),
-  mmenno61 = c(`-2` = "male respondent", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mmeno01 = c(`-3` = "na, wrong skip", `-2` = "male respondent", `-1` = "na, asked"),
-  mmeno02 = c(`-2` = "see BMMENO03", `-1` = "na, asked"),
-  mmeno03 = c(`-3` = "did not bear children", `-2` = "see BMMENO04", `-1` = "na, asked"),
-  mmeno04 = c(`-2` = "male respondent", `-1` = "na, asked", `1` = "yes", `2` = "no"),
+  menno18 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMMENO82",
+    `-1` = "R does not know age"
+  ),
+  mmenno61 = c(
+    `-2` = "male respondent",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  mmeno01 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "male respondent"
+  ),
+  mmeno02 = c(
+    `-2` = "see BMMENO03",
+    default_missing_labels[c("-1")]
+  ),
+  mmeno03 = c(
+    `-3` = "did not bear children",
+    `-2` = "see BMMENO04",
+    default_missing_labels[c("-1")]
+  ),
+  mmeno04 = c(
+    `-2` = "male respondent",
+    default_missing_labels[c("-1")],
+    `1` = "yes",
+    `2` = "no"
+  ),
   mmeno05 = c(
     `-5` = "na, interview terminated",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "male respondent",
     `-1` = "missing / source-specific"
   ),
-  mmeno07 = c(`-2` = "male respondent", `-1` = "na, asked", `1` = "yes", `2` = "no"),
-  mmeno08 = c(`-1` = "na, asked"),
+  mmeno07 = c(
+    `-2` = "male respondent",
+    default_missing_labels[c("-1")],
+    `1` = "yes",
+    `2` = "no"
+  ),
+  mmeno08 = c(
+    default_missing_labels[c("-1")]
+  ),
   mmeno09 = c(
     `-5` = "na, interview terminated",
     `-3` = "missing / source-specific",
     `-2` = "male respondent",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "no",
     `3` = "R refused to answer",
@@ -164,7 +206,7 @@ standardized_value_labels <- list(
   mmeno10 = c(
     `-3` = "missing / source-specific",
     `-2` = "male respondent",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "no",
     `3` = "R refused to answer",
@@ -173,87 +215,100 @@ standardized_value_labels <- list(
   mmeno11 = c(
     `-3` = "R does not know",
     `-2` = "male respondent",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "yes",
     `2` = "no"
   ),
   mmeno12 = c(
     `-3` = "R does not know",
     `-2` = "male respondent",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "yes",
     `2` = "no"
   ),
   mmeno13 = c(
     `-3` = "R does not know",
     `-2` = "male respondent",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "yes",
     `2` = "no"
   ),
   mmeno14 = c(
     `-3` = "missing / source-specific",
     `-2` = "male respondent",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes",
     `3` = "R refused to answer",
     `4` = "R does not know"
   ),
   mmeno15 = c(`-2` = "see BMMENO14"),
-  mmeno16 = c(`-1` = "na, asked"),
-  mmeno17 = c(`-3` = "na, wrong skip", `-2` = "na, see CMMENO09", `-1` = "R does not know age"),
+  mmeno16 = c(
+    default_missing_labels[c("-1")]
+  ),
+  mmeno17 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMMENO09",
+    `-1` = "R does not know age"
+  ),
   mmeno61 = c(
     `-5` = "na, interview terminated",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "male respondent",
-    `-1` = "na, asked",
     `1` = "no",
     `2` = "yes"
   ),
-  mmeno62 = c(`-3` = "na, wrong skip", `-2` = "see BMMENO61", `-1` = "missing / source-specific"),
+  mmeno62 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "see BMMENO61",
+    `-1` = "missing / source-specific"
+  ),
   mmeno63 = c(
     `-5` = "na, interview terminated",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "male respondent",
     `-1` = "missing / source-specific",
     `1` = "no",
     `2` = "yes, one taken",
     `3` = "yes, both taken"
   ),
-  mmeno64 = c(`-2` = "see BMMENO63", `-1` = "na, asked"),
-  mmeno65 = c(`-2` = "na, see BMMENO63", `-1` = "na, asked"),
-  mmeno66 = c(`-3` = "na, wrong skip", `-2` = "na, see CMMENO63", `-1` = "missing / source-specific"),
+  mmeno64 = c(
+    `-2` = "see BMMENO63",
+    default_missing_labels[c("-1")]
+  ),
+  mmeno65 = c(
+    `-2` = "na, see BMMENO63",
+    default_missing_labels[c("-1")]
+  ),
+  mmeno66 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMMENO63",
+    `-1` = "missing / source-specific"
+  ),
   mmeno81 = c(`-2` = "see BMMENO07"),
   mmeno82 = c(
     `-5` = "na, interview terminated",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "male respondent",
-    `-1` = "na, asked",
     `1` = "no",
     `2` = "yes",
     `3` = "yes, after menopause",
     `4` = "yes, during and after menopause"
   ),
-  mmeno83 = c(`-3` = "na, wrong skip", `-2` = "see BMMENO82", `-1` = "na, asked", `0` = "to be coded"),
+  mmeno83 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "see BMMENO82",
+    `0` = "to be coded"
+  ),
   mmeno84 = c(`-2` = "see BMMENO82"),
-  mmeno85 = c(`-1` = "na, asked")
+  mmeno85 = c(
+    default_missing_labels[c("-1")]
+  )
 )
 
 value_labels_list <- list(
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "menno18",
-    "mmeno05",
-    "mmeno09",
-    "mmeno17",
-    "mmeno61",
-    "mmeno62",
-    "mmeno63",
-    "mmeno66",
-    "mmeno82",
-    "mmeno83"
-  )],
+    standardized_value_labels,
     mmeno05 = c(`-5` = "na, interview terminated", `-2` = "male respondent", `-1` = "R does not know age"),
     mmeno09 = c(
     `-5` = "na, interview terminated",
@@ -296,32 +351,7 @@ value_labels_list <- list(
     mmeno83 = c(`-3` = "na, wrong skip", `-2` = "na, see CMMENO82", `0` = "to be coded")
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mmenno61",
-    "mmeno01",
-    "mmeno02",
-    "mmeno03",
-    "mmeno04",
-    "mmeno05",
-    "mmeno07",
-    "mmeno08",
-    "mmeno09",
-    "mmeno10",
-    "mmeno11",
-    "mmeno12",
-    "mmeno13",
-    "mmeno14",
-    "mmeno15",
-    "mmeno16",
-    "mmeno62",
-    "mmeno63",
-    "mmeno64",
-    "mmeno81",
-    "mmeno82",
-    "mmeno83",
-    "mmeno84",
-    "mmeno85"
-  )],
+    standardized_value_labels,
     mmeno01 = c(`-2` = "male respondent", `-1` = "na, asked"),
     mmeno05 = c(`-2` = "male respondent", `-1` = "na, asked"),
     mmeno09 = c(
@@ -357,34 +387,7 @@ value_labels_list <- list(
     mmeno83 = c(`-2` = "see BMMENO82", `-1` = "na, asked", `0` = "to be coded")
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mmenno61",
-    "mmeno01",
-    "mmeno02",
-    "mmeno03",
-    "mmeno04",
-    "mmeno05",
-    "mmeno07",
-    "mmeno08",
-    "mmeno09",
-    "mmeno10",
-    "mmeno11",
-    "mmeno12",
-    "mmeno13",
-    "mmeno14",
-    "mmeno15",
-    "mmeno16",
-    "mmeno62",
-    "mmeno63",
-    "mmeno64",
-    "mmeno65",
-    "mmeno66",
-    "mmeno81",
-    "mmeno82",
-    "mmeno83",
-    "mmeno84",
-    "mmeno85"
-  )],
+    standardized_value_labels,
     mmeno01 = c(`-2` = "male respondent", `-1` = "na, asked"),
     mmeno05 = c(`-2` = "male respondent", `-1` = "na, asked"),
     mmeno09 = c(
@@ -421,22 +424,7 @@ value_labels_list <- list(
     mmeno83 = c(`-2` = "see BMMENO82", `-1` = "na, asked", `0` = "to be coded")
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mmeno01",
-    "mmeno05",
-    "mmeno09",
-    "mmeno10",
-    "mmeno14",
-    "mmeno61",
-    "mmeno62",
-    "mmeno63",
-    "mmeno64",
-    "mmeno65",
-    "mmeno66",
-    "mmeno82",
-    "mmeno84",
-    "mmeno85"
-  )],
+    standardized_value_labels,
     mmeno05 = c(`-3` = "na, wrong skip", `-2` = "male respondent", `-1` = "na, asked"),
     mmeno09 = c(
     `-3` = "na, wrong skip",
@@ -524,9 +512,12 @@ var_types_vec <- c(
   mmeno85 = "numeric"
 )
 
-.lasa_fc_181 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "181", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "181", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "181", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "181", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_181 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

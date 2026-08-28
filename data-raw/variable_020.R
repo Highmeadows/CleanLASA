@@ -24,9 +24,41 @@ harmonized_labels <- c(
   dsf08 = "Digit Span forwards: 9 numbers, attempt 1+2"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `3B` = c(
+    "dsb01",
+    "dsb02",
+    "dsb03",
+    "dsb04",
+    "dsb05",
+    "dsb06",
+    "dsb07",
+    "dsf01",
+    "dsf02",
+    "dsf03",
+    "dsf04",
+    "dsf05",
+    "dsf06",
+    "dsf07",
+    "dsf08"
+  )
+)
+
 variable_labels_list <- list(
   Wave_3B_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
+)
+
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "1 correct",
+  `2` = "2 correct"
 )
 
 standardized_value_labels <- list(
@@ -35,120 +67,105 @@ standardized_value_labels <- list(
     `-2` = "not available, previous answers incorrect",
     `-1` = "not available, test broken off",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   dsb02 = c(
     `-3` = "not available, routing",
     `-2` = "not available, previous answers incorrect",
     `-1` = "not available, test broken off",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   dsb03 = c(
     `-3` = "not available, routing",
     `-2` = "not available, previous answers incorrect",
     `-1` = "not available, test broken off",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   dsb04 = c(
     `-3` = "not available, routing",
     `-2` = "not available, previous answers incorrect",
     `-1` = "not available, test broken off",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   dsb05 = c(
     `-3` = "not available, routing",
     `-2` = "not available, previous answers incorrect",
     `-1` = "not available, test broken off",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   dsb06 = c(
     `-3` = "not available, routing",
     `-2` = "not available, previous answers incorrect",
     `-1` = "not available, test broken off",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   dsb07 = c(
     `-3` = "not available, routing",
     `-2` = "not available, previous answers incorrect",
     `-1` = "not available, test broken off",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   dsf01 = c(
     `-3` = "not available, routing",
     `-2` = "not available, previous answers incorrect",
     `-1` = "not available, test broken off",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   dsf02 = c(
     `-3` = "not available, routing",
     `-2` = "not available, previous answers incorrect",
     `-1` = "not available, test broken off",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   dsf03 = c(
     `-3` = "not available, routing",
     `-2` = "not available, previous answers incorrect",
     `-1` = "not available, test broken off",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   dsf04 = c(
     `-3` = "not available, routing",
     `-2` = "not available, previous answers incorrect",
     `-1` = "not available, test broken off",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   dsf05 = c(
     `-3` = "not available, routing",
     `-2` = "not available, previous answers incorrect",
     `-1` = "not available, test broken off",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   dsf06 = c(
     `-3` = "not available, routing",
     `-2` = "not available, previous answers incorrect",
     `-1` = "not available, test broken off",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   dsf07 = c(
     `-3` = "not available, routing",
     `-2` = "not available, previous answers incorrect",
     `-1` = "not available, test broken off",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   dsf08 = c(
     `-3` = "not available, routing",
     `-2` = "not available, previous answers incorrect",
     `-1` = "not available, test broken off",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   )
 )
 
@@ -267,9 +284,12 @@ var_types_vec <- c(
   dsf08 = "numeric"
 )
 
-.lasa_fc_020 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "020", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "020", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "020", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "020", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_020 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

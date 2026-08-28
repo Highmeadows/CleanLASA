@@ -15,6 +15,29 @@ harmonized_labels <- c(
   an9 = "my feelings are my own business"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "an1",
+    "an10",
+    "an4",
+    "an6",
+    "an8",
+    "an9"
+  ),
+  `E` = c(
+    "an1",
+    "an10",
+    "an4",
+    "an6",
+    "an8",
+    "an9"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = harmonized_labels,
   Wave_E_labels = harmonized_labels,
@@ -23,55 +46,55 @@ variable_labels_list <- list(
 
 standardized_value_labels <- list(
   an1 = c(
-    `-4` = "coding category -4",
+    `-4` = "label varies by wave",
     `-3` = "interview terminated",
     `-2` = "no valid data",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "more or less",
     `3` = "yes"
   ),
   an10 = c(
-    `-4` = "coding category -4",
+    `-4` = "label varies by wave",
     `-3` = "interview terminated",
     `-2` = "no valid data",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "more or less",
     `3` = "yes"
   ),
   an4 = c(
-    `-4` = "coding category -4",
+    `-4` = "label varies by wave",
     `-3` = "interview terminated",
     `-2` = "no valid data",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "more or less",
     `3` = "yes"
   ),
   an6 = c(
-    `-4` = "coding category -4",
+    `-4` = "label varies by wave",
     `-3` = "interview terminated",
     `-2` = "no valid data",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "more or less",
     `3` = "yes"
   ),
   an8 = c(
-    `-4` = "coding category -4",
+    `-4` = "label varies by wave",
     `-3` = "interview terminated",
     `-2` = "no valid data",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "more or less",
     `3` = "yes"
   ),
   an9 = c(
-    `-4` = "coding category -4",
+    `-4` = "label varies by wave",
     `-3` = "interview terminated",
     `-2` = "no valid data",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "more or less",
     `3` = "yes"
@@ -169,9 +192,12 @@ var_types_vec <- c(
   an9 = "categorical"
 )
 
-.lasa_fc_078 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "078", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "078", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "078", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "078", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_078 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -8,6 +8,52 @@
 
 harmonized_labels <- c(qpain = "Evaluation of pain at present")
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "qpain"
+  ),
+  `C` = c(
+    "qpain"
+  ),
+  `D` = c(
+    "qpain"
+  ),
+  `E` = c(
+    "qpain"
+  ),
+  `2B` = c(
+    "qpain"
+  ),
+  `F` = c(
+    "qpain"
+  ),
+  `G` = c(
+    "qpain"
+  ),
+  `H` = c(
+    "qpain"
+  ),
+  `3B` = c(
+    "qpain"
+  ),
+  `MB` = c(
+    "qpain"
+  ),
+  `I` = c(
+    "qpain"
+  ),
+  `J` = c(
+    "qpain"
+  ),
+  `K` = c(
+    "qpain"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = harmonized_labels,
   Wave_C_labels = harmonized_labels,
@@ -48,10 +94,13 @@ value_labels_list <- list(
 
 var_types_vec <- c(qpain = "numeric")
 
-.lasa_fc_315 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "315", waves = .lasa_wave_rows()) |>
     .override_label(wave = "MB", variable = "qpain", override_value = "bmpain"),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "315", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "315", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "315", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_315 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

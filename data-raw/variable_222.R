@@ -14,37 +14,88 @@ harmonized_labels <- c(
   rmcrav = "Reason for missing/invalid coloured Raven score"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "craven",
+    "ravatot",
+    "ravbtot",
+    "rmcrav"
+  ),
+  `C` = c(
+    "craven",
+    "ravatot",
+    "ravbtot",
+    "rmcrav"
+  ),
+  `D` = c(
+    "craven",
+    "ravatot",
+    "ravbtot",
+    "rmcrav"
+  ),
+  `E` = c(
+    "craven",
+    "ravatot",
+    "ravbtot",
+    "rmcrav"
+  ),
+  `2B` = c(
+    "craven",
+    "ravatot",
+    "ravbtot",
+    "rmcrav"
+  ),
+  `F` = c(
+    "craven",
+    "ravatot",
+    "ravbtot",
+    "rmcrab",
+    "rmcrav"
+  ),
+  `G` = c(
+    "craven",
+    "ravatot",
+    "ravbtot",
+    "rmcrab",
+    "rmcrav"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
-    harmonized_labels[c("craven", "ravatot", "ravbtot", "rmcrav")],
+    harmonized_labels,
     craven = "Total score coloured raven",
     ravatot = "Total c. raven score section A",
     ravbtot = "Total c. raven score section B",
     rmcrav = "Reason, no valid data on c. raven"
   ),
   Wave_C_labels = .replace_labels(
-    harmonized_labels[c("craven", "ravatot", "ravbtot", "rmcrav")],
+    harmonized_labels,
     craven = "Total score coloured raven",
     ravatot = "Total c. raven score section A",
     ravbtot = "Total c. raven score section B",
     rmcrav = "Reason, no valid data on c. raven"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c("craven", "ravatot", "ravbtot", "rmcrav")],
+    harmonized_labels,
     craven = "Total score coloured raven",
     ravatot = "Total c. raven score section A",
     ravbtot = "Total c. raven score section B",
     rmcrav = "Reason, no valid data on c. raven"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c("craven", "ravatot", "ravbtot", "rmcrav")],
+    harmonized_labels,
     craven = "Total score coloured raven",
     ravatot = "Total c. raven score section A",
     ravbtot = "Total c. raven score section B",
     rmcrav = "Reason, no valid data on c. raven"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c("craven", "ravatot", "ravbtot", "rmcrav")],
+    harmonized_labels,
     craven = "Total score coloured raven",
     ravatot = "Total c. raven score section A",
     ravbtot = "Total c. raven score section B",
@@ -103,7 +154,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("craven", "ravatot", "ravbtot", "rmcrav")],
+    standardized_value_labels,
     craven = .replace_labels(
     standardized_value_labels$craven,
     `-2` = "na, see BRMCRAV"
@@ -129,7 +180,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("craven", "ravatot", "ravbtot", "rmcrav")],
+    standardized_value_labels,
     rmcrav = c(
     `-2` = "valid score",
     `1` = "short version",
@@ -143,7 +194,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("craven", "ravatot", "ravbtot", "rmcrav")],
+    standardized_value_labels,
     rmcrav = c(
     `-2` = "valid score",
     `1` = "short version",
@@ -157,7 +208,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("craven", "ravatot", "ravbtot", "rmcrav")],
+    standardized_value_labels,
     rmcrav = c(
     `-2` = "valid score",
     `1` = "short version",
@@ -171,7 +222,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("craven", "ravatot", "ravbtot", "rmcrav")],
+    standardized_value_labels,
     rmcrav = c(
     `-2` = "valid score",
     `1` = "short version",
@@ -234,7 +285,7 @@ var_types_vec <- c(
   rmcrav = "categorical"
 )
 
-.lasa_fc_222 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "222", waves = .lasa_wave_rows()) |>
     .override_label(wave = "E", variable = "craven", override_value = "emcraven") |>
     .override_label(wave = "E", variable = "ravatot", override_value = "emrvatot") |>
@@ -255,3 +306,6 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "222", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "222", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_222 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

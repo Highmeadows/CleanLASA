@@ -21,6 +21,170 @@ harmonized_labels <- c(
   mnotest = "(part of) Coding test done"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "mcodt1",
+    "mcodt2",
+    "mcodt3",
+    "mcodtp",
+    "mcodtp1",
+    "mcodtp2",
+    "mcodtp3",
+    "mcodtp4",
+    "mcodtp5",
+    "mcodtpoth",
+    "mcormis",
+    "mnotest"
+  ),
+  `C` = c(
+    "mcodt1",
+    "mcodt2",
+    "mcodt3",
+    "mcodtp",
+    "mcodtp1",
+    "mcodtp2",
+    "mcodtp3",
+    "mcodtp4",
+    "mcodtp5",
+    "mcodtpoth",
+    "mcormis",
+    "mnotest"
+  ),
+  `D` = c(
+    "mcodt1",
+    "mcodt2",
+    "mcodt3",
+    "mcodtp",
+    "mcodtp1",
+    "mcodtp2",
+    "mcodtp3",
+    "mcodtp4",
+    "mcodtp5",
+    "mcodtpoth",
+    "mcormis",
+    "mnotest"
+  ),
+  `E` = c(
+    "mcodt1",
+    "mcodt2",
+    "mcodt3",
+    "mcodtp",
+    "mcodtp1",
+    "mcodtp2",
+    "mcodtp3",
+    "mcodtp4",
+    "mcodtp5",
+    "mnotest"
+  ),
+  `2B` = c(
+    "mcodt1",
+    "mcodt2",
+    "mcodt3",
+    "mcodtp",
+    "mcodtp1",
+    "mcodtp2",
+    "mcodtp3",
+    "mcodtp4",
+    "mcodtp5",
+    "mcodtpoth",
+    "mcormis",
+    "mnotest"
+  ),
+  `F` = c(
+    "mcodt1",
+    "mcodt2",
+    "mcodt3",
+    "mcodtp",
+    "mcodtp1",
+    "mcodtp2",
+    "mcodtp3",
+    "mcodtp4",
+    "mcodtp5",
+    "mcormis",
+    "mnotest"
+  ),
+  `G` = c(
+    "mcodt1",
+    "mcodt2",
+    "mcodt3",
+    "mcodtp",
+    "mcodtp1",
+    "mcodtp2",
+    "mcodtp3",
+    "mcodtp4",
+    "mcodtp5",
+    "mcormis",
+    "mnotest"
+  ),
+  `H` = c(
+    "mcodt1",
+    "mcodt2",
+    "mcodt3",
+    "mcodtp",
+    "mcodtp1",
+    "mcodtp2",
+    "mcodtp3",
+    "mcodtp4",
+    "mcodtp5",
+    "mcormis",
+    "mnotest"
+  ),
+  `3B` = c(
+    "mcodt1",
+    "mcodt2",
+    "mcodt3",
+    "mcodtp",
+    "mcodtp1",
+    "mcodtp2",
+    "mcodtp3",
+    "mcodtp4",
+    "mcodtp5",
+    "mcormis",
+    "mnotest"
+  ),
+  `I` = c(
+    "mcodt1",
+    "mcodt2",
+    "mcodt3",
+    "mcodtp",
+    "mcodtp1",
+    "mcodtp2",
+    "mcodtp3",
+    "mcodtp4",
+    "mcodtp5",
+    "mnotest"
+  ),
+  `J` = c(
+    "mcodt1",
+    "mcodt2",
+    "mcodt3",
+    "mcodtp",
+    "mcodtp1",
+    "mcodtp2",
+    "mcodtp3",
+    "mcodtp4",
+    "mcodtp5",
+    "mcodtpoth",
+    "mnotest"
+  ),
+  `K` = c(
+    "mcodt1",
+    "mcodt2",
+    "mcodt3",
+    "mcodtp",
+    "mcodtp1",
+    "mcodtp2",
+    "mcodtp3",
+    "mcodtp4",
+    "mcodtp5",
+    "mnotest"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
     harmonized_labels,
@@ -34,111 +198,18 @@ variable_labels_list <- list(
     harmonized_labels,
     mcormis = "coding task: reason no trial(s)"
   ),
-  Wave_E_labels = harmonized_labels[c(
-    "mcodt1",
-    "mcodt2",
-    "mcodt3",
-    "mcodtp",
-    "mcodtp1",
-    "mcodtp2",
-    "mcodtp3",
-    "mcodtp4",
-    "mcodtp5",
-    "mnotest"
-  )],
+  Wave_E_labels = harmonized_labels,
   Wave_2B_labels = .replace_labels(
     harmonized_labels,
     mcormis = "coding task: reason no trial(s)"
   ),
-  Wave_F_labels = harmonized_labels[c(
-    "mcodt1",
-    "mcodt2",
-    "mcodt3",
-    "mcodtp",
-    "mcodtp1",
-    "mcodtp2",
-    "mcodtp3",
-    "mcodtp4",
-    "mcodtp5",
-    "mcormis",
-    "mnotest"
-  )],
-  Wave_G_labels = harmonized_labels[c(
-    "mcodt1",
-    "mcodt2",
-    "mcodt3",
-    "mcodtp",
-    "mcodtp1",
-    "mcodtp2",
-    "mcodtp3",
-    "mcodtp4",
-    "mcodtp5",
-    "mcormis",
-    "mnotest"
-  )],
-  Wave_H_labels = harmonized_labels[c(
-    "mcodt1",
-    "mcodt2",
-    "mcodt3",
-    "mcodtp",
-    "mcodtp1",
-    "mcodtp2",
-    "mcodtp3",
-    "mcodtp4",
-    "mcodtp5",
-    "mcormis",
-    "mnotest"
-  )],
-  Wave_3B_labels = harmonized_labels[c(
-    "mcodt1",
-    "mcodt2",
-    "mcodt3",
-    "mcodtp",
-    "mcodtp1",
-    "mcodtp2",
-    "mcodtp3",
-    "mcodtp4",
-    "mcodtp5",
-    "mcormis",
-    "mnotest"
-  )],
-  Wave_I_labels = harmonized_labels[c(
-    "mcodt1",
-    "mcodt2",
-    "mcodt3",
-    "mcodtp",
-    "mcodtp1",
-    "mcodtp2",
-    "mcodtp3",
-    "mcodtp4",
-    "mcodtp5",
-    "mnotest"
-  )],
-  Wave_J_labels = harmonized_labels[c(
-    "mcodt1",
-    "mcodt2",
-    "mcodt3",
-    "mcodtp",
-    "mcodtp1",
-    "mcodtp2",
-    "mcodtp3",
-    "mcodtp4",
-    "mcodtp5",
-    "mcodtpoth",
-    "mnotest"
-  )],
-  Wave_K_labels = harmonized_labels[c(
-    "mcodt1",
-    "mcodt2",
-    "mcodt3",
-    "mcodtp",
-    "mcodtp1",
-    "mcodtp2",
-    "mcodtp3",
-    "mcodtp4",
-    "mcodtp5",
-    "mnotest"
-  )],
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_3B_labels = harmonized_labels,
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
@@ -222,7 +293,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("mcodt1", "mcodt2", "mcodt3", "mcodtp", "mcodtpoth", "mcormis", "mnotest")],
+    standardized_value_labels,
     mcodt1 = c(`-1` = "no trial"),
     mcodt2 = c(`-1` = "no trial"),
     mcodt3 = c(`-1` = "no trial"),
@@ -249,7 +320,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("mcodt1", "mcodt2", "mcodt3", "mcodtp", "mcodtpoth", "mcormis", "mnotest")],
+    standardized_value_labels,
     mcodtp = .replace_labels(
     standardized_value_labels$mcodtp,
     `0` = "not mentioned",
@@ -277,7 +348,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("mcodt1", "mcodt2", "mcodt3", "mcodtp", "mcodtpoth", "mcormis", "mnotest")],
+    standardized_value_labels,
     mcodtp = .replace_labels(
     standardized_value_labels$mcodtp,
     `0` = "not mentioned",
@@ -305,7 +376,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("mcodt1", "mcodt2", "mcodt3", "mcodtp", "mnotest")],
+    standardized_value_labels,
     mcodtp = .replace_labels(
     standardized_value_labels$mcodtp,
     `0` = "not mentioned",
@@ -313,7 +384,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("mcodt1", "mcodt2", "mcodt3", "mcodtpoth", "mcormis", "mnotest")],
+    standardized_value_labels,
     mcodtpoth = c(
     `-3` = "no test",
     `-2` = "no particularities",
@@ -336,19 +407,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mcodt1",
-    "mcodt2",
-    "mcodt3",
-    "mcodtp",
-    "mcodtp1",
-    "mcodtp2",
-    "mcodtp3",
-    "mcodtp4",
-    "mcodtp5",
-    "mcormis",
-    "mnotest"
-  )],
+    standardized_value_labels,
     mcodtp = c(`-4` = "no valid data", `-3` = "no test", `0` = "no", `1` = "yes"),
     mcormis = c(
     `-2` = "valid score",
@@ -363,19 +422,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mcodt1",
-    "mcodt2",
-    "mcodt3",
-    "mcodtp",
-    "mcodtp1",
-    "mcodtp2",
-    "mcodtp3",
-    "mcodtp4",
-    "mcodtp5",
-    "mcormis",
-    "mnotest"
-  )],
+    standardized_value_labels,
     mcodtp = c(`-4` = "no valid data", `-3` = "no test", `0` = "no", `1` = "yes"),
     mcormis = c(
     `-2` = "valid score",
@@ -390,19 +437,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mcodt1",
-    "mcodt2",
-    "mcodt3",
-    "mcodtp",
-    "mcodtp1",
-    "mcodtp2",
-    "mcodtp3",
-    "mcodtp4",
-    "mcodtp5",
-    "mcormis",
-    "mnotest"
-  )],
+    standardized_value_labels,
     mcodtp = c(`-4` = "no valid data", `-3` = "no test", `0` = "no", `1` = "yes"),
     mcormis = c(
     `-2` = "valid score",
@@ -417,19 +452,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mcodt1",
-    "mcodt2",
-    "mcodt3",
-    "mcodtp",
-    "mcodtp1",
-    "mcodtp2",
-    "mcodtp3",
-    "mcodtp4",
-    "mcodtp5",
-    "mcormis",
-    "mnotest"
-  )],
+    standardized_value_labels,
     mcodtp = c(`-4` = "no valid data", `-3` = "no test", `0` = "no", `1` = "yes"),
     mcormis = c(
     `-2` = "valid score",
@@ -444,49 +467,15 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mcodt1",
-    "mcodt2",
-    "mcodt3",
-    "mcodtp",
-    "mcodtp1",
-    "mcodtp2",
-    "mcodtp3",
-    "mcodtp4",
-    "mcodtp5",
-    "mnotest"
-  )],
+    standardized_value_labels,
     mcodtp = c(`-4` = "no valid data", `-3` = "no test", `0` = "no", `1` = "yes")
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mcodt1",
-    "mcodt2",
-    "mcodt3",
-    "mcodtp",
-    "mcodtp1",
-    "mcodtp2",
-    "mcodtp3",
-    "mcodtp4",
-    "mcodtp5",
-    "mcodtpoth",
-    "mnotest"
-  )],
+    standardized_value_labels,
     mcodtp = c(`-4` = "no valid data", `-3` = "no test", `0` = "no", `1` = "yes")
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mcodt1",
-    "mcodt2",
-    "mcodt3",
-    "mcodtp",
-    "mcodtp1",
-    "mcodtp2",
-    "mcodtp3",
-    "mcodtp4",
-    "mcodtp5",
-    "mnotest"
-  )],
+    standardized_value_labels,
     mcodtp = c(`-4` = "no valid data", `-3` = "no test", `0` = "no", `1` = "yes")
   ),
   Harmonized_labels = standardized_value_labels
@@ -507,9 +496,39 @@ var_types_vec <- c(
   mnotest = "categorical"
 )
 
-.lasa_fc_155 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "155", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "155", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "155", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "155", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["mcodtp1"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mcodtp2"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mcodtp3"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mcodtp4"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mcodtp5"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mcodtp1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mcodtp2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mcodtp3"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mcodtp4"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mcodtp5"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mcodtp1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mcodtp2"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mcodtp3"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mcodtp4"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mcodtp5"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mcodtp1"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mcodtp2"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mcodtp3"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mcodtp4"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mcodtp5"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mcodtp"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mcodtp1"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mcodtp2"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mcodtp3"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mcodtp4"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mcodtp5"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+
+.lasa_fc_155 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

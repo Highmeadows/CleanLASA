@@ -14,6 +14,20 @@ harmonized_labels <- c(
   rmmeemo = "Reason missing: Meta emotion"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "metaem1",
+    "metaem2",
+    "metaem3",
+    "metaem4",
+    "rmmeemo"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
@@ -21,32 +35,28 @@ variable_labels_list <- list(
 
 standardized_value_labels <- list(
   metaem1 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "absolutely not emotional",
     `2` = "a little emotional",
     `3` = "fairly emotional",
     `4` = "very emotional"
   ),
   metaem2 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "very little",
     `2` = "little",
     `3` = "much",
     `4` = "very much"
   ),
   metaem3 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "not satisfied at all",
     `2` = "a bit satisfied",
     `3` = "rather satisfied",
     `4` = "very satisfied"
   ),
   metaem4 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "rarely or never",
     `2` = "sometimes",
     `3` = "often",
@@ -65,23 +75,19 @@ value_labels_list <- list(
     standardized_value_labels,
     metaem1 = .replace_labels(
     standardized_value_labels$metaem1,
-    `-2` = "na, see BRMMEEMO",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMMEEMO"
   ),
     metaem2 = .replace_labels(
     standardized_value_labels$metaem2,
-    `-2` = "na, see BRMMEEMO",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMMEEMO"
   ),
     metaem3 = .replace_labels(
     standardized_value_labels$metaem3,
-    `-2` = "na, see BRMMEEMO",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMMEEMO"
   ),
     metaem4 = .replace_labels(
     standardized_value_labels$metaem4,
-    `-2` = "na, see BRMMEEMO",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMMEEMO"
   )
   ),
   Harmonized_labels = standardized_value_labels
@@ -95,9 +101,12 @@ var_types_vec <- c(
   rmmeemo = "categorical"
 )
 
-.lasa_fc_029 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "029", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "029", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "029", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "029", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_029 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

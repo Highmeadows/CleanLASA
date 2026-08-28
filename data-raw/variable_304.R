@@ -8,6 +8,19 @@
 
 harmonized_labels <- c(qpsstot = "Perceived Stress Scale total score")
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `H` = c(
+    "qpsstot"
+  ),
+  `3B` = c(
+    "qpsstot"
+  )
+)
+
 variable_labels_list <- list(
   Wave_H_labels = .replace_labels(
     harmonized_labels,
@@ -32,9 +45,12 @@ value_labels_list <- list(
 
 var_types_vec <- c(qpsstot = "numeric")
 
-.lasa_fc_304 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "304", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "304", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "304", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "304", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_304 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

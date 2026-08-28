@@ -51,13 +51,17 @@ harmonized_labels <- c(
   rm151 = "Reason missing: LASAC151"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c("mfinps1", "mfinps2", "mfinps3")],
-    mfinps1 = "Pulse rate (1)"
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "mfinps1",
+    "mfinps2",
+    "mfinps3"
   ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+  `C` = c(
     "marmds1",
     "marmlds1",
     "marmlps1",
@@ -78,16 +82,8 @@ variable_labels_list <- list(
     "mfinps1",
     "mfinss1",
     "rm151"
-  )],
-    marmds1 = "Bloodpr sitting (arm) mmHg: diastolic",
-    marmpa1 = "Partic. bloodpressure: cannot stand",
-    marmpa2 = "Partic. bloodpressure: cannot sit",
-    marmps1 = "Pulse rate sitting (arm)",
-    marmss1 = "Bloodpr sitting (arm) mmHg: systolic",
-    mfinps1 = "Pulse rate (finger)"
   ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
+  `D` = c(
     "marmds1",
     "marmlds1",
     "marmlps1",
@@ -106,16 +102,8 @@ variable_labels_list <- list(
     "mfinpo1",
     "mfinps1",
     "mfinss1"
-  )],
-    marmds1 = "Bloodpr sitting (arm) mmHg: diastolic",
-    marmpa1 = "Partic. bloodpressure: cannot stand",
-    marmpa2 = "Partic. bloodpressure: cannot sit",
-    marmps1 = "Pulse rate sitting (arm)",
-    marmss1 = "Bloodpr sitting (arm) mmHg: systolic",
-    mfinps1 = "Pulse rate (finger)"
   ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
+  `E` = c(
     "marmds1",
     "marmds2",
     "marmds3",
@@ -126,16 +114,8 @@ variable_labels_list <- list(
     "marmss1",
     "marmss2",
     "marmss3"
-  )],
-    marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
-    marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
-    marmds3 = "Bloodpr 3 sitting (arm) mmHg: diastolic",
-    marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
-    marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic",
-    marmss3 = "Bloodpr 3 sitting (arm) mmHg: systolic"
   ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
+  `2B` = c(
     "marmds1",
     "marmds2",
     "marmds3",
@@ -150,21 +130,8 @@ variable_labels_list <- list(
     "marmss2",
     "marmss3",
     "marmss4"
-  )],
-    marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
-    marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
-    marmds3 = "Retest Bloodpr 3 sitting (arm) mmHg: diastolic",
-    marmpa1 = "Particularities bloodpressure",
-    marmpa2 = "Retest Particularities bloodpressure",
-    marmps1 = "Pulse rate sitting (arm) 1",
-    marmps2 = "Pulse rate sitting (arm) 2",
-    marmps3 = "Retest Pulse rate 3 sitting (arm)",
-    marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
-    marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic",
-    marmss3 = "Retest Bloodpr 3 sitting (arm) mmHg: systolic"
   ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
+  `F` = c(
     "marmds1",
     "marmds2",
     "marmds3",
@@ -175,16 +142,8 @@ variable_labels_list <- list(
     "marmss1",
     "marmss2",
     "marmss3"
-  )],
-    marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
-    marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
-    marmds3 = "Bloodpr 3 sitting (arm) mmHg: diastolic",
-    marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
-    marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic",
-    marmss3 = "Bloodpr 3 sitting (arm) mmHg: systolic"
   ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
+  `G` = c(
     "marmds0",
     "marmds1",
     "marmds2",
@@ -199,30 +158,18 @@ variable_labels_list <- list(
     "marmss1",
     "marmss2",
     "marmss3"
-  )],
-    marmds0 = "Pretest: bloodpr 0 sit (arm) mmHg: diastolic",
-    marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
-    marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
-    marmds3 = "Bloodpr 3 sitting (arm) mmHg: diastolic",
-    marmpa0 = "Particularities bloodpressure Pretest",
-    marmps0 = "Pretest: pulse rate 0 sit (arm)",
-    marmss0 = "Pretest: bloodpr 0 sit (arm) mmHg: systolic",
-    marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
-    marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic",
-    marmss3 = "Bloodpr 3 sitting (arm) mmHg: systolic"
   ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c("marmds0", "marmds1", "marmpa0", "marmpar", "marmps0", "marmps1", "marmss0", "marmss1")],
-    marmds0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: diastolic",
-    marmds1 = "Bloodpressure (1) sitting (arm) mmHg: diastolic",
-    marmpa0 = "Particularities bloodpressure Pretest",
-    marmps0 = "Pretest: pulse rate (0) sitting (arm)",
-    marmps1 = "Pulse rate (1) sitting (arm)",
-    marmss0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: systolic",
-    marmss1 = "Bloodpressure (1) sitting (arm) mmHg: systolic"
+  `H` = c(
+    "marmds0",
+    "marmds1",
+    "marmpa0",
+    "marmpar",
+    "marmps0",
+    "marmps1",
+    "marmss0",
+    "marmss1"
   ),
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
+  `3B` = c(
     "marmds01",
     "marmds02",
     "marmds1",
@@ -237,7 +184,128 @@ variable_labels_list <- list(
     "marmss02",
     "marmss1",
     "marmss2"
-  )],
+  ),
+  `MB` = c(
+    "marmds1",
+    "marmds2",
+    "marmpar",
+    "marmps1",
+    "marmps2",
+    "marmss1",
+    "marmss2"
+  ),
+  `I` = c(
+    "marmds0",
+    "marmds1",
+    "marmpa0",
+    "marmpar",
+    "marmps0",
+    "marmps1",
+    "marmss0",
+    "marmss1"
+  ),
+  `J` = c(
+    "marmds0",
+    "marmds1",
+    "marmpa0",
+    "marmpar",
+    "marmps0",
+    "marmps1",
+    "marmss0",
+    "marmss1"
+  ),
+  `K` = c(
+    "marmds0",
+    "marmds1",
+    "marmpa0",
+    "marmpar",
+    "marmps0",
+    "marmps1",
+    "marmss0",
+    "marmss1"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
+    mfinps1 = "Pulse rate (1)"
+  ),
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
+    marmds1 = "Bloodpr sitting (arm) mmHg: diastolic",
+    marmpa1 = "Partic. bloodpressure: cannot stand",
+    marmpa2 = "Partic. bloodpressure: cannot sit",
+    marmps1 = "Pulse rate sitting (arm)",
+    marmss1 = "Bloodpr sitting (arm) mmHg: systolic",
+    mfinps1 = "Pulse rate (finger)"
+  ),
+  Wave_D_labels = .replace_labels(
+    harmonized_labels,
+    marmds1 = "Bloodpr sitting (arm) mmHg: diastolic",
+    marmpa1 = "Partic. bloodpressure: cannot stand",
+    marmpa2 = "Partic. bloodpressure: cannot sit",
+    marmps1 = "Pulse rate sitting (arm)",
+    marmss1 = "Bloodpr sitting (arm) mmHg: systolic",
+    mfinps1 = "Pulse rate (finger)"
+  ),
+  Wave_E_labels = .replace_labels(
+    harmonized_labels,
+    marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
+    marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
+    marmds3 = "Bloodpr 3 sitting (arm) mmHg: diastolic",
+    marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
+    marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic",
+    marmss3 = "Bloodpr 3 sitting (arm) mmHg: systolic"
+  ),
+  Wave_2B_labels = .replace_labels(
+    harmonized_labels,
+    marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
+    marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
+    marmds3 = "Retest Bloodpr 3 sitting (arm) mmHg: diastolic",
+    marmpa1 = "Particularities bloodpressure",
+    marmpa2 = "Retest Particularities bloodpressure",
+    marmps1 = "Pulse rate sitting (arm) 1",
+    marmps2 = "Pulse rate sitting (arm) 2",
+    marmps3 = "Retest Pulse rate 3 sitting (arm)",
+    marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
+    marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic",
+    marmss3 = "Retest Bloodpr 3 sitting (arm) mmHg: systolic"
+  ),
+  Wave_F_labels = .replace_labels(
+    harmonized_labels,
+    marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
+    marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
+    marmds3 = "Bloodpr 3 sitting (arm) mmHg: diastolic",
+    marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
+    marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic",
+    marmss3 = "Bloodpr 3 sitting (arm) mmHg: systolic"
+  ),
+  Wave_G_labels = .replace_labels(
+    harmonized_labels,
+    marmds0 = "Pretest: bloodpr 0 sit (arm) mmHg: diastolic",
+    marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
+    marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
+    marmds3 = "Bloodpr 3 sitting (arm) mmHg: diastolic",
+    marmpa0 = "Particularities bloodpressure Pretest",
+    marmps0 = "Pretest: pulse rate 0 sit (arm)",
+    marmss0 = "Pretest: bloodpr 0 sit (arm) mmHg: systolic",
+    marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
+    marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic",
+    marmss3 = "Bloodpr 3 sitting (arm) mmHg: systolic"
+  ),
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
+    marmds0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: diastolic",
+    marmds1 = "Bloodpressure (1) sitting (arm) mmHg: diastolic",
+    marmpa0 = "Particularities bloodpressure Pretest",
+    marmps0 = "Pretest: pulse rate (0) sitting (arm)",
+    marmps1 = "Pulse rate (1) sitting (arm)",
+    marmss0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: systolic",
+    marmss1 = "Bloodpressure (1) sitting (arm) mmHg: systolic"
+  ),
+  Wave_3B_labels = .replace_labels(
+    harmonized_labels,
     marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
     marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
     marmpa0 = "Particularities bloodpressure Pretest",
@@ -245,14 +313,14 @@ variable_labels_list <- list(
     marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic"
   ),
   Wave_MB_labels = .replace_labels(
-    harmonized_labels[c("marmds1", "marmds2", "marmpar", "marmps1", "marmps2", "marmss1", "marmss2")],
+    harmonized_labels,
     marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
     marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
     marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
     marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c("marmds0", "marmds1", "marmpa0", "marmpar", "marmps0", "marmps1", "marmss0", "marmss1")],
+    harmonized_labels,
     marmds0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: diastolic",
     marmds1 = "Bloodpressure (1) sitting (arm) mmHg: diastolic",
     marmpa0 = "Particularities bloodpressure pretest",
@@ -262,7 +330,7 @@ variable_labels_list <- list(
     marmss1 = "Bloodpressure (1) sitting (arm) mmHg: systolic"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c("marmds0", "marmds1", "marmpa0", "marmpar", "marmps0", "marmps1", "marmss0", "marmss1")],
+    harmonized_labels,
     marmds0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: diastolic",
     marmds1 = "Bloodpressure (1) sitting (arm) mmHg: diastolic",
     marmpa0 = "Particularities bloodpressure pretest",
@@ -272,7 +340,7 @@ variable_labels_list <- list(
     marmss1 = "Bloodpressure (1) sitting (arm) mmHg: systolic"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c("marmds0", "marmds1", "marmpa0", "marmpar", "marmps0", "marmps1", "marmss0", "marmss1")],
+    harmonized_labels,
     marmds0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: diastolic",
     marmds1 = "Bloodpressure (1) sitting (arm) mmHg: diastolic",
     marmpa0 = "Particularities bloodpressure pretest",
@@ -380,27 +448,14 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("mfinps1")],
+    standardized_value_labels,
     mfinps1 = .replace_labels(
     standardized_value_labels$mfinps1,
     `-1` = NA_character_
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "marmds1",
-    "marmpa1",
-    "marmpa2",
-    "marmpa3",
-    "marmpa4",
-    "marmpa4o",
-    "marmpar",
-    "marmss1",
-    "mfinds1",
-    "mfinpos1",
-    "mfinss1",
-    "rm151"
-  )],
+    standardized_value_labels,
     marmds1 = .replace_labels(
     standardized_value_labels$marmds1,
     `-1` = "no valid measurement"
@@ -437,7 +492,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("marmpa1", "marmpa2", "marmpa3", "marmpa4", "marmpar", "mfinss1")],
+    standardized_value_labels,
     marmpa1 = c(`-2` = "na, see DMARMPAR", `0` = "not mentioned", `1` = "mentioned"),
     marmpa2 = c(`-2` = "na, see DMARMPAR", `0` = "not mentioned", `1` = "mentioned"),
     marmpa3 = .replace_labels(
@@ -453,7 +508,7 @@ value_labels_list <- list(
     mfinss1 = c(`-1` = "no valid measurement")
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("marmpar", "marmss1")],
+    standardized_value_labels,
     marmpar = c(
     `-3` = "test not done",
     `-1` = "normal test",
@@ -467,7 +522,7 @@ value_labels_list <- list(
     marmss1 = c(`-1` = "no valid measurement")
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("marmds1", "marmds3", "marmpa1", "marmpa2", "marmss1", "marmss3")],
+    standardized_value_labels,
     marmds1 = .replace_labels(
     standardized_value_labels$marmds1,
     `-1` = "no valid measurement"
@@ -500,7 +555,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("marmpar", "marmss1")],
+    standardized_value_labels,
     marmpar = .replace_labels(
     standardized_value_labels$marmpar,
     `-3` = "section not done",
@@ -510,7 +565,7 @@ value_labels_list <- list(
     marmss1 = c(`-1` = "no valid measurement")
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("marmpa0", "marmpar", "marmps2", "marmss0", "marmss1")],
+    standardized_value_labels,
     marmpa0 = .replace_labels(
     standardized_value_labels$marmpa0,
     `-3` = "section not done",
@@ -534,7 +589,7 @@ value_labels_list <- list(
     marmss1 = c(`-1` = "no valid measurement")
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("marmpa0", "marmss0")],
+    standardized_value_labels,
     marmpa0 = .replace_labels(
     standardized_value_labels$marmpa0,
     `-3` = "section not done",
@@ -547,7 +602,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("marmpa0", "marmps02", "marmss01")],
+    standardized_value_labels,
     marmpa0 = .replace_labels(
     standardized_value_labels$marmpa0,
     `-3` = "section not done",
@@ -564,7 +619,7 @@ value_labels_list <- list(
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c("marmpar", "marmss1")],
+    standardized_value_labels,
     marmpar = .replace_labels(
     standardized_value_labels$marmpar,
     `-3` = "section not done",
@@ -574,7 +629,7 @@ value_labels_list <- list(
     marmss1 = c(`-1` = "no valid measurement")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("marmpa0", "marmps0", "marmss0")],
+    standardized_value_labels,
     marmpa0 = .replace_labels(
     standardized_value_labels$marmpa0,
     `-3` = "section not done",
@@ -591,7 +646,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c("marmpa0", "marmps0", "marmss0")],
+    standardized_value_labels,
     marmpa0 = .replace_labels(
     standardized_value_labels$marmpa0,
     `-3` = "section not done",
@@ -608,7 +663,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c("marmpa0", "marmps0", "marmss0")],
+    standardized_value_labels,
     marmpa0 = .replace_labels(
     standardized_value_labels$marmpa0,
     `-3` = "section not done",
@@ -672,9 +727,105 @@ var_types_vec <- c(
   rm151 = "categorical"
 )
 
-.lasa_fc_151 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "151", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "151", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "151", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "151", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["mfinps2"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mfinps3"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["marmlds1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["marmlps1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["marmlss1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["marmsds1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["marmsps1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["marmsss1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mfinps1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["marmlds1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["marmlps1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["marmlss1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["marmsds1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["marmsps1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["marmss1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["marmsss1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mfinds1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mfinpo1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mfinps1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["marmds2"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["marmds3"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["marmps2"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["marmps3"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["marmss2"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["marmss3"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["marmds2"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["marmds4"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["marmps2"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["marmps3"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["marmps4"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["marmss2"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["marmss4"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["marmds2"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["marmds3"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["marmps2"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["marmps3"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["marmss2"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["marmss3"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["marmds0"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["marmds2"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["marmds3"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["marmps0"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["marmps3"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["marmss2"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["marmss3"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["marmds0"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["marmpar"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["marmps0"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["marmss1"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["marmds01"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["marmds02"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["marmds2"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["marmpar"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["marmps01"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["marmps2"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["marmss02"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["marmss1"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["marmss2"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["marmds2"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["marmps2"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["marmss2"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["marmds0"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["marmpar"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["marmss1"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["marmds0"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["marmpar"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["marmss1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["marmds0"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["marmpar"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["marmss1"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+
+.lasa_fc_151 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

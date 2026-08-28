@@ -14,12 +14,47 @@ harmonized_labels <- c(
   qsex05 = "sexual life 5: need for intimacy"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "qsex01",
+    "qsex02",
+    "qsex03"
+  ),
+  `E` = c(
+    "qsex01",
+    "qsex02",
+    "qsex03",
+    "qsex04",
+    "qsex05"
+  ),
+  `2B` = c(
+    "qsex01",
+    "qsex02",
+    "qsex03"
+  ),
+  `F` = c(
+    "qsex02",
+    "qsex03",
+    "qsex04",
+    "qsex05"
+  ),
+  `3B` = c(
+    "qsex01",
+    "qsex02",
+    "qsex03"
+  )
+)
+
 variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels[c("qsex01", "qsex02", "qsex03")],
+  Wave_B_labels = harmonized_labels,
   Wave_E_labels = harmonized_labels,
-  Wave_2B_labels = harmonized_labels[c("qsex01", "qsex02", "qsex03")],
-  Wave_F_labels = harmonized_labels[c("qsex02", "qsex03", "qsex04", "qsex05")],
-  Wave_3B_labels = harmonized_labels[c("qsex01", "qsex02", "qsex03")],
+  Wave_2B_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_3B_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
@@ -69,7 +104,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("qsex01", "qsex02", "qsex03")],
+    standardized_value_labels,
     qsex01 = .replace_labels(
     standardized_value_labels$qsex01,
     `-1` = "no answer"
@@ -107,7 +142,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("qsex01", "qsex02", "qsex03")],
+    standardized_value_labels,
     qsex01 = .replace_labels(
     standardized_value_labels$qsex01,
     `-1` = "no answer"
@@ -122,7 +157,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("qsex02", "qsex03", "qsex04", "qsex05")],
+    standardized_value_labels,
     qsex02 = .replace_labels(
     standardized_value_labels$qsex02,
     `-1` = "no answer"
@@ -141,7 +176,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("qsex01", "qsex02", "qsex03")],
+    standardized_value_labels,
     qsex01 = .replace_labels(
     standardized_value_labels$qsex01,
     `-1` = "no answer"
@@ -166,9 +201,12 @@ var_types_vec <- c(
   qsex05 = "categorical"
 )
 
-.lasa_fc_120 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "120", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "120", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "120", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "120", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_120 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

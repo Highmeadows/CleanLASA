@@ -93,9 +93,12 @@ harmonized_labels <- c(
   mknepry = "knee prosthesis right: year"
 )
 
-variable_labels_list <- list(
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
     "mbot1",
     "mbot1#",
     "mbot101",
@@ -135,15 +138,8 @@ variable_labels_list <- list(
     "mbot93",
     "mbot94",
     "mbot95"
-  )],
-    mbot1 = "Fracture: since last interview",
-    `mbot1#` = "# of fractures since (max 5)",
-    mbot51 = "Fracture 1 hip: cause",
-    mbot52 = "Fracture 2 hip; cause",
-    mbot53 = "Fracture 3 hip: cause"
   ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
+  `D` = c(
     "mbot1",
     "mbot1#",
     "mbot2_1",
@@ -162,20 +158,8 @@ variable_labels_list <- list(
     "mhipprm",
     "mhippro",
     "mhippry"
-  )],
-    mbot1 = "Fracture: since last interview",
-    `mbot1#` = "# of fractures since (max 3)",
-    mbot6 = "Hip fractures family members",
-    mbot62 = "Hip fractures history: mother",
-    mbot63 = "Hip fractures history: father",
-    mbot64 = "Hip fractures history: brother",
-    mbot65 = "Hip fractures history: sister",
-    mhipply = "Year left hip prosthesis",
-    mhippro = "Hip prosthesis",
-    mhippry = "Year right hip prosthesis"
   ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
+  `E` = c(
     "mbot1",
     "mbot1#",
     "mbot2_1",
@@ -187,15 +171,8 @@ variable_labels_list <- list(
     "mhipply",
     "mhippro",
     "mhippry"
-  )],
-    mbot1 = "Fracture: since last interview",
-    `mbot1#` = "# of fractures since (max 3)",
-    mhipply = "Year left hip prosthesis",
-    mhippro = "Hip prosthesis",
-    mhippry = "Year right hip prosthesis"
   ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
+  `2B` = c(
     "mbot1",
     "mbot1#",
     "mbot2_1",
@@ -219,25 +196,8 @@ variable_labels_list <- list(
     "mhipprm",
     "mhippro",
     "mhippry"
-  )],
-    mbot1 = "Fracture: ever",
-    `mbot1#` = "# of fractures (max 3)",
-    mbot41 = "Fracture 1: Year",
-    mbot42 = "Fracture 2: Year",
-    mbot43 = "Fracture 3: Year",
-    mbot51 = "Fracture 1 hip: cause",
-    mbot52 = "Fracture 2 hip: cause",
-    mbot53 = "Fracture 3 hip: cause",
-    mbot6 = "Fractures family",
-    mbot62 = "Fractures family history: mother",
-    mbot63 = "Fractures family history: father",
-    mbot64 = "Fractures family history: brother",
-    mbot65 = "Fractures family history: sister",
-    mhipplm = "not processed",
-    mhipprm = "not processed"
   ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
+  `F` = c(
     "mbot1",
     "mbot1#",
     "mbot111",
@@ -267,15 +227,8 @@ variable_labels_list <- list(
     "mhipply",
     "mhippro",
     "mhippry"
-  )],
-    mbot1 = "Fracture: since last interview",
-    `mbot1#` = "# of fractures since (max 3)",
-    mhipply = "Year left hip prosthesis",
-    mhippro = "Hip prosthesis",
-    mhippry = "Year right hip prosthesis"
   ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
+  `G` = c(
     "mbot1",
     "mbot1#",
     "mbot111",
@@ -305,39 +258,8 @@ variable_labels_list <- list(
     "mhipply",
     "mhippro",
     "mhippry"
-  )],
-    mbot1 = "fracture: since last interview",
-    `mbot1#` = "number of fractures since (max 3)",
-    mbot111 = "fracture 1: side",
-    mbot112 = "fracture 2: side",
-    mbot113 = "fracture 3: side",
-    mbot121 = "fracture 1: x-ray",
-    mbot122 = "fracture 2: x-ray",
-    mbot123 = "fracture 3: x-ray",
-    mbot131 = "fracture 1: consent",
-    mbot132 = "fracture 2: consent",
-    mbot133 = "fracture 3: consent",
-    mbot2_1 = "fracture 1: type",
-    mbot2_2 = "fracture 2: type",
-    mbot2_3 = "fracture 3: type",
-    mbot41d = "fracture 1: day",
-    mbot41m = "fracture 1: month",
-    mbot41y = "fracture 1: year",
-    mbot42d = "fracture 2: day",
-    mbot42m = "fracture 2: month",
-    mbot42y = "fracture 2: year",
-    mbot43d = "fracture 3: day",
-    mbot43m = "fracture 3: month",
-    mbot43y = "fracture 3: year",
-    mbot51 = "fracture 1: cause",
-    mbot52 = "fracture 2: cause",
-    mbot53 = "fracture 3: cause",
-    mhipply = "hip prosthesis left: year",
-    mhippro = "hip prosthesis",
-    mhippry = "hip prosthesis right: year"
   ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+  `H` = c(
     "mbot1",
     "mbot1#",
     "mbot111",
@@ -370,39 +292,8 @@ variable_labels_list <- list(
     "mkneply",
     "mknepro",
     "mknepry"
-  )],
-    mbot1 = "fracture: since last interview",
-    `mbot1#` = "number of fractures since (max 3)",
-    mbot111 = "fracture 1: side",
-    mbot112 = "fracture 2: side",
-    mbot113 = "fracture 3: side",
-    mbot121 = "fracture 1: x-ray",
-    mbot122 = "fracture 2: x-ray",
-    mbot123 = "fracture 3: x-ray",
-    mbot131 = "fracture 1: consent",
-    mbot132 = "fracture 2: consent",
-    mbot133 = "fracture 3: consent",
-    mbot2_1 = "fracture 1: type",
-    mbot2_2 = "fracture 2: type",
-    mbot2_3 = "fracture 3: type",
-    mbot41d = "fracture 1: day",
-    mbot41m = "fracture 1: month",
-    mbot41y = "fracture 1: year",
-    mbot42d = "fracture 2: day",
-    mbot42m = "fracture 2: month",
-    mbot42y = "fracture 2: year",
-    mbot43d = "fracture 3: day",
-    mbot43m = "fracture 3: month",
-    mbot43y = "fracture 3: year",
-    mbot51 = "fracture 1: cause",
-    mbot52 = "fracture 2: cause",
-    mbot53 = "fracture 3: cause",
-    mhipply = "hip prosthesis left: year",
-    mhippro = "hip prosthesis",
-    mhippry = "hip prosthesis right: year"
   ),
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
+  `3B` = c(
     "mbot1",
     "mbot1#",
     "mbot111",
@@ -445,44 +336,8 @@ variable_labels_list <- list(
     "mhipprm",
     "mhippro",
     "mhippry"
-  )],
-    mbot1 = "fracture: since last interview",
-    `mbot1#` = "number of fractures since (max 3)",
-    mbot111 = "fracture 1: side",
-    mbot112 = "fracture 2: side",
-    mbot113 = "fracture 3: side",
-    mbot2_1 = "fracture 1: type",
-    mbot2_2 = "fracture 2: type",
-    mbot2_3 = "fracture 3: type",
-    mbot2_4 = "fracture 4: type",
-    mbot2_5 = "fracture 5: type",
-    mbot41d = "fracture 1: day",
-    mbot41m = "fracture 1: month",
-    mbot41y = "fracture 1: year",
-    mbot42d = "fracture 2: day",
-    mbot42m = "fracture 2: month",
-    mbot42y = "fracture 2: year",
-    mbot43d = "fracture 3: day",
-    mbot43m = "fracture 3: month",
-    mbot43y = "fracture 3: year",
-    mbot51 = "fracture 1: cause",
-    mbot52 = "fracture 2: cause",
-    mbot53 = "fracture 3: cause",
-    mbot54 = "fracture 4: cause",
-    mbot55 = "fracture 5: cause",
-    mbot6 = "hip fractures family history",
-    mbot62 = "hip fractures family history: mother",
-    mbot63 = "hip fractures family history: father",
-    mbot64 = "hip fractures family history: brother",
-    mbot65 = "hip fractures family history: sister",
-    mhipplm = "hip prosthesis left: month",
-    mhipply = "hip prosthesis left: year",
-    mhipprm = "hip prosthesis right: month",
-    mhippro = "hip prosthesis",
-    mhippry = "hip prosthesis right: year"
   ),
-  Wave_MB_labels = .replace_labels(
-    harmonized_labels[c(
+  `MB` = c(
     "mbot1",
     "mbot1#",
     "mbot2_1",
@@ -497,24 +352,8 @@ variable_labels_list <- list(
     "mbot43d",
     "mbot43m",
     "mbot43y"
-  )],
-    mbot1 = "fracture: ever",
-    `mbot1#` = "number of fractures (max 3)",
-    mbot2_1 = "fracture 1: type",
-    mbot2_2 = "fracture 2: type",
-    mbot2_3 = "fracture 3: type",
-    mbot41d = "fracture 1: day",
-    mbot41m = "fracture 1: month",
-    mbot41y = "fracture 1: year",
-    mbot42d = "fracture 2: day",
-    mbot42m = "fracture 2: month",
-    mbot42y = "fracture 2: year",
-    mbot43d = "fracture 3: day",
-    mbot43m = "fracture 3: month",
-    mbot43y = "fracture 3: year"
   ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
+  `I` = c(
     "mbot1",
     "mbot1#",
     "mbot111",
@@ -546,38 +385,8 @@ variable_labels_list <- list(
     "mkneply",
     "mknepro",
     "mknepry"
-  )],
-    mbot1 = "fracture: since last interview",
-    `mbot1#` = "number of fractures since (max 3)",
-    mbot111 = "fracture 1: side",
-    mbot112 = "fracture 2: side",
-    mbot113 = "fracture 3: side",
-    mbot121 = "fracture 1: x-ray",
-    mbot122 = "fracture 2: x-ray",
-    mbot123 = "fracture 3: x-ray",
-    mbot132 = "fracture 2: consent",
-    mbot133 = "fracture 3: consent",
-    mbot2_1 = "fracture 1: type",
-    mbot2_2 = "fracture 2: type",
-    mbot2_3 = "fracture 3: type",
-    mbot41d = "fracture 1: day",
-    mbot41m = "fracture 1: month",
-    mbot41y = "fracture 1: year",
-    mbot42d = "fracture 2: day",
-    mbot42m = "fracture 2: month",
-    mbot42y = "fracture 2: year",
-    mbot43d = "fracture 3: day",
-    mbot43m = "fracture 3: month",
-    mbot43y = "fracture 3: year",
-    mbot51 = "fracture 1: cause",
-    mbot52 = "fracture 2: cause",
-    mbot53 = "fracture 3: cause",
-    mhipply = "hip prosthesis left: year",
-    mhippro = "hip prosthesis",
-    mhippry = "hip prosthesis right: year"
   ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
+  `J` = c(
     "mbot1",
     "mbot1#",
     "mbot111",
@@ -617,39 +426,8 @@ variable_labels_list <- list(
     "mkneply",
     "mknepro",
     "mknepry"
-  )],
-    mbot1 = "fracture: since last interview",
-    `mbot1#` = "number of fractures since last interview (max 3)",
-    mbot111 = "fracture 1: side",
-    mbot112 = "fracture 2: side",
-    mbot113 = "fracture 3: side",
-    mbot121 = "fracture 1: x-ray",
-    mbot122 = "fracture 2: x-ray",
-    mbot123 = "fracture 3: x-ray",
-    mbot131 = "fracture 1: consent for report",
-    mbot132 = "fracture 2: consent for report",
-    mbot133 = "fracture 3: consent for report",
-    mbot2_1 = "fracture 1: type",
-    mbot2_2 = "fracture 2: type",
-    mbot2_3 = "fracture 3: type",
-    mbot41d = "fracture 1: day",
-    mbot41m = "fracture 1: month",
-    mbot41y = "fracture 1: year",
-    mbot42d = "fracture 2: day",
-    mbot42m = "fracture 2: month",
-    mbot42y = "fracture 2: year",
-    mbot43d = "fracture 3: day",
-    mbot43m = "fracture 3: month",
-    mbot43y = "fracture 3: year",
-    mbot51 = "fracture 1: cause",
-    mbot52 = "fracture 2: cause",
-    mbot53 = "fracture 3: cause",
-    mhipply = "hip prosthesis left: year",
-    mhippro = "hip prosthesis",
-    mhippry = "hip prosthesis right: year"
   ),
-  Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
+  `K` = c(
     "mbot1",
     "mbot1#",
     "mbot111",
@@ -688,7 +466,248 @@ variable_labels_list <- list(
     "mkneply",
     "mknepro",
     "mknepry"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
+    mbot1 = "Fracture: since last interview",
+    `mbot1#` = "# of fractures since (max 5)",
+    mbot51 = "Fracture 1 hip: cause",
+    mbot52 = "Fracture 2 hip; cause",
+    mbot53 = "Fracture 3 hip: cause"
+  ),
+  Wave_D_labels = .replace_labels(
+    harmonized_labels,
+    mbot1 = "Fracture: since last interview",
+    `mbot1#` = "# of fractures since (max 3)",
+    mbot6 = "Hip fractures family members",
+    mbot62 = "Hip fractures history: mother",
+    mbot63 = "Hip fractures history: father",
+    mbot64 = "Hip fractures history: brother",
+    mbot65 = "Hip fractures history: sister",
+    mhipply = "Year left hip prosthesis",
+    mhippro = "Hip prosthesis",
+    mhippry = "Year right hip prosthesis"
+  ),
+  Wave_E_labels = .replace_labels(
+    harmonized_labels,
+    mbot1 = "Fracture: since last interview",
+    `mbot1#` = "# of fractures since (max 3)",
+    mhipply = "Year left hip prosthesis",
+    mhippro = "Hip prosthesis",
+    mhippry = "Year right hip prosthesis"
+  ),
+  Wave_2B_labels = .replace_labels(
+    harmonized_labels,
+    mbot1 = "Fracture: ever",
+    `mbot1#` = "# of fractures (max 3)",
+    mbot41 = "Fracture 1: Year",
+    mbot42 = "Fracture 2: Year",
+    mbot43 = "Fracture 3: Year",
+    mbot51 = "Fracture 1 hip: cause",
+    mbot52 = "Fracture 2 hip: cause",
+    mbot53 = "Fracture 3 hip: cause",
+    mbot6 = "Fractures family",
+    mbot62 = "Fractures family history: mother",
+    mbot63 = "Fractures family history: father",
+    mbot64 = "Fractures family history: brother",
+    mbot65 = "Fractures family history: sister",
+    mhipplm = "not processed",
+    mhipprm = "not processed"
+  ),
+  Wave_F_labels = .replace_labels(
+    harmonized_labels,
+    mbot1 = "Fracture: since last interview",
+    `mbot1#` = "# of fractures since (max 3)",
+    mhipply = "Year left hip prosthesis",
+    mhippro = "Hip prosthesis",
+    mhippry = "Year right hip prosthesis"
+  ),
+  Wave_G_labels = .replace_labels(
+    harmonized_labels,
+    mbot1 = "fracture: since last interview",
+    `mbot1#` = "number of fractures since (max 3)",
+    mbot111 = "fracture 1: side",
+    mbot112 = "fracture 2: side",
+    mbot113 = "fracture 3: side",
+    mbot121 = "fracture 1: x-ray",
+    mbot122 = "fracture 2: x-ray",
+    mbot123 = "fracture 3: x-ray",
+    mbot131 = "fracture 1: consent",
+    mbot132 = "fracture 2: consent",
+    mbot133 = "fracture 3: consent",
+    mbot2_1 = "fracture 1: type",
+    mbot2_2 = "fracture 2: type",
+    mbot2_3 = "fracture 3: type",
+    mbot41d = "fracture 1: day",
+    mbot41m = "fracture 1: month",
+    mbot41y = "fracture 1: year",
+    mbot42d = "fracture 2: day",
+    mbot42m = "fracture 2: month",
+    mbot42y = "fracture 2: year",
+    mbot43d = "fracture 3: day",
+    mbot43m = "fracture 3: month",
+    mbot43y = "fracture 3: year",
+    mbot51 = "fracture 1: cause",
+    mbot52 = "fracture 2: cause",
+    mbot53 = "fracture 3: cause",
+    mhipply = "hip prosthesis left: year",
+    mhippro = "hip prosthesis",
+    mhippry = "hip prosthesis right: year"
+  ),
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
+    mbot1 = "fracture: since last interview",
+    `mbot1#` = "number of fractures since (max 3)",
+    mbot111 = "fracture 1: side",
+    mbot112 = "fracture 2: side",
+    mbot113 = "fracture 3: side",
+    mbot121 = "fracture 1: x-ray",
+    mbot122 = "fracture 2: x-ray",
+    mbot123 = "fracture 3: x-ray",
+    mbot131 = "fracture 1: consent",
+    mbot132 = "fracture 2: consent",
+    mbot133 = "fracture 3: consent",
+    mbot2_1 = "fracture 1: type",
+    mbot2_2 = "fracture 2: type",
+    mbot2_3 = "fracture 3: type",
+    mbot41d = "fracture 1: day",
+    mbot41m = "fracture 1: month",
+    mbot41y = "fracture 1: year",
+    mbot42d = "fracture 2: day",
+    mbot42m = "fracture 2: month",
+    mbot42y = "fracture 2: year",
+    mbot43d = "fracture 3: day",
+    mbot43m = "fracture 3: month",
+    mbot43y = "fracture 3: year",
+    mbot51 = "fracture 1: cause",
+    mbot52 = "fracture 2: cause",
+    mbot53 = "fracture 3: cause",
+    mhipply = "hip prosthesis left: year",
+    mhippro = "hip prosthesis",
+    mhippry = "hip prosthesis right: year"
+  ),
+  Wave_3B_labels = .replace_labels(
+    harmonized_labels,
+    mbot1 = "fracture: since last interview",
+    `mbot1#` = "number of fractures since (max 3)",
+    mbot111 = "fracture 1: side",
+    mbot112 = "fracture 2: side",
+    mbot113 = "fracture 3: side",
+    mbot2_1 = "fracture 1: type",
+    mbot2_2 = "fracture 2: type",
+    mbot2_3 = "fracture 3: type",
+    mbot2_4 = "fracture 4: type",
+    mbot2_5 = "fracture 5: type",
+    mbot41d = "fracture 1: day",
+    mbot41m = "fracture 1: month",
+    mbot41y = "fracture 1: year",
+    mbot42d = "fracture 2: day",
+    mbot42m = "fracture 2: month",
+    mbot42y = "fracture 2: year",
+    mbot43d = "fracture 3: day",
+    mbot43m = "fracture 3: month",
+    mbot43y = "fracture 3: year",
+    mbot51 = "fracture 1: cause",
+    mbot52 = "fracture 2: cause",
+    mbot53 = "fracture 3: cause",
+    mbot54 = "fracture 4: cause",
+    mbot55 = "fracture 5: cause",
+    mbot6 = "hip fractures family history",
+    mbot62 = "hip fractures family history: mother",
+    mbot63 = "hip fractures family history: father",
+    mbot64 = "hip fractures family history: brother",
+    mbot65 = "hip fractures family history: sister",
+    mhipplm = "hip prosthesis left: month",
+    mhipply = "hip prosthesis left: year",
+    mhipprm = "hip prosthesis right: month",
+    mhippro = "hip prosthesis",
+    mhippry = "hip prosthesis right: year"
+  ),
+  Wave_MB_labels = .replace_labels(
+    harmonized_labels,
+    mbot1 = "fracture: ever",
+    `mbot1#` = "number of fractures (max 3)",
+    mbot2_1 = "fracture 1: type",
+    mbot2_2 = "fracture 2: type",
+    mbot2_3 = "fracture 3: type",
+    mbot41d = "fracture 1: day",
+    mbot41m = "fracture 1: month",
+    mbot41y = "fracture 1: year",
+    mbot42d = "fracture 2: day",
+    mbot42m = "fracture 2: month",
+    mbot42y = "fracture 2: year",
+    mbot43d = "fracture 3: day",
+    mbot43m = "fracture 3: month",
+    mbot43y = "fracture 3: year"
+  ),
+  Wave_I_labels = .replace_labels(
+    harmonized_labels,
+    mbot1 = "fracture: since last interview",
+    `mbot1#` = "number of fractures since (max 3)",
+    mbot111 = "fracture 1: side",
+    mbot112 = "fracture 2: side",
+    mbot113 = "fracture 3: side",
+    mbot121 = "fracture 1: x-ray",
+    mbot122 = "fracture 2: x-ray",
+    mbot123 = "fracture 3: x-ray",
+    mbot132 = "fracture 2: consent",
+    mbot133 = "fracture 3: consent",
+    mbot2_1 = "fracture 1: type",
+    mbot2_2 = "fracture 2: type",
+    mbot2_3 = "fracture 3: type",
+    mbot41d = "fracture 1: day",
+    mbot41m = "fracture 1: month",
+    mbot41y = "fracture 1: year",
+    mbot42d = "fracture 2: day",
+    mbot42m = "fracture 2: month",
+    mbot42y = "fracture 2: year",
+    mbot43d = "fracture 3: day",
+    mbot43m = "fracture 3: month",
+    mbot43y = "fracture 3: year",
+    mbot51 = "fracture 1: cause",
+    mbot52 = "fracture 2: cause",
+    mbot53 = "fracture 3: cause",
+    mhipply = "hip prosthesis left: year",
+    mhippro = "hip prosthesis",
+    mhippry = "hip prosthesis right: year"
+  ),
+  Wave_J_labels = .replace_labels(
+    harmonized_labels,
+    mbot1 = "fracture: since last interview",
+    `mbot1#` = "number of fractures since last interview (max 3)",
+    mbot111 = "fracture 1: side",
+    mbot112 = "fracture 2: side",
+    mbot113 = "fracture 3: side",
+    mbot121 = "fracture 1: x-ray",
+    mbot122 = "fracture 2: x-ray",
+    mbot123 = "fracture 3: x-ray",
+    mbot131 = "fracture 1: consent for report",
+    mbot132 = "fracture 2: consent for report",
+    mbot133 = "fracture 3: consent for report",
+    mbot2_1 = "fracture 1: type",
+    mbot2_2 = "fracture 2: type",
+    mbot2_3 = "fracture 3: type",
+    mbot41d = "fracture 1: day",
+    mbot41m = "fracture 1: month",
+    mbot41y = "fracture 1: year",
+    mbot42d = "fracture 2: day",
+    mbot42m = "fracture 2: month",
+    mbot42y = "fracture 2: year",
+    mbot43d = "fracture 3: day",
+    mbot43m = "fracture 3: month",
+    mbot43y = "fracture 3: year",
+    mbot51 = "fracture 1: cause",
+    mbot52 = "fracture 2: cause",
+    mbot53 = "fracture 3: cause",
+    mhipply = "hip prosthesis left: year",
+    mhippro = "hip prosthesis",
+    mhippry = "hip prosthesis right: year"
+  ),
+  Wave_K_labels = .replace_labels(
+    harmonized_labels,
     mbot1 = "other fracture since last interview",
     `mbot1#` = "number of fractures since last interview (max 3)",
     mbot111 = "fracture 1: side",
@@ -722,66 +741,129 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "no",
+  `2` = "yes",
+  `3` = "March",
+  `4` = "April",
+  `5` = "May",
+  `6` = "June",
+  `7` = "July",
+  `8` = "August",
+  `9` = "September",
+  `10` = "October",
+  `11` = "November",
+  `12` = "December",
+  `13` = "unknown"
+)
+
 standardized_value_labels <- list(
   mbot1 = c(
     `-5` = "na, interview terminated",
     `-2` = "na, see JMFALLFRAC",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
   ),
-  `mbot1#` = c(`-3` = "na, wrong skip", `-2` = "na, see CMBOT1", `-1` = "na, asked"),
-  mbot101 = c(`-3` = "na, wrong skip", `-2` = "na, see CMBOT8#"),
-  mbot102 = c(`-3` = "na, wrong skip", `-2` = "na, see CMBOT8#"),
-  mbot103 = c(`-3` = "na, wrong skip", `-2` = "na, see CMBOT8#"),
-  mbot104 = c(`-3` = "na, wrong skip", `-2` = "na, see CMBOT8#"),
-  mbot105 = c(`-3` = "na, wrong skip", `-2` = "na, see CMBOT8#"),
+  `mbot1#` = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see CMBOT1"
+  ),
+  mbot101 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMBOT8#"
+  ),
+  mbot102 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMBOT8#"
+  ),
+  mbot103 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMBOT8#"
+  ),
+  mbot104 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMBOT8#"
+  ),
+  mbot105 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMBOT8#"
+  ),
   mbot111 = c(
     `-2` = "na, see JMBOT#",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "right side",
     `2` = "left side",
     `3` = "not applicable"
   ),
   mbot112 = c(
     `-2` = "na, see JMBOT#",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "right side",
     `2` = "left side",
     `3` = "not applicable"
   ),
   mbot113 = c(
     `-2` = "na, see JMBOT#",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "right side",
     `2` = "left side",
     `3` = "not applicable"
   ),
   mbot114 = c(
     `-2` = "na, see BMBOT1#",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "right side",
     `2` = "left side",
     `3` = "not applicable"
   ),
   mbot115 = c(
     `-2` = "na, see BMBOT1#",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "right side",
     `2` = "left side",
     `3` = "not applicable"
   ),
-  mbot121 = c(`-2` = "na, see JMBOT#", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mbot122 = c(`-2` = "na, see KMBOT#", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mbot123 = c(`-2` = "na, see JMBOT#", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mbot131 = c(`-2` = "na, see JMBOT#", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mbot132 = c(`-2` = "na, see JMBOT#", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mbot133 = c(`-2` = "na, see JMBOT#", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mbot2 = c(`-2` = "na, see KMFALLFRAC", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mbot2_1 = c(
-    `-3` = "na, wrong skip",
+  mbot121 = c(
     `-2` = "na, see JMBOT#",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  mbot122 = c(
+    `-2` = "na, see KMBOT#",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  mbot123 = c(
+    `-2` = "na, see JMBOT#",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  mbot131 = c(
+    `-2` = "na, see JMBOT#",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  mbot132 = c(
+    `-2` = "na, see JMBOT#",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  mbot133 = c(
+    `-2` = "na, see JMBOT#",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  mbot2 = c(
+    `-2` = "na, see KMFALLFRAC",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  mbot2_1 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see JMBOT#",
     `1` = "wrist, colles",
     `2` = "humerus",
     `3` = "hand, fingers",
@@ -794,12 +876,11 @@ standardized_value_labels <- list(
     `10` = "other lower extremities",
     `11` = "head, neck",
     `12` = "vertebra",
-    `13` = "unknown"
+    default_answer_labels[c("13")]
   ),
   mbot2_2 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see KMBOT#",
-    `-1` = "na, asked",
     `1` = "wrist, colles",
     `2` = "humerus",
     `3` = "hand, fingers",
@@ -812,12 +893,11 @@ standardized_value_labels <- list(
     `10` = "other lower extremities",
     `11` = "head, neck",
     `12` = "vertebra",
-    `13` = "unknown"
+    default_answer_labels[c("13")]
   ),
   mbot2_3 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see JMBOT#",
-    `-1` = "na, asked",
     `1` = "wrist, colles",
     `2` = "humerus",
     `3` = "hand, fingers",
@@ -830,12 +910,11 @@ standardized_value_labels <- list(
     `10` = "other lower extremities",
     `11` = "head, neck",
     `12` = "vertebra",
-    `13` = "unknown"
+    default_answer_labels[c("13")]
   ),
   mbot2_4 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see CMBOT1#",
-    `-1` = "na, asked",
     `1` = "wrist, colles",
     `2` = "humerus",
     `3` = "hand, fingers",
@@ -848,12 +927,11 @@ standardized_value_labels <- list(
     `10` = "other lower extremities",
     `11` = "head, neck",
     `12` = "vertebra",
-    `13` = "unknown"
+    default_answer_labels[c("13")]
   ),
   mbot2_5 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see CMBOT1#",
-    `-1` = "na, asked",
     `1` = "wrist, colles",
     `2` = "humerus",
     `3` = "hand, fingers",
@@ -866,196 +944,149 @@ standardized_value_labels <- list(
     `10` = "other lower extremities",
     `11` = "head, neck",
     `12` = "vertebra",
-    `13` = "unknown"
+    default_answer_labels[c("13")]
   ),
-  mbot3 = c(`-2` = "na, see KMFALLFRAC", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  mbot3 = c(
+    `-2` = "na, see KMFALLFRAC",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
   mbot31 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see CMBOT1#",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
+    default_answer_labels[c("3", "4", "5", "6", "7", "8", "9", "10", "11", "12")]
   ),
   mbot32 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see CMBOT1#",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
+    default_answer_labels[c("3", "4", "5", "6", "7", "8", "9", "10", "11", "12")]
   ),
   mbot33 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see CMBOT1#",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
+    default_answer_labels[c("3", "4", "5", "6", "7", "8", "9", "10", "11", "12")]
   ),
   mbot34 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see CMBOT1#",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
+    default_answer_labels[c("3", "4", "5", "6", "7", "8", "9", "10", "11", "12")]
   ),
   mbot35 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see CMBOT1#",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
+    default_answer_labels[c("3", "4", "5", "6", "7", "8", "9", "10", "11", "12")]
   ),
-  mbot41 = c(`-3` = "na, wrong skip", `-2` = "na, see CMBOT1#", `-1` = "na, asked"),
-  mbot41d = c(`-3` = "na, see KMFALLFRACD", `-2` = "na, see FMBOT1", `-1` = "na, asked"),
+  mbot41 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see CMBOT1#"
+  ),
+  mbot41d = c(
+    `-3` = "na, see KMFALLFRACD",
+    `-2` = "na, see FMBOT1",
+    default_missing_labels[c("-1")]
+  ),
   mbot41m = c(
     `-3` = "missing / source-specific",
     `-2` = "na, see FMBOT1",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
+    default_answer_labels[c("3", "4", "5", "6", "7", "8", "9", "10", "11", "12")]
   ),
-  mbot41y = c(`-3` = "na, see KMFALLFRACY", `-2` = "na, see FMBOT1", `-1` = "na, asked"),
-  mbot42 = c(`-3` = "na, wrong skip", `-2` = "na, see CMBOT1#", `-1` = "na, asked"),
-  mbot42d = c(`-2` = "na, see FMBOT1", `-1` = "na, asked"),
+  mbot41y = c(
+    `-3` = "na, see KMFALLFRACY",
+    `-2` = "na, see FMBOT1",
+    default_missing_labels[c("-1")]
+  ),
+  mbot42 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see CMBOT1#"
+  ),
+  mbot42d = c(
+    `-2` = "na, see FMBOT1",
+    default_missing_labels[c("-1")]
+  ),
   mbot42m = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see FMBOT1",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
+    default_answer_labels[c("3", "4", "5", "6", "7", "8", "9", "10", "11", "12")]
   ),
-  mbot42y = c(`-2` = "na, see FMBOT1", `-1` = "na, asked"),
-  mbot43 = c(`-3` = "na, wrong skip", `-2` = "na, see CMBOT1#", `-1` = "na, asked"),
-  mbot43d = c(`-2` = "na, see FMBOT1", `-1` = "na, asked"),
+  mbot42y = c(
+    `-2` = "na, see FMBOT1",
+    default_missing_labels[c("-1")]
+  ),
+  mbot43 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see CMBOT1#"
+  ),
+  mbot43d = c(
+    `-2` = "na, see FMBOT1",
+    default_missing_labels[c("-1")]
+  ),
   mbot43m = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see FMBOT1",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
+    default_answer_labels[c("3", "4", "5", "6", "7", "8", "9", "10", "11", "12")]
   ),
-  mbot43y = c(`-2` = "na, see FMBOT1", `-1` = "na, asked"),
-  mbot44 = c(`-3` = "na, wrong skip", `-2` = "na, see CMBOT1#", `-1` = "na, asked"),
-  mbot44d = c(`-2` = "na, see BMBOT1#", `-1` = "na, asked"),
+  mbot43y = c(
+    `-2` = "na, see FMBOT1",
+    default_missing_labels[c("-1")]
+  ),
+  mbot44 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see CMBOT1#"
+  ),
+  mbot44d = c(
+    `-2` = "na, see BMBOT1#",
+    default_missing_labels[c("-1")]
+  ),
   mbot44m = c(
     `-2` = "na, see BMBOT1#",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
+    default_answer_labels[c("3", "4", "5", "6", "7", "8", "9", "10", "11", "12")]
   ),
-  mbot44y = c(`-2` = "na, see BMBOT1#", `-1` = "na, asked"),
-  mbot45 = c(`-3` = "na, wrong skip", `-2` = "na, see CMBOT1#", `-1` = "na, asked"),
-  mbot45d = c(`-2` = "na, see BMBOT1#", `-1` = "na, asked"),
+  mbot44y = c(
+    `-2` = "na, see BMBOT1#",
+    default_missing_labels[c("-1")]
+  ),
+  mbot45 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see CMBOT1#"
+  ),
+  mbot45d = c(
+    `-2` = "na, see BMBOT1#",
+    default_missing_labels[c("-1")]
+  ),
   mbot45m = c(
     `-2` = "na, see BMBOT1#",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
+    default_answer_labels[c("3", "4", "5", "6", "7", "8", "9", "10", "11", "12")]
   ),
-  mbot45y = c(`-2` = "na, see BMBOT1#", `-1` = "na, asked"),
+  mbot45y = c(
+    `-2` = "na, see BMBOT1#",
+    default_missing_labels[c("-1")]
+  ),
   mbot51 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see GMBOT1",
-    `-1` = "na, asked",
     `1` = "fall>standing height",
     `2` = "fall<standing height",
     `3` = "fall from bike",
@@ -1063,9 +1094,8 @@ standardized_value_labels <- list(
     `5` = "other"
   ),
   mbot52 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see JMBOT#",
-    `-1` = "na, asked",
     `1` = "fall>standing height",
     `2` = "fall<standing height",
     `3` = "fall from bike",
@@ -1073,9 +1103,8 @@ standardized_value_labels <- list(
     `5` = "other"
   ),
   mbot53 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see GMBOT1",
-    `-1` = "na, asked",
     `1` = "fall>standing height",
     `2` = "fall<standing height",
     `3` = "fall from bike",
@@ -1083,9 +1112,8 @@ standardized_value_labels <- list(
     `5` = "other"
   ),
   mbot54 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see CMBOT1#",
-    `-1` = "na, asked",
     `1` = "fall>standing height",
     `2` = "fall<standing height",
     `3` = "fall from bike",
@@ -1093,52 +1121,55 @@ standardized_value_labels <- list(
     `5` = "other"
   ),
   mbot55 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see CMBOT1#",
-    `-1` = "na, asked",
     `1` = "fall>standing height",
     `2` = "fall<standing height",
     `3` = "fall from bike",
     `4` = "other",
     `5` = "other"
   ),
-  mbot6 = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "no"),
+  mbot6 = c(
+    `-5` = "na, interview terminated",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1")],
+    `2` = "no"
+  ),
   mbot62 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see CMBOT6",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("1", "2")]
   ),
   mbot63 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see CMBOT6",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("1", "2")]
   ),
   mbot64 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see CMBOT6",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("1", "2")]
   ),
   mbot65 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see CMBOT6",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("1", "2")]
   ),
-  mbot8 = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  `mbot8#` = c(`-3` = "na, wrong skip", `-2` = "na, see CMBOT8"),
+  mbot8 = c(
+    `-5` = "na, interview terminated",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  `mbot8#` = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMBOT8"
+  ),
   mbot91 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see CMBOT8#",
     `1` = "pulse/wrist, colles",
     `2` = "forearm, humerus",
@@ -1152,10 +1183,10 @@ standardized_value_labels <- list(
     `10` = "other lower extremities",
     `11` = "head, neck",
     `12` = "vertebra",
-    `13` = "unknown"
+    default_answer_labels[c("13")]
   ),
   mbot92 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see CMBOT8#",
     `1` = "pulse/wrist, colles",
     `2` = "forearm, humerus",
@@ -1169,10 +1200,10 @@ standardized_value_labels <- list(
     `10` = "other lower extremities",
     `11` = "head, neck",
     `12` = "vertebra",
-    `13` = "unknown"
+    default_answer_labels[c("13")]
   ),
   mbot93 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see CMBOT8#",
     `1` = "pulse/wrist, colles",
     `2` = "forearm, humerus",
@@ -1186,10 +1217,10 @@ standardized_value_labels <- list(
     `10` = "other lower extremities",
     `11` = "head, neck",
     `12` = "vertebra",
-    `13` = "unknown"
+    default_answer_labels[c("13")]
   ),
   mbot94 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see CMBOT8#",
     `1` = "pulse/wrist, colles",
     `2` = "forearm, humerus",
@@ -1203,10 +1234,10 @@ standardized_value_labels <- list(
     `10` = "other lower extremities",
     `11` = "head, neck",
     `12` = "vertebra",
-    `13` = "unknown"
+    default_answer_labels[c("13")]
   ),
   mbot95 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see CMBOT8#",
     `1` = "pulse/wrist, colles",
     `2` = "forearm, humerus",
@@ -1220,115 +1251,103 @@ standardized_value_labels <- list(
     `10` = "other lower extremities",
     `11` = "head, neck",
     `12` = "vertebra",
-    `13` = "unknown"
+    default_answer_labels[c("13")]
   ),
-  mconsx1 = c(`-2` = "na, see JMBOT#", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mconsx2 = c(`-2` = "na, see JMBOT#", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mconsx3 = c(`-2` = "na, see JMBOT#", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mfallfrac = c(`1` = "fall no", `2` = "yes"),
-  mfallfracd = c(`-2` = "na, see JMFALLFRAC", `-1` = "na, asked"),
+  mconsx1 = c(
+    `-2` = "na, see JMBOT#",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  mconsx2 = c(
+    `-2` = "na, see JMBOT#",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  mconsx3 = c(
+    `-2` = "na, see JMBOT#",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  mfallfrac = c(
+    `1` = "fall no",
+    default_answer_labels[c("2")]
+  ),
+  mfallfracd = c(
+    `-2` = "na, see JMFALLFRAC",
+    default_missing_labels[c("-1")]
+  ),
   mfallfracm = c(
     `-2` = "na, see JMFALLFRAC",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
+    default_answer_labels[c("3", "4", "5", "6", "7", "8", "9", "10", "11", "12")]
   ),
-  mfallfracy = c(`-2` = "na, see JMFALLFRAC", `-1` = "na, asked"),
-  mhippl = c(`-2` = "na, see BMHIPPRO", `-1` = "na, asked", `1` = "no", `2` = "yes, left"),
+  mfallfracy = c(
+    `-2` = "na, see JMFALLFRAC",
+    default_missing_labels[c("-1")]
+  ),
+  mhippl = c(
+    `-2` = "na, see BMHIPPRO",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1")],
+    `2` = "yes, left"
+  ),
   mhipplm = c(
     `-2` = "na, see DMHIPPRO",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
+    default_answer_labels[c("3", "4", "5", "6", "7", "8", "9", "10", "11", "12")]
   ),
-  mhipply = c(`-2` = "na, see BMHIPPL", `-1` = "na, asked"),
-  mhippr = c(`-2` = "na, see BMHIPPRO", `-1` = "na, asked", `1` = "no", `2` = "yes, right"),
+  mhipply = c(
+    `-2` = "na, see BMHIPPL",
+    default_missing_labels[c("-1")]
+  ),
+  mhippr = c(
+    `-2` = "na, see BMHIPPRO",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1")],
+    `2` = "yes, right"
+  ),
   mhipprm = c(
     `-2` = "na, see DMHIPPRO",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
+    default_answer_labels[c("3", "4", "5", "6", "7", "8", "9", "10", "11", "12")]
   ),
-  mhippro = c(`-1` = "na, asked", `1` = "no", `2` = "no", `3` = "right", `4` = "left and right"),
-  mhippry = c(`-2` = "na, see BMHIPPR", `-1` = "na, asked"),
-  mkneply = c(`-2` = "na, see JMKNEPRO", `-1` = "na, asked"),
-  mknepro = c(`-1` = "na, asked", `1` = "no", `2` = "left", `3` = "right", `4` = "left and right"),
-  mknepry = c(`-2` = "na, see JMKNEPRO", `-1` = "na, asked")
+  mhippro = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1")],
+    `2` = "no",
+    `3` = "right",
+    `4` = "left and right"
+  ),
+  mhippry = c(
+    `-2` = "na, see BMHIPPR",
+    default_missing_labels[c("-1")]
+  ),
+  mkneply = c(
+    `-2` = "na, see JMKNEPRO",
+    default_missing_labels[c("-1")]
+  ),
+  mknepro = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1")],
+    `2` = "left",
+    `3` = "right",
+    `4` = "left and right"
+  ),
+  mknepry = c(
+    `-2` = "na, see JMKNEPRO",
+    default_missing_labels[c("-1")]
+  )
 )
 
 value_labels_list <- list(
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mbot1",
-    "mbot1#",
-    "mbot101",
-    "mbot102",
-    "mbot103",
-    "mbot104",
-    "mbot105",
-    "mbot2_1",
-    "mbot2_2",
-    "mbot2_3",
-    "mbot2_4",
-    "mbot2_5",
-    "mbot31",
-    "mbot32",
-    "mbot33",
-    "mbot34",
-    "mbot35",
-    "mbot41",
-    "mbot42",
-    "mbot43",
-    "mbot44",
-    "mbot45",
-    "mbot51",
-    "mbot52",
-    "mbot53",
-    "mbot54",
-    "mbot55",
-    "mbot6",
-    "mbot62",
-    "mbot63",
-    "mbot64",
-    "mbot65",
-    "mbot8",
-    "mbot8#",
-    "mbot91",
-    "mbot92",
-    "mbot93",
-    "mbot94",
-    "mbot95"
-  )],
+    standardized_value_labels,
     mbot1 = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     `mbot1#` = c(`-3` = "na, wrong skip", `-2` = "na, see CMBOT1"),
     mbot2_1 = c(
@@ -1454,26 +1473,7 @@ value_labels_list <- list(
     mbot65 = c(`-3` = "na, wrong skip", `-2` = "na, see CMBOT6", `0` = "not mentioned", `1` = "mentioned")
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mbot1",
-    "mbot1#",
-    "mbot2_1",
-    "mbot2_2",
-    "mbot2_3",
-    "mbot51",
-    "mbot52",
-    "mbot53",
-    "mbot6",
-    "mbot62",
-    "mbot63",
-    "mbot64",
-    "mbot65",
-    "mhipplm",
-    "mhipply",
-    "mhipprm",
-    "mhippro",
-    "mhippry"
-  )],
+    standardized_value_labels,
     mbot1 = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     `mbot1#` = c(`-2` = "na, see D/EMBOT1"),
     mbot2_1 = c(
@@ -1567,19 +1567,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mbot1",
-    "mbot1#",
-    "mbot2_1",
-    "mbot2_2",
-    "mbot2_3",
-    "mbot51",
-    "mbot52",
-    "mbot53",
-    "mhipply",
-    "mhippro",
-    "mhippry"
-  )],
+    standardized_value_labels,
     mbot1 = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     `mbot1#` = c(`-2` = "na, see D/EMBOT1"),
     mbot2_1 = c(
@@ -1668,29 +1656,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mbot1",
-    "mbot1#",
-    "mbot2_1",
-    "mbot2_2",
-    "mbot2_3",
-    "mbot41",
-    "mbot42",
-    "mbot43",
-    "mbot51",
-    "mbot52",
-    "mbot53",
-    "mbot6",
-    "mbot62",
-    "mbot63",
-    "mbot64",
-    "mbot65",
-    "mhippl",
-    "mhipply",
-    "mhippr",
-    "mhippro",
-    "mhippry"
-  )],
+    standardized_value_labels,
     mbot1 = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     `mbot1#` = c(`-2` = "na, see BMBOT1", `-1` = "na, asked"),
     mbot2_1 = c(
@@ -1791,37 +1757,7 @@ value_labels_list <- list(
     mhippro = c(`-1` = "na, asked", `1` = "yes", `2` = "no")
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mbot1",
-    "mbot1#",
-    "mbot111",
-    "mbot112",
-    "mbot113",
-    "mbot121",
-    "mbot122",
-    "mbot123",
-    "mbot131",
-    "mbot132",
-    "mbot133",
-    "mbot2_1",
-    "mbot2_2",
-    "mbot2_3",
-    "mbot41d",
-    "mbot41m",
-    "mbot41y",
-    "mbot42d",
-    "mbot42m",
-    "mbot42y",
-    "mbot43d",
-    "mbot43m",
-    "mbot43y",
-    "mbot51",
-    "mbot52",
-    "mbot53",
-    "mhipply",
-    "mhippro",
-    "mhippry"
-  )],
+    standardized_value_labels,
     mbot1 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
     `mbot1#` = c(`-2` = "na, see FMBOT1"),
     mbot111 = .replace_labels(
@@ -1999,37 +1935,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mbot1",
-    "mbot1#",
-    "mbot111",
-    "mbot112",
-    "mbot113",
-    "mbot121",
-    "mbot122",
-    "mbot123",
-    "mbot131",
-    "mbot132",
-    "mbot133",
-    "mbot2_1",
-    "mbot2_2",
-    "mbot2_3",
-    "mbot41d",
-    "mbot41m",
-    "mbot41y",
-    "mbot42d",
-    "mbot42m",
-    "mbot42y",
-    "mbot43d",
-    "mbot43m",
-    "mbot43y",
-    "mbot51",
-    "mbot52",
-    "mbot53",
-    "mhipply",
-    "mhippro",
-    "mhippry"
-  )],
+    standardized_value_labels,
     mbot1 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
     `mbot1#` = c(`-2` = "na, see GMBOT1"),
     mbot111 = .replace_labels(
@@ -2223,40 +2129,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mbot1",
-    "mbot1#",
-    "mbot111",
-    "mbot112",
-    "mbot113",
-    "mbot121",
-    "mbot122",
-    "mbot123",
-    "mbot131",
-    "mbot132",
-    "mbot133",
-    "mbot2_1",
-    "mbot2_2",
-    "mbot2_3",
-    "mbot41d",
-    "mbot41m",
-    "mbot41y",
-    "mbot42d",
-    "mbot42m",
-    "mbot42y",
-    "mbot43d",
-    "mbot43m",
-    "mbot43y",
-    "mbot51",
-    "mbot52",
-    "mbot53",
-    "mhipply",
-    "mhippro",
-    "mhippry",
-    "mkneply",
-    "mknepro",
-    "mknepry"
-  )],
+    standardized_value_labels,
     mbot1 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
     `mbot1#` = c(`-2` = "na, see H/B/IMBOT1"),
     mbot111 = .replace_labels(
@@ -2434,50 +2307,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mbot1",
-    "mbot1#",
-    "mbot111",
-    "mbot112",
-    "mbot113",
-    "mbot114",
-    "mbot115",
-    "mbot2_1",
-    "mbot2_2",
-    "mbot2_3",
-    "mbot2_4",
-    "mbot2_5",
-    "mbot41d",
-    "mbot41m",
-    "mbot41y",
-    "mbot42d",
-    "mbot42m",
-    "mbot42y",
-    "mbot43d",
-    "mbot43m",
-    "mbot43y",
-    "mbot44d",
-    "mbot44m",
-    "mbot44y",
-    "mbot45d",
-    "mbot45m",
-    "mbot45y",
-    "mbot51",
-    "mbot52",
-    "mbot53",
-    "mbot54",
-    "mbot55",
-    "mbot6",
-    "mbot62",
-    "mbot63",
-    "mbot64",
-    "mbot65",
-    "mhipplm",
-    "mhipply",
-    "mhipprm",
-    "mhippro",
-    "mhippry"
-  )],
+    standardized_value_labels,
     mbot1 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
     `mbot1#` = c(`-2` = "na, see H/B/IMBOT1"),
     mbot111 = .replace_labels(
@@ -2680,22 +2510,7 @@ value_labels_list <- list(
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mbot1",
-    "mbot1#",
-    "mbot2_1",
-    "mbot2_2",
-    "mbot2_3",
-    "mbot41d",
-    "mbot41m",
-    "mbot41y",
-    "mbot42d",
-    "mbot42m",
-    "mbot42y",
-    "mbot43d",
-    "mbot43m",
-    "mbot43y"
-  )],
+    standardized_value_labels,
     mbot1 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
     `mbot1#` = c(`-2` = "na, see BMBOT1"),
     mbot2_1 = c(
@@ -2817,39 +2632,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mbot1",
-    "mbot1#",
-    "mbot111",
-    "mbot112",
-    "mbot113",
-    "mbot121",
-    "mbot122",
-    "mbot123",
-    "mbot132",
-    "mbot133",
-    "mbot2_1",
-    "mbot2_2",
-    "mbot2_3",
-    "mbot41d",
-    "mbot41m",
-    "mbot41y",
-    "mbot42d",
-    "mbot42m",
-    "mbot42y",
-    "mbot43d",
-    "mbot43m",
-    "mbot43y",
-    "mbot51",
-    "mbot52",
-    "mbot53",
-    "mhipply",
-    "mhippro",
-    "mhippry",
-    "mkneply",
-    "mknepro",
-    "mknepry"
-  )],
+    standardized_value_labels,
     mbot1 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
     `mbot1#` = c(`-2` = "na, see H/B/IMBOT1"),
     mbot111 = .replace_labels(
@@ -3023,47 +2806,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mbot1",
-    "mbot1#",
-    "mbot111",
-    "mbot112",
-    "mbot113",
-    "mbot121",
-    "mbot122",
-    "mbot123",
-    "mbot131",
-    "mbot132",
-    "mbot133",
-    "mbot2_1",
-    "mbot2_2",
-    "mbot2_3",
-    "mbot41d",
-    "mbot41m",
-    "mbot41y",
-    "mbot42d",
-    "mbot42m",
-    "mbot42y",
-    "mbot43d",
-    "mbot43m",
-    "mbot43y",
-    "mbot51",
-    "mbot52",
-    "mbot53",
-    "mconsx1",
-    "mconsx2",
-    "mconsx3",
-    "mfallfrac",
-    "mfallfracd",
-    "mfallfracm",
-    "mfallfracy",
-    "mhipply",
-    "mhippro",
-    "mhippry",
-    "mkneply",
-    "mknepro",
-    "mknepry"
-  )],
+    standardized_value_labels,
     mbot1 = c(`-2` = "na, see JMFALLFRAC", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     `mbot1#` = c(`-2` = "na, see JMBOT1"),
     mbot122 = .replace_labels(
@@ -3225,46 +2968,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mbot1",
-    "mbot1#",
-    "mbot111",
-    "mbot112",
-    "mbot113",
-    "mbot121",
-    "mbot122",
-    "mbot123",
-    "mbot2",
-    "mbot2_1",
-    "mbot2_2",
-    "mbot2_3",
-    "mbot3",
-    "mbot41d",
-    "mbot41m",
-    "mbot41y",
-    "mbot42d",
-    "mbot42m",
-    "mbot42y",
-    "mbot43d",
-    "mbot43m",
-    "mbot43y",
-    "mbot51",
-    "mbot52",
-    "mbot53",
-    "mconsx1",
-    "mconsx2",
-    "mconsx3",
-    "mfallfrac",
-    "mfallfracd",
-    "mfallfracm",
-    "mfallfracy",
-    "mhipply",
-    "mhippro",
-    "mhippry",
-    "mkneply",
-    "mknepro",
-    "mknepry"
-  )],
+    standardized_value_labels,
     mbot1 = c(`-2` = "na, see KMFALLFRAC", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     `mbot1#` = c(`-2` = "na, see KMBOT1"),
     mbot111 = .replace_labels(
@@ -3558,9 +3262,15 @@ var_types_vec <- c(
   mknepry = "numeric"
 )
 
-.lasa_fc_186 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "186", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "186", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "186", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "186", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["mhipplm"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mhipprm"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+
+.lasa_fc_186 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

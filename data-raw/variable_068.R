@@ -25,28 +25,124 @@ harmonized_labels <- c(
   mcarr10 = "Medical care reason: other"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `MB` = c(
+    "mcarc1",
+    "mcarc2",
+    "mcarc3",
+    "mcarc4",
+    "mcarc5",
+    "mcarc6",
+    "mcarr01",
+    "mcarr02",
+    "mcarr03",
+    "mcarr04",
+    "mcarr05",
+    "mcarr06",
+    "mcarr07",
+    "mcarr08",
+    "mcarr09",
+    "mcarr10"
+  )
+)
+
 variable_labels_list <- list(
   Wave_MB_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "mentioned"
+)
+
 standardized_value_labels <- list(
-  mcarc1 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  mcarc2 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  mcarc3 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  mcarc4 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  mcarc5 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  mcarc6 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  mcarr01 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  mcarr02 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  mcarr03 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  mcarr04 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  mcarr05 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  mcarr06 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  mcarr07 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  mcarr08 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  mcarr09 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  mcarr10 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned")
+  mcarc1 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mcarc2 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mcarc3 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mcarc4 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mcarc5 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mcarc6 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mcarr01 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mcarr02 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mcarr03 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mcarr04 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mcarr05 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mcarr06 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mcarr07 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mcarr08 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mcarr09 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mcarr10 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  )
 )
 
 value_labels_list <- list(
@@ -139,9 +235,12 @@ var_types_vec <- c(
   mcarr10 = "categorical"
 )
 
-.lasa_fc_068 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "068", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "068", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "068", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "068", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_068 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

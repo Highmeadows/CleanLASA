@@ -29,6 +29,299 @@ harmonized_labels <- c(
   cesd20 = "Last week: get going"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "cesd01",
+    "cesd02",
+    "cesd03",
+    "cesd04",
+    "cesd05",
+    "cesd06",
+    "cesd07",
+    "cesd08",
+    "cesd09",
+    "cesd10",
+    "cesd11",
+    "cesd12",
+    "cesd13",
+    "cesd14",
+    "cesd15",
+    "cesd16",
+    "cesd17",
+    "cesd18",
+    "cesd19",
+    "cesd20"
+  ),
+  `C` = c(
+    "cesd01",
+    "cesd02",
+    "cesd03",
+    "cesd04",
+    "cesd05",
+    "cesd06",
+    "cesd07",
+    "cesd08",
+    "cesd09",
+    "cesd10",
+    "cesd11",
+    "cesd12",
+    "cesd13",
+    "cesd14",
+    "cesd15",
+    "cesd16",
+    "cesd17",
+    "cesd18",
+    "cesd19",
+    "cesd20"
+  ),
+  `D` = c(
+    "cesd01",
+    "cesd02",
+    "cesd03",
+    "cesd04",
+    "cesd05",
+    "cesd06",
+    "cesd07",
+    "cesd08",
+    "cesd09",
+    "cesd10",
+    "cesd11",
+    "cesd12",
+    "cesd13",
+    "cesd14",
+    "cesd15",
+    "cesd16",
+    "cesd17",
+    "cesd18",
+    "cesd19",
+    "cesd20"
+  ),
+  `E` = c(
+    "cesd01",
+    "cesd02",
+    "cesd03",
+    "cesd04",
+    "cesd05",
+    "cesd06",
+    "cesd07",
+    "cesd08",
+    "cesd09",
+    "cesd10",
+    "cesd11",
+    "cesd12",
+    "cesd13",
+    "cesd14",
+    "cesd15",
+    "cesd16",
+    "cesd17",
+    "cesd18",
+    "cesd19",
+    "cesd20"
+  ),
+  `2B` = c(
+    "cesd01",
+    "cesd02",
+    "cesd03",
+    "cesd04",
+    "cesd05",
+    "cesd06",
+    "cesd07",
+    "cesd08",
+    "cesd09",
+    "cesd10",
+    "cesd11",
+    "cesd12",
+    "cesd13",
+    "cesd14",
+    "cesd15",
+    "cesd16",
+    "cesd17",
+    "cesd18",
+    "cesd19",
+    "cesd20"
+  ),
+  `F` = c(
+    "cesd01",
+    "cesd02",
+    "cesd03",
+    "cesd04",
+    "cesd05",
+    "cesd06",
+    "cesd07",
+    "cesd08",
+    "cesd09",
+    "cesd10",
+    "cesd11",
+    "cesd12",
+    "cesd13",
+    "cesd14",
+    "cesd15",
+    "cesd16",
+    "cesd17",
+    "cesd18",
+    "cesd19",
+    "cesd20"
+  ),
+  `G` = c(
+    "cesd01",
+    "cesd02",
+    "cesd03",
+    "cesd04",
+    "cesd05",
+    "cesd06",
+    "cesd07",
+    "cesd08",
+    "cesd09",
+    "cesd10",
+    "cesd11",
+    "cesd12",
+    "cesd13",
+    "cesd14",
+    "cesd15",
+    "cesd16",
+    "cesd17",
+    "cesd18",
+    "cesd19",
+    "cesd20"
+  ),
+  `H` = c(
+    "cesd01",
+    "cesd02",
+    "cesd03",
+    "cesd04",
+    "cesd05",
+    "cesd06",
+    "cesd07",
+    "cesd08",
+    "cesd09",
+    "cesd10",
+    "cesd11",
+    "cesd12",
+    "cesd13",
+    "cesd14",
+    "cesd15",
+    "cesd16",
+    "cesd17",
+    "cesd18",
+    "cesd19",
+    "cesd20"
+  ),
+  `3B` = c(
+    "cesd01",
+    "cesd02",
+    "cesd03",
+    "cesd04",
+    "cesd05",
+    "cesd06",
+    "cesd07",
+    "cesd08",
+    "cesd09",
+    "cesd10",
+    "cesd11",
+    "cesd12",
+    "cesd13",
+    "cesd14",
+    "cesd15",
+    "cesd16",
+    "cesd17",
+    "cesd18",
+    "cesd19",
+    "cesd20"
+  ),
+  `MB` = c(
+    "cesd01",
+    "cesd02",
+    "cesd03",
+    "cesd04",
+    "cesd05",
+    "cesd06",
+    "cesd07",
+    "cesd08",
+    "cesd09",
+    "cesd10",
+    "cesd11",
+    "cesd12",
+    "cesd13",
+    "cesd14",
+    "cesd15",
+    "cesd16",
+    "cesd17",
+    "cesd18",
+    "cesd19",
+    "cesd20"
+  ),
+  `I` = c(
+    "cesd01",
+    "cesd02",
+    "cesd03",
+    "cesd04",
+    "cesd05",
+    "cesd06",
+    "cesd07",
+    "cesd08",
+    "cesd09",
+    "cesd10",
+    "cesd11",
+    "cesd12",
+    "cesd13",
+    "cesd14",
+    "cesd15",
+    "cesd16",
+    "cesd17",
+    "cesd18",
+    "cesd19",
+    "cesd20"
+  ),
+  `J` = c(
+    "cesd01",
+    "cesd02",
+    "cesd03",
+    "cesd04",
+    "cesd05",
+    "cesd06",
+    "cesd07",
+    "cesd08",
+    "cesd09",
+    "cesd10",
+    "cesd11",
+    "cesd12",
+    "cesd13",
+    "cesd14",
+    "cesd15",
+    "cesd16",
+    "cesd17",
+    "cesd18",
+    "cesd19",
+    "cesd20"
+  ),
+  `K` = c(
+    "cesd01",
+    "cesd02",
+    "cesd03",
+    "cesd04",
+    "cesd05",
+    "cesd06",
+    "cesd07",
+    "cesd08",
+    "cesd09",
+    "cesd10",
+    "cesd11",
+    "cesd12",
+    "cesd13",
+    "cesd14",
+    "cesd15",
+    "cesd16",
+    "cesd17",
+    "cesd18",
+    "cesd19",
+    "cesd20"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
     harmonized_labels,
@@ -332,166 +625,115 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "some of the time",
+  `2` = "occasionally",
+  `3` = "mostly or always"
+)
+
 standardized_value_labels <- list(
   cesd01 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd02 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd03 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd04 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd05 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd06 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd07 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd08 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd09 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd10 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd11 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd12 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd13 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd14 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd15 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd16 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd17 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd18 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd19 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   ),
   cesd20 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "rarely or never",
-    `1` = "some of the time",
-    `2` = "occasionally",
-    `3` = "mostly or always"
+    default_answer_labels[c("1", "2", "3")]
   )
 )
 
@@ -500,1339 +742,1079 @@ value_labels_list <- list(
     standardized_value_labels,
     cesd01 = .replace_labels(
     standardized_value_labels$cesd01,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd02 = .replace_labels(
     standardized_value_labels$cesd02,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd03 = .replace_labels(
     standardized_value_labels$cesd03,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd04 = .replace_labels(
     standardized_value_labels$cesd04,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd05 = .replace_labels(
     standardized_value_labels$cesd05,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd06 = .replace_labels(
     standardized_value_labels$cesd06,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd07 = .replace_labels(
     standardized_value_labels$cesd07,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd08 = .replace_labels(
     standardized_value_labels$cesd08,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd09 = .replace_labels(
     standardized_value_labels$cesd09,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd10 = .replace_labels(
     standardized_value_labels$cesd10,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd11 = .replace_labels(
     standardized_value_labels$cesd11,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd12 = .replace_labels(
     standardized_value_labels$cesd12,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd13 = .replace_labels(
     standardized_value_labels$cesd13,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd14 = .replace_labels(
     standardized_value_labels$cesd14,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd15 = .replace_labels(
     standardized_value_labels$cesd15,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd16 = .replace_labels(
     standardized_value_labels$cesd16,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd17 = .replace_labels(
     standardized_value_labels$cesd17,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd18 = .replace_labels(
     standardized_value_labels$cesd18,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd19 = .replace_labels(
     standardized_value_labels$cesd19,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd20 = .replace_labels(
     standardized_value_labels$cesd20,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   )
   ),
   Wave_C_labels = .replace_in_list(
     standardized_value_labels,
     cesd01 = .replace_labels(
     standardized_value_labels$cesd01,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd02 = .replace_labels(
     standardized_value_labels$cesd02,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd03 = .replace_labels(
     standardized_value_labels$cesd03,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd04 = .replace_labels(
     standardized_value_labels$cesd04,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd05 = .replace_labels(
     standardized_value_labels$cesd05,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd06 = .replace_labels(
     standardized_value_labels$cesd06,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd07 = .replace_labels(
     standardized_value_labels$cesd07,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd08 = .replace_labels(
     standardized_value_labels$cesd08,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd09 = .replace_labels(
     standardized_value_labels$cesd09,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd10 = .replace_labels(
     standardized_value_labels$cesd10,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd11 = .replace_labels(
     standardized_value_labels$cesd11,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd12 = .replace_labels(
     standardized_value_labels$cesd12,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd13 = .replace_labels(
     standardized_value_labels$cesd13,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd14 = .replace_labels(
     standardized_value_labels$cesd14,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd15 = .replace_labels(
     standardized_value_labels$cesd15,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd16 = .replace_labels(
     standardized_value_labels$cesd16,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd17 = .replace_labels(
     standardized_value_labels$cesd17,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd18 = .replace_labels(
     standardized_value_labels$cesd18,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd19 = .replace_labels(
     standardized_value_labels$cesd19,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd20 = .replace_labels(
     standardized_value_labels$cesd20,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   )
   ),
   Wave_D_labels = .replace_in_list(
     standardized_value_labels,
     cesd01 = .replace_labels(
     standardized_value_labels$cesd01,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd02 = .replace_labels(
     standardized_value_labels$cesd02,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd03 = .replace_labels(
     standardized_value_labels$cesd03,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd04 = .replace_labels(
     standardized_value_labels$cesd04,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd05 = .replace_labels(
     standardized_value_labels$cesd05,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd06 = .replace_labels(
     standardized_value_labels$cesd06,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd07 = .replace_labels(
     standardized_value_labels$cesd07,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd08 = .replace_labels(
     standardized_value_labels$cesd08,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd09 = .replace_labels(
     standardized_value_labels$cesd09,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd10 = .replace_labels(
     standardized_value_labels$cesd10,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd11 = .replace_labels(
     standardized_value_labels$cesd11,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd12 = .replace_labels(
     standardized_value_labels$cesd12,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd13 = .replace_labels(
     standardized_value_labels$cesd13,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd14 = .replace_labels(
     standardized_value_labels$cesd14,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd15 = .replace_labels(
     standardized_value_labels$cesd15,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd16 = .replace_labels(
     standardized_value_labels$cesd16,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd17 = .replace_labels(
     standardized_value_labels$cesd17,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd18 = .replace_labels(
     standardized_value_labels$cesd18,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd19 = .replace_labels(
     standardized_value_labels$cesd19,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd20 = .replace_labels(
     standardized_value_labels$cesd20,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   )
   ),
   Wave_E_labels = .replace_in_list(
     standardized_value_labels,
     cesd01 = .replace_labels(
     standardized_value_labels$cesd01,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd02 = .replace_labels(
     standardized_value_labels$cesd02,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd03 = .replace_labels(
     standardized_value_labels$cesd03,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd04 = .replace_labels(
     standardized_value_labels$cesd04,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd05 = .replace_labels(
     standardized_value_labels$cesd05,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd06 = .replace_labels(
     standardized_value_labels$cesd06,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd07 = .replace_labels(
     standardized_value_labels$cesd07,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd08 = .replace_labels(
     standardized_value_labels$cesd08,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd09 = .replace_labels(
     standardized_value_labels$cesd09,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd10 = .replace_labels(
     standardized_value_labels$cesd10,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd11 = .replace_labels(
     standardized_value_labels$cesd11,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd12 = .replace_labels(
     standardized_value_labels$cesd12,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd13 = .replace_labels(
     standardized_value_labels$cesd13,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd14 = .replace_labels(
     standardized_value_labels$cesd14,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd15 = .replace_labels(
     standardized_value_labels$cesd15,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd16 = .replace_labels(
     standardized_value_labels$cesd16,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd17 = .replace_labels(
     standardized_value_labels$cesd17,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd18 = .replace_labels(
     standardized_value_labels$cesd18,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd19 = .replace_labels(
     standardized_value_labels$cesd19,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd20 = .replace_labels(
     standardized_value_labels$cesd20,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   )
   ),
   Wave_2B_labels = .replace_in_list(
     standardized_value_labels,
     cesd01 = .replace_labels(
     standardized_value_labels$cesd01,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd02 = .replace_labels(
     standardized_value_labels$cesd02,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd03 = .replace_labels(
     standardized_value_labels$cesd03,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd04 = .replace_labels(
     standardized_value_labels$cesd04,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd05 = .replace_labels(
     standardized_value_labels$cesd05,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd06 = .replace_labels(
     standardized_value_labels$cesd06,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd07 = .replace_labels(
     standardized_value_labels$cesd07,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd08 = .replace_labels(
     standardized_value_labels$cesd08,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd09 = .replace_labels(
     standardized_value_labels$cesd09,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd10 = .replace_labels(
     standardized_value_labels$cesd10,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd11 = .replace_labels(
     standardized_value_labels$cesd11,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd12 = .replace_labels(
     standardized_value_labels$cesd12,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd13 = .replace_labels(
     standardized_value_labels$cesd13,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd14 = .replace_labels(
     standardized_value_labels$cesd14,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd15 = .replace_labels(
     standardized_value_labels$cesd15,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd16 = .replace_labels(
     standardized_value_labels$cesd16,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd17 = .replace_labels(
     standardized_value_labels$cesd17,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd18 = .replace_labels(
     standardized_value_labels$cesd18,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd19 = .replace_labels(
     standardized_value_labels$cesd19,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd20 = .replace_labels(
     standardized_value_labels$cesd20,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   )
   ),
   Wave_F_labels = .replace_in_list(
     standardized_value_labels,
     cesd01 = .replace_labels(
     standardized_value_labels$cesd01,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd02 = .replace_labels(
     standardized_value_labels$cesd02,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd03 = .replace_labels(
     standardized_value_labels$cesd03,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd04 = .replace_labels(
     standardized_value_labels$cesd04,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd05 = .replace_labels(
     standardized_value_labels$cesd05,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd06 = .replace_labels(
     standardized_value_labels$cesd06,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd07 = .replace_labels(
     standardized_value_labels$cesd07,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd08 = .replace_labels(
     standardized_value_labels$cesd08,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd09 = .replace_labels(
     standardized_value_labels$cesd09,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd10 = .replace_labels(
     standardized_value_labels$cesd10,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd11 = .replace_labels(
     standardized_value_labels$cesd11,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd12 = .replace_labels(
     standardized_value_labels$cesd12,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd13 = .replace_labels(
     standardized_value_labels$cesd13,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd14 = .replace_labels(
     standardized_value_labels$cesd14,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd15 = .replace_labels(
     standardized_value_labels$cesd15,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd16 = .replace_labels(
     standardized_value_labels$cesd16,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd17 = .replace_labels(
     standardized_value_labels$cesd17,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd18 = .replace_labels(
     standardized_value_labels$cesd18,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd19 = .replace_labels(
     standardized_value_labels$cesd19,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd20 = .replace_labels(
     standardized_value_labels$cesd20,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   )
   ),
   Wave_G_labels = .replace_in_list(
     standardized_value_labels,
     cesd01 = .replace_labels(
     standardized_value_labels$cesd01,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd02 = .replace_labels(
     standardized_value_labels$cesd02,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd03 = .replace_labels(
     standardized_value_labels$cesd03,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd04 = .replace_labels(
     standardized_value_labels$cesd04,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd05 = .replace_labels(
     standardized_value_labels$cesd05,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd06 = .replace_labels(
     standardized_value_labels$cesd06,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd07 = .replace_labels(
     standardized_value_labels$cesd07,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd08 = .replace_labels(
     standardized_value_labels$cesd08,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd09 = .replace_labels(
     standardized_value_labels$cesd09,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd10 = .replace_labels(
     standardized_value_labels$cesd10,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd11 = .replace_labels(
     standardized_value_labels$cesd11,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd12 = .replace_labels(
     standardized_value_labels$cesd12,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd13 = .replace_labels(
     standardized_value_labels$cesd13,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd14 = .replace_labels(
     standardized_value_labels$cesd14,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd15 = .replace_labels(
     standardized_value_labels$cesd15,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd16 = .replace_labels(
     standardized_value_labels$cesd16,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd17 = .replace_labels(
     standardized_value_labels$cesd17,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd18 = .replace_labels(
     standardized_value_labels$cesd18,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd19 = .replace_labels(
     standardized_value_labels$cesd19,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd20 = .replace_labels(
     standardized_value_labels$cesd20,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   )
   ),
   Wave_H_labels = .replace_in_list(
     standardized_value_labels,
     cesd01 = .replace_labels(
     standardized_value_labels$cesd01,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd02 = .replace_labels(
     standardized_value_labels$cesd02,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd03 = .replace_labels(
     standardized_value_labels$cesd03,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd04 = .replace_labels(
     standardized_value_labels$cesd04,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd05 = .replace_labels(
     standardized_value_labels$cesd05,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd06 = .replace_labels(
     standardized_value_labels$cesd06,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd07 = .replace_labels(
     standardized_value_labels$cesd07,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd08 = .replace_labels(
     standardized_value_labels$cesd08,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd09 = .replace_labels(
     standardized_value_labels$cesd09,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd10 = .replace_labels(
     standardized_value_labels$cesd10,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd11 = .replace_labels(
     standardized_value_labels$cesd11,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd12 = .replace_labels(
     standardized_value_labels$cesd12,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd13 = .replace_labels(
     standardized_value_labels$cesd13,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd14 = .replace_labels(
     standardized_value_labels$cesd14,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd15 = .replace_labels(
     standardized_value_labels$cesd15,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd16 = .replace_labels(
     standardized_value_labels$cesd16,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd17 = .replace_labels(
     standardized_value_labels$cesd17,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd18 = .replace_labels(
     standardized_value_labels$cesd18,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd19 = .replace_labels(
     standardized_value_labels$cesd19,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd20 = .replace_labels(
     standardized_value_labels$cesd20,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   )
   ),
   Wave_3B_labels = .replace_in_list(
     standardized_value_labels,
     cesd01 = .replace_labels(
     standardized_value_labels$cesd01,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd02 = .replace_labels(
     standardized_value_labels$cesd02,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd03 = .replace_labels(
     standardized_value_labels$cesd03,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd04 = .replace_labels(
     standardized_value_labels$cesd04,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd05 = .replace_labels(
     standardized_value_labels$cesd05,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd06 = .replace_labels(
     standardized_value_labels$cesd06,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd07 = .replace_labels(
     standardized_value_labels$cesd07,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd08 = .replace_labels(
     standardized_value_labels$cesd08,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd09 = .replace_labels(
     standardized_value_labels$cesd09,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd10 = .replace_labels(
     standardized_value_labels$cesd10,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd11 = .replace_labels(
     standardized_value_labels$cesd11,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd12 = .replace_labels(
     standardized_value_labels$cesd12,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd13 = .replace_labels(
     standardized_value_labels$cesd13,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd14 = .replace_labels(
     standardized_value_labels$cesd14,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd15 = .replace_labels(
     standardized_value_labels$cesd15,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd16 = .replace_labels(
     standardized_value_labels$cesd16,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd17 = .replace_labels(
     standardized_value_labels$cesd17,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd18 = .replace_labels(
     standardized_value_labels$cesd18,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd19 = .replace_labels(
     standardized_value_labels$cesd19,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd20 = .replace_labels(
     standardized_value_labels$cesd20,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   )
   ),
   Wave_MB_labels = .replace_in_list(
     standardized_value_labels,
     cesd01 = .replace_labels(
     standardized_value_labels$cesd01,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd02 = .replace_labels(
     standardized_value_labels$cesd02,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd03 = .replace_labels(
     standardized_value_labels$cesd03,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd04 = .replace_labels(
     standardized_value_labels$cesd04,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd05 = .replace_labels(
     standardized_value_labels$cesd05,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd06 = .replace_labels(
     standardized_value_labels$cesd06,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd07 = .replace_labels(
     standardized_value_labels$cesd07,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd08 = .replace_labels(
     standardized_value_labels$cesd08,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd09 = .replace_labels(
     standardized_value_labels$cesd09,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd10 = .replace_labels(
     standardized_value_labels$cesd10,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd11 = .replace_labels(
     standardized_value_labels$cesd11,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd12 = .replace_labels(
     standardized_value_labels$cesd12,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd13 = .replace_labels(
     standardized_value_labels$cesd13,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd14 = .replace_labels(
     standardized_value_labels$cesd14,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd15 = .replace_labels(
     standardized_value_labels$cesd15,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd16 = .replace_labels(
     standardized_value_labels$cesd16,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd17 = .replace_labels(
     standardized_value_labels$cesd17,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd18 = .replace_labels(
     standardized_value_labels$cesd18,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd19 = .replace_labels(
     standardized_value_labels$cesd19,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd20 = .replace_labels(
     standardized_value_labels$cesd20,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   )
   ),
   Wave_I_labels = .replace_in_list(
     standardized_value_labels,
     cesd01 = .replace_labels(
     standardized_value_labels$cesd01,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd02 = .replace_labels(
     standardized_value_labels$cesd02,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd03 = .replace_labels(
     standardized_value_labels$cesd03,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd04 = .replace_labels(
     standardized_value_labels$cesd04,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd05 = .replace_labels(
     standardized_value_labels$cesd05,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd06 = .replace_labels(
     standardized_value_labels$cesd06,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd07 = .replace_labels(
     standardized_value_labels$cesd07,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd08 = .replace_labels(
     standardized_value_labels$cesd08,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd09 = .replace_labels(
     standardized_value_labels$cesd09,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd10 = .replace_labels(
     standardized_value_labels$cesd10,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd11 = .replace_labels(
     standardized_value_labels$cesd11,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd12 = .replace_labels(
     standardized_value_labels$cesd12,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd13 = .replace_labels(
     standardized_value_labels$cesd13,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd14 = .replace_labels(
     standardized_value_labels$cesd14,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd15 = .replace_labels(
     standardized_value_labels$cesd15,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd16 = .replace_labels(
     standardized_value_labels$cesd16,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd17 = .replace_labels(
     standardized_value_labels$cesd17,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd18 = .replace_labels(
     standardized_value_labels$cesd18,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd19 = .replace_labels(
     standardized_value_labels$cesd19,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd20 = .replace_labels(
     standardized_value_labels$cesd20,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   )
   ),
   Wave_J_labels = .replace_in_list(
     standardized_value_labels,
     cesd01 = .replace_labels(
     standardized_value_labels$cesd01,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd02 = .replace_labels(
     standardized_value_labels$cesd02,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd03 = .replace_labels(
     standardized_value_labels$cesd03,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd04 = .replace_labels(
     standardized_value_labels$cesd04,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd05 = .replace_labels(
     standardized_value_labels$cesd05,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd06 = .replace_labels(
     standardized_value_labels$cesd06,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd07 = .replace_labels(
     standardized_value_labels$cesd07,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd08 = .replace_labels(
     standardized_value_labels$cesd08,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd09 = .replace_labels(
     standardized_value_labels$cesd09,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd10 = .replace_labels(
     standardized_value_labels$cesd10,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd11 = .replace_labels(
     standardized_value_labels$cesd11,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd12 = .replace_labels(
     standardized_value_labels$cesd12,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd13 = .replace_labels(
     standardized_value_labels$cesd13,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd14 = .replace_labels(
     standardized_value_labels$cesd14,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd15 = .replace_labels(
     standardized_value_labels$cesd15,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd16 = .replace_labels(
     standardized_value_labels$cesd16,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd17 = .replace_labels(
     standardized_value_labels$cesd17,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd18 = .replace_labels(
     standardized_value_labels$cesd18,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd19 = .replace_labels(
     standardized_value_labels$cesd19,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd20 = .replace_labels(
     standardized_value_labels$cesd20,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   )
   ),
   Wave_K_labels = .replace_in_list(
     standardized_value_labels,
     cesd01 = .replace_labels(
     standardized_value_labels$cesd01,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd02 = .replace_labels(
     standardized_value_labels$cesd02,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd03 = .replace_labels(
     standardized_value_labels$cesd03,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd04 = .replace_labels(
     standardized_value_labels$cesd04,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd05 = .replace_labels(
     standardized_value_labels$cesd05,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd06 = .replace_labels(
     standardized_value_labels$cesd06,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd07 = .replace_labels(
     standardized_value_labels$cesd07,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd08 = .replace_labels(
     standardized_value_labels$cesd08,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd09 = .replace_labels(
     standardized_value_labels$cesd09,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd10 = .replace_labels(
     standardized_value_labels$cesd10,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd11 = .replace_labels(
     standardized_value_labels$cesd11,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd12 = .replace_labels(
     standardized_value_labels$cesd12,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd13 = .replace_labels(
     standardized_value_labels$cesd13,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd14 = .replace_labels(
     standardized_value_labels$cesd14,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd15 = .replace_labels(
     standardized_value_labels$cesd15,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd16 = .replace_labels(
     standardized_value_labels$cesd16,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd17 = .replace_labels(
     standardized_value_labels$cesd17,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd18 = .replace_labels(
     standardized_value_labels$cesd18,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd19 = .replace_labels(
     standardized_value_labels$cesd19,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   ),
     cesd20 = .replace_labels(
     standardized_value_labels$cesd20,
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225"
   )
   ),
   Harmonized_labels = standardized_value_labels
@@ -1861,9 +1843,12 @@ var_types_vec <- c(
   cesd20 = "categorical"
 )
 
-.lasa_fc_025 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "025", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "025", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "025", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "025", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_025 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

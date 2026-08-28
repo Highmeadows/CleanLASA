@@ -16,9 +16,112 @@ harmonized_labels <- c(
   petsoth = "Pets: Other"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "bird",
+    "cat",
+    "dog",
+    "nspecie",
+    "pets",
+    "petsoth"
+  ),
+  `C` = c(
+    "bird",
+    "cat",
+    "dog",
+    "nspecie",
+    "petothe",
+    "pets"
+  ),
+  `D` = c(
+    "bird",
+    "cat",
+    "dog",
+    "nspecie",
+    "petothe",
+    "pets"
+  ),
+  `E` = c(
+    "bird",
+    "cat",
+    "dog",
+    "nspecie",
+    "petothe",
+    "pets"
+  ),
+  `2B` = c(
+    "bird",
+    "cat",
+    "dog",
+    "nspecie",
+    "petothe",
+    "pets"
+  ),
+  `F` = c(
+    "bird",
+    "cat",
+    "dog",
+    "nspecie",
+    "petothe",
+    "pets"
+  ),
+  `G` = c(
+    "bird",
+    "cat",
+    "dog",
+    "nspecie",
+    "petothe",
+    "pets"
+  ),
+  `H` = c(
+    "bird",
+    "cat",
+    "dog",
+    "nspecie",
+    "petothe",
+    "pets"
+  ),
+  `3B` = c(
+    "bird",
+    "cat",
+    "dog",
+    "nspecie",
+    "petothe",
+    "pets"
+  ),
+  `I` = c(
+    "bird",
+    "cat",
+    "dog",
+    "nspecie",
+    "petothe",
+    "pets"
+  ),
+  `J` = c(
+    "bird",
+    "cat",
+    "dog",
+    "nspecie",
+    "petothe",
+    "pets"
+  ),
+  `K` = c(
+    "bird",
+    "cat",
+    "dog",
+    "nspecie",
+    "petothe",
+    "pets"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
-    harmonized_labels[c("bird", "cat", "dog", "nspecie", "pets", "petsoth")],
+    harmonized_labels,
     bird = "pets: Bird(s)",
     cat = "pets: Cat(s)",
     dog = "pets: Dog(s)",
@@ -27,7 +130,7 @@ variable_labels_list <- list(
     petsoth = "pets: Other"
   ),
   Wave_C_labels = .replace_labels(
-    harmonized_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    harmonized_labels,
     bird = "pets: Bird(s)",
     cat = "pets: Cat(s)",
     dog = "pets: Dog(s)",
@@ -36,7 +139,7 @@ variable_labels_list <- list(
     pets = "Do you have pets?"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    harmonized_labels,
     bird = "pets: Bird(s)",
     cat = "pets: Cat(s)",
     dog = "pets: Dog(s)",
@@ -45,7 +148,7 @@ variable_labels_list <- list(
     pets = "Do you have pets?"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    harmonized_labels,
     bird = "pets: Bird(s)",
     cat = "pets: Cat(s)",
     dog = "pets: Dog(s)",
@@ -54,7 +157,7 @@ variable_labels_list <- list(
     pets = "Do you have pets?"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    harmonized_labels,
     bird = "pets: bird (s)",
     cat = "pets: cat (s)",
     dog = "pets: dog(s)",
@@ -63,7 +166,7 @@ variable_labels_list <- list(
     pets = "do you have pets?"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    harmonized_labels,
     bird = "pets: bird (s)",
     cat = "pets: cat (s)",
     dog = "pets: dog(s)",
@@ -72,7 +175,7 @@ variable_labels_list <- list(
     pets = "do you have pets?"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    harmonized_labels,
     bird = "pets: bird (s)",
     cat = "pets: cat (s)",
     dog = "pets: dog(s)",
@@ -81,7 +184,7 @@ variable_labels_list <- list(
     pets = "do you have pets?"
   ),
   Wave_H_labels = .replace_labels(
-    harmonized_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    harmonized_labels,
     bird = "pets: bird (s)",
     cat = "pets: cat (s)",
     dog = "pets: dog(s)",
@@ -90,7 +193,7 @@ variable_labels_list <- list(
     pets = "do you have pets?"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    harmonized_labels,
     bird = "pets: bird (s)",
     cat = "pets: cat (s)",
     dog = "pets: dog(s)",
@@ -99,7 +202,7 @@ variable_labels_list <- list(
     pets = "do you have pets?"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    harmonized_labels,
     bird = "pets: bird (s)",
     cat = "pets: cat (s)",
     dog = "pets: dog(s)",
@@ -108,7 +211,7 @@ variable_labels_list <- list(
     pets = "do you have pets?"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    harmonized_labels,
     bird = "pets: bird (s)",
     cat = "pets: cat (s)",
     dog = "pets: dog(s)",
@@ -117,7 +220,7 @@ variable_labels_list <- list(
     pets = "do you have pets?"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    harmonized_labels,
     bird = "pets: bird (s)",
     cat = "pets: cat (s)",
     dog = "pets: dog(s)",
@@ -129,24 +232,45 @@ variable_labels_list <- list(
 )
 
 standardized_value_labels <- list(
-  bird = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  cat = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  dog = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  nspecie = c(`-2` = "not available, routing"),
-  petothe = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
+  bird = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  cat = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  dog = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  nspecie = c(
+    default_missing_labels[c("-2")]
+  ),
+  petothe = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
   pets = c(
-    `-4` = "not available, short version",
+    default_missing_labels[c("-4", "-1")],
     `-2` = "not available, interview terminated",
-    `-1` = "not available, asked",
     `0` = "no",
     `1` = "yes"
   ),
-  petsoth = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned")
+  petsoth = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  )
 )
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("bird", "cat", "dog", "nspecie", "pets", "petsoth")],
+    standardized_value_labels,
     bird = .replace_labels(
     standardized_value_labels$bird,
     `-2` = "na, see BPETS"
@@ -170,7 +294,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    standardized_value_labels,
     bird = .replace_labels(
     standardized_value_labels$bird,
     `-2` = "na, see CPETS"
@@ -194,7 +318,7 @@ value_labels_list <- list(
     pets = c(`0` = "no", `1` = "yes")
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    standardized_value_labels,
     bird = .replace_labels(
     standardized_value_labels$bird,
     `-2` = "na, see D/EPETS"
@@ -218,7 +342,7 @@ value_labels_list <- list(
     pets = c(`-1` = "na, asked", `0` = "no", `1` = "yes")
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    standardized_value_labels,
     bird = .replace_labels(
     standardized_value_labels$bird,
     `-2` = "na, see D/EPETS"
@@ -242,7 +366,7 @@ value_labels_list <- list(
     pets = c(`-1` = "na, asked", `0` = "no", `1` = "yes")
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    standardized_value_labels,
     bird = .replace_labels(
     standardized_value_labels$bird,
     `-2` = "na, see BPETS"
@@ -266,7 +390,7 @@ value_labels_list <- list(
     pets = c(`-2` = "na, interview terminated", `-1` = "na, asked", `0` = "no", `1` = "yes")
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    standardized_value_labels,
     bird = .replace_labels(
     standardized_value_labels$bird,
     `-2` = "na, see F/G/H/B/I/JPTS"
@@ -290,7 +414,7 @@ value_labels_list <- list(
     pets = c(`-1` = "na, asked", `0` = "no", `1` = "yes")
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    standardized_value_labels,
     bird = .replace_labels(
     standardized_value_labels$bird,
     `-2` = "na, see F/G/H/B/I/JPTS"
@@ -314,7 +438,7 @@ value_labels_list <- list(
     pets = c(`-1` = "na, asked", `0` = "no", `1` = "yes")
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    standardized_value_labels,
     bird = .replace_labels(
     standardized_value_labels$bird,
     `-2` = "na, see F/G/H/B/I/JPTS"
@@ -338,7 +462,7 @@ value_labels_list <- list(
     pets = c(`-1` = "na, asked", `0` = "no", `1` = "yes")
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    standardized_value_labels,
     bird = .replace_labels(
     standardized_value_labels$bird,
     `-2` = "na, see F/G/H/B/I/JPTS"
@@ -362,7 +486,7 @@ value_labels_list <- list(
     pets = c(`-1` = "na, asked", `0` = "no", `1` = "yes")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    standardized_value_labels,
     bird = .replace_labels(
     standardized_value_labels$bird,
     `-2` = "na, see F/G/H/B/I/JPTS"
@@ -386,7 +510,7 @@ value_labels_list <- list(
     pets = c(`-1` = "na, asked", `0` = "no", `1` = "yes")
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    standardized_value_labels,
     bird = .replace_labels(
     standardized_value_labels$bird,
     `-2` = "na, see F/G/H/B/I/JPTS"
@@ -410,7 +534,7 @@ value_labels_list <- list(
     pets = c(`-1` = "na, asked", `0` = "no", `1` = "yes")
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c("bird", "cat", "dog", "nspecie", "petothe", "pets")],
+    standardized_value_labels,
     bird = .replace_labels(
     standardized_value_labels$bird,
     `-2` = "na, see F/G/H/B/I/JPTS"
@@ -446,9 +570,12 @@ var_types_vec <- c(
   petsoth = "categorical"
 )
 
-.lasa_fc_012 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "012", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "012", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "012", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "012", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_012 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

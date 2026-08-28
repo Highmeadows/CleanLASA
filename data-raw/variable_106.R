@@ -58,8 +58,12 @@ harmonized_labels <- c(
   qworkyn = "work demands: ever had a job?"
 )
 
-variable_labels_list <- list(
-  Wave_3B_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `3B` = c(
     "qworkd",
     "qworkd1",
     "qworkd10",
@@ -82,8 +86,8 @@ variable_labels_list <- list(
     "qworkd7",
     "qworkd8",
     "qworkd9"
-  )],
-  Wave_MB_labels = harmonized_labels[c(
+  ),
+  `MB` = c(
     "qworkn1",
     "qworkn10",
     "qworkn11",
@@ -111,8 +115,8 @@ variable_labels_list <- list(
     "qworkp8",
     "qworkp9",
     "qworkyn"
-  )],
-  Wave_I_labels = harmonized_labels[c(
+  ),
+  `I` = c(
     "qworkd",
     "qworkd1",
     "qworkd10",
@@ -135,8 +139,8 @@ variable_labels_list <- list(
     "qworkd7",
     "qworkd8",
     "qworkd9"
-  )],
-  Wave_J_labels = harmonized_labels[c(
+  ),
+  `J` = c(
     "qworkd",
     "qworkd1",
     "qworkd10",
@@ -159,8 +163,8 @@ variable_labels_list <- list(
     "qworkd7",
     "qworkd8",
     "qworkd9"
-  )],
-  Wave_K_labels = harmonized_labels[c(
+  ),
+  `K` = c(
     "qworkd",
     "qworkd1",
     "qworkd10",
@@ -183,442 +187,234 @@ variable_labels_list <- list(
     "qworkd7",
     "qworkd8",
     "qworkd9"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_3B_labels = harmonized_labels,
+  Wave_MB_labels = harmonized_labels,
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "never",
+  `2` = "sometimes",
+  `3` = "often",
+  `4` = "all the time",
+  `5` = "not applicable"
+)
+
 standardized_value_labels <- list(
-  qworkd = c(`-1` = "not available, asked", `1` = "never had a job", `2` = "has/had a job"),
+  qworkd = c(
+    default_missing_labels[c("-1")],
+    `1` = "never had a job",
+    `2` = "has/had a job"
+  ),
   qworkd1 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd10 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd11 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd12 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd13 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd14 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd15 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd16 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd17 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd18 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd19 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd2 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd20 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd21 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd3 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd4 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd5 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd6 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd7 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd8 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkd9 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time",
-    `5` = "not applicable"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworkn1 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkn10 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkn11 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkn12 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkn13 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkn2 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkn3 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkn4 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkn5 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkn6 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkn7 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkn8 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkn9 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkp1 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkp10 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkp11 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkp12 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkp13 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkp2 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkp3 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkp4 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkp5 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkp6 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkp7 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkp8 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qworkp9 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "all the time"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
-  qworkyn = c(`-1` = "not available, asked", `1` = "never had a job", `2` = "had a job", `3` = "has a job")
+  qworkyn = c(
+    default_missing_labels[c("-1")],
+    `1` = "never had a job",
+    `2` = "had a job",
+    `3` = "has a job"
+  )
 )
 
 value_labels_list <- list(
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qworkd",
-    "qworkd1",
-    "qworkd10",
-    "qworkd11",
-    "qworkd12",
-    "qworkd13",
-    "qworkd14",
-    "qworkd15",
-    "qworkd16",
-    "qworkd17",
-    "qworkd18",
-    "qworkd19",
-    "qworkd2",
-    "qworkd20",
-    "qworkd21",
-    "qworkd3",
-    "qworkd4",
-    "qworkd5",
-    "qworkd6",
-    "qworkd7",
-    "qworkd8",
-    "qworkd9"
-  )],
-    qworkd = .replace_labels(
-    standardized_value_labels$qworkd,
-    `-1` = "na, asked"
-  ),
+    standardized_value_labels,
     qworkd1 = c(
     `-2` = "na, see BQWORKD",
     `-1` = "na, asked",
@@ -789,334 +585,201 @@ value_labels_list <- list(
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qworkn1",
-    "qworkn10",
-    "qworkn11",
-    "qworkn12",
-    "qworkn13",
-    "qworkn2",
-    "qworkn3",
-    "qworkn4",
-    "qworkn5",
-    "qworkn6",
-    "qworkn7",
-    "qworkn8",
-    "qworkn9",
-    "qworkp1",
-    "qworkp10",
-    "qworkp11",
-    "qworkp12",
-    "qworkp13",
-    "qworkp2",
-    "qworkp3",
-    "qworkp4",
-    "qworkp5",
-    "qworkp6",
-    "qworkp7",
-    "qworkp8",
-    "qworkp9",
-    "qworkyn"
-  )],
+    standardized_value_labels,
     qworkn1 = .replace_labels(
     standardized_value_labels$qworkn1,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkn10 = .replace_labels(
     standardized_value_labels$qworkn10,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkn11 = .replace_labels(
     standardized_value_labels$qworkn11,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkn12 = .replace_labels(
     standardized_value_labels$qworkn12,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkn13 = .replace_labels(
     standardized_value_labels$qworkn13,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkn2 = .replace_labels(
     standardized_value_labels$qworkn2,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkn3 = .replace_labels(
     standardized_value_labels$qworkn3,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkn4 = .replace_labels(
     standardized_value_labels$qworkn4,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkn5 = .replace_labels(
     standardized_value_labels$qworkn5,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkn6 = .replace_labels(
     standardized_value_labels$qworkn6,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkn7 = .replace_labels(
     standardized_value_labels$qworkn7,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkn8 = .replace_labels(
     standardized_value_labels$qworkn8,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkn9 = .replace_labels(
     standardized_value_labels$qworkn9,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkp1 = .replace_labels(
     standardized_value_labels$qworkp1,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkp10 = .replace_labels(
     standardized_value_labels$qworkp10,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkp11 = .replace_labels(
     standardized_value_labels$qworkp11,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkp12 = .replace_labels(
     standardized_value_labels$qworkp12,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkp13 = .replace_labels(
     standardized_value_labels$qworkp13,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkp2 = .replace_labels(
     standardized_value_labels$qworkp2,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkp3 = .replace_labels(
     standardized_value_labels$qworkp3,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkp4 = .replace_labels(
     standardized_value_labels$qworkp4,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkp5 = .replace_labels(
     standardized_value_labels$qworkp5,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkp6 = .replace_labels(
     standardized_value_labels$qworkp6,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkp7 = .replace_labels(
     standardized_value_labels$qworkp7,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkp8 = .replace_labels(
     standardized_value_labels$qworkp8,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   ),
     qworkp9 = .replace_labels(
     standardized_value_labels$qworkp9,
-    `-2` = "na, see BQWORKYN",
-    `-1` = "na, asked"
-  ),
-    qworkyn = .replace_labels(
-    standardized_value_labels$qworkyn,
-    `-1` = "na, asked"
+    `-2` = "na, see BQWORKYN"
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qworkd",
-    "qworkd1",
-    "qworkd10",
-    "qworkd11",
-    "qworkd12",
-    "qworkd13",
-    "qworkd14",
-    "qworkd15",
-    "qworkd16",
-    "qworkd17",
-    "qworkd18",
-    "qworkd19",
-    "qworkd2",
-    "qworkd20",
-    "qworkd21",
-    "qworkd3",
-    "qworkd4",
-    "qworkd5",
-    "qworkd6",
-    "qworkd7",
-    "qworkd8",
-    "qworkd9"
-  )],
-    qworkd = .replace_labels(
-    standardized_value_labels$qworkd,
-    `-1` = "na, asked"
-  ),
+    standardized_value_labels,
     qworkd1 = .replace_labels(
     standardized_value_labels$qworkd1,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd10 = .replace_labels(
     standardized_value_labels$qworkd10,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd11 = .replace_labels(
     standardized_value_labels$qworkd11,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd12 = .replace_labels(
     standardized_value_labels$qworkd12,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd13 = .replace_labels(
     standardized_value_labels$qworkd13,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd14 = .replace_labels(
     standardized_value_labels$qworkd14,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd15 = .replace_labels(
     standardized_value_labels$qworkd15,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd16 = .replace_labels(
     standardized_value_labels$qworkd16,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd17 = .replace_labels(
     standardized_value_labels$qworkd17,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd18 = .replace_labels(
     standardized_value_labels$qworkd18,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd19 = .replace_labels(
     standardized_value_labels$qworkd19,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd2 = .replace_labels(
     standardized_value_labels$qworkd2,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd20 = .replace_labels(
     standardized_value_labels$qworkd20,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd21 = .replace_labels(
     standardized_value_labels$qworkd21,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd3 = .replace_labels(
     standardized_value_labels$qworkd3,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd4 = .replace_labels(
     standardized_value_labels$qworkd4,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd5 = .replace_labels(
     standardized_value_labels$qworkd5,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd6 = .replace_labels(
     standardized_value_labels$qworkd6,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd7 = .replace_labels(
     standardized_value_labels$qworkd7,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd8 = .replace_labels(
     standardized_value_labels$qworkd8,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   ),
     qworkd9 = .replace_labels(
     standardized_value_labels$qworkd9,
-    `-2` = "na, see IQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see IQWORKD"
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qworkd",
-    "qworkd1",
-    "qworkd10",
-    "qworkd11",
-    "qworkd12",
-    "qworkd13",
-    "qworkd14",
-    "qworkd15",
-    "qworkd16",
-    "qworkd17",
-    "qworkd18",
-    "qworkd19",
-    "qworkd2",
-    "qworkd20",
-    "qworkd21",
-    "qworkd3",
-    "qworkd4",
-    "qworkd5",
-    "qworkd6",
-    "qworkd7",
-    "qworkd8",
-    "qworkd9"
-  )],
-    qworkd = .replace_labels(
-    standardized_value_labels$qworkd,
-    `-1` = "na, asked"
-  ),
+    standardized_value_labels,
     qworkd1 = c(
     `-2` = "na, see JQWORKD",
     `-1` = "na, asked",
@@ -1191,13 +854,11 @@ value_labels_list <- list(
   ),
     qworkd18 = .replace_labels(
     standardized_value_labels$qworkd18,
-    `-2` = "na, see JQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see JQWORKD"
   ),
     qworkd19 = .replace_labels(
     standardized_value_labels$qworkd19,
-    `-2` = "na, see JQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see JQWORKD"
   ),
     qworkd2 = c(
     `-2` = "na, see JQWORKD",
@@ -1209,13 +870,11 @@ value_labels_list <- list(
   ),
     qworkd20 = .replace_labels(
     standardized_value_labels$qworkd20,
-    `-2` = "na, see JQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see JQWORKD"
   ),
     qworkd21 = .replace_labels(
     standardized_value_labels$qworkd21,
-    `-2` = "na, see JQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see JQWORKD"
   ),
     qworkd3 = c(
     `-2` = "na, see JQWORKD",
@@ -1275,34 +934,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qworkd",
-    "qworkd1",
-    "qworkd10",
-    "qworkd11",
-    "qworkd12",
-    "qworkd13",
-    "qworkd14",
-    "qworkd15",
-    "qworkd16",
-    "qworkd17",
-    "qworkd18",
-    "qworkd19",
-    "qworkd2",
-    "qworkd20",
-    "qworkd21",
-    "qworkd3",
-    "qworkd4",
-    "qworkd5",
-    "qworkd6",
-    "qworkd7",
-    "qworkd8",
-    "qworkd9"
-  )],
-    qworkd = .replace_labels(
-    standardized_value_labels$qworkd,
-    `-1` = "na, asked"
-  ),
+    standardized_value_labels,
     qworkd1 = c(
     `-2` = "na, see KQWORKD",
     `-1` = "na, asked",
@@ -1377,13 +1009,11 @@ value_labels_list <- list(
   ),
     qworkd18 = .replace_labels(
     standardized_value_labels$qworkd18,
-    `-2` = "na, see KQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see KQWORKD"
   ),
     qworkd19 = .replace_labels(
     standardized_value_labels$qworkd19,
-    `-2` = "na, see KQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see KQWORKD"
   ),
     qworkd2 = c(
     `-2` = "na, see KQWORKD",
@@ -1395,13 +1025,11 @@ value_labels_list <- list(
   ),
     qworkd20 = .replace_labels(
     standardized_value_labels$qworkd20,
-    `-2` = "na, see KQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see KQWORKD"
   ),
     qworkd21 = .replace_labels(
     standardized_value_labels$qworkd21,
-    `-2` = "na, see KQWORKD",
-    `-1` = "na, asked"
+    `-2` = "na, see KQWORKD"
   ),
     qworkd3 = c(
     `-2` = "na, see KQWORKD",
@@ -1515,9 +1143,12 @@ var_types_vec <- c(
   qworkyn = "categorical"
 )
 
-.lasa_fc_106 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "106", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "106", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "106", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "106", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_106 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

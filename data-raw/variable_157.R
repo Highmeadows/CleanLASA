@@ -35,9 +35,12 @@ harmonized_labels <- c(
   mricont = "right eye: total score low-high"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "mcontra",
     "mctinch",
     "mctley1",
@@ -57,13 +60,8 @@ variable_labels_list <- list(
     "mdasig3",
     "mlecont",
     "mricont"
-  )],
-    mdasig1 = "weather: cloudy",
-    mdasig2 = "weather: clear sky",
-    mdasig3 = "sight: blinded by indoor/outdoor"
   ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+  `C` = c(
     "mctglas",
     "mctinch",
     "mctley1",
@@ -83,13 +81,8 @@ variable_labels_list <- list(
     "mdasig2",
     "mdasig3",
     "meyetes"
-  )],
-    mdasig1 = "weather: cloudy",
-    mdasig2 = "weather: clear sky",
-    mdasig3 = "weather: blinded by indoor/outdoor"
   ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
+  `D` = c(
     "mctglcl",
     "mctinch",
     "mctley1",
@@ -110,7 +103,48 @@ variable_labels_list <- list(
     "mdasig4",
     "mdasig5",
     "mdasig6"
-  )],
+  ),
+  `E` = c(
+    "mdasig1",
+    "mdasig2",
+    "mdasig3",
+    "mdasig4",
+    "mdasig5",
+    "mdasig6"
+  ),
+  `2B` = c(
+    "mdasig1",
+    "mdasig2",
+    "mdasig3",
+    "mdasig4",
+    "mdasig5",
+    "mdasig6"
+  ),
+  `F` = c(
+    "mdasig1",
+    "mdasig2",
+    "mdasig3",
+    "mdasig4",
+    "mdasig5",
+    "mdasig6"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
+    mdasig1 = "weather: cloudy",
+    mdasig2 = "weather: clear sky",
+    mdasig3 = "sight: blinded by indoor/outdoor"
+  ),
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
+    mdasig1 = "weather: cloudy",
+    mdasig2 = "weather: clear sky",
+    mdasig3 = "weather: blinded by indoor/outdoor"
+  ),
+  Wave_D_labels = .replace_labels(
+    harmonized_labels,
     mctinch = "contast test: inch",
     mctley1 = "contrast test: left eye A",
     mctley2 = "contrast test: left eye B",
@@ -125,15 +159,15 @@ variable_labels_list <- list(
     mdasig3 = "Daily sight: blinded when indoor/outdoor"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c("mdasig1", "mdasig2", "mdasig3", "mdasig4", "mdasig5", "mdasig6")],
+    harmonized_labels,
     mdasig3 = "Daily sight: blinded when indoor/outdoor"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c("mdasig1", "mdasig2", "mdasig3", "mdasig4", "mdasig5", "mdasig6")],
+    harmonized_labels,
     mdasig3 = "Daily sight: blinded when indoor/outdoor"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c("mdasig1", "mdasig2", "mdasig3", "mdasig4", "mdasig5", "mdasig6")],
+    harmonized_labels,
     mdasig3 = "Daily sight: blinded when indoor/outdoor"
   ),
   Harmonized_labels = harmonized_labels
@@ -142,14 +176,18 @@ variable_labels_list <- list(
 standardized_value_labels <- list(
   mcontra = c(`-1` = "no valid data"),
   mctglas = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see CMEYETES",
-    `-1` = "na, asked",
     `1` = "none",
     `2` = "glasses",
     `3` = "contact lenses"
   ),
-  mctglcl = c(`-1` = "no answer, asked", `1` = "none", `2` = "glasses", `3` = "contact lenses"),
+  mctglcl = c(
+    default_missing_labels[c("-1")],
+    `1` = "none",
+    `2` = "glasses",
+    `3` = "contact lenses"
+  ),
   mctinch = c(
     `-3` = "no valid data / na, wrong skip",
     `-2` = "no measurement done / na, see CMEYETES",
@@ -159,17 +197,57 @@ standardized_value_labels <- list(
     `3` = "40cm",
     `4` = "18inch [ca 46 cm]"
   ),
-  mctley1 = c(`-3` = "na, wrong skip", `-2` = "na, see CMEYETES", `-1` = "na, asked / no measurement"),
-  mctley2 = c(`-3` = "na, wrong skip", `-2` = "na, see CMEYETES", `-1` = "na, asked / no measurement"),
-  mctley3 = c(`-3` = "na, wrong skip", `-2` = "na, see CMEYETES", `-1` = "na, asked / no measurement"),
-  mctley4 = c(`-3` = "na, wrong skip", `-2` = "na, see CMEYETES", `-1` = "na, asked / no measurement"),
-  mctley5 = c(`-3` = "na, wrong skip", `-2` = "na, see CMEYETES", `-1` = "na, asked / no measurement"),
+  mctley1 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMEYETES",
+    `-1` = "na, asked / no measurement"
+  ),
+  mctley2 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMEYETES",
+    `-1` = "na, asked / no measurement"
+  ),
+  mctley3 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMEYETES",
+    `-1` = "na, asked / no measurement"
+  ),
+  mctley4 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMEYETES",
+    `-1` = "na, asked / no measurement"
+  ),
+  mctley5 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMEYETES",
+    `-1` = "na, asked / no measurement"
+  ),
   mctpart = stats::setNames(character(0), character(0)),
-  mctrey1 = c(`-3` = "na, wrong skip", `-2` = "na, see CMEYETES", `-1` = "na, asked / no measurement"),
-  mctrey2 = c(`-3` = "na, wrong skip", `-2` = "na, see CMEYETES", `-1` = "na, asked / no measurement"),
-  mctrey3 = c(`-3` = "na, wrong skip", `-2` = "na, see CMEYETES", `-1` = "na, asked / no measurement"),
-  mctrey4 = c(`-3` = "na, wrong skip", `-2` = "na, see CMEYETES", `-1` = "na, asked / no measurement"),
-  mctrey5 = c(`-3` = "na, wrong skip", `-2` = "na, see CMEYETES", `-1` = "na, asked / no measurement"),
+  mctrey1 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMEYETES",
+    `-1` = "na, asked / no measurement"
+  ),
+  mctrey2 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMEYETES",
+    `-1` = "na, asked / no measurement"
+  ),
+  mctrey3 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMEYETES",
+    `-1` = "na, asked / no measurement"
+  ),
+  mctrey4 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMEYETES",
+    `-1` = "na, asked / no measurement"
+  ),
+  mctrey5 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CMEYETES",
+    `-1` = "na, asked / no measurement"
+  ),
   mctrm = c(
     `-2` = "na, see CMEYETES",
     `4` = "refused",
@@ -181,7 +259,7 @@ standardized_value_labels <- list(
   mctunde = c(
     `-3` = "no valid data / na, wrong skip",
     `-2` = "no measurement done / na, see CMEYETES",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "excellent",
     `2` = "good",
     `3` = "moderate",
@@ -196,7 +274,7 @@ standardized_value_labels <- list(
   mdasig1 = c(
     `-3` = "no valid data",
     `-2` = "no measurement done",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "rarely",
     `2` = "sometimes",
     `3` = "often",
@@ -205,7 +283,7 @@ standardized_value_labels <- list(
   mdasig2 = c(
     `-3` = "no valid data",
     `-2` = "no measurement done",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "rarely",
     `2` = "sometimes",
     `3` = "often",
@@ -214,28 +292,28 @@ standardized_value_labels <- list(
   mdasig3 = c(
     `-3` = "no valid data",
     `-2` = "no measurement done",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "rarely",
     `2` = "sometimes",
     `3` = "often",
     `4` = "almost always"
   ),
   mdasig4 = c(
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "rarely",
     `2` = "sometimes",
     `3` = "often",
     `4` = "almost always"
   ),
   mdasig5 = c(
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "rarely",
     `2` = "sometimes",
     `3` = "often",
     `4` = "almost always"
   ),
   mdasig6 = c(
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "rarely",
     `2` = "sometimes",
     `3` = "often",
@@ -248,7 +326,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("mcontra", "mctinch", "mctunde", "mdasig1", "mdasig2", "mdasig3", "mlecont", "mricont")],
+    standardized_value_labels,
     mctinch = c(`-3` = "no valid data", `-2` = "no measurement done", `-1` = "no answer, asked"),
     mctunde = c(
     `-3` = "no valid data",
@@ -263,26 +341,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mctglas",
-    "mctinch",
-    "mctley1",
-    "mctley2",
-    "mctley3",
-    "mctley4",
-    "mctley5",
-    "mctrey1",
-    "mctrey2",
-    "mctrey3",
-    "mctrey4",
-    "mctrey5",
-    "mctrm",
-    "mctunde",
-    "mdasig1",
-    "mdasig2",
-    "mdasig3",
-    "meyetes"
-  )],
+    standardized_value_labels,
     mctinch = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see CMEYETES",
@@ -370,27 +429,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mctglcl",
-    "mctinch",
-    "mctley1",
-    "mctley2",
-    "mctley3",
-    "mctley4",
-    "mctley5",
-    "mctrey1",
-    "mctrey2",
-    "mctrey3",
-    "mctrey4",
-    "mctrey5",
-    "mctunde",
-    "mdasig1",
-    "mdasig2",
-    "mdasig3",
-    "mdasig4",
-    "mdasig5",
-    "mdasig6"
-  )],
+    standardized_value_labels,
     mctinch = c(`-1` = "no measurement"),
     mctley1 = c(`-1` = "no measurement"),
     mctley2 = c(`-1` = "no measurement"),
@@ -435,7 +474,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("mdasig1", "mdasig2", "mdasig3", "mdasig4", "mdasig5", "mdasig6")],
+    standardized_value_labels,
     mdasig1 = c(
     `-1` = "no answer, asked",
     `1` = "rarely",
@@ -459,7 +498,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("mdasig1", "mdasig2", "mdasig3", "mdasig4", "mdasig5", "mdasig6")],
+    standardized_value_labels,
     mdasig1 = c(
     `-1` = "no answer, asked",
     `1` = "rarely",
@@ -483,7 +522,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("mdasig1", "mdasig2", "mdasig3", "mdasig4", "mdasig5", "mdasig6")],
+    standardized_value_labels,
     mdasig1 = c(
     `-1` = "no answer, asked",
     `1` = "rarely",
@@ -538,9 +577,26 @@ var_types_vec <- c(
   mricont = "numeric"
 )
 
-.lasa_fc_157 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "157", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "157", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "157", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "157", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["mctley1"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mctley2"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mctley3"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mctley4"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mctley5"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mctpart"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mctrey1"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mctrey2"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mctrey3"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mctrey4"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mctrey5"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mctpart"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mctpart"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+
+.lasa_fc_157 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

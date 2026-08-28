@@ -27,10 +27,20 @@ harmonized_labels <- c(
   ressibs = "residence of siblings: Netherlands or abroad"
 )
 
-variable_labels_list <- list(
-  Wave_3B_labels = harmonized_labels[c("mnwctf1", "mnwctf2", "mnwctf3", "mnwctf4", "mnwctf6", "mnwctf8")],
-  Wave_MB_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `3B` = c(
+    "mnwctf1",
+    "mnwctf2",
+    "mnwctf3",
+    "mnwctf4",
+    "mnwctf6",
+    "mnwctf8"
+  ),
+  `MB` = c(
     "nwctf1",
     "nwctf2",
     "nwctf3",
@@ -43,13 +53,27 @@ variable_labels_list <- list(
     "resinlaws",
     "resotherkin",
     "ressibs"
-  )],
+  ),
+  `I` = c(
+    "mnwctf1",
+    "mnwctf2",
+    "mnwctf3",
+    "mnwctf4",
+    "mnwctf6",
+    "mnwctf8"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_3B_labels = harmonized_labels,
+  Wave_MB_labels = .replace_labels(
+    harmonized_labels,
     reschild = "residence children (in-law): in NL or abroad",
     resinlaws = "residence in-laws: in NL or abroad",
     resotherkin = "residence other kin: in NL or abroad",
     ressibs = "residence siblings: in NL or abroad"
   ),
-  Wave_I_labels = harmonized_labels[c("mnwctf1", "mnwctf2", "mnwctf3", "mnwctf4", "mnwctf6", "mnwctf8")],
+  Wave_I_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
@@ -58,7 +82,7 @@ standardized_value_labels <- list(
     `-4` = "no medical interview",
     `-3` = "not asked (interview terminated)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never or less than once a year",
     `2` = "once or few times a year",
     `3` = "once or few times a month",
@@ -69,7 +93,7 @@ standardized_value_labels <- list(
     `-4` = "no medical interview",
     `-3` = "not asked (interview terminated)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never or less than once a year",
     `2` = "once or few times a year",
     `3` = "once or few times a month",
@@ -80,7 +104,7 @@ standardized_value_labels <- list(
     `-4` = "no medical interview",
     `-3` = "not asked (interview terminated)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never or less than once a year",
     `2` = "once or few times a year",
     `3` = "once or few times a month",
@@ -91,7 +115,7 @@ standardized_value_labels <- list(
     `-4` = "no medical interview",
     `-3` = "not asked (interview terminated)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never or less than once a year",
     `2` = "once or few times a year",
     `3` = "once or few times a month",
@@ -102,7 +126,7 @@ standardized_value_labels <- list(
     `-4` = "no medical interview",
     `-3` = "not asked (interview terminated)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never or less than once a year",
     `2` = "once or few times a year",
     `3` = "once or few times a month",
@@ -113,7 +137,7 @@ standardized_value_labels <- list(
     `-4` = "no medical interview",
     `-3` = "not asked (interview terminated)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never or less than once a year",
     `2` = "once or few times a year",
     `3` = "once or few times a month",
@@ -123,47 +147,47 @@ standardized_value_labels <- list(
   nwctf1 = c(
     `-3` = "not asked (interview terminated/skip)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer"
+    default_missing_labels[c("-1")]
   ),
   nwctf2 = c(
     `-3` = "not asked (interview terminated/skip)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer"
+    default_missing_labels[c("-1")]
   ),
   nwctf3 = c(
     `-3` = "not asked (interview terminated/skip)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer"
+    default_missing_labels[c("-1")]
   ),
   nwctf4 = c(
     `-3` = "not asked (interview terminated/skip)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer"
+    default_missing_labels[c("-1")]
   ),
   nwctf5 = c(
     `-3` = "not asked (interview terminated/skip)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer"
+    default_missing_labels[c("-1")]
   ),
   nwctf6 = c(
     `-3` = "not asked (interview terminated/skip)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer"
+    default_missing_labels[c("-1")]
   ),
   nwctf7 = c(
     `-3` = "not asked (interview terminated/skip)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer"
+    default_missing_labels[c("-1")]
   ),
   nwctf8 = c(
     `-3` = "not asked (interview terminated/skip)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer"
+    default_missing_labels[c("-1")]
   ),
   reschild = c(
     `-3` = "not asked (interview terminated/skip)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "in Netherlands",
     `2` = "in Morocco/Turkey",
     `3` = "elsewhere",
@@ -172,7 +196,7 @@ standardized_value_labels <- list(
   resinlaws = c(
     `-3` = "not asked (interview terminated/skip)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "in Netherlands",
     `2` = "in Morocco/Turkey",
     `3` = "elsewhere",
@@ -181,7 +205,7 @@ standardized_value_labels <- list(
   resotherkin = c(
     `-3` = "not asked (interview terminated/skip)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "in Netherlands",
     `2` = "in Morocco/Turkey",
     `3` = "elsewhere",
@@ -190,7 +214,7 @@ standardized_value_labels <- list(
   ressibs = c(
     `-3` = "not asked (interview terminated/skip)",
     `-2` = "answer: not applicable",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "in Netherlands",
     `2` = "in Morocco/Turkey",
     `3` = "elsewhere",
@@ -199,22 +223,9 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_3B_labels = standardized_value_labels[c("mnwctf1", "mnwctf2", "mnwctf3", "mnwctf4", "mnwctf6", "mnwctf8")],
-  Wave_MB_labels = standardized_value_labels[c(
-    "nwctf1",
-    "nwctf2",
-    "nwctf3",
-    "nwctf4",
-    "nwctf5",
-    "nwctf6",
-    "nwctf7",
-    "nwctf8",
-    "reschild",
-    "resinlaws",
-    "resotherkin",
-    "ressibs"
-  )],
-  Wave_I_labels = standardized_value_labels[c("mnwctf1", "mnwctf2", "mnwctf3", "mnwctf4", "mnwctf6", "mnwctf8")],
+  Wave_3B_labels = standardized_value_labels,
+  Wave_MB_labels = standardized_value_labels,
+  Wave_I_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -239,9 +250,12 @@ var_types_vec <- c(
   ressibs = "categorical"
 )
 
-.lasa_fc_167 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "167", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "167", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "167", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "167", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_167 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -23,9 +23,12 @@ harmonized_labels <- c(
   qsatis4 = "satisfied with life: now compared to year ago"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "qimpor1",
     "qimpor2",
     "qimpor3",
@@ -38,109 +41,196 @@ variable_labels_list <- list(
     "qnansw",
     "qsatis1",
     "qsatis2"
-  )],
+  ),
+  `C` = c(
+    "qimpor1",
+    "qimpor2",
+    "qimpor3",
+    "qimpor4",
+    "qimpor5",
+    "qimpor6",
+    "qimpor7",
+    "qimpor8",
+    "qimpor9",
+    "qnansw",
+    "qsatis1",
+    "qsatis2"
+  ),
+  `D` = c(
+    "qimpor1",
+    "qimpor2",
+    "qimpor3",
+    "qimpor4",
+    "qimpor5",
+    "qimpor6",
+    "qimpor7",
+    "qimpor8",
+    "qimpor9",
+    "qnansw",
+    "qsatis1",
+    "qsatis2"
+  ),
+  `E` = c(
+    "qimpor1",
+    "qimpor2",
+    "qimpor3",
+    "qimpor4",
+    "qimpor5",
+    "qimpor6",
+    "qimpor7",
+    "qimpor8",
+    "qimpor9",
+    "qnansw",
+    "qsatis1",
+    "qsatis2"
+  ),
+  `2B` = c(
+    "qimpor1",
+    "qimpor2",
+    "qimpor3",
+    "qimpor4",
+    "qimpor5",
+    "qimpor6",
+    "qimpor7",
+    "qimpor8",
+    "qimpor9",
+    "qnansw",
+    "qsatis1",
+    "qsatis2"
+  ),
+  `F` = c(
+    "qimpor1",
+    "qimpor2",
+    "qimpor3",
+    "qimpor4",
+    "qimpor5",
+    "qimpor6",
+    "qimpor7",
+    "qimpor8",
+    "qimpor9",
+    "qnansw",
+    "qsatis1",
+    "qsatis2"
+  ),
+  `G` = c(
+    "qimpor1",
+    "qimpor2",
+    "qimpor3",
+    "qimpor4",
+    "qimpor5",
+    "qimpor6",
+    "qimpor7",
+    "qimpor8",
+    "qimpor9",
+    "qnansw",
+    "qsatis1",
+    "qsatis2"
+  ),
+  `H` = c(
+    "qimpor1",
+    "qimpor2",
+    "qimpor3",
+    "qimpor4",
+    "qimpor5",
+    "qimpor6",
+    "qimpor7",
+    "qimpor8",
+    "qimpor9",
+    "qnansw",
+    "qsatis1",
+    "qsatis2",
+    "qsatis3",
+    "qsatis4"
+  ),
+  `3B` = c(
+    "qimpor1",
+    "qimpor2",
+    "qimpor3",
+    "qimpor4",
+    "qimpor5",
+    "qimpor6",
+    "qimpor7",
+    "qimpor8",
+    "qimpor9",
+    "qnansw",
+    "qsatis1",
+    "qsatis2"
+  ),
+  `I` = c(
+    "qimpor1",
+    "qimpor2",
+    "qimpor3",
+    "qimpor4",
+    "qimpor5",
+    "qimpor6",
+    "qimpor7",
+    "qimpor8",
+    "qimpor9",
+    "qnansw",
+    "qsatis1",
+    "qsatis2",
+    "qsatis3",
+    "qsatis4"
+  ),
+  `J` = c(
+    "qimpor1",
+    "qimpor2",
+    "qimpor3",
+    "qimpor4",
+    "qimpor5",
+    "qimpor6",
+    "qimpor7",
+    "qimpor8",
+    "qimpor9",
+    "qnansw",
+    "qsatis1",
+    "qsatis2",
+    "qsatis3",
+    "qsatis4"
+  ),
+  `K` = c(
+    "qimpor1",
+    "qimpor2",
+    "qimpor3",
+    "qimpor4",
+    "qimpor5",
+    "qimpor6",
+    "qimpor7",
+    "qimpor8",
+    "qimpor9",
+    "qnansw",
+    "qsatis1",
+    "qsatis2"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
     qimpor4 = "sensible spending of time"
   ),
   Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    harmonized_labels,
     qimpor4 = "sensible spending of time"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    harmonized_labels,
     qimpor4 = "sensible spending of time"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    harmonized_labels,
     qimpor4 = "sensible spending of time"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    harmonized_labels,
     qimpor4 = "sensible spending of time"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    harmonized_labels,
     qimpor4 = "sensible spending of time"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    harmonized_labels,
     qimpor4 = "sensible spending of time"
   ),
   Wave_H_labels = .replace_labels(
@@ -148,20 +238,7 @@ variable_labels_list <- list(
     qimpor4 = "sensible spending of time"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    harmonized_labels,
     qimpor4 = "meaningful pastime"
   ),
   Wave_I_labels = .replace_labels(
@@ -173,20 +250,7 @@ variable_labels_list <- list(
     qimpor4 = "meaningful pastime"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    harmonized_labels,
     qimpor4 = "meaningful pastime"
   ),
   Harmonized_labels = harmonized_labels
@@ -232,20 +296,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    standardized_value_labels,
     qimpor1 = .replace_labels(
     standardized_value_labels$qimpor1,
     `-1` = "all 3 missing"
@@ -292,20 +343,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    standardized_value_labels,
     qimpor1 = .replace_labels(
     standardized_value_labels$qimpor1,
     `-1` = "all 3 missing"
@@ -352,20 +390,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    standardized_value_labels,
     qimpor1 = .replace_labels(
     standardized_value_labels$qimpor1,
     `-1` = "all 3 missing"
@@ -412,20 +437,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    standardized_value_labels,
     qimpor1 = .replace_labels(
     standardized_value_labels$qimpor1,
     `-1` = "all 3 missing"
@@ -472,20 +484,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    standardized_value_labels,
     qimpor1 = .replace_labels(
     standardized_value_labels$qimpor1,
     `-1` = "all 3 missing"
@@ -532,20 +531,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    standardized_value_labels,
     qimpor1 = .replace_labels(
     standardized_value_labels$qimpor1,
     `-1` = "all 3 missing"
@@ -592,20 +578,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    standardized_value_labels,
     qimpor1 = .replace_labels(
     standardized_value_labels$qimpor1,
     `-1` = "all 3 missing"
@@ -707,20 +680,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    standardized_value_labels,
     qimpor1 = .replace_labels(
     standardized_value_labels$qimpor1,
     `-1` = "all 3 missing"
@@ -877,20 +837,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qimpor1",
-    "qimpor2",
-    "qimpor3",
-    "qimpor4",
-    "qimpor5",
-    "qimpor6",
-    "qimpor7",
-    "qimpor8",
-    "qimpor9",
-    "qnansw",
-    "qsatis1",
-    "qsatis2"
-  )],
+    standardized_value_labels,
     qimpor1 = .replace_labels(
     standardized_value_labels$qimpor1,
     `-1` = "all 3 missing"
@@ -956,9 +903,12 @@ var_types_vec <- c(
   qsatis4 = "categorical"
 )
 
-.lasa_fc_110 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "110", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "110", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "110", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "110", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_110 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

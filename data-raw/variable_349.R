@@ -14,6 +14,27 @@ harmonized_labels <- c(
   qmisgsr = "Number of missing general self-regulation items"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `G` = c(
+    "qgsr",
+    "qgsracp",
+    "qgsrmk",
+    "qgsrsu",
+    "qmisgsr"
+  ),
+  `H` = c(
+    "qgsr",
+    "qgsracp",
+    "qgsrmk",
+    "qgsrsu",
+    "qmisgsr"
+  )
+)
+
 variable_labels_list <- list(
   Wave_G_labels = .replace_labels(
     harmonized_labels,
@@ -43,8 +64,8 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_G_labels = standardized_value_labels[c("qgsr", "qgsracp", "qgsrmk", "qgsrsu")],
-  Wave_H_labels = standardized_value_labels[c("qgsr", "qgsracp", "qgsrmk", "qgsrsu")],
+  Wave_G_labels = standardized_value_labels,
+  Wave_H_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -56,9 +77,15 @@ var_types_vec <- c(
   qmisgsr = "numeric"
 )
 
-.lasa_fc_349 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "349", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "349", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "349", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "349", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["qmisgsr"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["qmisgsr"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+
+.lasa_fc_349 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

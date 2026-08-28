@@ -16,47 +16,90 @@ harmonized_labels <- c(
   mthyrover = "Thyroid gland: overactive"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
+    "mbackp",
+    "mbackpd",
+    "mconfbed",
+    "mconfbeda25",
+    "mconfbedb25",
+    "mconfbedpy",
+    "mthyrover"
+  ),
+  `D` = c(
+    "mbackp",
+    "mbackpd",
+    "mconfbed",
+    "mthyrover"
+  ),
+  `E` = c(
+    "mbackp",
+    "mbackpd"
+  ),
+  `F` = c(
+    "mconfbed"
+  ),
+  `G` = c(
+    "mconfbed"
+  ),
+  `H` = c(
+    "mconfbed"
+  ),
+  `3B` = c(
+    "mconfbed"
+  )
+)
+
 variable_labels_list <- list(
   Wave_C_labels = .replace_labels(
     harmonized_labels,
     mconfbed = "Confined to bed yes/no"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c("mbackp", "mbackpd", "mconfbed", "mthyrover")],
+    harmonized_labels,
     mconfbed = "Confined to bed since last interview"
   ),
-  Wave_E_labels = harmonized_labels[c("mbackp", "mbackpd")],
+  Wave_E_labels = harmonized_labels,
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c("mconfbed")],
+    harmonized_labels,
     mconfbed = "Confined to bed since last interview"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c("mconfbed")],
+    harmonized_labels,
     mconfbed = "Confined to bed since last interview"
   ),
   Wave_H_labels = .replace_labels(
-    harmonized_labels[c("mconfbed")],
+    harmonized_labels,
     mconfbed = "Confined to bed since last interview"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c("mconfbed")],
+    harmonized_labels,
     mconfbed = "Confined to bed in last 3 years for 6 weeks or more"
   ),
   Harmonized_labels = harmonized_labels
 )
 
 standardized_value_labels <- list(
-  mbackp = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  mbackp = c(
+    `-5` = "na, interview terminated",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   mbackpd = c(
     `-2` = "na, see EMBACKP",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "less than one week",
     `2` = "> week < one month",
     `3` = "> one month"
   ),
   mconfbed = c(
     `-5` = "na, interview terminated",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes",
     `3` = "do not know"
@@ -78,7 +121,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("mbackp", "mbackpd", "mconfbed", "mthyrover")],
+    standardized_value_labels,
     mbackpd = c(
     `-2` = "na, see C/DMBACKP",
     `1` = "less than one week",
@@ -92,23 +135,23 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("mbackp", "mbackpd")],
+    standardized_value_labels,
     mbackp = c(`-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("mconfbed")],
+    standardized_value_labels,
     mconfbed = c(`-1` = "na, asked", `1` = "no", `2` = "yes, not the past year", `3` = "yes, the past year")
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("mconfbed")],
+    standardized_value_labels,
     mconfbed = c(`-1` = "na, asked", `1` = "no", `2` = "yes, not the past year", `3` = "yes, the past year")
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("mconfbed")],
+    standardized_value_labels,
     mconfbed = c(`-1` = "na, asked", `1` = "no", `2` = "yes, not the past year", `3` = "yes, the past year")
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("mconfbed")],
+    standardized_value_labels,
     mconfbed = c(`-1` = "na, asked", `1` = "no", `2` = "yes, not the past year", `3` = "yes, the past year")
   ),
   Harmonized_labels = standardized_value_labels
@@ -124,9 +167,12 @@ var_types_vec <- c(
   mthyrover = "categorical"
 )
 
-.lasa_fc_182 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "182", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "182", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "182", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "182", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_182 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -12,6 +12,18 @@ harmonized_labels <- c(
   sample = "sample cohort"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "052record",
+    "municipality",
+    "sample"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
     harmonized_labels,
@@ -34,7 +46,7 @@ standardized_value_labels <- list(
     `-6` = "not applicable: first move",
     `-3` = "1944:not born",
     `-2` = "not applicable: from abroad",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `3` = "Appingedam",
     `1987` = NA_character_,
     `7001` = "Neth:Groningen",
@@ -62,10 +74,13 @@ value_labels_list <- list(
 
 var_types_vec <- c(`052record` = "categorical", municipality = "categorical", sample = "categorical")
 
-.lasa_fc_z052 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "z052", waves = .lasa_wave_rows()) |>
     .override_label(wave = "B", variable = "sample", override_value = "sample"),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "z052", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "z052", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "z052", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_z052 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

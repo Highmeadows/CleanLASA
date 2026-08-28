@@ -20,91 +20,82 @@ harmonized_labels <- c(
   qdecf11 = "if I die, I hope: something else"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `F` = c(
+    "qdecf01",
+    "qdecf02",
+    "qdecf03",
+    "qdecf04",
+    "qdecf05",
+    "qdecf06",
+    "qdecf07",
+    "qdecf08",
+    "qdecf09",
+    "qdecf10",
+    "qdecf11"
+  )
+)
+
 variable_labels_list <- list(
   Wave_F_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "strongly disagree",
+  `2` = "disagree",
+  `3` = "no agreement/disagreement",
+  `4` = "agree",
+  `5` = "strongly agree"
+)
+
 standardized_value_labels <- list(
   qdecf01 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qdecf02 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qdecf03 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qdecf04 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qdecf05 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qdecf06 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qdecf07 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qdecf08 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qdecf09 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qdecf10 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qdecf11 = c(`-1` = "not available", `0` = "not mentioned", `1` = "mentioned")
 )
@@ -174,9 +165,12 @@ var_types_vec <- c(
   qdecf11 = "categorical"
 )
 
-.lasa_fc_146 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "146", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "146", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "146", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "146", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_146 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

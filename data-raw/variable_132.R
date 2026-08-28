@@ -25,6 +25,67 @@ harmonized_labels <- c(
   qfioe16 = "Fil Obl Exp 16: care"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `D` = c(
+    "qfioe01",
+    "qfioe02",
+    "qfioe03",
+    "qfioe04",
+    "qfioe05",
+    "qfioe06",
+    "qfioe07",
+    "qfioe08",
+    "qfioe09",
+    "qfioe10",
+    "qfioe11",
+    "qfioe12",
+    "qfioe13",
+    "qfioe14",
+    "qfioe15",
+    "qfioe16"
+  ),
+  `E` = c(
+    "qfioe01",
+    "qfioe02",
+    "qfioe03",
+    "qfioe04",
+    "qfioe05",
+    "qfioe06",
+    "qfioe07",
+    "qfioe08",
+    "qfioe09",
+    "qfioe10",
+    "qfioe11",
+    "qfioe12",
+    "qfioe13",
+    "qfioe14",
+    "qfioe15",
+    "qfioe16"
+  ),
+  `J` = c(
+    "qfioe01",
+    "qfioe02",
+    "qfioe03",
+    "qfioe04",
+    "qfioe05",
+    "qfioe06",
+    "qfioe07",
+    "qfioe08",
+    "qfioe09",
+    "qfioe10",
+    "qfioe11",
+    "qfioe12",
+    "qfioe13",
+    "qfioe14",
+    "qfioe15",
+    "qfioe16"
+  )
+)
+
 variable_labels_list <- list(
   Wave_D_labels = harmonized_labels,
   Wave_E_labels = harmonized_labels,
@@ -32,134 +93,81 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "strongly disagree",
+  `2` = "disagree",
+  `3` = "no agreement/disagreement",
+  `4` = "agree",
+  `5` = "strongly agree"
+)
+
 standardized_value_labels <- list(
   qfioe01 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qfioe02 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qfioe03 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qfioe04 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qfioe05 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qfioe06 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qfioe07 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qfioe08 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qfioe09 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qfioe10 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qfioe11 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qfioe12 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qfioe13 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qfioe14 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qfioe15 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qfioe16 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   )
 )
 
@@ -387,9 +395,12 @@ var_types_vec <- c(
   qfioe16 = "categorical"
 )
 
-.lasa_fc_132 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "132", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "132", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "132", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "132", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_132 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -14,6 +14,20 @@ harmonized_labels <- c(
   rmpar = "reason no valid data on parents"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `D` = c(
+    "fademen",
+    "fatreat",
+    "modemen",
+    "motreat",
+    "rmpar"
+  )
+)
+
 variable_labels_list <- list(
   Wave_D_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
@@ -21,30 +35,22 @@ variable_labels_list <- list(
 
 standardized_value_labels <- list(
   fademen = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "yes",
     `2` = "no"
   ),
   fatreat = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "yes",
     `2` = "no"
   ),
   modemen = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "yes",
     `2` = "no"
   ),
   motreat = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "yes",
     `2` = "no"
   ),
@@ -56,27 +62,19 @@ value_labels_list <- list(
     standardized_value_labels,
     fademen = .replace_labels(
     standardized_value_labels$fademen,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see DRMPAR",
-    `-1` = "na, asked"
+    `-2` = "na, see DRMPAR"
   ),
     fatreat = .replace_labels(
     standardized_value_labels$fatreat,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see DFADEMEN",
-    `-1` = "na, asked"
+    `-2` = "na, see DFADEMEN"
   ),
     modemen = .replace_labels(
     standardized_value_labels$modemen,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see DRMPAR",
-    `-1` = "na, asked"
+    `-2` = "na, see DRMPAR"
   ),
     motreat = .replace_labels(
     standardized_value_labels$motreat,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see DMODEMEN",
-    `-1` = "na, asked"
+    `-2` = "na, see DMODEMEN"
   )
   ),
   Harmonized_labels = standardized_value_labels
@@ -90,9 +88,12 @@ var_types_vec <- c(
   rmpar = "categorical"
 )
 
-.lasa_fc_092 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "092", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "092", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "092", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "092", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_092 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

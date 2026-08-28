@@ -17,27 +17,90 @@ harmonized_labels <- c(
   subjage = "Subjective age"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `D` = c(
+    "happy",
+    "lifeli",
+    "lijnen",
+    "resint"
+  ),
+  `E` = c(
+    "lifeli"
+  ),
+  `F` = c(
+    "lifeli"
+  ),
+  `G` = c(
+    "dltd",
+    "eltd",
+    "lifeli",
+    "pflt",
+    "subjage"
+  ),
+  `H` = c(
+    "dltd",
+    "eltd",
+    "lifeli",
+    "pflt",
+    "subjage"
+  ),
+  `I` = c(
+    "dltd",
+    "eltd",
+    "lifeli",
+    "pflt",
+    "subjage"
+  ),
+  `J` = c(
+    "dltd",
+    "eltd",
+    "lifeli",
+    "pflt",
+    "subjage"
+  ),
+  `K` = c(
+    "dltd",
+    "eltd",
+    "lifeli",
+    "pflt",
+    "subjage"
+  )
+)
+
 variable_labels_list <- list(
-  Wave_D_labels = harmonized_labels[c("happy", "lifeli", "lijnen", "resint")],
-  Wave_E_labels = harmonized_labels[c("lifeli")],
-  Wave_F_labels = harmonized_labels[c("lifeli")],
-  Wave_G_labels = harmonized_labels[c("dltd", "eltd", "lifeli", "pflt", "subjage")],
-  Wave_H_labels = harmonized_labels[c("dltd", "eltd", "lifeli", "pflt", "subjage")],
-  Wave_I_labels = harmonized_labels[c("dltd", "eltd", "lifeli", "pflt", "subjage")],
-  Wave_J_labels = harmonized_labels[c("dltd", "eltd", "lifeli", "pflt", "subjage")],
-  Wave_K_labels = harmonized_labels[c("dltd", "eltd", "lifeli", "pflt", "subjage")],
+  Wave_D_labels = harmonized_labels,
+  Wave_E_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
 standardized_value_labels <- list(
-  dltd = c(`-2` = "not available, routing", `-1` = "not available, asked"),
-  eltd = c(`-2` = "not available, routing", `-1` = "not available, asked"),
-  happy = c(`-2` = "not asked", `-1` = "not available, asked", `0` = NA_character_, `1` = NA_character_),
+  dltd = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  eltd = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  happy = c(
+    `-2` = "not asked",
+    default_missing_labels[c("-1")],
+    `0` = NA_character_,
+    `1` = NA_character_
+  ),
   lifeli = c(
     `-4` = "interview terminated",
     `-3` = "short interview",
-    `-2` = "coding category -2",
-    `-1` = "not available, asked",
+    `-2` = "label varies by wave",
+    default_missing_labels[c("-1")],
     `0` = NA_character_,
     `1` = NA_character_
   ),
@@ -48,8 +111,7 @@ standardized_value_labels <- list(
     `4` = "on both lines/op allebei de lijnen"
   ),
   pflt = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "as old as possible, irrespective health problems",
     `2` = "shorter life, if without major health problems"
   ),
@@ -62,12 +124,14 @@ standardized_value_labels <- list(
     `5` = "telephone: respondent",
     `6` = "telephone: respondent"
   ),
-  subjage = c(`-2` = "not available, routing", `-1` = "not available, asked")
+  subjage = c(
+    default_missing_labels[c("-2", "-1")]
+  )
 )
 
 value_labels_list <- list(
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("happy", "lifeli", "lijnen", "resint")],
+    standardized_value_labels,
     happy = .replace_labels(
     standardized_value_labels$happy,
     `-1` = "asked, no score"
@@ -75,7 +139,7 @@ value_labels_list <- list(
     lifeli = c(`-2` = "not asked", `-1` = "asked, no score", `0` = NA_character_, `1` = NA_character_)
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("lifeli")],
+    standardized_value_labels,
     lifeli = c(
     `-4` = "interview terminated",
     `-3` = "short interview",
@@ -85,7 +149,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("lifeli")],
+    standardized_value_labels,
     lifeli = c(
     `-4` = "interview terminated",
     `-3` = "short interview",
@@ -95,143 +159,118 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("dltd", "eltd", "lifeli", "pflt", "subjage")],
+    standardized_value_labels,
     dltd = .replace_labels(
     standardized_value_labels$dltd,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   ),
     eltd = .replace_labels(
     standardized_value_labels$eltd,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   ),
     lifeli = .replace_labels(
     standardized_value_labels$lifeli,
-    `-2` = "na, refused",
-    `-1` = "na, asked"
+    `-2` = "na, refused"
   ),
     pflt = .replace_labels(
     standardized_value_labels$pflt,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   ),
     subjage = .replace_labels(
     standardized_value_labels$subjage,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("dltd", "eltd", "lifeli", "pflt", "subjage")],
+    standardized_value_labels,
     dltd = .replace_labels(
     standardized_value_labels$dltd,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   ),
     eltd = .replace_labels(
     standardized_value_labels$eltd,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   ),
     lifeli = .replace_labels(
     standardized_value_labels$lifeli,
-    `-2` = "na, refused",
-    `-1` = "na, asked"
+    `-2` = "na, refused"
   ),
     pflt = .replace_labels(
     standardized_value_labels$pflt,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   ),
     subjage = .replace_labels(
     standardized_value_labels$subjage,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("dltd", "eltd", "lifeli", "pflt", "subjage")],
+    standardized_value_labels,
     dltd = .replace_labels(
     standardized_value_labels$dltd,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   ),
     eltd = .replace_labels(
     standardized_value_labels$eltd,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   ),
     lifeli = .replace_labels(
     standardized_value_labels$lifeli,
-    `-2` = "na, refused",
-    `-1` = "na, asked"
+    `-2` = "na, refused"
   ),
     pflt = .replace_labels(
     standardized_value_labels$pflt,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   ),
     subjage = .replace_labels(
     standardized_value_labels$subjage,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c("dltd", "eltd", "lifeli", "pflt", "subjage")],
+    standardized_value_labels,
     dltd = .replace_labels(
     standardized_value_labels$dltd,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   ),
     eltd = .replace_labels(
     standardized_value_labels$eltd,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   ),
     lifeli = .replace_labels(
     standardized_value_labels$lifeli,
-    `-2` = "na, refused",
-    `-1` = "na, asked"
+    `-2` = "na, refused"
   ),
     pflt = .replace_labels(
     standardized_value_labels$pflt,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   ),
     subjage = .replace_labels(
     standardized_value_labels$subjage,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c("dltd", "eltd", "lifeli", "pflt", "subjage")],
+    standardized_value_labels,
     dltd = .replace_labels(
     standardized_value_labels$dltd,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   ),
     eltd = .replace_labels(
     standardized_value_labels$eltd,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   ),
     lifeli = .replace_labels(
     standardized_value_labels$lifeli,
-    `-2` = "na, refused",
-    `-1` = "na, asked"
+    `-2` = "na, refused"
   ),
     pflt = .replace_labels(
     standardized_value_labels$pflt,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   ),
     subjage = .replace_labels(
     standardized_value_labels$subjage,
-    `-2` = "na, see G/H/I/J/KLIFELI",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KLIFELI"
   )
   ),
   Harmonized_labels = standardized_value_labels
@@ -248,10 +287,13 @@ var_types_vec <- c(
   subjage = "numeric"
 )
 
-.lasa_fc_094 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "094", waves = .lasa_wave_rows()) |>
     .override_label(wave = "D", variable = "lijnen", override_value = "lijnen"),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "094", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "094", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "094", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_094 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

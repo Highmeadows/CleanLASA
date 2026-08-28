@@ -13,6 +13,79 @@ harmonized_labels <- c(
   separ = "reason not living with spouse/registered partner"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `A` = c(
+    "marst",
+    "partner",
+    "partst",
+    "separ"
+  ),
+  `B` = c(
+    "marst",
+    "partner",
+    "partst",
+    "separ"
+  ),
+  `C` = c(
+    "marst",
+    "partner",
+    "partst",
+    "separ"
+  ),
+  `D` = c(
+    "marst",
+    "partner",
+    "partst",
+    "separ"
+  ),
+  `E` = c(
+    "marst",
+    "partner",
+    "partst",
+    "separ"
+  ),
+  `F` = c(
+    "marst",
+    "partner",
+    "partst",
+    "separ"
+  ),
+  `G` = c(
+    "marst",
+    "partner",
+    "partst",
+    "separ"
+  ),
+  `H` = c(
+    "marst",
+    "partner",
+    "partst",
+    "separ"
+  ),
+  `I` = c(
+    "marst",
+    "partner",
+    "partst",
+    "separ"
+  ),
+  `J` = c(
+    "marst",
+    "partner",
+    "partst",
+    "separ"
+  ),
+  `K` = c(
+    "marst",
+    "partner",
+    "partst",
+    "separ"
+  )
+)
+
 variable_labels_list <- list(
   Wave_A_labels = .replace_labels(
     harmonized_labels,
@@ -174,9 +247,12 @@ value_labels_list <- list(
 
 var_types_vec <- c(marst = "categorical", partner = "categorical", partst = "categorical", separ = "categorical")
 
-.lasa_fc_z010 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "z010", waves = .lasa_wave_rows(has_wave_a = TRUE)),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "z010", waves = .lasa_wave_rows(has_wave_a = TRUE)),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "z010", waves = .lasa_wave_rows(has_wave_a = TRUE)),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "z010", waves = .lasa_wave_rows(has_wave_a = TRUE))
 )
+
+.lasa_fc_z010 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

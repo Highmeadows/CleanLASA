@@ -14,6 +14,27 @@ harmonized_labels <- c(
   qsocd5 = "social des. 5: listen good"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
+    "qsocd1",
+    "qsocd2",
+    "qsocd3",
+    "qsocd4",
+    "qsocd5"
+  ),
+  `F` = c(
+    "qsocd1",
+    "qsocd2",
+    "qsocd3",
+    "qsocd4",
+    "qsocd5"
+  )
+)
+
 variable_labels_list <- list(
   Wave_C_labels = harmonized_labels,
   Wave_F_labels = harmonized_labels,
@@ -121,9 +142,12 @@ var_types_vec <- c(
   qsocd5 = "categorical"
 )
 
-.lasa_fc_130 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "130", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "130", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "130", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "130", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_130 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

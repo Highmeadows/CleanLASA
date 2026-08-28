@@ -8,6 +8,57 @@
 
 harmonized_labels <- c(anxint = "Anxiety scale total score", rmanx = "Reason for missing anxiety scale score")
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "anxint",
+    "rmanx"
+  ),
+  `C` = c(
+    "anxint",
+    "rmanx"
+  ),
+  `D` = c(
+    "anxint",
+    "rmanx"
+  ),
+  `E` = c(
+    "anxint",
+    "rmanx"
+  ),
+  `F` = c(
+    "anxint",
+    "rmanx"
+  ),
+  `G` = c(
+    "anxint",
+    "rmanx"
+  ),
+  `H` = c(
+    "anxint",
+    "rmanx"
+  ),
+  `3B` = c(
+    "anxint",
+    "rmanx"
+  ),
+  `MB` = c(
+    "anxint",
+    "rmanx"
+  ),
+  `I` = c(
+    "anxint",
+    "rmanx"
+  ),
+  `J` = c(
+    "anxint",
+    "rmanx"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
     harmonized_labels,
@@ -181,7 +232,7 @@ value_labels_list <- list(
 
 var_types_vec <- c(anxint = "numeric", rmanx = "categorical")
 
-.lasa_fc_226 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "226", waves = .lasa_wave_rows()) |>
     .override_label(wave = "MB", variable = "anxint", override_value = "bmanxint") |>
     .override_label(wave = "MB", variable = "rmanx", override_value = "bmrmanx"),
@@ -189,3 +240,6 @@ var_types_vec <- c(anxint = "numeric", rmanx = "categorical")
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "226", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "226", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_226 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

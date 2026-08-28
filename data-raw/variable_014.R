@@ -66,9 +66,12 @@ harmonized_labels <- c(
   specwho = "Special adjustment: for who"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "fdoor",
     "fdoorc",
     "hindep",
@@ -109,19 +112,8 @@ variable_labels_list <- list(
     "spec16",
     "spec17",
     "specadj"
-  )],
-    houstyp = "Type of housing: constructed",
-    momonth = "Moved since last interview: month",
-    moyear = "Moved since last interview: year",
-    nrooms = "# rooms in house",
-    nroomsc = "# rooms: constructed",
-    spec01 = "Specially adjusted: telephone e.g. amplified sound",
-    spec04 = "Specially adjusted: handgrips or supports",
-    spec10 = "Specially adjusted: non-skid in bathroom",
-    spec12 = "spec. adjust: raised bed"
   ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+  `C` = c(
     "fdoor",
     "fdoorc",
     "hindep",
@@ -153,16 +145,8 @@ variable_labels_list <- list(
     "spec16",
     "spec17",
     "specadj"
-  )],
-    houstyp = "Type of housing: constructed",
-    momonth = "Moved since last int: month",
-    moyear = "Moved since last int: year",
-    nrooms = "# rooms in house",
-    nroomsc = "# rooms: constructed",
-    spec10 = "Specially adjusted: non-skid in bathroom"
   ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
+  `D` = c(
     "fdoor",
     "fdoorc",
     "hindep",
@@ -194,16 +178,8 @@ variable_labels_list <- list(
     "spec16",
     "spec17",
     "specadj"
-  )],
-    houstyp = "Type of housing: constructed",
-    momonth = "Moved since last int: month",
-    moyear = "Moved since last int: year",
-    nrooms = "# rooms in house",
-    nroomsc = "# rooms: constructed",
-    spec10 = "Specially adjusted: non-skid in bathroom"
   ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
+  `E` = c(
     "fdoor",
     "fdoorc",
     "hindep",
@@ -235,16 +211,8 @@ variable_labels_list <- list(
     "spec16",
     "spec17",
     "specadj"
-  )],
-    houstyp = "Type of housing: constructed",
-    momonth = "Moved since last int: month",
-    moyear = "Moved since last int: year",
-    nrooms = "# rooms in house",
-    nroomsc = "# rooms: constructed",
-    spec10 = "Specially adjusted: non-skid in bathroom"
   ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
+  `2B` = c(
     "fdoor",
     "hindep",
     "houstyp",
@@ -278,14 +246,8 @@ variable_labels_list <- list(
     "spec16",
     "spec17",
     "specadj"
-  )],
-    momonth = "Moved to current residence: month",
-    moyear = "Moved to current residence: year",
-    spec04 = "Specially adjusted: handgrips or supports",
-    spec10 = "Specially adjusted: non-skid in bathroom"
   ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
+  `F` = c(
     "fdoor",
     "fdoorc",
     "hindep",
@@ -317,16 +279,8 @@ variable_labels_list <- list(
     "spec16",
     "spec17",
     "specadj"
-  )],
-    houstyp = "Type of housing: constructed",
-    momonth = "Moved since last int: month",
-    moyear = "Moved since last int: year",
-    nrooms = "# rooms in house",
-    nroomsc = "# rooms: constructed",
-    spec10 = "Specially adjusted: non-skid in bathroom"
   ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
+  `G` = c(
     "fdoor",
     "fdoorc",
     "hindep",
@@ -358,16 +312,8 @@ variable_labels_list <- list(
     "spec16",
     "spec17",
     "specadj"
-  )],
-    houstyp = "Type of housing: constructed",
-    momonth = "Moved since last int: month",
-    moyear = "Moved since last int: year",
-    nrooms = "# rooms in house",
-    nroomsc = "# rooms: constructed",
-    spec10 = "Specially adjusted: non-skid in bathroom"
   ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+  `H` = c(
     "hindep",
     "housem",
     "houstyp",
@@ -390,7 +336,164 @@ variable_labels_list <- list(
     "spec9",
     "specadj",
     "specwho"
-  )],
+  ),
+  `3B` = c(
+    "hindep",
+    "houstyp",
+    "hwhacc",
+    "momonth",
+    "moyear",
+    "satis",
+    "spec1",
+    "spec2",
+    "spec3",
+    "spec4",
+    "spec5",
+    "spec6",
+    "spec7",
+    "spec8",
+    "spec9",
+    "specadj",
+    "specwho"
+  ),
+  `MB` = c(
+    "hindep"
+  ),
+  `I` = c(
+    "hindep",
+    "housem",
+    "houstyp",
+    "hwhacc",
+    "lrooms",
+    "momonth",
+    "moved",
+    "moyear",
+    "nrooms",
+    "satis",
+    "spec1",
+    "spec2",
+    "spec3",
+    "spec4",
+    "spec5",
+    "spec6",
+    "spec7",
+    "spec8",
+    "spec9",
+    "specadj",
+    "specwho"
+  ),
+  `J` = c(
+    "hindep",
+    "housem",
+    "houstyp",
+    "hwhacc",
+    "momonth",
+    "moved",
+    "moyear",
+    "satis",
+    "spec1",
+    "spec2",
+    "spec3",
+    "spec4",
+    "spec5",
+    "spec6",
+    "spec7",
+    "spec8",
+    "spec9",
+    "specadj",
+    "specwho"
+  ),
+  `K` = c(
+    "hindep",
+    "housem",
+    "houstyp",
+    "hwhacc",
+    "momonth",
+    "moved",
+    "moyear",
+    "satis",
+    "spec1",
+    "spec10",
+    "spec2",
+    "spec3",
+    "spec4",
+    "spec5",
+    "spec6",
+    "spec7",
+    "spec8",
+    "spec9",
+    "specadj",
+    "specwho"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
+    houstyp = "Type of housing: constructed",
+    momonth = "Moved since last interview: month",
+    moyear = "Moved since last interview: year",
+    nrooms = "# rooms in house",
+    nroomsc = "# rooms: constructed",
+    spec01 = "Specially adjusted: telephone e.g. amplified sound",
+    spec04 = "Specially adjusted: handgrips or supports",
+    spec10 = "Specially adjusted: non-skid in bathroom",
+    spec12 = "spec. adjust: raised bed"
+  ),
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
+    houstyp = "Type of housing: constructed",
+    momonth = "Moved since last int: month",
+    moyear = "Moved since last int: year",
+    nrooms = "# rooms in house",
+    nroomsc = "# rooms: constructed",
+    spec10 = "Specially adjusted: non-skid in bathroom"
+  ),
+  Wave_D_labels = .replace_labels(
+    harmonized_labels,
+    houstyp = "Type of housing: constructed",
+    momonth = "Moved since last int: month",
+    moyear = "Moved since last int: year",
+    nrooms = "# rooms in house",
+    nroomsc = "# rooms: constructed",
+    spec10 = "Specially adjusted: non-skid in bathroom"
+  ),
+  Wave_E_labels = .replace_labels(
+    harmonized_labels,
+    houstyp = "Type of housing: constructed",
+    momonth = "Moved since last int: month",
+    moyear = "Moved since last int: year",
+    nrooms = "# rooms in house",
+    nroomsc = "# rooms: constructed",
+    spec10 = "Specially adjusted: non-skid in bathroom"
+  ),
+  Wave_2B_labels = .replace_labels(
+    harmonized_labels,
+    momonth = "Moved to current residence: month",
+    moyear = "Moved to current residence: year",
+    spec04 = "Specially adjusted: handgrips or supports",
+    spec10 = "Specially adjusted: non-skid in bathroom"
+  ),
+  Wave_F_labels = .replace_labels(
+    harmonized_labels,
+    houstyp = "Type of housing: constructed",
+    momonth = "Moved since last int: month",
+    moyear = "Moved since last int: year",
+    nrooms = "# rooms in house",
+    nroomsc = "# rooms: constructed",
+    spec10 = "Specially adjusted: non-skid in bathroom"
+  ),
+  Wave_G_labels = .replace_labels(
+    harmonized_labels,
+    houstyp = "Type of housing: constructed",
+    momonth = "Moved since last int: month",
+    moyear = "Moved since last int: year",
+    nrooms = "# rooms in house",
+    nroomsc = "# rooms: constructed",
+    spec10 = "Specially adjusted: non-skid in bathroom"
+  ),
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
     houstyp = "Type of housing: constructed",
     momonth = "Moved since last int: month",
     moyear = "Moved since last int: year",
@@ -408,25 +511,7 @@ variable_labels_list <- list(
     specwho = "Spec. adjust: for who"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
-    "hindep",
-    "houstyp",
-    "hwhacc",
-    "momonth",
-    "moyear",
-    "satis",
-    "spec1",
-    "spec2",
-    "spec3",
-    "spec4",
-    "spec5",
-    "spec6",
-    "spec7",
-    "spec8",
-    "spec9",
-    "specadj",
-    "specwho"
-  )],
+    harmonized_labels,
     momonth = "Moved to current residence: month",
     moyear = "Moved to current residence: year",
     spec1 = "Spec. adjust: lowered or no doorstep",
@@ -440,31 +525,9 @@ variable_labels_list <- list(
     spec9 = "Spec. adjust: other",
     specwho = "Spec. adjust: for who"
   ),
-  Wave_MB_labels = harmonized_labels[c("hindep")],
+  Wave_MB_labels = harmonized_labels,
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
-    "hindep",
-    "housem",
-    "houstyp",
-    "hwhacc",
-    "lrooms",
-    "momonth",
-    "moved",
-    "moyear",
-    "nrooms",
-    "satis",
-    "spec1",
-    "spec2",
-    "spec3",
-    "spec4",
-    "spec5",
-    "spec6",
-    "spec7",
-    "spec8",
-    "spec9",
-    "specadj",
-    "specwho"
-  )],
+    harmonized_labels,
     houstyp = "Type of housing: constructed",
     momonth = "Moved since last int: month",
     moyear = "Moved since last int: year",
@@ -482,27 +545,7 @@ variable_labels_list <- list(
     specwho = "Spec. adjust: for who"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
-    "hindep",
-    "housem",
-    "houstyp",
-    "hwhacc",
-    "momonth",
-    "moved",
-    "moyear",
-    "satis",
-    "spec1",
-    "spec2",
-    "spec3",
-    "spec4",
-    "spec5",
-    "spec6",
-    "spec7",
-    "spec8",
-    "spec9",
-    "specadj",
-    "specwho"
-  )],
+    harmonized_labels,
     houstyp = "Type of housing: constructed",
     momonth = "Moved since last int: month",
     moyear = "Moved since last int: year",
@@ -519,28 +562,7 @@ variable_labels_list <- list(
     specwho = "Spec. adjust: for who"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
-    "hindep",
-    "housem",
-    "houstyp",
-    "hwhacc",
-    "momonth",
-    "moved",
-    "moyear",
-    "satis",
-    "spec1",
-    "spec10",
-    "spec2",
-    "spec3",
-    "spec4",
-    "spec5",
-    "spec6",
-    "spec7",
-    "spec8",
-    "spec9",
-    "specadj",
-    "specwho"
-  )],
+    harmonized_labels,
     houstyp = "Type of housing: constructed",
     momonth = "Moved since last int: month",
     moyear = "Moved since last int: year",
@@ -560,18 +582,24 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "mentioned",
+  `2` = "mentioned"
+)
+
 standardized_value_labels <- list(
   fdoor = c(
     `-5` = "not available, routing",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available"
   ),
   fdoorc = c(`-3` = "monastery", `-2` = "institution", `-1` = "unknown"),
   hindep = c(
-    `-3` = "not available, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "not available",
-    `-1` = "not available, asked",
     `1` = "independent",
     `2` = "residential home",
     `3` = "nursing h-somatic",
@@ -583,392 +611,330 @@ standardized_value_labels <- list(
   ),
   housem = c(
     `-5` = "not available, routing",
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "housing type category 1",
-    `2` = "housing type category 2",
-    `3` = "housing type category 3",
-    `4` = "housing type category 4",
-    `5` = "housing type category 5",
-    `6` = "housing type category 6",
-    `7` = "housing type category 7",
-    `8` = "housing type category 8",
-    `9` = "housing type category 9",
-    `10` = "housing type category 10",
-    `11` = "housing type category 11",
-    `12` = "housing type category 12",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
+    `1` = "label varies by wave",
+    `2` = "label varies by wave",
+    `3` = "label varies by wave",
+    `4` = "label varies by wave",
+    `5` = "label varies by wave",
+    `6` = "label varies by wave",
+    `7` = "label varies by wave",
+    `8` = "label varies by wave",
+    `9` = "label varies by wave",
+    `10` = "label varies by wave",
+    `11` = "label varies by wave",
+    `12` = "label varies by wave",
     `13` = "houseboat",
     `14` = "commune",
     `15` = "other"
   ),
   houstyp = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
-    `1` = "housing type category 1",
-    `2` = "housing type category 2",
-    `3` = "housing type category 3",
-    `4` = "housing type category 4",
-    `5` = "housing type category 5",
-    `6` = "housing type category 6",
-    `7` = "housing type category 7",
-    `8` = "housing type category 8",
-    `9` = "housing type category 9",
-    `10` = "housing type category 10",
-    `11` = "housing type category 11",
-    `12` = "housing type category 12",
-    `13` = "housing type category 13",
-    `14` = "housing type category 14",
+    `1` = "label varies by wave",
+    `2` = "label varies by wave",
+    `3` = "label varies by wave",
+    `4` = "label varies by wave",
+    `5` = "label varies by wave",
+    `6` = "label varies by wave",
+    `7` = "label varies by wave",
+    `8` = "label varies by wave",
+    `9` = "label varies by wave",
+    `10` = "label varies by wave",
+    `11` = "label varies by wave",
+    `12` = "label varies by wave",
+    `13` = "label varies by wave",
+    `14` = "label varies by wave",
     `15` = "other",
     `16` = "institution",
     `17` = "monastery"
   ),
   hwhacc = c(
     `-5` = "not available, routing",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "yes",
     `2` = "only with help",
     `3` = "no"
   ),
   lrooms = c(
     `-5` = "not available, routing",
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-3", "-2")],
     `-1` = "not available",
     `1` = "no",
     `2` = "yes"
   ),
   momonth = c(
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-4", "-3", "-2", "-1")]
   ),
   moved = c(
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes",
     `3` = "yes, temporarily living elsewhere",
     `4` = "lived temporarily elsewhere"
   ),
   moyear = c(
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-4", "-3", "-2", "-1")]
   ),
   nrooms = c(
     `-5` = "not available, routing",
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-3", "-2")],
     `-1` = "not available"
   ),
   nroomsc = c(`-3` = "monastery", `-2` = "institution", `-1` = "unknown"),
-  ospec1 = c(`-2` = "not available, routing", `0` = "no", `1` = "yes"),
-  ospec2 = c(`-2` = "not available, routing", `0` = "no", `1` = "yes"),
-  ospec3 = c(`-2` = "not available, routing", `0` = "no", `1` = "yes"),
-  ospec4 = c(`-2` = "not available, routing", `0` = "no", `1` = "yes"),
-  ospec5 = c(`-2` = "not available, routing", `0` = "no", `1` = "yes"),
-  ospec6 = c(`-2` = "not available, routing", `0` = "no", `1` = "yes"),
+  ospec1 = c(
+    default_missing_labels[c("-2")],
+    `0` = "no",
+    `1` = "yes"
+  ),
+  ospec2 = c(
+    default_missing_labels[c("-2")],
+    `0` = "no",
+    `1` = "yes"
+  ),
+  ospec3 = c(
+    default_missing_labels[c("-2")],
+    `0` = "no",
+    `1` = "yes"
+  ),
+  ospec4 = c(
+    default_missing_labels[c("-2")],
+    `0` = "no",
+    `1` = "yes"
+  ),
+  ospec5 = c(
+    default_missing_labels[c("-2")],
+    `0` = "no",
+    `1` = "yes"
+  ),
+  ospec6 = c(
+    default_missing_labels[c("-2")],
+    `0` = "no",
+    `1` = "yes"
+  ),
   rfdoor = c(
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-3", "-2")],
     `-1` = "not available",
     `1` = "only stairs",
     `2` = "elevator present",
     `3` = "other"
   ),
   satis = c(
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "dissatisfied",
     `2` = "not satisfied/dissatisfied",
     `3` = "satisfied"
   ),
   satis01 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   satis02 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   satis03 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   satis04 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   satis05 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   satis06 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   satis07 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   satis08 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   satis09 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   spec01 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec06 = c(
     `-5` = "not available, routing",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec07 = c(
     `-5` = "not available, routing",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec08 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec09 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec1 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   spec10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "special housing adjustment category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec11 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec13 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec14 = c(
     `-5` = "not available, routing",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec15 = c(
     `-5` = "not available, routing",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec16 = c(
     `-5` = "not available, routing",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec17 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "binary category 1",
-    `2` = "mentioned"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   spec2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   spec3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   spec4 = c(
     `-5` = "not available, routing",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   spec5 = c(
     `-5` = "not available, routing",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   spec6 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   spec7 = c(
     `-5` = "not available, routing",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   spec8 = c(
     `-5` = "not available, routing",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   spec9 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   specadj = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "no",
-    `1` = "binary category 1",
+    `1` = "label varies by wave",
     `2` = "yes"
   ),
   specwho = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "for respondent",
     `2` = "for (former) inmate",
     `3` = "for both",
@@ -978,52 +944,10 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "fdoor",
-    "fdoorc",
-    "hindep",
-    "housem",
-    "houstyp",
-    "lrooms",
-    "momonth",
-    "moved",
-    "moyear",
-    "nrooms",
-    "nroomsc",
-    "rfdoor",
-    "satis",
-    "satis01",
-    "satis02",
-    "satis03",
-    "satis04",
-    "satis05",
-    "satis06",
-    "satis07",
-    "satis08",
-    "satis09",
-    "spec01",
-    "spec02",
-    "spec03",
-    "spec04",
-    "spec05",
-    "spec06",
-    "spec07",
-    "spec08",
-    "spec09",
-    "spec10",
-    "spec11",
-    "spec12",
-    "spec13",
-    "spec14",
-    "spec15",
-    "spec16",
-    "spec17",
-    "specadj"
-  )],
+    standardized_value_labels,
     fdoor = .replace_labels(
     standardized_value_labels$fdoor,
     `-5` = "na, see BHINDEP",
-    `-3` = "na, wrong skip",
     `-2` = "na, see BMOVED",
     `-1` = "na"
   ),
@@ -1040,9 +964,7 @@ value_labels_list <- list(
     standardized_value_labels$housem,
     `-5` = "na, see BHINDEP",
     `-4` = "na, short version",
-    `-3` = "na, wrong skip",
     `-2` = "na, see BMOVED",
-    `-1` = "na, asked",
     `1` = "attached row",
     `2` = "semi-detached",
     `3` = "detached",
@@ -1080,30 +1002,24 @@ value_labels_list <- list(
     standardized_value_labels$lrooms,
     `-5` = "na, see BHINDEP",
     `-4` = "na, short version",
-    `-3` = "na, wrong skip",
     `-2` = "na, see BMOVED",
     `-1` = "na"
   ),
     momonth = .replace_labels(
     standardized_value_labels$momonth,
     `-4` = "na, short version",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BMOVED",
-    `-1` = "na, asked"
+    `-2` = "na, see BMOVED"
   ),
     moved = c(`1` = "no", `2` = "yes"),
     moyear = .replace_labels(
     standardized_value_labels$moyear,
     `-4` = "na, short version",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BMOVED",
-    `-1` = "na, asked"
+    `-2` = "na, see BMOVED"
   ),
     nrooms = .replace_labels(
     standardized_value_labels$nrooms,
     `-5` = "na, see BHINDEP",
     `-4` = "na, short version",
-    `-3` = "na, wrong skip",
     `-2` = "na, see BMOVED",
     `-1` = "na"
   ),
@@ -1120,53 +1036,43 @@ value_labels_list <- list(
     `-4` = "na, short version",
     `-3` = "wrong skip",
     `-2` = "na, routing",
-    `-1` = "na, asked",
     `2` = "no satisfied/dissatisfy"
   ),
     satis01 = .replace_labels(
     standardized_value_labels$satis01,
-    `-2` = "na, see BSATIS",
-    `-1` = "na, asked"
+    `-2` = "na, see BSATIS"
   ),
     satis02 = .replace_labels(
     standardized_value_labels$satis02,
-    `-2` = "na, see BSATIS",
-    `-1` = "na, asked"
+    `-2` = "na, see BSATIS"
   ),
     satis03 = .replace_labels(
     standardized_value_labels$satis03,
-    `-2` = "na, see BSATIS",
-    `-1` = "na, asked"
+    `-2` = "na, see BSATIS"
   ),
     satis04 = .replace_labels(
     standardized_value_labels$satis04,
-    `-2` = "na, see BSATIS",
-    `-1` = "na, asked"
+    `-2` = "na, see BSATIS"
   ),
     satis05 = .replace_labels(
     standardized_value_labels$satis05,
-    `-2` = "na, see BSATIS",
-    `-1` = "na, asked"
+    `-2` = "na, see BSATIS"
   ),
     satis06 = .replace_labels(
     standardized_value_labels$satis06,
-    `-2` = "na, see BSATIS",
-    `-1` = "na, asked"
+    `-2` = "na, see BSATIS"
   ),
     satis07 = .replace_labels(
     standardized_value_labels$satis07,
-    `-2` = "na, see BSATIS",
-    `-1` = "na, asked"
+    `-2` = "na, see BSATIS"
   ),
     satis08 = .replace_labels(
     standardized_value_labels$satis08,
-    `-2` = "na, see BSATIS",
-    `-1` = "na, asked"
+    `-2` = "na, see BSATIS"
   ),
     satis09 = .replace_labels(
     standardized_value_labels$satis09,
-    `-2` = "na, see BSATIS",
-    `-1` = "na, asked"
+    `-2` = "na, see BSATIS"
   ),
     spec01 = c(
     `-3` = "na, wrong skip",
@@ -1295,43 +1201,10 @@ value_labels_list <- list(
     specadj = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "no", `1` = "yes")
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "fdoor",
-    "fdoorc",
-    "hindep",
-    "housem",
-    "houstyp",
-    "lrooms",
-    "momonth",
-    "moved",
-    "moyear",
-    "nrooms",
-    "nroomsc",
-    "rfdoor",
-    "satis",
-    "spec01",
-    "spec02",
-    "spec03",
-    "spec04",
-    "spec05",
-    "spec06",
-    "spec07",
-    "spec08",
-    "spec09",
-    "spec10",
-    "spec11",
-    "spec12",
-    "spec13",
-    "spec14",
-    "spec15",
-    "spec16",
-    "spec17",
-    "specadj"
-  )],
+    standardized_value_labels,
     fdoor = .replace_labels(
     standardized_value_labels$fdoor,
     `-5` = "na, see C/D/E/F/GHINDEP",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GMOVED",
     `-1` = "na, asked"
   ),
@@ -1554,43 +1427,10 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "fdoor",
-    "fdoorc",
-    "hindep",
-    "housem",
-    "houstyp",
-    "lrooms",
-    "momonth",
-    "moved",
-    "moyear",
-    "nrooms",
-    "nroomsc",
-    "rfdoor",
-    "satis",
-    "spec01",
-    "spec02",
-    "spec03",
-    "spec04",
-    "spec05",
-    "spec06",
-    "spec07",
-    "spec08",
-    "spec09",
-    "spec10",
-    "spec11",
-    "spec12",
-    "spec13",
-    "spec14",
-    "spec15",
-    "spec16",
-    "spec17",
-    "specadj"
-  )],
+    standardized_value_labels,
     fdoor = .replace_labels(
     standardized_value_labels$fdoor,
     `-5` = "na, see C/D/E/F/GHINDEP",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GMOVED",
     `-1` = "na, asked"
   ),
@@ -1813,43 +1653,10 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "fdoor",
-    "fdoorc",
-    "hindep",
-    "housem",
-    "houstyp",
-    "lrooms",
-    "momonth",
-    "moved",
-    "moyear",
-    "nrooms",
-    "nroomsc",
-    "rfdoor",
-    "satis",
-    "spec01",
-    "spec02",
-    "spec03",
-    "spec04",
-    "spec05",
-    "spec06",
-    "spec07",
-    "spec08",
-    "spec09",
-    "spec10",
-    "spec11",
-    "spec12",
-    "spec13",
-    "spec14",
-    "spec15",
-    "spec16",
-    "spec17",
-    "specadj"
-  )],
+    standardized_value_labels,
     fdoor = .replace_labels(
     standardized_value_labels$fdoor,
     `-5` = "na, see C/D/E/F/GHINDEP",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GMOVED",
     `-1` = "na, asked"
   ),
@@ -2073,41 +1880,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "fdoor",
-    "hindep",
-    "houstyp",
-    "lrooms",
-    "momonth",
-    "moyear",
-    "nrooms",
-    "ospec1",
-    "ospec2",
-    "ospec3",
-    "ospec4",
-    "ospec5",
-    "ospec6",
-    "rfdoor",
-    "satis",
-    "spec01",
-    "spec02",
-    "spec03",
-    "spec04",
-    "spec05",
-    "spec06",
-    "spec07",
-    "spec08",
-    "spec09",
-    "spec10",
-    "spec11",
-    "spec12",
-    "spec13",
-    "spec14",
-    "spec15",
-    "spec16",
-    "spec17",
-    "specadj"
-  )],
+    standardized_value_labels,
     fdoor = c(`-3` = "wrong skip", `-2` = "na, see BHINDEP", `-1` = "na, asked"),
     hindep = c(
     `-2` = "na, interview terminated",
@@ -2319,43 +2092,10 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "fdoor",
-    "fdoorc",
-    "hindep",
-    "housem",
-    "houstyp",
-    "lrooms",
-    "momonth",
-    "moved",
-    "moyear",
-    "nrooms",
-    "nroomsc",
-    "rfdoor",
-    "satis",
-    "spec01",
-    "spec02",
-    "spec03",
-    "spec04",
-    "spec05",
-    "spec06",
-    "spec07",
-    "spec08",
-    "spec09",
-    "spec10",
-    "spec11",
-    "spec12",
-    "spec13",
-    "spec14",
-    "spec15",
-    "spec16",
-    "spec17",
-    "specadj"
-  )],
+    standardized_value_labels,
     fdoor = .replace_labels(
     standardized_value_labels$fdoor,
     `-5` = "na, see C/D/E/F/GHINDEP",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GMOVED",
     `-1` = "na, asked"
   ),
@@ -2422,10 +2162,6 @@ value_labels_list <- list(
     `2` = "yes"
   ),
     momonth = c(`-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/GMOVED", `-1` = "na, asked"),
-    moved = .replace_labels(
-    standardized_value_labels$moved,
-    `-1` = "na, asked"
-  ),
     moyear = c(`-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/GMOVED", `-1` = "na, asked"),
     nrooms = c(
     `-5` = "na, see C/D/E/F/GHINDEP",
@@ -2582,43 +2318,10 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "fdoor",
-    "fdoorc",
-    "hindep",
-    "housem",
-    "houstyp",
-    "lrooms",
-    "momonth",
-    "moved",
-    "moyear",
-    "nrooms",
-    "nroomsc",
-    "rfdoor",
-    "satis",
-    "spec01",
-    "spec02",
-    "spec03",
-    "spec04",
-    "spec05",
-    "spec06",
-    "spec07",
-    "spec08",
-    "spec09",
-    "spec10",
-    "spec11",
-    "spec12",
-    "spec13",
-    "spec14",
-    "spec15",
-    "spec16",
-    "spec17",
-    "specadj"
-  )],
+    standardized_value_labels,
     fdoor = .replace_labels(
     standardized_value_labels$fdoor,
     `-5` = "na, see C/D/E/F/GHINDEP",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GMOVED",
     `-1` = "na, asked"
   ),
@@ -2685,10 +2388,6 @@ value_labels_list <- list(
     `2` = "yes"
   ),
     momonth = c(`-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/GMOVED", `-1` = "na, asked"),
-    moved = .replace_labels(
-    standardized_value_labels$moved,
-    `-1` = "na, asked"
-  ),
     moyear = c(`-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/GMOVED", `-1` = "na, asked"),
     nrooms = c(
     `-5` = "na, see C/D/E/F/GHINDEP",
@@ -2845,30 +2544,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "hindep",
-    "housem",
-    "houstyp",
-    "hwhacc",
-    "lrooms",
-    "momonth",
-    "moved",
-    "moyear",
-    "nrooms",
-    "nroomsc",
-    "satis",
-    "spec1",
-    "spec2",
-    "spec3",
-    "spec4",
-    "spec5",
-    "spec6",
-    "spec7",
-    "spec8",
-    "spec9",
-    "specadj",
-    "specwho"
-  )],
+    standardized_value_labels,
     hindep = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see HMOVED",
@@ -2932,10 +2608,6 @@ value_labels_list <- list(
     `2` = "yes"
   ),
     momonth = c(`-3` = "na, wrong skip", `-2` = "na, see HMOVED", `-1` = "na, asked"),
-    moved = .replace_labels(
-    standardized_value_labels$moved,
-    `-1` = "na, asked"
-  ),
     moyear = c(`-3` = "na, wrong skip", `-2` = "na, see HMOVED", `-1` = "na, asked"),
     nrooms = c(
     `-5` = "na, see HHINDEP",
@@ -2953,61 +2625,43 @@ value_labels_list <- list(
   ),
     spec1 = .replace_labels(
     standardized_value_labels$spec1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see HSPECADJ"
   ),
     spec2 = .replace_labels(
     standardized_value_labels$spec2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see HSPECADJ"
   ),
     spec3 = .replace_labels(
     standardized_value_labels$spec3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see HSPECADJ"
   ),
     spec4 = .replace_labels(
     standardized_value_labels$spec4,
     `-5` = "na, see HHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see HSPECADJ"
   ),
     spec5 = .replace_labels(
     standardized_value_labels$spec5,
     `-5` = "na, see HHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see HSPECADJ"
   ),
     spec6 = .replace_labels(
     standardized_value_labels$spec6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see HSPECADJ"
   ),
     spec7 = .replace_labels(
     standardized_value_labels$spec7,
     `-5` = "na, see HHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see HSPECADJ"
   ),
     spec8 = .replace_labels(
     standardized_value_labels$spec8,
     `-5` = "na, see HHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see HSPECADJ"
   ),
     spec9 = .replace_labels(
     standardized_value_labels$spec9,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see HSPECADJ"
   ),
     specadj = c(`-3` = "na, wrong skip", `-2` = "na, see HMOVED", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     specwho = c(
@@ -3020,25 +2674,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "hindep",
-    "houstyp",
-    "hwhacc",
-    "momonth",
-    "moyear",
-    "satis",
-    "spec1",
-    "spec2",
-    "spec3",
-    "spec4",
-    "spec5",
-    "spec6",
-    "spec7",
-    "spec8",
-    "spec9",
-    "specadj",
-    "specwho"
-  )],
+    standardized_value_labels,
     hindep = c(
     `-3` = "na, wrong skip",
     `-1` = "na, asked",
@@ -3072,9 +2708,7 @@ value_labels_list <- list(
     hwhacc = .replace_labels(
     standardized_value_labels$hwhacc,
     `-5` = "na, see BHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BHINDEP",
-    `-1` = "na, asked"
+    `-2` = "na, see BHINDEP"
   ),
     momonth = c(`-3` = "na, wrong skip", `-2` = "na, see BHINDEP", `-1` = "na, asked"),
     moyear = c(`-3` = "na, wrong skip", `-2` = "na, see BHINDEP", `-1` = "na, asked"),
@@ -3087,41 +2721,29 @@ value_labels_list <- list(
   ),
     spec1 = .replace_labels(
     standardized_value_labels$spec1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see BSPECADJ"
   ),
     spec2 = .replace_labels(
     standardized_value_labels$spec2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see BSPECADJ"
   ),
     spec3 = .replace_labels(
     standardized_value_labels$spec3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see BSPECADJ"
   ),
     spec4 = .replace_labels(
     standardized_value_labels$spec4,
     `-5` = "na, see BHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see BSPECADJ"
   ),
     spec5 = .replace_labels(
     standardized_value_labels$spec5,
     `-5` = "na, see BHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see BSPECADJ"
   ),
     spec6 = .replace_labels(
     standardized_value_labels$spec6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see BSPECADJ"
   ),
     spec7 = c(
     `-3` = "na, wrong skip",
@@ -3133,15 +2755,11 @@ value_labels_list <- list(
     spec8 = .replace_labels(
     standardized_value_labels$spec8,
     `-5` = "na, see BHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see BSPECADJ"
   ),
     spec9 = .replace_labels(
     standardized_value_labels$spec9,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see BSPECADJ"
   ),
     specadj = c(
     `-3` = "na, wrong skip",
@@ -3152,13 +2770,11 @@ value_labels_list <- list(
   ),
     specwho = .replace_labels(
     standardized_value_labels$specwho,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see BSPECADJ"
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c("hindep")],
+    standardized_value_labels,
     hindep = c(
     `-3` = "na, wrong skip",
     `-1` = "na, asked",
@@ -3172,29 +2788,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "hindep",
-    "housem",
-    "houstyp",
-    "hwhacc",
-    "lrooms",
-    "momonth",
-    "moved",
-    "moyear",
-    "nrooms",
-    "satis",
-    "spec1",
-    "spec2",
-    "spec3",
-    "spec4",
-    "spec5",
-    "spec6",
-    "spec7",
-    "spec8",
-    "spec9",
-    "specadj",
-    "specwho"
-  )],
+    standardized_value_labels,
     hindep = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see I/J/KMOVED",
@@ -3247,9 +2841,7 @@ value_labels_list <- list(
     hwhacc = .replace_labels(
     standardized_value_labels$hwhacc,
     `-5` = "na, see I/J/KHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KMOVED",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KMOVED"
   ),
     lrooms = c(
     `-5` = "na, see IHINDEP",
@@ -3260,10 +2852,6 @@ value_labels_list <- list(
     `2` = "yes"
   ),
     momonth = c(`-3` = "na, wrong skip", `-2` = "na, see I/J/KMOVED", `-1` = "na, asked"),
-    moved = .replace_labels(
-    standardized_value_labels$moved,
-    `-1` = "na, asked"
-  ),
     moyear = c(`-3` = "na, wrong skip", `-2` = "na, see I/J/KMOVED", `-1` = "na, asked"),
     nrooms = c(
     `-5` = "na, see IHINDEP",
@@ -3281,41 +2869,29 @@ value_labels_list <- list(
   ),
     spec1 = .replace_labels(
     standardized_value_labels$spec1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec2 = .replace_labels(
     standardized_value_labels$spec2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec3 = .replace_labels(
     standardized_value_labels$spec3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec4 = .replace_labels(
     standardized_value_labels$spec4,
     `-5` = "na, see I/J/KHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec5 = .replace_labels(
     standardized_value_labels$spec5,
     `-5` = "na, see I/J/KHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec6 = .replace_labels(
     standardized_value_labels$spec6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec7 = c(
     `-3` = "na, wrong skip",
@@ -3327,15 +2903,11 @@ value_labels_list <- list(
     spec8 = .replace_labels(
     standardized_value_labels$spec8,
     `-5` = "na, see I/J/KHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec9 = .replace_labels(
     standardized_value_labels$spec9,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/JSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/JSPECADJ"
   ),
     specadj = c(
     `-3` = "na, wrong skip",
@@ -3346,33 +2918,11 @@ value_labels_list <- list(
   ),
     specwho = .replace_labels(
     standardized_value_labels$specwho,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "hindep",
-    "housem",
-    "houstyp",
-    "hwhacc",
-    "momonth",
-    "moved",
-    "moyear",
-    "satis",
-    "spec1",
-    "spec2",
-    "spec3",
-    "spec4",
-    "spec5",
-    "spec6",
-    "spec7",
-    "spec8",
-    "spec9",
-    "specadj",
-    "specwho"
-  )],
+    standardized_value_labels,
     hindep = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see I/J/KMOVED",
@@ -3425,15 +2975,9 @@ value_labels_list <- list(
     hwhacc = .replace_labels(
     standardized_value_labels$hwhacc,
     `-5` = "na, see I/J/KHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KMOVED",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KMOVED"
   ),
     momonth = c(`-3` = "na, wrong skip", `-2` = "na, see I/J/KMOVED", `-1` = "na, asked"),
-    moved = .replace_labels(
-    standardized_value_labels$moved,
-    `-1` = "na, asked"
-  ),
     moyear = c(`-3` = "na, wrong skip", `-2` = "na, see I/J/KMOVED", `-1` = "na, asked"),
     satis = c(
     `-3` = "na, wrong skip",
@@ -3445,41 +2989,29 @@ value_labels_list <- list(
   ),
     spec1 = .replace_labels(
     standardized_value_labels$spec1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec2 = .replace_labels(
     standardized_value_labels$spec2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec3 = .replace_labels(
     standardized_value_labels$spec3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec4 = .replace_labels(
     standardized_value_labels$spec4,
     `-5` = "na, see I/J/KHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec5 = .replace_labels(
     standardized_value_labels$spec5,
     `-5` = "na, see I/J/KHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec6 = .replace_labels(
     standardized_value_labels$spec6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec7 = c(
     `-3` = "na, wrong skip",
@@ -3491,15 +3023,11 @@ value_labels_list <- list(
     spec8 = .replace_labels(
     standardized_value_labels$spec8,
     `-5` = "na, see I/J/KHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec9 = .replace_labels(
     standardized_value_labels$spec9,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/JSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/JSPECADJ"
   ),
     specadj = c(
     `-3` = "na, wrong skip",
@@ -3510,34 +3038,11 @@ value_labels_list <- list(
   ),
     specwho = .replace_labels(
     standardized_value_labels$specwho,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "hindep",
-    "housem",
-    "houstyp",
-    "hwhacc",
-    "momonth",
-    "moved",
-    "moyear",
-    "satis",
-    "spec1",
-    "spec10",
-    "spec2",
-    "spec3",
-    "spec4",
-    "spec5",
-    "spec6",
-    "spec7",
-    "spec8",
-    "spec9",
-    "specadj",
-    "specwho"
-  )],
+    standardized_value_labels,
     hindep = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see I/J/KMOVED",
@@ -3590,15 +3095,9 @@ value_labels_list <- list(
     hwhacc = .replace_labels(
     standardized_value_labels$hwhacc,
     `-5` = "na, see I/J/KHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KMOVED",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KMOVED"
   ),
     momonth = c(`-3` = "na, wrong skip", `-2` = "na, see I/J/KMOVED", `-1` = "na, asked"),
-    moved = .replace_labels(
-    standardized_value_labels$moved,
-    `-1` = "na, asked"
-  ),
     moyear = c(`-3` = "na, wrong skip", `-2` = "na, see I/J/KMOVED", `-1` = "na, asked"),
     satis = c(
     `-3` = "na, wrong skip",
@@ -3610,9 +3109,7 @@ value_labels_list <- list(
   ),
     spec1 = .replace_labels(
     standardized_value_labels$spec1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec10 = c(
     `-3` = "na, wrong skip",
@@ -3623,35 +3120,25 @@ value_labels_list <- list(
   ),
     spec2 = .replace_labels(
     standardized_value_labels$spec2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec3 = .replace_labels(
     standardized_value_labels$spec3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec4 = .replace_labels(
     standardized_value_labels$spec4,
     `-5` = "na, see I/J/KHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec5 = .replace_labels(
     standardized_value_labels$spec5,
     `-5` = "na, see I/J/KHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec6 = .replace_labels(
     standardized_value_labels$spec6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec7 = c(
     `-3` = "na, wrong skip",
@@ -3663,15 +3150,11 @@ value_labels_list <- list(
     spec8 = .replace_labels(
     standardized_value_labels$spec8,
     `-5` = "na, see I/J/KHINDEP",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   ),
     spec9 = .replace_labels(
     standardized_value_labels$spec9,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see KSPECADJ"
   ),
     specadj = c(
     `-3` = "na, wrong skip",
@@ -3682,9 +3165,7 @@ value_labels_list <- list(
   ),
     specwho = .replace_labels(
     standardized_value_labels$specwho,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see I/J/KSPECADJ",
-    `-1` = "na, asked"
+    `-2` = "na, see I/J/KSPECADJ"
   )
   ),
   Harmonized_labels = standardized_value_labels
@@ -3750,9 +3231,12 @@ var_types_vec <- c(
   specwho = "categorical"
 )
 
-.lasa_fc_014 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "014", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "014", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "014", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "014", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_014 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

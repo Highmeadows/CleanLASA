@@ -18,61 +18,82 @@ harmonized_labels <- c(
   ndays = "Day of interviewing"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "evmem01",
+    "evmem02",
+    "evmem03",
+    "evmem04",
+    "evmem05",
+    "evmem06",
+    "evmem07",
+    "evmem08",
+    "ndays"
+  ),
+  `F` = c(
+    "evmem08"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
     harmonized_labels,
     ndays = "day of interviewing"
   ),
-  Wave_F_labels = harmonized_labels[c("evmem08")],
+  Wave_F_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
 standardized_value_labels <- list(
   evmem01 = c(
     `-5` = "not available, various reasons",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `0` = "wrong",
     `1` = "right corrected",
     `2` = "right"
   ),
   evmem02 = c(
     `-5` = "not available, various reasons",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `0` = "wrong",
     `1` = "right (partial)",
     `2` = "right"
   ),
   evmem03 = c(
     `-5` = "not available, various reasons",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `0` = "wrong",
     `1` = "partially right",
     `2` = "right"
   ),
   evmem04 = c(
     `-5` = "not available, various reasons",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "not asked",
     `2` = "asked",
     `3` = "cannot remember"
   ),
   evmem05 = c(
     `-5` = "not available, various reasons",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "not asked",
     `2` = "asked",
     `3` = "cannot remember"
   ),
   evmem06 = c(
     `-5` = "not available, various reasons",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "not asked",
     `2` = "asked",
     `3` = "cannot remember"
   ),
   evmem07 = c(
     `-5` = "not available, various reasons",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "not asked",
     `2` = "asked",
     `3` = "cannot remember"
@@ -98,38 +119,31 @@ value_labels_list <- list(
     standardized_value_labels,
     evmem01 = .replace_labels(
     standardized_value_labels$evmem01,
-    `-5` = "na, various reasons",
-    `-1` = "na, asked"
+    `-5` = "na, various reasons"
   ),
     evmem02 = .replace_labels(
     standardized_value_labels$evmem02,
-    `-5` = "na, various reasons",
-    `-1` = "na, asked"
+    `-5` = "na, various reasons"
   ),
     evmem03 = .replace_labels(
     standardized_value_labels$evmem03,
-    `-5` = "na, various reasons",
-    `-1` = "na, asked"
+    `-5` = "na, various reasons"
   ),
     evmem04 = .replace_labels(
     standardized_value_labels$evmem04,
-    `-5` = "na, various reasons",
-    `-1` = "na, asked"
+    `-5` = "na, various reasons"
   ),
     evmem05 = .replace_labels(
     standardized_value_labels$evmem05,
-    `-5` = "na, various reasons",
-    `-1` = "na, asked"
+    `-5` = "na, various reasons"
   ),
     evmem06 = .replace_labels(
     standardized_value_labels$evmem06,
-    `-5` = "na, various reasons",
-    `-1` = "na, asked"
+    `-5` = "na, various reasons"
   ),
     evmem07 = .replace_labels(
     standardized_value_labels$evmem07,
-    `-5` = "na, various reasons",
-    `-1` = "na, asked"
+    `-5` = "na, various reasons"
   ),
     evmem08 = c(
     `-5` = "na, various reasons",
@@ -144,7 +158,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("evmem08")],
+    standardized_value_labels,
     evmem08 = c(
     `-3` = "na, interview terminated",
     `-1` = "no observation",
@@ -168,10 +182,13 @@ var_types_vec <- c(
   ndays = "categorical"
 )
 
-.lasa_fc_023 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "023", waves = .lasa_wave_rows()) |>
     .override_label(wave = "B", variable = "ndays", override_value = "ndays"),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "023", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "023", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "023", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_023 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

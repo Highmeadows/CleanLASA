@@ -19,91 +19,81 @@ harmonized_labels <- c(
   maarc9 = "AARC: I have more freedom to live my days the way I want"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `K` = c(
+    "maarc1",
+    "maarc10",
+    "maarc2",
+    "maarc3",
+    "maarc4",
+    "maarc5",
+    "maarc6",
+    "maarc7",
+    "maarc8",
+    "maarc9"
+  )
+)
+
 variable_labels_list <- list(
   Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "not at all",
+  `2` = "a little",
+  `3` = "moderately",
+  `4` = "quite a bit",
+  `5` = "very much"
+)
+
 standardized_value_labels <- list(
   maarc1 = c(
-    `-1` = "na, asked",
-    `1` = "not at all",
-    `2` = "a little",
-    `3` = "moderately",
-    `4` = "quite a bit",
-    `5` = "very much"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   maarc10 = c(
-    `-1` = "na, asked",
-    `1` = "not at all",
-    `2` = "a little",
-    `3` = "moderately",
-    `4` = "quite a bit",
-    `5` = "very much"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   maarc2 = c(
-    `-1` = "na, asked",
-    `1` = "not at all",
-    `2` = "a little",
-    `3` = "moderately",
-    `4` = "quite a bit",
-    `5` = "very much"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   maarc3 = c(
-    `-1` = "na, asked",
-    `1` = "not at all",
-    `2` = "a little",
-    `3` = "moderately",
-    `4` = "quite a bit",
-    `5` = "very much"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   maarc4 = c(
-    `-1` = "na, asked",
-    `1` = "not at all",
-    `2` = "a little",
-    `3` = "moderately",
-    `4` = "quite a bit",
-    `5` = "very much"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   maarc5 = c(
-    `-1` = "na, asked",
-    `1` = "not at all",
-    `2` = "a little",
-    `3` = "moderately",
-    `4` = "quite a bit",
-    `5` = "very much"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   maarc6 = c(
-    `-1` = "na, asked",
-    `1` = "not at all",
-    `2` = "a little",
-    `3` = "moderately",
-    `4` = "quite a bit",
-    `5` = "very much"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   maarc7 = c(
-    `-1` = "na, asked",
-    `1` = "not at all",
-    `2` = "a little",
-    `3` = "moderately",
-    `4` = "quite a bit",
-    `5` = "very much"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   maarc8 = c(
-    `-1` = "na, asked",
-    `1` = "not at all",
-    `2` = "a little",
-    `3` = "moderately",
-    `4` = "quite a bit",
-    `5` = "very much"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   maarc9 = c(
-    `-1` = "na, asked",
-    `1` = "not at all",
-    `2` = "a little",
-    `3` = "moderately",
-    `4` = "quite a bit",
-    `5` = "very much"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   )
 )
 
@@ -125,9 +115,12 @@ var_types_vec <- c(
   maarc9 = "categorical"
 )
 
-.lasa_fc_197 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "197", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "197", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "197", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "197", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_197 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

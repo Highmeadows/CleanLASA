@@ -14,6 +14,34 @@ harmonized_labels <- c(
   trjobstoy = "stopped working: year"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `I` = c(
+    "trjob1",
+    "trjob6",
+    "trjobl1",
+    "trjobstom",
+    "trjobstoy"
+  ),
+  `J` = c(
+    "trjob1",
+    "trjob6",
+    "trjobl1",
+    "trjobstom",
+    "trjobstoy"
+  ),
+  `K` = c(
+    "trjob1",
+    "trjob6",
+    "trjobl1",
+    "trjobstom",
+    "trjobstoy"
+  )
+)
+
 variable_labels_list <- list(
   Wave_I_labels = harmonized_labels,
   Wave_J_labels = harmonized_labels,
@@ -22,12 +50,26 @@ variable_labels_list <- list(
 )
 
 standardized_value_labels <- list(
-  trjob1 = c(`-2` = "na, outside birth-year eligibility", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  trjob6 = c(`-3` = "does not know", `-2` = "na, see TRJOB1", `-1` = "na, asked"),
-  trjobl1 = c(`-2` = "na, see TRJOB1", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  trjob1 = c(
+    `-2` = "na, outside birth-year eligibility",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  trjob6 = c(
+    `-3` = "does not know",
+    `-2` = "na, see TRJOB1",
+    default_missing_labels[c("-1")]
+  ),
+  trjobl1 = c(
+    `-2` = "na, see TRJOB1",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   trjobstom = c(
     `-2` = "na, see TRJOBL1",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -41,7 +83,10 @@ standardized_value_labels <- list(
     `11` = "November",
     `12` = "December"
   ),
-  trjobstoy = c(`-2` = "na, see TRJOBL1", `-1` = "na, asked")
+  trjobstoy = c(
+    `-2` = "na, see TRJOBL1",
+    default_missing_labels[c("-1")]
+  )
 )
 
 value_labels_list <- list(
@@ -113,9 +158,12 @@ var_types_vec <- c(
   trjobstoy = "date"
 )
 
-.lasa_fc_713 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "713", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "713", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "713", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "713", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_713 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -124,9 +124,12 @@ harmonized_labels <- c(
   trsuffic = "Respondent gets sufficient help"
 )
 
-variable_labels_list <- list(
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
     "tradl1a",
     "tradl2a",
     "tradl3a",
@@ -167,59 +170,8 @@ variable_labels_list <- list(
     "trpsyc",
     "trpsyh",
     "trstic1"
-  )],
-    `trflwd#6` = "functional limitations, with difficulty #6",
-    trflwdiff = "functional limitations, with difficulty #3"
   ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
-    "tradl1a",
-    "tradl2a",
-    "tradl3a",
-    "tradl4a",
-    "tradl5a",
-    "tradl6a",
-    "trflwd#6",
-    "trflwdiff",
-    "trheal1",
-    "trhed01",
-    "trhed02",
-    "trhed03",
-    "trhed04",
-    "trhed05",
-    "trhed06",
-    "trhed07",
-    "trhed08",
-    "trhed09",
-    "trhed10",
-    "trhed11",
-    "trhed12",
-    "trhedyn",
-    "trhep01",
-    "trhep02",
-    "trhep03",
-    "trhep04",
-    "trhep05",
-    "trhep06",
-    "trhep07",
-    "trhep08",
-    "trhep09",
-    "trhep10",
-    "trhep11",
-    "trhep12",
-    "trhepyn",
-    "trhosp",
-    "trmeds",
-    "trpha1",
-    "trpsyc",
-    "trpsyh",
-    "trstic1"
-  )],
-    `trflwd#6` = "functional limitations, with difficulty #6",
-    trflwdiff = "functional limitations, with difficulty #3"
-  ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
+  `D` = c(
     "tradl1a",
     "tradl2a",
     "tradl3a",
@@ -261,12 +213,8 @@ variable_labels_list <- list(
     "trpsyc",
     "trpsyh",
     "trstic1"
-  )],
-    `trflwd#6` = "functional limitations, with difficulty #6",
-    trflwdiff = "functional limitations, with difficulty #3"
   ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
+  `E` = c(
     "tradl1a",
     "tradl2a",
     "tradl3a",
@@ -308,12 +256,8 @@ variable_labels_list <- list(
     "trpsyc",
     "trpsyh",
     "trstic1"
-  )],
-    `trflwd#6` = "functional limitations, with difficulty #6",
-    trflwdiff = "functional limitations, with difficulty #3"
   ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
+  `F` = c(
     "tradl1a",
     "tradl2a",
     "tradl3a",
@@ -355,12 +299,51 @@ variable_labels_list <- list(
     "trpsyc",
     "trpsyh",
     "trstic1"
-  )],
-    `trflwd#6` = "functional limitations, with difficulty #6",
-    trflwdiff = "functional limitations, with difficulty #3"
   ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+  `G` = c(
+    "tradl1a",
+    "tradl2a",
+    "tradl3a",
+    "tradl4a",
+    "tradl5a",
+    "tradl6a",
+    "trflwd#6",
+    "trflwdiff",
+    "trheal1",
+    "trhed01",
+    "trhed02",
+    "trhed03",
+    "trhed04",
+    "trhed05",
+    "trhed06",
+    "trhed07",
+    "trhed08",
+    "trhed09",
+    "trhed10",
+    "trhed11",
+    "trhed12",
+    "trhedyn",
+    "trhep01",
+    "trhep02",
+    "trhep03",
+    "trhep04",
+    "trhep05",
+    "trhep06",
+    "trhep07",
+    "trhep08",
+    "trhep09",
+    "trhep10",
+    "trhep11",
+    "trhep12",
+    "trhepyn",
+    "trhosp",
+    "trmeds",
+    "trpha1",
+    "trpsyc",
+    "trpsyh",
+    "trstic1"
+  ),
+  `H` = c(
     "tradl1a",
     "tradl2a",
     "tradl3a",
@@ -441,12 +424,8 @@ variable_labels_list <- list(
     "trpsyc",
     "trpsyh",
     "trstic1"
-  )],
-    `trflwd#6` = "functional limitations, with difficulty #6",
-    trflwdiff = "functional limitations, with difficulty #3"
   ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
+  `I` = c(
     "tradl1a",
     "tradl2a",
     "tradl3a",
@@ -527,12 +506,8 @@ variable_labels_list <- list(
     "trpsyc",
     "trpsyh",
     "trstic1"
-  )],
-    `trflwd#6` = "functional limitations, with difficulty #6",
-    trflwdiff = "functional limitations, with difficulty #3"
   ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
+  `J` = c(
     "tradl1a",
     "tradl2a",
     "tradl3a",
@@ -630,14 +605,8 @@ variable_labels_list <- list(
     "trpsyc",
     "trpsyh",
     "trstic1"
-  )],
-    `trflwd#6` = "functional limitations, with difficulty #6",
-    trflwdiff = "functional limitations, with difficulty #3",
-    trmeds = "Contacted medical specialist past 6 months",
-    trpsyc = "Contacted psychiatrist past 6 months"
   ),
-  Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
+  `K` = c(
     "tradl1a",
     "tradl2a",
     "tradl3a",
@@ -738,7 +707,54 @@ variable_labels_list <- list(
     "trpsyh",
     "trstic1",
     "trsuffic"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
+    `trflwd#6` = "functional limitations, with difficulty #6",
+    trflwdiff = "functional limitations, with difficulty #3"
+  ),
+  Wave_D_labels = .replace_labels(
+    harmonized_labels,
+    `trflwd#6` = "functional limitations, with difficulty #6",
+    trflwdiff = "functional limitations, with difficulty #3"
+  ),
+  Wave_E_labels = .replace_labels(
+    harmonized_labels,
+    `trflwd#6` = "functional limitations, with difficulty #6",
+    trflwdiff = "functional limitations, with difficulty #3"
+  ),
+  Wave_F_labels = .replace_labels(
+    harmonized_labels,
+    `trflwd#6` = "functional limitations, with difficulty #6",
+    trflwdiff = "functional limitations, with difficulty #3"
+  ),
+  Wave_G_labels = .replace_labels(
+    harmonized_labels,
+    `trflwd#6` = "functional limitations, with difficulty #6",
+    trflwdiff = "functional limitations, with difficulty #3"
+  ),
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
+    `trflwd#6` = "functional limitations, with difficulty #6",
+    trflwdiff = "functional limitations, with difficulty #3"
+  ),
+  Wave_I_labels = .replace_labels(
+    harmonized_labels,
+    `trflwd#6` = "functional limitations, with difficulty #6",
+    trflwdiff = "functional limitations, with difficulty #3"
+  ),
+  Wave_J_labels = .replace_labels(
+    harmonized_labels,
+    `trflwd#6` = "functional limitations, with difficulty #6",
+    trflwdiff = "functional limitations, with difficulty #3",
+    trmeds = "Contacted medical specialist past 6 months",
+    trpsyc = "Contacted psychiatrist past 6 months"
+  ),
+  Wave_K_labels = .replace_labels(
+    harmonized_labels,
     `trflwd#6` = "functional limitations, with difficulty #6",
     `trflwd#7` = "functional limitations, with difficulty #7",
     trflwdiff = "functional limitations, with difficulty #3",
@@ -746,6 +762,14 @@ variable_labels_list <- list(
     trpsyc = "Contacted psychiatrist past 6 months"
   ),
   Harmonized_labels = harmonized_labels
+)
+
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "mentioned",
+  `2` = "yes"
 )
 
 standardized_value_labels <- list(
@@ -812,7 +836,11 @@ standardized_value_labels <- list(
     `4` = "yes, with much difficulty",
     `5` = "only with help"
   ),
-  trerh = c(`-1` = "na, asked / does not know", `1` = "no", `2` = "yes"),
+  trerh = c(
+    `-1` = "na, asked / does not know",
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
   `trflwd#6` = c(
     `-2` = "na, see TRPHA1",
     `-1` = "no valid data",
@@ -844,26 +872,116 @@ standardized_value_labels <- list(
     `2` = "1 without difficulty",
     `3` = "all with difficulty"
   ),
-  trhea01 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea02 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea02a = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea02b = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea03 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea04 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea04a = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea04b = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea05 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea06 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea06a = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea06b = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea07 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea08 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea09 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea10 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea11 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhea12 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
+  trhea01 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea02 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea02a = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea02b = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea03 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea04 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea04a = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea04b = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea05 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea06 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea06a = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea06b = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea07 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea08 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea09 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea10 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea11 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhea12 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   trheal1 = c(
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes, severely",
     `3` = "yes, slightly",
@@ -871,102 +989,502 @@ standardized_value_labels <- list(
   ),
   trheal2 = c(
     `-2` = "na, see TRHEAL1",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "> 3 months",
     `2` = "< 3 months",
     `3` = "R does not know / refused to answer"
   ),
-  trheayn = c(`-1` = "asked, no answer", `1` = "no", `2` = "yes"),
-  trhed01 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed02 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed02a = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed02b = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed03 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed04 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed04a = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed04b = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed05 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed06 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed06a = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed06b = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed07 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed08 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed09 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed10 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed11 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhed12 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhedyn = c(`-1` = "asked, no answer", `1` = "no", `2` = "yes"),
-  trheg01 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg02 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg02a = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg02b = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg03 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg04 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg04a = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg04b = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg05 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg06 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg06a = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg06b = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg07 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg08 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg09 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg10 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg11 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trheg12 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhegyn = c(`-1` = "asked, no answer", `1` = "no", `2` = "yes"),
-  trhen01 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen02 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen02a = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen02b = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen03 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen04 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen04a = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen04b = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen05 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen06 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen06a = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen06b = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen07 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen08 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen09 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen10 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen11 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhen12 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhenyn = c(`-1` = "asked, no answer", `1` = "no", `2` = "yes"),
-  trhep01 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep02 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep02a = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep02b = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep03 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep04 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep04a = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep04b = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep05 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep06 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep06a = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep06b = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep07 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep08 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep09 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep10 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep11 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhep12 = c(`-2` = "no help", `-1` = "asked, no answer", `0` = "not mentioned", `1` = "mentioned"),
-  trhepyn = c(`-1` = "asked, no answer", `1` = "no", `2` = "yes"),
-  trhosp = c(`-1` = "not available after question asked", `1` = "no", `2` = "yes"),
-  trmeds = c(`-1` = "not available after question asked", `1` = "no", `2` = "yes"),
+  trheayn = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  trhed01 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed02 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed02a = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed02b = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed03 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed04 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed04a = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed04b = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed05 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed06 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed06a = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed06b = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed07 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed08 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed09 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed10 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed11 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhed12 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhedyn = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  trheg01 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg02 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg02a = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg02b = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg03 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg04 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg04a = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg04b = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg05 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg06 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg06a = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg06b = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg07 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg08 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg09 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg10 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg11 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trheg12 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhegyn = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  trhen01 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen02 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen02a = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen02b = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen03 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen04 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen04a = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen04b = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen05 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen06 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen06a = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen06b = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen07 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen08 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen09 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen10 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen11 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhen12 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhenyn = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  trhep01 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep02 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep02a = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep02b = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep03 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep04 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep04a = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep04b = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep05 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep06 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep06a = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep06b = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep07 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep08 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep09 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep10 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep11 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhep12 = c(
+    `-2` = "no help",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  trhepyn = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  trhosp = c(
+    `-1` = "not available after question asked",
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  trmeds = c(
+    `-1` = "not available after question asked",
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
   trpha1 = c(
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "respondent bedridden",
     `2` = "R in wheelchair",
     `3` = "R with walking aid",
     `4` = "not 1, 2 or 3"
   ),
-  trpsyc = c(`-1` = "not available after question asked", `1` = "no", `2` = "yes"),
-  trpsyh = c(`-1` = "not available after question asked", `1` = "no", `2` = "yes"),
-  trstic1 = c(`-1` = "not available after question asked", `1` = "no", `2` = "yes"),
+  trpsyc = c(
+    `-1` = "not available after question asked",
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  trpsyh = c(
+    `-1` = "not available after question asked",
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  trstic1 = c(
+    `-1` = "not available after question asked",
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
   trsuffic = c(
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "insufficient",
     `2` = "in between insufficient/sufficient",
     `3` = "sufficient"
@@ -975,48 +1493,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tradl1a",
-    "tradl2a",
-    "tradl3a",
-    "tradl4a",
-    "tradl5a",
-    "tradl6a",
-    "trflwd#6",
-    "trflwdiff",
-    "trhed01",
-    "trhed02",
-    "trhed03",
-    "trhed04",
-    "trhed05",
-    "trhed06",
-    "trhed07",
-    "trhed08",
-    "trhed09",
-    "trhed10",
-    "trhed11",
-    "trhed12",
-    "trhedyn",
-    "trhep01",
-    "trhep02",
-    "trhep03",
-    "trhep04",
-    "trhep05",
-    "trhep06",
-    "trhep07",
-    "trhep08",
-    "trhep09",
-    "trhep10",
-    "trhep11",
-    "trhep12",
-    "trhepyn",
-    "trhosp",
-    "trmeds",
-    "trpha1",
-    "trpsyc",
-    "trpsyh",
-    "trstic1"
-  )],
+    standardized_value_labels,
     tradl1a = c(
     `-1` = "asked, no answer",
     `1` = "no, R cannot",
@@ -1108,49 +1585,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tradl1a",
-    "tradl2a",
-    "tradl3a",
-    "tradl4a",
-    "tradl5a",
-    "tradl6a",
-    "trflwd#6",
-    "trflwdiff",
-    "trheal1",
-    "trhed01",
-    "trhed02",
-    "trhed03",
-    "trhed04",
-    "trhed05",
-    "trhed06",
-    "trhed07",
-    "trhed08",
-    "trhed09",
-    "trhed10",
-    "trhed11",
-    "trhed12",
-    "trhedyn",
-    "trhep01",
-    "trhep02",
-    "trhep03",
-    "trhep04",
-    "trhep05",
-    "trhep06",
-    "trhep07",
-    "trhep08",
-    "trhep09",
-    "trhep10",
-    "trhep11",
-    "trhep12",
-    "trhepyn",
-    "trhosp",
-    "trmeds",
-    "trpha1",
-    "trpsyc",
-    "trpsyh",
-    "trstic1"
-  )],
+    standardized_value_labels,
     tradl1a = c(
     `-1` = "asked, no answer",
     `1` = "no, R cannot",
@@ -1243,49 +1678,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tradl1a",
-    "tradl2a",
-    "tradl3a",
-    "tradl4a",
-    "tradl5a",
-    "tradl6a",
-    "trflwd#6",
-    "trflwdiff",
-    "trheal1",
-    "trhed01",
-    "trhed02",
-    "trhed03",
-    "trhed04",
-    "trhed05",
-    "trhed06",
-    "trhed07",
-    "trhed08",
-    "trhed09",
-    "trhed10",
-    "trhed11",
-    "trhed12",
-    "trhedyn",
-    "trhep01",
-    "trhep02",
-    "trhep03",
-    "trhep04",
-    "trhep05",
-    "trhep06",
-    "trhep07",
-    "trhep08",
-    "trhep09",
-    "trhep10",
-    "trhep11",
-    "trhep12",
-    "trhepyn",
-    "trhosp",
-    "trmeds",
-    "trpha1",
-    "trpsyc",
-    "trpsyh",
-    "trstic1"
-  )],
+    standardized_value_labels,
     tradl1a = c(
     `-1` = "asked, no answer",
     `1` = "no, R cannot",
@@ -1378,49 +1771,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tradl1a",
-    "tradl2a",
-    "tradl3a",
-    "tradl4a",
-    "tradl5a",
-    "tradl6a",
-    "trflwd#6",
-    "trflwdiff",
-    "trheal1",
-    "trhed01",
-    "trhed02",
-    "trhed03",
-    "trhed04",
-    "trhed05",
-    "trhed06",
-    "trhed07",
-    "trhed08",
-    "trhed09",
-    "trhed10",
-    "trhed11",
-    "trhed12",
-    "trhedyn",
-    "trhep01",
-    "trhep02",
-    "trhep03",
-    "trhep04",
-    "trhep05",
-    "trhep06",
-    "trhep07",
-    "trhep08",
-    "trhep09",
-    "trhep10",
-    "trhep11",
-    "trhep12",
-    "trhepyn",
-    "trhosp",
-    "trmeds",
-    "trpha1",
-    "trpsyc",
-    "trpsyh",
-    "trstic1"
-  )],
+    standardized_value_labels,
     tradl1a = c(
     `-1` = "asked, no answer",
     `1` = "no, R cannot",
@@ -1513,49 +1864,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tradl1a",
-    "tradl2a",
-    "tradl3a",
-    "tradl4a",
-    "tradl5a",
-    "tradl6a",
-    "trflwd#6",
-    "trflwdiff",
-    "trheal1",
-    "trhed01",
-    "trhed02",
-    "trhed03",
-    "trhed04",
-    "trhed05",
-    "trhed06",
-    "trhed07",
-    "trhed08",
-    "trhed09",
-    "trhed10",
-    "trhed11",
-    "trhed12",
-    "trhedyn",
-    "trhep01",
-    "trhep02",
-    "trhep03",
-    "trhep04",
-    "trhep05",
-    "trhep06",
-    "trhep07",
-    "trhep08",
-    "trhep09",
-    "trhep10",
-    "trhep11",
-    "trhep12",
-    "trhepyn",
-    "trhosp",
-    "trmeds",
-    "trpha1",
-    "trpsyc",
-    "trpsyh",
-    "trstic1"
-  )],
+    standardized_value_labels,
     tradl1a = c(
     `-1` = "asked, no answer",
     `1` = "no, R cannot",
@@ -1648,88 +1957,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tradl1a",
-    "tradl2a",
-    "tradl3a",
-    "tradl4a",
-    "tradl5a",
-    "tradl6a",
-    "trflwd#6",
-    "trflwdiff",
-    "trhea01",
-    "trhea02",
-    "trhea03",
-    "trhea04",
-    "trhea05",
-    "trhea06",
-    "trhea07",
-    "trhea08",
-    "trhea09",
-    "trhea10",
-    "trhea11",
-    "trhea12",
-    "trheal1",
-    "trheayn",
-    "trhed01",
-    "trhed02",
-    "trhed03",
-    "trhed04",
-    "trhed05",
-    "trhed06",
-    "trhed07",
-    "trhed08",
-    "trhed09",
-    "trhed10",
-    "trhed11",
-    "trhed12",
-    "trhedyn",
-    "trheg01",
-    "trheg02",
-    "trheg03",
-    "trheg04",
-    "trheg05",
-    "trheg06",
-    "trheg07",
-    "trheg08",
-    "trheg09",
-    "trheg10",
-    "trheg11",
-    "trheg12",
-    "trhegyn",
-    "trhen01",
-    "trhen02",
-    "trhen03",
-    "trhen04",
-    "trhen05",
-    "trhen06",
-    "trhen07",
-    "trhen08",
-    "trhen09",
-    "trhen10",
-    "trhen11",
-    "trhen12",
-    "trhenyn",
-    "trhep01",
-    "trhep02",
-    "trhep03",
-    "trhep04",
-    "trhep05",
-    "trhep06",
-    "trhep07",
-    "trhep08",
-    "trhep09",
-    "trhep10",
-    "trhep11",
-    "trhep12",
-    "trhepyn",
-    "trhosp",
-    "trmeds",
-    "trpha1",
-    "trpsyc",
-    "trpsyh",
-    "trstic1"
-  )],
+    standardized_value_labels,
     tradl1a = c(
     `-1` = "asked, no answer / does not know",
     `1` = "no, R cannot",
@@ -1818,88 +2046,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tradl1a",
-    "tradl2a",
-    "tradl3a",
-    "tradl4a",
-    "tradl5a",
-    "tradl6a",
-    "trflwd#6",
-    "trflwdiff",
-    "trhea01",
-    "trhea02",
-    "trhea03",
-    "trhea04",
-    "trhea05",
-    "trhea06",
-    "trhea07",
-    "trhea08",
-    "trhea09",
-    "trhea10",
-    "trhea11",
-    "trhea12",
-    "trheal1",
-    "trheayn",
-    "trhed01",
-    "trhed02",
-    "trhed03",
-    "trhed04",
-    "trhed05",
-    "trhed06",
-    "trhed07",
-    "trhed08",
-    "trhed09",
-    "trhed10",
-    "trhed11",
-    "trhed12",
-    "trhedyn",
-    "trheg01",
-    "trheg02",
-    "trheg03",
-    "trheg04",
-    "trheg05",
-    "trheg06",
-    "trheg07",
-    "trheg08",
-    "trheg09",
-    "trheg10",
-    "trheg11",
-    "trheg12",
-    "trhegyn",
-    "trhen01",
-    "trhen02",
-    "trhen03",
-    "trhen04",
-    "trhen05",
-    "trhen06",
-    "trhen07",
-    "trhen08",
-    "trhen09",
-    "trhen10",
-    "trhen11",
-    "trhen12",
-    "trhenyn",
-    "trhep01",
-    "trhep02",
-    "trhep03",
-    "trhep04",
-    "trhep05",
-    "trhep06",
-    "trhep07",
-    "trhep08",
-    "trhep09",
-    "trhep10",
-    "trhep11",
-    "trhep12",
-    "trhepyn",
-    "trhosp",
-    "trmeds",
-    "trpha1",
-    "trpsyc",
-    "trpsyh",
-    "trstic1"
-  )],
+    standardized_value_labels,
     tradl1a = c(
     `-1` = "asked, no answer / does not know",
     `1` = "no, R cannot",
@@ -1988,105 +2135,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tradl1a",
-    "tradl2a",
-    "tradl3a",
-    "tradl4a",
-    "tradl5a",
-    "tradl6a",
-    "trerh",
-    "trflwd#6",
-    "trflwdiff",
-    "trhea01",
-    "trhea02a",
-    "trhea02b",
-    "trhea03",
-    "trhea04a",
-    "trhea04b",
-    "trhea05",
-    "trhea06a",
-    "trhea06b",
-    "trhea07",
-    "trhea08",
-    "trhea09",
-    "trhea10",
-    "trhea11",
-    "trhea12",
-    "trheal1",
-    "trheal2",
-    "trheayn",
-    "trhed01",
-    "trhed02a",
-    "trhed02b",
-    "trhed03",
-    "trhed04a",
-    "trhed04b",
-    "trhed05",
-    "trhed06a",
-    "trhed06b",
-    "trhed07",
-    "trhed08",
-    "trhed09",
-    "trhed10",
-    "trhed11",
-    "trhed12",
-    "trhedyn",
-    "trheg01",
-    "trheg02a",
-    "trheg02b",
-    "trheg03",
-    "trheg04a",
-    "trheg04b",
-    "trheg05",
-    "trheg06a",
-    "trheg06b",
-    "trheg07",
-    "trheg08",
-    "trheg09",
-    "trheg10",
-    "trheg11",
-    "trheg12",
-    "trhegyn",
-    "trhen01",
-    "trhen02a",
-    "trhen02b",
-    "trhen03",
-    "trhen04a",
-    "trhen04b",
-    "trhen05",
-    "trhen06a",
-    "trhen06b",
-    "trhen07",
-    "trhen08",
-    "trhen09",
-    "trhen10",
-    "trhen11",
-    "trhen12",
-    "trhenyn",
-    "trhep01",
-    "trhep02a",
-    "trhep02b",
-    "trhep03",
-    "trhep04a",
-    "trhep04b",
-    "trhep05",
-    "trhep06a",
-    "trhep06b",
-    "trhep07",
-    "trhep08",
-    "trhep09",
-    "trhep10",
-    "trhep11",
-    "trhep12",
-    "trhepyn",
-    "trhosp",
-    "trmeds",
-    "trpha1",
-    "trpsyc",
-    "trpsyh",
-    "trstic1"
-  )],
+    standardized_value_labels,
     tradl1a = .replace_labels(
     standardized_value_labels$tradl1a,
     `-2` = "na, see JTRPHA1",
@@ -2151,108 +2200,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tradl1a",
-    "tradl2a",
-    "tradl3a",
-    "tradl4a",
-    "tradl5a",
-    "tradl6a",
-    "tradl7a",
-    "trerh",
-    "trflwd#6",
-    "trflwd#7",
-    "trflwdiff",
-    "trhea01",
-    "trhea02a",
-    "trhea02b",
-    "trhea03",
-    "trhea04a",
-    "trhea04b",
-    "trhea05",
-    "trhea06a",
-    "trhea06b",
-    "trhea07",
-    "trhea08",
-    "trhea09",
-    "trhea10",
-    "trhea11",
-    "trhea12",
-    "trheal1",
-    "trheal2",
-    "trheayn",
-    "trhed01",
-    "trhed02a",
-    "trhed02b",
-    "trhed03",
-    "trhed04a",
-    "trhed04b",
-    "trhed05",
-    "trhed06a",
-    "trhed06b",
-    "trhed07",
-    "trhed08",
-    "trhed09",
-    "trhed10",
-    "trhed11",
-    "trhed12",
-    "trhedyn",
-    "trheg01",
-    "trheg02a",
-    "trheg02b",
-    "trheg03",
-    "trheg04a",
-    "trheg04b",
-    "trheg05",
-    "trheg06a",
-    "trheg06b",
-    "trheg07",
-    "trheg08",
-    "trheg09",
-    "trheg10",
-    "trheg11",
-    "trheg12",
-    "trhegyn",
-    "trhen01",
-    "trhen02a",
-    "trhen02b",
-    "trhen03",
-    "trhen04a",
-    "trhen04b",
-    "trhen05",
-    "trhen06a",
-    "trhen06b",
-    "trhen07",
-    "trhen08",
-    "trhen09",
-    "trhen10",
-    "trhen11",
-    "trhen12",
-    "trhenyn",
-    "trhep01",
-    "trhep02a",
-    "trhep02b",
-    "trhep03",
-    "trhep04a",
-    "trhep04b",
-    "trhep05",
-    "trhep06a",
-    "trhep06b",
-    "trhep07",
-    "trhep08",
-    "trhep09",
-    "trhep10",
-    "trhep11",
-    "trhep12",
-    "trhepyn",
-    "trhosp",
-    "trmeds",
-    "trpha1",
-    "trpsyc",
-    "trpsyh",
-    "trstic1",
-    "trsuffic"
-  )],
+    standardized_value_labels,
     tradl1a = .replace_labels(
     standardized_value_labels$tradl1a,
     `-2` = "na, see KTRPHA1",
@@ -2446,9 +2394,12 @@ var_types_vec <- c(
   trsuffic = "categorical"
 )
 
-.lasa_fc_703 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "703", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "703", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "703", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "703", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_703 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

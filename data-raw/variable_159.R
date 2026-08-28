@@ -17,16 +17,38 @@ harmonized_labels <- c(
   mdecu08 = "Decubitus: past year how often"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "mdecu01",
+    "mdecu02",
+    "mdecu03",
+    "mdecu04",
+    "mdecu05",
+    "mdecu06",
+    "mdecu07",
+    "mdecu08"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
 standardized_value_labels <- list(
-  mdecu01 = c(`-3` = "no valid data", `-1` = "no answer, asked", `1` = "no", `2` = "yes"),
+  mdecu01 = c(
+    `-3` = "no valid data",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   mdecu02 = c(
     `-3` = "no valid data",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not reported",
     `1` = "heel",
     `2` = "ankle",
@@ -36,7 +58,7 @@ standardized_value_labels <- list(
   ),
   mdecu03 = c(
     `-3` = "no valid data",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not reported",
     `1` = "heel",
     `2` = "ankle",
@@ -48,23 +70,27 @@ standardized_value_labels <- list(
   mdecu05 = c(
     `-3` = "no valid data",
     `-2` = "in nursing home",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not reported",
     `1` = "oneself"
   ),
   mdecu06 = c(
     `-3` = "no valid data",
     `-2` = "living at home",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not reported",
     `4` = "nurse",
     `7` = "other: elderly care"
   ),
-  mdecu07 = c(`-3` = "no valid data", `-1` = "no answer, asked", `1` = "no", `2` = "yes"),
+  mdecu07 = c(
+    `-3` = "no valid data",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   mdecu08 = c(
     `-3` = "no valid data",
-    `-2` = "no answer, routing",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "1 time"
   )
 )
@@ -85,9 +111,12 @@ var_types_vec <- c(
   mdecu08 = "numeric"
 )
 
-.lasa_fc_159 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "159", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "159", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "159", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "159", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_159 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

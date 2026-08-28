@@ -8,6 +8,21 @@
 
 harmonized_labels <- c(oah = "Symptomatic hip osteoarthritis", oak = "Symptomatic knee osteoarthritis")
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `3B` = c(
+    "oah",
+    "oak"
+  ),
+  `I` = c(
+    "oah",
+    "oak"
+  )
+)
+
 variable_labels_list <- list(
   Wave_3B_labels = .replace_labels(
     harmonized_labels,
@@ -53,7 +68,7 @@ value_labels_list <- list(
 
 var_types_vec <- c(oah = "categorical", oak = "categorical")
 
-.lasa_fc_zoa3 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "zoa3", waves = .lasa_wave_rows()) |>
     .override_label(wave = "3B", variable = "oah", override_value = "b3oah") |>
     .override_label(wave = "3B", variable = "oak", override_value = "b3oak"),
@@ -61,3 +76,6 @@ var_types_vec <- c(oah = "categorical", oak = "categorical")
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "zoa3", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "zoa3", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_zoa3 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

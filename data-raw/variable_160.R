@@ -59,9 +59,12 @@ harmonized_labels <- c(
   mwmax = "Weight: maximum in lifetime"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "mheight40y",
     "mweightage",
     "mweightch",
@@ -72,10 +75,8 @@ variable_labels_list <- list(
     "mweighthigh",
     "mweightk40y",
     "mweightlr"
-  )],
-    mweightch = "Weight: change"
   ),
-  Wave_C_labels = harmonized_labels[c(
+  `C` = c(
     "mheight25y",
     "mweightch",
     "mweightchkg",
@@ -84,11 +85,24 @@ variable_labels_list <- list(
     "mweightgr",
     "mweightlow",
     "mweightlr"
-  )],
-  Wave_D_labels = harmonized_labels[c("mweightch", "mweightchkg", "mweightchr", "mweightchrc", "mweightgr", "mweightlr")],
-  Wave_E_labels = harmonized_labels[c("mweightch", "mweightchkg", "mweightchr", "mweightchrc", "mweightgr", "mweightlr")],
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
+  ),
+  `D` = c(
+    "mweightch",
+    "mweightchkg",
+    "mweightchr",
+    "mweightchrc",
+    "mweightgr",
+    "mweightlr"
+  ),
+  `E` = c(
+    "mweightch",
+    "mweightchkg",
+    "mweightchr",
+    "mweightchrc",
+    "mweightgr",
+    "mweightlr"
+  ),
+  `2B` = c(
     "magewmx",
     "mhage25",
     "mwage25",
@@ -100,13 +114,8 @@ variable_labels_list <- list(
     "mweightgr",
     "mweightlr",
     "mwmax"
-  )],
-    mhage25 = "Height: height at age 25",
-    mwage25 = "Weight: weight at age 25",
-    mwage40 = "Weight: weight at age 40"
   ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
+  `F` = c(
     "mattw",
     "mestw",
     "mlwm01",
@@ -131,12 +140,8 @@ variable_labels_list <- list(
     "mweightchrc",
     "mweightgr",
     "mweightlr"
-  )],
-    msatw = "Satisfied with body weight",
-    mweightchkg = "Weight: change kilogram"
   ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
+  `G` = c(
     "mattw",
     "mestw",
     "mlwm01",
@@ -161,12 +166,8 @@ variable_labels_list <- list(
     "mweightchrc",
     "mweightgr",
     "mweightlr"
-  )],
-    msatw = "Satisfied with body weight",
-    mweightchkg = "Weight: change kilogram"
   ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+  `H` = c(
     "mapp6m",
     "mapp7d",
     "mattw",
@@ -182,15 +183,8 @@ variable_labels_list <- list(
     "mweightgr2",
     "mweightlr",
     "mweightlr2"
-  )],
-    mprob6m = "psychological stress or severe sickness last 6 months",
-    mweightchkg = "Weight change kilogram",
-    mweightchrc = "Weight change other reason: coded",
-    mweightgr = "Reason weight gain: coded",
-    mweightlr = "Reason weight loss: coded"
   ),
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
+  `3B` = c(
     "magemxw",
     "mapp6m",
     "mapp7d",
@@ -210,16 +204,14 @@ variable_labels_list <- list(
     "mweightgr2",
     "mweightlr",
     "mweightlr2"
-  )],
-    mprob6m = "psychological stress or severe sickness last 6 months",
-    mweightchkg = "Weight change kilogram",
-    mweightchrc = "Weight change other reason: coded",
-    mweightgr = "Reason weight gain: coded",
-    mweightlr = "Reason weight loss: coded"
   ),
-  Wave_MB_labels = harmonized_labels[c("mwlbelt", "mwlclot", "mwloss", "mwlwatc")],
-  Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
+  `MB` = c(
+    "mwlbelt",
+    "mwlclot",
+    "mwloss",
+    "mwlwatc"
+  ),
+  `I` = c(
     "mapp7d",
     "meatl6m",
     "mestw",
@@ -235,12 +227,8 @@ variable_labels_list <- list(
     "mweightgr2",
     "mweightlr",
     "mweightlr2"
-  )],
-    mweightchrc = "Weight change other: coded",
-    mweightgr = "Reason weight gain: coded",
-    mweightlr = "Reason weight loss: coded"
   ),
-  Wave_J_labels = harmonized_labels[c(
+  `J` = c(
     "mapp7d",
     "meatl6m",
     "mestw",
@@ -250,17 +238,74 @@ variable_labels_list <- list(
     "mweightchkgl",
     "mweightgr2",
     "mweightlr2"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
+    mweightch = "Weight: change"
+  ),
+  Wave_C_labels = harmonized_labels,
+  Wave_D_labels = harmonized_labels,
+  Wave_E_labels = harmonized_labels,
+  Wave_2B_labels = .replace_labels(
+    harmonized_labels,
+    mhage25 = "Height: height at age 25",
+    mwage25 = "Weight: weight at age 25",
+    mwage40 = "Weight: weight at age 40"
+  ),
+  Wave_F_labels = .replace_labels(
+    harmonized_labels,
+    msatw = "Satisfied with body weight",
+    mweightchkg = "Weight: change kilogram"
+  ),
+  Wave_G_labels = .replace_labels(
+    harmonized_labels,
+    msatw = "Satisfied with body weight",
+    mweightchkg = "Weight: change kilogram"
+  ),
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
+    mprob6m = "psychological stress or severe sickness last 6 months",
+    mweightchkg = "Weight change kilogram",
+    mweightchrc = "Weight change other reason: coded",
+    mweightgr = "Reason weight gain: coded",
+    mweightlr = "Reason weight loss: coded"
+  ),
+  Wave_3B_labels = .replace_labels(
+    harmonized_labels,
+    mprob6m = "psychological stress or severe sickness last 6 months",
+    mweightchkg = "Weight change kilogram",
+    mweightchrc = "Weight change other reason: coded",
+    mweightgr = "Reason weight gain: coded",
+    mweightlr = "Reason weight loss: coded"
+  ),
+  Wave_MB_labels = harmonized_labels,
+  Wave_I_labels = .replace_labels(
+    harmonized_labels,
+    mweightchrc = "Weight change other: coded",
+    mweightgr = "Reason weight gain: coded",
+    mweightlr = "Reason weight loss: coded"
+  ),
+  Wave_J_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
 standardized_value_labels <- list(
-  magemxw = c(`-1` = "na, asked"),
+  magemxw = c(
+    default_missing_labels[c("-1")]
+  ),
   magewmx = stats::setNames(character(0), character(0)),
-  mapp6m = c(`-1` = "na, asked", `1` = "good", `2` = "moderate", `3` = "poor"),
+  mapp6m = c(
+    default_missing_labels[c("-1")],
+    `1` = "good",
+    `2` = "moderate",
+    `3` = "poor"
+  ),
   mapp7d = c(
     `-3` = "na, section ot done",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "good",
     `2` = "moderate",
     `3` = "poor"
@@ -275,21 +320,21 @@ standardized_value_labels <- list(
     `6` = "do not know"
   ),
   mealt6m = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "did not eat less",
     `2` = "did eat somewhat less",
     `3` = "did eat much less"
   ),
   meatl6m = c(
     `-3` = "na, section not done",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "did not eat less",
     `2` = "did eat somewhat less",
     `3` = "did eat much less"
   ),
   mestw = c(
     `-3` = "na, section not done",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "underweight / severe underweight",
     `2` = "normal weight / underweight",
     `3` = "overweight / normal weight / approx.. normal weight",
@@ -302,7 +347,7 @@ standardized_value_labels <- list(
   mheight40y = stats::setNames(character(0), character(0)),
   mlwm01 = c(
     `-2` = "no answer, see F/GMATTW",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
@@ -321,9 +366,14 @@ standardized_value_labels <- list(
   mlwm14 = c(`14` = "guidance dietician"),
   mlwm15 = c(`15` = "other method"),
   mmaxw = c(`-3` = "na, section not done"),
-  mprob6m = c(`-3` = "na, section ot done", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  mprob6m = c(
+    `-3` = "na, section ot done",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   msatw = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "very / very dissatisfied",
     `2` = "reasonably / dissatisfied",
     `3` = "a little / neither dissatisfied nor satisfied / not satisfied/dissatisfied",
@@ -331,24 +381,35 @@ standardized_value_labels <- list(
     `5` = "very satisfied",
     `6` = "do not know"
   ),
-  mwage25 = c(`-3` = "na, section not done", `-1` = "na, asked"),
+  mwage25 = c(
+    `-3` = "na, section not done",
+    default_missing_labels[c("-1")]
+  ),
   mwage40 = stats::setNames(character(0), character(0)),
   mweightage = stats::setNames(character(0), character(0)),
   mweightch = c(
     `-5` = "na, interview terminated",
     `-3` = "no valid data / na, section not done",
-    `-2` = "no answer, routing",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "not changed",
     `2` = "gained weight",
     `3` = "lost weight"
   ),
-  mweightchkg = c(`-3` = "no valid data", `-2` = "no answer, routing", `-1` = "no answer, asked"),
-  mweightchkgg = c(`-2` = "na, see I/JMWEIGHTCH", `-1` = "na, asked"),
-  mweightchkgl = c(`-2` = "na, see I/JMWEIGHTCH", `-1` = "na, asked"),
+  mweightchkg = c(
+    `-3` = "no valid data",
+    default_missing_labels[c("-2", "-1")]
+  ),
+  mweightchkgg = c(
+    `-2` = "na, see I/JMWEIGHTCH",
+    default_missing_labels[c("-1")]
+  ),
+  mweightchkgl = c(
+    `-2` = "na, see I/JMWEIGHTCH",
+    default_missing_labels[c("-1")]
+  ),
   mweightchr = c(
     `-2` = "na, see BMWEIGHTCH",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "sickness",
     `2` = "diet",
     `3` = "social factors",
@@ -389,7 +450,7 @@ standardized_value_labels <- list(
   mweightgr = c(
     `-3` = "no valid data",
     `-2` = "no weight gain / na, see HMWEIGHTGR2",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "related to eating / sickness",
     `2` = "physical inactivity / related to eating",
     `3` = "eating and physical inactivity / physical inactivity",
@@ -401,7 +462,7 @@ standardized_value_labels <- list(
   ),
   mweightgr2 = c(
     `-2` = "na, see H/BMWEIGHTCH",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "sickness",
     `2` = "eating more or different",
     `3` = "less physical activity",
@@ -409,13 +470,16 @@ standardized_value_labels <- list(
     `5` = "reason unknown",
     `6` = "other reason"
   ),
-  mweighthigh = c(`-3` = "no valid data", `-2` = "no answer, routing", `-1` = "no answer, asked"),
+  mweighthigh = c(
+    `-3` = "no valid data",
+    default_missing_labels[c("-2", "-1")]
+  ),
   mweightk40y = stats::setNames(character(0), character(0)),
   mweightlow = c(`-1` = "no valid data"),
   mweightlr = c(
     `-3` = "no valid data",
     `-2` = "no weight loss / na, see HMWEIGHTLR2",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "voluntary / sickness (unintentional)",
     `2` = "involuntary / diet (intentional)",
     `3` = "eating less or different / different diet (unintentional)",
@@ -431,7 +495,7 @@ standardized_value_labels <- list(
   ),
   mweightlr2 = c(
     `-2` = "na, see H/BMWEIGHTCH",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "sickness (unintentional)",
     `2` = "diet (intentional)",
     `3` = "other diet (unintentional)",
@@ -441,23 +505,27 @@ standardized_value_labels <- list(
     `7` = "other reason"
   ),
   mwlbelt = stats::setNames(character(0), character(0)),
-  mwlclot = c(`-2` = "na, see BMWLOSS", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mwloss = c(`-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "unknown"),
+  mwlclot = c(
+    `-2` = "na, see BMWLOSS",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  mwloss = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes",
+    `3` = "unknown"
+  ),
   mwlwatc = stats::setNames(character(0), character(0)),
-  mwmax = c(`-1` = "na, asked")
+  mwmax = c(
+    default_missing_labels[c("-1")]
+  )
 )
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mweightch",
-    "mweightchkg",
-    "mweightchr",
-    "mweightchrc",
-    "mweightgr",
-    "mweighthigh",
-    "mweightlr"
-  )],
+    standardized_value_labels,
     mweightch = c(
     `-3` = "no valid data",
     `-2` = "no answer, routing",
@@ -521,16 +589,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mheight25y",
-    "mweightch",
-    "mweightchkg",
-    "mweightchr",
-    "mweightchrc",
-    "mweightgr",
-    "mweightlow",
-    "mweightlr"
-  )],
+    standardized_value_labels,
     mweightch = c(
     `-5` = "na, interview terminated",
     `-1` = "na, asked",
@@ -591,7 +650,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("mweightch", "mweightchkg", "mweightchr", "mweightchrc", "mweightgr", "mweightlr")],
+    standardized_value_labels,
     mweightch = c(
     `-5` = "na, interview terminated",
     `-1` = "na, asked",
@@ -652,7 +711,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("mweightch", "mweightchkg", "mweightchr", "mweightchrc", "mweightgr", "mweightlr")],
+    standardized_value_labels,
     mweightch = c(
     `-5` = "na, interview terminated",
     `-1` = "na, asked",
@@ -713,7 +772,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("mweightch", "mweightchkg", "mweightchr", "mweightchrc", "mweightgr", "mweightlr", "mwmax")],
+    standardized_value_labels,
     mweightch = c(`-1` = "na, asked", `1` = "not changed", `2` = "gained weight", `3` = "lost weight"),
     mweightchkg = c(`-2` = "na, see C/D/E/BMWEIGHTCH", `-1` = "na, asked"),
     mweightchr = .replace_labels(
@@ -768,32 +827,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mattw",
-    "mestw",
-    "mlwm01",
-    "mlwm02",
-    "mlwm03",
-    "mlwm04",
-    "mlwm05",
-    "mlwm06",
-    "mlwm07",
-    "mlwm08",
-    "mlwm09",
-    "mlwm10",
-    "mlwm11",
-    "mlwm12",
-    "mlwm13",
-    "mlwm14",
-    "mlwm15",
-    "msatw",
-    "mweightch",
-    "mweightchkg",
-    "mweightchr",
-    "mweightchrc",
-    "mweightgr",
-    "mweightlr"
-  )],
+    standardized_value_labels,
     mattw = c(
     `-1` = "na, asked / do not know",
     `1` = "yes, trying to lose weight",
@@ -858,32 +892,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mattw",
-    "mestw",
-    "mlwm01",
-    "mlwm02",
-    "mlwm03",
-    "mlwm04",
-    "mlwm05",
-    "mlwm06",
-    "mlwm07",
-    "mlwm08",
-    "mlwm09",
-    "mlwm10",
-    "mlwm11",
-    "mlwm12",
-    "mlwm13",
-    "mlwm14",
-    "mlwm15",
-    "msatw",
-    "mweightch",
-    "mweightchkg",
-    "mweightchr",
-    "mweightchrc",
-    "mweightgr",
-    "mweightlr"
-  )],
+    standardized_value_labels,
     mattw = c(
     `-1` = "na, asked / do not know",
     `1` = "yes, trying to lose weight",
@@ -965,23 +974,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mapp6m",
-    "mapp7d",
-    "mattw",
-    "mealt6m",
-    "mestw",
-    "mprob6m",
-    "msatw",
-    "mwage25",
-    "mweightch",
-    "mweightchkg",
-    "mweightchrc",
-    "mweightgr",
-    "mweightgr2",
-    "mweightlr",
-    "mweightlr2"
-  )],
+    standardized_value_labels,
     mapp7d = c(`-1` = "na, asked", `1` = "good", `2` = "moderate", `3` = "poor"),
     mattw = .replace_labels(
     standardized_value_labels$mattw,
@@ -1041,7 +1034,6 @@ value_labels_list <- list(
     mweightgr = .replace_labels(
     standardized_value_labels$mweightgr,
     `-2` = "na, see HMWEIGHTGR2",
-    `-1` = "na, asked",
     `1` = "sickness",
     `2` = "related to eating",
     `3` = "physical inactivity",
@@ -1051,31 +1043,13 @@ value_labels_list <- list(
     mweightlr = .replace_labels(
     standardized_value_labels$mweightlr,
     `-2` = "na, see HMWEIGHTLR2",
-    `-1` = "na, asked",
     `1` = "sickness (unintentional)",
     `2` = "diet (intentional)",
     `3` = "different diet (unintentional)"
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "magemxw",
-    "mapp6m",
-    "mapp7d",
-    "mattw",
-    "mealt6m",
-    "mestw",
-    "mmaxw",
-    "mprob6m",
-    "msatw",
-    "mweightch",
-    "mweightchkg",
-    "mweightchrc",
-    "mweightgr",
-    "mweightgr2",
-    "mweightlr",
-    "mweightlr2"
-  )],
+    standardized_value_labels,
     mapp7d = c(`-1` = "na, asked", `1` = "good", `2` = "moderate", `3` = "poor"),
     mattw = .replace_labels(
     standardized_value_labels$mattw,
@@ -1134,7 +1108,6 @@ value_labels_list <- list(
     mweightgr = .replace_labels(
     standardized_value_labels$mweightgr,
     `-2` = "na, see HMWEIGHTGR2",
-    `-1` = "na, asked",
     `1` = "sickness",
     `2` = "related to eating",
     `3` = "physical inactivity",
@@ -1144,29 +1117,14 @@ value_labels_list <- list(
     mweightlr = .replace_labels(
     standardized_value_labels$mweightlr,
     `-2` = "na, see HMWEIGHTLR2",
-    `-1` = "na, asked",
     `1` = "sickness (unintentional)",
     `2` = "diet (intentional)",
     `3` = "different diet (unintentional)"
   )
   ),
-  Wave_MB_labels = standardized_value_labels[c("mwlclot", "mwloss")],
+  Wave_MB_labels = standardized_value_labels,
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mapp7d",
-    "meatl6m",
-    "mestw",
-    "mprob6m",
-    "mwage25",
-    "mweightch",
-    "mweightchkgg",
-    "mweightchkgl",
-    "mweightchrc",
-    "mweightgr",
-    "mweightgr2",
-    "mweightlr",
-    "mweightlr2"
-  )],
+    standardized_value_labels,
     mestw = .replace_labels(
     standardized_value_labels$mestw,
     `1` = "severe underweight",
@@ -1213,7 +1171,6 @@ value_labels_list <- list(
     mweightgr = .replace_labels(
     standardized_value_labels$mweightgr,
     `-2` = "na, see IMWEIGHTGR2",
-    `-1` = "na, asked",
     `1` = "sickness",
     `2` = "related to eating",
     `3` = "physical inactivity",
@@ -1227,7 +1184,6 @@ value_labels_list <- list(
     mweightlr = .replace_labels(
     standardized_value_labels$mweightlr,
     `-2` = "na, see IMWEIGHTLR2",
-    `-1` = "na, asked",
     `1` = "sickness (unintentional)",
     `2` = "diet (intentional)",
     `3` = "different diet (unintentional)"
@@ -1238,17 +1194,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mapp7d",
-    "meatl6m",
-    "mestw",
-    "mprob6m",
-    "mweightch",
-    "mweightchkgg",
-    "mweightchkgl",
-    "mweightgr2",
-    "mweightlr2"
-  )],
+    standardized_value_labels,
     mestw = .replace_labels(
     standardized_value_labels$mestw,
     `1` = "severe underweight",
@@ -1327,7 +1273,7 @@ var_types_vec <- c(
   mwmax = "categorical"
 )
 
-.lasa_fc_160 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "160", waves = .lasa_wave_rows()) |>
     .override_label(wave = "B", variable = "mweightchrc", override_value = "bmweightchcr") |>
     .override_label(wave = "H", variable = "mweightgr2", override_value = "hmweightr2") |>
@@ -1336,3 +1282,21 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "160", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "160", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["mheight40y"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mweightage"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mweightk40y"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["magewmx"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mhage25"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mwage25"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mwage40"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mhage25"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mwage25"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mwage40"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mwlbelt"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["mwlwatc"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["mhage25"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["mwage40"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+
+.lasa_fc_160 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

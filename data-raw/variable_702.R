@@ -45,8 +45,12 @@ harmonized_labels <- c(
   trsubh1 = "General health"
 )
 
-variable_labels_list <- list(
-  Wave_C_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
     "trartv1",
     "trcanc1",
     "trcara1",
@@ -63,9 +67,8 @@ variable_labels_list <- list(
     "trrheu1",
     "trrheu2",
     "trsubh1"
-  )],
-  Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
+  ),
+  `D` = c(
     "trartv1",
     "trcanc1",
     "trcara1",
@@ -90,11 +93,8 @@ variable_labels_list <- list(
     "trrheu1",
     "trrheu2",
     "trsubh1"
-  )],
-    trhead = "Head injury: yes/no"
   ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
+  `E` = c(
     "trartv1",
     "trcanc1",
     "trcara1",
@@ -117,11 +117,8 @@ variable_labels_list <- list(
     "trrheu1",
     "trrheu2",
     "trsubh1"
-  )],
-    trhead = "Head injury: yes/no"
   ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
+  `F` = c(
     "trartv1",
     "trcanc1",
     "trcara1",
@@ -144,11 +141,8 @@ variable_labels_list <- list(
     "trrheu1",
     "trrheu2",
     "trsubh1"
-  )],
-    trhead = "Head injury: yes/no"
   ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
+  `G` = c(
     "trartv1",
     "trcanc1",
     "trcara1",
@@ -173,11 +167,8 @@ variable_labels_list <- list(
     "trrheu1",
     "trrheu2",
     "trsubh1"
-  )],
-    trhead = "Head injury: yes/no"
   ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+  `H` = c(
     "trartv1",
     "trcanc1",
     "trcara1",
@@ -199,13 +190,8 @@ variable_labels_list <- list(
     "trrheu1",
     "trrheu2",
     "trsubh1"
-  )],
-    trhead = "Head injury: yes/no",
-    trnochrom = "Number of chronic diseases from 7 majors (constructed)",
-    trnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
   ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
+  `I` = c(
     "trartv1",
     "trcanc1",
     "trcara1",
@@ -228,13 +214,8 @@ variable_labels_list <- list(
     "trrheu1",
     "trrheu2",
     "trsubh1"
-  )],
-    trhead = "Head injury: yes/no",
-    trnochrom = "Number of chronic diseases from 7 majors (constructed)",
-    trnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
   ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
+  `J` = c(
     "trartv1",
     "trcanc1",
     "trcanc1a",
@@ -259,13 +240,8 @@ variable_labels_list <- list(
     "trrheu1",
     "trrheu2",
     "trsubh1"
-  )],
-    trhead = "Head injury: yes/no",
-    trnochrom = "Number of chronic diseases from 7 majors (constructed)",
-    trnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
   ),
-  Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
+  `K` = c(
     "trartv1",
     "trcanc1",
     "trcanc1a",
@@ -296,7 +272,47 @@ variable_labels_list <- list(
     "trrheu1",
     "trrheu2",
     "trsubh1"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_C_labels = harmonized_labels,
+  Wave_D_labels = .replace_labels(
+    harmonized_labels,
+    trhead = "Head injury: yes/no"
+  ),
+  Wave_E_labels = .replace_labels(
+    harmonized_labels,
+    trhead = "Head injury: yes/no"
+  ),
+  Wave_F_labels = .replace_labels(
+    harmonized_labels,
+    trhead = "Head injury: yes/no"
+  ),
+  Wave_G_labels = .replace_labels(
+    harmonized_labels,
+    trhead = "Head injury: yes/no"
+  ),
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
+    trhead = "Head injury: yes/no",
+    trnochrom = "Number of chronic diseases from 7 majors (constructed)",
+    trnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
+  ),
+  Wave_I_labels = .replace_labels(
+    harmonized_labels,
+    trhead = "Head injury: yes/no",
+    trnochrom = "Number of chronic diseases from 7 majors (constructed)",
+    trnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
+  ),
+  Wave_J_labels = .replace_labels(
+    harmonized_labels,
+    trhead = "Head injury: yes/no",
+    trnochrom = "Number of chronic diseases from 7 majors (constructed)",
+    trnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
+  ),
+  Wave_K_labels = .replace_labels(
+    harmonized_labels,
     trhead = "Head injury: yes/no",
     trnochrom = "Number of chronic diseases from 7 majors (constructed)",
     trnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
@@ -304,24 +320,62 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "yes"
+)
+
 standardized_value_labels <- list(
-  trartv1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  trcanc1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
+  trartv1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  trcanc1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
   trcanc1a = c(
     `-2` = "no answer, see TRCANC1",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "benign",
     `2` = "malign",
     `3` = "unknown"
   ),
-  trcara1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  trchol1 = c(`-1` = "asked, no answer", `1` = "no", `2` = "yes", `3` = "does not know"),
-  trchol1a = c(`-1` = "asked, no answer", `1` = "no", `2` = "yes", `3` = "does not know"),
-  trcor1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  trcor2 = c(`-2` = "never had corona", `-1` = "asked, no answer", `0` = "no", `1` = "yes"),
+  trcara1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  trchol1 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes",
+    `3` = "does not know"
+  ),
+  trchol1a = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes",
+    `3` = "does not know"
+  ),
+  trcor1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  trcor2 = c(
+    `-2` = "never had corona",
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
   trcorm1 = c(
     `-2` = "no corona",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -337,7 +391,7 @@ standardized_value_labels <- list(
   ),
   trcorm2 = c(
     `-2` = "no corona",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -351,19 +405,59 @@ standardized_value_labels <- list(
     `11` = "November",
     `12` = "December"
   ),
-  trcory1 = c(`-2` = "no corona", `-1` = "asked, no answer"),
-  trcory2 = c(`-2` = "no corona", `-1` = "asked, no answer"),
-  trcva01 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  trdiab1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  trfadem = c(`-1` = "asked, no answer / does not know", `0` = "no", `1` = "yes"),
-  trftrea = c(`-2` = "no dementia", `-1` = "asked, no answer / does not know", `0` = "no", `1` = "yes"),
-  trhart1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  trhbd1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  trhbd1a = c(`-1` = "asked, no answer", `1` = "no", `2` = "yes", `3` = "does not know"),
-  trhead = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
+  trcory1 = c(
+    `-2` = "no corona",
+    default_missing_labels[c("-1")]
+  ),
+  trcory2 = c(
+    `-2` = "no corona",
+    default_missing_labels[c("-1")]
+  ),
+  trcva01 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  trdiab1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  trfadem = c(
+    `-1` = "asked, no answer / does not know",
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  trftrea = c(
+    `-2` = "no dementia",
+    `-1` = "asked, no answer / does not know",
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  trhart1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  trhbd1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  trhbd1a = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes",
+    `3` = "does not know"
+  ),
+  trhead = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
   trheam = c(
     `-2` = "no head trauma",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -377,13 +471,30 @@ standardized_value_labels <- list(
     `11` = "November",
     `12` = "December"
   ),
-  trheanr = c(`-2` = "no head trauma", `-1` = "asked, no answer"),
-  trheay = c(`-2` = "no head trauma", `-1` = "asked, no answer"),
-  trmodem = c(`-1` = "asked, no answer / does not know", `0` = "no", `1` = "yes"),
-  trmtrea = c(`-2` = "no dementia", `-1` = "asked, no answer / does not know", `0` = "no", `1` = "yes"),
+  trheanr = c(
+    `-2` = "no head trauma",
+    default_missing_labels[c("-1")]
+  ),
+  trheay = c(
+    `-2` = "no head trauma",
+    default_missing_labels[c("-1")]
+  ),
+  trmodem = c(
+    `-1` = "asked, no answer / does not know",
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  trmtrea = c(
+    `-2` = "no dementia",
+    `-1` = "asked, no answer / does not know",
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
   trnochrom = c(`-1` = "no valid data"),
   trnochrot = c(`-1` = "no valid data"),
-  trothnr = c(`-1` = "asked, no answer"),
+  trothnr = c(
+    default_missing_labels[c("-1")]
+  ),
   troths1 = c(
     `-2` = "no other disease mentioned",
     `0` = "no more other diseases mentioned",
@@ -649,10 +760,18 @@ standardized_value_labels <- list(
     `49` = "Other chronic disease",
     `50` = "Other non-chronic disease"
   ),
-  trrheu1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  trrheu2 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
+  trrheu1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  trrheu2 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
   trsubh1 = c(
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "excellent",
     `2` = "good",
     `3` = "fair",
@@ -662,75 +781,10 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_C_labels = standardized_value_labels[c(
-    "trartv1",
-    "trcanc1",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trhart1",
-    "trhbd1",
-    "trnochrom",
-    "trnochrot",
-    "trothnr",
-    "troths1",
-    "troths2",
-    "troths3",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  )],
-  Wave_D_labels = standardized_value_labels[c(
-    "trartv1",
-    "trcanc1",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trfadem",
-    "trftrea",
-    "trhart1",
-    "trhbd1",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trmodem",
-    "trmtrea",
-    "trnochrom",
-    "trnochrot",
-    "trothnr",
-    "troths1",
-    "troths2",
-    "troths3",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  )],
+  Wave_C_labels = standardized_value_labels,
+  Wave_D_labels = standardized_value_labels,
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trartv1",
-    "trcanc1",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trhart1",
-    "trhbd1",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trnochrom",
-    "trnochrot",
-    "trothnr",
-    "troths1",
-    "troths2",
-    "troths3",
-    "troths4",
-    "troths5",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  )],
+    standardized_value_labels,
     troths4 = .replace_labels(
     standardized_value_labels$troths4,
     `24` = "Mental problems, incl. depression",
@@ -740,30 +794,7 @@ value_labels_list <- list(
     trsubh1 = c(`1` = "excellent", `2` = "good", `3` = "fair", `4` = "sometimes good/bad", `5` = "poor")
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trartv1",
-    "trcanc1",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trhart1",
-    "trhbd1",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trnochrom",
-    "trnochrot",
-    "trothnr",
-    "troths1",
-    "troths2",
-    "troths3",
-    "troths4",
-    "troths5",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  )],
+    standardized_value_labels,
     troths4 = .replace_labels(
     standardized_value_labels$troths4,
     `24` = "Mental problems, incl. depression",
@@ -772,55 +803,9 @@ value_labels_list <- list(
   ),
     trsubh1 = c(`1` = "excellent", `2` = "good", `3` = "fair", `4` = "sometimes good/bad", `5` = "poor")
   ),
-  Wave_G_labels = standardized_value_labels[c(
-    "trartv1",
-    "trcanc1",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trfadem",
-    "trftrea",
-    "trhart1",
-    "trhbd1",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trmodem",
-    "trmtrea",
-    "trnochrom",
-    "trnochrot",
-    "trothnr",
-    "troths1",
-    "troths2",
-    "troths3",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  )],
+  Wave_G_labels = standardized_value_labels,
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trartv1",
-    "trcanc1",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trhart1",
-    "trhbd1",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trnochrom",
-    "trnochrot",
-    "troths1",
-    "troths2",
-    "troths3",
-    "troths4",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  )],
+    standardized_value_labels,
     troths1 = c(
     `-2` = "no other disease mentioned",
     `0` = "no more other diseases mentioned",
@@ -939,29 +924,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trartv1",
-    "trcanc1",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trhart1",
-    "trhbd1",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trnochrom",
-    "trnochrot",
-    "troths1",
-    "troths2",
-    "troths3",
-    "troths4",
-    "troths5",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  )],
+    standardized_value_labels,
     troths1 = c(
     `-2` = "no other disease mentioned",
     `0` = "no more other diseases mentioned",
@@ -1109,31 +1072,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trartv1",
-    "trcanc1",
-    "trcanc1a",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trhart1",
-    "trhbd1",
-    "trhbd1a",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trnochrom",
-    "trnochrot",
-    "troths1",
-    "troths2",
-    "troths3",
-    "troths4",
-    "troths5",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  )],
+    standardized_value_labels,
     trcanc1a = .replace_labels(
     standardized_value_labels$trcanc1a,
     `-2` = "no answer, see JTRCANC1"
@@ -1285,37 +1224,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trartv1",
-    "trcanc1",
-    "trcanc1a",
-    "trcara1",
-    "trchol1",
-    "trchol1a",
-    "trcor1",
-    "trcor2",
-    "trcorm1",
-    "trcorm2",
-    "trcory1",
-    "trcory2",
-    "trcva01",
-    "trdiab1",
-    "trhart1",
-    "trhbd1",
-    "trhbd1a",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trnochrom",
-    "trnochrot",
-    "troths1",
-    "troths2",
-    "troths3",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  )],
+    standardized_value_labels,
     trcanc1a = .replace_labels(
     standardized_value_labels$trcanc1a,
     `-2` = "no answer, see KTRCANC1"
@@ -1465,9 +1374,17 @@ var_types_vec <- c(
   trsubh1 = "categorical"
 )
 
-.lasa_fc_702 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "702", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "702", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "702", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "702", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["trothnr"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["trothnr"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["trothnr"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["trothnr"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+
+.lasa_fc_702 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

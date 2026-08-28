@@ -13,6 +13,19 @@ harmonized_labels <- c(
   qmetem4 = "meta emotion item 04: change"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `2B` = c(
+    "qmetem1",
+    "qmetem2",
+    "qmetem3",
+    "qmetem4"
+  )
+)
+
 variable_labels_list <- list(
   Wave_2B_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
@@ -73,9 +86,12 @@ var_types_vec <- c(
   qmetem4 = "categorical"
 )
 
-.lasa_fc_143 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "143", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "143", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "143", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "143", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_143 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

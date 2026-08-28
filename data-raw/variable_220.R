@@ -15,6 +15,21 @@ harmonized_labels <- c(
   rmds = "Reason for missing Digit Span score"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `3B` = c(
+    "dsbsp",
+    "dsbw",
+    "dsfsp",
+    "dsfw",
+    "dstot",
+    "rmds"
+  )
+)
+
 variable_labels_list <- list(
   Wave_3B_labels = .replace_labels(
     harmonized_labels,
@@ -57,9 +72,12 @@ var_types_vec <- c(
   rmds = "categorical"
 )
 
-.lasa_fc_220 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "220", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "220", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "220", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "220", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_220 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -29,6 +29,35 @@ harmonized_labels <- c(
   nllang3 = "I can read Dutch well / Ik kan NLs goed lezen"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `MB` = c(
+    "cultdis1",
+    "cultdis2",
+    "cultdis3",
+    "cultid1",
+    "cultid2",
+    "cultid3",
+    "cultid4",
+    "cultid5",
+    "cultid6",
+    "cultid7",
+    "loss1",
+    "loss2",
+    "loss3",
+    "loss4",
+    "loss5",
+    "loss6",
+    "loss7",
+    "nllang1",
+    "nllang2",
+    "nllang3"
+  )
+)
+
 variable_labels_list <- list(
   Wave_MB_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
@@ -36,56 +65,126 @@ variable_labels_list <- list(
 
 standardized_value_labels <- list(
   cultdis1 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "strongly disagree",
     `2` = "disagree",
     `3` = "agree",
     `4` = "strongly agree"
   ),
   cultdis2 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "strongly disagree",
     `2` = "disagree",
     `3` = "agree",
     `4` = "strongly agree"
   ),
   cultdis3 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "strongly disagree",
     `2` = "disagree",
     `3` = "agree",
     `4` = "strongly agree"
   ),
-  cultid1 = c(`-1` = "no answer", `1` = "never", `2` = "sometimes", `3` = "regularly", `4` = "often"),
-  cultid2 = c(`-1` = "no answer", `1` = "never", `2` = "sometimes", `3` = "regularly", `4` = "often"),
-  cultid3 = c(`-1` = "no answer", `1` = "never", `2` = "sometimes", `3` = "regularly", `4` = "often"),
-  cultid4 = c(`-1` = "no answer", `1` = "never", `2` = "sometimes", `3` = "regularly", `4` = "often"),
-  cultid5 = c(`-1` = "no answer", `1` = "never", `2` = "sometimes", `3` = "regularly", `4` = "often"),
-  cultid6 = c(`-1` = "no answer", `1` = "never", `2` = "sometimes", `3` = "regularly", `4` = "often"),
-  cultid7 = c(`-1` = "no answer", `1` = "never", `2` = "sometimes", `3` = "regularly", `4` = "often"),
-  loss1 = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  loss2 = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  loss3 = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  loss4 = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  loss5 = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  loss6 = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  loss7 = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
+  cultid1 = c(
+    default_missing_labels[c("-1")],
+    `1` = "never",
+    `2` = "sometimes",
+    `3` = "regularly",
+    `4` = "often"
+  ),
+  cultid2 = c(
+    default_missing_labels[c("-1")],
+    `1` = "never",
+    `2` = "sometimes",
+    `3` = "regularly",
+    `4` = "often"
+  ),
+  cultid3 = c(
+    default_missing_labels[c("-1")],
+    `1` = "never",
+    `2` = "sometimes",
+    `3` = "regularly",
+    `4` = "often"
+  ),
+  cultid4 = c(
+    default_missing_labels[c("-1")],
+    `1` = "never",
+    `2` = "sometimes",
+    `3` = "regularly",
+    `4` = "often"
+  ),
+  cultid5 = c(
+    default_missing_labels[c("-1")],
+    `1` = "never",
+    `2` = "sometimes",
+    `3` = "regularly",
+    `4` = "often"
+  ),
+  cultid6 = c(
+    default_missing_labels[c("-1")],
+    `1` = "never",
+    `2` = "sometimes",
+    `3` = "regularly",
+    `4` = "often"
+  ),
+  cultid7 = c(
+    default_missing_labels[c("-1")],
+    `1` = "never",
+    `2` = "sometimes",
+    `3` = "regularly",
+    `4` = "often"
+  ),
+  loss1 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  loss2 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  loss3 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  loss4 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  loss5 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  loss6 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  loss7 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   nllang1 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "strongly disagree",
     `2` = "disagree",
     `3` = "agree",
     `4` = "strongly agree"
   ),
   nllang2 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "strongly disagree",
     `2` = "disagree",
     `3` = "agree",
     `4` = "strongly agree"
   ),
   nllang3 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "strongly disagree",
     `2` = "disagree",
     `3` = "agree",
@@ -121,9 +220,12 @@ var_types_vec <- c(
   nllang3 = "categorical"
 )
 
-.lasa_fc_069 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "069", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "069", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "069", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "069", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_069 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

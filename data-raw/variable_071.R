@@ -13,6 +13,25 @@ harmonized_labels <- c(
   eval04 = "Evaluation age norms: current affairs"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "eval01",
+    "eval02",
+    "eval03",
+    "eval04"
+  ),
+  `K` = c(
+    "eval01",
+    "eval02",
+    "eval03",
+    "eval04"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = harmonized_labels,
   Wave_K_labels = harmonized_labels,
@@ -21,33 +40,25 @@ variable_labels_list <- list(
 
 standardized_value_labels <- list(
   eval01 = c(
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-1")],
     `1` = "no",
     `2` = "more or less",
     `3` = "yes"
   ),
   eval02 = c(
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-1")],
     `1` = "no",
     `2` = "more or less",
     `3` = "yes"
   ),
   eval03 = c(
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-1")],
     `1` = "no",
     `2` = "more or less",
     `3` = "yes"
   ),
   eval04 = c(
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-1")],
     `1` = "no",
     `2` = "more or less",
     `3` = "yes"
@@ -127,10 +138,13 @@ var_types_vec <- c(
   eval04 = "categorical"
 )
 
-.lasa_fc_071 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "071", waves = .lasa_wave_rows()) |>
     .override_label(wave = "K", variable = "eval03", override_value = "kbeval03"),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "071", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "071", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "071", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_071 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

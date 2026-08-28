@@ -15,6 +15,21 @@ harmonized_labels <- c(
   sex = "sex respondent"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `MB` = c(
+    "aeducat",
+    "aethnic",
+    "bycohort",
+    "byear",
+    "migcoh",
+    "sex"
+  )
+)
+
 variable_labels_list <- list(
   Wave_MB_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
@@ -22,7 +37,7 @@ variable_labels_list <- list(
 
 standardized_value_labels <- list(
   aeducat = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "elementary not completed",
     `2` = "elementary education",
     `3` = "lower vocational education",
@@ -34,7 +49,7 @@ standardized_value_labels <- list(
     `9` = "university education"
   ),
   aethnic = c(
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "Dutch/Netherlands",
     `2` = "Moroccan Arabic",
     `3` = "Moroccan Berber",
@@ -58,7 +73,7 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_MB_labels = standardized_value_labels[c("aeducat", "aethnic", "bycohort", "migcoh", "sex")],
+  Wave_MB_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -71,7 +86,7 @@ var_types_vec <- c(
   sex = "categorical"
 )
 
-.lasa_fc_mb004 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "mb004", waves = .lasa_wave_rows()) |>
     .override_label(wave = "MB", variable = "aeducat", override_value = "aeducat") |>
     .override_label(wave = "MB", variable = "aethnic", override_value = "aethnic") |>
@@ -83,3 +98,8 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "mb004", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "mb004", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["byear"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+
+.lasa_fc_mb004 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

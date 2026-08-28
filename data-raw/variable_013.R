@@ -13,6 +13,19 @@ harmonized_labels <- c(
   remarks = "Residence 1944: Special remarks"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "city",
+    "country",
+    "provinc",
+    "remarks"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
@@ -23,11 +36,16 @@ standardized_value_labels <- list(
     `-4` = "outside holland",
     `-3` = "not living on 1 place",
     `-2` = "specific city unknown",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "aalsmeer",
-    `565` = "… zwolle-kerspel"
+    `565` = "\342\200\246 zwolle-kerspel"
   ),
-  country = c(`-2` = "specific country unknown", `-1` = "no answer", `1` = "antilles", `26` = "… vietnam"),
+  country = c(
+    `-2` = "specific country unknown",
+    default_missing_labels[c("-1")],
+    `1` = "antilles",
+    `26` = "\342\200\246 vietnam"
+  ),
   provinc = c(
     `-2` = "routing (no city)",
     `-1` = "province unknown",
@@ -46,7 +64,7 @@ standardized_value_labels <- list(
   ),
   remarks = c(
     `-2` = "no remarks",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "airforce",
     `2` = "camp",
     `3` = "care hiders",
@@ -120,9 +138,12 @@ var_types_vec <- c(
   remarks = "categorical"
 )
 
-.lasa_fc_013 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "013", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "013", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "013", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "013", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_013 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

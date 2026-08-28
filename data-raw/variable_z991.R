@@ -17,6 +17,23 @@ harmonized_labels <- c(
   zscod3 = "third secondary cause of death"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "zdeceas17",
+    "zdedate_y",
+    "zecdl",
+    "zecdmi",
+    "zpcod",
+    "zscod1",
+    "zscod2",
+    "zscod3"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
@@ -41,7 +58,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("zdeceas17", "zdedate_y", "zpcod")],
+    standardized_value_labels,
     zdeceas17 = .replace_labels(
     standardized_value_labels$zdeceas17,
     `-2` = "no data, see GBADATA"
@@ -69,7 +86,7 @@ var_types_vec <- c(
   zscod3 = "text"
 )
 
-.lasa_fc_z991 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "z991", waves = .lasa_wave_rows()) |>
     .override_label(wave = "B", variable = "zdeceas17", override_value = "zdeceas17") |>
     .override_label(wave = "B", variable = "zdedate_y", override_value = "zdedate_y") |>
@@ -83,3 +100,12 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "z991", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "z991", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["zecdl"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["zecdmi"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["zscod1"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["zscod2"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["zscod3"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+
+.lasa_fc_z991 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

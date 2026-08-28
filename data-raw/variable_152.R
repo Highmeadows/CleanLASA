@@ -179,9 +179,12 @@ harmonized_labels <- c(
   mvitfr3 = "vitamin 3: frequency"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "m#med",
     "matc1",
     "matc2",
@@ -218,13 +221,8 @@ variable_labels_list <- list(
     "mmeduse",
     "mmedvitinj",
     "mmedvittab"
-  )],
-    matc1 = "med. 1: ATC-code (constructed)",
-    mmeduse = "Medication use",
-    mmedvittab = "Tablets: vitamins"
   ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+  `C` = c(
     "m#med",
     "matc1",
     "matc2",
@@ -288,54 +286,8 @@ variable_labels_list <- list(
     "mtad6",
     "mtad7",
     "mtad8"
-  )],
-    matc1 = "Medicine 1: ATC-code (constructed)",
-    matc2 = "Medicine 2: ATC-code (constructed)",
-    matc3 = "Medicine 3: ATC-code (constructed)",
-    matc4 = "Medicine 4: ATC-code (constructed)",
-    matc5 = "Medicine 5: ATC-code (constructed)",
-    matc6 = "Medicine 6: ATC-code (constructed)",
-    matc7 = "Medicine 7: ATC-code (constructed)",
-    matc8 = "Medicine 8: ATC-code (constructed)",
-    mdurat1 = "Medicine 1: duration",
-    mdurat2 = "Medicine 2: duration",
-    mdurat3 = "Medicine 3: duration",
-    mdurat4 = "Medicine 4: duration",
-    mdurat5 = "Medicine 5: duration",
-    mdurat6 = "Medicine 6: duration",
-    mdurat7 = "Medicine 7: duration",
-    mdurat8 = "Medicine 8: duration",
-    mmeasu1 = "Medicine 1: measurement",
-    mmeasu2 = "Medicine 2: measurement",
-    mmeasu3 = "Medicine 3: measurement",
-    mmeasu4 = "Medicine 4: measurement",
-    mmeasu5 = "Medicine 5: measurement",
-    mmeasu6 = "Medicine 6: measurement",
-    mmeasu7 = "Medicine 7: measurement",
-    mmeasu8 = "Medicine 8: measurement",
-    mmed1 = "Medicine 1: name",
-    mmed2 = "Medicine 2: name",
-    mmed3 = "Medicine 3: name",
-    mmed4 = "Medicine 4: name",
-    mmed5 = "Medicine 5: name",
-    mmed6 = "Medicine 6: name",
-    mmed7 = "Medicine 7: name",
-    mmed8 = "Medicine 8: name",
-    mmedbis = "Use of biphosfonates last 10 years",
-    mmedcort = "Ever use corticosteroïden > 3 months",
-    mmeduse = "Medication use",
-    mmedvittab = "Tablets: vitamines",
-    mquant1 = "Medicine 1: quantity",
-    mquant2 = "Medicine 2: quantity",
-    mquant3 = "Medicine 3: quantity",
-    mquant4 = "Medicine 4: quantity",
-    mquant5 = "Medicine 5: quantity",
-    mquant6 = "Medicine 6: quantity",
-    mquant7 = "Medicine 7: quantity",
-    mquant8 = "Medicine 8: quantity"
   ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
+  `D` = c(
     "m#med",
     "m#timp1",
     "m#timp2",
@@ -420,15 +372,8 @@ variable_labels_list <- list(
     "mquant6",
     "mquant7",
     "mquant8"
-  )],
-    matc1 = "med. 1: ATC-code (constructed)",
-    mmedcaltab = "tablets: calcium",
-    mmedcort = "ever use corticosteroids > 3 months",
-    mmedfertab = "tablets: ferro",
-    mmedvittab = "tablets: vitamins"
   ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
+  `E` = c(
     "m#med",
     "m#timp1",
     "m#timp2",
@@ -505,12 +450,8 @@ variable_labels_list <- list(
     "mquant6",
     "mquant7",
     "mquant8"
-  )],
-    matc1 = "med. 1: ATC-code (constructed)",
-    mmedcort = "use corticosteroids last 3 years"
   ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
+  `2B` = c(
     "m#med",
     "m#timp1",
     "m#timp2",
@@ -582,12 +523,8 @@ variable_labels_list <- list(
     "mquant6",
     "mquant7",
     "mquant8"
-  )],
-    matc1 = "med. 1: ATC-code (constructed)",
-    mmedcort = "use corticosteroids last 3 years"
   ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
+  `F` = c(
     "m#med",
     "m#timp1",
     "m#timp2",
@@ -659,12 +596,8 @@ variable_labels_list <- list(
     "mquant6",
     "mquant7",
     "mquant8"
-  )],
-    matc1 = "med. 1: ATC-code (constructed)",
-    mmedcort = "use corticosteroids last 3 years"
   ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
+  `G` = c(
     "drinking",
     "m#med",
     "m#timp1",
@@ -752,19 +685,8 @@ variable_labels_list <- list(
     "mquant7",
     "mquant8",
     "mquant9"
-  )],
-    matc2 = "med. 2: ATC-code in: G, H, 3B, I, J, K:",
-    matc3 = "med. 3: ATC-code in: G, H, 3B, I, J, K:",
-    matc4 = "med. 4: ATC-code in: G, H, 3B, I, J, K:",
-    matc5 = "med. 5: ATC-code in: G, H, 3B, I, J, K:",
-    matc6 = "med. 6: ATC-code in: G, H, 3B, I, J, K:",
-    matc7 = "med. 7: ATC-code in: G, H, 3B, I, J, K:",
-    matc8 = "med. 8: ATC-code in: G, H, 3B, I, J, K:",
-    mccsatc = "corticosteroid: ATC-code",
-    mmedcort = "use corticosteroids last 3 years"
   ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+  `H` = c(
     "drinking",
     "m#med",
     "m#timp1",
@@ -881,18 +803,8 @@ variable_labels_list <- list(
     "mquant7",
     "mquant8",
     "mquant9"
-  )],
-    matc2 = "med. 2: ATC-code in: G, H, 3B, I, J, K:",
-    matc3 = "med. 3: ATC-code in: G, H, 3B, I, J, K:",
-    matc4 = "med. 4: ATC-code in: G, H, 3B, I, J, K:",
-    matc5 = "med. 5: ATC-code in: G, H, 3B, I, J, K:",
-    matc6 = "med. 6: ATC-code in: G, H, 3B, I, J, K:",
-    matc7 = "med. 7: ATC-code in: G, H, 3B, I, J, K:",
-    matc8 = "med. 8: ATC-code in: G, H, 3B, I, J, K:",
-    mmedcort = "use corticosteroids last 3 years"
   ),
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
+  `3B` = c(
     "drinking",
     "m#med",
     "m#timp1",
@@ -977,18 +889,8 @@ variable_labels_list <- list(
     "mvitfr1",
     "mvitfr2",
     "mvitfr3"
-  )],
-    matc2 = "med. 2: ATC-code in: G, H, 3B, I, J, K:",
-    matc3 = "med. 3: ATC-code in: G, H, 3B, I, J, K:",
-    matc4 = "med. 4: ATC-code in: G, H, 3B, I, J, K:",
-    matc5 = "med. 5: ATC-code in: G, H, 3B, I, J, K:",
-    matc6 = "med. 6: ATC-code in: G, H, 3B, I, J, K:",
-    matc7 = "med. 7: ATC-code in: G, H, 3B, I, J, K:",
-    matc8 = "med. 8: ATC-code in: G, H, 3B, I, J, K:",
-    mmedcaltab = "use of calcium tablets (no prescription)",
-    mmedcort = "use prescribed corticosteroids ever"
   ),
-  Wave_MB_labels = harmonized_labels[c(
+  `MB` = c(
     "drinking",
     "m#timp1",
     "matc1",
@@ -1000,8 +902,8 @@ variable_labels_list <- list(
     "mperio1",
     "mquant1",
     "mvit3"
-  )],
-  Wave_I_labels = harmonized_labels[c(
+  ),
+  `I` = c(
     "drinking",
     "m#med",
     "m#timp1",
@@ -1013,8 +915,8 @@ variable_labels_list <- list(
     "mmeduse",
     "mperio1",
     "mquant1"
-  )],
-  Wave_J_labels = harmonized_labels[c(
+  ),
+  `J` = c(
     "drinking",
     "m#med",
     "m#timp1",
@@ -1026,8 +928,8 @@ variable_labels_list <- list(
     "mmeduse",
     "mperio1",
     "mquant1"
-  )],
-  Wave_K_labels = harmonized_labels[c(
+  ),
+  `K` = c(
     "drinking",
     "m#med",
     "m#timp1",
@@ -1039,53 +941,290 @@ variable_labels_list <- list(
     "mmeduse",
     "mperio1",
     "mquant1"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
+    matc1 = "med. 1: ATC-code (constructed)",
+    mmeduse = "Medication use",
+    mmedvittab = "Tablets: vitamins"
+  ),
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
+    matc1 = "Medicine 1: ATC-code (constructed)",
+    matc2 = "Medicine 2: ATC-code (constructed)",
+    matc3 = "Medicine 3: ATC-code (constructed)",
+    matc4 = "Medicine 4: ATC-code (constructed)",
+    matc5 = "Medicine 5: ATC-code (constructed)",
+    matc6 = "Medicine 6: ATC-code (constructed)",
+    matc7 = "Medicine 7: ATC-code (constructed)",
+    matc8 = "Medicine 8: ATC-code (constructed)",
+    mdurat1 = "Medicine 1: duration",
+    mdurat2 = "Medicine 2: duration",
+    mdurat3 = "Medicine 3: duration",
+    mdurat4 = "Medicine 4: duration",
+    mdurat5 = "Medicine 5: duration",
+    mdurat6 = "Medicine 6: duration",
+    mdurat7 = "Medicine 7: duration",
+    mdurat8 = "Medicine 8: duration",
+    mmeasu1 = "Medicine 1: measurement",
+    mmeasu2 = "Medicine 2: measurement",
+    mmeasu3 = "Medicine 3: measurement",
+    mmeasu4 = "Medicine 4: measurement",
+    mmeasu5 = "Medicine 5: measurement",
+    mmeasu6 = "Medicine 6: measurement",
+    mmeasu7 = "Medicine 7: measurement",
+    mmeasu8 = "Medicine 8: measurement",
+    mmed1 = "Medicine 1: name",
+    mmed2 = "Medicine 2: name",
+    mmed3 = "Medicine 3: name",
+    mmed4 = "Medicine 4: name",
+    mmed5 = "Medicine 5: name",
+    mmed6 = "Medicine 6: name",
+    mmed7 = "Medicine 7: name",
+    mmed8 = "Medicine 8: name",
+    mmedbis = "Use of biphosfonates last 10 years",
+    mmedcort = "Ever use corticosteroïden > 3 months",
+    mmeduse = "Medication use",
+    mmedvittab = "Tablets: vitamines",
+    mquant1 = "Medicine 1: quantity",
+    mquant2 = "Medicine 2: quantity",
+    mquant3 = "Medicine 3: quantity",
+    mquant4 = "Medicine 4: quantity",
+    mquant5 = "Medicine 5: quantity",
+    mquant6 = "Medicine 6: quantity",
+    mquant7 = "Medicine 7: quantity",
+    mquant8 = "Medicine 8: quantity"
+  ),
+  Wave_D_labels = .replace_labels(
+    harmonized_labels,
+    matc1 = "med. 1: ATC-code (constructed)",
+    mmedcaltab = "tablets: calcium",
+    mmedcort = "ever use corticosteroids > 3 months",
+    mmedfertab = "tablets: ferro",
+    mmedvittab = "tablets: vitamins"
+  ),
+  Wave_E_labels = .replace_labels(
+    harmonized_labels,
+    matc1 = "med. 1: ATC-code (constructed)",
+    mmedcort = "use corticosteroids last 3 years"
+  ),
+  Wave_2B_labels = .replace_labels(
+    harmonized_labels,
+    matc1 = "med. 1: ATC-code (constructed)",
+    mmedcort = "use corticosteroids last 3 years"
+  ),
+  Wave_F_labels = .replace_labels(
+    harmonized_labels,
+    matc1 = "med. 1: ATC-code (constructed)",
+    mmedcort = "use corticosteroids last 3 years"
+  ),
+  Wave_G_labels = .replace_labels(
+    harmonized_labels,
+    matc2 = "med. 2: ATC-code in: G, H, 3B, I, J, K:",
+    matc3 = "med. 3: ATC-code in: G, H, 3B, I, J, K:",
+    matc4 = "med. 4: ATC-code in: G, H, 3B, I, J, K:",
+    matc5 = "med. 5: ATC-code in: G, H, 3B, I, J, K:",
+    matc6 = "med. 6: ATC-code in: G, H, 3B, I, J, K:",
+    matc7 = "med. 7: ATC-code in: G, H, 3B, I, J, K:",
+    matc8 = "med. 8: ATC-code in: G, H, 3B, I, J, K:",
+    mccsatc = "corticosteroid: ATC-code",
+    mmedcort = "use corticosteroids last 3 years"
+  ),
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
+    matc2 = "med. 2: ATC-code in: G, H, 3B, I, J, K:",
+    matc3 = "med. 3: ATC-code in: G, H, 3B, I, J, K:",
+    matc4 = "med. 4: ATC-code in: G, H, 3B, I, J, K:",
+    matc5 = "med. 5: ATC-code in: G, H, 3B, I, J, K:",
+    matc6 = "med. 6: ATC-code in: G, H, 3B, I, J, K:",
+    matc7 = "med. 7: ATC-code in: G, H, 3B, I, J, K:",
+    matc8 = "med. 8: ATC-code in: G, H, 3B, I, J, K:",
+    mmedcort = "use corticosteroids last 3 years"
+  ),
+  Wave_3B_labels = .replace_labels(
+    harmonized_labels,
+    matc2 = "med. 2: ATC-code in: G, H, 3B, I, J, K:",
+    matc3 = "med. 3: ATC-code in: G, H, 3B, I, J, K:",
+    matc4 = "med. 4: ATC-code in: G, H, 3B, I, J, K:",
+    matc5 = "med. 5: ATC-code in: G, H, 3B, I, J, K:",
+    matc6 = "med. 6: ATC-code in: G, H, 3B, I, J, K:",
+    matc7 = "med. 7: ATC-code in: G, H, 3B, I, J, K:",
+    matc8 = "med. 8: ATC-code in: G, H, 3B, I, J, K:",
+    mmedcaltab = "use of calcium tablets (no prescription)",
+    mmedcort = "use prescribed corticosteroids ever"
+  ),
+  Wave_MB_labels = harmonized_labels,
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
+)
+
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "day",
+  `2` = "1 month to 1 year",
+  `3` = "1 to 5 years",
+  `4` = "effervescent tablet",
+  `5` = "as required",
+  `6` = "inhaler",
+  `7` = "powder",
+  `8` = "ointment"
 )
 
 standardized_value_labels <- list(
   drinking = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "with each meal (3 or more glasses a day)",
     `2` = "not with each meal (1 or 2 glasses a day)",
     `3` = "every week, but not every day",
     `4` = "every week, but not every day",
     `5` = "less than once a week"
   ),
-  `m#med` = c(`-3` = "na, wrong skip", `-2` = "na, see BMMEDUSE", `0` = "no medicines"),
-  `m#timp1` = c(`-3` = "na, for thrombosis", `-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked"),
-  `m#timp10` = c(`-3` = "na, for thrombosis", `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked"),
-  `m#timp11` = c(`-3` = "na, for thrombosis", `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked"),
-  `m#timp12` = c(`-3` = "na, for thrombosis", `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked"),
-  `m#timp13` = c(`-3` = "na, for thrombosis", `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked"),
-  `m#timp14` = c(`-3` = "na, for thrombosis", `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked"),
-  `m#timp2` = c(`-3` = "na, for thrombosis", `-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked"),
-  `m#timp3` = c(`-3` = "na, for thrombosis", `-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked"),
-  `m#timp4` = c(`-3` = "na, for thrombosis", `-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked"),
-  `m#timp5` = c(`-3` = "na, for thrombosis", `-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked"),
-  `m#timp6` = c(`-3` = "na, for thrombosis", `-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked"),
-  `m#timp7` = c(`-3` = "na, for thrombosis", `-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked"),
-  `m#timp8` = c(`-3` = "na, for thrombosis", `-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked"),
-  `m#timp9` = c(`-3` = "na, for thrombosis", `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked"),
-  matc1 = c(`-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked"),
-  matc10 = c(`-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked"),
-  matc11 = c(`-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked"),
-  matc12 = c(`-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked"),
-  matc13 = c(`-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked"),
-  matc14 = c(`-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked"),
-  matc2 = c(`-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked"),
-  matc3 = c(`-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked"),
-  matc4 = c(`-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked"),
-  matc5 = c(`-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked"),
-  matc6 = c(`-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked"),
-  matc7 = c(`-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked"),
-  matc8 = c(`-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked"),
-  matc9 = c(`-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked"),
+  `m#med` = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see BMMEDUSE",
+    `0` = "no medicines"
+  ),
+  `m#timp1` = c(
+    `-3` = "na, for thrombosis",
+    `-2` = "na, see D/E/B/FM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  `m#timp10` = c(
+    `-3` = "na, for thrombosis",
+    `-2` = "na, see G/H/B/B/I/J/KM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  `m#timp11` = c(
+    `-3` = "na, for thrombosis",
+    `-2` = "na, see G/H/B/B/I/J/KM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  `m#timp12` = c(
+    `-3` = "na, for thrombosis",
+    `-2` = "na, see G/H/B/B/I/J/KM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  `m#timp13` = c(
+    `-3` = "na, for thrombosis",
+    `-2` = "na, see G/H/B/B/I/J/KM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  `m#timp14` = c(
+    `-3` = "na, for thrombosis",
+    `-2` = "na, see G/H/B/B/I/J/KM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  `m#timp2` = c(
+    `-3` = "na, for thrombosis",
+    `-2` = "na, see D/E/B/FM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  `m#timp3` = c(
+    `-3` = "na, for thrombosis",
+    `-2` = "na, see D/E/B/FM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  `m#timp4` = c(
+    `-3` = "na, for thrombosis",
+    `-2` = "na, see D/E/B/FM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  `m#timp5` = c(
+    `-3` = "na, for thrombosis",
+    `-2` = "na, see D/E/B/FM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  `m#timp6` = c(
+    `-3` = "na, for thrombosis",
+    `-2` = "na, see D/E/B/FM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  `m#timp7` = c(
+    `-3` = "na, for thrombosis",
+    `-2` = "na, see D/E/B/FM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  `m#timp8` = c(
+    `-3` = "na, for thrombosis",
+    `-2` = "na, see D/E/B/FM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  `m#timp9` = c(
+    `-3` = "na, for thrombosis",
+    `-2` = "na, see G/H/B/B/I/J/KM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  matc1 = c(
+    `-2` = "na, see G/H/B/I/J/KMMEDUSE",
+    default_missing_labels[c("-1")]
+  ),
+  matc10 = c(
+    `-2` = "na, see G/H/B/I/J/KMMEDUSE",
+    default_missing_labels[c("-1")]
+  ),
+  matc11 = c(
+    `-2` = "na, see G/H/B/I/J/KMMEDUSE",
+    default_missing_labels[c("-1")]
+  ),
+  matc12 = c(
+    `-2` = "na, see G/H/B/I/J/KMMEDUSE",
+    default_missing_labels[c("-1")]
+  ),
+  matc13 = c(
+    `-2` = "na, see G/H/B/I/J/KMMEDUSE",
+    default_missing_labels[c("-1")]
+  ),
+  matc14 = c(
+    `-2` = "na, see G/H/B/I/J/KMMEDUSE",
+    default_missing_labels[c("-1")]
+  ),
+  matc2 = c(
+    `-2` = "na, see G/H/B/I/J/KMMEDUSE",
+    default_missing_labels[c("-1")]
+  ),
+  matc3 = c(
+    `-2` = "na, see G/H/B/I/J/KMMEDUSE",
+    default_missing_labels[c("-1")]
+  ),
+  matc4 = c(
+    `-2` = "na, see G/H/B/I/J/KMMEDUSE",
+    default_missing_labels[c("-1")]
+  ),
+  matc5 = c(
+    `-2` = "na, see G/H/B/I/J/KMMEDUSE",
+    default_missing_labels[c("-1")]
+  ),
+  matc6 = c(
+    `-2` = "na, see G/H/B/I/J/KMMEDUSE",
+    default_missing_labels[c("-1")]
+  ),
+  matc7 = c(
+    `-2` = "na, see G/H/B/I/J/KMMEDUSE",
+    default_missing_labels[c("-1")]
+  ),
+  matc8 = c(
+    `-2` = "na, see G/H/B/I/J/KMMEDUSE",
+    default_missing_labels[c("-1")]
+  ),
+  matc9 = c(
+    `-2` = "na, see G/H/B/I/J/KMMEDUSE",
+    default_missing_labels[c("-1")]
+  ),
   mbff = stats::setNames(character(0), character(0)),
   mbffatc = stats::setNames(character(0), character(0)),
-  mbffnr = c(`-2` = "na, see D/EM#MED", `-1` = "na, asked"),
+  mbffnr = c(
+    `-2` = "na, see D/EM#MED",
+    default_missing_labels[c("-1")]
+  ),
   mcalcfr = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "less than one day a week",
     `2` = "1-2 days a week",
     `3` = "3-4 days a week",
@@ -1098,19 +1237,19 @@ standardized_value_labels <- list(
   mccsatc = stats::setNames(character(0), character(0)),
   mccsatc1 = stats::setNames(character(0), character(0)),
   mccsatc2 = stats::setNames(character(0), character(0)),
-  mccsnr = c(`-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked"),
+  mccsnr = c(
+    `-2` = "na, see D/E/B/FM#MED",
+    default_missing_labels[c("-1")]
+  ),
   mdairy = stats::setNames(character(0), character(0)),
   mdform1 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "tablet",
     `2` = "capsule",
     `3` = "drops",
-    `4` = "effervescent tablet",
+    default_answer_labels[c("4", "6", "7", "8")],
     `5` = "injection",
-    `6` = "inhaler",
-    `7` = "powder",
-    `8` = "ointment",
     `9` = "other form / plaster",
     `10` = "suppository",
     `11` = "spray",
@@ -1118,80 +1257,62 @@ standardized_value_labels <- list(
   ),
   mdform10 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "tablet",
     `2` = "capsule",
     `3` = "drops",
-    `4` = "effervescent tablet",
+    default_answer_labels[c("4", "6", "7", "8")],
     `5` = "injection",
-    `6` = "inhaler",
-    `7` = "powder",
-    `8` = "ointment",
     `9` = "other form"
   ),
   mdform11 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "tablet",
     `2` = "capsule",
     `3` = "drops",
-    `4` = "effervescent tablet",
+    default_answer_labels[c("4", "6", "7", "8")],
     `5` = "injection",
-    `6` = "inhaler",
-    `7` = "powder",
-    `8` = "ointment",
     `9` = "other form"
   ),
   mdform12 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "tablet",
     `2` = "capsule",
     `3` = "drops",
-    `4` = "effervescent tablet",
+    default_answer_labels[c("4", "6", "7", "8")],
     `5` = "injection",
-    `6` = "inhaler",
-    `7` = "powder",
-    `8` = "ointment",
     `9` = "other form"
   ),
   mdform13 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "tablet",
     `2` = "capsule",
     `3` = "drops",
-    `4` = "effervescent tablet",
+    default_answer_labels[c("4", "6", "7", "8")],
     `5` = "injection",
-    `6` = "inhaler",
-    `7` = "powder",
-    `8` = "ointment",
     `9` = "other form"
   ),
   mdform14 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "tablet",
     `2` = "capsule",
     `3` = "drops",
-    `4` = "effervescent tablet",
+    default_answer_labels[c("4", "6", "7", "8")],
     `5` = "injection",
-    `6` = "inhaler",
-    `7` = "powder",
-    `8` = "ointment",
     `9` = "other form"
   ),
   mdform2 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "tablet",
     `2` = "capsule",
     `3` = "drops",
-    `4` = "effervescent tablet",
+    default_answer_labels[c("4", "6", "7", "8")],
     `5` = "injection",
-    `6` = "inhaler",
-    `7` = "powder",
-    `8` = "ointment",
     `9` = "other form / plaster",
     `10` = "suppository",
     `11` = "spray",
@@ -1199,15 +1320,12 @@ standardized_value_labels <- list(
   ),
   mdform3 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "tablet",
     `2` = "capsule",
     `3` = "drops",
-    `4` = "effervescent tablet",
+    default_answer_labels[c("4", "6", "7", "8")],
     `5` = "injection",
-    `6` = "inhaler",
-    `7` = "powder",
-    `8` = "ointment",
     `9` = "other form / plaster",
     `10` = "suppository",
     `11` = "spray",
@@ -1215,15 +1333,12 @@ standardized_value_labels <- list(
   ),
   mdform4 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "tablet",
     `2` = "capsule",
     `3` = "drops",
-    `4` = "effervescent tablet",
+    default_answer_labels[c("4", "6", "7", "8")],
     `5` = "injection",
-    `6` = "inhaler",
-    `7` = "powder",
-    `8` = "ointment",
     `9` = "other form / plaster",
     `10` = "suppository",
     `11` = "spray",
@@ -1231,15 +1346,12 @@ standardized_value_labels <- list(
   ),
   mdform5 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "tablet",
     `2` = "capsule",
     `3` = "drops",
-    `4` = "effervescent tablet",
+    default_answer_labels[c("4", "6", "7", "8")],
     `5` = "injection",
-    `6` = "inhaler",
-    `7` = "powder",
-    `8` = "ointment",
     `9` = "other form / plaster",
     `10` = "suppository",
     `11` = "spray",
@@ -1247,15 +1359,12 @@ standardized_value_labels <- list(
   ),
   mdform6 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "tablet",
     `2` = "capsule",
     `3` = "drops",
-    `4` = "effervescent tablet",
+    default_answer_labels[c("4", "6", "7", "8")],
     `5` = "injection",
-    `6` = "inhaler",
-    `7` = "powder",
-    `8` = "ointment",
     `9` = "other form / plaster",
     `10` = "suppository",
     `11` = "spray",
@@ -1263,15 +1372,12 @@ standardized_value_labels <- list(
   ),
   mdform7 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "tablet",
     `2` = "capsule",
     `3` = "drops",
-    `4` = "effervescent tablet",
+    default_answer_labels[c("4", "6", "7", "8")],
     `5` = "injection",
-    `6` = "inhaler",
-    `7` = "powder",
-    `8` = "ointment",
     `9` = "other form / plaster",
     `10` = "suppository",
     `11` = "spray",
@@ -1279,15 +1385,12 @@ standardized_value_labels <- list(
   ),
   mdform8 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "tablet",
     `2` = "capsule",
     `3` = "drops",
-    `4` = "effervescent tablet",
+    default_answer_labels[c("4", "6", "7", "8")],
     `5` = "injection",
-    `6` = "inhaler",
-    `7` = "powder",
-    `8` = "ointment",
     `9` = "other form / plaster",
     `10` = "suppository",
     `11` = "spray",
@@ -1295,15 +1398,12 @@ standardized_value_labels <- list(
   ),
   mdform9 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "tablet",
     `2` = "capsule",
     `3` = "drops",
-    `4` = "effervescent tablet",
+    default_answer_labels[c("4", "6", "7", "8")],
     `5` = "injection",
-    `6` = "inhaler",
-    `7` = "powder",
-    `8` = "ointment",
     `9` = "other form"
   ),
   mdos1 = c(`-2` = "na, see BMMED", `-1` = "R does not know"),
@@ -1317,50 +1417,44 @@ standardized_value_labels <- list(
     `-2` = "na, see BM#MED",
     `-1` = "na, asked / no valid data",
     `1` = "less than 1 month",
-    `2` = "1 month to 1 year",
-    `3` = "1 to 5 years",
+    default_answer_labels[c("2", "3")],
     `4` = "longer than 5 years / longer than 5 years 1",
     `5` = "sometimes",
     `6` = "only when necessary"
   ),
   mdurat10 = c(
     `-2` = "na, see G/H/B/B/I/J/KM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "less than 1 month",
-    `2` = "1 month to 1 year",
-    `3` = "1 to 5 years",
+    default_answer_labels[c("2", "3")],
     `4` = "longer than 5 years 1"
   ),
   mdurat11 = c(
     `-2` = "na, see G/H/B/B/I/J/KM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "less than 1 month",
-    `2` = "1 month to 1 year",
-    `3` = "1 to 5 years",
+    default_answer_labels[c("2", "3")],
     `4` = "longer than 5 years 1"
   ),
   mdurat12 = c(
     `-2` = "na, see G/H/B/B/I/J/KM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "less than 1 month",
-    `2` = "1 month to 1 year",
-    `3` = "1 to 5 years",
+    default_answer_labels[c("2", "3")],
     `4` = "longer than 5 years 1"
   ),
   mdurat13 = c(
     `-2` = "na, see G/H/B/B/I/J/KM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "less than 1 month",
-    `2` = "1 month to 1 year",
-    `3` = "1 to 5 years",
+    default_answer_labels[c("2", "3")],
     `4` = "longer than 5 years 1"
   ),
   mdurat14 = c(
     `-2` = "na, see G/H/B/B/I/J/KM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "less than 1 month",
-    `2` = "1 month to 1 year",
-    `3` = "1 to 5 years",
+    default_answer_labels[c("2", "3")],
     `4` = "longer than 5 years 1"
   ),
   mdurat2 = c(
@@ -1368,8 +1462,7 @@ standardized_value_labels <- list(
     `-2` = "na, see BM#MED",
     `-1` = "na, asked / no valid data",
     `1` = "less than 1 month",
-    `2` = "1 month to 1 year",
-    `3` = "1 to 5 years",
+    default_answer_labels[c("2", "3")],
     `4` = "longer than 5 years / longer than 5 years 1",
     `5` = "sometimes",
     `6` = "only when necessary"
@@ -1379,8 +1472,7 @@ standardized_value_labels <- list(
     `-2` = "na, see BM#MED",
     `-1` = "na, asked / no valid data",
     `1` = "less than 1 month",
-    `2` = "1 month to 1 year",
-    `3` = "1 to 5 years",
+    default_answer_labels[c("2", "3")],
     `4` = "longer than 5 years / longer than 5 years 1",
     `5` = "sometimes",
     `6` = "only when necessary"
@@ -1390,8 +1482,7 @@ standardized_value_labels <- list(
     `-2` = "na, see BM#MED",
     `-1` = "na, asked / no valid data",
     `1` = "less than 1 month",
-    `2` = "1 month to 1 year",
-    `3` = "1 to 5 years",
+    default_answer_labels[c("2", "3")],
     `4` = "longer than 5 years / longer than 5 years 1",
     `5` = "sometimes",
     `6` = "only when necessary"
@@ -1401,8 +1492,7 @@ standardized_value_labels <- list(
     `-2` = "na, see BM#MED",
     `-1` = "na, asked / no valid data",
     `1` = "less than 1 month",
-    `2` = "1 month to 1 year",
-    `3` = "1 to 5 years",
+    default_answer_labels[c("2", "3")],
     `4` = "longer than 5 years / longer than 5 years 1",
     `5` = "sometimes",
     `6` = "only when necessary"
@@ -1412,41 +1502,37 @@ standardized_value_labels <- list(
     `-2` = "na, see BM#MED",
     `-1` = "na, asked / no valid data",
     `1` = "less than 1 month",
-    `2` = "1 month to 1 year",
-    `3` = "1 to 5 years",
+    default_answer_labels[c("2", "3")],
     `4` = "longer than 5 years / longer than 5 years 1",
     `5` = "sometimes",
     `6` = "only when necessary"
   ),
   mdurat7 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see CM#MED",
     `-1` = "no valid data / na, asked",
     `1` = "less than 1 month",
-    `2` = "1 month to 1 year",
-    `3` = "1 to 5 years",
+    default_answer_labels[c("2", "3")],
     `4` = "longer than 5 years / longer than 5 years 1"
   ),
   mdurat8 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see CM#MED",
     `-1` = "no valid data / na, asked",
     `1` = "less than 1 month",
-    `2` = "1 month to 1 year",
-    `3` = "1 to 5 years",
+    default_answer_labels[c("2", "3")],
     `4` = "longer than 5 years / longer than 5 years 1"
   ),
   mdurat9 = c(
     `-2` = "na, see G/H/B/B/I/J/KM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "less than 1 month",
-    `2` = "1 month to 1 year",
-    `3` = "1 to 5 years",
+    default_answer_labels[c("2", "3")],
     `4` = "longer than 5 years 1"
   ),
   mmeasu1 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -1456,7 +1542,7 @@ standardized_value_labels <- list(
   ),
   mmeasu10 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -1464,7 +1550,7 @@ standardized_value_labels <- list(
   ),
   mmeasu11 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -1472,7 +1558,7 @@ standardized_value_labels <- list(
   ),
   mmeasu12 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -1480,7 +1566,7 @@ standardized_value_labels <- list(
   ),
   mmeasu13 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -1488,7 +1574,7 @@ standardized_value_labels <- list(
   ),
   mmeasu14 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -1496,7 +1582,7 @@ standardized_value_labels <- list(
   ),
   mmeasu2 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -1506,7 +1592,7 @@ standardized_value_labels <- list(
   ),
   mmeasu3 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -1516,7 +1602,7 @@ standardized_value_labels <- list(
   ),
   mmeasu4 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -1526,7 +1612,7 @@ standardized_value_labels <- list(
   ),
   mmeasu5 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -1536,7 +1622,7 @@ standardized_value_labels <- list(
   ),
   mmeasu6 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -1546,7 +1632,7 @@ standardized_value_labels <- list(
   ),
   mmeasu7 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -1556,7 +1642,7 @@ standardized_value_labels <- list(
   ),
   mmeasu8 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -1566,7 +1652,7 @@ standardized_value_labels <- list(
   ),
   mmeasu9 = c(
     `-2` = "na, see G/HM#MED",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -1586,264 +1672,352 @@ standardized_value_labels <- list(
   mmed7 = stats::setNames(character(0), character(0)),
   mmed8 = stats::setNames(character(0), character(0)),
   mmed9 = stats::setNames(character(0), character(0)),
-  mmedbis = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  mmedbis = c(
+    `-5` = "na, interview terminated",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   mmedbisnm = stats::setNames(character(0), character(0)),
   mmedcaltab = c(
     `-5` = "na, interview terminated",
     `-2` = "no answer, skipped",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes"
   ),
-  mmedcort = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  mmedcort = c(
+    `-5` = "na, interview terminated",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   mmedcortnm = c(
     `-3` = "only once/ short cure / only once / short cure",
     `-2` = "na, see D/E/B/FMMEDCORT",
     `-1` = "R does not know period / na, asked / na, asked",
     `99` = "99 months or longer"
   ),
-  mmedcortnm1 = c(`-1` = "na, asked"),
-  mmedcortnm2 = c(`-2` = "na, no second corticosteroid", `-1` = "na, asked"),
+  mmedcortnm1 = c(
+    default_missing_labels[c("-1")]
+  ),
+  mmedcortnm2 = c(
+    `-2` = "na, no second corticosteroid",
+    default_missing_labels[c("-1")]
+  ),
   mmedfertab = c(
     `-5` = "na, interview terminated",
     `-2` = "no answer, skipped",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes"
   ),
-  mmednr1 = c(`-2` = "na, see BM#MED", `-1` = "na, asked"),
-  mmednr2 = c(`-2` = "na, see BM#MED", `-1` = "na, asked"),
-  mmednr3 = c(`-2` = "na, see BM#MED", `-1` = "na, asked"),
-  mmednr4 = c(`-2` = "na, see BM#MED", `-1` = "na, asked"),
-  mmednr5 = c(`-2` = "na, see BM#MED", `-1` = "na, asked"),
-  mmednr6 = c(`-2` = "na, see BM#MED", `-1` = "na, asked"),
-  mmednr7 = c(`-2` = "na, see CM#MED", `-1` = "na, asked"),
-  mmednr8 = c(`-2` = "na, see CM#MED", `-1` = "na, asked"),
+  mmednr1 = c(
+    `-2` = "na, see BM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  mmednr2 = c(
+    `-2` = "na, see BM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  mmednr3 = c(
+    `-2` = "na, see BM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  mmednr4 = c(
+    `-2` = "na, see BM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  mmednr5 = c(
+    `-2` = "na, see BM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  mmednr6 = c(
+    `-2` = "na, see BM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  mmednr7 = c(
+    `-2` = "na, see CM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  mmednr8 = c(
+    `-2` = "na, see CM#MED",
+    default_missing_labels[c("-1")]
+  ),
   mmeduse = c(
     `-5` = "na, interview terminated",
     `-2` = "no answer, skipped",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes"
   ),
-  mmedvitinj = c(`-2` = "no answer, skipped", `-1` = "no answer, asked", `1` = "no", `2` = "yes"),
+  mmedvitinj = c(
+    `-2` = "no answer, skipped",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   mmedvittab = c(
     `-5` = "na, interview terminated",
     `-2` = "no answer, skipped",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes"
   ),
-  mmeno82 = c(`-2` = "na, male respondent", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  mmeno82 = c(
+    `-2` = "na, male respondent",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   mmenonrm = c(`-2` = "na, see DMMENO82", `-1` = "R does not know period", `99` = "99 months or longer"),
   moes = stats::setNames(character(0), character(0)),
   moesatc = stats::setNames(character(0), character(0)),
-  moesnr = c(`-2` = "na, see DM#MED", `-1` = "na, asked"),
+  moesnr = c(
+    `-2` = "na, see DM#MED",
+    default_missing_labels[c("-1")]
+  ),
   mperio1 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
-    `1` = "day",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "5")],
     `2` = "week",
     `3` = "month",
     `4` = "for thrombosis",
-    `5` = "as required",
     `6` = "other kind of period"
   ),
   mperio10 = c(
     `-2` = "na, see G/H/B/B/I/J/KM#MED",
-    `-1` = "na, asked",
-    `1` = "day",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "5")],
     `2` = "week",
     `3` = "month",
     `4` = "for thrombosis",
-    `5` = "as required",
     `6` = "other kind of period"
   ),
   mperio11 = c(
     `-2` = "na, see G/H/B/B/I/J/KM#MED",
-    `-1` = "na, asked",
-    `1` = "day",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "5")],
     `2` = "week",
     `3` = "month",
     `4` = "for thrombosis",
-    `5` = "as required",
     `6` = "other kind of period"
   ),
   mperio12 = c(
     `-2` = "na, see G/H/B/B/I/J/KM#MED",
-    `-1` = "na, asked",
-    `1` = "day",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "5")],
     `2` = "week",
     `3` = "month",
     `4` = "for thrombosis",
-    `5` = "as required",
     `6` = "other kind of period"
   ),
   mperio13 = c(
     `-2` = "na, see G/H/B/B/I/J/KM#MED",
-    `-1` = "na, asked",
-    `1` = "day",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "5")],
     `2` = "week",
     `3` = "month",
     `4` = "for thrombosis",
-    `5` = "as required",
     `6` = "other kind of period"
   ),
   mperio14 = c(
     `-2` = "na, see G/H/B/B/I/J/KM#MED",
-    `-1` = "na, asked",
-    `1` = "day",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "5")],
     `2` = "week",
     `3` = "month",
     `4` = "for thrombosis",
-    `5` = "as required",
     `6` = "other kind of period"
   ),
   mperio2 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
-    `1` = "day",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "5")],
     `2` = "week",
     `3` = "month",
     `4` = "for thrombosis",
-    `5` = "as required",
     `6` = "other kind of period"
   ),
   mperio3 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
-    `1` = "day",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "5")],
     `2` = "week",
     `3` = "month",
     `4` = "for thrombosis",
-    `5` = "as required",
     `6` = "other kind of period"
   ),
   mperio4 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
-    `1` = "day",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "5")],
     `2` = "week",
     `3` = "month",
     `4` = "for thrombosis",
-    `5` = "as required",
     `6` = "other kind of period"
   ),
   mperio5 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
-    `1` = "day",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "5")],
     `2` = "week",
     `3` = "month",
     `4` = "for thrombosis",
-    `5` = "as required",
     `6` = "other kind of period"
   ),
   mperio6 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
-    `1` = "day",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "5")],
     `2` = "week",
     `3` = "month",
     `4` = "for thrombosis",
-    `5` = "as required",
     `6` = "other kind of period"
   ),
   mperio7 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
-    `1` = "day",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "5")],
     `2` = "week",
     `3` = "month",
     `4` = "for thrombosis",
-    `5` = "as required",
     `6` = "other kind of period"
   ),
   mperio8 = c(
     `-2` = "na, see D/E/B/FM#MED",
-    `-1` = "na, asked",
-    `1` = "day",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "5")],
     `2` = "week",
     `3` = "month",
     `4` = "for thrombosis",
-    `5` = "as required",
     `6` = "other kind of period"
   ),
   mperio9 = c(
     `-2` = "na, see G/H/B/B/I/J/KM#MED",
-    `-1` = "na, asked",
-    `1` = "day",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "5")],
     `2` = "week",
     `3` = "month",
     `4` = "for thrombosis",
-    `5` = "as required",
     `6` = "other kind of period"
   ),
-  mquant1 = c(`-3` = "na, wrong skip", `-2` = "na, see CM#MED", `-1` = "no valid data / na, asked"),
-  mquant10 = c(`-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked"),
-  mquant11 = c(`-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked"),
-  mquant12 = c(`-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked"),
-  mquant13 = c(`-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked"),
-  mquant14 = c(`-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked"),
-  mquant2 = c(`-3` = "na, wrong skip", `-2` = "na, see CM#MED", `-1` = "no valid data / na, asked"),
-  mquant3 = c(`-3` = "na, wrong skip", `-2` = "na, see CM#MED", `-1` = "no valid data / na, asked"),
-  mquant4 = c(`-3` = "na, wrong skip", `-2` = "na, see CM#MED", `-1` = "no valid data / na, asked"),
-  mquant5 = c(`-3` = "na, wrong skip", `-2` = "na, see CM#MED", `-1` = "no valid data / na, asked"),
-  mquant6 = c(`-3` = "na, wrong skip", `-2` = "na, see CM#MED", `-1` = "no valid data / na, asked"),
-  mquant7 = c(`-3` = "na, wrong skip", `-2` = "na, see CM#MED", `-1` = "no valid data / na, asked"),
-  mquant8 = c(`-3` = "na, wrong skip", `-2` = "na, see CM#MED", `-1` = "no valid data / na, asked"),
-  mquant9 = c(`-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked"),
+  mquant1 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CM#MED",
+    `-1` = "no valid data / na, asked"
+  ),
+  mquant10 = c(
+    `-2` = "na, see G/H/B/B/I/J/KM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  mquant11 = c(
+    `-2` = "na, see G/H/B/B/I/J/KM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  mquant12 = c(
+    `-2` = "na, see G/H/B/B/I/J/KM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  mquant13 = c(
+    `-2` = "na, see G/H/B/B/I/J/KM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  mquant14 = c(
+    `-2` = "na, see G/H/B/B/I/J/KM#MED",
+    default_missing_labels[c("-1")]
+  ),
+  mquant2 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CM#MED",
+    `-1` = "no valid data / na, asked"
+  ),
+  mquant3 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CM#MED",
+    `-1` = "no valid data / na, asked"
+  ),
+  mquant4 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CM#MED",
+    `-1` = "no valid data / na, asked"
+  ),
+  mquant5 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CM#MED",
+    `-1` = "no valid data / na, asked"
+  ),
+  mquant6 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CM#MED",
+    `-1` = "no valid data / na, asked"
+  ),
+  mquant7 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CM#MED",
+    `-1` = "no valid data / na, asked"
+  ),
+  mquant8 = c(
+    default_missing_labels[c("-3")],
+    `-2` = "na, see CM#MED",
+    `-1` = "no valid data / na, asked"
+  ),
+  mquant9 = c(
+    `-2` = "na, see G/H/B/B/I/J/KM#MED",
+    default_missing_labels[c("-1")]
+  ),
   mtad1 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see CM#MED",
     `-1` = "no valid data",
     `98` = "less than once a day",
     `99` = "if necessary"
   ),
   mtad2 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see CM#MED",
     `-1` = "no valid data",
     `98` = "less than once a day",
     `99` = "if necessary"
   ),
   mtad3 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see CM#MED",
     `-1` = "no valid data",
     `98` = "less than once a day",
     `99` = "if necessary"
   ),
   mtad4 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see CM#MED",
     `-1` = "no valid data",
     `98` = "less than once a day",
     `99` = "if necessary"
   ),
   mtad5 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see CM#MED",
     `-1` = "no valid data",
     `98` = "less than once a day",
     `99` = "if necessary"
   ),
   mtad6 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see CM#MED",
     `-1` = "no valid data",
     `98` = "less than once a day",
     `99` = "if necessary"
   ),
   mtad7 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see CM#MED",
     `-1` = "no valid data",
     `98` = "less than once a day",
     `99` = "if necessary"
   ),
   mtad8 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see CM#MED",
     `-1` = "no valid data",
     `98` = "less than once a day",
@@ -1853,7 +2027,7 @@ standardized_value_labels <- list(
   mvit2 = stats::setNames(character(0), character(0)),
   mvit3 = stats::setNames(character(0), character(0)),
   mvitfr1 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "less than one day a week",
     `2` = "1-2 days a week",
     `3` = "3-4 days a week",
@@ -1862,7 +2036,7 @@ standardized_value_labels <- list(
   ),
   mvitfr2 = c(
     `-2` = "na, no second vitamin",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "less than one day a week",
     `2` = "1-2 days a week",
     `3` = "3-4 days a week",
@@ -1871,7 +2045,7 @@ standardized_value_labels <- list(
   ),
   mvitfr3 = c(
     `-2` = "na, no third vitamin",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "less than one day a week",
     `2` = "1-2 days a week",
     `3` = "3-4 days a week",
@@ -1882,32 +2056,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "m#med",
-    "mdos1",
-    "mdos2",
-    "mdos3",
-    "mdos4",
-    "mdos5",
-    "mdos6",
-    "mdurat1",
-    "mdurat2",
-    "mdurat3",
-    "mdurat4",
-    "mdurat5",
-    "mdurat6",
-    "mmedcaltab",
-    "mmedfertab",
-    "mmednr1",
-    "mmednr2",
-    "mmednr3",
-    "mmednr4",
-    "mmednr5",
-    "mmednr6",
-    "mmeduse",
-    "mmedvitinj",
-    "mmedvittab"
-  )],
+    standardized_value_labels,
     `m#med` = c(`-3` = "na, wrong skip", `-2` = "na, see BMMEDUSE"),
     mdurat1 = .replace_labels(
     standardized_value_labels$mdurat1,
@@ -1951,47 +2100,7 @@ value_labels_list <- list(
     mmedvittab = c(`-2` = "no answer, skipped", `-1` = "no answer, asked", `1` = "no", `2` = "yes")
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "m#med",
-    "mdurat1",
-    "mdurat2",
-    "mdurat3",
-    "mdurat4",
-    "mdurat5",
-    "mdurat6",
-    "mdurat7",
-    "mdurat8",
-    "mmedbis",
-    "mmedcaltab",
-    "mmedcort",
-    "mmedfertab",
-    "mmednr1",
-    "mmednr2",
-    "mmednr3",
-    "mmednr4",
-    "mmednr5",
-    "mmednr6",
-    "mmednr7",
-    "mmednr8",
-    "mmeduse",
-    "mmedvittab",
-    "mquant1",
-    "mquant2",
-    "mquant3",
-    "mquant4",
-    "mquant5",
-    "mquant6",
-    "mquant7",
-    "mquant8",
-    "mtad1",
-    "mtad2",
-    "mtad3",
-    "mtad4",
-    "mtad5",
-    "mtad6",
-    "mtad7",
-    "mtad8"
-  )],
+    standardized_value_labels,
     `m#med` = c(`-2` = "na, see CMMEDUSE"),
     mdurat1 = c(
     `-3` = "na, wrong skip",
@@ -2119,67 +2228,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "m#med",
-    "m#timp1",
-    "m#timp2",
-    "m#timp3",
-    "m#timp4",
-    "m#timp5",
-    "m#timp6",
-    "m#timp7",
-    "m#timp8",
-    "mbffnr",
-    "mccsnr",
-    "mdurat1",
-    "mdurat2",
-    "mdurat3",
-    "mdurat4",
-    "mdurat5",
-    "mdurat6",
-    "mdurat7",
-    "mdurat8",
-    "mmeasu1",
-    "mmeasu2",
-    "mmeasu3",
-    "mmeasu4",
-    "mmeasu5",
-    "mmeasu6",
-    "mmeasu7",
-    "mmeasu8",
-    "mmedbis",
-    "mmedcort",
-    "mmedcortnm",
-    "mmednr1",
-    "mmednr2",
-    "mmednr3",
-    "mmednr4",
-    "mmednr5",
-    "mmednr6",
-    "mmednr7",
-    "mmednr8",
-    "mmeduse",
-    "mmedvittab",
-    "mmeno82",
-    "mmenonrm",
-    "moesnr",
-    "mperio1",
-    "mperio2",
-    "mperio3",
-    "mperio4",
-    "mperio5",
-    "mperio6",
-    "mperio7",
-    "mperio8",
-    "mquant1",
-    "mquant2",
-    "mquant3",
-    "mquant4",
-    "mquant5",
-    "mquant6",
-    "mquant7",
-    "mquant8"
-  )],
+    standardized_value_labels,
     `m#med` = c(`0` = "no medicines"),
     mdurat1 = c(
     `-2` = "na, see D/E/B/FM#MED",
@@ -2360,63 +2409,7 @@ value_labels_list <- list(
     mquant8 = c(`-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked")
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "m#med",
-    "m#timp1",
-    "m#timp2",
-    "m#timp3",
-    "m#timp4",
-    "m#timp5",
-    "m#timp6",
-    "m#timp7",
-    "m#timp8",
-    "mbffnr",
-    "mccsnr",
-    "mdurat1",
-    "mdurat2",
-    "mdurat3",
-    "mdurat4",
-    "mdurat5",
-    "mdurat6",
-    "mdurat7",
-    "mdurat8",
-    "mmeasu1",
-    "mmeasu2",
-    "mmeasu3",
-    "mmeasu4",
-    "mmeasu5",
-    "mmeasu6",
-    "mmeasu7",
-    "mmeasu8",
-    "mmedbis",
-    "mmedcort",
-    "mmedcortnm",
-    "mmednr1",
-    "mmednr2",
-    "mmednr3",
-    "mmednr4",
-    "mmednr5",
-    "mmednr6",
-    "mmednr7",
-    "mmednr8",
-    "mmeduse",
-    "mperio1",
-    "mperio2",
-    "mperio3",
-    "mperio4",
-    "mperio5",
-    "mperio6",
-    "mperio7",
-    "mperio8",
-    "mquant1",
-    "mquant2",
-    "mquant3",
-    "mquant4",
-    "mquant5",
-    "mquant6",
-    "mquant7",
-    "mquant8"
-  )],
+    standardized_value_labels,
     `m#med` = c(`0` = "no medicines"),
     mdurat1 = c(
     `-2` = "na, see D/E/B/FM#MED",
@@ -2596,61 +2589,7 @@ value_labels_list <- list(
     mquant8 = c(`-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked")
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "m#med",
-    "m#timp1",
-    "m#timp2",
-    "m#timp3",
-    "m#timp4",
-    "m#timp5",
-    "m#timp6",
-    "m#timp7",
-    "m#timp8",
-    "mccsnr",
-    "mdurat1",
-    "mdurat2",
-    "mdurat3",
-    "mdurat4",
-    "mdurat5",
-    "mdurat6",
-    "mdurat7",
-    "mdurat8",
-    "mmeasu1",
-    "mmeasu2",
-    "mmeasu3",
-    "mmeasu4",
-    "mmeasu5",
-    "mmeasu6",
-    "mmeasu7",
-    "mmeasu8",
-    "mmedcort",
-    "mmedcortnm",
-    "mmednr1",
-    "mmednr2",
-    "mmednr3",
-    "mmednr4",
-    "mmednr5",
-    "mmednr6",
-    "mmednr7",
-    "mmednr8",
-    "mmeduse",
-    "mperio1",
-    "mperio2",
-    "mperio3",
-    "mperio4",
-    "mperio5",
-    "mperio6",
-    "mperio7",
-    "mperio8",
-    "mquant1",
-    "mquant2",
-    "mquant3",
-    "mquant4",
-    "mquant5",
-    "mquant6",
-    "mquant7",
-    "mquant8"
-  )],
+    standardized_value_labels,
     `m#med` = c(`0` = "no medicines"),
     mdurat1 = c(
     `-2` = "na, see D/E/B/FM#MED",
@@ -2829,61 +2768,7 @@ value_labels_list <- list(
     mquant8 = c(`-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked")
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "m#med",
-    "m#timp1",
-    "m#timp2",
-    "m#timp3",
-    "m#timp4",
-    "m#timp5",
-    "m#timp6",
-    "m#timp7",
-    "m#timp8",
-    "mccsnr",
-    "mdurat1",
-    "mdurat2",
-    "mdurat3",
-    "mdurat4",
-    "mdurat5",
-    "mdurat6",
-    "mdurat7",
-    "mdurat8",
-    "mmeasu1",
-    "mmeasu2",
-    "mmeasu3",
-    "mmeasu4",
-    "mmeasu5",
-    "mmeasu6",
-    "mmeasu7",
-    "mmeasu8",
-    "mmedcort",
-    "mmedcortnm",
-    "mmednr1",
-    "mmednr2",
-    "mmednr3",
-    "mmednr4",
-    "mmednr5",
-    "mmednr6",
-    "mmednr7",
-    "mmednr8",
-    "mmeduse",
-    "mperio1",
-    "mperio2",
-    "mperio3",
-    "mperio4",
-    "mperio5",
-    "mperio6",
-    "mperio7",
-    "mperio8",
-    "mquant1",
-    "mquant2",
-    "mquant3",
-    "mquant4",
-    "mquant5",
-    "mquant6",
-    "mquant7",
-    "mquant8"
-  )],
+    standardized_value_labels,
     `m#med` = c(`0` = "no medicines"),
     mdurat1 = c(
     `-2` = "na, see D/E/B/FM#MED",
@@ -3062,83 +2947,7 @@ value_labels_list <- list(
     mquant8 = c(`-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked")
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "drinking",
-    "m#med",
-    "m#timp1",
-    "m#timp10",
-    "m#timp2",
-    "m#timp3",
-    "m#timp4",
-    "m#timp5",
-    "m#timp6",
-    "m#timp7",
-    "m#timp8",
-    "m#timp9",
-    "matc1",
-    "matc10",
-    "matc2",
-    "matc3",
-    "matc4",
-    "matc5",
-    "matc6",
-    "matc7",
-    "matc8",
-    "matc9",
-    "mdform1",
-    "mdform10",
-    "mdform2",
-    "mdform3",
-    "mdform4",
-    "mdform5",
-    "mdform6",
-    "mdform7",
-    "mdform8",
-    "mdform9",
-    "mdurat1",
-    "mdurat10",
-    "mdurat2",
-    "mdurat3",
-    "mdurat4",
-    "mdurat5",
-    "mdurat6",
-    "mdurat7",
-    "mdurat8",
-    "mdurat9",
-    "mmeasu1",
-    "mmeasu10",
-    "mmeasu2",
-    "mmeasu3",
-    "mmeasu4",
-    "mmeasu5",
-    "mmeasu6",
-    "mmeasu7",
-    "mmeasu8",
-    "mmeasu9",
-    "mmedcort",
-    "mmedcortnm",
-    "mmeduse",
-    "mperio1",
-    "mperio10",
-    "mperio2",
-    "mperio3",
-    "mperio4",
-    "mperio5",
-    "mperio6",
-    "mperio7",
-    "mperio8",
-    "mperio9",
-    "mquant1",
-    "mquant10",
-    "mquant2",
-    "mquant3",
-    "mquant4",
-    "mquant5",
-    "mquant6",
-    "mquant7",
-    "mquant8",
-    "mquant9"
-  )],
+    standardized_value_labels,
     `m#med` = c(`0` = "no medicines"),
     `m#timp1` = .replace_labels(
     standardized_value_labels$`m#timp1`,
@@ -3449,110 +3258,7 @@ value_labels_list <- list(
     mquant8 = c(`-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked")
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "drinking",
-    "m#med",
-    "m#timp1",
-    "m#timp10",
-    "m#timp11",
-    "m#timp12",
-    "m#timp13",
-    "m#timp14",
-    "m#timp2",
-    "m#timp3",
-    "m#timp4",
-    "m#timp5",
-    "m#timp6",
-    "m#timp7",
-    "m#timp8",
-    "m#timp9",
-    "matc1",
-    "matc10",
-    "matc11",
-    "matc12",
-    "matc13",
-    "matc14",
-    "matc2",
-    "matc3",
-    "matc4",
-    "matc5",
-    "matc6",
-    "matc7",
-    "matc8",
-    "matc9",
-    "mdform1",
-    "mdform10",
-    "mdform11",
-    "mdform12",
-    "mdform13",
-    "mdform14",
-    "mdform2",
-    "mdform3",
-    "mdform4",
-    "mdform5",
-    "mdform6",
-    "mdform7",
-    "mdform8",
-    "mdform9",
-    "mdurat1",
-    "mdurat10",
-    "mdurat11",
-    "mdurat12",
-    "mdurat13",
-    "mdurat14",
-    "mdurat2",
-    "mdurat3",
-    "mdurat4",
-    "mdurat5",
-    "mdurat6",
-    "mdurat7",
-    "mdurat8",
-    "mdurat9",
-    "mmeasu1",
-    "mmeasu10",
-    "mmeasu11",
-    "mmeasu12",
-    "mmeasu13",
-    "mmeasu14",
-    "mmeasu2",
-    "mmeasu3",
-    "mmeasu4",
-    "mmeasu5",
-    "mmeasu6",
-    "mmeasu7",
-    "mmeasu8",
-    "mmeasu9",
-    "mmedcort",
-    "mmeduse",
-    "mperio1",
-    "mperio10",
-    "mperio11",
-    "mperio12",
-    "mperio13",
-    "mperio14",
-    "mperio2",
-    "mperio3",
-    "mperio4",
-    "mperio5",
-    "mperio6",
-    "mperio7",
-    "mperio8",
-    "mperio9",
-    "mquant1",
-    "mquant10",
-    "mquant11",
-    "mquant12",
-    "mquant13",
-    "mquant14",
-    "mquant2",
-    "mquant3",
-    "mquant4",
-    "mquant5",
-    "mquant6",
-    "mquant7",
-    "mquant8",
-    "mquant9"
-  )],
+    standardized_value_labels,
     `m#med` = c(`0` = "no medicines"),
     `m#timp1` = .replace_labels(
     standardized_value_labels$`m#timp1`,
@@ -3862,76 +3568,7 @@ value_labels_list <- list(
     mquant8 = c(`-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked")
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "drinking",
-    "m#med",
-    "m#timp1",
-    "m#timp2",
-    "m#timp3",
-    "m#timp4",
-    "m#timp5",
-    "m#timp6",
-    "m#timp7",
-    "m#timp8",
-    "matc1",
-    "matc2",
-    "matc3",
-    "matc4",
-    "matc5",
-    "matc6",
-    "matc7",
-    "matc8",
-    "mcalcfr",
-    "mdform1",
-    "mdform2",
-    "mdform3",
-    "mdform4",
-    "mdform5",
-    "mdform6",
-    "mdform7",
-    "mdform8",
-    "mdurat1",
-    "mdurat2",
-    "mdurat3",
-    "mdurat4",
-    "mdurat5",
-    "mdurat6",
-    "mdurat7",
-    "mdurat8",
-    "mmeasu1",
-    "mmeasu2",
-    "mmeasu3",
-    "mmeasu4",
-    "mmeasu5",
-    "mmeasu6",
-    "mmeasu7",
-    "mmeasu8",
-    "mmedcaltab",
-    "mmedcort",
-    "mmedcortnm1",
-    "mmedcortnm2",
-    "mmeduse",
-    "mmedvittab",
-    "mperio1",
-    "mperio2",
-    "mperio3",
-    "mperio4",
-    "mperio5",
-    "mperio6",
-    "mperio7",
-    "mperio8",
-    "mquant1",
-    "mquant2",
-    "mquant3",
-    "mquant4",
-    "mquant5",
-    "mquant6",
-    "mquant7",
-    "mquant8",
-    "mvitfr1",
-    "mvitfr2",
-    "mvitfr3"
-  )],
+    standardized_value_labels,
     `m#med` = c(`-2` = "na, see B/I/J/KMMEDUSE", `0` = "no medicines"),
     `m#timp1` = .replace_labels(
     standardized_value_labels$`m#timp1`,
@@ -4155,7 +3792,7 @@ value_labels_list <- list(
     mquant8 = c(`-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked")
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c("drinking", "m#timp1", "mdform1", "mdurat1", "mmeasu1", "mmeduse", "mperio1", "mquant1")],
+    standardized_value_labels,
     `m#timp1` = .replace_labels(
     standardized_value_labels$`m#timp1`,
     `-2` = "na, see G/H/B/B/I/J/KM#MED"
@@ -4186,18 +3823,7 @@ value_labels_list <- list(
     mquant1 = c(`-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "drinking",
-    "m#med",
-    "m#timp1",
-    "matc1",
-    "mdform1",
-    "mdurat1",
-    "mmeasu1",
-    "mmeduse",
-    "mperio1",
-    "mquant1"
-  )],
+    standardized_value_labels,
     `m#med` = c(`-2` = "na, see B/I/J/KMMEDUSE", `0` = "no medicines"),
     `m#timp1` = .replace_labels(
     standardized_value_labels$`m#timp1`,
@@ -4229,18 +3855,7 @@ value_labels_list <- list(
     mquant1 = c(`-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked")
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "drinking",
-    "m#med",
-    "m#timp1",
-    "matc1",
-    "mdform1",
-    "mdurat1",
-    "mmeasu1",
-    "mmeduse",
-    "mperio1",
-    "mquant1"
-  )],
+    standardized_value_labels,
     `m#med` = c(`-2` = "na, see B/I/J/KMMEDUSE", `0` = "no medicines"),
     `m#timp1` = .replace_labels(
     standardized_value_labels$`m#timp1`,
@@ -4272,18 +3887,7 @@ value_labels_list <- list(
     mquant1 = c(`-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked")
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "drinking",
-    "m#med",
-    "m#timp1",
-    "matc1",
-    "mdform1",
-    "mdurat1",
-    "mmeasu1",
-    "mmeduse",
-    "mperio1",
-    "mquant1"
-  )],
+    standardized_value_labels,
     `m#med` = c(`-2` = "na, see B/I/J/KMMEDUSE", `0` = "no medicines"),
     `m#timp1` = .replace_labels(
     standardized_value_labels$`m#timp1`,
@@ -4490,7 +4094,7 @@ var_types_vec <- c(
   mvitfr3 = "categorical"
 )
 
-.lasa_fc_152 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "152", waves = .lasa_wave_rows()) |>
     .override_label(wave = "G", variable = "drinking", override_value = "drinking") |>
     .override_label(wave = "H", variable = "drinking", override_value = "drinking") |>
@@ -4503,3 +4107,173 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "152", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "152", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["matc1"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["matc2"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["matc3"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["matc4"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["matc5"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["matc6"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mmed1"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mmed2"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mmed3"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mmed4"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mmed5"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mmed6"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["matc1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["matc2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["matc3"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["matc4"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["matc5"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["matc6"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["matc7"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["matc8"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmeasu1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmeasu2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmeasu3"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmeasu4"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmeasu5"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmeasu6"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmeasu7"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmeasu8"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmed1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmed2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmed3"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmed4"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmed5"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmed6"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmed7"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mmed8"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["matc1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["matc2"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["matc3"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["matc4"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["matc5"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["matc6"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["matc7"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["matc8"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mbff"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mbffatc"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mccs"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mccsatc"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mmed1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mmed2"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mmed3"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mmed4"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mmed5"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mmed6"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mmed7"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mmed8"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mmedbisnm"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mmedcaltab"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mmedfertab"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["moes"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["moesatc"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["matc1"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["matc2"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["matc3"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["matc4"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["matc5"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["matc6"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["matc7"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["matc8"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mbff"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mbffatc"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mccs"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mccsatc"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mmed1"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mmed2"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mmed3"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mmed4"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mmed5"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mmed6"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mmed7"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mmed8"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mmedbisnm"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["matc1"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["matc2"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["matc3"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["matc4"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["matc5"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["matc6"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["matc7"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["matc8"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mccs"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mccsatc"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mmed1"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mmed2"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mmed3"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mmed4"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mmed5"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mmed6"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mmed7"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mmed8"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["matc1"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["matc2"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["matc3"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["matc4"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["matc5"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["matc6"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["matc7"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["matc8"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["mccs"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["mccsatc"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["mmed1"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["mmed2"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["mmed3"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["mmed4"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["mmed5"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["mmed6"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["mmed7"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["mmed8"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["mccs"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mccsatc"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mmed1"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mmed10"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mmed2"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mmed3"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mmed4"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mmed5"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mmed6"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mmed7"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mmed8"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mmed9"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mmed1"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mmed10"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mmed11"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mmed12"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mmed13"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mmed14"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mmed2"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mmed3"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mmed4"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mmed5"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mmed6"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mmed7"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mmed8"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mmed9"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mccs1"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mccs2"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mccsatc1"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mccsatc2"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mdairy"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mmed1"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mmed2"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mmed3"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mmed4"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mmed5"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mmed6"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mmed7"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mmed8"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mvit1"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mvit2"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mvit3"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["matc1"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["mmed1"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["mvit3"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["mmed1"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["mmed1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["mmed1"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+
+.lasa_fc_152 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

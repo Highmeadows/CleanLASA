@@ -47,9 +47,12 @@ harmonized_labels <- c(
   mrmeol = "Reason for missing end-of-life answers"
 )
 
-variable_labels_list <- list(
-  Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `F` = c(
     "meol01",
     "meol02",
     "meol03",
@@ -76,18 +79,8 @@ variable_labels_list <- list(
     "meol44",
     "meol45",
     "mrmeol"
-  )],
-    meol01 = "Trust in doctors for good care in EOL",
-    meol02 = "Trust in doctors for EOL-wishes",
-    meol03 = "Discussed EOL-wishes with doctor",
-    meol04 = "# persons talked to about EOL-wishes",
-    meol05 = "Indication (verbal/written)",
-    meol06 = "(standard) End-of-life declaration",
-    meol14 = "# circumstances taking suicide medication",
-    mrmeol = "reason missing eol-answers"
   ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
+  `G` = c(
     "meol01",
     "meol02",
     "meol03",
@@ -100,17 +93,8 @@ variable_labels_list <- list(
     "meol44",
     "meol45",
     "mrmeol"
-  )],
-    meol01 = "Trust in doctors for good care in EOL",
-    meol02 = "Trust in doctors for EOL-wishes",
-    meol03 = "Discussed EOL-wishes with doctor",
-    meol04 = "# persons talked to about EOL-wishes",
-    meol05 = "Indication (verbal/written)",
-    meol06 = "(standard) End-of-life declaration",
-    mrmeol = "reason missing eol-answers"
   ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+  `H` = c(
     "meol01",
     "meol02",
     "meol03",
@@ -134,7 +118,106 @@ variable_labels_list <- list(
     "meol610",
     "meol611",
     "mrmeol"
-  )],
+  ),
+  `I` = c(
+    "meol01",
+    "meol02",
+    "meol03",
+    "meol04",
+    "meol05",
+    "meol06",
+    "meol41",
+    "meol42",
+    "meol43",
+    "meol44",
+    "meol45",
+    "meol601",
+    "meol602",
+    "meol603",
+    "meol604",
+    "meol605",
+    "meol606",
+    "meol607",
+    "meol608",
+    "meol609",
+    "meol610",
+    "meol611",
+    "meol612",
+    "mrmeol"
+  ),
+  `J` = c(
+    "meol01",
+    "meol02",
+    "meol03",
+    "meol04",
+    "meol05",
+    "meol06",
+    "meol41",
+    "meol42",
+    "meol43",
+    "meol44",
+    "meol45",
+    "meol601",
+    "meol602",
+    "meol603",
+    "meol604",
+    "meol605",
+    "meol606",
+    "meol607",
+    "meol608",
+    "meol609",
+    "meol610",
+    "meol611",
+    "meol612",
+    "mrmeol"
+  ),
+  `K` = c(
+    "meol01",
+    "meol02",
+    "meol03",
+    "meol04",
+    "meol05",
+    "meol06",
+    "meol41",
+    "meol42",
+    "meol43",
+    "meol44",
+    "meol45",
+    "meol601",
+    "meol602",
+    "meol603",
+    "meol604",
+    "meol605",
+    "meol606",
+    "meol607",
+    "mrmeol"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_F_labels = .replace_labels(
+    harmonized_labels,
+    meol01 = "Trust in doctors for good care in EOL",
+    meol02 = "Trust in doctors for EOL-wishes",
+    meol03 = "Discussed EOL-wishes with doctor",
+    meol04 = "# persons talked to about EOL-wishes",
+    meol05 = "Indication (verbal/written)",
+    meol06 = "(standard) End-of-life declaration",
+    meol14 = "# circumstances taking suicide medication",
+    mrmeol = "reason missing eol-answers"
+  ),
+  Wave_G_labels = .replace_labels(
+    harmonized_labels,
+    meol01 = "Trust in doctors for good care in EOL",
+    meol02 = "Trust in doctors for EOL-wishes",
+    meol03 = "Discussed EOL-wishes with doctor",
+    meol04 = "# persons talked to about EOL-wishes",
+    meol05 = "Indication (verbal/written)",
+    meol06 = "(standard) End-of-life declaration",
+    mrmeol = "reason missing eol-answers"
+  ),
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
     meol01 = "Trust in doctors for good care in EOL",
     meol02 = "Trust in doctors for EOL-wishes",
     meol03 = "Discussed EOL-wishes with doctor",
@@ -147,32 +230,7 @@ variable_labels_list <- list(
     mrmeol = "reason missing EOL-answers"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
-    "meol01",
-    "meol02",
-    "meol03",
-    "meol04",
-    "meol05",
-    "meol06",
-    "meol41",
-    "meol42",
-    "meol43",
-    "meol44",
-    "meol45",
-    "meol601",
-    "meol602",
-    "meol603",
-    "meol604",
-    "meol605",
-    "meol606",
-    "meol607",
-    "meol608",
-    "meol609",
-    "meol610",
-    "meol611",
-    "meol612",
-    "mrmeol"
-  )],
+    harmonized_labels,
     meol01 = "Trust in doctors for good care in EOL",
     meol02 = "Trust in doctors for EOL-wishes",
     meol03 = "Discussed EOL-wishes with doctor",
@@ -185,32 +243,7 @@ variable_labels_list <- list(
     mrmeol = "reason missing EOL-answers"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
-    "meol01",
-    "meol02",
-    "meol03",
-    "meol04",
-    "meol05",
-    "meol06",
-    "meol41",
-    "meol42",
-    "meol43",
-    "meol44",
-    "meol45",
-    "meol601",
-    "meol602",
-    "meol603",
-    "meol604",
-    "meol605",
-    "meol606",
-    "meol607",
-    "meol608",
-    "meol609",
-    "meol610",
-    "meol611",
-    "meol612",
-    "mrmeol"
-  )],
+    harmonized_labels,
     meol01 = "Trust in doctors for good care in EOL",
     meol02 = "Trust in doctors for EOL-wishes",
     meol03 = "Discussed EOL-wishes with doctor",
@@ -223,27 +256,7 @@ variable_labels_list <- list(
     mrmeol = "reason missing EOL-answers"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
-    "meol01",
-    "meol02",
-    "meol03",
-    "meol04",
-    "meol05",
-    "meol06",
-    "meol41",
-    "meol42",
-    "meol43",
-    "meol44",
-    "meol45",
-    "meol601",
-    "meol602",
-    "meol603",
-    "meol604",
-    "meol605",
-    "meol606",
-    "meol607",
-    "mrmeol"
-  )],
+    harmonized_labels,
     meol01 = "trust in doctors for good care in EOL",
     meol02 = "trust in doctors for EOL-wishes",
     meol03 = "discussed EOL-wishes with doctor",
@@ -267,10 +280,17 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "mentioned"
+)
+
 standardized_value_labels <- list(
   meol01 = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "trust: very strong",
     `2` = "quite strong",
     `3` = "not much",
@@ -279,14 +299,20 @@ standardized_value_labels <- list(
   ),
   meol02 = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "trust: very strong",
     `2` = "quite strong",
     `3` = "not much",
     `4` = "not at all",
     `5` = "no opinion"
   ),
-  meol03 = c(`-2` = "no valid data", `-1` = "na, asked", `1` = "yes", `2` = "no", `3` = "R does not know"),
+  meol03 = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")],
+    `1` = "yes",
+    `2` = "no",
+    `3` = "R does not know"
+  ),
   meol04 = c(
     `-2` = "no valid data",
     `-1` = "does not know / no valid count",
@@ -294,7 +320,7 @@ standardized_value_labels <- list(
   ),
   meol05 = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "yes, exclusively written",
     `2` = "yes, excl. verbal",
     `3` = "yes, written and verbal",
@@ -320,32 +346,44 @@ standardized_value_labels <- list(
     `12` = "recorded value 12",
     `13` = "recorded value 13"
   ),
-  meol07 = c(`-2` = "no valid data", `-1` = "na, asked", `1` = "yes", `2` = "no", `3` = "R does not know"),
-  meol08 = c(`-2` = "no valid data", `-1` = "na, asked", `1` = "yes", `2` = "no", `3` = "R does not know"),
+  meol07 = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")],
+    `1` = "yes",
+    `2` = "no",
+    `3` = "R does not know"
+  ),
+  meol08 = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")],
+    `1` = "yes",
+    `2` = "no",
+    `3` = "R does not know"
+  ),
   meol09 = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "a moderate to strong wish to live",
     `2` = "a weak wish to live",
     `3` = "no wish to live"
   ),
   meol10 = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no wish to die",
     `2` = "a weak wish to die",
     `3` = "a moderate to strong wish to die"
   ),
   meol11 = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "for living outweigh those for dying",
     `2` = "about equal",
     `3` = "for dying outweigh those for living"
   ),
   meol12 = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "yes",
     `2` = "maybe",
     `3` = "no",
@@ -353,36 +391,132 @@ standardized_value_labels <- list(
   ),
   meol13 = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "yes",
     `2` = "maybe",
     `3` = "no",
     `4` = "R does not know"
   ),
-  meol14 = c(`-2` = "no valid data", `-1` = "na, asked"),
-  meol141 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol142 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol143 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol144 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol145 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol15 = c(`-2` = "no valid data", `-1` = "na, asked", `1` = "yes, because…", `2` = "no"),
-  meol41 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol42 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol43 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol44 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol45 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol601 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol602 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol603 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol604 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol605 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol606 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol607 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol608 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol609 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol610 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol611 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  meol612 = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
+  meol14 = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
+  meol141 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol142 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol143 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol144 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol145 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol15 = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")],
+    `1` = "yes, because\342\200\246",
+    `2` = "no"
+  ),
+  meol41 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol42 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol43 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol44 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol45 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol601 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol602 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol603 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol604 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol605 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol606 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol607 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol608 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol609 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol610 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol611 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  meol612 = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mrmeol = c(
     `-2` = "valid score",
     `1` = "short version",
@@ -398,34 +532,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "meol01",
-    "meol02",
-    "meol03",
-    "meol04",
-    "meol05",
-    "meol06",
-    "meol07",
-    "meol08",
-    "meol09",
-    "meol10",
-    "meol11",
-    "meol12",
-    "meol13",
-    "meol14",
-    "meol141",
-    "meol142",
-    "meol143",
-    "meol144",
-    "meol145",
-    "meol15",
-    "meol41",
-    "meol42",
-    "meol43",
-    "meol44",
-    "meol45",
-    "mrmeol"
-  )],
+    standardized_value_labels,
     meol01 = .replace_labels(
     standardized_value_labels$meol01,
     `-2` = "na, see FMRMEOL"
@@ -542,20 +649,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "meol01",
-    "meol02",
-    "meol03",
-    "meol04",
-    "meol05",
-    "meol06",
-    "meol41",
-    "meol42",
-    "meol43",
-    "meol44",
-    "meol45",
-    "mrmeol"
-  )],
+    standardized_value_labels,
     meol01 = .replace_labels(
     standardized_value_labels$meol01,
     `-2` = "na, see GMRMEOL"
@@ -616,31 +710,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "meol01",
-    "meol02",
-    "meol03",
-    "meol04",
-    "meol05",
-    "meol06",
-    "meol41",
-    "meol42",
-    "meol43",
-    "meol44",
-    "meol45",
-    "meol601",
-    "meol602",
-    "meol603",
-    "meol604",
-    "meol605",
-    "meol606",
-    "meol607",
-    "meol608",
-    "meol609",
-    "meol610",
-    "meol611",
-    "mrmeol"
-  )],
+    standardized_value_labels,
     meol01 = .replace_labels(
     standardized_value_labels$meol01,
     `-2` = "na, see HMRMEOL"
@@ -731,32 +801,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "meol01",
-    "meol02",
-    "meol03",
-    "meol04",
-    "meol05",
-    "meol06",
-    "meol41",
-    "meol42",
-    "meol43",
-    "meol44",
-    "meol45",
-    "meol601",
-    "meol602",
-    "meol603",
-    "meol604",
-    "meol605",
-    "meol606",
-    "meol607",
-    "meol608",
-    "meol609",
-    "meol610",
-    "meol611",
-    "meol612",
-    "mrmeol"
-  )],
+    standardized_value_labels,
     meol01 = .replace_labels(
     standardized_value_labels$meol01,
     `-2` = "na, see IMRMEOL"
@@ -855,32 +900,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "meol01",
-    "meol02",
-    "meol03",
-    "meol04",
-    "meol05",
-    "meol06",
-    "meol41",
-    "meol42",
-    "meol43",
-    "meol44",
-    "meol45",
-    "meol601",
-    "meol602",
-    "meol603",
-    "meol604",
-    "meol605",
-    "meol606",
-    "meol607",
-    "meol608",
-    "meol609",
-    "meol610",
-    "meol611",
-    "meol612",
-    "mrmeol"
-  )],
+    standardized_value_labels,
     meol01 = .replace_labels(
     standardized_value_labels$meol01,
     `-2` = "na, see JMRMEOL"
@@ -979,27 +999,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "meol01",
-    "meol02",
-    "meol03",
-    "meol04",
-    "meol05",
-    "meol06",
-    "meol41",
-    "meol42",
-    "meol43",
-    "meol44",
-    "meol45",
-    "meol601",
-    "meol602",
-    "meol603",
-    "meol604",
-    "meol605",
-    "meol606",
-    "meol607",
-    "mrmeol"
-  )],
+    standardized_value_labels,
     meol01 = .replace_labels(
     standardized_value_labels$meol01,
     `-2` = "na, see KMRMEOL",
@@ -1129,9 +1129,12 @@ var_types_vec <- c(
   mrmeol = "categorical"
 )
 
-.lasa_fc_195 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "195", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "195", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "195", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "195", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_195 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

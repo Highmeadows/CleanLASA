@@ -32,196 +32,171 @@ harmonized_labels <- c(
   ptsd23 = "23. Last 4 weeks: daily activities"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `D` = c(
+    "ptsd01",
+    "ptsd02",
+    "ptsd03",
+    "ptsd04",
+    "ptsd05",
+    "ptsd06",
+    "ptsd07",
+    "ptsd08",
+    "ptsd09",
+    "ptsd10",
+    "ptsd11",
+    "ptsd12",
+    "ptsd13",
+    "ptsd14",
+    "ptsd15",
+    "ptsd16",
+    "ptsd17",
+    "ptsd18",
+    "ptsd19",
+    "ptsd20",
+    "ptsd21",
+    "ptsd22",
+    "ptsd23"
+  ),
+  `E` = c(
+    "ptsd01",
+    "ptsd02",
+    "ptsd03",
+    "ptsd04",
+    "ptsd05",
+    "ptsd06",
+    "ptsd07",
+    "ptsd08",
+    "ptsd09",
+    "ptsd10",
+    "ptsd11",
+    "ptsd12",
+    "ptsd13",
+    "ptsd14",
+    "ptsd15",
+    "ptsd16",
+    "ptsd17",
+    "ptsd18",
+    "ptsd19",
+    "ptsd20",
+    "ptsd21",
+    "ptsd22",
+    "ptsd23"
+  )
+)
+
 variable_labels_list <- list(
   Wave_D_labels = harmonized_labels,
   Wave_E_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "not at all",
+  `2` = "somewhat",
+  `3` = "considerably",
+  `4` = "very much"
+)
+
 standardized_value_labels <- list(
   ptsd01 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd02 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd03 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd04 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd05 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd06 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd07 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd08 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd09 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd10 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd11 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd12 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd13 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd14 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd15 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd16 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd17 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd18 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd19 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd20 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd21 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd22 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   ptsd23 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "not at all",
-    `2` = "somewhat",
-    `3` = "considerably",
-    `4` = "very much"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   )
 )
 
@@ -230,236 +205,190 @@ value_labels_list <- list(
     standardized_value_labels,
     ptsd01 = .replace_labels(
     standardized_value_labels$ptsd01,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd02 = .replace_labels(
     standardized_value_labels$ptsd02,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd03 = .replace_labels(
     standardized_value_labels$ptsd03,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd04 = .replace_labels(
     standardized_value_labels$ptsd04,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd05 = .replace_labels(
     standardized_value_labels$ptsd05,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd06 = .replace_labels(
     standardized_value_labels$ptsd06,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd07 = .replace_labels(
     standardized_value_labels$ptsd07,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd08 = .replace_labels(
     standardized_value_labels$ptsd08,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd09 = .replace_labels(
     standardized_value_labels$ptsd09,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd10 = .replace_labels(
     standardized_value_labels$ptsd10,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd11 = .replace_labels(
     standardized_value_labels$ptsd11,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd12 = .replace_labels(
     standardized_value_labels$ptsd12,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd13 = .replace_labels(
     standardized_value_labels$ptsd13,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd14 = .replace_labels(
     standardized_value_labels$ptsd14,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd15 = .replace_labels(
     standardized_value_labels$ptsd15,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd16 = .replace_labels(
     standardized_value_labels$ptsd16,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd17 = .replace_labels(
     standardized_value_labels$ptsd17,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd18 = .replace_labels(
     standardized_value_labels$ptsd18,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd19 = .replace_labels(
     standardized_value_labels$ptsd19,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd20 = .replace_labels(
     standardized_value_labels$ptsd20,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd21 = .replace_labels(
     standardized_value_labels$ptsd21,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd22 = .replace_labels(
     standardized_value_labels$ptsd22,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd23 = .replace_labels(
     standardized_value_labels$ptsd23,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   )
   ),
   Wave_E_labels = .replace_in_list(
     standardized_value_labels,
     ptsd01 = .replace_labels(
     standardized_value_labels$ptsd01,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd02 = .replace_labels(
     standardized_value_labels$ptsd02,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd03 = .replace_labels(
     standardized_value_labels$ptsd03,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd04 = .replace_labels(
     standardized_value_labels$ptsd04,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd05 = .replace_labels(
     standardized_value_labels$ptsd05,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd06 = .replace_labels(
     standardized_value_labels$ptsd06,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd07 = .replace_labels(
     standardized_value_labels$ptsd07,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd08 = .replace_labels(
     standardized_value_labels$ptsd08,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd09 = .replace_labels(
     standardized_value_labels$ptsd09,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd10 = .replace_labels(
     standardized_value_labels$ptsd10,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd11 = .replace_labels(
     standardized_value_labels$ptsd11,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd12 = .replace_labels(
     standardized_value_labels$ptsd12,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd13 = .replace_labels(
     standardized_value_labels$ptsd13,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd14 = .replace_labels(
     standardized_value_labels$ptsd14,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd15 = .replace_labels(
     standardized_value_labels$ptsd15,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd16 = .replace_labels(
     standardized_value_labels$ptsd16,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd17 = .replace_labels(
     standardized_value_labels$ptsd17,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd18 = .replace_labels(
     standardized_value_labels$ptsd18,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd19 = .replace_labels(
     standardized_value_labels$ptsd19,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd20 = .replace_labels(
     standardized_value_labels$ptsd20,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd21 = .replace_labels(
     standardized_value_labels$ptsd21,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd22 = .replace_labels(
     standardized_value_labels$ptsd22,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   ),
     ptsd23 = .replace_labels(
     standardized_value_labels$ptsd23,
-    `-2` = "na, see D/ERMPTSD in LASAD/E291",
-    `-1` = "na, asked"
+    `-2` = "na, see D/ERMPTSD in LASAD/E291"
   )
   ),
   Harmonized_labels = standardized_value_labels
@@ -491,9 +420,12 @@ var_types_vec <- c(
   ptsd23 = "categorical"
 )
 
-.lasa_fc_091 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "091", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "091", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "091", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "091", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_091 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

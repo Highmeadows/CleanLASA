@@ -68,9 +68,12 @@ harmonized_labels <- c(
   sense7b = "R wears hearing aid(s) (HA) how many hours"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "sense01",
     "sense02",
     "sense03",
@@ -85,14 +88,8 @@ variable_labels_list <- list(
     "sense12",
     "sense13",
     "sense14"
-  )],
-    sense03 = "Small print in paper without glasses etc",
-    sense05 = "Recognize face 4 meter without glasses etc",
-    sense09 = "Follow conversation 4 persons: without HA",
-    sense11 = "Have conversation 1 person: without HA"
   ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+  `C` = c(
     "sense01",
     "sense02",
     "sense03",
@@ -107,14 +104,8 @@ variable_labels_list <- list(
     "sense12",
     "sense13",
     "sense14"
-  )],
-    sense03 = "Small print in paper without glasses etc",
-    sense05 = "Recognize face 4 meter without glasses etc",
-    sense09 = "Follow conversation 4 persons: without HA",
-    sense11 = "Have conversation 1 person: without HA"
   ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
+  `D` = c(
     "sense01",
     "sense02",
     "sense03",
@@ -129,16 +120,8 @@ variable_labels_list <- list(
     "sense12",
     "sense13",
     "sense14"
-  )],
-    sense01 = "R usually wears glasses or contact lenses (in D: observation)",
-    sense03 = "Small print in paper without glasses etc",
-    sense05 = "Recognize face 4 meter without glasses etc",
-    sense07 = "R usually wears hearing aid (HA)",
-    sense09 = "Follow conversation 4 persons: without HA",
-    sense11 = "Have conversation 1 person: without HA"
   ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
+  `E` = c(
     "sense01",
     "sense02",
     "sense03",
@@ -153,16 +136,8 @@ variable_labels_list <- list(
     "sense12",
     "sense13",
     "sense14"
-  )],
-    sense01 = "R usually wears glasses or contact lenses (in D: observation)",
-    sense03 = "Small print in paper without glasses etc",
-    sense05 = "Recognize face 4 meter without glasses etc",
-    sense07 = "R usually wears hearing aid (HA)",
-    sense09 = "Follow conversation 4 persons: without HA",
-    sense11 = "Have conversation 1 person: without HA"
   ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
+  `2B` = c(
     "sense03",
     "sense04",
     "sense05",
@@ -172,13 +147,8 @@ variable_labels_list <- list(
     "sense11",
     "sense12",
     "sense13"
-  )],
-    sense03 = "Small print in paper without glasses etc",
-    sense05 = "Recognize face 4 meter without glasses etc",
-    sense09 = "Follow conversation 4 persons: without HA",
-    sense11 = "Have conversation 1 person: without HA"
   ),
-  Wave_F_labels = harmonized_labels[c(
+  `F` = c(
     "msens01",
     "msens02",
     "msens03",
@@ -194,8 +164,8 @@ variable_labels_list <- list(
     "msens13",
     "msens14",
     "msens15"
-  )],
-  Wave_G_labels = harmonized_labels[c(
+  ),
+  `G` = c(
     "msens01",
     "msens02",
     "msens03",
@@ -211,8 +181,8 @@ variable_labels_list <- list(
     "msens13",
     "msens14",
     "msens15"
-  )],
-  Wave_H_labels = harmonized_labels[c(
+  ),
+  `H` = c(
     "msens01",
     "msens02",
     "msens03",
@@ -232,9 +202,8 @@ variable_labels_list <- list(
     "msens20",
     "msens7a",
     "msens7b"
-  )],
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
+  ),
+  `3B` = c(
     "sense01",
     "sense02",
     "sense03",
@@ -252,15 +221,8 @@ variable_labels_list <- list(
     "sense20",
     "sense7a",
     "sense7b"
-  )],
-    sense01 = "R usually wears glasses or contact lenses",
-    sense03 = "Small print in paper without glasses etc",
-    sense05 = "Recognize face 4 meter without glasses etc",
-    sense09 = "Follow conversation 4 persons: without HA",
-    sense11 = "Have conversation 1 person: without HA"
   ),
-  Wave_MB_labels = .replace_labels(
-    harmonized_labels[c(
+  `MB` = c(
     "sense03",
     "sense05",
     "sense09",
@@ -271,13 +233,8 @@ variable_labels_list <- list(
     "sense20",
     "sense7a",
     "sense7b"
-  )],
-    sense03 = "Small print in paper with or without glasses etc",
-    sense05 = "Recognize face 4 meter with or without glasses etc",
-    sense09 = "Follow conversation 3/4 persons: with or without HA",
-    sense11 = "Have conversation 1 person: with or without HA"
   ),
-  Wave_I_labels = harmonized_labels[c(
+  `I` = c(
     "msens01",
     "msens03",
     "msens04",
@@ -296,9 +253,8 @@ variable_labels_list <- list(
     "msens20",
     "msens7a",
     "msens7b"
-  )],
-  Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
+  ),
+  `J` = c(
     "msens01",
     "msens03",
     "msens04",
@@ -328,7 +284,101 @@ variable_labels_list <- list(
     "msens7a",
     "msens7b",
     "msens7c"
-  )],
+  ),
+  `K` = c(
+    "msens01",
+    "msens03",
+    "msens04",
+    "msens05",
+    "msens06",
+    "msens08",
+    "msens08a",
+    "msens08b",
+    "msens09",
+    "msens09a",
+    "msens09b",
+    "msens10a",
+    "msens10b",
+    "msens11",
+    "msens11a",
+    "msens11b",
+    "msens12a",
+    "msens12b",
+    "msens16",
+    "msens16a",
+    "msens16b",
+    "msens17a",
+    "msens17b",
+    "msens21",
+    "msens22a",
+    "msens22b",
+    "msens7a",
+    "msens7b",
+    "msens7c"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
+    sense03 = "Small print in paper without glasses etc",
+    sense05 = "Recognize face 4 meter without glasses etc",
+    sense09 = "Follow conversation 4 persons: without HA",
+    sense11 = "Have conversation 1 person: without HA"
+  ),
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
+    sense03 = "Small print in paper without glasses etc",
+    sense05 = "Recognize face 4 meter without glasses etc",
+    sense09 = "Follow conversation 4 persons: without HA",
+    sense11 = "Have conversation 1 person: without HA"
+  ),
+  Wave_D_labels = .replace_labels(
+    harmonized_labels,
+    sense01 = "R usually wears glasses or contact lenses (in D: observation)",
+    sense03 = "Small print in paper without glasses etc",
+    sense05 = "Recognize face 4 meter without glasses etc",
+    sense07 = "R usually wears hearing aid (HA)",
+    sense09 = "Follow conversation 4 persons: without HA",
+    sense11 = "Have conversation 1 person: without HA"
+  ),
+  Wave_E_labels = .replace_labels(
+    harmonized_labels,
+    sense01 = "R usually wears glasses or contact lenses (in D: observation)",
+    sense03 = "Small print in paper without glasses etc",
+    sense05 = "Recognize face 4 meter without glasses etc",
+    sense07 = "R usually wears hearing aid (HA)",
+    sense09 = "Follow conversation 4 persons: without HA",
+    sense11 = "Have conversation 1 person: without HA"
+  ),
+  Wave_2B_labels = .replace_labels(
+    harmonized_labels,
+    sense03 = "Small print in paper without glasses etc",
+    sense05 = "Recognize face 4 meter without glasses etc",
+    sense09 = "Follow conversation 4 persons: without HA",
+    sense11 = "Have conversation 1 person: without HA"
+  ),
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_3B_labels = .replace_labels(
+    harmonized_labels,
+    sense01 = "R usually wears glasses or contact lenses",
+    sense03 = "Small print in paper without glasses etc",
+    sense05 = "Recognize face 4 meter without glasses etc",
+    sense09 = "Follow conversation 4 persons: without HA",
+    sense11 = "Have conversation 1 person: without HA"
+  ),
+  Wave_MB_labels = .replace_labels(
+    harmonized_labels,
+    sense03 = "Small print in paper with or without glasses etc",
+    sense05 = "Recognize face 4 meter with or without glasses etc",
+    sense09 = "Follow conversation 3/4 persons: with or without HA",
+    sense11 = "Have conversation 1 person: with or without HA"
+  ),
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = .replace_labels(
+    harmonized_labels,
     msens08 = "No HA/not using HA: hear well enough (subjective)",
     msens09 = "No HA/not using HA: follow conversation 3/4 persons",
     msens11 = "No HA/not using HA: have conversation 1 person",
@@ -337,37 +387,7 @@ variable_labels_list <- list(
     msens7b = "1 or 2 HA: R wears HA how many hours"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
-    "msens01",
-    "msens03",
-    "msens04",
-    "msens05",
-    "msens06",
-    "msens08",
-    "msens08a",
-    "msens08b",
-    "msens09",
-    "msens09a",
-    "msens09b",
-    "msens10a",
-    "msens10b",
-    "msens11",
-    "msens11a",
-    "msens11b",
-    "msens12a",
-    "msens12b",
-    "msens16",
-    "msens16a",
-    "msens16b",
-    "msens17a",
-    "msens17b",
-    "msens21",
-    "msens22a",
-    "msens22b",
-    "msens7a",
-    "msens7b",
-    "msens7c"
-  )],
+    harmonized_labels,
     msens08 = "No HA/not using HA: hear well enough (subjective)",
     msens09 = "No HA/not using HA: follow conversation 3/4 persons",
     msens11 = "No HA/not using HA: have conversation 1 person",
@@ -378,135 +398,118 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "yes, without difficulty",
+  `2` = "yes, with some difficulty",
+  `3` = "yes, with much difficulty",
+  `4` = "no, I cannot"
+)
+
 standardized_value_labels <- list(
   msens01 = c(`-5` = "not available, section not done", `-1` = "not available", `1` = "no", `2` = "yes"),
   msens02 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   msens03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   msens04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot",
-    `5` = "coding category 5"
+    default_answer_labels[c("1", "2", "3", "4")],
+    `5` = "label varies by wave"
   ),
   msens05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   msens06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot",
+    default_answer_labels[c("1", "2", "3", "4")],
     `5` = "R does not have glasses or contact lenses"
   ),
-  msens07 = c(`-2` = "not available, routing", `-1` = "not available", `1` = "no", `2` = "yes"),
-  msens08 = c(
-    `-2` = "not available, routing",
+  msens07 = c(
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot"
+    `1` = "no",
+    `2` = "yes"
+  ),
+  msens08 = c(
+    default_missing_labels[c("-2")],
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   msens08a = stats::setNames(character(0), character(0)),
   msens08b = stats::setNames(character(0), character(0)),
   msens09 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
+    default_answer_labels[c("1", "2", "3")],
     `4` = "no I cannot"
   ),
   msens09a = stats::setNames(character(0), character(0)),
   msens09b = stats::setNames(character(0), character(0)),
   msens10 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot",
+    default_answer_labels[c("1", "2", "3", "4")],
     `5` = "R does not have a hearing aid"
   ),
   msens10a = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot",
+    default_answer_labels[c("1", "2", "3", "4")],
     `5` = "R does not wear a HA in this situation"
   ),
   msens10b = stats::setNames(character(0), character(0)),
   msens11 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   msens11a = stats::setNames(character(0), character(0)),
   msens11b = stats::setNames(character(0), character(0)),
   msens12 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot",
+    default_answer_labels[c("1", "2", "3", "4")],
     `5` = "R does not have a hearing aid"
   ),
   msens12a = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot",
+    default_answer_labels[c("1", "2", "3", "4")],
     `5` = "R does not wear a HA in this situation"
   ),
   msens12b = stats::setNames(character(0), character(0)),
   msens13 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
-  msens14 = c(`-2` = "not available, routing", `-1` = "not available", `1` = "no", `2` = "yes"),
-  msens15 = c(`-2` = "not available, routing", `-1` = "not available", `1` = "no", `2` = "yes"),
+  msens14 = c(
+    default_missing_labels[c("-2")],
+    `-1` = "not available",
+    `1` = "no",
+    `2` = "yes"
+  ),
+  msens15 = c(
+    default_missing_labels[c("-2")],
+    `-1` = "not available",
+    `1` = "no",
+    `2` = "yes"
+  ),
   msens16 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "hardly ever",
     `2` = "sometimes",
@@ -517,7 +520,7 @@ standardized_value_labels <- list(
   msens16a = stats::setNames(character(0), character(0)),
   msens16b = stats::setNames(character(0), character(0)),
   msens17 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "hardly ever",
     `2` = "sometimes",
@@ -526,7 +529,7 @@ standardized_value_labels <- list(
     `5` = "R does not have a hearing aid"
   ),
   msens17a = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "hardly ever",
     `2` = "sometimes",
@@ -535,23 +538,31 @@ standardized_value_labels <- list(
     `5` = "R does not wear a HA in this situation"
   ),
   msens17b = stats::setNames(character(0), character(0)),
-  msens18 = c(`-2` = "not available, routing", `-1` = "not available", `1` = "no", `2` = "yes"),
+  msens18 = c(
+    default_missing_labels[c("-2")],
+    `-1` = "not available",
+    `1` = "no",
+    `2` = "yes"
+  ),
   msens19 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "some of the time",
     `2` = "most of the time",
     `3` = "all of the time"
   ),
   msens20 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "not annoying at all",
     `2` = "a bit annoying",
     `3` = "rather annoying",
     `4` = "most annoying"
   ),
-  msens21 = c(`-2` = "not available, routing", `-1` = "not available"),
+  msens21 = c(
+    default_missing_labels[c("-2")],
+    `-1` = "not available"
+  ),
   msens22a = stats::setNames(character(0), character(0)),
   msens22b = stats::setNames(character(0), character(0)),
   msens7a = c(
@@ -565,7 +576,7 @@ standardized_value_labels <- list(
     `6` = "yes, possess two with use"
   ),
   msens7b = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "< 1 hr a day",
     `2` = "1-4 hrs a day",
@@ -573,7 +584,7 @@ standardized_value_labels <- list(
     `4` = "all day"
   ),
   msens7c = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "no, R is not wearing HA",
     `2` = "yes, R is wearing 1 HA, left",
@@ -583,118 +594,97 @@ standardized_value_labels <- list(
   sense01 = c(`-5` = "not available, interview terminated", `-1` = "not available", `1` = "no", `2` = "yes"),
   sense02 = c(
     `-4` = "not available",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   sense03 = c(
     `-5` = "not available, interview terminated",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   sense04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot",
-    `5` = "coding category 5"
+    default_answer_labels[c("1", "2", "3", "4")],
+    `5` = "label varies by wave"
   ),
   sense05 = c(
     `-4` = "not available",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   sense06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot",
+    default_answer_labels[c("1", "2", "3", "4")],
     `5` = "R does not have glasses or contact lenses"
   ),
-  sense07 = c(`-2` = "not available, routing", `-1` = "not available", `1` = "no", `2` = "yes"),
+  sense07 = c(
+    default_missing_labels[c("-2")],
+    `-1` = "not available",
+    `1` = "no",
+    `2` = "yes"
+  ),
   sense08 = c(
     `-4` = "not available",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   sense09 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
+    default_answer_labels[c("1", "2", "3")],
     `4` = "no I cannot"
   ),
   sense10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot",
+    default_answer_labels[c("1", "2", "3", "4")],
     `5` = "R does not have a hearing aid"
   ),
   sense11 = c(
     `-4` = "not available",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   sense12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot",
+    default_answer_labels[c("1", "2", "3", "4")],
     `5` = "R does not have a hearing aid"
   ),
   sense13 = c(
     `-4` = "not available",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, I cannot"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
-  sense14 = c(`-2` = "not available, routing", `-1` = "not available", `1` = "no", `2` = "yes"),
-  sense18 = c(`-2` = "not available, routing", `-1` = "not available", `1` = "no", `2` = "yes"),
+  sense14 = c(
+    default_missing_labels[c("-2")],
+    `-1` = "not available",
+    `1` = "no",
+    `2` = "yes"
+  ),
+  sense18 = c(
+    default_missing_labels[c("-2")],
+    `-1` = "not available",
+    `1` = "no",
+    `2` = "yes"
+  ),
   sense19 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "some of the time",
     `2` = "most of the time",
     `3` = "all of the time"
   ),
   sense20 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "not annoying at all",
     `2` = "a bit annoying",
@@ -705,14 +695,14 @@ standardized_value_labels <- list(
     `-5` = "not available, section not done",
     `-1` = "not available",
     `1` = "no, never had before",
-    `2` = "coding category 2",
-    `3` = "coding category 3",
+    `2` = "label varies by wave",
+    `3` = "label varies by wave",
     `4` = "yes, possess one with use",
     `5` = "yes, possess two with use of one",
     `6` = "yes, possess two with use"
   ),
   sense7b = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "< 1 hr a day",
     `2` = "1-4 hrs a day",
@@ -723,22 +713,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "sense01",
-    "sense02",
-    "sense03",
-    "sense04",
-    "sense05",
-    "sense06",
-    "sense07",
-    "sense08",
-    "sense09",
-    "sense10",
-    "sense11",
-    "sense12",
-    "sense13",
-    "sense14"
-  )],
+    standardized_value_labels,
     sense01 = .replace_labels(
     standardized_value_labels$sense01,
     `-5` = "na, interview terminated",
@@ -836,22 +811,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "sense01",
-    "sense02",
-    "sense03",
-    "sense04",
-    "sense05",
-    "sense06",
-    "sense07",
-    "sense08",
-    "sense09",
-    "sense10",
-    "sense11",
-    "sense12",
-    "sense13",
-    "sense14"
-  )],
+    standardized_value_labels,
     sense01 = .replace_labels(
     standardized_value_labels$sense01,
     `-5` = "na, interview terminated",
@@ -954,22 +914,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "sense01",
-    "sense02",
-    "sense03",
-    "sense04",
-    "sense05",
-    "sense06",
-    "sense07",
-    "sense08",
-    "sense09",
-    "sense10",
-    "sense11",
-    "sense12",
-    "sense13",
-    "sense14"
-  )],
+    standardized_value_labels,
     sense01 = .replace_labels(
     standardized_value_labels$sense01,
     `-5` = "na, interview terminated",
@@ -1076,22 +1021,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "sense01",
-    "sense02",
-    "sense03",
-    "sense04",
-    "sense05",
-    "sense06",
-    "sense07",
-    "sense08",
-    "sense09",
-    "sense10",
-    "sense11",
-    "sense12",
-    "sense13",
-    "sense14"
-  )],
+    standardized_value_labels,
     sense01 = .replace_labels(
     standardized_value_labels$sense01,
     `-5` = "na, interview terminated",
@@ -1198,17 +1128,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "sense03",
-    "sense04",
-    "sense05",
-    "sense06",
-    "sense09",
-    "sense10",
-    "sense11",
-    "sense12",
-    "sense13"
-  )],
+    standardized_value_labels,
     sense03 = c(
     `-5` = "na, interview terminated",
     `-1` = "na, asked",
@@ -1284,23 +1204,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msens01",
-    "msens02",
-    "msens03",
-    "msens04",
-    "msens05",
-    "msens06",
-    "msens07",
-    "msens08",
-    "msens09",
-    "msens10",
-    "msens11",
-    "msens12",
-    "msens13",
-    "msens14",
-    "msens15"
-  )],
+    standardized_value_labels,
     msens01 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
     msens02 = .replace_labels(
     standardized_value_labels$msens02,
@@ -1387,23 +1291,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msens01",
-    "msens02",
-    "msens03",
-    "msens04",
-    "msens05",
-    "msens06",
-    "msens07",
-    "msens08",
-    "msens09",
-    "msens10",
-    "msens11",
-    "msens12",
-    "msens13",
-    "msens14",
-    "msens15"
-  )],
+    standardized_value_labels,
     msens01 = .replace_labels(
     standardized_value_labels$msens01,
     `-5` = "na, section not done",
@@ -1494,27 +1382,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msens01",
-    "msens02",
-    "msens03",
-    "msens04",
-    "msens05",
-    "msens06",
-    "msens08",
-    "msens09",
-    "msens10",
-    "msens11",
-    "msens12",
-    "msens13",
-    "msens16",
-    "msens17",
-    "msens18",
-    "msens19",
-    "msens20",
-    "msens7a",
-    "msens7b"
-  )],
+    standardized_value_labels,
     msens01 = .replace_labels(
     standardized_value_labels$msens01,
     `-5` = "na, section not done",
@@ -1626,25 +1494,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "sense01",
-    "sense02",
-    "sense03",
-    "sense04",
-    "sense05",
-    "sense06",
-    "sense08",
-    "sense09",
-    "sense10",
-    "sense11",
-    "sense12",
-    "sense13",
-    "sense18",
-    "sense19",
-    "sense20",
-    "sense7a",
-    "sense7b"
-  )],
+    standardized_value_labels,
     sense01 = .replace_labels(
     standardized_value_labels$sense01,
     `-5` = "na, interview terminated",
@@ -1768,18 +1618,7 @@ value_labels_list <- list(
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "sense03",
-    "sense05",
-    "sense09",
-    "sense11",
-    "sense13",
-    "sense18",
-    "sense19",
-    "sense20",
-    "sense7a",
-    "sense7b"
-  )],
+    standardized_value_labels,
     sense03 = c(
     `-1` = "na, asked",
     `1` = "yes, without difficulty",
@@ -1839,26 +1678,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msens01",
-    "msens03",
-    "msens04",
-    "msens05",
-    "msens06",
-    "msens08",
-    "msens09",
-    "msens10",
-    "msens11",
-    "msens12",
-    "msens13",
-    "msens16",
-    "msens17",
-    "msens18",
-    "msens19",
-    "msens20",
-    "msens7a",
-    "msens7b"
-  )],
+    standardized_value_labels,
     msens01 = .replace_labels(
     standardized_value_labels$msens01,
     `-5` = "na, section not done",
@@ -1866,26 +1686,22 @@ value_labels_list <- list(
   ),
     msens03 = .replace_labels(
     standardized_value_labels$msens03,
-    `-3` = "na, wrong skip",
     `-2` = "na, see IMSENS01",
     `-1` = "na, asked"
   ),
     msens04 = .replace_labels(
     standardized_value_labels$msens04,
-    `-3` = "na, wrong skip",
     `-2` = "na, see IMSENS03",
     `-1` = "na, asked",
     `5` = "R does not have glasses or contact lenses"
   ),
     msens05 = .replace_labels(
     standardized_value_labels$msens05,
-    `-3` = "na, wrong skip",
     `-2` = "na, see IMSENS01",
     `-1` = "na, asked"
   ),
     msens06 = .replace_labels(
     standardized_value_labels$msens06,
-    `-3` = "na, wrong skip",
     `-2` = "na, see IMSENS05",
     `-1` = "na, asked"
   ),
@@ -1956,23 +1772,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msens01",
-    "msens03",
-    "msens04",
-    "msens05",
-    "msens06",
-    "msens08",
-    "msens10a",
-    "msens11",
-    "msens12a",
-    "msens16",
-    "msens17a",
-    "msens21",
-    "msens7a",
-    "msens7b",
-    "msens7c"
-  )],
+    standardized_value_labels,
     msens01 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
     msens03 = c(
     `-2` = "na, see J/KMSENS01",
@@ -2067,23 +1867,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msens01",
-    "msens03",
-    "msens04",
-    "msens05",
-    "msens06",
-    "msens08",
-    "msens10a",
-    "msens11",
-    "msens12a",
-    "msens16",
-    "msens17a",
-    "msens21",
-    "msens7a",
-    "msens7b",
-    "msens7c"
-  )],
+    standardized_value_labels,
     msens01 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
     msens03 = c(
     `-2` = "na, see J/KMSENS01",
@@ -2242,9 +2026,41 @@ var_types_vec <- c(
   sense7b = "categorical"
 )
 
-.lasa_fc_031 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "031", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "031", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "031", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "031", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["msens08a"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["msens08b"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["msens09"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["msens09a"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["msens09b"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["msens10b"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["msens11a"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["msens11b"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["msens12b"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["msens16a"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["msens16b"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["msens17b"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["msens22a"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["msens22b"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["msens08a"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["msens08b"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["msens09"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["msens09a"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["msens09b"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["msens10b"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["msens11a"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["msens11b"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["msens12b"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["msens16a"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["msens16b"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["msens17b"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["msens22a"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["msens22b"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+
+.lasa_fc_031 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -45,34 +45,36 @@ harmonized_labels <- c(
   rinc13 = "R: other income source"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c("inccat", "incf", "partinc", "respinc")],
-    inccat = "Income categories : constructed",
-    incf = "Answers in BINCCAT & BAMOUNT for:",
-    partinc = "Own income partner: yes/no?",
-    respinc = "R: Own income respondent: yes/no"
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "inccat",
+    "incf",
+    "partinc",
+    "respinc"
   ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c("inccat", "incf", "partinc", "respinc")],
-    incf = "Answers in C/D/EINCCAT for:",
-    partinc = "Own income partner: yes/no",
-    respinc = "R: Own income respondent: yes/no"
+  `C` = c(
+    "inccat",
+    "incf",
+    "partinc",
+    "respinc"
   ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels[c("inccat", "incf", "partinc", "respinc")],
-    incf = "Answers in C/D/EINCCAT for:",
-    partinc = "Own income partner: yes/no",
-    respinc = "R: Own income respondent: yes/no"
+  `D` = c(
+    "inccat",
+    "incf",
+    "partinc",
+    "respinc"
   ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels[c("inccat", "incf", "partinc", "respinc")],
-    incf = "Answers in C/D/EINCCAT for:",
-    partinc = "Own income partner: yes/no",
-    respinc = "R: Own income respondent: yes/no"
+  `E` = c(
+    "inccat",
+    "incf",
+    "partinc",
+    "respinc"
   ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
+  `2B` = c(
     "inccat",
     "incf",
     "partinc",
@@ -103,14 +105,107 @@ variable_labels_list <- list(
     "rinc11",
     "rinc12",
     "rinc13"
-  )],
+  ),
+  `F` = c(
+    "incc5s",
+    "incc7s",
+    "inccat",
+    "incf",
+    "partinc",
+    "respinc"
+  ),
+  `G` = c(
+    "incc5s",
+    "incc7s",
+    "inccat",
+    "incf",
+    "partinc",
+    "respinc"
+  ),
+  `H` = c(
+    "incc6s",
+    "incc8s",
+    "inccat",
+    "incf",
+    "partinc",
+    "respinc"
+  ),
+  `3B` = c(
+    "incc6s",
+    "incc8s",
+    "inccat",
+    "incf",
+    "partinc",
+    "respinc"
+  ),
+  `MB` = c(
+    "incc6s",
+    "incc8s",
+    "inccat",
+    "incf",
+    "partinc",
+    "respinc"
+  ),
+  `I` = c(
+    "incc6s",
+    "incc8s",
+    "inccat",
+    "incf",
+    "partinc",
+    "respinc"
+  ),
+  `J` = c(
+    "incc9s",
+    "inccat",
+    "incf",
+    "partinc",
+    "respinc"
+  ),
+  `K` = c(
+    "incc10s",
+    "incc8s",
+    "inccat",
+    "incf",
+    "partinc",
+    "respinc"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
+    inccat = "Income categories : constructed",
+    incf = "Answers in BINCCAT & BAMOUNT for:",
+    partinc = "Own income partner: yes/no?",
+    respinc = "R: Own income respondent: yes/no"
+  ),
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
+    incf = "Answers in C/D/EINCCAT for:",
+    partinc = "Own income partner: yes/no",
+    respinc = "R: Own income respondent: yes/no"
+  ),
+  Wave_D_labels = .replace_labels(
+    harmonized_labels,
+    incf = "Answers in C/D/EINCCAT for:",
+    partinc = "Own income partner: yes/no",
+    respinc = "R: Own income respondent: yes/no"
+  ),
+  Wave_E_labels = .replace_labels(
+    harmonized_labels,
+    incf = "Answers in C/D/EINCCAT for:",
+    partinc = "Own income partner: yes/no",
+    respinc = "R: Own income respondent: yes/no"
+  ),
+  Wave_2B_labels = .replace_labels(
+    harmonized_labels,
     inccat = "income categories",
     incf = "answers in BINCCAT for:",
     partinc = "own income partner: yes/no",
     respinc = "R: own income respondent: yes/no"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c("incc5s", "incc7s", "inccat", "incf", "partinc", "respinc")],
+    harmonized_labels,
     incc5s = "subdivision income category 5",
     incc7s = "subdivision income category 7",
     inccat = "income categories",
@@ -119,7 +214,7 @@ variable_labels_list <- list(
     respinc = "r: own income respondent: yes/no"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c("incc5s", "incc7s", "inccat", "incf", "partinc", "respinc")],
+    harmonized_labels,
     incc5s = "subdivision income category 5",
     incc7s = "subdivision income category 7",
     inccat = "income categories",
@@ -128,7 +223,7 @@ variable_labels_list <- list(
     respinc = "r: own income respondent: yes/no"
   ),
   Wave_H_labels = .replace_labels(
-    harmonized_labels[c("incc6s", "incc8s", "inccat", "incf", "partinc", "respinc")],
+    harmonized_labels,
     incc6s = "subdivision income category 6",
     incc8s = "subdivision income category 8",
     inccat = "income categories",
@@ -137,7 +232,7 @@ variable_labels_list <- list(
     respinc = "own income respondent: yes/no"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c("incc6s", "incc8s", "inccat", "incf", "partinc", "respinc")],
+    harmonized_labels,
     incc6s = "subdivision income category 6",
     incc8s = "subdivision income category 8",
     inccat = "income categories",
@@ -146,7 +241,7 @@ variable_labels_list <- list(
     respinc = "own income respondent: yes/no"
   ),
   Wave_MB_labels = .replace_labels(
-    harmonized_labels[c("incc6s", "incc8s", "inccat", "incf", "partinc", "respinc")],
+    harmonized_labels,
     incc6s = "subdivision income category 6",
     incc8s = "subdivision income category 8",
     inccat = "income categories",
@@ -155,7 +250,7 @@ variable_labels_list <- list(
     respinc = "own income respondent: yes/no"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c("incc6s", "incc8s", "inccat", "incf", "partinc", "respinc")],
+    harmonized_labels,
     incc6s = "subdivision income category 6",
     incc8s = "subdivision income category 8",
     inccat = "income categories",
@@ -164,7 +259,7 @@ variable_labels_list <- list(
     respinc = "own income respondent: yes/no"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c("incc9s", "inccat", "incf", "partinc", "respinc")],
+    harmonized_labels,
     incc9s = "subdivision income category 9",
     inccat = "income categories",
     incf = "answers in JINCCAT for:",
@@ -172,7 +267,7 @@ variable_labels_list <- list(
     respinc = "own income respondent: yes/no"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c("incc10s", "incc8s", "inccat", "incf", "partinc", "respinc")],
+    harmonized_labels,
     incc10s = "subdivision income category 10",
     incc8s = "subdivision income category 8",
     inccat = "income categories",
@@ -183,89 +278,82 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "yes"
+)
+
 standardized_value_labels <- list(
   incc10s = c(
     `-4` = "not available, no partner in household",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "1645 euro or lower",
     `2` = "more than 1645 euro"
   ),
   incc5s = c(
     `-4` = "not available, partner in household",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "at or below income threshold",
     `2` = "above income threshold"
   ),
   incc6s = c(
     `-4` = "not available, partner in household",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "at or below income threshold",
     `2` = "above income threshold"
   ),
   incc7s = c(
     `-4` = "not available, no partner in household",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "at or below income threshold",
     `2` = "above income threshold"
   ),
   incc8s = c(
     `-4` = "not available, no partner in household",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "at or below income threshold",
     `2` = "above income threshold"
   ),
   incc9s = c(
     `-4` = "not available, no partner in household",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "1555 euro or lower",
     `2` = "more than 1555 euro"
   ),
   inccat = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `0` = "less than ƒ 999",
-    `1` = "income category 1",
-    `2` = "income category 2",
-    `3` = "income category 3",
-    `4` = "income category 4",
-    `5` = "income category 5",
-    `6` = "income category 6",
-    `7` = "income category 7",
-    `8` = "income category 8",
-    `9` = "income category 9",
-    `10` = "income category 10",
-    `11` = "income category 11",
-    `12` = "income category 12",
-    `13` = "income category 13",
-    `14` = "income category 14",
-    `15` = "income category 15",
-    `16` = "income category 16",
-    `17` = "income category 17",
-    `18` = "income category 18",
-    `19` = "income category 19",
-    `20` = "income category 20",
-    `21` = "income category 21",
-    `22` = "income category 22",
-    `23` = "income category 23",
-    `24` = "income category 24",
+    default_missing_labels[c("-3", "-2")],
+    `0` = "less than \306\222 999",
+    `1` = "label varies by wave",
+    `2` = "label varies by wave",
+    `3` = "label varies by wave",
+    `4` = "label varies by wave",
+    `5` = "label varies by wave",
+    `6` = "label varies by wave",
+    `7` = "label varies by wave",
+    `8` = "label varies by wave",
+    `9` = "label varies by wave",
+    `10` = "label varies by wave",
+    `11` = "label varies by wave",
+    `12` = "label varies by wave",
+    `13` = "label varies by wave",
+    `14` = "label varies by wave",
+    `15` = "label varies by wave",
+    `16` = "label varies by wave",
+    `17` = "label varies by wave",
+    `18` = "label varies by wave",
+    `19` = "label varies by wave",
+    `20` = "label varies by wave",
+    `21` = "label varies by wave",
+    `22` = "label varies by wave",
+    `23` = "label varies by wave",
+    `24` = "label varies by wave",
     `25` = "5446 or more (12000 fl or more)"
   ),
   incf = c(
     `-5` = "not available, refused",
-    `-4` = "not available, short version",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-1")],
     `0` = "no income",
     `1` = "respondent only",
     `2` = "partner only",
@@ -276,212 +364,181 @@ standardized_value_labels <- list(
   ),
   partinc = c(
     `-5` = "not available",
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "not available",
-    `-1` = "not available, asked",
     `0` = "no",
-    `1` = "category 1",
+    `1` = "label varies by wave",
     `2` = "yes",
     `3` = "partner has income but r does not report amount"
   ),
   pinc01 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc02 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc03 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc04 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc05 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc06 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc07 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc08 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc09 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc10 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc11 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc12 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc13 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   respinc = c(
     `-5` = "not available, refused",
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "no",
-    `1` = "binary category 1",
+    `1` = "label varies by wave",
     `2` = "yes"
   ),
   rinc01 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc02 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc03 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc04 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc05 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc06 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc07 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc08 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc09 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc10 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc11 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc12 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc13 = c(
     `-5` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   )
 )
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("inccat", "incf", "partinc", "respinc")],
+    standardized_value_labels,
     inccat = c(
     `-2` = "na, see BINCF",
     `0` = "less than ƒ 999",
@@ -528,7 +585,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("inccat", "incf", "partinc", "respinc")],
+    standardized_value_labels,
     inccat = c(
     `-2` = "na, see C/D/EINCF",
     `0` = "less than ƒ 999",
@@ -567,7 +624,7 @@ value_labels_list <- list(
     respinc = c(`-4` = "na, short version", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("inccat", "incf", "partinc", "respinc")],
+    standardized_value_labels,
     inccat = c(`-2` = "na, see C/D/EINCF"),
     incf = c(
     `-5` = "na, refused",
@@ -591,7 +648,7 @@ value_labels_list <- list(
     respinc = c(`-4` = "na, short version", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("inccat", "incf", "partinc", "respinc")],
+    standardized_value_labels,
     inccat = c(`-2` = "na, see C/D/EINCF"),
     incf = c(
     `-5` = "na, refused",
@@ -615,38 +672,7 @@ value_labels_list <- list(
     respinc = c(`-4` = "na, short version", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "inccat",
-    "incf",
-    "partinc",
-    "pinc01",
-    "pinc02",
-    "pinc03",
-    "pinc04",
-    "pinc05",
-    "pinc06",
-    "pinc07",
-    "pinc08",
-    "pinc09",
-    "pinc10",
-    "pinc11",
-    "pinc12",
-    "pinc13",
-    "respinc",
-    "rinc01",
-    "rinc02",
-    "rinc03",
-    "rinc04",
-    "rinc05",
-    "rinc06",
-    "rinc07",
-    "rinc08",
-    "rinc09",
-    "rinc10",
-    "rinc11",
-    "rinc12",
-    "rinc13"
-  )],
+    standardized_value_labels,
     inccat = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see BINCF",
@@ -686,178 +712,148 @@ value_labels_list <- list(
     pinc01 = .replace_labels(
     standardized_value_labels$pinc01,
     `-5` = "na, refusal",
-    `-2` = "na, see BPARTINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BPARTINC"
   ),
     pinc02 = .replace_labels(
     standardized_value_labels$pinc02,
     `-5` = "na, refusal",
-    `-2` = "na, see BPARTINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BPARTINC"
   ),
     pinc03 = .replace_labels(
     standardized_value_labels$pinc03,
     `-5` = "na, refusal",
-    `-2` = "na, see BPARTINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BPARTINC"
   ),
     pinc04 = .replace_labels(
     standardized_value_labels$pinc04,
     `-5` = "na, refusal",
-    `-2` = "na, see BPARTINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BPARTINC"
   ),
     pinc05 = .replace_labels(
     standardized_value_labels$pinc05,
     `-5` = "na, refusal",
-    `-2` = "na, see BPARTINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BPARTINC"
   ),
     pinc06 = .replace_labels(
     standardized_value_labels$pinc06,
     `-5` = "na, refusal",
-    `-2` = "na, see BPARTINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BPARTINC"
   ),
     pinc07 = .replace_labels(
     standardized_value_labels$pinc07,
     `-5` = "na, refusal",
-    `-2` = "na, see BPARTINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BPARTINC"
   ),
     pinc08 = .replace_labels(
     standardized_value_labels$pinc08,
     `-5` = "na, refusal",
-    `-2` = "na, see BPARTINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BPARTINC"
   ),
     pinc09 = .replace_labels(
     standardized_value_labels$pinc09,
     `-5` = "na, refusal",
-    `-2` = "na, see BPARTINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BPARTINC"
   ),
     pinc10 = .replace_labels(
     standardized_value_labels$pinc10,
     `-5` = "na, refusal",
-    `-2` = "na, see BPARTINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BPARTINC"
   ),
     pinc11 = .replace_labels(
     standardized_value_labels$pinc11,
     `-5` = "na, refusal",
-    `-2` = "na, see BPARTINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BPARTINC"
   ),
     pinc12 = .replace_labels(
     standardized_value_labels$pinc12,
     `-5` = "na, refusal",
-    `-2` = "na, see BPARTINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BPARTINC"
   ),
     pinc13 = .replace_labels(
     standardized_value_labels$pinc13,
     `-5` = "na, refusal",
-    `-2` = "na, see BPARTINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BPARTINC"
   ),
     respinc = c(`-4` = "na, short version", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     rinc01 = .replace_labels(
     standardized_value_labels$rinc01,
     `-5` = "na, refusal",
-    `-2` = "na, see BRESPINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BRESPINC"
   ),
     rinc02 = .replace_labels(
     standardized_value_labels$rinc02,
     `-5` = "na, refusal",
-    `-2` = "na, see BRESPINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BRESPINC"
   ),
     rinc03 = .replace_labels(
     standardized_value_labels$rinc03,
     `-5` = "na, refusal",
-    `-2` = "na, see BRESPINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BRESPINC"
   ),
     rinc04 = .replace_labels(
     standardized_value_labels$rinc04,
     `-5` = "na, refusal",
-    `-2` = "na, see BRESPINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BRESPINC"
   ),
     rinc05 = .replace_labels(
     standardized_value_labels$rinc05,
     `-5` = "na, refusal",
-    `-2` = "na, see BRESPINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BRESPINC"
   ),
     rinc06 = .replace_labels(
     standardized_value_labels$rinc06,
     `-5` = "na, refusal",
-    `-2` = "na, see BRESPINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BRESPINC"
   ),
     rinc07 = .replace_labels(
     standardized_value_labels$rinc07,
     `-5` = "na, refusal",
-    `-2` = "na, see BRESPINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BRESPINC"
   ),
     rinc08 = .replace_labels(
     standardized_value_labels$rinc08,
     `-5` = "na, refusal",
-    `-2` = "na, see BRESPINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BRESPINC"
   ),
     rinc09 = .replace_labels(
     standardized_value_labels$rinc09,
     `-5` = "na, refusal",
-    `-2` = "na, see BRESPINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BRESPINC"
   ),
     rinc10 = .replace_labels(
     standardized_value_labels$rinc10,
     `-5` = "na, refusal",
-    `-2` = "na, see BRESPINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BRESPINC"
   ),
     rinc11 = .replace_labels(
     standardized_value_labels$rinc11,
     `-5` = "na, refusal",
-    `-2` = "na, see BRESPINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BRESPINC"
   ),
     rinc12 = .replace_labels(
     standardized_value_labels$rinc12,
     `-5` = "na, refusal",
-    `-2` = "na, see BRESPINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BRESPINC"
   ),
     rinc13 = .replace_labels(
     standardized_value_labels$rinc13,
     `-5` = "na, refusal",
-    `-2` = "na, see BRESPINC",
-    `-1` = "na, asked"
+    `-2` = "na, see BRESPINC"
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("incc5s", "incc7s", "inccat", "incf", "partinc", "respinc")],
+    standardized_value_labels,
     incc5s = .replace_labels(
     standardized_value_labels$incc5s,
     `-4` = "na, partner in hh",
-    `-3` = "na, wrong skip",
     `-2` = "na, see FINCCAT",
-    `-1` = "na, asked",
     `1` = "935 euro or lower",
     `2` = "more than 935 euro"
   ),
     incc7s = .replace_labels(
     standardized_value_labels$incc7s,
     `-4` = "na, no partner in hh",
-    `-3` = "na, wrong skip",
     `-2` = "na, see FINCCAT",
-    `-1` = "na, asked",
     `1` = "1335 euro or lower",
     `2` = "more than 1335 euro"
   ),
@@ -899,22 +895,18 @@ value_labels_list <- list(
     respinc = c(`-4` = "na, short version", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("incc5s", "incc7s", "inccat", "incf", "partinc", "respinc")],
+    standardized_value_labels,
     incc5s = .replace_labels(
     standardized_value_labels$incc5s,
     `-4` = "na, partner in hh",
-    `-3` = "na, wrong skip",
     `-2` = "na, see GINCCAT",
-    `-1` = "na, asked",
     `1` = "976 euro or lower",
     `2` = "more than 976 euro"
   ),
     incc7s = .replace_labels(
     standardized_value_labels$incc7s,
     `-4` = "na, no partner in hh",
-    `-3` = "na, wrong skip",
     `-2` = "na, see GINCCAT",
-    `-1` = "na, asked",
     `1` = "1340 euro or lower",
     `2` = "more than 1340 euro"
   ),
@@ -968,22 +960,18 @@ value_labels_list <- list(
     respinc = c(`-4` = "na, short version", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("incc6s", "incc8s", "inccat", "incf", "partinc", "respinc")],
+    standardized_value_labels,
     incc6s = .replace_labels(
     standardized_value_labels$incc6s,
     `-4` = "na, partner in hh",
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/BINCCAT",
-    `-1` = "na, asked",
     `1` = "1040 euro or lower",
     `2` = "more than 1040 euro"
   ),
     incc8s = .replace_labels(
     standardized_value_labels$incc8s,
     `-4` = "na, no partner in hh",
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/BINCCAT",
-    `-1` = "na, asked",
     `1` = "1425 euro or lower",
     `2` = "more than 1425 euro"
   ),
@@ -1037,22 +1025,18 @@ value_labels_list <- list(
     respinc = c(`-4` = "na, short version", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("incc6s", "incc8s", "inccat", "incf", "partinc", "respinc")],
+    standardized_value_labels,
     incc6s = .replace_labels(
     standardized_value_labels$incc6s,
     `-4` = "na, partner in hh",
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/BINCCAT",
-    `-1` = "na, asked",
     `1` = "1040 euro or lower",
     `2` = "more than 1040 euro"
   ),
     incc8s = .replace_labels(
     standardized_value_labels$incc8s,
     `-4` = "na, no partner in hh",
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/BINCCAT",
-    `-1` = "na, asked",
     `1` = "1425 euro or lower",
     `2` = "more than 1425 euro"
   ),
@@ -1106,22 +1090,18 @@ value_labels_list <- list(
     respinc = c(`-4` = "na, short version", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c("incc6s", "incc8s", "inccat", "incf", "partinc", "respinc")],
+    standardized_value_labels,
     incc6s = .replace_labels(
     standardized_value_labels$incc6s,
     `-4` = "na, partner in hh",
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/BINCCAT",
-    `-1` = "na, asked",
     `1` = "1040 euro or lower",
     `2` = "more than 1040 euro"
   ),
     incc8s = .replace_labels(
     standardized_value_labels$incc8s,
     `-4` = "na, no partner in hh",
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/BINCCAT",
-    `-1` = "na, asked",
     `1` = "1425 euro or lower",
     `2` = "more than 1425 euro"
   ),
@@ -1175,22 +1155,18 @@ value_labels_list <- list(
     respinc = c(`-4` = "na, short version", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("incc6s", "incc8s", "inccat", "incf", "partinc", "respinc")],
+    standardized_value_labels,
     incc6s = .replace_labels(
     standardized_value_labels$incc6s,
     `-4` = "na, partner in hh",
-    `-3` = "na, wrong skip",
     `-2` = "na, see IINCCAT",
-    `-1` = "na, asked",
     `1` = "1060 euro or lower",
     `2` = "more than 1060 euro"
   ),
     incc8s = .replace_labels(
     standardized_value_labels$incc8s,
     `-4` = "na, no partner in hh",
-    `-3` = "na, wrong skip",
     `-2` = "na, see IINCCAT",
-    `-1` = "na, asked",
     `1` = "1450 euro or lower",
     `2` = "more than 1450 euro"
   ),
@@ -1244,13 +1220,11 @@ value_labels_list <- list(
     respinc = c(`-4` = "na, short version", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c("incc9s", "inccat", "incf", "partinc", "respinc")],
+    standardized_value_labels,
     incc9s = .replace_labels(
     standardized_value_labels$incc9s,
     `-4` = "na, no partner in hh",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JINCCAT",
-    `-1` = "na, asked"
+    `-2` = "na, see JINCCAT"
   ),
     inccat = c(
     `-2` = "na, see JINCF",
@@ -1303,20 +1277,16 @@ value_labels_list <- list(
     respinc = c(`-4` = "na, short version", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c("incc10s", "incc8s", "inccat", "incf", "partinc", "respinc")],
+    standardized_value_labels,
     incc10s = .replace_labels(
     standardized_value_labels$incc10s,
     `-4` = "na, no partner in hh",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KINCCAT",
-    `-1` = "na, asked"
+    `-2` = "na, see KINCCAT"
   ),
     incc8s = .replace_labels(
     standardized_value_labels$incc8s,
     `-4` = "na, no partner in hh",
-    `-3` = "na, wrong skip",
     `-2` = "na, see KINCCAT",
-    `-1` = "na, asked",
     `1` = "1201 euro or lower",
     `2` = "more than 1201 euro"
   ),
@@ -1352,7 +1322,6 @@ value_labels_list <- list(
     standardized_value_labels$incf,
     `-5` = "na, refused",
     `-4` = "na, short version",
-    `-1` = "na, asked",
     `1` = "R only",
     `2` = "P only",
     `3` = "R+P in hh",
@@ -1414,9 +1383,12 @@ var_types_vec <- c(
   rinc13 = "categorical"
 )
 
-.lasa_fc_017 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "017", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "017", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "017", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "017", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_017 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

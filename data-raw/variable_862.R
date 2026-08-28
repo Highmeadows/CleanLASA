@@ -18,21 +18,53 @@ harmonized_labels <- c(
   mvitd25st = "serum: 25-hydroxyvitamin D (25(OH)D), nmol/L, ODIN-standardized"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
+    "mcreat",
+    "mdpd",
+    "mdpdcre",
+    "migf1",
+    "most",
+    "mpth",
+    "mvitd25",
+    "mvitd25st"
+  ),
+  `2B` = c(
+    "mpth",
+    "mvitd25",
+    "mvitd25st"
+  ),
+  `G` = c(
+    "mpth",
+    "mvitd25",
+    "mvitd25st"
+  ),
+  `3B` = c(
+    "mcreat",
+    "mrem862",
+    "mvitd25"
+  )
+)
+
 variable_labels_list <- list(
   Wave_C_labels = .replace_labels(
-    harmonized_labels[c("mcreat", "mdpd", "mdpdcre", "migf1", "most", "mpth", "mvitd25", "mvitd25st")],
+    harmonized_labels,
     mcreat = "urine: creatinine (mmol/l)"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c("mpth", "mvitd25", "mvitd25st")],
+    harmonized_labels,
     mpth = "serum: parathyroid hormone (PTH), pmol/L"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c("mpth", "mvitd25", "mvitd25st")],
+    harmonized_labels,
     mpth = "serum: parathyroid hormone (PTH), pmol/L"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c("mcreat", "mrem862", "mvitd25")],
+    harmonized_labels,
     mcreat = "serum: creatinine (umol/L)",
     mvitd25 = "serum: 25-hydroxyvitamin D (25(OH)D) (nmol/l)"
   ),
@@ -61,7 +93,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("mcreat", "mdpd", "mdpdcre", "migf1", "most", "mpth", "mvitd25", "mvitd25st")],
+    standardized_value_labels,
     mcreat = .replace_labels(
     standardized_value_labels$mcreat,
     `-2` = "value below determination",
@@ -74,7 +106,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("mpth", "mvitd25", "mvitd25st")],
+    standardized_value_labels,
     mvitd25 = .replace_labels(
     standardized_value_labels$mvitd25,
     `-2` = "value below determination",
@@ -82,7 +114,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("mpth", "mvitd25", "mvitd25st")],
+    standardized_value_labels,
     mvitd25 = .replace_labels(
     standardized_value_labels$mvitd25,
     `-2` = "value below determination",
@@ -90,7 +122,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("mcreat", "mvitd25")],
+    standardized_value_labels,
     mcreat = c(`-2` = "no serum, not determined", `-1` = "no valid data"),
     mvitd25 = c(`-2` = "no serum, not determined", `-1` = "no valid data")
   ),
@@ -109,9 +141,14 @@ var_types_vec <- c(
   mvitd25st = "numeric"
 )
 
-.lasa_fc_862 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "862", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "862", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "862", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "862", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["mrem862"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+
+.lasa_fc_862 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

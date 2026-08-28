@@ -19,9 +19,107 @@ harmonized_labels <- c(
   mwtt3 = "Number of words correct: trial 3"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "mdelta",
+    "mrecal",
+    "mret1pc",
+    "mtmax",
+    "mtotal",
+    "mwtdr",
+    "mwtt1",
+    "mwtt2",
+    "mwtt3"
+  ),
+  `C` = c(
+    "mdelta",
+    "mret1pc",
+    "mtmax",
+    "mtotal",
+    "mwtdr",
+    "mwtt1",
+    "mwtt2",
+    "mwtt3"
+  ),
+  `D` = c(
+    "mdelta",
+    "mret1pc",
+    "mret2pc",
+    "mtmax",
+    "mtotal"
+  ),
+  `E` = c(
+    "mdelta",
+    "mret1pc",
+    "mret2pc",
+    "mtmax",
+    "mtotal"
+  ),
+  `2B` = c(
+    "mdelta",
+    "mret1pc",
+    "mret2pc",
+    "mtmax",
+    "mtotal"
+  ),
+  `F` = c(
+    "mdelta",
+    "mret1pc",
+    "mret2pc",
+    "mtmax",
+    "mtotal"
+  ),
+  `G` = c(
+    "mdelta",
+    "mret1pc",
+    "mret2pc",
+    "mtmax",
+    "mtotal"
+  ),
+  `H` = c(
+    "mdelta",
+    "mret1pc",
+    "mret2pc",
+    "mtmax",
+    "mtotal"
+  ),
+  `3B` = c(
+    "mdelta",
+    "mret1pc",
+    "mret2pc",
+    "mtmax",
+    "mtotal"
+  ),
+  `I` = c(
+    "mdelta",
+    "mret1pc",
+    "mret2pc",
+    "mtmax",
+    "mtotal"
+  ),
+  `J` = c(
+    "mdelta",
+    "mret1pc",
+    "mret2pc",
+    "mtmax",
+    "mtotal"
+  ),
+  `K` = c(
+    "mdelta",
+    "mret1pc",
+    "mret2pc",
+    "mtmax",
+    "mtotal"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
-    harmonized_labels[c("mdelta", "mrecal", "mret1pc", "mtmax", "mtotal", "mwtdr", "mwtt1", "mwtt2", "mwtt3")],
+    harmonized_labels,
     mdelta = "learning effect highest-lowest",
     mrecal = "15 word test time interval in minutes",
     mret1pc = "retention 1: bmwtdr/bmwtt3",
@@ -33,7 +131,7 @@ variable_labels_list <- list(
     mwtt3 = "number of words correct: trial 3"
   ),
   Wave_C_labels = .replace_labels(
-    harmonized_labels[c("mdelta", "mret1pc", "mtmax", "mtotal", "mwtdr", "mwtt1", "mwtt2", "mwtt3")],
+    harmonized_labels,
     mdelta = "learning effect highest-lowest",
     mret1pc = "retention 1: cmwtdr/cmwtt3",
     mtmax = "maximum score: highest on 1, 2, 3",
@@ -44,7 +142,7 @@ variable_labels_list <- list(
     mwtt3 = "number of words correct: trial 3"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c("mdelta", "mret1pc", "mret2pc", "mtmax", "mtotal")],
+    harmonized_labels,
     mdelta = "learning highest-lowest",
     mret1pc = "retention 1: dmwtdr - dmwtt3",
     mret2pc = "retention 2: dmwtdr - dmtmax",
@@ -52,7 +150,7 @@ variable_labels_list <- list(
     mtotal = "learning/memory: total of 1, 2 and 3"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c("mdelta", "mret1pc", "mret2pc", "mtmax", "mtotal")],
+    harmonized_labels,
     mdelta = "learning highest-lowest",
     mret1pc = "retention 1: emwtdr - emwtt3",
     mret2pc = "retention 2: emwtdr - emtmax",
@@ -60,7 +158,7 @@ variable_labels_list <- list(
     mtotal = "learning/memory: total of 1, 2 and 3"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c("mdelta", "mret1pc", "mret2pc", "mtmax", "mtotal")],
+    harmonized_labels,
     mdelta = "learning highest-lowest",
     mret1pc = "retention 1: bmwtdr - bmwtt3",
     mret2pc = "retention 2: bmwtdr - bmtmax",
@@ -68,7 +166,7 @@ variable_labels_list <- list(
     mtotal = "learning/memory: total of 1, 2 and 3"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c("mdelta", "mret1pc", "mret2pc", "mtmax", "mtotal")],
+    harmonized_labels,
     mdelta = "learning highest-lowest",
     mret1pc = "retention 1: fmwtdr - fmwtt3",
     mret2pc = "retention 2: fmwtdr - fmtmax",
@@ -76,7 +174,7 @@ variable_labels_list <- list(
     mtotal = "learning/memory: total of 1, 2 and 3"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c("mdelta", "mret1pc", "mret2pc", "mtmax", "mtotal")],
+    harmonized_labels,
     mdelta = "learning highest-lowest",
     mret1pc = "retention 1: gmwtdr - gmwtt3",
     mret2pc = "retention 2: gmwtdr - gmtmax",
@@ -84,7 +182,7 @@ variable_labels_list <- list(
     mtotal = "learning/memory: total of 1, 2 and 3"
   ),
   Wave_H_labels = .replace_labels(
-    harmonized_labels[c("mdelta", "mret1pc", "mret2pc", "mtmax", "mtotal")],
+    harmonized_labels,
     mdelta = "learning highest-lowest",
     mret1pc = "retention 1: hmwtdr - hmwtt3",
     mret2pc = "retention 2: hmwtdr - hmtmax",
@@ -92,7 +190,7 @@ variable_labels_list <- list(
     mtotal = "learning/memory: total of 1, 2 and 3"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c("mdelta", "mret1pc", "mret2pc", "mtmax", "mtotal")],
+    harmonized_labels,
     mdelta = "learning highest-lowest",
     mret1pc = "retention 1: bmwtdr - bmwtt3",
     mret2pc = "retention 2: bmwtdr - bmtmax",
@@ -100,7 +198,7 @@ variable_labels_list <- list(
     mtotal = "learning/memory: total of 1, 2 and 3"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c("mdelta", "mret1pc", "mret2pc", "mtmax", "mtotal")],
+    harmonized_labels,
     mdelta = "learning highest-lowest",
     mret1pc = "retention 1: imwtdr - imwtt3",
     mret2pc = "retention 2: imwtdr - imtmax",
@@ -108,7 +206,7 @@ variable_labels_list <- list(
     mtotal = "learning/memory: total of 1, 2 and 3"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c("mdelta", "mret1pc", "mret2pc", "mtmax", "mtotal")],
+    harmonized_labels,
     mdelta = "learning highest-lowest",
     mret1pc = "retention 1: jmwtdr - jmwtt3",
     mret2pc = "retention 2: jmwtdr - jmtmax",
@@ -116,7 +214,7 @@ variable_labels_list <- list(
     mtotal = "learning/memory: total of 1, 2 and 3"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c("mdelta", "mret1pc", "mret2pc", "mtmax", "mtotal")],
+    harmonized_labels,
     mdelta = "learning highest-lowest",
     mret1pc = "retention 1: kmwtdr - kmwtt3",
     mret2pc = "retention 2: kmwtdr - kmtmax",
@@ -141,62 +239,62 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("mrecal", "mwtt1", "mwtt2")],
+    standardized_value_labels,
     mwtt1 = c(`-2` = "zero on trial")
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("mtmax", "mtotal", "mwtt1", "mwtt2")],
+    standardized_value_labels,
     mtmax = c(`1` = "no valid data"),
     mtotal = c(`-4` = "interview terminated"),
     mwtt1 = c(`-4` = "interview terminated")
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("mret1pc", "mtmax", "mtotal")],
+    standardized_value_labels,
     mtmax = c(`-1` = "no valid data"),
     mtotal = c(`-2` = "test not done")
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("mret1pc", "mtmax", "mtotal")],
+    standardized_value_labels,
     mtmax = c(`-1` = "no valid data"),
     mtotal = c(`-2` = "test not done")
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("mret1pc", "mtmax", "mtotal")],
+    standardized_value_labels,
     mtmax = c(`-1` = "no valid data"),
     mtotal = c(`-2` = "test not done")
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("mret1pc", "mtmax", "mtotal")],
+    standardized_value_labels,
     mtmax = c(`-1` = "no valid data"),
     mtotal = c(`-2` = "test not done")
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("mret1pc", "mtmax", "mtotal")],
+    standardized_value_labels,
     mtmax = c(`-1` = "no valid data"),
     mtotal = c(`-2` = "test not done")
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("mret1pc", "mtmax", "mtotal")],
+    standardized_value_labels,
     mtmax = c(`-1` = "no valid data"),
     mtotal = c(`-2` = "test not done")
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("mret1pc", "mtmax", "mtotal")],
+    standardized_value_labels,
     mtmax = c(`-1` = "no valid data"),
     mtotal = c(`-2` = "test not done")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("mret1pc", "mtmax", "mtotal")],
+    standardized_value_labels,
     mtmax = c(`-1` = "no valid data"),
     mtotal = c(`-2` = "test not done")
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c("mret1pc", "mtmax", "mtotal")],
+    standardized_value_labels,
     mtmax = c(`-1` = "no valid data"),
     mtotal = c(`-2` = "test not done")
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c("mret1pc", "mtmax", "mtotal")],
+    standardized_value_labels,
     mtmax = c(`-1` = "no valid data"),
     mtotal = c(`-2` = "test not done")
   ),
@@ -216,9 +314,43 @@ var_types_vec <- c(
   mwtt3 = "numeric"
 )
 
-.lasa_fc_356 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "356", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "356", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "356", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "356", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["mdelta"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mret1pc"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mtmax"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mtotal"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mwtdr"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mwtt3"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mdelta"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mret1pc"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mwtdr"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mwtt3"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mdelta"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mret2pc"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["mdelta"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mret2pc"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["mdelta"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mret2pc"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["mdelta"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["mret2pc"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["mdelta"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mret2pc"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mdelta"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mret2pc"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mdelta"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mret2pc"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["mdelta"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["mret2pc"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["mdelta"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["mret2pc"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["mdelta"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["mret2pc"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+
+.lasa_fc_356 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

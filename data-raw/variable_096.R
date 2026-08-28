@@ -20,37 +20,113 @@ harmonized_labels <- c(
   remdis = "REM sleep behaviour disorder"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `3B` = c(
+    "bowmf",
+    "pd01",
+    "pd02",
+    "pd03",
+    "pd04",
+    "pd05",
+    "pd06",
+    "pd07",
+    "pd08",
+    "pd09",
+    "remdis"
+  ),
+  `MB` = c(
+    "bowmf",
+    "pd01",
+    "pd02",
+    "pd03",
+    "pd04",
+    "pd05",
+    "pd06",
+    "pd07",
+    "pd08",
+    "pd09",
+    "remdis"
+  )
+)
+
 variable_labels_list <- list(
   Wave_3B_labels = harmonized_labels,
   Wave_MB_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "no",
+  `2` = "yes"
+)
+
 standardized_value_labels <- list(
   bowmf = c(
     `-5` = "interview terminated",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "less than once a day",
     `2` = "once a day",
     `3` = "twice a day",
     `4` = "more than twice a day"
   ),
-  pd01 = c(`-5` = "interview terminated", `-1` = "not available, asked", `1` = "no", `2` = "yes"),
+  pd01 = c(
+    `-5` = "interview terminated",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
   pd02 = c(
     `-5` = "interview terminated",
     `-2` = "R cannot write",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
   ),
-  pd03 = c(`-5` = "interview terminated", `-1` = "not available, asked", `1` = "no", `2` = "yes"),
-  pd04 = c(`-5` = "interview terminated", `-1` = "not available, asked", `1` = "no", `2` = "yes"),
-  pd05 = c(`-5` = "interview terminated", `-1` = "not available, asked", `1` = "no", `2` = "yes"),
-  pd06 = c(`-5` = "interview terminated", `-1` = "not available, asked", `1` = "no", `2` = "yes"),
-  pd07 = c(`-5` = "interview terminated", `-1` = "not available, asked", `1` = "no", `2` = "yes"),
-  pd08 = c(`-5` = "interview terminated", `-1` = "not available, asked", `1` = "no", `2` = "yes"),
-  pd09 = c(`-5` = "interview terminated", `-1` = "not available, asked", `1` = "no", `2` = "yes"),
-  remdis = c(`-5` = "interview terminated", `-1` = "not available, asked", `1` = "no", `2` = "yes")
+  pd03 = c(
+    `-5` = "interview terminated",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  pd04 = c(
+    `-5` = "interview terminated",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  pd05 = c(
+    `-5` = "interview terminated",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  pd06 = c(
+    `-5` = "interview terminated",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  pd07 = c(
+    `-5` = "interview terminated",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  pd08 = c(
+    `-5` = "interview terminated",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  pd09 = c(
+    `-5` = "interview terminated",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  remdis = c(
+    `-5` = "interview terminated",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  )
 )
 
 value_labels_list <- list(
@@ -58,112 +134,91 @@ value_labels_list <- list(
     standardized_value_labels,
     bowmf = .replace_labels(
     standardized_value_labels$bowmf,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd01 = .replace_labels(
     standardized_value_labels$pd01,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd02 = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     pd03 = .replace_labels(
     standardized_value_labels$pd03,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd04 = .replace_labels(
     standardized_value_labels$pd04,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd05 = .replace_labels(
     standardized_value_labels$pd05,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd06 = .replace_labels(
     standardized_value_labels$pd06,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd07 = .replace_labels(
     standardized_value_labels$pd07,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd08 = .replace_labels(
     standardized_value_labels$pd08,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd09 = .replace_labels(
     standardized_value_labels$pd09,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     remdis = .replace_labels(
     standardized_value_labels$remdis,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   )
   ),
   Wave_MB_labels = .replace_in_list(
     standardized_value_labels,
     bowmf = .replace_labels(
     standardized_value_labels$bowmf,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd01 = .replace_labels(
     standardized_value_labels$pd01,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd02 = .replace_labels(
     standardized_value_labels$pd02,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd03 = .replace_labels(
     standardized_value_labels$pd03,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd04 = .replace_labels(
     standardized_value_labels$pd04,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd05 = .replace_labels(
     standardized_value_labels$pd05,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd06 = .replace_labels(
     standardized_value_labels$pd06,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd07 = .replace_labels(
     standardized_value_labels$pd07,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd08 = .replace_labels(
     standardized_value_labels$pd08,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     pd09 = .replace_labels(
     standardized_value_labels$pd09,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   ),
     remdis = .replace_labels(
     standardized_value_labels$remdis,
-    `-5` = "na, interview terminated",
-    `-1` = "na, asked"
+    `-5` = "na, interview terminated"
   )
   ),
   Harmonized_labels = standardized_value_labels
@@ -183,9 +238,12 @@ var_types_vec <- c(
   remdis = "categorical"
 )
 
-.lasa_fc_096 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "096", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "096", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "096", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "096", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_096 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

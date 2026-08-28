@@ -25,9 +25,42 @@ harmonized_labels <- c(
   mmilkyght = "Milk products: number of days yoghurt"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
+    "mdiet",
+    "mdiethcal",
+    "mdietlcal",
+    "mdietlchol",
+    "mdietlsalt",
+    "mdietoth",
+    "mdietsugf",
+    "mdietveg",
+    "mmilka50y",
+    "mmilkb25y",
+    "mmilkb50y",
+    "mmilkhchs",
+    "mmilkmlk",
+    "mmilkschs",
+    "mmilkvar",
+    "mmilkyght"
+  ),
+  `D` = c(
+    "mdiet",
+    "mdietlcal",
+    "mdietlchol",
+    "mdietlsalt",
+    "mdietsugf",
+    "mdietveg"
+  )
+)
+
 variable_labels_list <- list(
   Wave_C_labels = harmonized_labels,
-  Wave_D_labels = harmonized_labels[c("mdiet", "mdietlcal", "mdietlchol", "mdietlsalt", "mdietsugf", "mdietveg")],
+  Wave_D_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
@@ -73,7 +106,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_C_labels = standardized_value_labels,
-  Wave_D_labels = standardized_value_labels[c("mdiet", "mdietlcal", "mdietlchol", "mdietlsalt", "mdietsugf", "mdietveg")],
+  Wave_D_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -96,9 +129,12 @@ var_types_vec <- c(
   mmilkyght = "numeric"
 )
 
-.lasa_fc_184 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "184", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "184", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "184", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "184", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_184 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

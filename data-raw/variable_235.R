@@ -13,6 +13,68 @@ harmonized_labels <- c(
   xnochrot = "Longitudinal number of chronic diseases including others"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "nochrom",
+    "nochrot",
+    "xnochrom",
+    "xnochrot"
+  ),
+  `C` = c(
+    "nochrom",
+    "nochrot",
+    "xnochrom",
+    "xnochrot"
+  ),
+  `D` = c(
+    "nochrom",
+    "nochrot"
+  ),
+  `E` = c(
+    "nochrom",
+    "nochrot"
+  ),
+  `2B` = c(
+    "nochrom",
+    "nochrot"
+  ),
+  `F` = c(
+    "nochrom",
+    "nochrot"
+  ),
+  `G` = c(
+    "nochrom",
+    "nochrot"
+  ),
+  `H` = c(
+    "nochrom",
+    "nochrot"
+  ),
+  `3B` = c(
+    "nochrom",
+    "nochrot"
+  ),
+  `MB` = c(
+    "nochrom"
+  ),
+  `I` = c(
+    "nochrom",
+    "nochrot"
+  ),
+  `J` = c(
+    "nochrom",
+    "nochrot"
+  ),
+  `K` = c(
+    "nochrom",
+    "nochrot"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
     harmonized_labels,
@@ -29,56 +91,56 @@ variable_labels_list <- list(
     xnochrot = "(longitudinal) # chronic diseases incl Others"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c("nochrom", "nochrot")],
+    harmonized_labels,
     nochrom = "Number chronic diseases from 7 majors",
     nochrot = "Number chronic diseases incl. others"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c("nochrom", "nochrot")],
+    harmonized_labels,
     nochrom = "Number chronic diseases from 7 majors",
     nochrot = "Number chronic diseases incl. others"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c("nochrom", "nochrot")],
+    harmonized_labels,
     nochrom = "Number chronic diseases from 7 majors",
     nochrot = "Number chronic diseases incl. others"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c("nochrom", "nochrot")],
+    harmonized_labels,
     nochrom = "Number chronic diseases from 7 majors",
     nochrot = "Number chronic diseases incl. others"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c("nochrom", "nochrot")],
+    harmonized_labels,
     nochrom = "Number chronic diseases from 7 majors",
     nochrot = "Number chronic diseases incl. others"
   ),
   Wave_H_labels = .replace_labels(
-    harmonized_labels[c("nochrom", "nochrot")],
+    harmonized_labels,
     nochrom = "Number chronic diseases from 7 majors",
     nochrot = "Number chronic diseases incl. others"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c("nochrom", "nochrot")],
+    harmonized_labels,
     nochrom = "Number chronic diseases from 7 majors",
     nochrot = "Number chronic diseases incl. others"
   ),
   Wave_MB_labels = .replace_labels(
-    harmonized_labels[c("nochrom")],
+    harmonized_labels,
     nochrom = "Number chronic diseases from 7 majors"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c("nochrom", "nochrot")],
+    harmonized_labels,
     nochrom = "Number chronic diseases from 7 majors",
     nochrot = "Number chronic diseases incl. others"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c("nochrom", "nochrot")],
+    harmonized_labels,
     nochrom = "Number chronic diseases from 7 majors",
     nochrot = "Number chronic diseases incl. others"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c("nochrom", "nochrot")],
+    harmonized_labels,
     nochrom = "Number chronic diseases from 7 majors",
     nochrot = "Number chronic diseases incl. others"
   ),
@@ -95,23 +157,23 @@ standardized_value_labels <- list(
 value_labels_list <- list(
   Wave_B_labels = standardized_value_labels,
   Wave_C_labels = standardized_value_labels,
-  Wave_D_labels = standardized_value_labels[c("nochrom", "nochrot")],
-  Wave_E_labels = standardized_value_labels[c("nochrom", "nochrot")],
-  Wave_2B_labels = standardized_value_labels[c("nochrom", "nochrot")],
-  Wave_F_labels = standardized_value_labels[c("nochrom", "nochrot")],
-  Wave_G_labels = standardized_value_labels[c("nochrom", "nochrot")],
-  Wave_H_labels = standardized_value_labels[c("nochrom", "nochrot")],
-  Wave_3B_labels = standardized_value_labels[c("nochrom", "nochrot")],
-  Wave_MB_labels = standardized_value_labels[c("nochrom")],
-  Wave_I_labels = standardized_value_labels[c("nochrom", "nochrot")],
-  Wave_J_labels = standardized_value_labels[c("nochrom", "nochrot")],
-  Wave_K_labels = standardized_value_labels[c("nochrom", "nochrot")],
+  Wave_D_labels = standardized_value_labels,
+  Wave_E_labels = standardized_value_labels,
+  Wave_2B_labels = standardized_value_labels,
+  Wave_F_labels = standardized_value_labels,
+  Wave_G_labels = standardized_value_labels,
+  Wave_H_labels = standardized_value_labels,
+  Wave_3B_labels = standardized_value_labels,
+  Wave_MB_labels = standardized_value_labels,
+  Wave_I_labels = standardized_value_labels,
+  Wave_J_labels = standardized_value_labels,
+  Wave_K_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
 var_types_vec <- c(nochrom = "numeric", nochrot = "numeric", xnochrom = "numeric", xnochrot = "numeric")
 
-.lasa_fc_235 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "235", waves = .lasa_wave_rows()) |>
     .override_label(wave = "B", variable = "xnochrom", override_value = "xnochrom") |>
     .override_label(wave = "B", variable = "xnochrot", override_value = "xnochrot") |>
@@ -121,3 +183,6 @@ var_types_vec <- c(nochrom = "numeric", nochrot = "numeric", xnochrom = "numeric
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "235", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "235", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_235 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

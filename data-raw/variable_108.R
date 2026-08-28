@@ -59,9 +59,12 @@ harmonized_labels <- c(
   qacp9e = "acp 9e: put something on paper about future euthanasia as an option for me if life has become unbearable"
 )
 
-variable_labels_list <- list(
-  Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `I` = c(
     "qacp10a",
     "qacp10b",
     "qacp10c",
@@ -110,43 +113,8 @@ variable_labels_list <- list(
     "qacp9c",
     "qacp9d",
     "qacp9e"
-  )],
-    qacp1a = "acp 1a: sometimes think about future health",
-    qacp1b = "acp 1b: talk to people close to me about future health",
-    qacp1c = "acp 1c: talk to my general physician about future health",
-    qacp1d = "acp 1d: would like to talk to my general physician about future health",
-    qacp2a = "acp 2a: sometimes think about future health partner",
-    qacp2b = "acp 2b: talk to people close to me about future health partner",
-    qacp2c = "acp 2c: talk to my general physician about future health partner",
-    qacp2d = "acp 2d: would like to talk to my general physician about future health partner",
-    qacp3a = "acp 3a: sometimes think about future medical care and guidance",
-    qacp3b = "acp 3b: talk to people close to me about future medical care and guidance",
-    qacp3c = "acp 3c: talk to my general physician about future medical care and guidance",
-    qacp3d = "acp 3d: would like to talk to my general physician about future medical care and guidance",
-    qacp3e = "acp 3e: put something on paper about future medical care and guidance",
-    qacp4a = "acp 4a: sometimes think about who to take care of me not being able to care for myself",
-    qacp4b = "acp 4b: talk to people close to me about who to take care of me not being able to care for myself",
-    qacp4c = "acp 4c: talk to my general physician about who to take care of me not being able to care for myself",
-    qacp4d = "acp 4d: would like to talk to my general physician who to take care of me not being able to care for myself",
-    qacp4e = "acp 4e: put something on paper about who to take care of me not being able to care for myself",
-    qacp5a = "acp 5a: sometimes think about who to take medical decisions for me not being able doing it myself",
-    qacp5b = "acp 5b: talk to people close to me about who to take medical decisions for me not being able doing it myself",
-    qacp5c = "acp 5c: talk to my general physician about who to take medical decisions for me not being able doing it myself",
-    qacp5d = "acp 5d: would like to talk to my general physician about who to take medical decisions for me not being able doing it myself",
-    qacp5e = "acp 5e: put something on paper about who to take medical decisions for me not being able doing it myself",
-    qacp6a = "acp 6a: sometimes think about whether a nursing home is an option for me when not being able to stay at home",
-    qacp6b = "acp 6b: talk to people close to me about whether a nursing home is an option for me when not being able to stay at home",
-    qacp6c = "acp 6c: talk to my general physician about whether a nursing home is an option for me when not being able to stay at home",
-    qacp6d = "acp 6d: would like to talk to my general physician about whether a nursing home is an option for me when not being able to stay at home",
-    qacp6e = "acp 6e: put something on paper about whether a nursing home is an option for me when not being able to stay at home",
-    qacp7a = "acp 7a: sometimes think about situations where I no longer want to have a life-extending treatment",
-    qacp7b = "acp 7b: talk to people close to me about situations where I no longer want to have a life-extending treatment",
-    qacp7c = "acp 7c: talk to my general physician about situations where I no longer want to have a life-extending treatment",
-    qacp7d = "acp 7d: would like to talk to my general physician about situations where I no longer want to have a life-extending treatment",
-    qacp7e = "acp 7e: put something on paper about situations where I no longer want to have a life-extending treatment"
   ),
-  Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
+  `K` = c(
     "qacp1a",
     "qacp1b",
     "qacp1c",
@@ -182,7 +150,48 @@ variable_labels_list <- list(
     "qacp7c",
     "qacp7d",
     "qacp7e"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_I_labels = .replace_labels(
+    harmonized_labels,
+    qacp1a = "acp 1a: sometimes think about future health",
+    qacp1b = "acp 1b: talk to people close to me about future health",
+    qacp1c = "acp 1c: talk to my general physician about future health",
+    qacp1d = "acp 1d: would like to talk to my general physician about future health",
+    qacp2a = "acp 2a: sometimes think about future health partner",
+    qacp2b = "acp 2b: talk to people close to me about future health partner",
+    qacp2c = "acp 2c: talk to my general physician about future health partner",
+    qacp2d = "acp 2d: would like to talk to my general physician about future health partner",
+    qacp3a = "acp 3a: sometimes think about future medical care and guidance",
+    qacp3b = "acp 3b: talk to people close to me about future medical care and guidance",
+    qacp3c = "acp 3c: talk to my general physician about future medical care and guidance",
+    qacp3d = "acp 3d: would like to talk to my general physician about future medical care and guidance",
+    qacp3e = "acp 3e: put something on paper about future medical care and guidance",
+    qacp4a = "acp 4a: sometimes think about who to take care of me not being able to care for myself",
+    qacp4b = "acp 4b: talk to people close to me about who to take care of me not being able to care for myself",
+    qacp4c = "acp 4c: talk to my general physician about who to take care of me not being able to care for myself",
+    qacp4d = "acp 4d: would like to talk to my general physician who to take care of me not being able to care for myself",
+    qacp4e = "acp 4e: put something on paper about who to take care of me not being able to care for myself",
+    qacp5a = "acp 5a: sometimes think about who to take medical decisions for me not being able doing it myself",
+    qacp5b = "acp 5b: talk to people close to me about who to take medical decisions for me not being able doing it myself",
+    qacp5c = "acp 5c: talk to my general physician about who to take medical decisions for me not being able doing it myself",
+    qacp5d = "acp 5d: would like to talk to my general physician about who to take medical decisions for me not being able doing it myself",
+    qacp5e = "acp 5e: put something on paper about who to take medical decisions for me not being able doing it myself",
+    qacp6a = "acp 6a: sometimes think about whether a nursing home is an option for me when not being able to stay at home",
+    qacp6b = "acp 6b: talk to people close to me about whether a nursing home is an option for me when not being able to stay at home",
+    qacp6c = "acp 6c: talk to my general physician about whether a nursing home is an option for me when not being able to stay at home",
+    qacp6d = "acp 6d: would like to talk to my general physician about whether a nursing home is an option for me when not being able to stay at home",
+    qacp6e = "acp 6e: put something on paper about whether a nursing home is an option for me when not being able to stay at home",
+    qacp7a = "acp 7a: sometimes think about situations where I no longer want to have a life-extending treatment",
+    qacp7b = "acp 7b: talk to people close to me about situations where I no longer want to have a life-extending treatment",
+    qacp7c = "acp 7c: talk to my general physician about situations where I no longer want to have a life-extending treatment",
+    qacp7d = "acp 7d: would like to talk to my general physician about situations where I no longer want to have a life-extending treatment",
+    qacp7e = "acp 7e: put something on paper about situations where I no longer want to have a life-extending treatment"
+  ),
+  Wave_K_labels = .replace_labels(
+    harmonized_labels,
     qacp1a = "Advanced care planning, staying at home: no, not thought about (past months)",
     qacp1b = "Advanced care planning, staying at home: yes, thought about (past months)",
     qacp1c = "Advanced care planning, staying at home: yes, spoken about with doctor/healthcare provider (past months)",
@@ -220,135 +229,292 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "yes",
+  `2` = "no"
+)
+
 standardized_value_labels <- list(
-  qacp10a = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
-  qacp10b = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
-  qacp10c = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
-  qacp10d = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
-  qacp10e = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
-  qacp1a = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp1b = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp1c = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp1d = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp1e = c(`-1` = "no answer", `0` = "not mentioned", `1` = "mentioned"),
+  qacp10a = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  qacp10b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  qacp10c = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  qacp10d = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  qacp10e = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  qacp1a = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp1b = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp1c = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp1d = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp1e = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
   qacp2a = c(
     `-2` = "not applicable",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "no"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   qacp2b = c(
     `-2` = "not applicable",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "no"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   qacp2c = c(
     `-2` = "not applicable",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "no"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   qacp2d = c(
     `-2` = "not applicable",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "no"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
-  qacp2e = c(`-1` = "no answer", `0` = "not mentioned", `1` = "mentioned"),
-  qacp3a = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp3b = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp3c = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp3d = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp3e = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp4a = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp4b = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp4c = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp4d = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp4e = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp5a = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp5b = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp5c = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp5d = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp5e = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp6a = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp6b = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp6c = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp6d = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp6e = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp7a = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp7b = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp7c = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp7d = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp7e = c(`-1` = "no answer", `0` = "not mentioned", `1` = "coding category 1", `2` = "no"),
-  qacp8a = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
-  qacp8b = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
-  qacp8c = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
-  qacp8d = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
-  qacp8e = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
-  qacp9a = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
-  qacp9b = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
-  qacp9c = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
-  qacp9d = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
-  qacp9e = c(`-1` = "no answer", `1` = "yes", `2` = "no")
+  qacp2e = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  qacp3a = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp3b = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp3c = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp3d = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp3e = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp4a = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp4b = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp4c = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp4d = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp4e = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp5a = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp5b = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp5c = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp5d = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp5e = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp6a = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp6b = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp6c = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp6d = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp6e = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp7a = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp7b = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp7c = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp7d = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp7e = c(
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
+  ),
+  qacp8a = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  qacp8b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  qacp8c = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  qacp8d = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  qacp8e = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  qacp9a = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  qacp9b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  qacp9c = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  qacp9d = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  qacp9e = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  )
 )
 
 value_labels_list <- list(
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qacp10a",
-    "qacp10b",
-    "qacp10c",
-    "qacp10d",
-    "qacp10e",
-    "qacp1a",
-    "qacp1b",
-    "qacp1c",
-    "qacp1d",
-    "qacp2a",
-    "qacp2b",
-    "qacp2c",
-    "qacp2d",
-    "qacp3a",
-    "qacp3b",
-    "qacp3c",
-    "qacp3d",
-    "qacp3e",
-    "qacp4a",
-    "qacp4b",
-    "qacp4c",
-    "qacp4d",
-    "qacp4e",
-    "qacp5a",
-    "qacp5b",
-    "qacp5c",
-    "qacp5d",
-    "qacp5e",
-    "qacp6a",
-    "qacp6b",
-    "qacp6c",
-    "qacp6d",
-    "qacp6e",
-    "qacp7a",
-    "qacp7b",
-    "qacp7c",
-    "qacp7d",
-    "qacp7e",
-    "qacp8a",
-    "qacp8b",
-    "qacp8c",
-    "qacp8d",
-    "qacp8e",
-    "qacp9a",
-    "qacp9b",
-    "qacp9c",
-    "qacp9d",
-    "qacp9e"
-  )],
+    standardized_value_labels,
     qacp1a = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
     qacp1b = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
     qacp1c = c(`-1` = "no answer", `1` = "yes", `2` = "no"),
@@ -384,43 +550,7 @@ value_labels_list <- list(
     qacp7e = c(`-1` = "no answer", `1` = "yes", `2` = "no")
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qacp1a",
-    "qacp1b",
-    "qacp1c",
-    "qacp1d",
-    "qacp1e",
-    "qacp2a",
-    "qacp2b",
-    "qacp2c",
-    "qacp2d",
-    "qacp2e",
-    "qacp3a",
-    "qacp3b",
-    "qacp3c",
-    "qacp3d",
-    "qacp3e",
-    "qacp4a",
-    "qacp4b",
-    "qacp4c",
-    "qacp4d",
-    "qacp4e",
-    "qacp5a",
-    "qacp5b",
-    "qacp5c",
-    "qacp5d",
-    "qacp5e",
-    "qacp6a",
-    "qacp6b",
-    "qacp6c",
-    "qacp6d",
-    "qacp6e",
-    "qacp7a",
-    "qacp7b",
-    "qacp7c",
-    "qacp7d",
-    "qacp7e"
-  )],
+    standardized_value_labels,
     qacp1a = c(`-1` = "no answer", `0` = "not mentioned", `1` = "mentioned"),
     qacp1b = c(`-1` = "no answer", `0` = "not mentioned", `1` = "mentioned"),
     qacp1c = c(`-1` = "no answer", `0` = "not mentioned", `1` = "mentioned"),
@@ -511,9 +641,12 @@ var_types_vec <- c(
   qacp9e = "categorical"
 )
 
-.lasa_fc_108 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "108", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "108", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "108", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "108", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_108 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

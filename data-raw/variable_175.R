@@ -18,6 +18,35 @@ harmonized_labels <- c(
   mnh09 = "Good conversations with residents of nursing home"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `J` = c(
+    "mnh01",
+    "mnh02",
+    "mnh03",
+    "mnh04",
+    "mnh05",
+    "mnh06",
+    "mnh07",
+    "mnh08",
+    "mnh09"
+  ),
+  `K` = c(
+    "mnh01",
+    "mnh02",
+    "mnh03",
+    "mnh04",
+    "mnh05",
+    "mnh06",
+    "mnh07",
+    "mnh08",
+    "mnh09"
+  )
+)
+
 variable_labels_list <- list(
   Wave_J_labels = harmonized_labels,
   Wave_K_labels = harmonized_labels,
@@ -26,7 +55,7 @@ variable_labels_list <- list(
 
 standardized_value_labels <- list(
   mnh01 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "completely disagree",
     `2` = "disagree",
     `3` = "do not agree/disagree",
@@ -34,7 +63,7 @@ standardized_value_labels <- list(
     `5` = "completely agree"
   ),
   mnh02 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "completely disagree",
     `2` = "disagree",
     `3` = "do not agree/disagree",
@@ -42,7 +71,7 @@ standardized_value_labels <- list(
     `5` = "completely agree"
   ),
   mnh03 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "completely disagree",
     `2` = "disagree",
     `3` = "do not agree/disagree",
@@ -50,7 +79,7 @@ standardized_value_labels <- list(
     `5` = "completely agree"
   ),
   mnh04 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "completely disagree",
     `2` = "disagree",
     `3` = "do not agree/disagree",
@@ -58,7 +87,7 @@ standardized_value_labels <- list(
     `5` = "completely agree"
   ),
   mnh05 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "completely disagree",
     `2` = "disagree",
     `3` = "do not agree/disagree",
@@ -66,7 +95,7 @@ standardized_value_labels <- list(
     `5` = "completely agree"
   ),
   mnh06 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "completely disagree",
     `2` = "disagree",
     `3` = "do not agree/disagree",
@@ -74,7 +103,7 @@ standardized_value_labels <- list(
     `5` = "completely agree"
   ),
   mnh07 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "completely disagree",
     `2` = "disagree",
     `3` = "do not agree/disagree",
@@ -82,7 +111,7 @@ standardized_value_labels <- list(
     `5` = "completely agree"
   ),
   mnh08 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "completely disagree",
     `2` = "disagree",
     `3` = "do not agree/disagree",
@@ -90,7 +119,7 @@ standardized_value_labels <- list(
     `5` = "completely agree"
   ),
   mnh09 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "completely disagree",
     `2` = "disagree",
     `3` = "do not agree/disagree",
@@ -117,9 +146,12 @@ var_types_vec <- c(
   mnh09 = "categorical"
 )
 
-.lasa_fc_175 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "175", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "175", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "175", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "175", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_175 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

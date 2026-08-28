@@ -40,8 +40,12 @@ harmonized_labels <- c(
   qfood27 = "phys. cond. limit shopping and cooking"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "qfood01",
     "qfood02",
     "qfood03",
@@ -62,13 +66,41 @@ variable_labels_list <- list(
     "qfood18",
     "qfood19",
     "qfood20"
-  )],
-  Wave_C_labels = harmonized_labels[c("qfood01")],
-  Wave_D_labels = harmonized_labels[c("qfood01")],
-  Wave_H_labels = harmonized_labels[c("qfood21", "qfood22", "qfood23", "qfood24", "qfood25", "qfood26", "qfood27")],
-  Wave_I_labels = harmonized_labels[c("qfood21", "qfood22", "qfood23", "qfood24", "qfood25", "qfood26", "qfood27")],
-  Wave_J_labels = harmonized_labels[c("qfood21", "qfood22", "qfood23", "qfood24", "qfood25", "qfood26", "qfood27")],
-  Wave_K_labels = harmonized_labels[c(
+  ),
+  `C` = c(
+    "qfood01"
+  ),
+  `D` = c(
+    "qfood01"
+  ),
+  `H` = c(
+    "qfood21",
+    "qfood22",
+    "qfood23",
+    "qfood24",
+    "qfood25",
+    "qfood26",
+    "qfood27"
+  ),
+  `I` = c(
+    "qfood21",
+    "qfood22",
+    "qfood23",
+    "qfood24",
+    "qfood25",
+    "qfood26",
+    "qfood27"
+  ),
+  `J` = c(
+    "qfood21",
+    "qfood22",
+    "qfood23",
+    "qfood24",
+    "qfood25",
+    "qfood26",
+    "qfood27"
+  ),
+  `K` = c(
     "qapp1",
     "qapp2",
     "qapp3",
@@ -80,7 +112,17 @@ variable_labels_list <- list(
     "qfood25",
     "qfood26",
     "qfood27"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = harmonized_labels,
+  Wave_C_labels = harmonized_labels,
+  Wave_D_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
@@ -119,10 +161,10 @@ standardized_value_labels <- list(
   ),
   qfood01 = c(
     `-1` = "not available",
-    `1` = "coding category 1",
-    `2` = "coding category 2",
-    `3` = "coding category 3",
-    `4` = "coding category 4"
+    `1` = "label varies by wave",
+    `2` = "label varies by wave",
+    `3` = "label varies by wave",
+    `4` = "label varies by wave"
   ),
   qfood02 = c(`-1` = "not available"),
   qfood03 = c(`-1` = "not available"),
@@ -154,28 +196,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qfood01",
-    "qfood02",
-    "qfood03",
-    "qfood04",
-    "qfood05",
-    "qfood06",
-    "qfood07",
-    "qfood08",
-    "qfood09",
-    "qfood10",
-    "qfood11",
-    "qfood12",
-    "qfood13",
-    "qfood14",
-    "qfood15",
-    "qfood16",
-    "qfood17",
-    "qfood18",
-    "qfood19",
-    "qfood20"
-  )],
+    standardized_value_labels,
     qfood01 = .replace_labels(
     standardized_value_labels$qfood01,
     `-1` = "no answer",
@@ -262,7 +283,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("qfood01")],
+    standardized_value_labels,
     qfood01 = .replace_labels(
     standardized_value_labels$qfood01,
     `-1` = "no value",
@@ -273,7 +294,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("qfood01")],
+    standardized_value_labels,
     qfood01 = .replace_labels(
     standardized_value_labels$qfood01,
     `-1` = "no value",
@@ -284,7 +305,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("qfood21", "qfood22", "qfood23", "qfood24", "qfood25", "qfood26", "qfood27")],
+    standardized_value_labels,
     qfood21 = .replace_labels(
     standardized_value_labels$qfood21,
     `-1` = "no answer"
@@ -315,7 +336,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("qfood21", "qfood22", "qfood23", "qfood24", "qfood25", "qfood26", "qfood27")],
+    standardized_value_labels,
     qfood21 = .replace_labels(
     standardized_value_labels$qfood21,
     `-1` = "no answer"
@@ -346,7 +367,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c("qfood21", "qfood22", "qfood23", "qfood24", "qfood25", "qfood26", "qfood27")],
+    standardized_value_labels,
     qfood21 = .replace_labels(
     standardized_value_labels$qfood21,
     `-1` = "no answer"
@@ -377,19 +398,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qapp1",
-    "qapp2",
-    "qapp3",
-    "qapp4",
-    "qfood21",
-    "qfood22",
-    "qfood23",
-    "qfood24",
-    "qfood25",
-    "qfood26",
-    "qfood27"
-  )],
+    standardized_value_labels,
     qapp1 = .replace_labels(
     standardized_value_labels$qapp1,
     `-1` = "no answer"
@@ -472,9 +481,12 @@ var_types_vec <- c(
   qfood27 = "categorical"
 )
 
-.lasa_fc_118 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "118", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "118", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "118", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "118", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_118 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -18,15 +18,18 @@
 ##
 ## The pattern throughout: start from a mechanical default (a wave's
 ## variable name = its prefix + the canonical name; a wave's labels = the
-## harmonized ones, subset to the names that wave actually documents),
-## and override only the exceptions -- see .override_label(),
-## .replace_labels(), .replace_in_list() below. Coverage (which canonical
-## names a given wave actually documents -- not every filecode asks every
-## variable in every wave) lives in exactly one place: the names present
-## in that wave's entry of `variable_labels_list`/`value_labels_list` in
-## each per-filecode script. Everything else (variables, value labels,
-## types) derives its own per-wave coverage from those same names, so
-## there's no separate coverage bookkeeping to keep in sync.
+## harmonized ones, with wave-specific text spliced in) and override only
+## the exceptions -- see .override_label(), .replace_labels(),
+## .replace_in_list() below. Coverage (which canonical names a given wave
+## actually documents -- not every filecode asks every variable in every
+## wave) lives in exactly one place per script: its own `wave_coverage`
+## list, declared once near the top. The four wide tables are built
+## first from the *unsubsetted* label lists (every wave "has" every
+## canonical name in the file), then .lasa_prune_wave_coverage() nulls
+## each wave back down to its `wave_coverage` entry in one pass at the
+## end -- so there's still no separate coverage bookkeeping to keep in
+## sync, just one list per script instead of a repeated inline subset at
+## every `Wave_X_labels` call site.
 
 # Wave -> the lowercase prefix LASA puts on that wave's variable names.
 # "A" is an earlier baseline wave documented by only a few filecodes (see
@@ -50,6 +53,37 @@ wave_prefix <- c(
 # filecode/wave genuinely differs (e.g. a differently-cased respnr).
 file_identifiers <- c("filecode", "LASA_Wave")
 resp_identifiers <- c("respnr", "Wave")
+
+## Shared default harmonized labels for LASA's most common negative
+## (missing-reason) value codes -- consistent enough in meaning across
+## nearly every filecode that hand-retyping/re-overriding them per
+## variable and per wave is pure duplication. Used the same way
+## `harmonized_labels` already is in each variable_<fc>.R script: spliced
+## into a variable's own harmonized vector (e.g.
+## `default_missing_labels[c("-1", "-3", "-4")]` for a variable without
+## a documented -2), overridden with `.replace_labels()` only for the
+## rare genuine deviation.
+##
+## Text chosen per code as the single most common exact wording already
+## in use across the 239 variable_<fc>.R files (a corpus-wide survey of
+## every `` `-N` = "..." `` entry) -- not a uniform style, because the
+## dominant convention genuinely differs by code (-1/-3/-4 mostly read
+## "na, ...", -2 mostly reads "not available, routing"); matching each
+## code's own real majority usage keeps this default from silently
+## contradicting the wording actually used almost everywhere. -2's own
+## "na, see <other variable>" cross-references stay variable-specific
+## text (never folded into this default): they name *which* other
+## variable caused the routing skip, information this generic label
+## can't carry. -5 and more extreme codes vary too much by filecode/
+## variable (refusal vs. interview-termination vs. entirely bespoke
+## reasons, and are occasionally repurposed as a real substantive
+## category value, e.g. "-3 = monastery") to have a safe shared default.
+default_missing_labels <- c(
+  `-1` = "na, asked",
+  `-2` = "not available, routing",
+  `-3` = "na, wrong skip",
+  `-4` = "na, short interview"
+)
 
 ## The row set for one filecode's wide tables: every standard wave in
 ## `wave_prefix` order, plus `"A"` only for the (rare) filecodes that
@@ -203,14 +237,59 @@ resp_identifiers <- c("respnr", "Wave")
   df
 }
 
-## A harmonized value label is a human-authored placeholder (e.g. "binary
-## category 1", "coding category 11", "income category 5") when a code's
-## real-world meaning genuinely differs by wave and no single cross-wave
-## label could be written -- the author typed this in as a stand-in rather
-## than leave it blank. Detected purely by its trailing "<...> category
-## <code>" shape; see data-raw/build_lasa_label_db.R for what happens next
-## (the whole variable's harmonized value-label set is dropped and its
-## var_type is reclassified "text").
+## Nulls out, per wave, every canonical-name cell not in that wave's
+## `wave_coverage` entry -- lets `variable_labels_list`/`value_labels_list`
+## be authored unsubsetted (every wave's entry = the full harmonized/
+## standardized set plus its own `.replace_labels()`/`.replace_in_list()`
+## deltas, no `[c(...)]` subsetting at any call site) while the four wide
+## tables built from them still end up with exactly the per-wave coverage
+## that subsetting used to produce directly. Called once, at the very end
+## of each variable_<fc>.R script, on the `fc_labels` list built from the
+## four `.lasa_build_*_table()` calls.
+##
+## `variable_types` is left untouched: type is a property of the
+## canonical variable, not of a specific wave, so there's nothing to
+## prune there. `value_labels` is a list-column (see
+## .lasa_build_value_table()), so its cells are nulled with `list(NULL)`
+## per column -- a vectorized `<- NA` would instead set the cell to the
+## atomic value `NA`, which is not the same as clearing it (and would
+## break the flatten step in build_lasa_label_db.R, which expects an
+## absent value-label set to be `NULL`, not `NA`).
+.lasa_prune_wave_coverage <- function(fc_labels, wave_coverage) {
+  keep_always <- c(file_identifiers, resp_identifiers)
+  for (w in names(wave_coverage)) {
+    keep <- c(keep_always, wave_coverage[[w]])
+
+    row_v <- which(fc_labels$variables$LASA_Wave == w)
+    row_l <- which(fc_labels$variable_labels$LASA_Wave == w)
+    row_x <- which(fc_labels$value_labels$LASA_Wave == w)
+
+    drop_v <- setdiff(names(fc_labels$variables), keep)
+    drop_l <- setdiff(names(fc_labels$variable_labels), keep)
+    drop_x <- setdiff(names(fc_labels$value_labels), keep)
+
+    fc_labels$variables[row_v, drop_v] <- NA_character_
+    fc_labels$variable_labels[row_l, drop_l] <- NA_character_
+    for (cn in drop_x) fc_labels$value_labels[[cn]][row_x] <- list(NULL)
+  }
+  fc_labels
+}
+
+## A harmonized value label is a human-authored placeholder, the fixed
+## string "label varies by wave", when a code's real-world meaning
+## genuinely differs by wave and no single cross-wave label could be
+## written -- the author typed this in as a stand-in rather than leave it
+## blank. See data-raw/build_lasa_label_db.R for what happens next: a
+## default-eligible code (-1..-4) is backfilled from
+## `default_missing_labels`; any other code is dropped from that
+## variable's harmonized value labels and the variable's var_type is
+## reclassified "text" (its wave-specific label text is used instead, see
+## R/lasa_apply_labels.R).
+## `%in%`, not `==`: a value-label vector can legitimately hold
+## NA_character_ (a code that exists but was never given specific
+## wording) -- `==` would propagate that to NA and break any `if(any(...))`
+## caller downstream, where `%in%` correctly (and silently) reads it as
+## "not a placeholder".
 .lasa_is_placeholder_category_label <- function(label_text) {
-  grepl("categor(y|ies)\\s+-?\\d+$", label_text, ignore.case = TRUE)
+  trimws(label_text) %in% "label varies by wave"
 }

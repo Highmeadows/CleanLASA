@@ -25,6 +25,31 @@ harmonized_labels <- c(
   mexlo8 = "I feel lonely"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `J` = c(
+    "mexlo1",
+    "mexlo12",
+    "mexlo16",
+    "mexlo18",
+    "mexlo21",
+    "mexlo23",
+    "mexlo24",
+    "mexlo25",
+    "mexlo26",
+    "mexlo27",
+    "mexlo29",
+    "mexlo3",
+    "mexlo30",
+    "mexlo31",
+    "mexlo6",
+    "mexlo8"
+  )
+)
+
 variable_labels_list <- list(
   Wave_J_labels = .replace_labels(
     harmonized_labels,
@@ -48,166 +73,113 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "no!",
+  `2` = "no",
+  `3` = "more or less",
+  `4` = "yes",
+  `5` = "yes!"
+)
+
 standardized_value_labels <- list(
   mexlo1 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mexlo12 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mexlo16 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mexlo18 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mexlo21 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mexlo23 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mexlo24 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mexlo25 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mexlo26 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mexlo27 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mexlo29 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mexlo3 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mexlo30 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mexlo31 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mexlo6 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mexlo8 = c(
     `-4` = "interview terminated",
     `-2` = "not asked",
-    `-1` = "na, asked",
-    `1` = "no!",
-    `2` = "no",
-    `3` = "more or less",
-    `4` = "yes",
-    `5` = "yes!"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   )
 )
 
@@ -235,9 +207,12 @@ var_types_vec <- c(
   mexlo8 = "categorical"
 )
 
-.lasa_fc_173 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "173", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "173", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "173", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "173", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_173 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

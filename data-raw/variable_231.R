@@ -13,6 +13,85 @@ harmonized_labels <- c(
   sensevg = "vision with glasses"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "senseh",
+    "senseha",
+    "sensev",
+    "sensevg"
+  ),
+  `C` = c(
+    "senseh",
+    "senseha",
+    "sensev",
+    "sensevg"
+  ),
+  `D` = c(
+    "senseh",
+    "senseha",
+    "sensev",
+    "sensevg"
+  ),
+  `E` = c(
+    "senseh",
+    "senseha",
+    "sensev",
+    "sensevg"
+  ),
+  `2B` = c(
+    "senseh",
+    "senseha",
+    "sensev",
+    "sensevg"
+  ),
+  `F` = c(
+    "senseh",
+    "senseha",
+    "sensev",
+    "sensevg"
+  ),
+  `G` = c(
+    "senseh",
+    "senseha",
+    "sensev",
+    "sensevg"
+  ),
+  `H` = c(
+    "senseh",
+    "senseha",
+    "sensev",
+    "sensevg"
+  ),
+  `3B` = c(
+    "senseh",
+    "senseha",
+    "sensev",
+    "sensevg"
+  ),
+  `I` = c(
+    "senseh",
+    "senseha",
+    "sensev",
+    "sensevg"
+  ),
+  `J` = c(
+    "senseh",
+    "senseha",
+    "sensev",
+    "sensevg"
+  ),
+  `K` = c(
+    "senseh",
+    "senseha",
+    "sensev",
+    "sensevg"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = harmonized_labels,
   Wave_C_labels = harmonized_labels,
@@ -41,18 +120,18 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_B_labels = standardized_value_labels[c("sensev")],
-  Wave_C_labels = standardized_value_labels[c("sensev")],
-  Wave_D_labels = standardized_value_labels[c("sensev")],
-  Wave_E_labels = standardized_value_labels[c("sensev")],
-  Wave_2B_labels = standardized_value_labels[c("sensev")],
-  Wave_F_labels = standardized_value_labels[c("sensev")],
-  Wave_G_labels = standardized_value_labels[c("sensev")],
-  Wave_H_labels = standardized_value_labels[c("sensev")],
-  Wave_3B_labels = standardized_value_labels[c("sensev")],
-  Wave_I_labels = standardized_value_labels[c("sensev")],
-  Wave_J_labels = standardized_value_labels[c("sensev")],
-  Wave_K_labels = standardized_value_labels[c("sensev")],
+  Wave_B_labels = standardized_value_labels,
+  Wave_C_labels = standardized_value_labels,
+  Wave_D_labels = standardized_value_labels,
+  Wave_E_labels = standardized_value_labels,
+  Wave_2B_labels = standardized_value_labels,
+  Wave_F_labels = standardized_value_labels,
+  Wave_G_labels = standardized_value_labels,
+  Wave_H_labels = standardized_value_labels,
+  Wave_3B_labels = standardized_value_labels,
+  Wave_I_labels = standardized_value_labels,
+  Wave_J_labels = standardized_value_labels,
+  Wave_K_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -63,7 +142,7 @@ var_types_vec <- c(
   sensevg = "categorical"
 )
 
-.lasa_fc_231 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "231", waves = .lasa_wave_rows()) |>
     .override_label(wave = "F", variable = "senseh", override_value = "fmsensh") |>
     .override_label(wave = "F", variable = "senseha", override_value = "fmsensha") |>
@@ -93,3 +172,43 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "231", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "231", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["senseh"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["senseha"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["sensevg"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["senseh"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["senseha"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["sensevg"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["senseh"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["senseha"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["sensevg"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["senseh"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["senseha"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["sensevg"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["senseh"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["senseha"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["sensevg"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["senseh"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["senseha"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["sensevg"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["senseh"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["senseha"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["sensevg"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["senseh"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["senseha"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["sensevg"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["senseh"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["senseha"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["sensevg"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["senseh"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["senseha"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["sensevg"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["senseh"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["senseha"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["sensevg"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["senseh"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["senseha"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["sensevg"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+
+.lasa_fc_231 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

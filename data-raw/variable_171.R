@@ -27,9 +27,12 @@ harmonized_labels <- c(
   rm171 = "reason missing / data status"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "mcalf01",
     "mcalf02",
     "mcalf03",
@@ -41,7 +44,80 @@ variable_labels_list <- list(
     "mcalf09",
     "mcalf10",
     "mcalf11"
-  )],
+  ),
+  `D` = c(
+    "mcalf02",
+    "mcalf03",
+    "mcalf04",
+    "mcalf06",
+    "mcalf12",
+    "mcalf13",
+    "mcalf1a",
+    "mcalf1b",
+    "rm161"
+  ),
+  `E` = c(
+    "mcalf02",
+    "mcalf03",
+    "mcalf04",
+    "mcalf06",
+    "mcalf12",
+    "mcalf13",
+    "mcalf1a",
+    "mcalf1b",
+    "rm161"
+  ),
+  `2B` = c(
+    "mcalf02",
+    "mcalf03",
+    "mcalf04",
+    "mcalf06",
+    "mcalf1",
+    "mcalf12",
+    "mcalf13"
+  ),
+  `F` = c(
+    "mcalf02",
+    "mcalf1a",
+    "mcalf1b",
+    "rm161"
+  ),
+  `G` = c(
+    "mcalf02",
+    "mcalf03",
+    "mcalf04",
+    "mcalf06",
+    "mcalf12",
+    "mcalf13",
+    "mcalf1a",
+    "mcalf1b",
+    "rm161"
+  ),
+  `H` = c(
+    "mcalf01",
+    "mcalf02",
+    "mcalf03",
+    "mcalf04",
+    "mcalf06",
+    "mcalf12",
+    "mcalf13",
+    "rm171"
+  ),
+  `3B` = c(
+    "mcalf01",
+    "mcalf02",
+    "mcalf03",
+    "mcalf04",
+    "mcalf06",
+    "mcalf12",
+    "mcalf13",
+    "rm171"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
     mcalf01 = "circumference: in cm",
     mcalf02 = "measurement: remarks Y/N",
     mcalf03 = "remark: refused",
@@ -55,17 +131,7 @@ variable_labels_list <- list(
     mcalf11 = "remark other"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
-    "mcalf02",
-    "mcalf03",
-    "mcalf04",
-    "mcalf06",
-    "mcalf12",
-    "mcalf13",
-    "mcalf1a",
-    "mcalf1b",
-    "rm161"
-  )],
+    harmonized_labels,
     mcalf02 = "Calf particularities",
     mcalf03 = "Calf: refused",
     mcalf04 = "Calf: R sitting down",
@@ -77,17 +143,7 @@ variable_labels_list <- list(
     rm161 = NA_character_
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
-    "mcalf02",
-    "mcalf03",
-    "mcalf04",
-    "mcalf06",
-    "mcalf12",
-    "mcalf13",
-    "mcalf1a",
-    "mcalf1b",
-    "rm161"
-  )],
+    harmonized_labels,
     mcalf02 = "Calf particularities",
     mcalf03 = "Calf: refused",
     mcalf04 = "Calf: R sitting down",
@@ -99,7 +155,7 @@ variable_labels_list <- list(
     rm161 = NA_character_
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c("mcalf02", "mcalf03", "mcalf04", "mcalf06", "mcalf1", "mcalf12", "mcalf13")],
+    harmonized_labels,
     mcalf02 = "Calf particularities",
     mcalf03 = "Calf: refused",
     mcalf04 = "Calf: R sitting down",
@@ -109,24 +165,14 @@ variable_labels_list <- list(
     mcalf13 = "Calf: much space between tape and leg"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c("mcalf02", "mcalf1a", "mcalf1b", "rm161")],
+    harmonized_labels,
     mcalf02 = "Calf particularities",
     mcalf1a = "Measured calf (1) in cm",
     mcalf1b = "Measured calf (2) in cm",
     rm161 = NA_character_
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
-    "mcalf02",
-    "mcalf03",
-    "mcalf04",
-    "mcalf06",
-    "mcalf12",
-    "mcalf13",
-    "mcalf1a",
-    "mcalf1b",
-    "rm161"
-  )],
+    harmonized_labels,
     mcalf02 = "Calf particularities",
     mcalf03 = "Calf: refused",
     mcalf04 = "Calf: R sitting down",
@@ -138,7 +184,7 @@ variable_labels_list <- list(
     rm161 = NA_character_
   ),
   Wave_H_labels = .replace_labels(
-    harmonized_labels[c("mcalf01", "mcalf02", "mcalf03", "mcalf04", "mcalf06", "mcalf12", "mcalf13", "rm171")],
+    harmonized_labels,
     mcalf01 = "Measured calf in cm",
     mcalf02 = "Calf particularities",
     mcalf03 = "Calf: refused",
@@ -149,7 +195,7 @@ variable_labels_list <- list(
     rm171 = "Reason missing: LASAH/B171"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c("mcalf01", "mcalf02", "mcalf03", "mcalf04", "mcalf06", "mcalf12", "mcalf13", "rm171")],
+    harmonized_labels,
     mcalf01 = "Measured calf in cm",
     mcalf02 = "Calf particularities",
     mcalf03 = "Calf: refused",
@@ -167,7 +213,7 @@ standardized_value_labels <- list(
   mcalf02 = c(
     `-3` = "not applicable / skipped",
     `-2` = "na, see BRM161",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
     `1` = "particularity status",
     `2` = "particularity status or category",
@@ -179,7 +225,7 @@ standardized_value_labels <- list(
   mcalf03 = c(
     `-3` = "not applicable / skipped",
     `-2` = "na, see MCALF02",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
     `1` = "particularity status",
     `2` = "yes",
@@ -188,7 +234,7 @@ standardized_value_labels <- list(
   mcalf04 = c(
     `-3` = "not applicable / skipped",
     `-2` = "na, see MCALF02",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
     `1` = "particularity status",
     `2` = "yes",
@@ -198,7 +244,7 @@ standardized_value_labels <- list(
   mcalf06 = c(
     `-3` = "not applicable / skipped",
     `-2` = "na, see MCALF02",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
     `1` = "particularity status",
     `2` = "yes",
@@ -207,25 +253,32 @@ standardized_value_labels <- list(
   mcalf07 = c(`-3` = "not in sample", `1` = "no", `2` = "yes", `3` = "not done various reasons"),
   mcalf08 = c(`-3` = "not in sample", `1` = "no", `2` = "yes", `3` = "not done various reasons"),
   mcalf09 = c(`-3` = "not in sample", `1` = "no", `2` = "yes", `3` = "not done various reasons"),
-  mcalf1 = c(`-3` = "na, wrong skip", `-2` = "na, see BRM161", `-1` = "na, asked"),
+  mcalf1 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see BRM161"
+  ),
   mcalf10 = c(`-3` = "not in sample", `1` = "no", `2` = "yes", `3` = "not done various reasons"),
   mcalf11 = c(`-3` = "not in sample", `1` = "no", `2` = "yes", `3` = "not done various reasons"),
   mcalf12 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see MCALF02",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   mcalf13 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see MCALF02",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
-  mcalf1a = c(`-3` = "na, wrong skip", `-2` = "na, see FRM161", `-1` = "na, asked"),
-  mcalf1b = c(`-3` = "na, wrong skip", `-2` = "na, see FRM161", `-1` = "na, asked"),
+  mcalf1a = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see FRM161"
+  ),
+  mcalf1b = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see FRM161"
+  ),
   rm161 = c(
     `-2` = "valid data",
     `0` = "- to be coded -",
@@ -242,19 +295,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mcalf01",
-    "mcalf02",
-    "mcalf03",
-    "mcalf04",
-    "mcalf05",
-    "mcalf06",
-    "mcalf07",
-    "mcalf08",
-    "mcalf09",
-    "mcalf10",
-    "mcalf11"
-  )],
+    standardized_value_labels,
     mcalf01 = c(`-3` = "not in sample", `-1` = "no measurement"),
     mcalf02 = c(`-3` = "not in sample", `1` = "no", `2` = "yes", `3` = "not done various reasons"),
     mcalf03 = c(`-3` = "not in sample", `1` = "no", `2` = "yes", `3` = "not done various reasons"),
@@ -262,17 +303,7 @@ value_labels_list <- list(
     mcalf06 = c(`-3` = "not in sample", `1` = "no", `2` = "yes", `3` = "not done various reasons")
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mcalf02",
-    "mcalf03",
-    "mcalf04",
-    "mcalf06",
-    "mcalf12",
-    "mcalf13",
-    "mcalf1a",
-    "mcalf1b",
-    "rm161"
-  )],
+    standardized_value_labels,
     mcalf02 = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see D/ERM161",
@@ -320,17 +351,7 @@ value_labels_list <- list(
     rm161 = c(`-2` = "valid data", `2` = "interview terminated")
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mcalf02",
-    "mcalf03",
-    "mcalf04",
-    "mcalf06",
-    "mcalf12",
-    "mcalf13",
-    "mcalf1a",
-    "mcalf1b",
-    "rm161"
-  )],
+    standardized_value_labels,
     mcalf02 = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see D/ERM161",
@@ -378,7 +399,7 @@ value_labels_list <- list(
     rm161 = c(`-2` = "valid data", `2` = "interview terminated")
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("mcalf02", "mcalf03", "mcalf04", "mcalf06", "mcalf1", "mcalf12", "mcalf13")],
+    standardized_value_labels,
     mcalf02 = c(`-3` = "na, wrong skip", `-2` = "na, see BRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     mcalf03 = c(
     `-3` = "na, wrong skip",
@@ -411,7 +432,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("mcalf02", "mcalf1a", "mcalf1b", "rm161")],
+    standardized_value_labels,
     mcalf02 = c(
     `-2` = "na, see FRM161",
     `-1` = "na, asked",
@@ -427,17 +448,7 @@ value_labels_list <- list(
     rm161 = c(`-2` = "valid data", `1` = "short version", `2` = "interview terminated")
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mcalf02",
-    "mcalf03",
-    "mcalf04",
-    "mcalf06",
-    "mcalf12",
-    "mcalf13",
-    "mcalf1a",
-    "mcalf1b",
-    "rm161"
-  )],
+    standardized_value_labels,
     mcalf02 = c(`-2` = "na, see GRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     mcalf03 = c(
     `-3` = "na, wrong skip",
@@ -472,7 +483,7 @@ value_labels_list <- list(
     mcalf1b = c(`-2` = "na, see GRM161", `-1` = "na, asked")
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("mcalf01", "mcalf02", "mcalf03", "mcalf04", "mcalf06", "mcalf12", "mcalf13", "rm171")],
+    standardized_value_labels,
     mcalf01 = c(`-2` = "na, see H/BRM171", `-1` = "na, asked"),
     mcalf02 = c(`-2` = "na, see H/BRM171", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     mcalf03 = c(`-2` = "na, see H/BMCALF02", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
@@ -482,7 +493,7 @@ value_labels_list <- list(
     mcalf13 = c(`-2` = "na, see H/BMCALF02", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned")
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("mcalf01", "mcalf02", "mcalf03", "mcalf04", "mcalf06", "mcalf12", "mcalf13", "rm171")],
+    standardized_value_labels,
     mcalf01 = c(`-2` = "na, see H/BRM171", `-1` = "na, asked"),
     mcalf02 = c(`-2` = "na, see H/BRM171", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     mcalf03 = c(`-2` = "na, see H/BMCALF02", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
@@ -515,9 +526,12 @@ var_types_vec <- c(
   rm171 = "categorical"
 )
 
-.lasa_fc_171 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "171", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "171", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "171", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "171", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_171 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

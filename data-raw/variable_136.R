@@ -25,139 +25,111 @@ harmonized_labels <- c(
   qworr16 = "Worry 16: when finished"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `E` = c(
+    "qworr01",
+    "qworr02",
+    "qworr03",
+    "qworr04",
+    "qworr05",
+    "qworr06",
+    "qworr07",
+    "qworr08",
+    "qworr09",
+    "qworr10",
+    "qworr11",
+    "qworr12",
+    "qworr13",
+    "qworr14",
+    "qworr15",
+    "qworr16"
+  )
+)
+
 variable_labels_list <- list(
   Wave_E_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "not at all characteristic",
+  `2` = "not characteristic",
+  `3` = "somewhat characteristic",
+  `4` = "characteristic",
+  `5` = "very characteristic"
+)
+
 standardized_value_labels <- list(
   qworr01 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworr02 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworr03 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworr04 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworr05 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworr06 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworr07 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworr08 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworr09 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworr10 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworr11 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworr12 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworr13 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworr14 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworr15 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qworr16 = c(
     `-1` = "not available",
-    `1` = "not at all characteristic",
-    `2` = "not characteristic",
-    `3` = "somewhat characteristic",
-    `4` = "characteristic",
-    `5` = "very characteristic"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   )
 )
 
@@ -251,9 +223,12 @@ var_types_vec <- c(
   qworr16 = "categorical"
 )
 
-.lasa_fc_136 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "136", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "136", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "136", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "136", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_136 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -15,9 +15,98 @@ harmonized_labels <- c(
   incsat2 = "Satisfaction with income and living standard"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "incdecl",
+    "incfutu",
+    "incsat1",
+    "incsat2"
+  ),
+  `C` = c(
+    "incdclm",
+    "incdcly",
+    "incdecl",
+    "incfutu",
+    "incsat1",
+    "incsat2"
+  ),
+  `D` = c(
+    "incdclm",
+    "incdcly",
+    "incdecl",
+    "incfutu",
+    "incsat1",
+    "incsat2"
+  ),
+  `E` = c(
+    "incsat1",
+    "incsat2"
+  ),
+  `2B` = c(
+    "incdecl",
+    "incsat1",
+    "incsat2"
+  ),
+  `F` = c(
+    "incsat1",
+    "incsat2"
+  ),
+  `G` = c(
+    "incdclm",
+    "incdcly",
+    "incdecl",
+    "incsat1",
+    "incsat2"
+  ),
+  `H` = c(
+    "incdclm",
+    "incdcly",
+    "incdecl",
+    "incsat1",
+    "incsat2"
+  ),
+  `3B` = c(
+    "incdclm",
+    "incdcly",
+    "incdecl",
+    "incsat1",
+    "incsat2"
+  ),
+  `MB` = c(
+    "incdecl",
+    "incsat1",
+    "incsat2"
+  ),
+  `I` = c(
+    "incdclm",
+    "incdcly",
+    "incdecl",
+    "incsat1",
+    "incsat2"
+  ),
+  `J` = c(
+    "incdclm",
+    "incdcly",
+    "incdecl",
+    "incsat1",
+    "incsat2"
+  ),
+  `K` = c(
+    "incdclm",
+    "incdcly",
+    "incdecl",
+    "incsat1",
+    "incsat2"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
-    harmonized_labels[c("incdecl", "incfutu", "incsat1", "incsat2")],
+    harmonized_labels,
     incdecl = "Income decline last 5 years net/month (in Dutch Guilders)"
   ),
   Wave_C_labels = .replace_labels(
@@ -37,23 +126,23 @@ variable_labels_list <- list(
     incsat2 = "satisfaction with income and living standard"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c("incsat1", "incsat2")],
+    harmonized_labels,
     incsat1 = "satisfaction with income level",
     incsat2 = "satisfaction with income and living standard"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c("incdecl", "incsat1", "incsat2")],
+    harmonized_labels,
     incdecl = "net monthly decline in income last 5 years",
     incsat1 = "satisfaction with income level",
     incsat2 = "satisfaction with income and living standard"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c("incsat1", "incsat2")],
+    harmonized_labels,
     incsat1 = "satisfaction with income level",
     incsat2 = "satisfaction with income and living standard"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c("incdclm", "incdcly", "incdecl", "incsat1", "incsat2")],
+    harmonized_labels,
     incdclm = "moment of (major) decline: month",
     incdcly = "moment of (major) decline: year",
     incdecl = "net monthly decline in income last 3 years",
@@ -61,7 +150,7 @@ variable_labels_list <- list(
     incsat2 = "satisfaction with income and living standard"
   ),
   Wave_H_labels = .replace_labels(
-    harmonized_labels[c("incdclm", "incdcly", "incdecl", "incsat1", "incsat2")],
+    harmonized_labels,
     incdclm = "moment of (major) decline: month",
     incdcly = "moment of (major) decline: year",
     incdecl = "net monthly decline in income last 3 years",
@@ -69,7 +158,7 @@ variable_labels_list <- list(
     incsat2 = "satisfaction with income and living standard"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c("incdclm", "incdcly", "incdecl", "incsat1", "incsat2")],
+    harmonized_labels,
     incdclm = "moment of (major) decline: month",
     incdcly = "moment of (major) decline: year",
     incdecl = "net monthly decline in income last 5 years",
@@ -77,13 +166,13 @@ variable_labels_list <- list(
     incsat2 = "satisfaction with income and living standard"
   ),
   Wave_MB_labels = .replace_labels(
-    harmonized_labels[c("incdecl", "incsat1", "incsat2")],
+    harmonized_labels,
     incdecl = "net monthly decline in income last 5 years",
     incsat1 = "satisfaction with income level",
     incsat2 = "satisfaction with income and living standard"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c("incdclm", "incdcly", "incdecl", "incsat1", "incsat2")],
+    harmonized_labels,
     incdclm = "moment of (major) decline: month",
     incdcly = "moment of (major) decline: year",
     incdecl = "net monthly decline in income last 3 years",
@@ -91,7 +180,7 @@ variable_labels_list <- list(
     incsat2 = "satisfaction with income and living standard"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c("incdclm", "incdcly", "incdecl", "incsat1", "incsat2")],
+    harmonized_labels,
     incdclm = "moment of (major) decline: month",
     incdcly = "moment of (major) decline: year",
     incdecl = "net monthly decline in income last 3 years",
@@ -99,7 +188,7 @@ variable_labels_list <- list(
     incsat2 = "satisfaction with income and living standard"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c("incdclm", "incdcly", "incdecl", "incsat1", "incsat2")],
+    harmonized_labels,
     incdclm = "moment of (major) decline: month",
     incdcly = "moment of (major) decline: year",
     incdecl = "net monthly decline in income last 3 years",
@@ -111,9 +200,7 @@ variable_labels_list <- list(
 
 standardized_value_labels <- list(
   incdclm = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "january",
     `2` = "february",
     `3` = "march",
@@ -128,29 +215,24 @@ standardized_value_labels <- list(
     `12` = "december"
   ),
   incdcly = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   incdecl = c(
     `-6` = "not available, refused",
     `-5` = "not available, refused",
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-3", "-2")],
     `-1` = "not available",
     `1` = "no",
-    `2` = "income category 2",
-    `3` = "income category 3",
-    `4` = "income category 4",
-    `5` = "income category 5",
-    `6` = "income category 6",
-    `7` = "income category 7",
+    `2` = "label varies by wave",
+    `3` = "label varies by wave",
+    `4` = "label varies by wave",
+    `5` = "label varies by wave",
+    `6` = "label varies by wave",
+    `7` = "label varies by wave",
     `8` = "yes, do not know how many"
   ),
   incfutu = c(
-    `-4` = "not available, short version",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-1")],
     `1` = "decrease",
     `2` = "same",
     `3` = "increase"
@@ -158,8 +240,7 @@ standardized_value_labels <- list(
   incsat1 = c(
     `-6` = "not available, refused",
     `-5` = "not available, refused",
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
+    default_missing_labels[c("-4", "-3")],
     `-1` = "not available",
     `1` = "dissatisfied",
     `2` = "a little dissatisfied",
@@ -170,8 +251,7 @@ standardized_value_labels <- list(
   incsat2 = c(
     `-6` = "not available, refused",
     `-5` = "not available, refused",
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
+    default_missing_labels[c("-4", "-3")],
     `-1` = "not available",
     `1` = "dissatisfied",
     `2` = "a little dissatisfied",
@@ -183,7 +263,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("incdecl", "incfutu", "incsat1", "incsat2")],
+    standardized_value_labels,
     incdecl = c(
     `-6` = "na, refused",
     `-4` = "na, short version",
@@ -198,8 +278,7 @@ value_labels_list <- list(
   ),
     incfutu = .replace_labels(
     standardized_value_labels$incfutu,
-    `-4` = "na, short version",
-    `-1` = "na, asked"
+    `-4` = "na, short version"
   ),
     incsat1 = c(
     `-6` = "na, refused",
@@ -226,9 +305,7 @@ value_labels_list <- list(
     standardized_value_labels,
     incdclm = .replace_labels(
     standardized_value_labels$incdclm,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/DINCDECL",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -244,9 +321,7 @@ value_labels_list <- list(
   ),
     incdcly = .replace_labels(
     standardized_value_labels$incdcly,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DINCDECL",
-    `-1` = "na, asked"
+    `-2` = "na, see C/DINCDECL"
   ),
     incdecl = c(
     `-5` = "na, refused",
@@ -266,7 +341,6 @@ value_labels_list <- list(
     incfutu = .replace_labels(
     standardized_value_labels$incfutu,
     `-4` = "na, short version",
-    `-1` = "na, asked",
     `2` = "stays the same"
   ),
     incsat1 = c(
@@ -292,9 +366,7 @@ value_labels_list <- list(
     standardized_value_labels,
     incdclm = .replace_labels(
     standardized_value_labels$incdclm,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/DINCDECL",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -310,9 +382,7 @@ value_labels_list <- list(
   ),
     incdcly = .replace_labels(
     standardized_value_labels$incdcly,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DINCDECL",
-    `-1` = "na, asked"
+    `-2` = "na, see C/DINCDECL"
   ),
     incdecl = c(
     `-5` = "na, refused",
@@ -332,7 +402,6 @@ value_labels_list <- list(
     incfutu = .replace_labels(
     standardized_value_labels$incfutu,
     `-4` = "na, short version",
-    `-1` = "na, asked",
     `2` = "stays the same"
   ),
     incsat1 = c(
@@ -355,7 +424,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("incsat1", "incsat2")],
+    standardized_value_labels,
     incsat1 = c(
     `-5` = "na, refused",
     `-4` = "na, short version",
@@ -378,7 +447,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("incdecl", "incsat1", "incsat2")],
+    standardized_value_labels,
     incdecl = c(
     `-5` = "na, refusal",
     `-4` = "na, short version",
@@ -416,7 +485,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("incsat1", "incsat2")],
+    standardized_value_labels,
     incsat1 = c(
     `-5` = "na, refused",
     `-4` = "na, short version",
@@ -439,12 +508,10 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("incdclm", "incdcly", "incdecl", "incsat1", "incsat2")],
+    standardized_value_labels,
     incdclm = .replace_labels(
     standardized_value_labels$incdclm,
-    `-3` = "na, wrong skip",
     `-2` = "na, see G/H/I/J/KINCDECL",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -460,9 +527,7 @@ value_labels_list <- list(
   ),
     incdcly = .replace_labels(
     standardized_value_labels$incdcly,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see G/H/I/J/KINCDECL",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KINCDECL"
   ),
     incdecl = c(
     `-5` = "na, refused",
@@ -500,12 +565,10 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("incdclm", "incdcly", "incdecl", "incsat1", "incsat2")],
+    standardized_value_labels,
     incdclm = .replace_labels(
     standardized_value_labels$incdclm,
-    `-3` = "na, wrong skip",
     `-2` = "na, see G/H/I/J/KINCDECL",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -521,9 +584,7 @@ value_labels_list <- list(
   ),
     incdcly = .replace_labels(
     standardized_value_labels$incdcly,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see G/H/I/J/KINCDECL",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KINCDECL"
   ),
     incdecl = c(
     `-5` = "na, refused",
@@ -561,13 +622,11 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("incdclm", "incdcly", "incdecl", "incsat1", "incsat2")],
+    standardized_value_labels,
     incdclm = c(`-3` = "na, wrong skip", `-2` = "na, see BINCDECL", `-1` = "na, asked"),
     incdcly = .replace_labels(
     standardized_value_labels$incdcly,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BINCDECL",
-    `-1` = "na, asked"
+    `-2` = "na, see BINCDECL"
   ),
     incdecl = c(
     `-5` = "na, refused",
@@ -605,7 +664,7 @@ value_labels_list <- list(
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c("incdecl", "incsat1", "incsat2")],
+    standardized_value_labels,
     incdecl = c(
     `-5` = "na, refused",
     `-4` = "na, short version",
@@ -642,12 +701,10 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("incdclm", "incdcly", "incdecl", "incsat1", "incsat2")],
+    standardized_value_labels,
     incdclm = .replace_labels(
     standardized_value_labels$incdclm,
-    `-3` = "na, wrong skip",
     `-2` = "na, see G/H/I/J/KINCDECL",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -663,9 +720,7 @@ value_labels_list <- list(
   ),
     incdcly = .replace_labels(
     standardized_value_labels$incdcly,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see G/H/I/J/KINCDECL",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KINCDECL"
   ),
     incdecl = c(
     `-5` = "na, refused",
@@ -703,12 +758,10 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c("incdclm", "incdcly", "incdecl", "incsat1", "incsat2")],
+    standardized_value_labels,
     incdclm = .replace_labels(
     standardized_value_labels$incdclm,
-    `-3` = "na, wrong skip",
     `-2` = "na, see G/H/I/J/KINCDECL",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -724,9 +777,7 @@ value_labels_list <- list(
   ),
     incdcly = .replace_labels(
     standardized_value_labels$incdcly,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see G/H/I/J/KINCDECL",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KINCDECL"
   ),
     incdecl = c(
     `-5` = "na, refused",
@@ -764,12 +815,10 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c("incdclm", "incdcly", "incdecl", "incsat1", "incsat2")],
+    standardized_value_labels,
     incdclm = .replace_labels(
     standardized_value_labels$incdclm,
-    `-3` = "na, wrong skip",
     `-2` = "na, see G/H/I/J/KINCDECL",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -785,9 +834,7 @@ value_labels_list <- list(
   ),
     incdcly = .replace_labels(
     standardized_value_labels$incdcly,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see G/H/I/J/KINCDECL",
-    `-1` = "na, asked"
+    `-2` = "na, see G/H/I/J/KINCDECL"
   ),
     incdecl = c(
     `-5` = "na, refused",
@@ -836,9 +883,12 @@ var_types_vec <- c(
   incsat2 = "categorical"
 )
 
-.lasa_fc_019 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "019", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "019", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "019", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "019", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_019 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

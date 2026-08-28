@@ -185,9 +185,12 @@ harmonized_labels <- c(
   murgyn = "Urgent indication"
 )
 
-variable_labels_list <- list(
-  Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `E` = c(
     "madapt",
     "mappli",
     "mdistr",
@@ -209,19 +212,8 @@ variable_labels_list <- list(
     "mriooth",
     "mrioyn",
     "murgyn"
-  )],
-    mdistr = "Indication for district nurse",
-    mdistrh = "District nurse: # hours/week",
-    mdomech = "Domestic tasks: # hours/week",
-    melderh = "Home for the elderly: # hours/week",
-    mmealn = "# meals per week",
-    mnursh = "Nursing home: # hours/week",
-    mpersca = "Home care: personal care",
-    mpersch = "Personal care: # hours/week",
-    mrioyn = "Indication (on medical grounds)"
   ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
+  `F` = c(
     "madapt",
     "mappli",
     "mdistr",
@@ -273,23 +265,8 @@ variable_labels_list <- list(
     "mriooth",
     "mrioyn",
     "murgyn"
-  )],
-    mdistr = "Indication for nursing",
-    mdistrh = "nursing: # hours/week",
-    mdomeca = "Indication for domestic care",
-    mdomech = "Domestic care: # hours/week",
-    mioagh = "Other ind.: activating guidance: # hours/week",
-    mioseh = "Other ind.: something else: # hours/week",
-    miosgh = "Other ind.: supporting guidance: # hours/week",
-    miotrh = "Other ind.: treatment: # hours/week",
-    mitypc = "Indication: type of care",
-    mmealn = "# meals per week",
-    mpersch = "Personal care: # hours/week",
-    mpgbadm = "PGB: administration",
-    mrioyn = "Indication (on medical grounds)"
   ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
+  `G` = c(
     "mdistr",
     "mdistrh",
     "mdtreat",
@@ -335,20 +312,8 @@ variable_labels_list <- list(
     "mrioyn",
     "mshstay",
     "murgyn"
-  )],
-    mdistr = "indication for nursing",
-    mdistrh = "nursing: # hrs per week",
-    mitypc = "home care services or PGB",
-    motherh = "other care: # hrs per week",
-    mpersca = "indication personal care",
-    mpersch = "personal care: # hrs per week",
-    mpgbadm = "PGB: administration",
-    mpgbpc = "PGB: partner personal care",
-    mrioyn = "Applied for Indication",
-    murgyn = "urgent indication"
   ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+  `H` = c(
     "mcizna",
     "mcizrd",
     "mcizyn",
@@ -400,18 +365,8 @@ variable_labels_list <- list(
     "mpgbrlh",
     "mshstay",
     "murgyn"
-  )],
-    mdistr = "indication for nursing",
-    mdistrh = "nursing: # hrs per week",
-    mitypc = "home care services or PGB",
-    motherh = "other care: # hrs per week",
-    mpersca = "indication personal care",
-    mpersch = "personal care: # hrs per week",
-    mpgbpc = "PGB: partner personal care",
-    murgyn = "urgent indication"
   ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
+  `I` = c(
     "mi24ca",
     "mi24cg",
     "mi24cm",
@@ -471,15 +426,8 @@ variable_labels_list <- list(
     "mppgbrc",
     "mppgbro",
     "mppgbvo"
-  )],
-    mpgbac = "PGB: administration: child(ren)",
-    mpgbao = "PGB: administration: other",
-    mpgbap = "PGB: administration: partner",
-    mpgbaph = "PGB: administration: private help",
-    mpgbas = "PGB: administration: self"
   ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
+  `J` = c(
     "mi24ca",
     "mi24cg",
     "mi24ch",
@@ -557,15 +505,8 @@ variable_labels_list <- list(
     "mppgbrc",
     "mppgbro",
     "mppgbvo"
-  )],
-    mpgbac = "PGB: administration: child(ren)",
-    mpgbao = "PGB: administration: other",
-    mpgbap = "PGB: administration: partner",
-    mpgbaph = "PGB: administration: private help",
-    mpgbas = "PGB: administration: self"
   ),
-  Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
+  `K` = c(
     "mi24ca",
     "mi24cg",
     "mi24crd",
@@ -640,7 +581,80 @@ variable_labels_list <- list(
     "mppgbrc",
     "mppgbro",
     "mppgbvo"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_E_labels = .replace_labels(
+    harmonized_labels,
+    mdistr = "Indication for district nurse",
+    mdistrh = "District nurse: # hours/week",
+    mdomech = "Domestic tasks: # hours/week",
+    melderh = "Home for the elderly: # hours/week",
+    mmealn = "# meals per week",
+    mnursh = "Nursing home: # hours/week",
+    mpersca = "Home care: personal care",
+    mpersch = "Personal care: # hours/week",
+    mrioyn = "Indication (on medical grounds)"
+  ),
+  Wave_F_labels = .replace_labels(
+    harmonized_labels,
+    mdistr = "Indication for nursing",
+    mdistrh = "nursing: # hours/week",
+    mdomeca = "Indication for domestic care",
+    mdomech = "Domestic care: # hours/week",
+    mioagh = "Other ind.: activating guidance: # hours/week",
+    mioseh = "Other ind.: something else: # hours/week",
+    miosgh = "Other ind.: supporting guidance: # hours/week",
+    miotrh = "Other ind.: treatment: # hours/week",
+    mitypc = "Indication: type of care",
+    mmealn = "# meals per week",
+    mpersch = "Personal care: # hours/week",
+    mpgbadm = "PGB: administration",
+    mrioyn = "Indication (on medical grounds)"
+  ),
+  Wave_G_labels = .replace_labels(
+    harmonized_labels,
+    mdistr = "indication for nursing",
+    mdistrh = "nursing: # hrs per week",
+    mitypc = "home care services or PGB",
+    motherh = "other care: # hrs per week",
+    mpersca = "indication personal care",
+    mpersch = "personal care: # hrs per week",
+    mpgbadm = "PGB: administration",
+    mpgbpc = "PGB: partner personal care",
+    mrioyn = "Applied for Indication",
+    murgyn = "urgent indication"
+  ),
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
+    mdistr = "indication for nursing",
+    mdistrh = "nursing: # hrs per week",
+    mitypc = "home care services or PGB",
+    motherh = "other care: # hrs per week",
+    mpersca = "indication personal care",
+    mpersch = "personal care: # hrs per week",
+    mpgbpc = "PGB: partner personal care",
+    murgyn = "urgent indication"
+  ),
+  Wave_I_labels = .replace_labels(
+    harmonized_labels,
+    mpgbac = "PGB: administration: child(ren)",
+    mpgbao = "PGB: administration: other",
+    mpgbap = "PGB: administration: partner",
+    mpgbaph = "PGB: administration: private help",
+    mpgbas = "PGB: administration: self"
+  ),
+  Wave_J_labels = .replace_labels(
+    harmonized_labels,
+    mpgbac = "PGB: administration: child(ren)",
+    mpgbao = "PGB: administration: other",
+    mpgbap = "PGB: administration: partner",
+    mpgbaph = "PGB: administration: private help",
+    mpgbas = "PGB: administration: self"
+  ),
+  Wave_K_labels = .replace_labels(
+    harmonized_labels,
     mpgbac = "PGB: administration: child(ren)",
     mpgbao = "PGB: administration: other",
     mpgbap = "PGB: administration: partner",
@@ -650,12 +664,29 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "mentioned",
+  `2` = "yes",
+  `3` = "other",
+  `4` = "withdrawn"
+)
+
 standardized_value_labels <- list(
-  madapt = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mappli = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  madapt = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mappli = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
   mcizna = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "not needed",
     `2` = "prefer self-regulation",
     `3` = "did not know",
@@ -663,8 +694,7 @@ standardized_value_labels <- list(
     `5` = "other reason"
   ),
   mcizrd = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "must rely on informal network",
     `2` = "need for help not strong enough",
     `3` = "other reason"
@@ -676,199 +706,247 @@ standardized_value_labels <- list(
     `3` = "yes, not approved yet",
     `4` = "yes"
   ),
-  mdistr = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mdistrh = c(`-2` = "na, routing", `-1` = "na, asked"),
-  mdomeca = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mdomech = c(`-2` = "na, routing", `-1` = "na, asked"),
+  mdistr = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mdistrh = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  mdomeca = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mdomech = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
   mdtreat = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "no",
     `2` = "yes, elderly home",
     `3` = "yes, nursing home, somatic",
     `4` = "yes, nursing home, psychogeriatric"
   ),
   medntyp = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "day treatment",
     `2` = "night treatment",
     `3` = "both"
   ),
-  meldedn = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "both"),
-  melderh = c(`-2` = "na, routing", `-1` = "na, asked"),
-  melderl = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mhomeca = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  meldedn = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")],
+    `3` = "both"
+  ),
+  melderh = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  melderl = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mhomeca = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
   mi24ca = c(
     `-3` = "section not done",
     `-2` = "na, no contact about services",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   mi24cg = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes",
-    `3` = "under consideration",
-    `4` = "withdrawn"
+    default_answer_labels[c("2", "4")],
+    `3` = "under consideration"
   ),
-  mi24ch = c(`-2` = "no valid data", `-1` = "na, asked"),
-  mi24cm = c(`-2` = "no valid data", `-1` = "na, asked"),
+  mi24ch = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
+  mi24cm = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
   mi24crd = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   mi24crw = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   midaca = c(
     `-3` = "section not done",
     `-2` = "na, no contact about services",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   midacg = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes",
-    `3` = "under consideration",
-    `4` = "withdrawn"
+    default_answer_labels[c("2", "4")],
+    `3` = "under consideration"
   ),
-  midach = c(`-2` = "no valid data", `-1` = "na, asked"),
-  midacm = c(`-2` = "no valid data", `-1` = "na, asked"),
+  midach = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
+  midacm = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
   midacrd = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   midacrw = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
-  midn = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  midn = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
   miguia = c(
     `-3` = "section not done",
     `-2` = "na, no contact about services",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   miguig = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes",
-    `3` = "under consideration",
-    `4` = "withdrawn"
+    default_answer_labels[c("2", "4")],
+    `3` = "under consideration"
   ),
-  miguih = c(`-2` = "no valid data", `-1` = "na, asked"),
-  miguim = c(`-2` = "no valid data", `-1` = "na, asked"),
+  miguih = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
+  miguim = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
   miguird = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   miguirw = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   mihada = c(
     `-3` = "section not done",
     `-2` = "na, no contact about services",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   mihadg = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes",
-    `3` = "under consideration",
-    `4` = "withdrawn"
+    default_answer_labels[c("2", "4")],
+    `3` = "under consideration"
   ),
   mihadrd = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   mihadrw = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   mihhaa = c(
     `-3` = "section not done",
     `-2` = "na, no contact about services",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   mihhag = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes",
-    `3` = "under consideration",
-    `4` = "withdrawn"
+    default_answer_labels[c("2", "4")],
+    `3` = "under consideration"
   ),
-  mihhah = c(`-2` = "no valid data", `-1` = "na, asked"),
-  mihham = c(`-2` = "no valid data", `-1` = "na, asked"),
+  mihhah = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
+  mihham = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
   mihhard = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   mihharw = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   mindnat = c(
     `-3` = "section not done",
     `-2` = "na, no contact about services",
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mindpgb = c(
     `-3` = "section not done",
     `-2` = "na, no contact about services",
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mindtype = c(
     `-3` = "section not done",
     `-2` = "na, no contact about services",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "in kind",
     `2` = "Personal budget (PGB)",
     `3` = "both"
@@ -876,243 +954,338 @@ standardized_value_labels <- list(
   mintca = c(
     `-3` = "section not done",
     `-2` = "na, no contact about services",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   mintcc = stats::setNames(character(0), character(0)),
   mintcg = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes",
-    `3` = "under consideration",
-    `4` = "withdrawn"
+    default_answer_labels[c("2", "4")],
+    `3` = "under consideration"
   ),
-  mintch = c(`-2` = "no valid data", `-1` = "na, asked"),
-  mintcm = c(`-2` = "no valid data", `-1` = "na, asked"),
-  mintcn = c(`-2` = "no valid data", `-1` = "na, asked"),
+  mintch = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
+  mintcm = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
+  mintcn = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
   mintcrd = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   mintcrw = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   minura = c(
     `-3` = "section not done",
     `-2` = "na, no contact about services",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   minurg = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes",
-    `3` = "under consideration",
-    `4` = "withdrawn"
+    default_answer_labels[c("2", "4")],
+    `3` = "under consideration"
   ),
-  minurh = c(`-2` = "no valid data", `-1` = "na, asked"),
-  minurm = c(`-2` = "no valid data", `-1` = "na, asked"),
+  minurh = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
+  minurm = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
   minurrd = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   minurrw = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
-  mioag = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mioagh = c(`-2` = "na, routing", `-1` = "na, asked"),
-  miose = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mioseh = c(`-2` = "na, routing", `-1` = "na, asked"),
-  miosg = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  miosgh = c(`-2` = "na, routing", `-1` = "na, asked"),
+  mioag = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mioagh = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  miose = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mioseh = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  miosg = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  miosgh = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
   miotha = c(
     `-3` = "section not done",
     `-2` = "na, no contact about services",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   miothg = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes",
-    `3` = "under consideration",
-    `4` = "withdrawn"
+    default_answer_labels[c("2", "4")],
+    `3` = "under consideration"
   ),
-  miothh = c(`-2` = "no valid data", `-1` = "na, asked"),
-  miothm = c(`-2` = "no valid data", `-1` = "na, asked"),
+  miothh = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
+  miothm = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
   miothrd = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   miothrw = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
-  miotr = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  miotrh = c(`-2` = "na, routing", `-1` = "na, asked"),
+  miotr = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  miotrh = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
   mipca = c(
     `-3` = "section not done",
     `-2` = "na, no contact about services",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   mipcg = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes",
-    `3` = "under consideration",
-    `4` = "withdrawn"
+    default_answer_labels[c("2", "4")],
+    `3` = "under consideration"
   ),
-  mipch = c(`-2` = "no valid data", `-1` = "na, asked"),
-  mipcm = c(`-2` = "no valid data", `-1` = "na, asked"),
+  mipch = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
+  mipcm = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
   mipcrd = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   mipcrw = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   missca = c(
     `-3` = "section not done",
     `-2` = "na, no contact about services",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
-  misscd = c(`-2` = "no valid data", `-1` = "na, asked"),
+  misscd = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
   misscg = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes",
-    `3` = "under consideration",
-    `4` = "withdrawn"
+    default_answer_labels[c("2", "4")],
+    `3` = "under consideration"
   ),
   misscrd = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   misscrw = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
-  misshd = c(`-2` = "no valid data", `-1` = "na, asked"),
-  missn = c(`-2` = "no valid data", `-1` = "na, asked"),
-  mistay = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  misshd = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
+  missn = c(
+    `-2` = "no valid data",
+    default_missing_labels[c("-1")]
+  ),
+  mistay = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
   mitraa = c(
     `-3` = "section not done",
     `-2` = "na, no contact about services",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   mitrag = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes",
-    `3` = "under consideration",
-    `4` = "withdrawn"
+    default_answer_labels[c("2", "4")],
+    `3` = "under consideration"
   ),
   mitrard = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
   mitrarw = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "informal network should help",
     `2` = "need for care is not serious enough",
-    `3` = "other"
+    default_answer_labels[c("3")]
   ),
-  mitypc = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "care paid by org", `2` = "PGB"),
+  mitypc = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "care paid by org",
+    `2` = "PGB"
+  ),
   mlstay = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "no",
     `2` = "yes, elderly home",
     `3` = "yes, nursing home, somatic",
     `4` = "yes, nursing home, psychogeriatric"
   ),
-  mmeal = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mmealn = c(`-2` = "na, routing", `-1` = "na, asked"),
-  mndndep = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "somatic", `2` = "psychogeriatric"),
+  mmeal = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mmealn = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  mndndep = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "somatic",
+    `2` = "psychogeriatric"
+  ),
   mndntyp = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "day treatment",
     `2` = "night treatment",
     `3` = "both"
   ),
   mntreat = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "no",
     `2` = "yes, elderly home",
     `3` = "yes, nursing home, somatic",
     `4` = "yes, nursing home, psychogeriatric"
   ),
-  mnurdep = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "somatic", `2` = "psychogeriatric"),
-  mnursdn = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "both"),
-  mnursh = c(`-2` = "na, routing", `-1` = "na, asked"),
-  mnursin = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mother = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  motherh = c(`-2` = "na, routing", `-1` = "na, asked"),
-  mpersca = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mpersch = c(`-2` = "na, routing", `-1` = "na, asked"),
+  mnurdep = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "somatic",
+    `2` = "psychogeriatric"
+  ),
+  mnursdn = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")],
+    `3` = "both"
+  ),
+  mnursh = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  mnursin = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mother = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  motherh = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  mpersca = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mpersch = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
   mpgbac = c(
     `-2` = "not applicable based on routing/PGB indication status",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mpgbadm = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "respondent",
     `2` = "spouse",
     `3` = "child(ren)",
@@ -1121,184 +1294,357 @@ standardized_value_labels <- list(
   ),
   mpgbao = c(
     `-2` = "not applicable based on routing/PGB indication status",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mpgbap = c(
     `-2` = "not applicable based on routing/PGB indication status",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mpgbaph = c(
     `-2` = "not applicable based on routing/PGB indication status",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mpgbas = c(
     `-2` = "not applicable based on routing/PGB indication status",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
-  mpgbca = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
+  mpgbca = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mpgbcat = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "domestic care",
     `2` = "personal care",
     `3` = "both"
   ),
-  mpgbchc = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbchg = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbchh = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbdev = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mpgbf = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbfa = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
+  mpgbchc = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbchg = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbchh = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbdev = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  mpgbf = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbfa = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mpgbfat = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "domestic care",
     `2` = "personal care",
     `3` = "both"
   ),
-  mpgbfrc = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbfrg = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbfrh = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
+  mpgbfrc = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbfrg = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbfrh = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mpgbft = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "domestic care",
     `2` = "personal care",
     `3` = "both"
   ),
-  mpgbhc = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbhcc = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbhcg = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbhch = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
+  mpgbhc = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbhcc = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbhcg = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbhch = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mpgbhct = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "domestic care",
     `2` = "personal care",
     `3` = "both"
   ),
-  mpgbhf = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
+  mpgbhf = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mpgbhft = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "domestic care",
     `2` = "personal care",
     `3` = "both"
   ),
-  mpgbhmc = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbhmg = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbhmh = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbn = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbnbc = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbnbg = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbnbh = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
+  mpgbhmc = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbhmg = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbhmh = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbn = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbnbc = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbnbg = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbnbh = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mpgbnt = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "domestic care",
     `2` = "personal care",
     `3` = "both"
   ),
-  mpgbo = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
+  mpgbo = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mpgbot = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "domestic care",
     `2` = "personal care",
     `3` = "both"
   ),
-  mpgbotc = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbotg = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgboth = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbp = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbpc = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
+  mpgbotc = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbotg = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgboth = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbp = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbpc = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mpgbpct = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "domestic care",
     `2` = "personal care",
     `3` = "both"
   ),
-  mpgbpg = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbph = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbphc = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbphg = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbphh = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
+  mpgbpg = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbph = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbphc = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbphg = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbphh = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mpgbpt = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "domestic care",
     `2` = "personal care",
     `3` = "both"
   ),
-  mpgbrcc = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbrcg = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbrch = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbrlc = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbrlg = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mpgbrlh = c(`-2` = "na, routing", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mppgbdn = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  mppgbfo = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  mppgbnf = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  mppgbot = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  mppgbpa = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  mppgbpc = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  mppgbph = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  mppgbrc = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  mppgbro = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  mppgbvo = c(`-2` = "no valid data", `0` = "not mentioned", `1` = "mentioned"),
-  mriooth = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  mpgbrcc = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbrcg = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbrch = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbrlc = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbrlg = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mpgbrlh = c(
+    default_missing_labels[c("-2", "-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mppgbdn = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mppgbfo = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mppgbnf = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mppgbot = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mppgbpa = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mppgbpc = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mppgbph = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mppgbrc = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mppgbro = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mppgbvo = c(
+    `-2` = "no valid data",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mriooth = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
   mrioyn = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "indication/application not yet finalized",
     `3` = "yes",
     `4` = "answer 2 + 3"
   ),
   mshstay = c(
-    `-2` = "na, routing",
-    `-1` = "na, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "no",
     `2` = "yes, elderly home",
     `3` = "yes, nursing home, somatic",
     `4` = "yes, nursing home, psychogeriatric"
   ),
-  murgyn = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "yes, very urgent")
+  murgyn = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")],
+    `3` = "yes, very urgent"
+  )
 )
 
 value_labels_list <- list(
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "madapt",
-    "mappli",
-    "mdistr",
-    "mdistrh",
-    "mdomeca",
-    "mdomech",
-    "meldedn",
-    "melderh",
-    "melderl",
-    "mhomeca",
-    "mmeal",
-    "mmealn",
-    "mnurdep",
-    "mnursdn",
-    "mnursh",
-    "mnursin",
-    "mpersca",
-    "mpersch",
-    "mriooth",
-    "mrioyn",
-    "murgyn"
-  )],
+    standardized_value_labels,
     meldedn = .replace_labels(
     standardized_value_labels$meldedn,
     `1` = "day treatment",
@@ -1319,59 +1665,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "madapt",
-    "mappli",
-    "mdistr",
-    "mdistrh",
-    "mdomeca",
-    "mdomech",
-    "medntyp",
-    "meldedn",
-    "melderl",
-    "midn",
-    "mioag",
-    "mioagh",
-    "miose",
-    "mioseh",
-    "miosg",
-    "miosgh",
-    "miotr",
-    "miotrh",
-    "mistay",
-    "mitypc",
-    "mmeal",
-    "mmealn",
-    "mndndep",
-    "mndntyp",
-    "mnurdep",
-    "mnursdn",
-    "mnursin",
-    "mpersca",
-    "mpersch",
-    "mpgbadm",
-    "mpgbca",
-    "mpgbcat",
-    "mpgbf",
-    "mpgbfa",
-    "mpgbfat",
-    "mpgbft",
-    "mpgbhc",
-    "mpgbhct",
-    "mpgbhf",
-    "mpgbhft",
-    "mpgbn",
-    "mpgbnt",
-    "mpgbo",
-    "mpgbot",
-    "mpgbp",
-    "mpgbpc",
-    "mpgbpct",
-    "mpgbpt",
-    "mriooth",
-    "mrioyn",
-    "murgyn"
-  )],
+    standardized_value_labels,
     meldedn = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     mitypc = .replace_labels(
     standardized_value_labels$mitypc,
@@ -1386,53 +1680,7 @@ value_labels_list <- list(
     murgyn = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mdistr",
-    "mdistrh",
-    "mdtreat",
-    "mitypc",
-    "mlstay",
-    "mntreat",
-    "mother",
-    "motherh",
-    "mpersca",
-    "mpersch",
-    "mpgbadm",
-    "mpgbchc",
-    "mpgbchg",
-    "mpgbchh",
-    "mpgbdev",
-    "mpgbfrc",
-    "mpgbfrg",
-    "mpgbfrh",
-    "mpgbhcc",
-    "mpgbhcg",
-    "mpgbhch",
-    "mpgbhmc",
-    "mpgbhmg",
-    "mpgbhmh",
-    "mpgbnbc",
-    "mpgbnbg",
-    "mpgbnbh",
-    "mpgbotc",
-    "mpgbotg",
-    "mpgboth",
-    "mpgbpc",
-    "mpgbpg",
-    "mpgbph",
-    "mpgbphc",
-    "mpgbphg",
-    "mpgbphh",
-    "mpgbrcc",
-    "mpgbrcg",
-    "mpgbrch",
-    "mpgbrlc",
-    "mpgbrlg",
-    "mpgbrlh",
-    "mrioyn",
-    "mshstay",
-    "murgyn"
-  )],
+    standardized_value_labels,
     mitypc = .replace_labels(
     standardized_value_labels$mitypc,
     `1` = "home care service"
@@ -1441,59 +1689,7 @@ value_labels_list <- list(
     murgyn = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mcizna",
-    "mcizrd",
-    "mcizyn",
-    "mdistr",
-    "mdistrh",
-    "mdtreat",
-    "mitypc",
-    "mlstay",
-    "mntreat",
-    "mother",
-    "motherh",
-    "mpersca",
-    "mpersch",
-    "mpgbac",
-    "mpgbao",
-    "mpgbap",
-    "mpgbaph",
-    "mpgbas",
-    "mpgbchc",
-    "mpgbchg",
-    "mpgbchh",
-    "mpgbdev",
-    "mpgbfrc",
-    "mpgbfrg",
-    "mpgbfrh",
-    "mpgbhcc",
-    "mpgbhcg",
-    "mpgbhch",
-    "mpgbhmc",
-    "mpgbhmg",
-    "mpgbhmh",
-    "mpgbnbc",
-    "mpgbnbg",
-    "mpgbnbh",
-    "mpgbotc",
-    "mpgbotg",
-    "mpgboth",
-    "mpgbpc",
-    "mpgbpg",
-    "mpgbph",
-    "mpgbphc",
-    "mpgbphg",
-    "mpgbphh",
-    "mpgbrcc",
-    "mpgbrcg",
-    "mpgbrch",
-    "mpgbrlc",
-    "mpgbrlg",
-    "mpgbrlh",
-    "mshstay",
-    "murgyn"
-  )],
+    standardized_value_labels,
     mcizyn = .replace_labels(
     standardized_value_labels$mcizyn,
     `4` = "yes, approved"
@@ -1525,67 +1721,7 @@ value_labels_list <- list(
     murgyn = c(`-2` = "na, routing", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mi24ca",
-    "mi24cg",
-    "mi24cm",
-    "mi24crd",
-    "midaca",
-    "midacg",
-    "midacm",
-    "midacrd",
-    "miguia",
-    "miguig",
-    "miguim",
-    "miguird",
-    "mihada",
-    "mihadg",
-    "mihadrd",
-    "mihhaa",
-    "mihhag",
-    "mihham",
-    "mihhard",
-    "mindnat",
-    "mindpgb",
-    "mintca",
-    "mintcg",
-    "mintcm",
-    "mintcrd",
-    "minura",
-    "minurg",
-    "minurm",
-    "minurrd",
-    "miotha",
-    "miothg",
-    "miothm",
-    "miothrd",
-    "mipca",
-    "mipcg",
-    "mipcm",
-    "mipcrd",
-    "missca",
-    "misscd",
-    "misscg",
-    "misscrd",
-    "mitraa",
-    "mitrag",
-    "mitrard",
-    "mpgbac",
-    "mpgbao",
-    "mpgbap",
-    "mpgbaph",
-    "mpgbas",
-    "mppgbdn",
-    "mppgbfo",
-    "mppgbnf",
-    "mppgbot",
-    "mppgbpa",
-    "mppgbpc",
-    "mppgbph",
-    "mppgbrc",
-    "mppgbro",
-    "mppgbvo"
-  )],
+    standardized_value_labels,
     mi24ca = c(`-3` = "section not done", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     mi24cg = .replace_labels(
     standardized_value_labels$mi24cg,
@@ -1768,85 +1904,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mi24ca",
-    "mi24cg",
-    "mi24ch",
-    "mi24cm",
-    "mi24crd",
-    "mi24crw",
-    "midaca",
-    "midacg",
-    "midach",
-    "midacm",
-    "midacrd",
-    "midacrw",
-    "miguia",
-    "miguig",
-    "miguih",
-    "miguim",
-    "miguird",
-    "miguirw",
-    "mihada",
-    "mihadg",
-    "mihadrd",
-    "mihadrw",
-    "mihhaa",
-    "mihhag",
-    "mihhah",
-    "mihham",
-    "mihhard",
-    "mihharw",
-    "mindtype",
-    "mintca",
-    "mintcg",
-    "mintch",
-    "mintcm",
-    "mintcrd",
-    "mintcrw",
-    "minura",
-    "minurg",
-    "minurh",
-    "minurm",
-    "minurrd",
-    "minurrw",
-    "miotha",
-    "miothg",
-    "miothh",
-    "miothm",
-    "miothrd",
-    "miothrw",
-    "mipca",
-    "mipcg",
-    "mipch",
-    "mipcm",
-    "mipcrd",
-    "mipcrw",
-    "missca",
-    "misscd",
-    "misscg",
-    "misscrd",
-    "misscrw",
-    "mitraa",
-    "mitrag",
-    "mitrard",
-    "mitrarw",
-    "mpgbac",
-    "mpgbao",
-    "mpgbap",
-    "mpgbaph",
-    "mpgbas",
-    "mppgbdn",
-    "mppgbfo",
-    "mppgbnf",
-    "mppgbot",
-    "mppgbpa",
-    "mppgbpc",
-    "mppgbph",
-    "mppgbrc",
-    "mppgbro",
-    "mppgbvo"
-  )],
+    standardized_value_labels,
     mi24cg = .replace_labels(
     standardized_value_labels$mi24cg,
     `-2` = "na, see JMI24CA"
@@ -2094,81 +2152,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mi24ca",
-    "mi24cg",
-    "mi24crd",
-    "mi24crw",
-    "midaca",
-    "midacg",
-    "midach",
-    "midacm",
-    "midacrd",
-    "midacrw",
-    "miguia",
-    "miguig",
-    "miguih",
-    "miguim",
-    "miguird",
-    "miguirw",
-    "mihada",
-    "mihadg",
-    "mihadrd",
-    "mihadrw",
-    "mihhaa",
-    "mihhag",
-    "mihhah",
-    "mihham",
-    "mihhard",
-    "mihharw",
-    "mindtype",
-    "mintca",
-    "mintcg",
-    "mintcn",
-    "mintcrd",
-    "mintcrw",
-    "minura",
-    "minurg",
-    "minurh",
-    "minurm",
-    "minurrd",
-    "minurrw",
-    "miotha",
-    "miothg",
-    "miothrd",
-    "miothrw",
-    "mipca",
-    "mipcg",
-    "mipch",
-    "mipcm",
-    "mipcrd",
-    "mipcrw",
-    "missca",
-    "misscg",
-    "misscrd",
-    "misscrw",
-    "misshd",
-    "missn",
-    "mitraa",
-    "mitrag",
-    "mitrard",
-    "mitrarw",
-    "mpgbac",
-    "mpgbao",
-    "mpgbap",
-    "mpgbaph",
-    "mpgbas",
-    "mppgbdn",
-    "mppgbfo",
-    "mppgbnf",
-    "mppgbot",
-    "mppgbpa",
-    "mppgbpc",
-    "mppgbph",
-    "mppgbrc",
-    "mppgbro",
-    "mppgbvo"
-  )],
+    standardized_value_labels,
     mi24cg = .replace_labels(
     standardized_value_labels$mi24cg,
     `-2` = "na, see KMI24CA"
@@ -2581,10 +2565,15 @@ var_types_vec <- c(
   murgyn = "categorical"
 )
 
-.lasa_fc_189 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "189", waves = .lasa_wave_rows()) |>
     .override_label(wave = "I", variable = "misscd", override_value = "imisscm"),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "189", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "189", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "189", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["mintcc"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+
+.lasa_fc_189 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

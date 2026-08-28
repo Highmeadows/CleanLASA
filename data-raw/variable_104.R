@@ -19,92 +19,103 @@ harmonized_labels <- c(
   qpss10 = "felt difficulties piling up"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `H` = c(
+    "qpss01",
+    "qpss02",
+    "qpss03",
+    "qpss04",
+    "qpss05",
+    "qpss06",
+    "qpss07",
+    "qpss08",
+    "qpss09",
+    "qpss10"
+  ),
+  `3B` = c(
+    "qpss01",
+    "qpss02",
+    "qpss03",
+    "qpss04",
+    "qpss05",
+    "qpss06",
+    "qpss07",
+    "qpss08",
+    "qpss09",
+    "qpss10"
+  )
+)
+
 variable_labels_list <- list(
   Wave_H_labels = harmonized_labels,
   Wave_3B_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "almost never",
+  `2` = "sometimes",
+  `3` = "often",
+  `4` = "very often"
+)
+
 standardized_value_labels <- list(
   qpss01 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "never",
-    `1` = "almost never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "very often"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qpss02 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "never",
-    `1` = "almost never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "very often"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qpss03 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "never",
-    `1` = "almost never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "very often"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qpss04 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "never",
-    `1` = "almost never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "very often"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qpss05 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "never",
-    `1` = "almost never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "very often"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qpss06 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "never",
-    `1` = "almost never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "very often"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qpss07 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "never",
-    `1` = "almost never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "very often"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qpss08 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "never",
-    `1` = "almost never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "very often"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qpss09 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "never",
-    `1` = "almost never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "very often"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qpss10 = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "never",
-    `1` = "almost never",
-    `2` = "sometimes",
-    `3` = "often",
-    `4` = "very often"
+    default_answer_labels[c("1", "2", "3", "4")]
   )
 )
 
@@ -127,9 +138,12 @@ var_types_vec <- c(
   qpss10 = "categorical"
 )
 
-.lasa_fc_104 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "104", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "104", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "104", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "104", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_104 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

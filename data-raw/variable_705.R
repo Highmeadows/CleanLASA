@@ -23,9 +23,12 @@ harmonized_labels <- c(
   trfracn = "Number of fractures since last interview (max. 3)"
 )
 
-variable_labels_list <- list(
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
     "trbot",
     "trbot1a",
     "trbot1b",
@@ -36,11 +39,8 @@ variable_labels_list <- list(
     "trbotph",
     "trfall",
     "trfalln"
-  )],
-    trfall = "Did you fall last year?"
   ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
+  `D` = c(
     "trbot1",
     "trbot1a",
     "trbot1b",
@@ -54,109 +54,133 @@ variable_labels_list <- list(
     "trfall",
     "trfalln",
     "trfracn"
-  )],
+  ),
+  `E` = c(
+    "trbot1",
+    "trbot1a",
+    "trbot1b",
+    "trbot2",
+    "trbot2a",
+    "trbot2b",
+    "trbot3",
+    "trbot3a",
+    "trbot3b",
+    "trbotph",
+    "trfracn"
+  ),
+  `F` = c(
+    "trbot1",
+    "trbot1a",
+    "trbot1b",
+    "trbot2",
+    "trbot2a",
+    "trbot2b",
+    "trbot3",
+    "trbot3a",
+    "trbot3b",
+    "trbotph",
+    "trfracn"
+  ),
+  `G` = c(
+    "trbot1",
+    "trbot1a",
+    "trbot1b",
+    "trbot2",
+    "trbot2a",
+    "trbot2b",
+    "trbot3",
+    "trbot3a",
+    "trbot3b",
+    "trbotph",
+    "trfracn"
+  ),
+  `H` = c(
+    "trbot1",
+    "trbot1a",
+    "trbot1b",
+    "trbot2",
+    "trbot2a",
+    "trbot2b",
+    "trbot3",
+    "trbot3a",
+    "trbot3b",
+    "trbotph",
+    "trfracn"
+  ),
+  `I` = c(
+    "trbot1",
+    "trbot1a",
+    "trbot1b",
+    "trbot2",
+    "trbot2a",
+    "trbot2b",
+    "trbot3",
+    "trbot3a",
+    "trbot3b",
+    "trbotph",
+    "trfracn"
+  ),
+  `J` = c(
+    "trbot1",
+    "trbot1a",
+    "trbot1b",
+    "trbot2",
+    "trbot2a",
+    "trbot2b",
+    "trbot3",
+    "trbot3a",
+    "trbot3b",
+    "trbotph",
+    "trfracn"
+  ),
+  `K` = c(
+    "trbot1",
+    "trbot1a",
+    "trbot1b",
+    "trbot2",
+    "trbot2a",
+    "trbot2b",
+    "trbot3",
+    "trbot3a",
+    "trbot3b",
+    "trbotph",
+    "trfracn"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
+    trfall = "Did you fall last year?"
+  ),
+  Wave_D_labels = .replace_labels(
+    harmonized_labels,
     trfall = "Did you fall past year?"
   ),
-  Wave_E_labels = harmonized_labels[c(
-    "trbot1",
-    "trbot1a",
-    "trbot1b",
-    "trbot2",
-    "trbot2a",
-    "trbot2b",
-    "trbot3",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfracn"
-  )],
-  Wave_F_labels = harmonized_labels[c(
-    "trbot1",
-    "trbot1a",
-    "trbot1b",
-    "trbot2",
-    "trbot2a",
-    "trbot2b",
-    "trbot3",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfracn"
-  )],
-  Wave_G_labels = harmonized_labels[c(
-    "trbot1",
-    "trbot1a",
-    "trbot1b",
-    "trbot2",
-    "trbot2a",
-    "trbot2b",
-    "trbot3",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfracn"
-  )],
-  Wave_H_labels = harmonized_labels[c(
-    "trbot1",
-    "trbot1a",
-    "trbot1b",
-    "trbot2",
-    "trbot2a",
-    "trbot2b",
-    "trbot3",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfracn"
-  )],
-  Wave_I_labels = harmonized_labels[c(
-    "trbot1",
-    "trbot1a",
-    "trbot1b",
-    "trbot2",
-    "trbot2a",
-    "trbot2b",
-    "trbot3",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfracn"
-  )],
-  Wave_J_labels = harmonized_labels[c(
-    "trbot1",
-    "trbot1a",
-    "trbot1b",
-    "trbot2",
-    "trbot2a",
-    "trbot2b",
-    "trbot3",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfracn"
-  )],
-  Wave_K_labels = harmonized_labels[c(
-    "trbot1",
-    "trbot1a",
-    "trbot1b",
-    "trbot2",
-    "trbot2a",
-    "trbot2b",
-    "trbot3",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfracn"
-  )],
+  Wave_E_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
 standardized_value_labels <- list(
-  trbot = c(`-1` = "asked no answer", `1` = "no", `2` = "yes"),
-  trbot1 = c(`-1` = "asked, no answer", `1` = "no", `2` = "yes"),
+  trbot = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  trbot1 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   trbot1a = c(
     `-2` = "nothing broken",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "pulse/wrist, colles",
     `2` = "forearm / humerus",
     `3` = "hand, fingers",
@@ -173,7 +197,7 @@ standardized_value_labels <- list(
   ),
   trbot1b = c(
     `-2` = "nothing broken",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `0` = "reason unknown",
     `1` = "fall from > standing height",
     `2` = "fall from standing height or <",
@@ -207,7 +231,12 @@ standardized_value_labels <- list(
     `3` = "traffic accident",
     `4` = "other"
   ),
-  trbot3 = c(`-2` = "no first or second fracture", `-1` = "asked, no answer", `1` = "no", `2` = "yes"),
+  trbot3 = c(
+    `-2` = "no first or second fracture",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   trbot3a = c(
     `-2` = "no first/second fracture",
     `-1` = "no third fracture",
@@ -236,15 +265,19 @@ standardized_value_labels <- list(
   ),
   trbotph = c(
     `-2` = "no fracture(s)",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `0` = "no",
     `1` = "yes, family physician / no",
     `2` = "yes, specialist"
   ),
-  trfall = c(`-1` = "asked, no answer", `1` = "no", `2` = "yes"),
+  trfall = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   trfalln = c(
     `-2` = "not fallen",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `0` = "fallen, number unknown",
     `9` = "more than 8 falls"
   ),
@@ -253,18 +286,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trbot",
-    "trbot1a",
-    "trbot1b",
-    "trbot2a",
-    "trbot2b",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfall",
-    "trfalln"
-  )],
+    standardized_value_labels,
     trbotph = .replace_labels(
     standardized_value_labels$trbotph,
     `-2` = "no fracture",
@@ -276,21 +298,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trbot1",
-    "trbot1a",
-    "trbot1b",
-    "trbot2",
-    "trbot2a",
-    "trbot2b",
-    "trbot3",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfall",
-    "trfalln",
-    "trfracn"
-  )],
+    standardized_value_labels,
     trbot2 = .replace_labels(
     standardized_value_labels$trbot2,
     `-1` = "no first fracture"
@@ -305,19 +313,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trbot1",
-    "trbot1a",
-    "trbot1b",
-    "trbot2",
-    "trbot2a",
-    "trbot2b",
-    "trbot3",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfracn"
-  )],
+    standardized_value_labels,
     trbot2 = .replace_labels(
     standardized_value_labels$trbot2,
     `-1` = "no first fracture"
@@ -328,19 +324,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trbot1",
-    "trbot1a",
-    "trbot1b",
-    "trbot2",
-    "trbot2a",
-    "trbot2b",
-    "trbot3",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfracn"
-  )],
+    standardized_value_labels,
     trbot2 = .replace_labels(
     standardized_value_labels$trbot2,
     `-1` = "no first fracture"
@@ -351,19 +335,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trbot1",
-    "trbot1a",
-    "trbot1b",
-    "trbot2",
-    "trbot2a",
-    "trbot2b",
-    "trbot3",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfracn"
-  )],
+    standardized_value_labels,
     trbot2 = .replace_labels(
     standardized_value_labels$trbot2,
     `-1` = "no first fracture"
@@ -374,19 +346,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trbot1",
-    "trbot1a",
-    "trbot1b",
-    "trbot2",
-    "trbot2a",
-    "trbot2b",
-    "trbot3",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfracn"
-  )],
+    standardized_value_labels,
     trbot2 = .replace_labels(
     standardized_value_labels$trbot2,
     `-1` = "no first fracture"
@@ -394,19 +354,7 @@ value_labels_list <- list(
     trbotph = c(`-2` = "no fracture(s)", `-1` = "asked, no answer", `1` = "no", `2` = "yes, specialist")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trbot1",
-    "trbot1a",
-    "trbot1b",
-    "trbot2",
-    "trbot2a",
-    "trbot2b",
-    "trbot3",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfracn"
-  )],
+    standardized_value_labels,
     trbot2 = .replace_labels(
     standardized_value_labels$trbot2,
     `-1` = "no first fracture"
@@ -414,19 +362,7 @@ value_labels_list <- list(
     trbotph = c(`-2` = "no fracture(s)", `-1` = "asked, no answer", `1` = "no", `2` = "yes, specialist")
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trbot1",
-    "trbot1a",
-    "trbot1b",
-    "trbot2",
-    "trbot2a",
-    "trbot2b",
-    "trbot3",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfracn"
-  )],
+    standardized_value_labels,
     trbot2 = .replace_labels(
     standardized_value_labels$trbot2,
     `-1` = "no first fracture"
@@ -434,19 +370,7 @@ value_labels_list <- list(
     trbotph = c(`-2` = "no fracture(s)", `-1` = "asked, no answer", `1` = "no", `2` = "yes, specialist")
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trbot1",
-    "trbot1a",
-    "trbot1b",
-    "trbot2",
-    "trbot2a",
-    "trbot2b",
-    "trbot3",
-    "trbot3a",
-    "trbot3b",
-    "trbotph",
-    "trfracn"
-  )],
+    standardized_value_labels,
     trbot2 = .replace_labels(
     standardized_value_labels$trbot2,
     `-1` = "no first fracture"
@@ -473,9 +397,12 @@ var_types_vec <- c(
   trfracn = "numeric"
 )
 
-.lasa_fc_705 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "705", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "705", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "705", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "705", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_705 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

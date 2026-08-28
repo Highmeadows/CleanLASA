@@ -47,8 +47,12 @@ harmonized_labels <- c(
   tpsubh1 = "General health"
 )
 
-variable_labels_list <- list(
-  Wave_C_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
     "tpartv1",
     "tpcanc1",
     "tpcara1",
@@ -65,8 +69,8 @@ variable_labels_list <- list(
     "tprheu1",
     "tprheu2",
     "tpsubh1"
-  )],
-  Wave_D_labels = harmonized_labels[c(
+  ),
+  `D` = c(
     "tpartv1",
     "tpcanc1",
     "tpcara1",
@@ -92,8 +96,8 @@ variable_labels_list <- list(
     "tprheu1",
     "tprheu2",
     "tpsubh1"
-  )],
-  Wave_E_labels = harmonized_labels[c(
+  ),
+  `E` = c(
     "tpartv1",
     "tpcanc1",
     "tpcara1",
@@ -116,8 +120,8 @@ variable_labels_list <- list(
     "tprheu1",
     "tprheu2",
     "tpsubh1"
-  )],
-  Wave_F_labels = harmonized_labels[c(
+  ),
+  `F` = c(
     "tpartv1",
     "tpcanc1",
     "tpcara1",
@@ -141,8 +145,8 @@ variable_labels_list <- list(
     "tprheu1",
     "tprheu2",
     "tpsubh1"
-  )],
-  Wave_G_labels = harmonized_labels[c(
+  ),
+  `G` = c(
     "tpartv1",
     "tpcanc1",
     "tpcara1",
@@ -164,9 +168,8 @@ variable_labels_list <- list(
     "tprheu1",
     "tprheu2",
     "tpsubh1"
-  )],
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+  ),
+  `H` = c(
     "tpartv1",
     "tpcanc1",
     "tpcara1",
@@ -189,12 +192,8 @@ variable_labels_list <- list(
     "tprheu1",
     "tprheu2",
     "tpsubh1"
-  )],
-    tpnochrom = "Number of chronic diseases from 7 majors (constructed)",
-    tpnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
   ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
+  `I` = c(
     "tpartv1",
     "tpcanc1",
     "tpcara1",
@@ -218,12 +217,8 @@ variable_labels_list <- list(
     "tprheu1",
     "tprheu2",
     "tpsubh1"
-  )],
-    tpnochrom = "Number of chronic diseases from 7 majors (constructed)",
-    tpnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
   ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
+  `J` = c(
     "tpartv1",
     "tpcanc1",
     "tpcanc1a",
@@ -249,12 +244,8 @@ variable_labels_list <- list(
     "tprheu1",
     "tprheu2",
     "tpsubh1"
-  )],
-    tpnochrom = "Number of chronic diseases from 7 majors (constructed)",
-    tpnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
   ),
-  Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
+  `K` = c(
     "tpartv1",
     "tpcanc1",
     "tpcanc1a",
@@ -287,7 +278,32 @@ variable_labels_list <- list(
     "tprheu1_1",
     "tprheu2",
     "tpsubh1"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_C_labels = harmonized_labels,
+  Wave_D_labels = harmonized_labels,
+  Wave_E_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
+    tpnochrom = "Number of chronic diseases from 7 majors (constructed)",
+    tpnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
+  ),
+  Wave_I_labels = .replace_labels(
+    harmonized_labels,
+    tpnochrom = "Number of chronic diseases from 7 majors (constructed)",
+    tpnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
+  ),
+  Wave_J_labels = .replace_labels(
+    harmonized_labels,
+    tpnochrom = "Number of chronic diseases from 7 majors (constructed)",
+    tpnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
+  ),
+  Wave_K_labels = .replace_labels(
+    harmonized_labels,
     tpnochrom = "Number of chronic diseases from 7 majors (constructed)",
     tpnochrot = "Number of chronic diseases including maximum 2 others (constructed)",
     tprheu1 = "Osteoarthritis: knees, hips or hands"
@@ -295,24 +311,62 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "yes"
+)
+
 standardized_value_labels <- list(
-  tpartv1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  tpcanc1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
+  tpartv1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  tpcanc1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
   tpcanc1a = c(
     `-2` = "no answer, see TPCANC1",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "benign",
     `2` = "malign",
     `3` = "unknown"
   ),
-  tpcara1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  tpchol1 = c(`-1` = "asked, no answer", `1` = "no", `2` = "yes", `3` = "does not know"),
-  tpchol1a = c(`-1` = "asked, no answer", `1` = "no", `2` = "yes", `3` = "does not know"),
-  tpcor1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  tpcor2 = c(`-2` = "never had corona", `-1` = "asked, no answer", `0` = "no", `1` = "yes"),
+  tpcara1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  tpchol1 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes",
+    `3` = "does not know"
+  ),
+  tpchol1a = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes",
+    `3` = "does not know"
+  ),
+  tpcor1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  tpcor2 = c(
+    `-2` = "never had corona",
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
   tpcorm1 = c(
     `-2` = "no corona",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -328,7 +382,7 @@ standardized_value_labels <- list(
   ),
   tpcorm2 = c(
     `-2` = "no corona",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -342,19 +396,59 @@ standardized_value_labels <- list(
     `11` = "November",
     `12` = "December"
   ),
-  tpcory1 = c(`-2` = "no corona", `-1` = "asked, no answer"),
-  tpcory2 = c(`-2` = "no corona", `-1` = "asked, no answer"),
-  tpcva01 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  tpdiab1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  tpfadem = c(`-1` = "asked, no answer / does not know", `0` = "no", `1` = "yes"),
-  tpftrea = c(`-2` = "no dementia", `-1` = "asked, no answer / does not know", `0` = "no", `1` = "yes"),
-  tphart1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  tphbd1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  tphbd1a = c(`-1` = "asked, no answer", `1` = "no", `2` = "yes", `3` = "does not know"),
-  tphead = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
+  tpcory1 = c(
+    `-2` = "no corona",
+    default_missing_labels[c("-1")]
+  ),
+  tpcory2 = c(
+    `-2` = "no corona",
+    default_missing_labels[c("-1")]
+  ),
+  tpcva01 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  tpdiab1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  tpfadem = c(
+    `-1` = "asked, no answer / does not know",
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  tpftrea = c(
+    `-2` = "no dementia",
+    `-1` = "asked, no answer / does not know",
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  tphart1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  tphbd1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  tphbd1a = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes",
+    `3` = "does not know"
+  ),
+  tphead = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
   tpheam = c(
     `-2` = "no head trauma",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -368,13 +462,30 @@ standardized_value_labels <- list(
     `11` = "November",
     `12` = "December"
   ),
-  tpheanr = c(`-2` = "no head trauma", `-1` = "asked, no answer"),
-  tpheay = c(`-2` = "no head trauma", `-1` = "asked, no answer"),
-  tpmodem = c(`-1` = "asked, no answer / does not know", `0` = "no", `1` = "yes"),
-  tpmtrea = c(`-2` = "no dementia", `-1` = "asked, no answer / does not know", `0` = "no", `1` = "yes"),
+  tpheanr = c(
+    `-2` = "no head trauma",
+    default_missing_labels[c("-1")]
+  ),
+  tpheay = c(
+    `-2` = "no head trauma",
+    default_missing_labels[c("-1")]
+  ),
+  tpmodem = c(
+    `-1` = "asked, no answer / does not know",
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  tpmtrea = c(
+    `-2` = "no dementia",
+    `-1` = "asked, no answer / does not know",
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
   tpnochrom = c(`-1` = "no valid data"),
   tpnochrot = c(`-1` = "no valid data"),
-  tpothnr = c(`-1` = "asked, no answer"),
+  tpothnr = c(
+    default_missing_labels[c("-1")]
+  ),
   tpoths1 = c(
     `-2` = "no other disease mentioned",
     `0` = "no more other diseases mentioned",
@@ -641,7 +752,7 @@ standardized_value_labels <- list(
     `50` = "Other non-chronic disease"
   ),
   tpreaso = c(
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "physical indication",
     `2` = "psychological indication",
     `3` = "physical + psychological indication",
@@ -652,11 +763,23 @@ standardized_value_labels <- list(
     `8` = "other reason / demented",
     `9` = "other reason"
   ),
-  tprheu1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  tprheu1_1 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
-  tprheu2 = c(`-1` = "asked, no answer", `0` = "no", `1` = "yes"),
+  tprheu1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  tprheu1_1 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  tprheu2 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
   tpsubh1 = c(
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "excellent",
     `2` = "good",
     `3` = "fair",
@@ -666,52 +789,9 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_C_labels = standardized_value_labels[c(
-    "tpartv1",
-    "tpcanc1",
-    "tpcara1",
-    "tpcva01",
-    "tpdiab1",
-    "tphart1",
-    "tphbd1",
-    "tpnochrom",
-    "tpnochrot",
-    "tpothnr",
-    "tpoths1",
-    "tpoths2",
-    "tpoths3",
-    "tprheu1",
-    "tprheu2",
-    "tpsubh1"
-  )],
+  Wave_C_labels = standardized_value_labels,
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tpartv1",
-    "tpcanc1",
-    "tpcara1",
-    "tpcva01",
-    "tpdiab1",
-    "tpfadem",
-    "tpftrea",
-    "tphart1",
-    "tphbd1",
-    "tphead",
-    "tpheam",
-    "tpheanr",
-    "tpheay",
-    "tpmodem",
-    "tpmtrea",
-    "tpnochrom",
-    "tpnochrot",
-    "tpothnr",
-    "tpoths1",
-    "tpoths2",
-    "tpoths3",
-    "tpreaso",
-    "tprheu1",
-    "tprheu2",
-    "tpsubh1"
-  )],
+    standardized_value_labels,
     tpreaso = c(
     `-1` = "asked, no answer",
     `1` = "physical indication",
@@ -722,30 +802,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tpartv1",
-    "tpcanc1",
-    "tpcara1",
-    "tpcva01",
-    "tpdiab1",
-    "tphart1",
-    "tphbd1",
-    "tphead",
-    "tpheam",
-    "tpheanr",
-    "tpheay",
-    "tpnochrom",
-    "tpnochrot",
-    "tpothnr",
-    "tpoths1",
-    "tpoths2",
-    "tpoths3",
-    "tpoths4",
-    "tpreaso",
-    "tprheu1",
-    "tprheu2",
-    "tpsubh1"
-  )],
+    standardized_value_labels,
     tpoths4 = .replace_labels(
     standardized_value_labels$tpoths4,
     `24` = "Mental problems, incl. depression",
@@ -762,30 +819,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tpartv1",
-    "tpcanc1",
-    "tpcara1",
-    "tpcva01",
-    "tpdiab1",
-    "tphart1",
-    "tphbd1",
-    "tphead",
-    "tpheam",
-    "tpheanr",
-    "tpheay",
-    "tpnochrom",
-    "tpnochrot",
-    "tpoths1",
-    "tpoths2",
-    "tpoths3",
-    "tpoths4",
-    "tpoths5",
-    "tpreaso",
-    "tprheu1",
-    "tprheu2",
-    "tpsubh1"
-  )],
+    standardized_value_labels,
     tpoths4 = .replace_labels(
     standardized_value_labels$tpoths4,
     `24` = "Mental problems, incl. depression",
@@ -808,28 +842,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tpartv1",
-    "tpcanc1",
-    "tpcara1",
-    "tpcva01",
-    "tpdiab1",
-    "tphart1",
-    "tphbd1",
-    "tphead",
-    "tpheam",
-    "tpheanr",
-    "tpheay",
-    "tpnochrom",
-    "tpnochrot",
-    "tpoths1",
-    "tpoths2",
-    "tpoths3",
-    "tpreaso",
-    "tprheu1",
-    "tprheu2",
-    "tpsubh1"
-  )],
+    standardized_value_labels,
     tpreaso = c(
     `-1` = "asked, no answer",
     `1` = "physical indication",
@@ -840,29 +853,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tpartv1",
-    "tpcanc1",
-    "tpcara1",
-    "tpcva01",
-    "tpdiab1",
-    "tphart1",
-    "tphbd1",
-    "tphead",
-    "tpheam",
-    "tpheanr",
-    "tpheay",
-    "tpnochrom",
-    "tpnochrot",
-    "tpoths1",
-    "tpoths2",
-    "tpoths3",
-    "tpoths4",
-    "tpreaso",
-    "tprheu1",
-    "tprheu2",
-    "tpsubh1"
-  )],
+    standardized_value_labels,
     tpoths1 = c(
     `-2` = "no other disease mentioned",
     `0` = "no more other diseases mentioned",
@@ -992,30 +983,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tpartv1",
-    "tpcanc1",
-    "tpcara1",
-    "tpcva01",
-    "tpdiab1",
-    "tphart1",
-    "tphbd1",
-    "tphead",
-    "tpheam",
-    "tpheanr",
-    "tpheay",
-    "tpnochrom",
-    "tpnochrot",
-    "tpoths1",
-    "tpoths2",
-    "tpoths3",
-    "tpoths4",
-    "tpoths5",
-    "tpreaso",
-    "tprheu1",
-    "tprheu2",
-    "tpsubh1"
-  )],
+    standardized_value_labels,
     tpoths1 = c(
     `-2` = "no other disease mentioned",
     `0` = "no more other diseases mentioned",
@@ -1167,32 +1135,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tpartv1",
-    "tpcanc1",
-    "tpcanc1a",
-    "tpcara1",
-    "tpcva01",
-    "tpdiab1",
-    "tphart1",
-    "tphbd1",
-    "tphbd1a",
-    "tphead",
-    "tpheam",
-    "tpheanr",
-    "tpheay",
-    "tpnochrom",
-    "tpnochrot",
-    "tpoths1",
-    "tpoths2",
-    "tpoths3",
-    "tpoths4",
-    "tpoths5",
-    "tpreaso",
-    "tprheu1",
-    "tprheu2",
-    "tpsubh1"
-  )],
+    standardized_value_labels,
     tpcanc1a = .replace_labels(
     standardized_value_labels$tpcanc1a,
     `-2` = "no answer, see JTPCANC1"
@@ -1348,39 +1291,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tpartv1",
-    "tpcanc1",
-    "tpcanc1a",
-    "tpcara1",
-    "tpchol1",
-    "tpchol1a",
-    "tpcor1",
-    "tpcor2",
-    "tpcorm1",
-    "tpcorm2",
-    "tpcory1",
-    "tpcory2",
-    "tpcva01",
-    "tpdiab1",
-    "tphart1",
-    "tphbd1",
-    "tphbd1a",
-    "tphead",
-    "tpheam",
-    "tpheanr",
-    "tpheay",
-    "tpnochrom",
-    "tpnochrot",
-    "tpoths1",
-    "tpoths2",
-    "tpoths3",
-    "tpreaso",
-    "tprheu1",
-    "tprheu1_1",
-    "tprheu2",
-    "tpsubh1"
-  )],
+    standardized_value_labels,
     tpcanc1a = .replace_labels(
     standardized_value_labels$tpcanc1a,
     `-2` = "no answer, see KTPCANC1"
@@ -1536,9 +1447,19 @@ var_types_vec <- c(
   tpsubh1 = "categorical"
 )
 
-.lasa_fc_602 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "602", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "602", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "602", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "602", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["tpothnr"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["tpothnr"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["tpothnr"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["tpothnr"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["tpothnr"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["tpothnr"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+
+.lasa_fc_602 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

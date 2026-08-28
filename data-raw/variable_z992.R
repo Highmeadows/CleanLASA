@@ -27,6 +27,33 @@ harmonized_labels <- c(
   zs3_i9c = "third secondary cause of death, ICD9-chapter (< 1996)"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "zecdl_i10",
+    "zecdmi_i10",
+    "zpc_i10",
+    "zpc_i10c",
+    "zpc_i9",
+    "zpc_i9c",
+    "zs1_i10",
+    "zs1_i10c",
+    "zs1_i9",
+    "zs1_i9c",
+    "zs2_i10",
+    "zs2_i10c",
+    "zs2_i9",
+    "zs2_i9c",
+    "zs3_i10",
+    "zs3_i10c",
+    "zs3_i9",
+    "zs3_i9c"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
@@ -285,7 +312,7 @@ var_types_vec <- c(
   zs3_i9c = "categorical"
 )
 
-.lasa_fc_z992 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "z992", waves = .lasa_wave_rows()) |>
     .override_label(wave = "B", variable = "zecdl_i10", override_value = "zecdl_i10") |>
     .override_label(wave = "B", variable = "zecdmi_i10", override_value = "zecdmi_i10") |>
@@ -309,3 +336,6 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "z992", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "z992", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_z992 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+
