@@ -12,8 +12,9 @@ lasa_topics(
 )
 }
 \arguments{
-\item{topic}{A topic search term. Use \code{"all"} (the default) to return every
-topic, optionally within the selected \code{theme} or subtheme.}
+\item{topic}{A topic search term, or a LASA file code such as \code{"011"} or
+\code{"LASA011"}. Use \code{"all"} (the default) to return every topic,
+optionally within the selected \code{theme} or subtheme.}
 
 \item{theme}{An optional theme or subtheme search term, such as
 \code{"cognitive"} or \code{"memory"}.}
@@ -41,6 +42,15 @@ Topic, theme, and subtheme matching is case-insensitive. Incomplete names
 and small typographical errors are accepted when \code{fuzzy_match = TRUE}.
 Supplying \code{theme} searches both the main LASA themes and their subthemes.
 
+\code{topic} also accepts a LASA file code (such as \code{"011"} or \code{"LASA011"}),
+matched the same way \code{filecode} is in \code{\link[=lasa_var_info]{lasa_var_info()}}; a file-code
+match takes precedence over topic-text search. A 3-digit numeric file
+code also matches its processed/scaled variants -- other 3-digit file
+codes sharing the same final two digits (e.g. \code{"045"} also returns the
+\code{"245"} row) -- since LASA commonly reuses a base code's last two digits
+with a different leading digit to mark a computed/processed variant of
+the same underlying topic.
+
 A topic with no file code yet (e.g. a planned but not-yet-released
 measure), or a file code with no linked variable-information PDF, is
 still included in the result -- \code{filecode} is \code{NA} and/or
@@ -57,5 +67,7 @@ lasa_topics(topic = "Physical")
 lasa_topics(topic = "physical act")
 lasa_topics(theme = "cognitive")
 lasa_topics(theme = "memory")
+lasa_topics("011")   # search by file code
+lasa_topics("045")   # also returns the "245" processed/scaled variant
 
 }

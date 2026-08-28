@@ -61,6 +61,15 @@
 #' and small typographical errors are accepted when `fuzzy_match = TRUE`.
 #' Supplying `theme` searches both the main LASA themes and their subthemes.
 #'
+#' `topic` also accepts a LASA file code (such as `"011"` or `"LASA011"`),
+#' matched the same way `filecode` is in [lasa_var_info()]; a file-code
+#' match takes precedence over topic-text search. A 3-digit numeric file
+#' code also matches its processed/scaled variants -- other 3-digit file
+#' codes sharing the same final two digits (e.g. `"045"` also returns the
+#' `"245"` row) -- since LASA commonly reuses a base code's last two digits
+#' with a different leading digit to mark a computed/processed variant of
+#' the same underlying topic.
+#'
 #' A topic with no file code yet (e.g. a planned but not-yet-released
 #' measure), or a file code with no linked variable-information PDF, is
 #' still included in the result -- `filecode` is `NA` and/or
@@ -71,8 +80,9 @@
 #' an existing file code is available in (e.g. a newly released wave),
 #' edit `data-raw/lasa_topic_database.R` directly and re-run it.
 #'
-#' @param topic A topic search term. Use `"all"` (the default) to return every
-#'   topic, optionally within the selected `theme` or subtheme.
+#' @param topic A topic search term, or a LASA file code such as `"011"` or
+#'   `"LASA011"`. Use `"all"` (the default) to return every topic,
+#'   optionally within the selected `theme` or subtheme.
 #' @param theme An optional theme or subtheme search term, such as
 #'   `"cognitive"` or `"memory"`.
 #' @param fuzzy_match Logical. If `TRUE`, allow fuzzy matching.
@@ -89,6 +99,8 @@
 #' lasa_topics(topic = "physical act")
 #' lasa_topics(theme = "cognitive")
 #' lasa_topics(theme = "memory")
+#' lasa_topics("011")   # search by file code
+#' lasa_topics("045")   # also returns the "245" processed/scaled variant
 #'
 #' @export
 lasa_topics <- function(
@@ -131,59 +143,95 @@ lasa_topics <- function(
   }
 
   if (!identical(.lasa_normalize_text(topic), "all")) {
-    topic_scores <- .lasa_match_scores(
-      query = topic,
-      candidates = topic_index$topic,
-      fuzzy_match = fuzzy_match,
-      max_edit_distance = max_edit_distance
-    )
-    keep_topic <- topic_scores$matched
+    normalized_query_code <- .lasa_normalize_filecode(topic)
+    normalized_filecodes <- .lasa_normalize_filecode(topic_index$filecode)
+    exact_filecode <-
+      !is.na(normalized_filecodes) & normalized_filecodes == normalized_query_code
 
-    if (!any(keep_topic)) {
-      stop(
-        sprintf("No LASA topics matched %s.", shQuote(topic)),
-        call. = FALSE
+    # LASA's processed/scaled variables commonly reuse a base code's final
+    # two digits with a different leading digit (e.g. 045/145/245/345,
+    # 011/111/311/611/711, 033/133/233/333/533) to mark a computed/processed
+    # variant of the same base topic. So a 3-digit numeric query also
+    # matches every OTHER 3-digit numeric filecode sharing its last two
+    # digits -- e.g. `lasa_topics("045")` also returns the "245" row.
+    # Letter-prefixed codes (e.g. "z010", "mb010") never participate.
+    family_filecode <- rep(FALSE, length(normalized_filecodes))
+    if (grepl("^[0-9]{3}$", normalized_query_code)) {
+      query_suffix <- substr(normalized_query_code, 2, 3)
+      is_three_digit <- grepl("^[0-9]{3}$", normalized_filecodes)
+      candidate_suffix <- ifelse(
+        is_three_digit, substr(normalized_filecodes, 2, 3), NA_character_
       )
+      family_filecode <-
+        !exact_filecode & !is.na(candidate_suffix) & candidate_suffix == query_suffix
     }
 
-    topic_index <- topic_index[keep_topic, , drop = FALSE]
-    topic_index$.match_score <- topic_scores$score[keep_topic]
+    keep_filecode <- exact_filecode | family_filecode
 
-    # Search the complete database for matching theme names, not only the
-    # topic rows retained above (and not only within a `theme` filter, if
-    # one was supplied).
-    complete_index <- .lasa_topic_database()
-    all_labels <- unique(data.frame(
-      type = c(
-        rep("theme", length(unique(complete_index$theme))),
-        rep(
-          "subtheme",
-          length(unique(stats::na.omit(complete_index$subtheme)))
-        )
-      ),
-      label = c(
-        unique(complete_index$theme),
-        unique(stats::na.omit(complete_index$subtheme))
-      ),
-      stringsAsFactors = FALSE
-    ))
-    label_scores <- .lasa_match_scores(
-      query = topic,
-      candidates = all_labels$label,
-      fuzzy_match = fuzzy_match,
-      max_edit_distance = max_edit_distance
-    )
-    matching_labels <- all_labels[label_scores$matched, , drop = FALSE]
-
-    if (nrow(matching_labels) > 0L) {
-      message(
-        "Matching LASA themes/subthemes: ",
-        paste(
-          sprintf("%s (%s)", matching_labels$label, matching_labels$type),
-          collapse = "; "
-        ),
-        ". Use `lasa_topics(theme = ...)` to search within one of them."
+    if (nzchar(normalized_query_code) && any(keep_filecode)) {
+      # -- File-code match: takes precedence over topic-text search, and
+      # skips the "Matching LASA themes/subthemes" message below (which is
+      # keyed off topic-text similarity and doesn't apply to a filecode
+      # query). Exact matches sort ahead of same-family (suffix-only)
+      # matches; both stay ahead of where a topic-text match would ever
+      # score (10+).
+      topic_index <- topic_index[keep_filecode, , drop = FALSE]
+      topic_index$.match_score <- ifelse(exact_filecode[keep_filecode], 0, 1)
+    } else {
+      topic_scores <- .lasa_match_scores(
+        query = topic,
+        candidates = topic_index$topic,
+        fuzzy_match = fuzzy_match,
+        max_edit_distance = max_edit_distance
       )
+      keep_topic <- topic_scores$matched
+
+      if (!any(keep_topic)) {
+        stop(
+          sprintf("No LASA topics matched %s.", shQuote(topic)),
+          call. = FALSE
+        )
+      }
+
+      topic_index <- topic_index[keep_topic, , drop = FALSE]
+      topic_index$.match_score <- topic_scores$score[keep_topic]
+
+      # Search the complete database for matching theme names, not only the
+      # topic rows retained above (and not only within a `theme` filter, if
+      # one was supplied).
+      complete_index <- .lasa_topic_database()
+      all_labels <- unique(data.frame(
+        type = c(
+          rep("theme", length(unique(complete_index$theme))),
+          rep(
+            "subtheme",
+            length(unique(stats::na.omit(complete_index$subtheme)))
+          )
+        ),
+        label = c(
+          unique(complete_index$theme),
+          unique(stats::na.omit(complete_index$subtheme))
+        ),
+        stringsAsFactors = FALSE
+      ))
+      label_scores <- .lasa_match_scores(
+        query = topic,
+        candidates = all_labels$label,
+        fuzzy_match = fuzzy_match,
+        max_edit_distance = max_edit_distance
+      )
+      matching_labels <- all_labels[label_scores$matched, , drop = FALSE]
+
+      if (nrow(matching_labels) > 0L) {
+        message(
+          "Matching LASA themes/subthemes: ",
+          paste(
+            sprintf("%s (%s)", matching_labels$label, matching_labels$type),
+            collapse = "; "
+          ),
+          ". Use `lasa_topics(theme = ...)` to search within one of them."
+        )
+      }
     }
   } else {
     topic_index$.match_score <- 0
