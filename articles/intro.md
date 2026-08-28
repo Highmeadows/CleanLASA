@@ -541,11 +541,38 @@ manual_update_lasa_labels(
 
 manual_update_lasa_labels(
   filecode = "046",
-  wave = c("B", "C", "D"), # only update specified waves.  
+  wave = c("B", "C", "D"), # only update specified waves.
   variable = "lphya01",
   var_label = "New label",
   val_labels = c(`-5` = "NA, wrong, skip")
 )
+```
+
+### Undo a manual correction
+
+[`manual_update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/manual_update_lasa_labels.md)
+writes its corrections into a *full* local snapshot of the database, not
+just the correction itself – so once that snapshot exists, it takes
+precedence over the bundled database on every subsequent load, for every
+file code, until it’s refreshed.
+[`restore_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/restore_lasa_labels.md)
+is the inverse: it discards recorded corrections (entirely, or scoped to
+a `filecode`/`wave`/`variable`), and can also rebuild that local
+snapshot from whatever the currently-installed package’s bundled
+database contains, so a package update’s new or corrected coverage
+actually takes effect.
+
+``` r
+
+# Undo one correction:
+restore_lasa_labels(filecode = "046", variable = "lphya01")
+
+# Undo every correction ever recorded locally:
+restore_lasa_labels()
+
+# Full reset: undo every correction AND rebuild the local snapshot from
+# the currently-installed package's bundled database:
+restore_lasa_labels(rebuild = TRUE)
 ```
 
 ## 9. A complete analysis-oriented workflow
@@ -591,6 +618,7 @@ labels again.
 | [`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md) | Inspect the full matching audit or only entries requiring attention |
 | [`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md) | Inspect the active bundled + user-local label metadata database |
 | [`manual_update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/manual_update_lasa_labels.md) | Add or correct metadata in a persistent manual override layer |
+| [`restore_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/restore_lasa_labels.md) | Undo manual corrections (entirely, or scoped) and/or rebuild the local database cache from the bundled one |
 
 Together, these functions make the LASA documentation part of the R data
 workflow: topics and source documents remain discoverable, imported

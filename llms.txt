@@ -227,6 +227,27 @@ manual_update_lasa_labels(
 )
 ```
 
+[`manual_update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/manual_update_lasa_labels.md)
+writes to a *full* local snapshot of the database the first time it’s
+called, not just the correction – so once that snapshot exists, it takes
+precedence over the bundled database on every subsequent load, for every
+file code, until it’s refreshed.
+[`restore_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/restore_lasa_labels.md)
+is the inverse: it undoes a correction (entirely, or scoped to a
+`filecode`/`wave`/`variable`) and/or rebuilds that local snapshot from
+whatever the currently-installed package’s bundled database contains, so
+a package update’s new/corrected coverage actually takes effect.
+
+``` r
+
+# Undo one correction:
+restore_lasa_labels(filecode = "046", variable = "lphya01")
+
+# Undo every correction ever recorded locally, and pick up whatever the
+# installed package version's bundled database currently contains:
+restore_lasa_labels(rebuild = TRUE)
+```
+
 ## Finding topics and documentation
 
 [`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md)
@@ -292,6 +313,7 @@ use `refresh = TRUE` to check the live site for a changed link.
 | [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md) | Reads a LASA `.sav` file and labels it using [`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md), based on the wave/file code parsed from the file name |
 | [`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md) | Applies [`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md) labels to any data frame, resolving file code/wave explicitly or from stored provenance |
 | [`manual_update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/manual_update_lasa_labels.md) | Hand-corrects or adds a variable/value label in your local copy of the database |
+| [`restore_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/restore_lasa_labels.md) | Undoes manual corrections (entirely, or scoped) and/or rebuilds the local database cache from the bundled one |
 | [`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md) | Returns the label database currently in effect (bundled snapshot + any local updates) |
 | [`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md) | Returns variables that could not be matched to the corresponding LASA documentation |
 | [`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md) | Searches the bundled LASA topic database for topics, themes, and file codes |
@@ -322,6 +344,8 @@ Full function reference and articles are available at:
   : Manually correct or add LASA variable/value labels
 - [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
   : Read and label a LASA SPSS data file
+- [`restore_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/restore_lasa_labels.md)
+  : Restore/reset the local LASA label database
 
 # Articles
 

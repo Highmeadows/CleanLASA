@@ -539,18 +539,42 @@ subsequently be applied to the loaded dataframes with
 <span></span>
 <span><span class="fu"><a href="../reference/manual_update_lasa_labels.html">manual_update_lasa_labels</a></span><span class="op">(</span></span>
 <span>  filecode <span class="op">=</span> <span class="st">"046"</span>,</span>
-<span>  wave <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span><span class="op">)</span>, <span class="co"># only update specified waves.  </span></span>
+<span>  wave <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span><span class="op">)</span>, <span class="co"># only update specified waves.</span></span>
 <span>  variable <span class="op">=</span> <span class="st">"lphya01"</span>,</span>
 <span>  var_label <span class="op">=</span> <span class="st">"New label"</span>,</span>
 <span>  val_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>`-5` <span class="op">=</span> <span class="st">"NA, wrong, skip"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="undo-a-manual-correction">Undo a manual correction<a class="anchor" aria-label="anchor" href="#undo-a-manual-correction"></a>
+</h3>
+<p><code><a href="../reference/manual_update_lasa_labels.html">manual_update_lasa_labels()</a></code> writes its corrections into
+a <em>full</em> local snapshot of the database, not just the correction
+itself – so once that snapshot exists, it takes precedence over the
+bundled database on every subsequent load, for every file code, until
+it’s refreshed. <code><a href="../reference/restore_lasa_labels.html">restore_lasa_labels()</a></code> is the inverse: it
+discards recorded corrections (entirely, or scoped to a
+<code>filecode</code>/<code>wave</code>/<code>variable</code>), and can
+also rebuild that local snapshot from whatever the currently-installed
+package’s bundled database contains, so a package update’s new or
+corrected coverage actually takes effect.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Undo one correction:</span></span>
+<span><span class="fu"><a href="../reference/restore_lasa_labels.html">restore_lasa_labels</a></span><span class="op">(</span>filecode <span class="op">=</span> <span class="st">"046"</span>, variable <span class="op">=</span> <span class="st">"lphya01"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Undo every correction ever recorded locally:</span></span>
+<span><span class="fu"><a href="../reference/restore_lasa_labels.html">restore_lasa_labels</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Full reset: undo every correction AND rebuild the local snapshot from</span></span>
+<span><span class="co"># the currently-installed package's bundled database:</span></span>
+<span><span class="fu"><a href="../reference/restore_lasa_labels.html">restore_lasa_labels</a></span><span class="op">(</span>rebuild <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="a-complete-analysis-oriented-workflow">9. A complete analysis-oriented workflow<a class="anchor" aria-label="anchor" href="#a-complete-analysis-oriented-workflow"></a>
 </h2>
 <p>For most analyses, the package can be used with a small number of
 steps:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://highmeadows.github.io/CleanLASA/">CleanLASA</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 1. Find the relevant LASA topic and file code</span></span>
@@ -617,6 +641,11 @@ attention</td>
 <tr class="odd">
 <td><code><a href="../reference/manual_update_lasa_labels.html">manual_update_lasa_labels()</a></code></td>
 <td>Add or correct metadata in a persistent manual override layer</td>
+</tr>
+<tr class="even">
+<td><code><a href="../reference/restore_lasa_labels.html">restore_lasa_labels()</a></code></td>
+<td>Undo manual corrections (entirely, or scoped) and/or rebuild the
+local database cache from the bundled one</td>
 </tr>
 </tbody>
 </table>

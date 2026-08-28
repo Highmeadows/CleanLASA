@@ -174,13 +174,21 @@
 <span>  val_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>`-5` <span class="op">=</span> <span class="st">"NA, wrong, skip"</span><span class="op">)</span>,</span>
 <span>  replace_val_labels <span class="op">=</span> <span class="cn">TRUE</span>  <span class="co"># replaces the value-label set entirely</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p><code><a href="reference/manual_update_lasa_labels.html">manual_update_lasa_labels()</a></code> writes to a <em>full</em> local snapshot of the database the first time it’s called, not just the correction – so once that snapshot exists, it takes precedence over the bundled database on every subsequent load, for every file code, until it’s refreshed. <code><a href="reference/restore_lasa_labels.html">restore_lasa_labels()</a></code> is the inverse: it undoes a correction (entirely, or scoped to a <code>filecode</code>/<code>wave</code>/<code>variable</code>) and/or rebuilds that local snapshot from whatever the currently-installed package’s bundled database contains, so a package update’s new/corrected coverage actually takes effect.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Undo one correction:</span></span>
+<span><span class="fu"><a href="reference/restore_lasa_labels.html">restore_lasa_labels</a></span><span class="op">(</span>filecode <span class="op">=</span> <span class="st">"046"</span>, variable <span class="op">=</span> <span class="st">"lphya01"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Undo every correction ever recorded locally, and pick up whatever the</span></span>
+<span><span class="co"># installed package version's bundled database currently contains:</span></span>
+<span><span class="fu"><a href="reference/restore_lasa_labels.html">restore_lasa_labels</a></span><span class="op">(</span>rebuild <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="finding-topics-and-documentation">Finding topics and documentation<a class="anchor" aria-label="anchor" href="#finding-topics-and-documentation"></a>
 </h2>
 <p><code><a href="reference/lasa_topics.html">lasa_topics()</a></code> searches the package’s bundled LASA topic database for topics, themes, and file codes:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Browse everything</span></span>
 <span><span class="fu"><a href="reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -196,7 +204,7 @@
 <span><span class="fu"><a href="reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span><span class="st">"011"</span><span class="op">)</span></span></code></pre></div>
 <p>This table is hand-maintained (see <code>data-raw/lasa_topic_database.R</code> in the package source), not scraped, so it updates only when the package itself does — but that also makes it directly editable: adding a new file code or updating which waves an existing one is available in (e.g. a newly released wave) is a one-line change to that file.</p>
 <p>Once you’ve found a topic or file code, <code><a href="reference/lasa_var_info.html">lasa_var_info()</a></code> resolves and opens its variable-information PDF or its LASA topic webpage, scraped live from the LASA website (no PDFs are bundled with the package):</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span><span class="op">)</span>               <span class="co"># by file code</span></span>
 <span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"LASA046"</span><span class="op">)</span>           <span class="co"># file code variations are recognized</span></span>
 <span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"Physical activity"</span><span class="op">)</span> <span class="co"># or by topic name</span></span>
@@ -233,6 +241,10 @@
 <tr>
 <td><code><a href="reference/manual_update_lasa_labels.html">manual_update_lasa_labels()</a></code></td>
 <td>Hand-corrects or adds a variable/value label in your local copy of the database</td>
+</tr>
+<tr>
+<td><code><a href="reference/restore_lasa_labels.html">restore_lasa_labels()</a></code></td>
+<td>Undoes manual corrections (entirely, or scoped) and/or rebuilds the local database cache from the bundled one</td>
 </tr>
 <tr>
 <td><code><a href="reference/lasa_label_db.html">lasa_label_db()</a></code></td>
