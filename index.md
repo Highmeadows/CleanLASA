@@ -1,5 +1,9 @@
 # CleanLASA
 
+------------------------------------------------------------------------
+
+editor_options: markdown: wrap: 72 —
+
 The goal of CleanLASA is to make it easy to import and clean LASA
 (Longitudinal Aging Study Amsterdam) SPSS data files in R. It applies
 the correct variable and value labels from the LASA documentation,
@@ -17,8 +21,10 @@ with package updates; local, one-off corrections are also possible with
 ## Installation
 
 WARNING! The project is stil heavily work-in-progress, so installing is
-currently not recommended. You can install the development version of
-CleanLASA from [GitHub](https://github.com/) with:
+currently not recommended.
+
+You can install the development version of CleanLASA from
+[GitHub](https://github.com/) with:
 
 ``` r
 
@@ -96,12 +102,14 @@ which both functions share.
 
 # Rename columns to their canonical names, harmonize labels, and insert a
 # "Wave" column, all in one call -- this is also the default:
-data <- read_lasa_sav("LASAB046.sav")
+data <- read_lasa_sav("LASAB046.sav", standardize=TRUE)
 names(data)[1:3]
 #> [1] "respnr"  "Wave"    "lphya01"
 
 # add_wavecode also works on its own, without fully standardizing names:
 data <- read_lasa_sav("LASAB046.sav", .standardize_names = FALSE, add_wavecode = TRUE)
+names(data)[1:3]
+#> [1] "respnr"  "Wave"    "blphya01"
 ```
 
 Regardless of these arguments, every matched column also keeps its
@@ -165,21 +173,27 @@ db <- lasa_label_db()
 subset(db$variables, filecode == "046" & wave == "B")
 ```
 
-The database has three parts: `variables` (one row per file
-code/wave/variable), `value_labels` (that variable’s value labels as
-documented for that specific wave), and `value_labels_harmonized` (the
-same variable’s value labels standardized across every wave that
-documents it, independent of wave – useful when combining waves that
-coded the same concept slightly differently).
+The database has three parts:
+
+- `variables` (one row per file code/wave/variable),
+
+- `value_labels` (that variable’s value labels as documented for that
+  specific wave)
+
+- `value_labels_harmonized` (the same variable’s value labels
+  standardized across every wave that documents it, independent of wave
+  – useful when combining waves that coded the same concept slightly
+  differently).
+
 [`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
 and
 [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
 attach all of this to each labelled column as attributes:
-`"label"`/`"labels"` (the *active* variable label/value labels –
-wave-specific unless `.standardize_var_labels`/`.standardize_val_labels`
-is on), `"wave_label"`/`"labels_wave"` (always the wave-specific
-versions), `"canonical_name"`, `"harmonized_label"`, and (where
-documented) `"labels_harmonized"`.
+`"label"`/`"labels"` (the *active* **variable label/value labels**:
+wave-specific unless `.standardize_var_labels`/
+`.standardize_val_labels` is on), `"wave_label"`/`"labels_wave"` (always
+the wave-specific versions), `"canonical_name"`, `"harmonized_label"`,
+and (where documented) `"labels_harmonized"`.
 
 Some variables’ coding genuinely differs by wave – a binary code’s
 polarity flipped, or an income variable’s brackets were redefined – so
@@ -188,7 +202,7 @@ marks these `var_type == "text"` and documents no harmonized value
 labels at all for them; `to_factor` recodes such a variable to its
 wave-specific label text (character) instead of a factor, so waves whose
 numeric codes disagree but whose label text agrees
-(`0 = "no", 1 = "yes"` vs. `1 = "no", 2 = "yes"`) still merge correctly.
+(`0 = "no", 1 = "yes"` vs. `1 = "no", 2 = "yes"`) still merge correctly.
 
 ### Manual corrections
 

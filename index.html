@@ -50,7 +50,9 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><div class="section level1">
+  <main id="main" class="col-md-9"><hr>
+<p>editor_options: markdown: wrap: 72 —</p>
+<div class="section level1">
 <div class="page-header"><h1 id="cleanlasa">CleanLASA<a class="anchor" aria-label="anchor" href="#cleanlasa"></a>
 </h1></div>
 <!-- badges: start -->
@@ -60,7 +62,8 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>WARNING! The project is stil heavily work-in-progress, so installing is currently not recommended. You can install the development version of CleanLASA from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>WARNING! The project is stil heavily work-in-progress, so installing is currently not recommended.</p>
+<p>You can install the development version of CleanLASA from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Highmeadows/CleanLASA"</span><span class="op">)</span></span></code></pre></div>
@@ -112,12 +115,14 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Rename columns to their canonical names, harmonize labels, and insert a</span></span>
 <span><span class="co"># "Wave" column, all in one call -- this is also the default:</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span>, standardize<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
 <span><span class="co">#&gt; [1] "respnr"  "Wave"    "lphya01"</span></span>
 <span></span>
 <span><span class="co"># add_wavecode also works on its own, without fully standardizing names:</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span>, .standardize_names <span class="op">=</span> <span class="cn">FALSE</span>, add_wavecode <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span>, .standardize_names <span class="op">=</span> <span class="cn">FALSE</span>, add_wavecode <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] "respnr"  "Wave"    "blphya01"</span></span></code></pre></div>
 <p>Regardless of these arguments, every matched column also keeps its wave-specific label/value labels available as reference attributes – <code>attr(x, "wave_label")</code> and <code>attr(x, "labels_wave")</code> – so R output can always be cross-checked against another program’s (e.g. SPSS) coding, even after <code>to_numeric</code>/<code>to_factor</code> reshaping or harmonized-label standardization.</p>
 <p>After importing, you can check the variable-name matching audit – in both directions: documented variables not found in the data, and data columns not documented in the label database – using <code><a href="reference/lasa_label_report.html">lasa_label_report()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -146,8 +151,14 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lasa_label_db.html">lasa_label_db</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">db</span><span class="op">$</span><span class="va">variables</span>, <span class="va">filecode</span> <span class="op">==</span> <span class="st">"046"</span> <span class="op">&amp;</span> <span class="va">wave</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">)</span></span></code></pre></div>
-<p>The database has three parts: <code>variables</code> (one row per file code/wave/variable), <code>value_labels</code> (that variable’s value labels as documented for that specific wave), and <code>value_labels_harmonized</code> (the same variable’s value labels standardized across every wave that documents it, independent of wave – useful when combining waves that coded the same concept slightly differently). <code><a href="reference/apply_lasa_labels.html">apply_lasa_labels()</a></code> and <code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code> attach all of this to each labelled column as attributes: <code>"label"</code>/<code>"labels"</code> (the <em>active</em> variable label/value labels – wave-specific unless <code>.standardize_var_labels</code>/<code>.standardize_val_labels</code> is on), <code>"wave_label"</code>/<code>"labels_wave"</code> (always the wave-specific versions), <code>"canonical_name"</code>, <code>"harmonized_label"</code>, and (where documented) <code>"labels_harmonized"</code>.</p>
-<p>Some variables’ coding genuinely differs by wave – a binary code’s polarity flipped, or an income variable’s brackets were redefined – so no single cross-wave value label could be written for them. <code>variables</code> marks these <code>var_type == "text"</code> and documents no harmonized value labels at all for them; <code>to_factor</code> recodes such a variable to its wave-specific label text (character) instead of a factor, so waves whose numeric codes disagree but whose label text agrees (<code>0 = "no", 1 = "yes"</code> vs. <code>1 = "no", 2 = "yes"</code>) still merge correctly.</p>
+<p>The database has three parts:</p>
+<ul>
+<li><p><code>variables</code> (one row per file code/wave/variable),</p></li>
+<li><p><code>value_labels</code> (that variable’s value labels as documented for that specific wave)</p></li>
+<li><p><code>value_labels_harmonized</code> (the same variable’s value labels standardized across every wave that documents it, independent of wave – useful when combining waves that coded the same concept slightly differently).</p></li>
+</ul>
+<p><code><a href="reference/apply_lasa_labels.html">apply_lasa_labels()</a></code> and <code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code> attach all of this to each labelled column as attributes: <code>"label"</code>/<code>"labels"</code> (the <em>active</em> <strong>variable label/value labels</strong>: wave-specific unless <code>.standardize_var_labels</code>/ <code>.standardize_val_labels</code> is on), <code>"wave_label"</code>/<code>"labels_wave"</code> (always the wave-specific versions), <code>"canonical_name"</code>, <code>"harmonized_label"</code>, and (where documented) <code>"labels_harmonized"</code>.</p>
+<p>Some variables’ coding genuinely differs by wave – a binary code’s polarity flipped, or an income variable’s brackets were redefined – so no single cross-wave value label could be written for them. <code>variables</code> marks these <code>var_type == "text"</code> and documents no harmonized value labels at all for them; <code>to_factor</code> recodes such a variable to its wave-specific label text (character) instead of a factor, so waves whose numeric codes disagree but whose label text agrees (<code>0 = "no", 1 = "yes"</code> vs. <code>1 = "no", 2 = "yes"</code>) still merge correctly.</p>
 <div class="section level3">
 <h3 id="manual-corrections">Manual corrections<a class="anchor" aria-label="anchor" href="#manual-corrections"></a>
 </h3>
@@ -248,6 +259,7 @@
 <p>Full function reference and articles are available at: <a href="https://highmeadows.github.io/CleanLASA/" class="uri">https://highmeadows.github.io/CleanLASA/</a></p>
 </div>
 </div>
+
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
