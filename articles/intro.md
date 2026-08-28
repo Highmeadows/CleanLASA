@@ -38,9 +38,9 @@ installation.
 
 Use
 [`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md)
-to search the LASA topic overview. With no arguments it returns the
-complete topic index; searches can instead be restricted by topic,
-theme, or subtheme.
+to search the package’s bundled LASA topic database. With no arguments
+it returns the complete topic index; searches can instead be restricted
+by topic, theme, or subtheme.
 
 ``` r
 
@@ -59,23 +59,23 @@ The returned data frame contains one row per topic/file-code
 combination, with columns for `theme`, `subtheme`, `topic`, `filecode`,
 `waves`, and `has_varinfo`. This makes it possible to identify not only
 the relevant file code, but also the waves in which that topic is
-available and whether LASA links a variable-information PDF for it.
+available and whether LASA links a variable-information PDF for it. A
+topic with no file code yet, or a file code with no linked PDF, still
+appears in the result (`filecode` is `NA` and/or `has_varinfo` is
+`FALSE`) rather than being dropped.
 
-The topic table is retrieved from the LASA website and cached both for
-the current R session and on disk. Set `refresh = TRUE` when you
-explicitly want to rebuild the cache from the current live topic table:
-
-``` r
-
-lasa_topics(topic = "physical activity", refresh = TRUE)
-```
+This table is hand-maintained (see `data-raw/lasa_topic_database.R` in
+the package source) rather than scraped, so it updates only when the
+package itself does.
 
 ## 2. Open the corresponding variable-information PDF
 
 After identifying a topic or file code,
 [`lasa_var_info()`](https://highmeadows.github.io/CleanLASA/reference/lasa_var_info.md)
-resolves the variable-information PDF linked by LASA. It accepts common
-variations of a file code as well as topic names.
+scrapes the live [LASA topic
+overview](https://lasa-vu.nl/en/topic-table/) to resolve the
+variable-information PDF linked by LASA. It accepts common variations of
+a file code as well as topic names.
 
 ``` r
 
@@ -89,11 +89,18 @@ lasa_var_info("physical act")
 
 # Retrieve the URL without opening the PDF
 url <- lasa_var_info("046", open = FALSE)
+
+# Force a fresh lookup instead of using the cached varinfo link
+lasa_var_info("046", refresh = TRUE)
 ```
 
-By default, an interactive R session opens the PDF using the requested
-viewer. No LASA variable-information PDFs are bundled with `CleanLASA`;
-this function resolves the document from the LASA topic index.
+By default, an interactive R session opens the PDF in the system’s
+default web browser (the RStudio Viewer does not render hosted PDFs
+reliably, so it is never used here). The underlying varinfo-link lookup
+is cached, both for the current R session and on disk, so it doesn’t
+have to be rebuilt every session. No LASA variable-information PDFs are
+bundled with `CleanLASA`; this function always resolves the document
+from the live LASA website.
 
 ## 3. Import and label a LASA SPSS file
 

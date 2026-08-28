@@ -1,20 +1,19 @@
 # Open LASA variable information
 
-Searches the [LASA topic overview](https://lasa-vu.nl/en/topic-table/)
-and opens the variable-information PDF linked by LASA. The documentation
-is opened from the LASA website; no PDF files are read from or bundled
-with the package. The underlying topic table is cached the same way as
-in
-[`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md)
-(in-session and on disk); `refresh = TRUE` rebuilds it from the live
-site first.
+Searches the package's bundled LASA topic database (see
+[`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md))
+to resolve a file code or topic name, then scrapes the [LASA topic
+overview](https://lasa-vu.nl/en/topic-table/) live to find and open the
+variable-information PDF LASA links for it. The documentation is opened
+from the LASA website; no PDF files are read from or bundled with the
+package. The live lookup is cached (in-session and on disk);
+`refresh = TRUE` rebuilds it from the live site first.
 
 ## Usage
 
 ``` r
 lasa_var_info(
   filecode,
-  viewer = c("auto", "rstudio", "system"),
   open = interactive(),
   fuzzy_match = TRUE,
   max_edit_distance = 2L,
@@ -30,16 +29,13 @@ lasa_var_info(
   `"046"`, `"LASA046"`, `"LASA 046"`, `"lasa_046"`, or
   `"Physical activity"`.
 
-- viewer:
-
-  Where to open the PDF. One of `"auto"`, `"rstudio"`, or `"system"`.
-  `"auto"` uses the system's webbrowser as PDF viewer.
-
 - open:
 
   Logical. Should the PDF be opened? The default is `TRUE` in an
   interactive R session and `FALSE` otherwise. If `FALSE`, the URL is
-  returned without being opened.
+  returned without being opened. When opened, it is always opened in the
+  system's default web browser – the RStudio Viewer does not render
+  hosted PDFs/HTML reliably, so it is not used here.
 
 - fuzzy_match:
 
@@ -51,7 +47,7 @@ lasa_var_info(
 
 - refresh:
 
-  Logical. If `TRUE`, refresh the cached LASA topic table before
+  Logical. If `TRUE`, refresh the cached varinfo-link lookup before
   searching it.
 
 ## Value
