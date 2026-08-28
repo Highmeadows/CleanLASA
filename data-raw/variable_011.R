@@ -127,7 +127,7 @@ standardized_value_labels <- list(
   ),
   nupers = c(
     `-3` = "not available, wrong skip",
-    `-2` = "not available",
+    `-2` = "not available, routing",
     `-1` = "not available, asked",
     `0` = "none"
   )
