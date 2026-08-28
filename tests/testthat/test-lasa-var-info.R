@@ -1,4 +1,4 @@
-varinfo_fixture <- data.frame(
+topic_db_fixture <- data.frame(
   theme = c("Physical", "Physical", "Physical"),
   subtheme = c("Lifestyle", "Lifestyle", "Lifestyle"),
   topic = c(
@@ -9,25 +9,43 @@ varinfo_fixture <- data.frame(
   filecode = c("046", "162", "999"),
   waves = c("B, C, D", "J", "K"),
   has_varinfo = c(TRUE, TRUE, FALSE),
+  stringsAsFactors = FALSE
+)
+
+varinfo_index_fixture <- data.frame(
+  filecode = c("046", "162"),
   varinfo_url = c(
     "https://lasa-vu.nl/wp-content/uploads/2021/03/LASA046_varinfo.pdf",
-    "https://lasa-vu.nl/wp-content/uploads/2024/01/LASA162_varinfo.pdf",
-    NA_character_
-  ),
-  topic_url = c(
-    "https://lasa-vu.nl/topics/physical-activity/",
-    "https://lasa-vu.nl/topics/daily-physical-activity/",
-    "https://lasa-vu.nl/topics/undocumented-physical-measure/"
+    "https://lasa-vu.nl/wp-content/uploads/2024/01/LASA162_varinfo.pdf"
   ),
   stringsAsFactors = FALSE
 )
 
-test_that("lasa_var_info resolves file-code and filename variations", {
+local_var_info_mocks <- function() {
   local_mocked_bindings(
-    .lasa_topic_index = function(...) varinfo_fixture
+    .lasa_topic_database = function() topic_db_fixture,
+    .lasa_varinfo_index = function(...) varinfo_index_fixture,
+    .env = parent.frame()
   )
+}
 
-  expected <- varinfo_fixture$varinfo_url[[1L]]
+test_that("file codes are extracted from LASA wave cells", {
+  expect_equal(
+    .lasa_extract_filecodes("030 230 603 703"),
+    c("030", "230", "603", "703")
+  )
+  expect_equal(
+    .lasa_extract_filecodes("zoa1 zoa2 zoa3"),
+    c("zoa1", "zoa2", "zoa3")
+  )
+  expect_equal(.lasa_extract_filecodes("-"), character())
+  expect_equal(.lasa_extract_filecodes("X"), character())
+})
+
+test_that("lasa_var_info resolves file-code and filename variations", {
+  local_var_info_mocks()
+
+  expected <- varinfo_index_fixture$varinfo_url[[1L]]
   inputs <- c(
     "046",
     "LASA046",
@@ -47,11 +65,9 @@ test_that("lasa_var_info resolves file-code and filename variations", {
 })
 
 test_that("lasa_var_info resolves exact, incomplete, and fuzzy topic names", {
-  local_mocked_bindings(
-    .lasa_topic_index = function(...) varinfo_fixture
-  )
+  local_var_info_mocks()
 
-  expected <- varinfo_fixture$varinfo_url[[1L]]
+  expected <- varinfo_index_fixture$varinfo_url[[1L]]
 
   expect_equal(
     lasa_var_info("Physical activity", open = FALSE),
@@ -72,9 +88,7 @@ test_that("lasa_var_info resolves exact, incomplete, and fuzzy topic names", {
 })
 
 test_that("lasa_var_info reports missing online documentation", {
-  local_mocked_bindings(
-    .lasa_topic_index = function(...) varinfo_fixture
-  )
+  local_var_info_mocks()
 
   expect_error(
     lasa_var_info("999", open = FALSE),
@@ -90,9 +104,7 @@ test_that("lasa_var_info reports missing online documentation", {
 })
 
 test_that("lasa_var_info rejects an unknown topic or file code", {
-  local_mocked_bindings(
-    .lasa_topic_index = function(...) varinfo_fixture
-  )
+  local_var_info_mocks()
 
   expect_error(
     lasa_var_info("not a LASA topic", open = FALSE),
@@ -101,19 +113,27 @@ test_that("lasa_var_info rejects an unknown topic or file code", {
 })
 
 test_that("lasa_var_info prefers a canonical PDF for an exact file code", {
-  fixture <- varinfo_fixture[1L, , drop = FALSE]
-  fixture$varinfo_url <- paste(
-    "https://lasa-vu.nl/uploads/LASA046_appendix_varinfo.pdf",
-    "https://lasa-vu.nl/uploads/LASA046_varinfo.pdf",
-    sep = "; "
-  )
-
   local_mocked_bindings(
-    .lasa_topic_index = function(...) fixture
+    .lasa_topic_database = function() topic_db_fixture[1L, , drop = FALSE],
+    .lasa_varinfo_index = function(...) {
+      data.frame(
+        filecode = "046",
+        varinfo_url = paste(
+          "https://lasa-vu.nl/uploads/LASA046_appendix_varinfo.pdf",
+          "https://lasa-vu.nl/uploads/LASA046_varinfo.pdf",
+          sep = "; "
+        ),
+        stringsAsFactors = FALSE
+      )
+    }
   )
 
   expect_equal(
     lasa_var_info("046", open = FALSE),
     "https://lasa-vu.nl/uploads/LASA046_varinfo.pdf"
   )
+})
+
+test_that("lasa_var_info() no longer has a viewer argument", {
+  expect_false("viewer" %in% names(formals(lasa_var_info)))
 })

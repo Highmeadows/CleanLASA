@@ -117,10 +117,10 @@ manual_update_lasa_labels <- function(filecode = NULL,
     }
   }
   if (!is.null(filecode)) {
-    .lasa_var_info_validate_character(filecode, "filecode")
+    .lasa_validate_scalar_character(filecode, "filecode")
   }
   if (!is.null(wave) && !identical(toupper(wave), "ALL")) {
-    .lasa_var_info_validate_character(wave, "wave")
+    .lasa_validate_scalar_character(wave, "wave")
   }
 
   db <- .lasa_load_label_db()
