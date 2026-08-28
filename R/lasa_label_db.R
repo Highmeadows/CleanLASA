@@ -1,6 +1,8 @@
 # The normalized LASA label database: schema, load/save with user-local
-# precedence over the bundled snapshot, integrity validation, and the
-# manual-override composition rule used by `.lasa_apply_labels()`.
+# precedence over the bundled snapshot, integrity validation, the
+# manual-override composition rule used by `.lasa_apply_labels()`, and
+# `restore_lasa_labels()` (the inverse of `manual_update_lasa_labels()`:
+# discards recorded overrides and/or rebuilds the cache from bundled data).
 #
 # The database is built entirely from hardcoded R (data-raw/*.R, assembled
 # by data-raw/build_lasa_label_db.R) transcribed from LASA's own
@@ -296,4 +298,170 @@
 #' subset(db$variables, filecode == "046" & wave == "B")
 lasa_label_db <- function() {
   .lasa_load_label_db()
+}
+
+#' Restore/reset the local LASA label database
+#'
+#' The inverse of [manual_update_lasa_labels()]: discards recorded manual
+#' overrides (entirely, or scoped to a `filecode`/`wave`/`variable`), and/or
+#' rebuilds the cached base tables from whichever bundled database the
+#' currently-installed package ships -- useful after a package update that
+#' adds coverage or corrects a label the local cache would otherwise keep
+#' shadowing indefinitely (see Details).
+#'
+#' @details
+#' [manual_update_lasa_labels()] persists a *full* snapshot of the label
+#' database to a per-user cache file the first time it's called, not just
+#' the correction itself -- so once that cache exists, it takes precedence
+#' over the package's bundled data on every subsequent [lasa_label_db()]
+#' call, for every file code, not only the one that was corrected. A later
+#' package update with new or corrected coverage has no effect until that
+#' cache is refreshed. `rebuild = TRUE` does that refresh, and (unless a
+#' `filecode`/`wave`/`variable` scope leaves a manual override in place)
+#' also has nothing left to shadow the bundled data with, so the cache
+#' file itself is removed entirely -- meaning any *future* package update
+#' takes effect automatically, with no need to call this again.
+#'
+#' @param filecode Optional LASA file code. Scopes which manual overrides
+#'   are discarded; `NULL` (the default) discards overrides for every file
+#'   code.
+#' @param wave Optional LASA wave code, or `"all"`. Scopes which manual
+#'   overrides are discarded within `filecode`; `NULL` (the default, same
+#'   as `"all"`) discards overrides for every wave.
+#' @param variable Optional wave-specific or canonical variable name.
+#'   Scopes which manual overrides are discarded; `NULL` (the default)
+#'   discards every matched override, regardless of variable. Resolved the
+#'   same way [manual_update_lasa_labels()] resolves it, so a correction
+#'   originally recorded with `wave = "all"` (one row per wave) is found
+#'   and removed in full from a single call.
+#' @param rebuild Logical, default `FALSE`. If `TRUE`, also replace the
+#'   cached `variables`/`value_labels`/`value_labels_harmonized` tables
+#'   with fresh copies from the currently-installed package's bundled
+#'   database -- always the whole database (there is no per-filecode base
+#'   layer to refresh selectively), regardless of any `filecode`/`wave`/
+#'   `variable` scope above.
+#'
+#' @return Invisibly, a list describing what happened: `filecode`, `wave`,
+#'   `variable` (the requested scope, as supplied), `overrides_removed`
+#'   (how many manual-override rows, across both tables, were discarded),
+#'   `rebuilt` (whether the base tables were refreshed), and
+#'   `cache_deleted` (whether the local cache file was removed entirely,
+#'   vs. rewritten with what remains).
+#'
+#' @seealso [manual_update_lasa_labels()], [lasa_label_db()]
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Undo every manual override ever recorded locally, keeping whatever
+#' # base data is currently cached:
+#' restore_lasa_labels()
+#'
+#' # Undo overrides for just one file code:
+#' restore_lasa_labels(filecode = "046")
+#'
+#' # Undo one variable's override:
+#' restore_lasa_labels(filecode = "046", variable = "lphya01")
+#'
+#' # Full reset: discard every override AND refresh the base data from the
+#' # currently-installed package (removes the local cache file entirely):
+#' restore_lasa_labels(rebuild = TRUE)
+#' }
+restore_lasa_labels <- function(filecode = NULL, wave = NULL, variable = NULL, rebuild = FALSE) {
+  if (!is.null(filecode)) .lasa_validate_scalar_character(filecode, "filecode")
+  if (!is.null(wave)) .lasa_validate_scalar_character(wave, "wave")
+  if (!is.null(variable)) .lasa_validate_scalar_character(variable, "variable")
+  .lasa_assert_scalar_logical(rebuild, "rebuild")
+
+  path <- .lasa_label_db_path()
+  if (!file.exists(path)) {
+    message("No local override cache found; the bundled database is already active.")
+    return(invisible(list(
+      filecode = filecode, wave = wave, variable = variable,
+      overrides_removed = 0L, rebuilt = FALSE, cache_deleted = FALSE
+    )))
+  }
+
+  db <- .lasa_load_label_db()
+  mo <- db$manual_overrides
+  n_before <- nrow(mo$variables) + nrow(mo$value_labels)
+
+  ## wave = "all" means "every wave", same as omitting it -- matching
+  ## manual_update_lasa_labels()'s own convention for writing an override
+  ## across every wave a variable exists for.
+  wave_scope <- if (!is.null(wave) && !identical(toupper(wave), "ALL")) toupper(wave) else NULL
+
+  ## Resolve `variable` (wave-specific or canonical) into the exact set of
+  ## (filecode, variable_name) keys it matches, the same way
+  ## manual_update_lasa_labels() itself resolves it -- so a correction
+  ## originally written with wave = "all" (one row per wave, potentially
+  ## different wave-specific names) is found and removed in full. Matched
+  ## on the full (filecode, variable_name) pair, not variable_name alone,
+  ## so a coincidentally-shared literal name in a different file code is
+  ## never touched.
+  match_keys <- NULL
+  if (!is.null(variable)) {
+    candidates <- .lasa_manual_candidate_rows(db, variable, filecode)
+    match_keys <- unique(paste(.lasa_normalize_filecode(candidates$filecode), candidates$variable_name))
+  }
+
+  var_drop <- rep(TRUE, nrow(mo$variables))
+  val_drop <- rep(TRUE, nrow(mo$value_labels))
+  if (!is.null(filecode)) {
+    var_drop <- var_drop & .lasa_normalize_filecode(mo$variables$filecode) == .lasa_normalize_filecode(filecode)
+    val_drop <- val_drop & .lasa_normalize_filecode(mo$value_labels$filecode) == .lasa_normalize_filecode(filecode)
+  }
+  if (!is.null(wave_scope)) {
+    var_drop <- var_drop & toupper(mo$variables$wave) == wave_scope
+    val_drop <- val_drop & toupper(mo$value_labels$wave) == wave_scope
+  }
+  if (!is.null(variable)) {
+    var_drop <- var_drop & paste(.lasa_normalize_filecode(mo$variables$filecode), mo$variables$variable_name) %in% match_keys
+    val_drop <- val_drop & paste(.lasa_normalize_filecode(mo$value_labels$filecode), mo$value_labels$variable_name) %in% match_keys
+  }
+
+  mo$variables <- mo$variables[!var_drop, , drop = FALSE]
+  mo$value_labels <- mo$value_labels[!val_drop, , drop = FALSE]
+  rownames(mo$variables) <- NULL
+  rownames(mo$value_labels) <- NULL
+  db$manual_overrides <- mo
+
+  n_after <- nrow(mo$variables) + nrow(mo$value_labels)
+
+  if (isTRUE(rebuild)) {
+    bundled <- tryCatch(get("lasa_label_db_bundled"), error = function(e) NULL)
+    if (!is.null(bundled) && .lasa_is_label_db_shaped(bundled)) {
+      db$variables <- bundled$variables
+      db$value_labels <- bundled$value_labels
+      db$value_labels_harmonized <- bundled$value_labels_harmonized
+    }
+  }
+
+  ## When a rebuild leaves no overrides behind, the cache holds nothing
+  ## `.lasa_load_label_db()`'s bundled-fallback path wouldn't already give
+  ## you -- delete it outright rather than persist a redundant copy, so a
+  ## *future* package update takes effect automatically. Never do this
+  ## when rebuild = FALSE: the cached base tables might still be a
+  ## deliberately-kept stale snapshot, not something to silently discard.
+  overrides_empty <- nrow(mo$variables) == 0L && nrow(mo$value_labels) == 0L
+  cache_deleted <- isTRUE(rebuild) && overrides_empty
+
+  if (cache_deleted) {
+    unlink(path)
+  } else {
+    .lasa_save_label_db(db)
+  }
+
+  message(
+    n_before - n_after, " manual override row(s) removed",
+    if (isTRUE(rebuild)) "; base tables refreshed from the bundled database" else "",
+    if (cache_deleted) " (local cache file removed entirely)." else "."
+  )
+
+  invisible(list(
+    filecode = filecode, wave = wave, variable = variable,
+    overrides_removed = n_before - n_after,
+    rebuilt = isTRUE(rebuild),
+    cache_deleted = cache_deleted
+  ))
 }

@@ -135,6 +135,25 @@ manual_update_lasa_labels(
 )
 ```
 
+`manual_update_lasa_labels()` writes to a *full* local snapshot of the
+database the first time it's called, not just the correction -- so once
+that snapshot exists, it takes precedence over the bundled database on
+every subsequent load, for every file code, until it's refreshed.
+`restore_lasa_labels()` is the inverse: it undoes a correction (entirely,
+or scoped to a `filecode`/`wave`/`variable`) and/or rebuilds that local
+snapshot from whatever the currently-installed package's bundled database
+contains, so a package update's new/corrected coverage actually takes
+effect.
+
+``` r
+# Undo one correction:
+restore_lasa_labels(filecode = "046", variable = "lphya01")
+
+# Undo every correction ever recorded locally, and pick up whatever the
+# installed package version's bundled database currently contains:
+restore_lasa_labels(rebuild = TRUE)
+```
+
 ## Finding topics and documentation
 
 `lasa_topics()` searches the package's bundled LASA topic database for topics, themes, and file codes:
@@ -181,6 +200,7 @@ The document is always opened in the system's default web browser (the RStudio V
 | `read_lasa_sav()` | Reads a LASA `.sav` file and labels it using `lasa_label_db()`, based on the wave/file code parsed from the file name |
 | `apply_lasa_labels()` | Applies `lasa_label_db()` labels to any data frame, resolving file code/wave explicitly or from stored provenance |
 | `manual_update_lasa_labels()` | Hand-corrects or adds a variable/value label in your local copy of the database |
+| `restore_lasa_labels()` | Undoes manual corrections (entirely, or scoped) and/or rebuilds the local database cache from the bundled one |
 | `lasa_label_db()` | Returns the label database currently in effect (bundled snapshot + any local updates) |
 | `lasa_label_report()` | Returns variables that could not be matched to the corresponding LASA documentation |
 | `lasa_topics()` | Searches the bundled LASA topic database for topics, themes, and file codes |
