@@ -40,7 +40,7 @@ Use
 [`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md)
 to search the package’s bundled LASA topic database. With no arguments
 it returns the complete topic index; searches can instead be restricted
-by topic, theme, or subtheme.
+by topic, theme, subtheme, or file code.
 
 ``` r
 
@@ -53,6 +53,13 @@ lasa_topics(topic = "physical act")
 # Search a theme or subtheme
 lasa_topics(theme = "cognitive")
 lasa_topics(theme = "memory")
+
+# Search by file code
+lasa_topics("011")
+
+# A 3-digit file code also matches processed/scaled variants sharing the
+# same final two digits -- this also returns the "245" row
+lasa_topics("045")
 ```
 
 The returned data frame contains one row per topic/file-code
@@ -68,14 +75,15 @@ This table is hand-maintained (see `data-raw/lasa_topic_database.R` in
 the package source) rather than scraped, so it updates only when the
 package itself does.
 
-## 2. Open the corresponding variable-information PDF
+## 2. Open the corresponding variable-information PDF or webpage
 
 After identifying a topic or file code,
 [`lasa_var_info()`](https://highmeadows.github.io/CleanLASA/reference/lasa_var_info.md)
 scrapes the live [LASA topic
-overview](https://lasa-vu.nl/en/topic-table/) to resolve the
-variable-information PDF linked by LASA. It accepts common variations of
-a file code as well as topic names.
+overview](https://lasa-vu.nl/en/topic-table/) to resolve either the
+variable-information PDF LASA links for it, or its LASA topic webpage
+(`target`). It accepts common variations of a file code as well as topic
+names.
 
 ``` r
 
@@ -87,20 +95,29 @@ lasa_var_info("LASA046")
 lasa_var_info("Physical activity")
 lasa_var_info("physical act")
 
-# Retrieve the URL without opening the PDF
+# Open the topic's LASA webpage instead of the PDF (also accepts
+# "webpage"/"website"/"browser"/"online", case-insensitively)
+lasa_var_info("046", target = "web")
+
+# Retrieve the URL without opening the document
 url <- lasa_var_info("046", open = FALSE)
 
-# Force a fresh lookup instead of using the cached varinfo link
+# Force a fresh lookup instead of using the cached link
 lasa_var_info("046", refresh = TRUE)
 ```
 
 By default, an interactive R session opens the PDF in the system’s
 default web browser (the RStudio Viewer does not render hosted PDFs
-reliably, so it is never used here). The underlying varinfo-link lookup
-is cached, both for the current R session and on disk, so it doesn’t
-have to be rebuilt every session. No LASA variable-information PDFs are
-bundled with `CleanLASA`; this function always resolves the document
-from the live LASA website.
+reliably, so it is never used here). Not every file code has a linked
+PDF; when that’s the case,
+[`lasa_var_info()`](https://highmeadows.github.io/CleanLASA/reference/lasa_var_info.md)
+automatically detours to the topic’s LASA webpage instead and prints a
+message explaining why – there is no detour in the other direction (a
+`target = "web"` request with no resolvable webpage is a normal error).
+The underlying link lookup is cached, both for the current R session and
+on disk, so it doesn’t have to be rebuilt every session. No LASA
+variable-information PDFs are bundled with `CleanLASA`; this function
+always resolves the document from the live LASA website.
 
 ## 3. Import and label a LASA SPSS file
 
@@ -554,7 +571,7 @@ labels again.
 | Function | Main purpose |
 |----|----|
 | [`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md) | Search LASA topics, themes/subthemes, file codes, and available waves |
-| [`lasa_var_info()`](https://highmeadows.github.io/CleanLASA/reference/lasa_var_info.md) | Resolve and open the LASA variable-information PDF for a file code or topic |
+| [`lasa_var_info()`](https://highmeadows.github.io/CleanLASA/reference/lasa_var_info.md) | Resolve and open the LASA variable-information PDF or webpage for a file code or topic |
 | [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md) | Read a LASA `.sav` file, identify wave/file code, and apply database-backed labels |
 | [`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md) | Apply the same LASA labelling engine to an existing data frame |
 | [`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md) | Inspect the full matching audit or only entries requiring attention |

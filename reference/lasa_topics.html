@@ -69,8 +69,9 @@ from the LASA website – use <code><a href="lasa_var_info.html">lasa_var_info()
 
 
 <dl><dt id="arg-topic">topic<a class="anchor" aria-label="anchor" href="#arg-topic"></a></dt>
-<dd><p>A topic search term. Use <code>"all"</code> (the default) to return every
-topic, optionally within the selected <code>theme</code> or subtheme.</p></dd>
+<dd><p>A topic search term, or a LASA file code such as <code>"011"</code> or
+<code>"LASA011"</code>. Use <code>"all"</code> (the default) to return every topic,
+optionally within the selected <code>theme</code> or subtheme.</p></dd>
 
 
 <dt id="arg-theme">theme<a class="anchor" aria-label="anchor" href="#arg-theme"></a></dt>
@@ -98,6 +99,14 @@ linked for that row; use <code><a href="lasa_var_info.html">lasa_var_info()</a><
     <p>Topic, theme, and subtheme matching is case-insensitive. Incomplete names
 and small typographical errors are accepted when <code>fuzzy_match = TRUE</code>.
 Supplying <code>theme</code> searches both the main LASA themes and their subthemes.</p>
+<p><code>topic</code> also accepts a LASA file code (such as <code>"011"</code> or <code>"LASA011"</code>),
+matched the same way <code>filecode</code> is in <code><a href="lasa_var_info.html">lasa_var_info()</a></code>; a file-code
+match takes precedence over topic-text search. A 3-digit numeric file
+code also matches its processed/scaled variants – other 3-digit file
+codes sharing the same final two digits (e.g. <code>"045"</code> also returns the
+<code>"245"</code> row) – since LASA commonly reuses a base code's last two digits
+with a different leading digit to mark a computed/processed variant of
+the same underlying topic.</p>
 <p>A topic with no file code yet (e.g. a planned but not-yet-released
 measure), or a file code with no linked variable-information PDF, is
 still included in the result – <code>filecode</code> is <code>NA</code> and/or
@@ -1429,6 +1438,44 @@ edit <code>data-raw/lasa_topic_database.R</code> directly and re-run it.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6                  E, F, G, H, 3B, I, J, K        TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7                                  B, C, D        TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8                                  B, C, D        TRUE</span>
+<span class="r-in"><span><span class="fu">lasa_topics</span><span class="op">(</span><span class="st">"011"</span><span class="op">)</span>   <span class="co"># search by file code</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          theme            subtheme</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Demographics Living arrangements</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         Care    Needs assessment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         Care    Needs assessment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    Emotional  Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    Emotional  Personality traits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                     topic filecode</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                   Household composition      011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      Needs assessment - Use WVG facilities (tel. proxy)      611</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Needs assessment - Use WVG facilities (tel. respondent)      711</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                                   Humor      111</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                          Humor - scaled      311</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                      waves has_varinfo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                            G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                            G, H, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                     B, D        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                     B, D        TRUE</span>
+<span class="r-in"><span><span class="fu">lasa_topics</span><span class="op">(</span><span class="st">"045"</span><span class="op">)</span>   <span class="co"># also returns the "245" processed/scaled variant</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      theme              subtheme</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     Care Contact with services</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     Care Contact with services</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     Care Contact with services</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Physical      Body composition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Physical      Body composition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                     topic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                                                      Hospital admission</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                               Outpatient contact with medical specialists last 6 months</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Outpatient contact with medical specialists last 6 months - specification of specialist</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                                                    Perceived body shape</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                                           Perceived body shape - scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   filecode                                    waves has_varinfo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      045 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      045 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      245 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      145                             F, G, 3B, MB        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      345                                 F, G, 3B        TRUE</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

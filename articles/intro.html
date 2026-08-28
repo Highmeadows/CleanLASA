@@ -98,7 +98,8 @@ during package installation.</p>
 </h2>
 <p>Use <code><a href="../reference/lasa_topics.html">lasa_topics()</a></code> to search the package’s bundled LASA
 topic database. With no arguments it returns the complete topic index;
-searches can instead be restricted by topic, theme, or subtheme.</p>
+searches can instead be restricted by topic, theme, subtheme, or file
+code.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Browse the complete LASA topic index</span></span>
 <span><span class="fu"><a href="../reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -108,7 +109,14 @@ searches can instead be restricted by topic, theme, or subtheme.</p>
 <span></span>
 <span><span class="co"># Search a theme or subtheme</span></span>
 <span><span class="fu"><a href="../reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="st">"cognitive"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="st">"memory"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="st">"memory"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Search by file code</span></span>
+<span><span class="fu"><a href="../reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span><span class="st">"011"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># A 3-digit file code also matches processed/scaled variants sharing the</span></span>
+<span><span class="co"># same final two digits -- this also returns the "245" row</span></span>
+<span><span class="fu"><a href="../reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span><span class="st">"045"</span><span class="op">)</span></span></code></pre></div>
 <p>The returned data frame contains one row per topic/file-code
 combination, with columns for <code>theme</code>, <code>subtheme</code>,
 <code>topic</code>, <code>filecode</code>, <code>waves</code>, and
@@ -125,12 +133,13 @@ rather than scraped, so it updates only when the package itself
 does.</p>
 </div>
 <div class="section level2">
-<h2 id="open-the-corresponding-variable-information-pdf">2. Open the corresponding variable-information PDF<a class="anchor" aria-label="anchor" href="#open-the-corresponding-variable-information-pdf"></a>
+<h2 id="open-the-corresponding-variable-information-pdf-or-webpage">2. Open the corresponding variable-information PDF or webpage<a class="anchor" aria-label="anchor" href="#open-the-corresponding-variable-information-pdf-or-webpage"></a>
 </h2>
 <p>After identifying a topic or file code, <code><a href="../reference/lasa_var_info.html">lasa_var_info()</a></code>
 scrapes the live <a href="https://lasa-vu.nl/en/topic-table/" class="external-link">LASA topic
-overview</a> to resolve the variable-information PDF linked by LASA. It
-accepts common variations of a file code as well as topic names.</p>
+overview</a> to resolve either the variable-information PDF LASA links
+for it, or its LASA topic webpage (<code>target</code>). It accepts
+common variations of a file code as well as topic names.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># By file code</span></span>
 <span><span class="fu"><a href="../reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span><span class="op">)</span></span>
@@ -140,18 +149,27 @@ accepts common variations of a file code as well as topic names.</p>
 <span><span class="fu"><a href="../reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"Physical activity"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"physical act"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Retrieve the URL without opening the PDF</span></span>
+<span><span class="co"># Open the topic's LASA webpage instead of the PDF (also accepts</span></span>
+<span><span class="co"># "webpage"/"website"/"browser"/"online", case-insensitively)</span></span>
+<span><span class="fu"><a href="../reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span>, target <span class="op">=</span> <span class="st">"web"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Retrieve the URL without opening the document</span></span>
 <span><span class="va">url</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Force a fresh lookup instead of using the cached varinfo link</span></span>
+<span><span class="co"># Force a fresh lookup instead of using the cached link</span></span>
 <span><span class="fu"><a href="../reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span>, refresh <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>By default, an interactive R session opens the PDF in the system’s
 default web browser (the RStudio Viewer does not render hosted PDFs
-reliably, so it is never used here). The underlying varinfo-link lookup
-is cached, both for the current R session and on disk, so it doesn’t
-have to be rebuilt every session. No LASA variable-information PDFs are
-bundled with <code>CleanLASA</code>; this function always resolves the
-document from the live LASA website.</p>
+reliably, so it is never used here). Not every file code has a linked
+PDF; when that’s the case, <code><a href="../reference/lasa_var_info.html">lasa_var_info()</a></code> automatically
+detours to the topic’s LASA webpage instead and prints a message
+explaining why – there is no detour in the other direction (a
+<code>target = "web"</code> request with no resolvable webpage is a
+normal error). The underlying link lookup is cached, both for the
+current R session and on disk, so it doesn’t have to be rebuilt every
+session. No LASA variable-information PDFs are bundled with
+<code>CleanLASA</code>; this function always resolves the document from
+the live LASA website.</p>
 </div>
 <div class="section level2">
 <h2 id="import-and-label-a-lasa-spss-file">3. Import and label a LASA SPSS file<a class="anchor" aria-label="anchor" href="#import-and-label-a-lasa-spss-file"></a>
@@ -560,8 +578,8 @@ waves</td>
 </tr>
 <tr class="even">
 <td><code><a href="../reference/lasa_var_info.html">lasa_var_info()</a></code></td>
-<td>Resolve and open the LASA variable-information PDF for a file code
-or topic</td>
+<td>Resolve and open the LASA variable-information PDF or webpage for a
+file code or topic</td>
 </tr>
 <tr class="odd">
 <td><code><a href="../reference/read_lasa_sav.html">read_lasa_sav()</a></code></td>

@@ -23,7 +23,8 @@ lasa_topics(
 
 - topic:
 
-  A topic search term. Use `"all"` (the default) to return every topic,
+  A topic search term, or a LASA file code such as `"011"` or
+  `"LASA011"`. Use `"all"` (the default) to return every topic,
   optionally within the selected `theme` or subtheme.
 
 - theme:
@@ -54,6 +55,16 @@ Topic, theme, and subtheme matching is case-insensitive. Incomplete
 names and small typographical errors are accepted when
 `fuzzy_match = TRUE`. Supplying `theme` searches both the main LASA
 themes and their subthemes.
+
+`topic` also accepts a LASA file code (such as `"011"` or `"LASA011"`),
+matched the same way `filecode` is in
+[`lasa_var_info()`](https://highmeadows.github.io/CleanLASA/reference/lasa_var_info.md);
+a file-code match takes precedence over topic-text search. A 3-digit
+numeric file code also matches its processed/scaled variants – other
+3-digit file codes sharing the same final two digits (e.g. `"045"` also
+returns the `"245"` row) – since LASA commonly reuses a base code's last
+two digits with a different leading digit to mark a computed/processed
+variant of the same underlying topic.
 
 A topic with no file code yet (e.g. a planned but not-yet-released
 measure), or a file code with no linked variable-information PDF, is
@@ -1386,4 +1397,42 @@ lasa_topics(theme = "memory")
 #> 6                  E, F, G, H, 3B, I, J, K        TRUE
 #> 7                                  B, C, D        TRUE
 #> 8                                  B, C, D        TRUE
+lasa_topics("011")   # search by file code
+#>          theme            subtheme
+#> 1 Demographics Living arrangements
+#> 2         Care    Needs assessment
+#> 3         Care    Needs assessment
+#> 4    Emotional  Personality traits
+#> 5    Emotional  Personality traits
+#>                                                     topic filecode
+#> 1                                   Household composition      011
+#> 2      Needs assessment - Use WVG facilities (tel. proxy)      611
+#> 3 Needs assessment - Use WVG facilities (tel. respondent)      711
+#> 4                                                   Humor      111
+#> 5                                          Humor - scaled      311
+#>                                      waves has_varinfo
+#> 1 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE
+#> 2                            G, H, I, J, K        TRUE
+#> 3                            G, H, I, J, K        TRUE
+#> 4                                     B, D        TRUE
+#> 5                                     B, D        TRUE
+lasa_topics("045")   # also returns the "245" processed/scaled variant
+#>      theme              subtheme
+#> 1     Care Contact with services
+#> 2     Care Contact with services
+#> 3     Care Contact with services
+#> 4 Physical      Body composition
+#> 5 Physical      Body composition
+#>                                                                                     topic
+#> 1                                                                      Hospital admission
+#> 2                               Outpatient contact with medical specialists last 6 months
+#> 3 Outpatient contact with medical specialists last 6 months - specification of specialist
+#> 4                                                                    Perceived body shape
+#> 5                                                           Perceived body shape - scaled
+#>   filecode                                    waves has_varinfo
+#> 1      045 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE
+#> 2      045 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE
+#> 3      245 B, C, D, E, 2B, F, G, H, 3B, MB, I, J, K        TRUE
+#> 4      145                             F, G, 3B, MB        TRUE
+#> 5      345                                 F, G, 3B        TRUE
 ```
