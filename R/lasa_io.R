@@ -9,8 +9,8 @@
 # thin wrapper: all matching, transforming, standardizing, and
 # `add_wavecode` logic lives in `apply_lasa_labels()`. The reshaping
 # helpers below (`.lasa_convert_to_labelled_factor()`,
-# `.lasa_restore_plain_numeric()`, `.lasa_insert_wave_column()`,
-# `.lasa_is_codebook_numeric()`) are shared by that engine.
+# `.lasa_restore_plain_numeric()`, `.lasa_insert_wave_column()`) are shared
+# by that engine.
 #
 # Shared parameter contract
 # --------------------------------------------------------------------------
@@ -127,30 +127,6 @@
   )
 
   data[, new_order, drop = FALSE]
-}
-
-#' Is a codebook's value-label map made up only of missing-reason codes?
-#'
-#' A variable qualifies for `to_numeric` restoration when every one of its
-#' codebook value labels is a negative code (e.g. -1, -2, -3), which is how
-#' this package's LASA codebooks mark count/continuous variables whose only
-#' labelled values are missing-reason codes. Used by
-#' `data-raw/build_lasa_label_db.R`'s `var_type` classification
-#' (`"numeric"` vs. `"categorical"`), stored in [lasa_label_db()] rather
-#' than re-derived at label-application time.
-#'
-#' @param value_label_map A named numeric vector of SPSS value labels
-#'   (names = label text, values = numeric codes), or `NULL`.
-#'
-#' @return `TRUE` if `value_label_map` is non-empty and every code in it is
-#'   negative; `FALSE` otherwise.
-#' @keywords internal
-.lasa_is_codebook_numeric <- function(value_label_map) {
-  if (is.null(value_label_map) || length(value_label_map) == 0L) {
-    return(FALSE)
-  }
-  codes <- as.numeric(unname(value_label_map))
-  all(!is.na(codes) & is.finite(codes) & codes < 0)
 }
 
 #' Restore a value-labelled variable to plain numeric
