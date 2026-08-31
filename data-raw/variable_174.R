@@ -44,9 +44,12 @@ harmonized_labels <- c(
   msupseasoth1 = "supplement 1: other seasonal use (in Dutch)"
 )
 
-variable_labels_list <- list(
-  Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `I` = c(
     "m#sup",
     "msup",
     "msup#tp1",
@@ -60,21 +63,8 @@ variable_labels_list <- list(
     "msupquant1",
     "msupseas1",
     "msupseasoth1"
-  )],
-    `msup#tp1` = "sup. 1: # times a period",
-    msup1 = "sup. 1: type",
-    msupdesc1 = "sup. 1: description package (in Dutch)",
-    msupform1 = "sup. 1: dosage form",
-    msupformoth1 = "sup. 1: dosage form other (in Dutch)",
-    msupmeas1 = "sup. 1: measurement",
-    msupname1 = "sup. 1: name",
-    msupperiod1 = "sup. 1: period",
-    msupquant1 = "sup. 1: quantity",
-    msupseas1 = "sup. 1: use in season",
-    msupseasoth1 = "sup. 1: use in season other (in Dutch)"
   ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
+  `J` = c(
     "mDnsup",
     "mDsup",
     "mDsupbrand1",
@@ -97,7 +87,26 @@ variable_labels_list <- list(
     "mMVsupseas1",
     "mMVsupseasoth1",
     "mMVsuptp1"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_I_labels = .replace_labels(
+    harmonized_labels,
+    `msup#tp1` = "sup. 1: # times a period",
+    msup1 = "sup. 1: type",
+    msupdesc1 = "sup. 1: description package (in Dutch)",
+    msupform1 = "sup. 1: dosage form",
+    msupformoth1 = "sup. 1: dosage form other (in Dutch)",
+    msupmeas1 = "sup. 1: measurement",
+    msupname1 = "sup. 1: name",
+    msupperiod1 = "sup. 1: period",
+    msupquant1 = "sup. 1: quantity",
+    msupseas1 = "sup. 1: use in season",
+    msupseasoth1 = "sup. 1: use in season other (in Dutch)"
+  ),
+  Wave_J_labels = .replace_labels(
+    harmonized_labels,
     mDsupbrand1 = "vit D 1: brand",
     mDsupdesc1 = "vit D 1: description package (in Dutch)",
     mDsupmeas1 = "vit D 1: measurement",
@@ -124,12 +133,16 @@ variable_labels_list <- list(
 standardized_value_labels <- list(
   `m#sup` = c(`-2` = "na, see IMSUP", `0` = "no supplements"),
   mDnsup = c(`-2` = "na, see jmDsup/jmMVsup", `0` = "no supplements"),
-  mDsup = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
+  mDsup = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   mDsupbrand1 = stats::setNames(character(0), character(0)),
   mDsupdesc1 = stats::setNames(character(0), character(0)),
   mDsupmeas1 = c(
     `-2` = "na, see jmDsup/jmMVsup",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -138,11 +151,20 @@ standardized_value_labels <- list(
     `6` = "percentage"
   ),
   mDsupname1 = stats::setNames(character(0), character(0)),
-  mDsupperiod1 = c(`-2` = "na, see jmDsup/jmMVsup", `-1` = "na, asked", `1` = "day", `2` = "week", `3` = "month"),
-  mDsupquant1 = c(`-2` = "na, see jmDsup/jmMVsup", `-1` = "na, asked"),
+  mDsupperiod1 = c(
+    `-2` = "na, see jmDsup/jmMVsup",
+    default_missing_labels[c("-1")],
+    `1` = "day",
+    `2` = "week",
+    `3` = "month"
+  ),
+  mDsupquant1 = c(
+    `-2` = "na, see jmDsup/jmMVsup",
+    default_missing_labels[c("-1")]
+  ),
   mDsupseas1 = c(
     `-2` = "na, see jmDsup/jmMVsup",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "year round",
     `2` = "only in winter",
     `3` = "only in spring",
@@ -152,14 +174,21 @@ standardized_value_labels <- list(
     `7` = "other, see jmDsupseasoth/jmMVsupseasoth"
   ),
   mDsupseasoth1 = stats::setNames(character(0), character(0)),
-  mDsuptp1 = c(`-2` = "na, see jmDsup/jmMVsup", `-1` = "na, asked"),
+  mDsuptp1 = c(
+    `-2` = "na, see jmDsup/jmMVsup",
+    default_missing_labels[c("-1")]
+  ),
   mMVnsup = c(`-2` = "na, see jmDsup/jmMVsup", `0` = "no supplements"),
-  mMVsup = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
+  mMVsup = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   mMVsupbrand1 = stats::setNames(character(0), character(0)),
   mMVsupdesc1 = stats::setNames(character(0), character(0)),
   mMVsupmeas1 = c(
     `-2` = "na, see jmDsup/jmMVsup",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -168,11 +197,20 @@ standardized_value_labels <- list(
     `6` = "percentage"
   ),
   mMVsupname1 = stats::setNames(character(0), character(0)),
-  mMVsupperiod1 = c(`-2` = "na, see jmDsup/jmMVsup", `-1` = "na, asked", `1` = "day", `2` = "week", `3` = "month"),
-  mMVsupquant1 = c(`-2` = "na, see jmDsup/jmMVsup", `-1` = "na, asked"),
+  mMVsupperiod1 = c(
+    `-2` = "na, see jmDsup/jmMVsup",
+    default_missing_labels[c("-1")],
+    `1` = "day",
+    `2` = "week",
+    `3` = "month"
+  ),
+  mMVsupquant1 = c(
+    `-2` = "na, see jmDsup/jmMVsup",
+    default_missing_labels[c("-1")]
+  ),
   mMVsupseas1 = c(
     `-2` = "na, see jmDsup/jmMVsup",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "year round",
     `2` = "only in winter",
     `3` = "only in spring",
@@ -182,14 +220,24 @@ standardized_value_labels <- list(
     `7` = "other, see jmDsupseasoth/jmMVsupseasoth"
   ),
   mMVsupseasoth1 = stats::setNames(character(0), character(0)),
-  mMVsuptp1 = c(`-2` = "na, see jmDsup/jmMVsup", `-1` = "na, asked"),
-  msup = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  `msup#tp1` = c(`-2` = "na, see IM#SUP", `-1` = "na, asked"),
+  mMVsuptp1 = c(
+    `-2` = "na, see jmDsup/jmMVsup",
+    default_missing_labels[c("-1")]
+  ),
+  msup = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  `msup#tp1` = c(
+    `-2` = "na, see IM#SUP",
+    default_missing_labels[c("-1")]
+  ),
   msup1 = stats::setNames(character(0), character(0)),
   msupdesc1 = stats::setNames(character(0), character(0)),
   msupform1 = c(
     `-2` = "na, see IM#SUP",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "tablet",
     `2` = "capsule",
     `3` = "drops",
@@ -206,7 +254,7 @@ standardized_value_labels <- list(
   msupformoth1 = stats::setNames(character(0), character(0)),
   msupmeas1 = c(
     `-2` = "na, see IM#SUP",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "microgramme",
     `2` = "milligramme",
     `3` = "gramme",
@@ -215,11 +263,20 @@ standardized_value_labels <- list(
     `6` = "percentage"
   ),
   msupname1 = stats::setNames(character(0), character(0)),
-  msupperiod1 = c(`-2` = "na, see IM#SUP", `-1` = "na, asked", `1` = "day", `2` = "week", `3` = "month"),
-  msupquant1 = c(`-2` = "na, see IM#SUP", `-1` = "na, asked"),
+  msupperiod1 = c(
+    `-2` = "na, see IM#SUP",
+    default_missing_labels[c("-1")],
+    `1` = "day",
+    `2` = "week",
+    `3` = "month"
+  ),
+  msupquant1 = c(
+    `-2` = "na, see IM#SUP",
+    default_missing_labels[c("-1")]
+  ),
   msupseas1 = c(
     `-2` = "na, see IM#SUP",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "year round",
     `2` = "only in winter",
     `3` = "only in spring",
@@ -233,38 +290,14 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "m#sup",
-    "msup",
-    "msup#tp1",
-    "msupform1",
-    "msupmeas1",
-    "msupperiod1",
-    "msupquant1",
-    "msupseas1"
-  )],
+    standardized_value_labels,
     msupseas1 = .replace_labels(
     standardized_value_labels$msupseas1,
     `-1` = "na asked"
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mDnsup",
-    "mDsup",
-    "mDsupmeas1",
-    "mDsupperiod1",
-    "mDsupquant1",
-    "mDsupseas1",
-    "mDsuptp1",
-    "mMVnsup",
-    "mMVsup",
-    "mMVsupmeas1",
-    "mMVsupperiod1",
-    "mMVsupquant1",
-    "mMVsupseas1",
-    "mMVsuptp1"
-  )],
+    standardized_value_labels,
     mDsupseas1 = .replace_labels(
     standardized_value_labels$mDsupseas1,
     `-1` = "na asked"
@@ -315,9 +348,26 @@ var_types_vec <- c(
   msupseasoth1 = "text"
 )
 
-.lasa_fc_174 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "174", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "174", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "174", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "174", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["msup1"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["msupdesc1"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["msupformoth1"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["msupname1"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["msupseasoth1"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["mDsupbrand1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["mDsupdesc1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["mDsupname1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["mDsupseasoth1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["mMVsupbrand1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["mMVsupdesc1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["mMVsupname1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["mMVsupseasoth1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+
+.lasa_fc_174 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

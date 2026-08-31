@@ -30,9 +30,12 @@ harmonized_labels <- c(
   msmokeyn = "Do you smoke"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "msmokebef",
     "msmokecig",
     "msmokeciga",
@@ -45,7 +48,159 @@ variable_labels_list <- list(
     "msmokesh",
     "msmokeshnw",
     "msmokeyn"
-  )],
+  ),
+  `C` = c(
+    "msmokebef",
+    "msmokeciga",
+    "msmokeciganw",
+    "msmokecignw",
+    "msmokepipe",
+    "msmokepm",
+    "msmokeqage",
+    "msmokesage",
+    "msmokesh",
+    "msmokeyn"
+  ),
+  `D` = c(
+    "msmokebef",
+    "msmokecig",
+    "msmokeciga",
+    "msmokeciganw",
+    "msmokecignw",
+    "msmokepipe",
+    "msmokepm",
+    "msmokeqage",
+    "msmokesage",
+    "msmokesh",
+    "msmokeshnw",
+    "msmokeyn"
+  ),
+  `E` = c(
+    "msmokbef",
+    "msmokebef",
+    "msmokecig",
+    "msmokeciga",
+    "msmokeciganw",
+    "msmokecignw",
+    "msmokecigp",
+    "msmokecigpnw",
+    "msmokeqage",
+    "msmokesage",
+    "msmokeyn"
+  ),
+  `2B` = c(
+    "msmokbef",
+    "msmokebef",
+    "msmokecig",
+    "msmokeciga",
+    "msmokeciganw",
+    "msmokecignw",
+    "msmokecigp",
+    "msmokecigpnw",
+    "msmokeqage",
+    "msmokesage",
+    "msmokeyn"
+  ),
+  `F` = c(
+    "msmokbef",
+    "msmokebef",
+    "msmokecig",
+    "msmokeciga",
+    "msmokeciganw",
+    "msmokecignw",
+    "msmokecigp",
+    "msmokecigpnw",
+    "msmokeqage",
+    "msmokesage",
+    "msmokeyn"
+  ),
+  `G` = c(
+    "msmokbef",
+    "msmokebef",
+    "msmokecig",
+    "msmokeciga",
+    "msmokeciganw",
+    "msmokecignw",
+    "msmokecigp",
+    "msmokecigpnw",
+    "msmokeqage",
+    "msmokesage",
+    "msmokeyn"
+  ),
+  `H` = c(
+    "msmokbef",
+    "msmokebef",
+    "msmokecig",
+    "msmokeciga",
+    "msmokeciganw",
+    "msmokecigp",
+    "msmokecigpnw",
+    "msmokeqage",
+    "msmokesage",
+    "msmokeyn"
+  ),
+  `MB` = c(
+    "msmokebef",
+    "msmokecignw",
+    "msmokeqage",
+    "msmokeyn"
+  ),
+  `I` = c(
+    "msmokebef",
+    "msmokecig",
+    "msmokeciga",
+    "msmokeciganw",
+    "msmokecignw",
+    "msmokecignwp",
+    "msmokecigp",
+    "msmokeecig",
+    "msmokeecigd",
+    "msmokeecigf",
+    "msmokeecigp",
+    "msmokeecigpf",
+    "msmokeqage",
+    "msmokesage",
+    "msmokeyn"
+  ),
+  `J` = c(
+    "msmokebef",
+    "msmokecig",
+    "msmokeciga",
+    "msmokeciganw",
+    "msmokecignw",
+    "msmokecignwp",
+    "msmokecigp",
+    "msmokeecig",
+    "msmokeecigd",
+    "msmokeecigf",
+    "msmokeecigp",
+    "msmokeecigpf",
+    "msmokeqage",
+    "msmokesage",
+    "msmokeyn"
+  ),
+  `K` = c(
+    "msmokebef",
+    "msmokecig",
+    "msmokeciga",
+    "msmokeciganw",
+    "msmokecignw",
+    "msmokecignwp",
+    "msmokecigp",
+    "msmokeecig",
+    "msmokeecigd",
+    "msmokeecigf",
+    "msmokeecigp",
+    "msmokeecigpf",
+    "msmokeqage",
+    "msmokesage",
+    "msmokeyn"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
     msmokecig = "Do you smoke cigarettes",
     msmokeciga = "Do you smoke cigars",
     msmokeciganw = "Number of cigars a week",
@@ -57,175 +212,44 @@ variable_labels_list <- list(
     msmokeshnw = "Number of shags a week"
   ),
   Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
-    "msmokebef",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokepipe",
-    "msmokepm",
-    "msmokeqage",
-    "msmokesage",
-    "msmokesh",
-    "msmokeyn"
-  )],
+    harmonized_labels,
     msmokeciga = "smoking: cigars",
     msmokeciganw = "Number of cigars a week",
     msmokecignw = "Number of cigarettes or self-rolled a week",
     msmokesh = "smoking: cigarettes or shag"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokepipe",
-    "msmokepm",
-    "msmokeqage",
-    "msmokesage",
-    "msmokesh",
-    "msmokeshnw",
-    "msmokeyn"
-  )],
+    harmonized_labels,
     msmokecig = "do you smoke cigarettes",
     msmokeciga = "do you smoke cigars",
     msmokeciganw = "Number of cigars a week",
     msmokecignw = "Number of cigarettes a week",
     msmokepipe = "do you smoke pipe"
   ),
-  Wave_E_labels = harmonized_labels[c(
-    "msmokbef",
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokecigp",
-    "msmokecigpnw",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
-  Wave_2B_labels = harmonized_labels[c(
-    "msmokbef",
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokecigp",
-    "msmokecigpnw",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
-  Wave_F_labels = harmonized_labels[c(
-    "msmokbef",
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokecigp",
-    "msmokecigpnw",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
-  Wave_G_labels = harmonized_labels[c(
-    "msmokbef",
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokecigp",
-    "msmokecigpnw",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
-  Wave_H_labels = harmonized_labels[c(
-    "msmokbef",
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecigp",
-    "msmokecigpnw",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
+  Wave_E_labels = harmonized_labels,
+  Wave_2B_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
   Wave_MB_labels = .replace_labels(
-    harmonized_labels[c("msmokebef", "msmokecignw", "msmokeqage", "msmokeyn")],
+    harmonized_labels,
     msmokecignw = "Number of cigarettes a day",
     msmokeqage = "at what age did you stop smoking"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokecignwp",
-    "msmokecigp",
-    "msmokeecig",
-    "msmokeecigd",
-    "msmokeecigf",
-    "msmokeecigp",
-    "msmokeecigpf",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
+    harmonized_labels,
     msmokecig = "Do you smoke (self-rolled) cigarettes",
     msmokeciga = "Do you smoke pipe/cigars",
     msmokecigp = "(past) Did you smoke (self-rolled) cigarettes"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokecignwp",
-    "msmokecigp",
-    "msmokeecig",
-    "msmokeecigd",
-    "msmokeecigf",
-    "msmokeecigp",
-    "msmokeecigpf",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
+    harmonized_labels,
     msmokecig = "Do you smoke (self-rolled) cigarettes",
     msmokeciga = "Do you smoke pipe/cigars",
     msmokecigp = "(past) Did you smoke (self-rolled) cigarettes"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokecignwp",
-    "msmokecigp",
-    "msmokeecig",
-    "msmokeecigd",
-    "msmokeecigf",
-    "msmokeecigp",
-    "msmokeecigpf",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
+    harmonized_labels,
     msmokecig = "Do you smoke (self-rolled) cigarettes",
     msmokeciga = "Do you smoke pipe/cigars",
     msmokecigp = "(past) Did you smoke (self-rolled) cigarettes"
@@ -234,10 +258,12 @@ variable_labels_list <- list(
 )
 
 standardized_value_labels <- list(
-  msmokbef = c(`-1` = "na, asked"),
+  msmokbef = c(
+    default_missing_labels[c("-1")]
+  ),
   msmokebef = c(
     `-4` = "no valid data",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "R smokes / na, see CMSMOKEYN",
     `-1` = "no answer, asked / na, short interview",
     `1` = "no",
@@ -246,18 +272,16 @@ standardized_value_labels <- list(
   msmokecig = c(
     `-5` = "na, interview terminated",
     `-4` = "no valid data",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "R does not smoke / na, see DMSMOKEYN",
-    `-1` = "no answer, asked",
     `1` = "no / yes",
     `2` = "yes / no"
   ),
   msmokeciga = c(
     `-5` = "na, interview terminated",
     `-4` = "no valid data",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "R does not smoke / na, see DMSMOKEYN",
-    `-1` = "no answer, asked",
     `1` = "no / yes",
     `2` = "yes / no"
   ),
@@ -265,36 +289,43 @@ standardized_value_labels <- list(
     `-4` = "no valid data",
     `-3` = "R does not smoke / na, wrong skip",
     `-2` = "R smokes, but not cigars / na, see CMSMOKECIGA / na, see",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "< 1 a week"
   ),
   msmokecignw = c(
     `-4` = "no valid data",
     `-3` = "R does not smoke / na, wrong skip",
     `-2` = "R smokes, but not cig / na, see CMSMOKESH",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "less than 1 a week",
     `1` = "1 or less a week / 1-20 cigarettes a day",
     `2` = "more than 20 cigarettes a day"
   ),
-  msmokecignwp = c(`-2` = "na, see I/J/KMSMOKECIGP", `-1` = "na, asked", `0` = "< 1 a week"),
+  msmokecignwp = c(
+    `-2` = "na, see I/J/KMSMOKECIGP",
+    default_missing_labels[c("-1")],
+    `0` = "< 1 a week"
+  ),
   msmokecigp = c(
     `-5` = "na, interview terminated",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see E/B/F/G/HMSMOKEYN",
-    `-1` = "na, asked",
     `1` = "no / yes",
     `2` = "yes / no"
   ),
   msmokecigpnw = c(
     `-5` = "na, interview terminated",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see",
-    `-1` = "na, asked",
     `1` = "no",
     `2` = "yes"
   ),
-  msmokeecig = c(`-2` = "na, see I/J/KMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  msmokeecig = c(
+    `-2` = "na, see I/J/KMSMOKEYN",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   msmokeecigd = c(
     `-2` = "na, see I/J/KMSMOKEECIG",
     `1` = "no nicotine",
@@ -311,10 +342,15 @@ standardized_value_labels <- list(
     `4` = "a few times a month",
     `5` = "a few times a year"
   ),
-  msmokeecigp = c(`-2` = "na, see I/J/KMSMOKEBEF / SMOKECIGP", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  msmokeecigp = c(
+    `-2` = "na, see I/J/KMSMOKEBEF / SMOKECIGP",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   msmokeecigpf = c(
     `-2` = "na, see I/J/KMSMOKEECIGP",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "most of the day",
     `2` = "a few times a day",
     `3` = "a few times a week",
@@ -325,7 +361,7 @@ standardized_value_labels <- list(
     `-5` = "na, interview terminated",
     `-4` = "no valid data",
     `-2` = "R does not smoke / na, see DMSMOKEYN",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes"
   ),
@@ -333,25 +369,24 @@ standardized_value_labels <- list(
     `-4` = "no valid data",
     `-3` = "R does not smoke / na, wrong skip",
     `-2` = "R smokes, but not pipe / na, see CMSMOKEPIPE",
-    `-1` = "no answer, asked"
+    default_missing_labels[c("-1")]
   ),
   msmokeqage = c(
     `-4` = "no valid data",
     `-3` = "R smokes / na, wrong skip",
     `-2` = "R never smoked / na ,see CMSMOKEBEF / na, see DMSMOKEBEF / na, see",
-    `-1` = "no answer, asked"
+    default_missing_labels[c("-1")]
   ),
   msmokesage = c(
     `-4` = "no valid data",
     `-3` = "R smokes / na, wrong skip",
     `-2` = "R never smoked / na, see CMSMOKEYN /",
-    `-1` = "no answer, asked"
+    default_missing_labels[c("-1")]
   ),
   msmokesh = c(
     `-4` = "no valid data",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "R does not smoke / na, see CMSMOKEYN /",
-    `-1` = "no answer, asked",
     `1` = "no",
     `2` = "yes"
   ),
@@ -359,7 +394,7 @@ standardized_value_labels <- list(
     `-4` = "no valid data",
     `-3` = "R does not smoke",
     `-2` = "R smokes, but not shag / na, see DMSMOKESH",
-    `-1` = "no answer, asked"
+    default_missing_labels[c("-1")]
   ),
   msmokeyn = c(
     `-5` = "na, interview terminated",
@@ -373,20 +408,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokepipe",
-    "msmokepm",
-    "msmokeqage",
-    "msmokesage",
-    "msmokesh",
-    "msmokeshnw",
-    "msmokeyn"
-  )],
+    standardized_value_labels,
     msmokebef = c(`-4` = "no valid data", `-2` = "R smokes", `-1` = "no answer, asked", `1` = "no", `2` = "yes"),
     msmokecig = c(
     `-4` = "no valid data",
@@ -456,18 +478,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msmokebef",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokepipe",
-    "msmokepm",
-    "msmokeqage",
-    "msmokesage",
-    "msmokesh",
-    "msmokeyn"
-  )],
+    standardized_value_labels,
     msmokebef = c(`-3` = "na, wrong skip", `-2` = "na, see CMSMOKEYN", `1` = "no", `2` = "yes"),
     msmokeciga = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     msmokeciganw = c(`-3` = "na, wrong skip", `-2` = "na, see CMSMOKECIGA", `-1` = "na, asked"),
@@ -480,20 +491,7 @@ value_labels_list <- list(
     msmokeyn = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokepipe",
-    "msmokepm",
-    "msmokeqage",
-    "msmokesage",
-    "msmokesh",
-    "msmokeshnw",
-    "msmokeyn"
-  )],
+    standardized_value_labels,
     msmokebef = c(`-2` = "na, see DMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     msmokecig = c(`-2` = "na, see DMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     msmokeciga = c(`-2` = "na, see DMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
@@ -508,19 +506,7 @@ value_labels_list <- list(
     msmokeyn = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msmokbef",
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokecigp",
-    "msmokecigpnw",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
+    standardized_value_labels,
     msmokebef = c(`-2` = "na, see E/B/F/G/HMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     msmokecig = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     msmokeciga = c(
@@ -544,19 +530,7 @@ value_labels_list <- list(
     msmokeyn = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msmokbef",
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokecigp",
-    "msmokecigpnw",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
+    standardized_value_labels,
     msmokebef = c(`-2` = "na, see E/B/F/G/HMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     msmokecig = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     msmokeciga = c(
@@ -580,19 +554,7 @@ value_labels_list <- list(
     msmokeyn = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msmokbef",
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokecigp",
-    "msmokecigpnw",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
+    standardized_value_labels,
     msmokebef = c(`-2` = "na, see E/B/F/G/HMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     msmokecig = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     msmokeciga = c(
@@ -611,19 +573,7 @@ value_labels_list <- list(
     msmokeyn = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msmokbef",
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokecigp",
-    "msmokecigpnw",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
+    standardized_value_labels,
     msmokebef = c(`-2` = "na, see E/B/F/G/HMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     msmokecig = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     msmokeciga = c(
@@ -642,18 +592,7 @@ value_labels_list <- list(
     msmokeyn = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msmokbef",
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecigp",
-    "msmokecigpnw",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
+    standardized_value_labels,
     msmokebef = c(`-2` = "na, see E/B/F/G/HMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     msmokecig = c(
     `-3` = "na, wrong skip",
@@ -683,7 +622,7 @@ value_labels_list <- list(
     msmokeyn = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c("msmokebef", "msmokecignw", "msmokeqage", "msmokeyn")],
+    standardized_value_labels,
     msmokebef = c(`-2` = "na, see BMSMOKEYN /"),
     msmokecignw = c(
     `-2` = "na, see BMSMOKEYN",
@@ -695,23 +634,7 @@ value_labels_list <- list(
     msmokeyn = c(`-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokecignwp",
-    "msmokecigp",
-    "msmokeecig",
-    "msmokeecigd",
-    "msmokeecigf",
-    "msmokeecigp",
-    "msmokeecigpf",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
+    standardized_value_labels,
     msmokebef = c(`-2` = "na, see I/J/KMSMOKEYN", `-1` = "na, short interview", `1` = "no", `2` = "yes"),
     msmokecig = c(`-2` = "na, see I/J/KMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     msmokeciga = c(`-2` = "na, see I/J/KMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
@@ -728,23 +651,7 @@ value_labels_list <- list(
     msmokeyn = c(`-1` = "na, short interview", `1` = "no", `2` = "yes")
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokecignwp",
-    "msmokecigp",
-    "msmokeecig",
-    "msmokeecigd",
-    "msmokeecigf",
-    "msmokeecigp",
-    "msmokeecigpf",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
+    standardized_value_labels,
     msmokebef = c(`-2` = "na, see I/J/KMSMOKEYN", `-1` = "na, short interview", `1` = "no", `2` = "yes"),
     msmokecig = c(`-2` = "na, see I/J/KMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     msmokeciga = c(`-2` = "na, see I/J/KMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
@@ -761,23 +668,7 @@ value_labels_list <- list(
     msmokeyn = c(`-1` = "na, short interview", `1` = "no", `2` = "yes")
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "msmokebef",
-    "msmokecig",
-    "msmokeciga",
-    "msmokeciganw",
-    "msmokecignw",
-    "msmokecignwp",
-    "msmokecigp",
-    "msmokeecig",
-    "msmokeecigd",
-    "msmokeecigf",
-    "msmokeecigp",
-    "msmokeecigpf",
-    "msmokeqage",
-    "msmokesage",
-    "msmokeyn"
-  )],
+    standardized_value_labels,
     msmokebef = c(`-2` = "na, see I/J/KMSMOKEYN", `-1` = "na, short interview", `1` = "no", `2` = "yes"),
     msmokecig = c(`-2` = "na, see I/J/KMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     msmokeciga = c(`-2` = "na, see I/J/KMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
@@ -820,9 +711,12 @@ var_types_vec <- c(
   msmokeyn = "categorical"
 )
 
-.lasa_fc_154 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "154", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "154", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "154", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "154", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_154 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

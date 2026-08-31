@@ -34,8 +34,12 @@ harmonized_labels <- c(
   qsocp27 = "involved: neighborhood"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "qsocp04",
     "qsocp05",
     "qsocp06",
@@ -60,8 +64,8 @@ variable_labels_list <- list(
     "qsocp25",
     "qsocp26",
     "qsocp27"
-  )],
-  Wave_C_labels = harmonized_labels[c(
+  ),
+  `C` = c(
     "qsocp07",
     "qsocp08",
     "qsocp09",
@@ -75,24 +79,8 @@ variable_labels_list <- list(
     "qsocp18",
     "qsocp19",
     "qsocp21"
-  )],
-  Wave_D_labels = harmonized_labels[c(
-    "qsocp07",
-    "qsocp08",
-    "qsocp09",
-    "qsocp10",
-    "qsocp11",
-    "qsocp12",
-    "qsocp14",
-    "qsocp15",
-    "qsocp16",
-    "qsocp17",
-    "qsocp18",
-    "qsocp19",
-    "qsocp20",
-    "qsocp21"
-  )],
-  Wave_E_labels = harmonized_labels[c(
+  ),
+  `D` = c(
     "qsocp07",
     "qsocp08",
     "qsocp09",
@@ -107,8 +95,24 @@ variable_labels_list <- list(
     "qsocp19",
     "qsocp20",
     "qsocp21"
-  )],
-  Wave_2B_labels = harmonized_labels[c(
+  ),
+  `E` = c(
+    "qsocp07",
+    "qsocp08",
+    "qsocp09",
+    "qsocp10",
+    "qsocp11",
+    "qsocp12",
+    "qsocp14",
+    "qsocp15",
+    "qsocp16",
+    "qsocp17",
+    "qsocp18",
+    "qsocp19",
+    "qsocp20",
+    "qsocp21"
+  ),
+  `2B` = c(
     "qsocp04",
     "qsocp05",
     "qsocp06",
@@ -127,9 +131,8 @@ variable_labels_list <- list(
     "qsocp19",
     "qsocp20",
     "qsocp21"
-  )],
-  Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
+  ),
+  `F` = c(
     "qsocp07",
     "qsocp08",
     "qsocp09",
@@ -144,11 +147,8 @@ variable_labels_list <- list(
     "qsocp19",
     "qsocp20",
     "qsocp21"
-  )],
-    qsocp20 = "tv: films/tv series"
   ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
+  `G` = c(
     "qsocp07",
     "qsocp08",
     "qsocp09",
@@ -164,22 +164,46 @@ variable_labels_list <- list(
     "qsocp20",
     "qsocp20b",
     "qsocp21"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = harmonized_labels,
+  Wave_C_labels = harmonized_labels,
+  Wave_D_labels = harmonized_labels,
+  Wave_E_labels = harmonized_labels,
+  Wave_2B_labels = harmonized_labels,
+  Wave_F_labels = .replace_labels(
+    harmonized_labels,
+    qsocp20 = "tv: films/tv series"
+  ),
+  Wave_G_labels = .replace_labels(
+    harmonized_labels,
     qsocp20 = "tv: films/tv series"
   ),
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "very often",
+  `2` = "often",
+  `3` = "some of the time",
+  `4` = "never"
+)
+
 standardized_value_labels <- list(
   qsocp04 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "yes",
     `2` = "no",
     `3` = "R thinks not yet applicable"
   ),
   qsocp05 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "almost never",
     `2` = "a few times a year",
@@ -192,109 +216,67 @@ standardized_value_labels <- list(
   qsocp06 = c(`-1` = "not available"),
   qsocp07 = c(
     `-1` = "not available",
-    `1` = "very often",
-    `2` = "often",
-    `3` = "some of the time",
-    `4` = "never"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qsocp08 = c(
     `-1` = "not available",
-    `1` = "very often",
-    `2` = "often",
-    `3` = "some of the time",
-    `4` = "never"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qsocp09 = c(
     `-1` = "not available",
-    `1` = "very often",
-    `2` = "often",
-    `3` = "some of the time",
-    `4` = "never"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qsocp10 = c(
     `-1` = "not available",
-    `1` = "very often",
-    `2` = "often",
-    `3` = "some of the time",
-    `4` = "never"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qsocp11 = c(
     `-1` = "not available",
-    `1` = "very often",
-    `2` = "often",
-    `3` = "some of the time",
-    `4` = "never"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qsocp12 = c(
     `-1` = "not available",
-    `1` = "very often",
-    `2` = "often",
-    `3` = "some of the time",
-    `4` = "never"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qsocp13 = c(`-1` = "not available"),
   qsocp14 = c(
     `-1` = "not available",
-    `1` = "very often",
-    `2` = "often",
-    `3` = "some of the time",
-    `4` = "never"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qsocp15 = c(
     `-1` = "not available",
-    `1` = "very often",
-    `2` = "often",
-    `3` = "some of the time",
-    `4` = "never"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qsocp16 = c(
     `-1` = "not available",
-    `1` = "very often",
-    `2` = "often",
-    `3` = "some of the time",
-    `4` = "never"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qsocp17 = c(
     `-1` = "not available",
-    `1` = "very often",
-    `2` = "often",
-    `3` = "some of the time",
-    `4` = "never"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qsocp18 = c(
     `-1` = "not available",
-    `1` = "very often",
-    `2` = "often",
-    `3` = "some of the time",
-    `4` = "never"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qsocp19 = c(
     `-1` = "not available",
-    `1` = "very often",
-    `2` = "often",
-    `3` = "some of the time",
-    `4` = "never"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qsocp20 = c(
     `-1` = "not available",
-    `1` = "very often",
-    `2` = "often",
-    `3` = "some of the time",
-    `4` = "never"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qsocp20b = c(
     `-1` = "not available",
-    `1` = "very often",
-    `2` = "often",
-    `3` = "some of the time",
-    `4` = "never"
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   qsocp21 = c(
     `-1` = "not available",
-    `1` = "coding category 1",
-    `2` = "coding category 2",
-    `3` = "coding category 3",
-    `4` = "coding category 4",
+    `1` = "label varies by wave",
+    `2` = "label varies by wave",
+    `3` = "label varies by wave",
+    `4` = "label varies by wave",
     `5` = "never"
   ),
   qsocp22 = c(
@@ -343,32 +325,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qsocp04",
-    "qsocp05",
-    "qsocp06",
-    "qsocp07",
-    "qsocp08",
-    "qsocp09",
-    "qsocp10",
-    "qsocp11",
-    "qsocp12",
-    "qsocp13",
-    "qsocp14",
-    "qsocp15",
-    "qsocp16",
-    "qsocp17",
-    "qsocp18",
-    "qsocp19",
-    "qsocp20",
-    "qsocp21",
-    "qsocp22",
-    "qsocp23",
-    "qsocp24",
-    "qsocp25",
-    "qsocp26",
-    "qsocp27"
-  )],
+    standardized_value_labels,
     qsocp04 = .replace_labels(
     standardized_value_labels$qsocp04,
     `-2` = "no data, age",
@@ -473,21 +430,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qsocp07",
-    "qsocp08",
-    "qsocp09",
-    "qsocp10",
-    "qsocp11",
-    "qsocp12",
-    "qsocp14",
-    "qsocp15",
-    "qsocp16",
-    "qsocp17",
-    "qsocp18",
-    "qsocp19",
-    "qsocp21"
-  )],
+    standardized_value_labels,
     qsocp07 = .replace_labels(
     standardized_value_labels$qsocp07,
     `-1` = "no answer"
@@ -546,22 +489,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qsocp07",
-    "qsocp08",
-    "qsocp09",
-    "qsocp10",
-    "qsocp11",
-    "qsocp12",
-    "qsocp14",
-    "qsocp15",
-    "qsocp16",
-    "qsocp17",
-    "qsocp18",
-    "qsocp19",
-    "qsocp20",
-    "qsocp21"
-  )],
+    standardized_value_labels,
     qsocp07 = .replace_labels(
     standardized_value_labels$qsocp07,
     `-1` = "no answer"
@@ -624,22 +552,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qsocp07",
-    "qsocp08",
-    "qsocp09",
-    "qsocp10",
-    "qsocp11",
-    "qsocp12",
-    "qsocp14",
-    "qsocp15",
-    "qsocp16",
-    "qsocp17",
-    "qsocp18",
-    "qsocp19",
-    "qsocp20",
-    "qsocp21"
-  )],
+    standardized_value_labels,
     qsocp07 = .replace_labels(
     standardized_value_labels$qsocp07,
     `-1` = "no answer"
@@ -702,26 +615,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qsocp04",
-    "qsocp05",
-    "qsocp06",
-    "qsocp07",
-    "qsocp08",
-    "qsocp09",
-    "qsocp10",
-    "qsocp11",
-    "qsocp12",
-    "qsocp13",
-    "qsocp14",
-    "qsocp15",
-    "qsocp16",
-    "qsocp17",
-    "qsocp18",
-    "qsocp19",
-    "qsocp20",
-    "qsocp21"
-  )],
+    standardized_value_labels,
     qsocp04 = .replace_labels(
     standardized_value_labels$qsocp04,
     `-2` = "no data, age",
@@ -801,22 +695,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qsocp07",
-    "qsocp08",
-    "qsocp09",
-    "qsocp10",
-    "qsocp11",
-    "qsocp12",
-    "qsocp14",
-    "qsocp15",
-    "qsocp16",
-    "qsocp17",
-    "qsocp18",
-    "qsocp19",
-    "qsocp20",
-    "qsocp21"
-  )],
+    standardized_value_labels,
     qsocp07 = .replace_labels(
     standardized_value_labels$qsocp07,
     `-1` = "no answer"
@@ -879,23 +758,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qsocp07",
-    "qsocp08",
-    "qsocp09",
-    "qsocp10",
-    "qsocp11",
-    "qsocp12",
-    "qsocp14",
-    "qsocp15",
-    "qsocp16",
-    "qsocp17",
-    "qsocp18",
-    "qsocp19",
-    "qsocp20",
-    "qsocp20b",
-    "qsocp21"
-  )],
+    standardized_value_labels,
     qsocp07 = .replace_labels(
     standardized_value_labels$qsocp07,
     `-1` = "no answer"
@@ -992,9 +855,12 @@ var_types_vec <- c(
   qsocp27 = "categorical"
 )
 
-.lasa_fc_125 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "125", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "125", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "125", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "125", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_125 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

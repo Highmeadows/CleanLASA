@@ -63,9 +63,12 @@ harmonized_labels <- c(
   lspin3 = "Most intensive sport: time in minutes"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "lphya01",
     "lphya02",
     "lphya03",
@@ -112,12 +115,8 @@ variable_labels_list <- list(
     "lphya44",
     "lphya45",
     "lphya46"
-  )],
-    lphya45 = "not normal: other reason",
-    lphya46 = "not normal: other reasons coded"
   ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+  `C` = c(
     "lphya01",
     "lphya02",
     "lphya03",
@@ -164,12 +163,8 @@ variable_labels_list <- list(
     "lphya44",
     "lphya45",
     "lphya46"
-  )],
-    lphya45 = "not normal: other reason",
-    lphya46 = "not normal: other reasons coded"
   ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
+  `D` = c(
     "lphya01",
     "lphya02",
     "lphya03",
@@ -216,12 +211,8 @@ variable_labels_list <- list(
     "lphya44",
     "lphya45",
     "lphya46"
-  )],
-    lphya45 = "not normal: other reason",
-    lphya46 = "not normal: other reasons coded"
   ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
+  `E` = c(
     "lphya01",
     "lphya02",
     "lphya03",
@@ -268,12 +259,8 @@ variable_labels_list <- list(
     "lphya44",
     "lphya45",
     "lphya46"
-  )],
-    lphya45 = "not normal: other reason",
-    lphya46 = "not normal: other reasons coded"
   ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
+  `2B` = c(
     "lphya01",
     "lphya02",
     "lphya03",
@@ -319,10 +306,8 @@ variable_labels_list <- list(
     "lphya43",
     "lphya44",
     "lphya46"
-  )],
-    lphya46 = "not normal: other reasons coded"
   ),
-  Wave_F_labels = harmonized_labels[c(
+  `F` = c(
     "lphya01",
     "lphya02",
     "lphya03",
@@ -373,8 +358,8 @@ variable_labels_list <- list(
     "lphya48",
     "lphya49",
     "lphya50"
-  )],
-  Wave_G_labels = harmonized_labels[c(
+  ),
+  `G` = c(
     "lphya01",
     "lphya02",
     "lphya03",
@@ -425,8 +410,8 @@ variable_labels_list <- list(
     "lphya48",
     "lphya49",
     "lphya50"
-  )],
-  Wave_H_labels = harmonized_labels[c(
+  ),
+  `H` = c(
     "lphya01",
     "lphya02",
     "lphya03",
@@ -476,9 +461,8 @@ variable_labels_list <- list(
     "lphya49",
     "lphya50",
     "lphyasp"
-  )],
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
+  ),
+  `3B` = c(
     "lphya01",
     "lphya02",
     "lphya03",
@@ -531,10 +515,8 @@ variable_labels_list <- list(
     "lspin1",
     "lspin2",
     "lspin3"
-  )],
-    lspin1 = "Sport: most intensive sport:"
   ),
-  Wave_MB_labels = harmonized_labels[c(
+  `MB` = c(
     "lphya07",
     "lphya08",
     "lphya09",
@@ -547,8 +529,8 @@ variable_labels_list <- list(
     "lphya24",
     "lphya37",
     "lphya38"
-  )],
-  Wave_I_labels = harmonized_labels[c(
+  ),
+  `I` = c(
     "lphya01",
     "lphya02",
     "lphya03",
@@ -595,8 +577,8 @@ variable_labels_list <- list(
     "lphya49",
     "lphya50",
     "lphyasp"
-  )],
-  Wave_J_labels = harmonized_labels[c(
+  ),
+  `J` = c(
     "lphya01",
     "lphya02",
     "lphya03",
@@ -643,153 +625,141 @@ variable_labels_list <- list(
     "lphya49",
     "lphya50",
     "lphyasp"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
+    lphya45 = "not normal: other reason",
+    lphya46 = "not normal: other reasons coded"
+  ),
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
+    lphya45 = "not normal: other reason",
+    lphya46 = "not normal: other reasons coded"
+  ),
+  Wave_D_labels = .replace_labels(
+    harmonized_labels,
+    lphya45 = "not normal: other reason",
+    lphya46 = "not normal: other reasons coded"
+  ),
+  Wave_E_labels = .replace_labels(
+    harmonized_labels,
+    lphya45 = "not normal: other reason",
+    lphya46 = "not normal: other reasons coded"
+  ),
+  Wave_2B_labels = .replace_labels(
+    harmonized_labels,
+    lphya46 = "not normal: other reasons coded"
+  ),
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_3B_labels = .replace_labels(
+    harmonized_labels,
+    lspin1 = "Sport: most intensive sport:"
+  ),
+  Wave_MB_labels = harmonized_labels,
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
+)
+
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "no",
+  `2` = "yes"
 )
 
 standardized_value_labels <- list(
   lphya01 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "coding category -3",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-1")],
+    `-3` = "label varies by wave",
     `1` = "respondent bedridden",
     `2` = "respondent in elec. wheelchair",
     `3` = "respondent in mech. wheelchair",
     `4` = "not 1, 2 or 3"
   ),
   lphya02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lphya03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lphya04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lphya07 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lphya08 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya09 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lphya11 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lphya12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya13 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya14 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lphya15 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lphya16 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya17 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lphya18 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya19 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya20 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lphya21 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lphya22 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "distance walking",
     `2` = "distance cycling",
     `3` = "gymnastics",
@@ -800,13 +770,13 @@ standardized_value_labels <- list(
     `8` = "tennis",
     `9` = "jogging/running/speed walking",
     `10` = "rowing",
-    `11` = "coding category 11",
-    `12` = "coding category 12",
-    `13` = "coding category 13",
+    `11` = "label varies by wave",
+    `12` = "label varies by wave",
+    `13` = "label varies by wave",
     `14` = "soccer/basketball/korfball",
     `15` = "volleybal/baseball",
     `16` = "winter sports",
-    `17` = "coding category 17",
+    `17` = "label varies by wave",
     `18` = "other sports",
     `21` = "cycling: long distance cycling",
     `22` = "cycling: cycle racing / spinning / mountain biking",
@@ -845,26 +815,17 @@ standardized_value_labels <- list(
     `114` = "other sports: other"
   ),
   lphya23 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya24 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya25 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lphya26 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "distance walking",
     `2` = "distance cycling",
     `3` = "gymnastics",
@@ -875,13 +836,13 @@ standardized_value_labels <- list(
     `8` = "tennis",
     `9` = "jogging/running/speed walking",
     `10` = "rowing",
-    `11` = "coding category 11",
-    `12` = "coding category 12",
-    `13` = "coding category 13",
+    `11` = "label varies by wave",
+    `12` = "label varies by wave",
+    `13` = "label varies by wave",
     `14` = "soccer/basketball/korfball",
     `15` = "volleybal/baseball",
     `16` = "winter sports",
-    `17` = "coding category 17",
+    `17` = "label varies by wave",
     `18` = "other sports",
     `21` = "cycling: long distance cycling",
     `22` = "cycling: cycle racing / spinning / mountain biking",
@@ -920,137 +881,90 @@ standardized_value_labels <- list(
     `114` = "other sports: other"
   ),
   lphya27 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya28 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya29 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes",
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")],
     `3` = "do not know"
   ),
   lphya30 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya31 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lphya32 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes",
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")],
     `3` = "do not know",
     `4` = "refusal"
   ),
   lphya33 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya34 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya35 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lphya36 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes",
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")],
     `3` = "do not know",
     `4` = "refusal"
   ),
   lphya37 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-4", "-3", "-2", "-1")]
   ),
   lphya38 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lphya39 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lphya40 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   lphya41 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   lphya42 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   lphya43 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   lphya44 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   lphya45 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   lphya46 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `0` = "ordinal category 0",
-    `1` = "ordinal category 1",
+    default_missing_labels[c("-3", "-2", "-1")],
+    `0` = "label varies by wave",
+    `1` = "label varies by wave",
     `2` = "positive activities",
     `3` = "illness partner",
     `4` = "good weather",
@@ -1062,28 +976,22 @@ standardized_value_labels <- list(
     `10` = "other"
   ),
   lphya47 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   lphya48 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   lphya49 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   lphya50 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `1` = "visit from friend/family",
     `2` = "positive activities",
     `3` = "illness partner",
@@ -1096,16 +1004,12 @@ standardized_value_labels <- list(
     `10` = "other"
   ),
   lphyasp = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "no",
-    `2` = "yes"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   lspin1 = c(
     `-3` = "most intensive",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `11` = "walking / hiking: long distance hiking",
     `12` = "walking / hiking: nordic walking",
     `13` = "walking / hiking: speed walking",
@@ -1146,103 +1050,40 @@ standardized_value_labels <- list(
     `114` = "other sports: other"
   ),
   lspin2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   lspin3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   )
 )
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lphya01",
-    "lphya02",
-    "lphya03",
-    "lphya04",
-    "lphya05",
-    "lphya06",
-    "lphya07",
-    "lphya08",
-    "lphya09",
-    "lphya10",
-    "lphya11",
-    "lphya12",
-    "lphya13",
-    "lphya14",
-    "lphya15",
-    "lphya16",
-    "lphya17",
-    "lphya18",
-    "lphya19",
-    "lphya20",
-    "lphya21",
-    "lphya22",
-    "lphya23",
-    "lphya24",
-    "lphya25",
-    "lphya26",
-    "lphya27",
-    "lphya28",
-    "lphya29",
-    "lphya30",
-    "lphya31",
-    "lphya32",
-    "lphya33",
-    "lphya34",
-    "lphya35",
-    "lphya36",
-    "lphya37",
-    "lphya38",
-    "lphya39",
-    "lphya40",
-    "lphya41",
-    "lphya42",
-    "lphya43",
-    "lphya44",
-    "lphya45",
-    "lphya46"
-  )],
+    standardized_value_labels,
     lphya01 = .replace_labels(
     standardized_value_labels$lphya01,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
+    `-3` = "na, wrong skip"
   ),
     lphya02 = .replace_labels(
     standardized_value_labels$lphya02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya03 = .replace_labels(
     standardized_value_labels$lphya03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02"
   ),
     lphya04 = .replace_labels(
     standardized_value_labels$lphya04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya05 = .replace_labels(
     standardized_value_labels$lphya05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya06 = .replace_labels(
     standardized_value_labels$lphya06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya07 = c(
     `-3` = "na, wrong skip",
@@ -1253,21 +1094,15 @@ value_labels_list <- list(
   ),
     lphya08 = .replace_labels(
     standardized_value_labels$lphya08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya09 = .replace_labels(
     standardized_value_labels$lphya09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya10 = .replace_labels(
     standardized_value_labels$lphya10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya11 = c(
     `-3` = "na, wrong skip",
@@ -1278,57 +1113,39 @@ value_labels_list <- list(
   ),
     lphya12 = .replace_labels(
     standardized_value_labels$lphya12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya13 = .replace_labels(
     standardized_value_labels$lphya13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya14 = .replace_labels(
     standardized_value_labels$lphya14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01"
   ),
     lphya15 = .replace_labels(
     standardized_value_labels$lphya15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14"
   ),
     lphya16 = .replace_labels(
     standardized_value_labels$lphya16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15"
   ),
     lphya17 = .replace_labels(
     standardized_value_labels$lphya17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15"
   ),
     lphya18 = .replace_labels(
     standardized_value_labels$lphya18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya19 = .replace_labels(
     standardized_value_labels$lphya19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya20 = .replace_labels(
     standardized_value_labels$lphya20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17"
   ),
     lphya21 = c(
     `-3` = "na, wrong skip",
@@ -1361,21 +1178,15 @@ value_labels_list <- list(
   ),
     lphya23 = .replace_labels(
     standardized_value_labels$lphya23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya24 = .replace_labels(
     standardized_value_labels$lphya24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23"
   ),
     lphya25 = .replace_labels(
     standardized_value_labels$lphya25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya26 = c(
     `-3` = "na, wrong skip",
@@ -1401,112 +1212,76 @@ value_labels_list <- list(
   ),
     lphya27 = .replace_labels(
     standardized_value_labels$lphya27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25"
   ),
     lphya28 = .replace_labels(
     standardized_value_labels$lphya28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27"
   ),
     lphya29 = .replace_labels(
     standardized_value_labels$lphya29,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/GLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/GLPHYA21"
   ),
     lphya30 = .replace_labels(
     standardized_value_labels$lphya30,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/GLPHYA29",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/GLPHYA29"
   ),
     lphya31 = .replace_labels(
     standardized_value_labels$lphya31,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya32 = .replace_labels(
     standardized_value_labels$lphya32,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31"
   ),
     lphya33 = .replace_labels(
     standardized_value_labels$lphya33,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya34 = .replace_labels(
     standardized_value_labels$lphya34,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya35 = .replace_labels(
     standardized_value_labels$lphya35,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya36 = .replace_labels(
     standardized_value_labels$lphya36,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35"
   ),
     lphya37 = c(`-3` = "na, wrong skip", `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36", `-1` = "na, asked"),
     lphya38 = .replace_labels(
     standardized_value_labels$lphya38,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36"
   ),
     lphya39 = .replace_labels(
     standardized_value_labels$lphya39,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya40 = .replace_labels(
     standardized_value_labels$lphya40,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya41 = .replace_labels(
     standardized_value_labels$lphya41,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya42 = .replace_labels(
     standardized_value_labels$lphya42,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya43 = .replace_labels(
     standardized_value_labels$lphya43,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya44 = .replace_labels(
     standardized_value_labels$lphya44,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya45 = .replace_labels(
     standardized_value_labels$lphya45,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/BLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/BLPHYA39"
   ),
     lphya46 = c(
     `-2` = "na, see B/C/D/E/BLPHYA45",
@@ -1523,90 +1298,31 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lphya01",
-    "lphya02",
-    "lphya03",
-    "lphya04",
-    "lphya05",
-    "lphya06",
-    "lphya07",
-    "lphya08",
-    "lphya09",
-    "lphya10",
-    "lphya11",
-    "lphya12",
-    "lphya13",
-    "lphya14",
-    "lphya15",
-    "lphya16",
-    "lphya17",
-    "lphya18",
-    "lphya19",
-    "lphya20",
-    "lphya21",
-    "lphya22",
-    "lphya23",
-    "lphya24",
-    "lphya25",
-    "lphya26",
-    "lphya27",
-    "lphya28",
-    "lphya29",
-    "lphya30",
-    "lphya31",
-    "lphya32",
-    "lphya33",
-    "lphya34",
-    "lphya35",
-    "lphya36",
-    "lphya37",
-    "lphya38",
-    "lphya39",
-    "lphya40",
-    "lphya41",
-    "lphya42",
-    "lphya43",
-    "lphya44",
-    "lphya45",
-    "lphya46"
-  )],
+    standardized_value_labels,
     lphya01 = .replace_labels(
     standardized_value_labels$lphya01,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
+    `-3` = "na, wrong skip"
   ),
     lphya02 = .replace_labels(
     standardized_value_labels$lphya02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya03 = .replace_labels(
     standardized_value_labels$lphya03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02"
   ),
     lphya04 = .replace_labels(
     standardized_value_labels$lphya04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya05 = .replace_labels(
     standardized_value_labels$lphya05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya06 = .replace_labels(
     standardized_value_labels$lphya06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya07 = c(
     `-3` = "na, wrong skip",
@@ -1617,21 +1333,15 @@ value_labels_list <- list(
   ),
     lphya08 = .replace_labels(
     standardized_value_labels$lphya08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya09 = .replace_labels(
     standardized_value_labels$lphya09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya10 = .replace_labels(
     standardized_value_labels$lphya10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya11 = c(
     `-3` = "na, wrong skip",
@@ -1642,57 +1352,39 @@ value_labels_list <- list(
   ),
     lphya12 = .replace_labels(
     standardized_value_labels$lphya12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya13 = .replace_labels(
     standardized_value_labels$lphya13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya14 = .replace_labels(
     standardized_value_labels$lphya14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01"
   ),
     lphya15 = .replace_labels(
     standardized_value_labels$lphya15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14"
   ),
     lphya16 = .replace_labels(
     standardized_value_labels$lphya16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15"
   ),
     lphya17 = .replace_labels(
     standardized_value_labels$lphya17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15"
   ),
     lphya18 = .replace_labels(
     standardized_value_labels$lphya18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya19 = .replace_labels(
     standardized_value_labels$lphya19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya20 = .replace_labels(
     standardized_value_labels$lphya20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17"
   ),
     lphya21 = c(
     `-3` = "na, wrong skip",
@@ -1725,21 +1417,15 @@ value_labels_list <- list(
   ),
     lphya23 = .replace_labels(
     standardized_value_labels$lphya23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya24 = .replace_labels(
     standardized_value_labels$lphya24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23"
   ),
     lphya25 = .replace_labels(
     standardized_value_labels$lphya25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya26 = c(
     `-3` = "na, wrong skip",
@@ -1765,112 +1451,76 @@ value_labels_list <- list(
   ),
     lphya27 = .replace_labels(
     standardized_value_labels$lphya27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25"
   ),
     lphya28 = .replace_labels(
     standardized_value_labels$lphya28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27"
   ),
     lphya29 = .replace_labels(
     standardized_value_labels$lphya29,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/GLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/GLPHYA21"
   ),
     lphya30 = .replace_labels(
     standardized_value_labels$lphya30,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/GLPHYA29",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/GLPHYA29"
   ),
     lphya31 = .replace_labels(
     standardized_value_labels$lphya31,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya32 = .replace_labels(
     standardized_value_labels$lphya32,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31"
   ),
     lphya33 = .replace_labels(
     standardized_value_labels$lphya33,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya34 = .replace_labels(
     standardized_value_labels$lphya34,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya35 = .replace_labels(
     standardized_value_labels$lphya35,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya36 = .replace_labels(
     standardized_value_labels$lphya36,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35"
   ),
     lphya37 = c(`-3` = "na, wrong skip", `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36", `-1` = "na, asked"),
     lphya38 = .replace_labels(
     standardized_value_labels$lphya38,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36"
   ),
     lphya39 = .replace_labels(
     standardized_value_labels$lphya39,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya40 = .replace_labels(
     standardized_value_labels$lphya40,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya41 = .replace_labels(
     standardized_value_labels$lphya41,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya42 = .replace_labels(
     standardized_value_labels$lphya42,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya43 = .replace_labels(
     standardized_value_labels$lphya43,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya44 = .replace_labels(
     standardized_value_labels$lphya44,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya45 = .replace_labels(
     standardized_value_labels$lphya45,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/BLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/BLPHYA39"
   ),
     lphya46 = c(
     `-2` = "na, see B/C/D/E/BLPHYA45",
@@ -1887,90 +1537,31 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lphya01",
-    "lphya02",
-    "lphya03",
-    "lphya04",
-    "lphya05",
-    "lphya06",
-    "lphya07",
-    "lphya08",
-    "lphya09",
-    "lphya10",
-    "lphya11",
-    "lphya12",
-    "lphya13",
-    "lphya14",
-    "lphya15",
-    "lphya16",
-    "lphya17",
-    "lphya18",
-    "lphya19",
-    "lphya20",
-    "lphya21",
-    "lphya22",
-    "lphya23",
-    "lphya24",
-    "lphya25",
-    "lphya26",
-    "lphya27",
-    "lphya28",
-    "lphya29",
-    "lphya30",
-    "lphya31",
-    "lphya32",
-    "lphya33",
-    "lphya34",
-    "lphya35",
-    "lphya36",
-    "lphya37",
-    "lphya38",
-    "lphya39",
-    "lphya40",
-    "lphya41",
-    "lphya42",
-    "lphya43",
-    "lphya44",
-    "lphya45",
-    "lphya46"
-  )],
+    standardized_value_labels,
     lphya01 = .replace_labels(
     standardized_value_labels$lphya01,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
+    `-3` = "na, wrong skip"
   ),
     lphya02 = .replace_labels(
     standardized_value_labels$lphya02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya03 = .replace_labels(
     standardized_value_labels$lphya03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02"
   ),
     lphya04 = .replace_labels(
     standardized_value_labels$lphya04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya05 = .replace_labels(
     standardized_value_labels$lphya05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya06 = .replace_labels(
     standardized_value_labels$lphya06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya07 = c(
     `-3` = "na, wrong skip",
@@ -1981,21 +1572,15 @@ value_labels_list <- list(
   ),
     lphya08 = .replace_labels(
     standardized_value_labels$lphya08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya09 = .replace_labels(
     standardized_value_labels$lphya09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya10 = .replace_labels(
     standardized_value_labels$lphya10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya11 = c(
     `-3` = "na, wrong skip",
@@ -2006,57 +1591,39 @@ value_labels_list <- list(
   ),
     lphya12 = .replace_labels(
     standardized_value_labels$lphya12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya13 = .replace_labels(
     standardized_value_labels$lphya13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya14 = .replace_labels(
     standardized_value_labels$lphya14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01"
   ),
     lphya15 = .replace_labels(
     standardized_value_labels$lphya15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14"
   ),
     lphya16 = .replace_labels(
     standardized_value_labels$lphya16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15"
   ),
     lphya17 = .replace_labels(
     standardized_value_labels$lphya17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15"
   ),
     lphya18 = .replace_labels(
     standardized_value_labels$lphya18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya19 = .replace_labels(
     standardized_value_labels$lphya19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya20 = .replace_labels(
     standardized_value_labels$lphya20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17"
   ),
     lphya21 = c(
     `-3` = "na, wrong skip",
@@ -2089,21 +1656,15 @@ value_labels_list <- list(
   ),
     lphya23 = .replace_labels(
     standardized_value_labels$lphya23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya24 = .replace_labels(
     standardized_value_labels$lphya24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23"
   ),
     lphya25 = .replace_labels(
     standardized_value_labels$lphya25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya26 = c(
     `-3` = "na, wrong skip",
@@ -2129,112 +1690,76 @@ value_labels_list <- list(
   ),
     lphya27 = .replace_labels(
     standardized_value_labels$lphya27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25"
   ),
     lphya28 = .replace_labels(
     standardized_value_labels$lphya28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27"
   ),
     lphya29 = .replace_labels(
     standardized_value_labels$lphya29,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/GLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/GLPHYA21"
   ),
     lphya30 = .replace_labels(
     standardized_value_labels$lphya30,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/GLPHYA29",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/GLPHYA29"
   ),
     lphya31 = .replace_labels(
     standardized_value_labels$lphya31,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya32 = .replace_labels(
     standardized_value_labels$lphya32,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31"
   ),
     lphya33 = .replace_labels(
     standardized_value_labels$lphya33,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya34 = .replace_labels(
     standardized_value_labels$lphya34,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya35 = .replace_labels(
     standardized_value_labels$lphya35,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya36 = .replace_labels(
     standardized_value_labels$lphya36,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35"
   ),
     lphya37 = c(`-3` = "na, wrong skip", `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36", `-1` = "na, asked"),
     lphya38 = .replace_labels(
     standardized_value_labels$lphya38,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36"
   ),
     lphya39 = .replace_labels(
     standardized_value_labels$lphya39,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya40 = .replace_labels(
     standardized_value_labels$lphya40,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya41 = .replace_labels(
     standardized_value_labels$lphya41,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya42 = .replace_labels(
     standardized_value_labels$lphya42,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya43 = .replace_labels(
     standardized_value_labels$lphya43,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya44 = .replace_labels(
     standardized_value_labels$lphya44,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya45 = .replace_labels(
     standardized_value_labels$lphya45,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/BLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/BLPHYA39"
   ),
     lphya46 = c(
     `-2` = "na, see B/C/D/E/BLPHYA45",
@@ -2252,90 +1777,31 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lphya01",
-    "lphya02",
-    "lphya03",
-    "lphya04",
-    "lphya05",
-    "lphya06",
-    "lphya07",
-    "lphya08",
-    "lphya09",
-    "lphya10",
-    "lphya11",
-    "lphya12",
-    "lphya13",
-    "lphya14",
-    "lphya15",
-    "lphya16",
-    "lphya17",
-    "lphya18",
-    "lphya19",
-    "lphya20",
-    "lphya21",
-    "lphya22",
-    "lphya23",
-    "lphya24",
-    "lphya25",
-    "lphya26",
-    "lphya27",
-    "lphya28",
-    "lphya29",
-    "lphya30",
-    "lphya31",
-    "lphya32",
-    "lphya33",
-    "lphya34",
-    "lphya35",
-    "lphya36",
-    "lphya37",
-    "lphya38",
-    "lphya39",
-    "lphya40",
-    "lphya41",
-    "lphya42",
-    "lphya43",
-    "lphya44",
-    "lphya45",
-    "lphya46"
-  )],
+    standardized_value_labels,
     lphya01 = .replace_labels(
     standardized_value_labels$lphya01,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
+    `-3` = "na, wrong skip"
   ),
     lphya02 = .replace_labels(
     standardized_value_labels$lphya02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya03 = .replace_labels(
     standardized_value_labels$lphya03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02"
   ),
     lphya04 = .replace_labels(
     standardized_value_labels$lphya04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya05 = .replace_labels(
     standardized_value_labels$lphya05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya06 = .replace_labels(
     standardized_value_labels$lphya06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya07 = c(
     `-3` = "na, wrong skip",
@@ -2346,21 +1812,15 @@ value_labels_list <- list(
   ),
     lphya08 = .replace_labels(
     standardized_value_labels$lphya08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya09 = .replace_labels(
     standardized_value_labels$lphya09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya10 = .replace_labels(
     standardized_value_labels$lphya10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya11 = c(
     `-3` = "na, wrong skip",
@@ -2371,57 +1831,39 @@ value_labels_list <- list(
   ),
     lphya12 = .replace_labels(
     standardized_value_labels$lphya12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya13 = .replace_labels(
     standardized_value_labels$lphya13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya14 = .replace_labels(
     standardized_value_labels$lphya14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01"
   ),
     lphya15 = .replace_labels(
     standardized_value_labels$lphya15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14"
   ),
     lphya16 = .replace_labels(
     standardized_value_labels$lphya16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15"
   ),
     lphya17 = .replace_labels(
     standardized_value_labels$lphya17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15"
   ),
     lphya18 = .replace_labels(
     standardized_value_labels$lphya18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya19 = .replace_labels(
     standardized_value_labels$lphya19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya20 = .replace_labels(
     standardized_value_labels$lphya20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17"
   ),
     lphya21 = c(
     `-3` = "na, wrong skip",
@@ -2454,21 +1896,15 @@ value_labels_list <- list(
   ),
     lphya23 = .replace_labels(
     standardized_value_labels$lphya23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya24 = .replace_labels(
     standardized_value_labels$lphya24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23"
   ),
     lphya25 = .replace_labels(
     standardized_value_labels$lphya25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya26 = c(
     `-3` = "na, wrong skip",
@@ -2494,112 +1930,76 @@ value_labels_list <- list(
   ),
     lphya27 = .replace_labels(
     standardized_value_labels$lphya27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25"
   ),
     lphya28 = .replace_labels(
     standardized_value_labels$lphya28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27"
   ),
     lphya29 = .replace_labels(
     standardized_value_labels$lphya29,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/GLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/GLPHYA21"
   ),
     lphya30 = .replace_labels(
     standardized_value_labels$lphya30,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/GLPHYA29",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/GLPHYA29"
   ),
     lphya31 = .replace_labels(
     standardized_value_labels$lphya31,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya32 = .replace_labels(
     standardized_value_labels$lphya32,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31"
   ),
     lphya33 = .replace_labels(
     standardized_value_labels$lphya33,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya34 = .replace_labels(
     standardized_value_labels$lphya34,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya35 = .replace_labels(
     standardized_value_labels$lphya35,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya36 = .replace_labels(
     standardized_value_labels$lphya36,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35"
   ),
     lphya37 = c(`-3` = "na, wrong skip", `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36", `-1` = "na, asked"),
     lphya38 = .replace_labels(
     standardized_value_labels$lphya38,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36"
   ),
     lphya39 = .replace_labels(
     standardized_value_labels$lphya39,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya40 = .replace_labels(
     standardized_value_labels$lphya40,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya41 = .replace_labels(
     standardized_value_labels$lphya41,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya42 = .replace_labels(
     standardized_value_labels$lphya42,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya43 = .replace_labels(
     standardized_value_labels$lphya43,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya44 = .replace_labels(
     standardized_value_labels$lphya44,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya45 = .replace_labels(
     standardized_value_labels$lphya45,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/BLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/BLPHYA39"
   ),
     lphya46 = c(
     `-2` = "na, see B/C/D/E/BLPHYA45",
@@ -2617,89 +2017,31 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lphya01",
-    "lphya02",
-    "lphya03",
-    "lphya04",
-    "lphya05",
-    "lphya06",
-    "lphya07",
-    "lphya08",
-    "lphya09",
-    "lphya10",
-    "lphya11",
-    "lphya12",
-    "lphya13",
-    "lphya14",
-    "lphya15",
-    "lphya16",
-    "lphya17",
-    "lphya18",
-    "lphya19",
-    "lphya20",
-    "lphya21",
-    "lphya22",
-    "lphya23",
-    "lphya24",
-    "lphya25",
-    "lphya26",
-    "lphya27",
-    "lphya28",
-    "lphya29",
-    "lphya30",
-    "lphya31",
-    "lphya32",
-    "lphya33",
-    "lphya34",
-    "lphya35",
-    "lphya36",
-    "lphya37",
-    "lphya38",
-    "lphya39",
-    "lphya40",
-    "lphya41",
-    "lphya42",
-    "lphya43",
-    "lphya44",
-    "lphya46"
-  )],
+    standardized_value_labels,
     lphya01 = .replace_labels(
     standardized_value_labels$lphya01,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
+    `-3` = "na, wrong skip"
   ),
     lphya02 = .replace_labels(
     standardized_value_labels$lphya02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya03 = .replace_labels(
     standardized_value_labels$lphya03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02"
   ),
     lphya04 = .replace_labels(
     standardized_value_labels$lphya04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya05 = .replace_labels(
     standardized_value_labels$lphya05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya06 = .replace_labels(
     standardized_value_labels$lphya06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya07 = c(
     `-3` = "na, wrong skip",
@@ -2710,21 +2052,15 @@ value_labels_list <- list(
   ),
     lphya08 = .replace_labels(
     standardized_value_labels$lphya08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya09 = .replace_labels(
     standardized_value_labels$lphya09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya10 = .replace_labels(
     standardized_value_labels$lphya10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya11 = c(
     `-3` = "na, wrong skip",
@@ -2735,57 +2071,39 @@ value_labels_list <- list(
   ),
     lphya12 = .replace_labels(
     standardized_value_labels$lphya12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya13 = .replace_labels(
     standardized_value_labels$lphya13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya14 = .replace_labels(
     standardized_value_labels$lphya14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01"
   ),
     lphya15 = .replace_labels(
     standardized_value_labels$lphya15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14"
   ),
     lphya16 = .replace_labels(
     standardized_value_labels$lphya16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15"
   ),
     lphya17 = .replace_labels(
     standardized_value_labels$lphya17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15"
   ),
     lphya18 = .replace_labels(
     standardized_value_labels$lphya18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya19 = .replace_labels(
     standardized_value_labels$lphya19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya20 = .replace_labels(
     standardized_value_labels$lphya20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17"
   ),
     lphya21 = c(
     `-3` = "na, wrong skip",
@@ -2819,21 +2137,15 @@ value_labels_list <- list(
   ),
     lphya23 = .replace_labels(
     standardized_value_labels$lphya23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya24 = .replace_labels(
     standardized_value_labels$lphya24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23"
   ),
     lphya25 = .replace_labels(
     standardized_value_labels$lphya25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya26 = c(
     `-3` = "na, wrong skip",
@@ -2860,106 +2172,72 @@ value_labels_list <- list(
   ),
     lphya27 = .replace_labels(
     standardized_value_labels$lphya27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25"
   ),
     lphya28 = .replace_labels(
     standardized_value_labels$lphya28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27"
   ),
     lphya29 = .replace_labels(
     standardized_value_labels$lphya29,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/GLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/GLPHYA21"
   ),
     lphya30 = .replace_labels(
     standardized_value_labels$lphya30,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/GLPHYA29",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/GLPHYA29"
   ),
     lphya31 = .replace_labels(
     standardized_value_labels$lphya31,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya32 = .replace_labels(
     standardized_value_labels$lphya32,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31"
   ),
     lphya33 = .replace_labels(
     standardized_value_labels$lphya33,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya34 = .replace_labels(
     standardized_value_labels$lphya34,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya35 = .replace_labels(
     standardized_value_labels$lphya35,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya36 = .replace_labels(
     standardized_value_labels$lphya36,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35"
   ),
     lphya37 = c(`-3` = "na, wrong skip", `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36", `-1` = "na, asked"),
     lphya38 = .replace_labels(
     standardized_value_labels$lphya38,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36"
   ),
     lphya39 = .replace_labels(
     standardized_value_labels$lphya39,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya40 = .replace_labels(
     standardized_value_labels$lphya40,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya41 = .replace_labels(
     standardized_value_labels$lphya41,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya42 = .replace_labels(
     standardized_value_labels$lphya42,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya43 = .replace_labels(
     standardized_value_labels$lphya43,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya44 = .replace_labels(
     standardized_value_labels$lphya44,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya46 = c(
     `-2` = "na, see B/C/D/E/BLPHYA45",
@@ -2977,94 +2255,31 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lphya01",
-    "lphya02",
-    "lphya03",
-    "lphya04",
-    "lphya05",
-    "lphya06",
-    "lphya07",
-    "lphya08",
-    "lphya09",
-    "lphya10",
-    "lphya11",
-    "lphya12",
-    "lphya13",
-    "lphya14",
-    "lphya15",
-    "lphya16",
-    "lphya17",
-    "lphya18",
-    "lphya19",
-    "lphya20",
-    "lphya21",
-    "lphya22",
-    "lphya23",
-    "lphya24",
-    "lphya25",
-    "lphya26",
-    "lphya27",
-    "lphya28",
-    "lphya29",
-    "lphya30",
-    "lphya31",
-    "lphya32",
-    "lphya33",
-    "lphya34",
-    "lphya35",
-    "lphya36",
-    "lphya37",
-    "lphya38",
-    "lphya39",
-    "lphya40",
-    "lphya41",
-    "lphya42",
-    "lphya43",
-    "lphya44",
-    "lphya45",
-    "lphya46",
-    "lphya47",
-    "lphya48",
-    "lphya49",
-    "lphya50"
-  )],
+    standardized_value_labels,
     lphya01 = .replace_labels(
     standardized_value_labels$lphya01,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
+    `-3` = "na, wrong skip"
   ),
     lphya02 = .replace_labels(
     standardized_value_labels$lphya02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya03 = .replace_labels(
     standardized_value_labels$lphya03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02"
   ),
     lphya04 = .replace_labels(
     standardized_value_labels$lphya04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya05 = .replace_labels(
     standardized_value_labels$lphya05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya06 = .replace_labels(
     standardized_value_labels$lphya06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya07 = c(
     `-3` = "na, wrong skip",
@@ -3075,21 +2290,15 @@ value_labels_list <- list(
   ),
     lphya08 = .replace_labels(
     standardized_value_labels$lphya08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya09 = .replace_labels(
     standardized_value_labels$lphya09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya10 = .replace_labels(
     standardized_value_labels$lphya10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya11 = c(
     `-3` = "na, wrong skip",
@@ -3100,57 +2309,39 @@ value_labels_list <- list(
   ),
     lphya12 = .replace_labels(
     standardized_value_labels$lphya12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya13 = .replace_labels(
     standardized_value_labels$lphya13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya14 = .replace_labels(
     standardized_value_labels$lphya14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01"
   ),
     lphya15 = .replace_labels(
     standardized_value_labels$lphya15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14"
   ),
     lphya16 = .replace_labels(
     standardized_value_labels$lphya16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15"
   ),
     lphya17 = .replace_labels(
     standardized_value_labels$lphya17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15"
   ),
     lphya18 = .replace_labels(
     standardized_value_labels$lphya18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya19 = .replace_labels(
     standardized_value_labels$lphya19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya20 = .replace_labels(
     standardized_value_labels$lphya20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17"
   ),
     lphya21 = c(
     `-3` = "na, wrong skip",
@@ -3184,21 +2375,15 @@ value_labels_list <- list(
   ),
     lphya23 = .replace_labels(
     standardized_value_labels$lphya23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya24 = .replace_labels(
     standardized_value_labels$lphya24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23"
   ),
     lphya25 = .replace_labels(
     standardized_value_labels$lphya25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya26 = c(
     `-3` = "na, wrong skip",
@@ -3225,112 +2410,76 @@ value_labels_list <- list(
   ),
     lphya27 = .replace_labels(
     standardized_value_labels$lphya27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25"
   ),
     lphya28 = .replace_labels(
     standardized_value_labels$lphya28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27"
   ),
     lphya29 = .replace_labels(
     standardized_value_labels$lphya29,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/GLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/GLPHYA21"
   ),
     lphya30 = .replace_labels(
     standardized_value_labels$lphya30,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/GLPHYA29",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/GLPHYA29"
   ),
     lphya31 = .replace_labels(
     standardized_value_labels$lphya31,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya32 = .replace_labels(
     standardized_value_labels$lphya32,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31"
   ),
     lphya33 = .replace_labels(
     standardized_value_labels$lphya33,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya34 = .replace_labels(
     standardized_value_labels$lphya34,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya35 = .replace_labels(
     standardized_value_labels$lphya35,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya36 = .replace_labels(
     standardized_value_labels$lphya36,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35"
   ),
     lphya37 = c(`-3` = "na, wrong skip", `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36", `-1` = "na, asked"),
     lphya38 = .replace_labels(
     standardized_value_labels$lphya38,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36"
   ),
     lphya39 = .replace_labels(
     standardized_value_labels$lphya39,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya40 = .replace_labels(
     standardized_value_labels$lphya40,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya41 = .replace_labels(
     standardized_value_labels$lphya41,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya42 = .replace_labels(
     standardized_value_labels$lphya42,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya43 = .replace_labels(
     standardized_value_labels$lphya43,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya44 = .replace_labels(
     standardized_value_labels$lphya44,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya45 = .replace_labels(
     standardized_value_labels$lphya45,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya46 = c(
     `-3` = "na, wrong skip",
@@ -3341,21 +2490,15 @@ value_labels_list <- list(
   ),
     lphya47 = .replace_labels(
     standardized_value_labels$lphya47,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya48 = .replace_labels(
     standardized_value_labels$lphya48,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya49 = .replace_labels(
     standardized_value_labels$lphya49,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya50 = .replace_labels(
     standardized_value_labels$lphya50,
@@ -3363,94 +2506,31 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lphya01",
-    "lphya02",
-    "lphya03",
-    "lphya04",
-    "lphya05",
-    "lphya06",
-    "lphya07",
-    "lphya08",
-    "lphya09",
-    "lphya10",
-    "lphya11",
-    "lphya12",
-    "lphya13",
-    "lphya14",
-    "lphya15",
-    "lphya16",
-    "lphya17",
-    "lphya18",
-    "lphya19",
-    "lphya20",
-    "lphya21",
-    "lphya22",
-    "lphya23",
-    "lphya24",
-    "lphya25",
-    "lphya26",
-    "lphya27",
-    "lphya28",
-    "lphya29",
-    "lphya30",
-    "lphya31",
-    "lphya32",
-    "lphya33",
-    "lphya34",
-    "lphya35",
-    "lphya36",
-    "lphya37",
-    "lphya38",
-    "lphya39",
-    "lphya40",
-    "lphya41",
-    "lphya42",
-    "lphya43",
-    "lphya44",
-    "lphya45",
-    "lphya46",
-    "lphya47",
-    "lphya48",
-    "lphya49",
-    "lphya50"
-  )],
+    standardized_value_labels,
     lphya01 = .replace_labels(
     standardized_value_labels$lphya01,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
+    `-3` = "na, wrong skip"
   ),
     lphya02 = .replace_labels(
     standardized_value_labels$lphya02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya03 = .replace_labels(
     standardized_value_labels$lphya03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02"
   ),
     lphya04 = .replace_labels(
     standardized_value_labels$lphya04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya05 = .replace_labels(
     standardized_value_labels$lphya05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya06 = .replace_labels(
     standardized_value_labels$lphya06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya07 = c(
     `-3` = "na, wrong skip",
@@ -3461,21 +2541,15 @@ value_labels_list <- list(
   ),
     lphya08 = .replace_labels(
     standardized_value_labels$lphya08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya09 = .replace_labels(
     standardized_value_labels$lphya09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya10 = .replace_labels(
     standardized_value_labels$lphya10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya11 = c(
     `-3` = "na, wrong skip",
@@ -3486,57 +2560,39 @@ value_labels_list <- list(
   ),
     lphya12 = .replace_labels(
     standardized_value_labels$lphya12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya13 = .replace_labels(
     standardized_value_labels$lphya13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya14 = .replace_labels(
     standardized_value_labels$lphya14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01"
   ),
     lphya15 = .replace_labels(
     standardized_value_labels$lphya15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14"
   ),
     lphya16 = .replace_labels(
     standardized_value_labels$lphya16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15"
   ),
     lphya17 = .replace_labels(
     standardized_value_labels$lphya17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15"
   ),
     lphya18 = .replace_labels(
     standardized_value_labels$lphya18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya19 = .replace_labels(
     standardized_value_labels$lphya19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya20 = .replace_labels(
     standardized_value_labels$lphya20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17"
   ),
     lphya21 = c(
     `-3` = "na, wrong skip",
@@ -3570,21 +2626,15 @@ value_labels_list <- list(
   ),
     lphya23 = .replace_labels(
     standardized_value_labels$lphya23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya24 = .replace_labels(
     standardized_value_labels$lphya24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23"
   ),
     lphya25 = .replace_labels(
     standardized_value_labels$lphya25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya26 = c(
     `-3` = "na, wrong skip",
@@ -3611,112 +2661,76 @@ value_labels_list <- list(
   ),
     lphya27 = .replace_labels(
     standardized_value_labels$lphya27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25"
   ),
     lphya28 = .replace_labels(
     standardized_value_labels$lphya28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27"
   ),
     lphya29 = .replace_labels(
     standardized_value_labels$lphya29,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/GLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/GLPHYA21"
   ),
     lphya30 = .replace_labels(
     standardized_value_labels$lphya30,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/GLPHYA29",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/GLPHYA29"
   ),
     lphya31 = .replace_labels(
     standardized_value_labels$lphya31,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya32 = .replace_labels(
     standardized_value_labels$lphya32,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31"
   ),
     lphya33 = .replace_labels(
     standardized_value_labels$lphya33,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya34 = .replace_labels(
     standardized_value_labels$lphya34,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya35 = .replace_labels(
     standardized_value_labels$lphya35,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya36 = .replace_labels(
     standardized_value_labels$lphya36,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35"
   ),
     lphya37 = c(`-3` = "na, wrong skip", `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36", `-1` = "na, asked"),
     lphya38 = .replace_labels(
     standardized_value_labels$lphya38,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36"
   ),
     lphya39 = .replace_labels(
     standardized_value_labels$lphya39,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya40 = .replace_labels(
     standardized_value_labels$lphya40,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya41 = .replace_labels(
     standardized_value_labels$lphya41,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya42 = .replace_labels(
     standardized_value_labels$lphya42,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya43 = .replace_labels(
     standardized_value_labels$lphya43,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya44 = .replace_labels(
     standardized_value_labels$lphya44,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya45 = .replace_labels(
     standardized_value_labels$lphya45,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya46 = c(
     `-3` = "na, wrong skip",
@@ -3727,21 +2741,15 @@ value_labels_list <- list(
   ),
     lphya47 = .replace_labels(
     standardized_value_labels$lphya47,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya48 = .replace_labels(
     standardized_value_labels$lphya48,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya49 = .replace_labels(
     standardized_value_labels$lphya49,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya50 = .replace_labels(
     standardized_value_labels$lphya50,
@@ -3749,93 +2757,31 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lphya01",
-    "lphya02",
-    "lphya03",
-    "lphya04",
-    "lphya05",
-    "lphya06",
-    "lphya07",
-    "lphya08",
-    "lphya09",
-    "lphya10",
-    "lphya11",
-    "lphya12",
-    "lphya13",
-    "lphya14",
-    "lphya15",
-    "lphya16",
-    "lphya17",
-    "lphya18",
-    "lphya19",
-    "lphya20",
-    "lphya21",
-    "lphya22",
-    "lphya23",
-    "lphya24",
-    "lphya25",
-    "lphya26",
-    "lphya27",
-    "lphya28",
-    "lphya31",
-    "lphya32",
-    "lphya33",
-    "lphya34",
-    "lphya35",
-    "lphya36",
-    "lphya37",
-    "lphya38",
-    "lphya39",
-    "lphya40",
-    "lphya41",
-    "lphya42",
-    "lphya43",
-    "lphya44",
-    "lphya45",
-    "lphya46",
-    "lphya47",
-    "lphya48",
-    "lphya49",
-    "lphya50",
-    "lphyasp"
-  )],
+    standardized_value_labels,
     lphya01 = .replace_labels(
     standardized_value_labels$lphya01,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
-    `-3` = "not done, wrong skip",
-    `-1` = "na, asked"
+    `-3` = "not done, wrong skip"
   ),
     lphya02 = .replace_labels(
     standardized_value_labels$lphya02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya03 = .replace_labels(
     standardized_value_labels$lphya03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02"
   ),
     lphya04 = .replace_labels(
     standardized_value_labels$lphya04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya05 = .replace_labels(
     standardized_value_labels$lphya05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya06 = .replace_labels(
     standardized_value_labels$lphya06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya07 = c(
     `-3` = "na, wrong skip",
@@ -3846,21 +2792,15 @@ value_labels_list <- list(
   ),
     lphya08 = .replace_labels(
     standardized_value_labels$lphya08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya09 = .replace_labels(
     standardized_value_labels$lphya09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya10 = .replace_labels(
     standardized_value_labels$lphya10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya11 = c(
     `-3` = "na, wrong skip",
@@ -3871,57 +2811,39 @@ value_labels_list <- list(
   ),
     lphya12 = .replace_labels(
     standardized_value_labels$lphya12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya13 = .replace_labels(
     standardized_value_labels$lphya13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya14 = .replace_labels(
     standardized_value_labels$lphya14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01"
   ),
     lphya15 = .replace_labels(
     standardized_value_labels$lphya15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14"
   ),
     lphya16 = .replace_labels(
     standardized_value_labels$lphya16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15"
   ),
     lphya17 = .replace_labels(
     standardized_value_labels$lphya17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15"
   ),
     lphya18 = .replace_labels(
     standardized_value_labels$lphya18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya19 = .replace_labels(
     standardized_value_labels$lphya19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya20 = .replace_labels(
     standardized_value_labels$lphya20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17"
   ),
     lphya21 = c(
     `-3` = "na, wrong skip",
@@ -3975,21 +2897,15 @@ value_labels_list <- list(
   ),
     lphya23 = .replace_labels(
     standardized_value_labels$lphya23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya24 = .replace_labels(
     standardized_value_labels$lphya24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23"
   ),
     lphya25 = .replace_labels(
     standardized_value_labels$lphya25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya26 = c(
     `-3` = "na, wrong skip",
@@ -4036,100 +2952,68 @@ value_labels_list <- list(
   ),
     lphya27 = .replace_labels(
     standardized_value_labels$lphya27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25"
   ),
     lphya28 = .replace_labels(
     standardized_value_labels$lphya28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27"
   ),
     lphya31 = .replace_labels(
     standardized_value_labels$lphya31,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya32 = .replace_labels(
     standardized_value_labels$lphya32,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31"
   ),
     lphya33 = .replace_labels(
     standardized_value_labels$lphya33,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya34 = .replace_labels(
     standardized_value_labels$lphya34,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya35 = .replace_labels(
     standardized_value_labels$lphya35,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya36 = .replace_labels(
     standardized_value_labels$lphya36,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35"
   ),
     lphya37 = c(`-3` = "na, wrong skip", `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36", `-1` = "na, asked"),
     lphya38 = .replace_labels(
     standardized_value_labels$lphya38,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36"
   ),
     lphya39 = .replace_labels(
     standardized_value_labels$lphya39,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya40 = .replace_labels(
     standardized_value_labels$lphya40,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya41 = .replace_labels(
     standardized_value_labels$lphya41,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya42 = .replace_labels(
     standardized_value_labels$lphya42,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya43 = .replace_labels(
     standardized_value_labels$lphya43,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya44 = .replace_labels(
     standardized_value_labels$lphya44,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya45 = .replace_labels(
     standardized_value_labels$lphya45,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya46 = c(
     `-3` = "na, wrong skip",
@@ -4140,21 +3024,15 @@ value_labels_list <- list(
   ),
     lphya47 = .replace_labels(
     standardized_value_labels$lphya47,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya48 = .replace_labels(
     standardized_value_labels$lphya48,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya49 = .replace_labels(
     standardized_value_labels$lphya49,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya50 = .replace_labels(
     standardized_value_labels$lphya50,
@@ -4162,102 +3040,35 @@ value_labels_list <- list(
   ),
     lphyasp = .replace_labels(
     standardized_value_labels$lphyasp,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/I/JLPHYA01"
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lphya01",
-    "lphya02",
-    "lphya03",
-    "lphya04",
-    "lphya05",
-    "lphya06",
-    "lphya07",
-    "lphya08",
-    "lphya09",
-    "lphya10",
-    "lphya11",
-    "lphya12",
-    "lphya13",
-    "lphya14",
-    "lphya15",
-    "lphya16",
-    "lphya17",
-    "lphya18",
-    "lphya19",
-    "lphya20",
-    "lphya21",
-    "lphya22",
-    "lphya23",
-    "lphya24",
-    "lphya25",
-    "lphya26",
-    "lphya27",
-    "lphya28",
-    "lphya31",
-    "lphya32",
-    "lphya33",
-    "lphya34",
-    "lphya35",
-    "lphya36",
-    "lphya37",
-    "lphya38",
-    "lphya39",
-    "lphya40",
-    "lphya41",
-    "lphya42",
-    "lphya43",
-    "lphya44",
-    "lphya45",
-    "lphya46",
-    "lphya47",
-    "lphya48",
-    "lphya49",
-    "lphya50",
-    "lphyasp",
-    "lspin1",
-    "lspin2",
-    "lspin3"
-  )],
+    standardized_value_labels,
     lphya01 = .replace_labels(
     standardized_value_labels$lphya01,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
-    `-3` = "not done, wrong skip",
-    `-1` = "na, asked"
+    `-3` = "not done, wrong skip"
   ),
     lphya02 = .replace_labels(
     standardized_value_labels$lphya02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya03 = .replace_labels(
     standardized_value_labels$lphya03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02"
   ),
     lphya04 = .replace_labels(
     standardized_value_labels$lphya04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya05 = .replace_labels(
     standardized_value_labels$lphya05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya06 = .replace_labels(
     standardized_value_labels$lphya06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya07 = c(
     `-3` = "na, wrong skip",
@@ -4268,21 +3079,15 @@ value_labels_list <- list(
   ),
     lphya08 = .replace_labels(
     standardized_value_labels$lphya08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya09 = .replace_labels(
     standardized_value_labels$lphya09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya10 = .replace_labels(
     standardized_value_labels$lphya10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya11 = c(
     `-3` = "na, wrong skip",
@@ -4293,57 +3098,39 @@ value_labels_list <- list(
   ),
     lphya12 = .replace_labels(
     standardized_value_labels$lphya12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya13 = .replace_labels(
     standardized_value_labels$lphya13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya14 = .replace_labels(
     standardized_value_labels$lphya14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA01"
   ),
     lphya15 = .replace_labels(
     standardized_value_labels$lphya15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14"
   ),
     lphya16 = .replace_labels(
     standardized_value_labels$lphya16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA15"
   ),
     lphya17 = .replace_labels(
     standardized_value_labels$lphya17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15"
   ),
     lphya18 = .replace_labels(
     standardized_value_labels$lphya18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya19 = .replace_labels(
     standardized_value_labels$lphya19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya20 = .replace_labels(
     standardized_value_labels$lphya20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA17"
   ),
     lphya21 = c(
     `-3` = "na, wrong skip",
@@ -4397,21 +3184,15 @@ value_labels_list <- list(
   ),
     lphya23 = .replace_labels(
     standardized_value_labels$lphya23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya24 = .replace_labels(
     standardized_value_labels$lphya24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23"
   ),
     lphya25 = .replace_labels(
     standardized_value_labels$lphya25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya26 = c(
     `-3` = "na, wrong skip",
@@ -4458,100 +3239,68 @@ value_labels_list <- list(
   ),
     lphya27 = .replace_labels(
     standardized_value_labels$lphya27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25"
   ),
     lphya28 = .replace_labels(
     standardized_value_labels$lphya28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27"
   ),
     lphya31 = .replace_labels(
     standardized_value_labels$lphya31,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya32 = .replace_labels(
     standardized_value_labels$lphya32,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31"
   ),
     lphya33 = .replace_labels(
     standardized_value_labels$lphya33,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya34 = .replace_labels(
     standardized_value_labels$lphya34,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya35 = .replace_labels(
     standardized_value_labels$lphya35,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya36 = .replace_labels(
     standardized_value_labels$lphya36,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35"
   ),
     lphya37 = c(`-3` = "na, wrong skip", `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36", `-1` = "na, asked"),
     lphya38 = .replace_labels(
     standardized_value_labels$lphya38,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36"
   ),
     lphya39 = .replace_labels(
     standardized_value_labels$lphya39,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya40 = .replace_labels(
     standardized_value_labels$lphya40,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya41 = .replace_labels(
     standardized_value_labels$lphya41,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya42 = .replace_labels(
     standardized_value_labels$lphya42,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya43 = .replace_labels(
     standardized_value_labels$lphya43,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya44 = .replace_labels(
     standardized_value_labels$lphya44,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya45 = .replace_labels(
     standardized_value_labels$lphya45,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya46 = c(
     `-3` = "na, wrong skip",
@@ -4562,21 +3311,15 @@ value_labels_list <- list(
   ),
     lphya47 = .replace_labels(
     standardized_value_labels$lphya47,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya48 = .replace_labels(
     standardized_value_labels$lphya48,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya49 = .replace_labels(
     standardized_value_labels$lphya49,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya50 = .replace_labels(
     standardized_value_labels$lphya50,
@@ -4584,62 +3327,35 @@ value_labels_list <- list(
   ),
     lphyasp = .replace_labels(
     standardized_value_labels$lphyasp,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/I/JLPHYA01"
   ),
     lspin1 = .replace_labels(
     standardized_value_labels$lspin1,
-    `-2` = "na, see BLPHYA22 & BLPHYA26",
-    `-1` = "na, asked"
+    `-2` = "na, see BLPHYA22 & BLPHYA26"
   ),
     lspin2 = .replace_labels(
     standardized_value_labels$lspin2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BLSPIN1",
-    `-1` = "na, asked"
+    `-2` = "na, see BLSPIN1"
   ),
     lspin3 = .replace_labels(
     standardized_value_labels$lspin3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BLSPIN2",
-    `-1` = "na, asked"
+    `-2` = "na, see BLSPIN2"
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lphya07",
-    "lphya08",
-    "lphya09",
-    "lphya11",
-    "lphya12",
-    "lphya13",
-    "lphya21",
-    "lphya22",
-    "lphya23",
-    "lphya24",
-    "lphya37",
-    "lphya38"
-  )],
+    standardized_value_labels,
     lphya07 = .replace_labels(
     standardized_value_labels$lphya07,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BLPHYA06",
-    `-1` = "na, asked"
+    `-2` = "na, see BLPHYA06"
   ),
     lphya08 = .replace_labels(
     standardized_value_labels$lphya08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see BLPHYA07"
   ),
     lphya09 = .replace_labels(
     standardized_value_labels$lphya09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see BLPHYA07"
   ),
     lphya11 = c(
     `-5` = "na, interview terminated",
@@ -4651,15 +3367,11 @@ value_labels_list <- list(
   ),
     lphya12 = .replace_labels(
     standardized_value_labels$lphya12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see BLPHYA11"
   ),
     lphya13 = .replace_labels(
     standardized_value_labels$lphya13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see BLPHYA11"
   ),
     lphya21 = c(
     `-5` = "na, interview terminated",
@@ -4672,15 +3384,11 @@ value_labels_list <- list(
     lphya22 = c(`-3` = "na, wrong skip", `-2` = "na, see BLPHYA21", `-1` = "na, asked"),
     lphya23 = .replace_labels(
     standardized_value_labels$lphya23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see BLPHYA21"
   ),
     lphya24 = .replace_labels(
     standardized_value_labels$lphya24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BLPHYA23",
-    `-1` = "na, asked"
+    `-2` = "na, see BLPHYA23"
   ),
     lphya37 = c(
     `-5` = "na, interview terminated",
@@ -4690,96 +3398,35 @@ value_labels_list <- list(
   ),
     lphya38 = .replace_labels(
     standardized_value_labels$lphya38,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BLPHYA36",
-    `-1` = "na, asked"
+    `-2` = "na, see BLPHYA36"
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lphya01",
-    "lphya02",
-    "lphya03",
-    "lphya04",
-    "lphya05",
-    "lphya06",
-    "lphya07",
-    "lphya08",
-    "lphya09",
-    "lphya10",
-    "lphya11",
-    "lphya12",
-    "lphya13",
-    "lphya15",
-    "lphya17",
-    "lphya18",
-    "lphya19",
-    "lphya21",
-    "lphya22",
-    "lphya23",
-    "lphya24",
-    "lphya25",
-    "lphya26",
-    "lphya27",
-    "lphya28",
-    "lphya31",
-    "lphya32",
-    "lphya33",
-    "lphya34",
-    "lphya35",
-    "lphya36",
-    "lphya37",
-    "lphya38",
-    "lphya39",
-    "lphya40",
-    "lphya41",
-    "lphya42",
-    "lphya43",
-    "lphya44",
-    "lphya45",
-    "lphya46",
-    "lphya47",
-    "lphya48",
-    "lphya49",
-    "lphya50",
-    "lphyasp"
-  )],
+    standardized_value_labels,
     lphya01 = .replace_labels(
     standardized_value_labels$lphya01,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
-    `-3` = "not done, wrong skip",
-    `-1` = "na, asked"
+    `-3` = "not done, wrong skip"
   ),
     lphya02 = .replace_labels(
     standardized_value_labels$lphya02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya03 = .replace_labels(
     standardized_value_labels$lphya03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02"
   ),
     lphya04 = .replace_labels(
     standardized_value_labels$lphya04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya05 = .replace_labels(
     standardized_value_labels$lphya05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya06 = .replace_labels(
     standardized_value_labels$lphya06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya07 = c(
     `-3` = "na, wrong skip",
@@ -4790,21 +3437,15 @@ value_labels_list <- list(
   ),
     lphya08 = .replace_labels(
     standardized_value_labels$lphya08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya09 = .replace_labels(
     standardized_value_labels$lphya09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya10 = .replace_labels(
     standardized_value_labels$lphya10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya11 = c(
     `-3` = "na, wrong skip",
@@ -4815,39 +3456,27 @@ value_labels_list <- list(
   ),
     lphya12 = .replace_labels(
     standardized_value_labels$lphya12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya13 = .replace_labels(
     standardized_value_labels$lphya13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya15 = .replace_labels(
     standardized_value_labels$lphya15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ILPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see ILPHYA01"
   ),
     lphya17 = .replace_labels(
     standardized_value_labels$lphya17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15"
   ),
     lphya18 = .replace_labels(
     standardized_value_labels$lphya18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya19 = .replace_labels(
     standardized_value_labels$lphya19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya21 = c(
     `-3` = "na, wrong skip",
@@ -4901,21 +3530,15 @@ value_labels_list <- list(
   ),
     lphya23 = .replace_labels(
     standardized_value_labels$lphya23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya24 = .replace_labels(
     standardized_value_labels$lphya24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23"
   ),
     lphya25 = .replace_labels(
     standardized_value_labels$lphya25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya26 = c(
     `-3` = "na, wrong skip",
@@ -4962,100 +3585,68 @@ value_labels_list <- list(
   ),
     lphya27 = .replace_labels(
     standardized_value_labels$lphya27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25"
   ),
     lphya28 = .replace_labels(
     standardized_value_labels$lphya28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27"
   ),
     lphya31 = .replace_labels(
     standardized_value_labels$lphya31,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya32 = .replace_labels(
     standardized_value_labels$lphya32,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31"
   ),
     lphya33 = .replace_labels(
     standardized_value_labels$lphya33,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya34 = .replace_labels(
     standardized_value_labels$lphya34,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya35 = .replace_labels(
     standardized_value_labels$lphya35,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya36 = .replace_labels(
     standardized_value_labels$lphya36,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35"
   ),
     lphya37 = c(`-3` = "na, wrong skip", `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36", `-1` = "na, asked"),
     lphya38 = .replace_labels(
     standardized_value_labels$lphya38,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36"
   ),
     lphya39 = .replace_labels(
     standardized_value_labels$lphya39,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya40 = .replace_labels(
     standardized_value_labels$lphya40,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya41 = .replace_labels(
     standardized_value_labels$lphya41,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya42 = .replace_labels(
     standardized_value_labels$lphya42,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya43 = .replace_labels(
     standardized_value_labels$lphya43,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya44 = .replace_labels(
     standardized_value_labels$lphya44,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya45 = .replace_labels(
     standardized_value_labels$lphya45,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya46 = c(
     `-3` = "na, wrong skip",
@@ -5066,21 +3657,15 @@ value_labels_list <- list(
   ),
     lphya47 = .replace_labels(
     standardized_value_labels$lphya47,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya48 = .replace_labels(
     standardized_value_labels$lphya48,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya49 = .replace_labels(
     standardized_value_labels$lphya49,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya50 = .replace_labels(
     standardized_value_labels$lphya50,
@@ -5088,96 +3673,35 @@ value_labels_list <- list(
   ),
     lphyasp = .replace_labels(
     standardized_value_labels$lphyasp,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/I/JLPHYA01"
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lphya01",
-    "lphya02",
-    "lphya03",
-    "lphya04",
-    "lphya05",
-    "lphya06",
-    "lphya07",
-    "lphya08",
-    "lphya09",
-    "lphya10",
-    "lphya11",
-    "lphya12",
-    "lphya13",
-    "lphya15",
-    "lphya17",
-    "lphya18",
-    "lphya19",
-    "lphya21",
-    "lphya22",
-    "lphya23",
-    "lphya24",
-    "lphya25",
-    "lphya26",
-    "lphya27",
-    "lphya28",
-    "lphya31",
-    "lphya32",
-    "lphya33",
-    "lphya34",
-    "lphya35",
-    "lphya36",
-    "lphya37",
-    "lphya38",
-    "lphya39",
-    "lphya40",
-    "lphya41",
-    "lphya42",
-    "lphya43",
-    "lphya44",
-    "lphya45",
-    "lphya46",
-    "lphya47",
-    "lphya48",
-    "lphya49",
-    "lphya50",
-    "lphyasp"
-  )],
+    standardized_value_labels,
     lphya01 = .replace_labels(
     standardized_value_labels$lphya01,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
-    `-3` = "not done, wrong skip",
-    `-1` = "na, asked"
+    `-3` = "not done, wrong skip"
   ),
     lphya02 = .replace_labels(
     standardized_value_labels$lphya02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya03 = .replace_labels(
     standardized_value_labels$lphya03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02"
   ),
     lphya04 = .replace_labels(
     standardized_value_labels$lphya04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya05 = .replace_labels(
     standardized_value_labels$lphya05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03"
   ),
     lphya06 = .replace_labels(
     standardized_value_labels$lphya06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya07 = c(
     `-3` = "na, wrong skip",
@@ -5188,21 +3712,15 @@ value_labels_list <- list(
   ),
     lphya08 = .replace_labels(
     standardized_value_labels$lphya08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya09 = .replace_labels(
     standardized_value_labels$lphya09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07"
   ),
     lphya10 = .replace_labels(
     standardized_value_labels$lphya10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya11 = c(
     `-3` = "na, wrong skip",
@@ -5213,39 +3731,27 @@ value_labels_list <- list(
   ),
     lphya12 = .replace_labels(
     standardized_value_labels$lphya12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya13 = .replace_labels(
     standardized_value_labels$lphya13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11"
   ),
     lphya15 = .replace_labels(
     standardized_value_labels$lphya15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14"
   ),
     lphya17 = .replace_labels(
     standardized_value_labels$lphya17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15"
   ),
     lphya18 = .replace_labels(
     standardized_value_labels$lphya18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya19 = .replace_labels(
     standardized_value_labels$lphya19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17"
   ),
     lphya21 = c(
     `-3` = "na, wrong skip",
@@ -5299,21 +3805,15 @@ value_labels_list <- list(
   ),
     lphya23 = .replace_labels(
     standardized_value_labels$lphya23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya24 = .replace_labels(
     standardized_value_labels$lphya24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23"
   ),
     lphya25 = .replace_labels(
     standardized_value_labels$lphya25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21"
   ),
     lphya26 = c(
     `-3` = "na, wrong skip",
@@ -5360,100 +3860,68 @@ value_labels_list <- list(
   ),
     lphya27 = .replace_labels(
     standardized_value_labels$lphya27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25"
   ),
     lphya28 = .replace_labels(
     standardized_value_labels$lphya28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27"
   ),
     lphya31 = .replace_labels(
     standardized_value_labels$lphya31,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya32 = .replace_labels(
     standardized_value_labels$lphya32,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31"
   ),
     lphya33 = .replace_labels(
     standardized_value_labels$lphya33,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya34 = .replace_labels(
     standardized_value_labels$lphya34,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32"
   ),
     lphya35 = .replace_labels(
     standardized_value_labels$lphya35,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya36 = .replace_labels(
     standardized_value_labels$lphya36,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35"
   ),
     lphya37 = c(`-3` = "na, wrong skip", `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36", `-1` = "na, asked"),
     lphya38 = .replace_labels(
     standardized_value_labels$lphya38,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36"
   ),
     lphya39 = .replace_labels(
     standardized_value_labels$lphya39,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01"
   ),
     lphya40 = .replace_labels(
     standardized_value_labels$lphya40,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya41 = .replace_labels(
     standardized_value_labels$lphya41,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya42 = .replace_labels(
     standardized_value_labels$lphya42,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya43 = .replace_labels(
     standardized_value_labels$lphya43,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya44 = .replace_labels(
     standardized_value_labels$lphya44,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39"
   ),
     lphya45 = .replace_labels(
     standardized_value_labels$lphya45,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya46 = c(
     `-3` = "na, wrong skip",
@@ -5464,21 +3932,15 @@ value_labels_list <- list(
   ),
     lphya47 = .replace_labels(
     standardized_value_labels$lphya47,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya48 = .replace_labels(
     standardized_value_labels$lphya48,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya49 = .replace_labels(
     standardized_value_labels$lphya49,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see F/G/H/B/I/JLPHYA39",
-    `-1` = "na, asked"
+    `-2` = "na, see F/G/H/B/I/JLPHYA39"
   ),
     lphya50 = .replace_labels(
     standardized_value_labels$lphya50,
@@ -5486,9 +3948,7 @@ value_labels_list <- list(
   ),
     lphyasp = .replace_labels(
     standardized_value_labels$lphyasp,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JLPHYA01",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/I/JLPHYA01"
   )
   ),
   Harmonized_labels = standardized_value_labels
@@ -5551,9 +4011,12 @@ var_types_vec <- c(
   lspin3 = "numeric"
 )
 
-.lasa_fc_046 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "046", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "046", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "046", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "046", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_046 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -12,6 +12,18 @@ harmonized_labels <- c(
   mecog3 = "Future capability raven test: better"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "mecog1",
+    "mecog2",
+    "mecog3"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
@@ -20,8 +32,7 @@ variable_labels_list <- list(
 standardized_value_labels <- list(
   mecog1 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-1")],
     `0` = "no answer",
     `1` = "very tense",
     `2` = "tensed",
@@ -31,8 +42,7 @@ standardized_value_labels <- list(
   ),
   mecog2 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-1")],
     `0` = "no answer",
     `1` = "very bad",
     `2` = "bad",
@@ -42,8 +52,7 @@ standardized_value_labels <- list(
   ),
   mecog3 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-1")],
     `0` = "no answer",
     `1` = "no, certain",
     `2` = "no probably",
@@ -80,9 +89,12 @@ value_labels_list <- list(
 
 var_types_vec <- c(mecog1 = "categorical", mecog2 = "categorical", mecog3 = "categorical")
 
-.lasa_fc_024 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "024", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "024", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "024", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "024", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_024 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

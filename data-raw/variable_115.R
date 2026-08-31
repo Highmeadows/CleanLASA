@@ -21,41 +21,196 @@ harmonized_labels <- c(
   qpain6 = "Pain 6: constant"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "qpain1",
+    "qpain2",
+    "qpain3",
+    "qpain4",
+    "qpain5",
+    "qpain6"
+  ),
+  `C` = c(
+    "qpain1",
+    "qpain2",
+    "qpain3",
+    "qpain4",
+    "qpain5",
+    "qpain6"
+  ),
+  `D` = c(
+    "qpain1",
+    "qpain2",
+    "qpain3",
+    "qpain4",
+    "qpain5",
+    "qpain6"
+  ),
+  `E` = c(
+    "qpain1",
+    "qpain2",
+    "qpain3",
+    "qpain4",
+    "qpain5",
+    "qpain6"
+  ),
+  `2B` = c(
+    "qpain1",
+    "qpain2",
+    "qpain3",
+    "qpain4",
+    "qpain5",
+    "qpain6"
+  ),
+  `F` = c(
+    "qpain1",
+    "qpain2",
+    "qpain3",
+    "qpain4",
+    "qpain5",
+    "qpain6"
+  ),
+  `G` = c(
+    "qpain1",
+    "qpain2",
+    "qpain3",
+    "qpain4",
+    "qpain5",
+    "qpain6"
+  ),
+  `H` = c(
+    "qpain1",
+    "qpain2",
+    "qpain3",
+    "qpain4",
+    "qpain5",
+    "qpain6"
+  ),
+  `3B` = c(
+    "qpain1",
+    "qpain2",
+    "qpain3",
+    "qpain4",
+    "qpain5",
+    "qpain6"
+  ),
+  `MB` = c(
+    "mpain1",
+    "mpain2",
+    "mpain3",
+    "mpain4",
+    "mpain5",
+    "mpain6"
+  ),
+  `I` = c(
+    "qpain1",
+    "qpain2",
+    "qpain3",
+    "qpain4",
+    "qpain5",
+    "qpain6"
+  ),
+  `J` = c(
+    "qpain1",
+    "qpain2",
+    "qpain3",
+    "qpain4",
+    "qpain5",
+    "qpain6"
+  ),
+  `K` = c(
+    "qpain1",
+    "qpain2",
+    "qpain3",
+    "qpain4",
+    "qpain5",
+    "qpain6"
+  )
+)
+
 variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
-  Wave_C_labels = harmonized_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
-  Wave_D_labels = harmonized_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
-  Wave_E_labels = harmonized_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
-  Wave_2B_labels = harmonized_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
-  Wave_F_labels = harmonized_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
-  Wave_G_labels = harmonized_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
-  Wave_H_labels = harmonized_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
-  Wave_3B_labels = harmonized_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
-  Wave_MB_labels = harmonized_labels[c("mpain1", "mpain2", "mpain3", "mpain4", "mpain5", "mpain6")],
-  Wave_I_labels = harmonized_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
-  Wave_J_labels = harmonized_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
-  Wave_K_labels = harmonized_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
+  Wave_B_labels = harmonized_labels,
+  Wave_C_labels = harmonized_labels,
+  Wave_D_labels = harmonized_labels,
+  Wave_E_labels = harmonized_labels,
+  Wave_2B_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_3B_labels = harmonized_labels,
+  Wave_MB_labels = harmonized_labels,
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "yes",
+  `2` = "no"
+)
+
 standardized_value_labels <- list(
-  mpain1 = c(`-1` = "not available", `1` = "yes", `2` = "no"),
-  mpain2 = c(`-1` = "not available", `1` = "yes", `2` = "no"),
-  mpain3 = c(`-1` = "not available", `1` = "yes", `2` = "no"),
-  mpain4 = c(`-1` = "not available", `1` = "yes", `2` = "no"),
-  mpain5 = c(`-1` = "not available", `1` = "yes", `2` = "no"),
-  mpain6 = c(`-1` = "not available", `1` = "yes", `2` = "no"),
-  qpain1 = c(`-1` = "not available", `1` = "yes", `2` = "no"),
-  qpain2 = c(`-1` = "not available", `1` = "yes", `2` = "no"),
-  qpain3 = c(`-1` = "not available", `1` = "yes", `2` = "no"),
-  qpain4 = c(`-1` = "not available", `1` = "yes", `2` = "no"),
-  qpain5 = c(`-1` = "not available", `1` = "yes", `2` = "no"),
-  qpain6 = c(`-1` = "not available", `1` = "yes", `2` = "no")
+  mpain1 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2")]
+  ),
+  mpain2 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2")]
+  ),
+  mpain3 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2")]
+  ),
+  mpain4 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2")]
+  ),
+  mpain5 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2")]
+  ),
+  mpain6 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2")]
+  ),
+  qpain1 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2")]
+  ),
+  qpain2 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2")]
+  ),
+  qpain3 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2")]
+  ),
+  qpain4 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2")]
+  ),
+  qpain5 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2")]
+  ),
+  qpain6 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2")]
+  )
 )
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
+    standardized_value_labels,
     qpain1 = .replace_labels(
     standardized_value_labels$qpain1,
     `-1` = "no answer"
@@ -82,7 +237,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
+    standardized_value_labels,
     qpain1 = .replace_labels(
     standardized_value_labels$qpain1,
     `-1` = "no answer"
@@ -109,7 +264,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
+    standardized_value_labels,
     qpain1 = .replace_labels(
     standardized_value_labels$qpain1,
     `-1` = "no answer"
@@ -136,7 +291,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
+    standardized_value_labels,
     qpain1 = .replace_labels(
     standardized_value_labels$qpain1,
     `-1` = "no answer"
@@ -163,7 +318,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
+    standardized_value_labels,
     qpain1 = .replace_labels(
     standardized_value_labels$qpain1,
     `-1` = "no answer"
@@ -190,7 +345,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
+    standardized_value_labels,
     qpain1 = .replace_labels(
     standardized_value_labels$qpain1,
     `-1` = "no answer"
@@ -217,7 +372,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
+    standardized_value_labels,
     qpain1 = .replace_labels(
     standardized_value_labels$qpain1,
     `-1` = "no answer"
@@ -244,7 +399,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
+    standardized_value_labels,
     qpain1 = .replace_labels(
     standardized_value_labels$qpain1,
     `-1` = "no answer"
@@ -271,7 +426,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
+    standardized_value_labels,
     qpain1 = .replace_labels(
     standardized_value_labels$qpain1,
     `-1` = "no answer"
@@ -298,7 +453,7 @@ value_labels_list <- list(
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c("mpain1", "mpain2", "mpain3", "mpain4", "mpain5", "mpain6")],
+    standardized_value_labels,
     mpain1 = .replace_labels(
     standardized_value_labels$mpain1,
     `-1` = "no answer"
@@ -325,7 +480,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
+    standardized_value_labels,
     qpain1 = .replace_labels(
     standardized_value_labels$qpain1,
     `-1` = "no answer"
@@ -352,7 +507,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
+    standardized_value_labels,
     qpain1 = .replace_labels(
     standardized_value_labels$qpain1,
     `-1` = "no answer"
@@ -379,7 +534,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c("qpain1", "qpain2", "qpain3", "qpain4", "qpain5", "qpain6")],
+    standardized_value_labels,
     qpain1 = .replace_labels(
     standardized_value_labels$qpain1,
     `-1` = "no answer"
@@ -423,9 +578,12 @@ var_types_vec <- c(
   qpain6 = "categorical"
 )
 
-.lasa_fc_115 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "115", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "115", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "115", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "115", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_115 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -26,253 +26,214 @@ harmonized_labels <- c(
   qindf17 = "ability to cope, independently or with help from others (score from 1 to 10)"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `F` = c(
+    "qindf01",
+    "qindf02",
+    "qindf03",
+    "qindf04",
+    "qindf05",
+    "qindf06",
+    "qindf07",
+    "qindf08",
+    "qindf09",
+    "qindf10",
+    "qindf11",
+    "qindf12",
+    "qindf13",
+    "qindf14",
+    "qindf15",
+    "qindf16"
+  ),
+  `G` = c(
+    "qindf01",
+    "qindf02",
+    "qindf03",
+    "qindf04",
+    "qindf05",
+    "qindf06",
+    "qindf07",
+    "qindf08",
+    "qindf09",
+    "qindf10",
+    "qindf11",
+    "qindf12",
+    "qindf13",
+    "qindf14",
+    "qindf15",
+    "qindf16"
+  ),
+  `H` = c(
+    "qindf01",
+    "qindf02",
+    "qindf03",
+    "qindf04",
+    "qindf05",
+    "qindf06",
+    "qindf07",
+    "qindf08",
+    "qindf09",
+    "qindf10",
+    "qindf11",
+    "qindf12",
+    "qindf13",
+    "qindf14",
+    "qindf15",
+    "qindf16"
+  ),
+  `I` = c(
+    "qindf01",
+    "qindf02",
+    "qindf03",
+    "qindf04",
+    "qindf05",
+    "qindf06",
+    "qindf07",
+    "qindf08",
+    "qindf09",
+    "qindf10",
+    "qindf11",
+    "qindf12",
+    "qindf13",
+    "qindf14",
+    "qindf15",
+    "qindf16",
+    "qindf17"
+  ),
+  `J` = c(
+    "qindf01",
+    "qindf02",
+    "qindf03",
+    "qindf04",
+    "qindf05",
+    "qindf06",
+    "qindf07",
+    "qindf08",
+    "qindf09",
+    "qindf10",
+    "qindf11",
+    "qindf12",
+    "qindf13",
+    "qindf14",
+    "qindf15",
+    "qindf16"
+  ),
+  `K` = c(
+    "qindf01",
+    "qindf02",
+    "qindf03",
+    "qindf04",
+    "qindf05",
+    "qindf06",
+    "qindf07",
+    "qindf08",
+    "qindf09",
+    "qindf10",
+    "qindf11",
+    "qindf12",
+    "qindf13",
+    "qindf14",
+    "qindf15",
+    "qindf16"
+  )
+)
+
 variable_labels_list <- list(
-  Wave_F_labels = harmonized_labels[c(
-    "qindf01",
-    "qindf02",
-    "qindf03",
-    "qindf04",
-    "qindf05",
-    "qindf06",
-    "qindf07",
-    "qindf08",
-    "qindf09",
-    "qindf10",
-    "qindf11",
-    "qindf12",
-    "qindf13",
-    "qindf14",
-    "qindf15",
-    "qindf16"
-  )],
-  Wave_G_labels = harmonized_labels[c(
-    "qindf01",
-    "qindf02",
-    "qindf03",
-    "qindf04",
-    "qindf05",
-    "qindf06",
-    "qindf07",
-    "qindf08",
-    "qindf09",
-    "qindf10",
-    "qindf11",
-    "qindf12",
-    "qindf13",
-    "qindf14",
-    "qindf15",
-    "qindf16"
-  )],
-  Wave_H_labels = harmonized_labels[c(
-    "qindf01",
-    "qindf02",
-    "qindf03",
-    "qindf04",
-    "qindf05",
-    "qindf06",
-    "qindf07",
-    "qindf08",
-    "qindf09",
-    "qindf10",
-    "qindf11",
-    "qindf12",
-    "qindf13",
-    "qindf14",
-    "qindf15",
-    "qindf16"
-  )],
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
   Wave_I_labels = harmonized_labels,
-  Wave_J_labels = harmonized_labels[c(
-    "qindf01",
-    "qindf02",
-    "qindf03",
-    "qindf04",
-    "qindf05",
-    "qindf06",
-    "qindf07",
-    "qindf08",
-    "qindf09",
-    "qindf10",
-    "qindf11",
-    "qindf12",
-    "qindf13",
-    "qindf14",
-    "qindf15",
-    "qindf16"
-  )],
-  Wave_K_labels = harmonized_labels[c(
-    "qindf01",
-    "qindf02",
-    "qindf03",
-    "qindf04",
-    "qindf05",
-    "qindf06",
-    "qindf07",
-    "qindf08",
-    "qindf09",
-    "qindf10",
-    "qindf11",
-    "qindf12",
-    "qindf13",
-    "qindf14",
-    "qindf15",
-    "qindf16"
-  )],
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
+)
+
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "strongly disagree",
+  `2` = "disagree",
+  `3` = "no agreement/disagreement",
+  `4` = "agree",
+  `5` = "strongly agree"
 )
 
 standardized_value_labels <- list(
   qindf01 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf02 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf03 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf04 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf05 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf06 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf07 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf08 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf09 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf10 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf11 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf12 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf13 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf14 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf15 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf16 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/disagreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qindf17 = c(`-1` = "not available")
 )
 
 value_labels_list <- list(
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qindf01",
-    "qindf02",
-    "qindf03",
-    "qindf04",
-    "qindf05",
-    "qindf06",
-    "qindf07",
-    "qindf08",
-    "qindf09",
-    "qindf10",
-    "qindf11",
-    "qindf12",
-    "qindf13",
-    "qindf14",
-    "qindf15",
-    "qindf16"
-  )],
+    standardized_value_labels,
     qindf01 = .replace_labels(
     standardized_value_labels$qindf01,
     `-1` = "no answer"
@@ -339,24 +300,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qindf01",
-    "qindf02",
-    "qindf03",
-    "qindf04",
-    "qindf05",
-    "qindf06",
-    "qindf07",
-    "qindf08",
-    "qindf09",
-    "qindf10",
-    "qindf11",
-    "qindf12",
-    "qindf13",
-    "qindf14",
-    "qindf15",
-    "qindf16"
-  )],
+    standardized_value_labels,
     qindf01 = .replace_labels(
     standardized_value_labels$qindf01,
     `-1` = "no answer"
@@ -423,24 +367,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qindf01",
-    "qindf02",
-    "qindf03",
-    "qindf04",
-    "qindf05",
-    "qindf06",
-    "qindf07",
-    "qindf08",
-    "qindf09",
-    "qindf10",
-    "qindf11",
-    "qindf12",
-    "qindf13",
-    "qindf14",
-    "qindf15",
-    "qindf16"
-  )],
+    standardized_value_labels,
     qindf01 = .replace_labels(
     standardized_value_labels$qindf01,
     `-1` = "no answer"
@@ -578,24 +505,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qindf01",
-    "qindf02",
-    "qindf03",
-    "qindf04",
-    "qindf05",
-    "qindf06",
-    "qindf07",
-    "qindf08",
-    "qindf09",
-    "qindf10",
-    "qindf11",
-    "qindf12",
-    "qindf13",
-    "qindf14",
-    "qindf15",
-    "qindf16"
-  )],
+    standardized_value_labels,
     qindf01 = .replace_labels(
     standardized_value_labels$qindf01,
     `-1` = "no answer"
@@ -662,24 +572,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qindf01",
-    "qindf02",
-    "qindf03",
-    "qindf04",
-    "qindf05",
-    "qindf06",
-    "qindf07",
-    "qindf08",
-    "qindf09",
-    "qindf10",
-    "qindf11",
-    "qindf12",
-    "qindf13",
-    "qindf14",
-    "qindf15",
-    "qindf16"
-  )],
+    standardized_value_labels,
     qindf01 = .replace_labels(
     standardized_value_labels$qindf01,
     `-1` = "no answer"
@@ -768,9 +661,12 @@ var_types_vec <- c(
   qindf17 = "numeric"
 )
 
-.lasa_fc_144 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "144", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "144", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "144", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "144", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_144 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

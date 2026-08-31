@@ -40,9 +40,12 @@ harmonized_labels <- c(
   zwolnr = "Numeric field PNUM from file BL2.DBF"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "malbumi",
     "mbse",
     "mcalciu",
@@ -73,27 +76,8 @@ variable_labels_list <- list(
     "mureum",
     "mvitb12",
     "zwolnr"
-  )],
-    malbumi = "Blood: albumine G/L",
-    merytr = "Blood: erythrocyten x(10 power 12)/L",
-    mfolu = "Blood: Foliumacid nMol/L",
-    mfreet4 = "Blood: free T4 pMOL/L",
-    mglucos = "Blood: glucose mMOL/L",
-    mhb = "Blood: haemoglobine mMOL/L",
-    mhdl = "Blood: hdl mMOL/L",
-    mht = "Blood: haematocriet LL",
-    mlab = "Laboratorium analyses",
-    mldl = "Blood: ldl mmol/l",
-    mleuc = "Blood: leucocyten x(10 power 9)/L",
-    mmch = "Blood: multi cellulair haemoglobine a Mol",
-    mmchc = "Blood: multi cellulair haemoglobine concentration mMol/L",
-    mmcv = "Blood: multi cellulair volume FL",
-    mtrigly = "Blood: triglyceriden mMOL/L",
-    mureum = "Blood: ureum mMol/L",
-    mvitb12 = "Blood: Vitamine B12 pMOL/L"
   ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+  `C` = c(
     "malbcon",
     "malbumi",
     "mbse",
@@ -120,18 +104,8 @@ variable_labels_list <- list(
     "mtsh",
     "mureum",
     "mvitb12"
-  )],
-    malbcon = "Blood: albumin converted to BCG method (Adam, Oss)",
-    mfreet4 = "Blood: free T4 pMOL/L",
-    mglucos = "Blood: glucose mMOL/L",
-    mhb = "Blood: haemoglobine mMOL/L",
-    mhdl = "Blood: hdl mMOL/L",
-    mldl = "Blood: ldl mmol/l",
-    mtrigly = "Blood: triglyceriden mMOL/L",
-    mvitb12 = "Blood: Vitamine B12 pMOL/L"
   ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
+  `2B` = c(
     "malbumi",
     "mbse",
     "mcalciu",
@@ -157,7 +131,52 @@ variable_labels_list <- list(
     "mtsh",
     "mureum",
     "mvitb12"
-  )],
+  ),
+  `G` = c(
+    "malbumi",
+    "mcreati",
+    "mglucos",
+    "mtotcho"
+  ),
+  `3B` = c(
+    "mglucos"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
+    malbumi = "Blood: albumine G/L",
+    merytr = "Blood: erythrocyten x(10 power 12)/L",
+    mfolu = "Blood: Foliumacid nMol/L",
+    mfreet4 = "Blood: free T4 pMOL/L",
+    mglucos = "Blood: glucose mMOL/L",
+    mhb = "Blood: haemoglobine mMOL/L",
+    mhdl = "Blood: hdl mMOL/L",
+    mht = "Blood: haematocriet LL",
+    mlab = "Laboratorium analyses",
+    mldl = "Blood: ldl mmol/l",
+    mleuc = "Blood: leucocyten x(10 power 9)/L",
+    mmch = "Blood: multi cellulair haemoglobine a Mol",
+    mmchc = "Blood: multi cellulair haemoglobine concentration mMol/L",
+    mmcv = "Blood: multi cellulair volume FL",
+    mtrigly = "Blood: triglyceriden mMOL/L",
+    mureum = "Blood: ureum mMol/L",
+    mvitb12 = "Blood: Vitamine B12 pMOL/L"
+  ),
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
+    malbcon = "Blood: albumin converted to BCG method (Adam, Oss)",
+    mfreet4 = "Blood: free T4 pMOL/L",
+    mglucos = "Blood: glucose mMOL/L",
+    mhb = "Blood: haemoglobine mMOL/L",
+    mhdl = "Blood: hdl mMOL/L",
+    mldl = "Blood: ldl mmol/l",
+    mtrigly = "Blood: triglyceriden mMOL/L",
+    mvitb12 = "Blood: Vitamine B12 pMOL/L"
+  ),
+  Wave_2B_labels = .replace_labels(
+    harmonized_labels,
     mfolu = "Blood: Foliumacid nMol/L",
     mfreet4 = "Blood: free T4 pMOL/L",
     mglucos = "Blood: glucose mMOL/L",
@@ -168,10 +187,10 @@ variable_labels_list <- list(
     mvitb12 = "Blood: Vitamine B12 pMOL/L"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c("malbumi", "mcreati", "mglucos", "mtotcho")],
+    harmonized_labels,
     mcreati = "Blood: creatinine µMol/L"
   ),
-  Wave_3B_labels = harmonized_labels[c("mglucos")],
+  Wave_3B_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
@@ -291,37 +310,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "malbumi",
-    "mbse",
-    "mcalciu",
-    "mcreati",
-    "mcrp",
-    "merytr",
-    "mferro",
-    "mfolu",
-    "mfreet4",
-    "mgamma",
-    "mglucos",
-    "mhb",
-    "mhdl",
-    "mhdlcho",
-    "mht",
-    "mlab",
-    "mldl",
-    "mleuc",
-    "mmch",
-    "mmchc",
-    "mmcv",
-    "motasat",
-    "mptasat",
-    "mtotcho",
-    "mtotpro",
-    "mtrigly",
-    "mtsh",
-    "mureum",
-    "mvitb12"
-  )],
+    standardized_value_labels,
     malbumi = .replace_labels(
     standardized_value_labels$malbumi,
     `-2` = "Oss regio"
@@ -424,34 +413,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "malbcon",
-    "malbumi",
-    "mbse",
-    "mcalciu",
-    "mcreati",
-    "mcrp",
-    "merytr",
-    "mferro",
-    "mfolu",
-    "mfreet4",
-    "mgamma",
-    "mglucos",
-    "mhb",
-    "mhdl",
-    "mhdlcho",
-    "mht",
-    "mldl",
-    "mleuc",
-    "motasat",
-    "mptasat",
-    "mtotcho",
-    "mtotpro",
-    "mtrigly",
-    "mtsh",
-    "mureum",
-    "mvitb12"
-  )],
+    standardized_value_labels,
     malbumi = .replace_labels(
     standardized_value_labels$malbumi,
     `-2` = "no data, see CMLAB in LASAC850"
@@ -554,33 +516,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "malbumi",
-    "mbse",
-    "mcalciu",
-    "mcreati",
-    "mcrp",
-    "merytr",
-    "mferro",
-    "mfolu",
-    "mfreet4",
-    "mgamma",
-    "mglucos",
-    "mhb",
-    "mhdl",
-    "mhdlcho",
-    "mht",
-    "mldl",
-    "mleuc",
-    "motasat",
-    "mptasat",
-    "mtotcho",
-    "mtotpro",
-    "mtrigly",
-    "mtsh",
-    "mureum",
-    "mvitb12"
-  )],
+    standardized_value_labels,
     malbumi = .replace_labels(
     standardized_value_labels$malbumi,
     `-2` = "no data, not determined"
@@ -683,7 +619,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("malbumi", "mcreati", "mglucos", "mtotcho")],
+    standardized_value_labels,
     malbumi = .replace_labels(
     standardized_value_labels$malbumi,
     `-2` = "no data, not determined"
@@ -702,7 +638,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("mglucos")],
+    standardized_value_labels,
     mglucos = .replace_labels(
     standardized_value_labels$mglucos,
     `-2` = "no data, not determined"
@@ -745,10 +681,15 @@ var_types_vec <- c(
   zwolnr = "text"
 )
 
-.lasa_fc_860 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "860", waves = .lasa_wave_rows()) |>
     .override_label(wave = "B", variable = "zwolnr", override_value = "zwolnr"),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "860", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "860", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "860", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["zwolnr"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+
+.lasa_fc_860 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

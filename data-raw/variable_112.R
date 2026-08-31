@@ -24,152 +24,196 @@ harmonized_labels <- c(
   qaid9 = "Assistance 9: too often appeal"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "qaid1",
+    "qaid2",
+    "qaid3",
+    "qaid4",
+    "qaid5",
+    "qaid6",
+    "qaid7",
+    "qaid8"
+  ),
+  `2B` = c(
+    "qaid1",
+    "qaid2",
+    "qaid3",
+    "qaid4",
+    "qaid5",
+    "qaid6",
+    "qaid7",
+    "qaid8"
+  ),
+  `F` = c(
+    "qaid1",
+    "qaid2",
+    "qaid3",
+    "qaid4",
+    "qaid5",
+    "qaid6",
+    "qaid7",
+    "qaid8"
+  ),
+  `G` = c(
+    "qaid1",
+    "qaid2",
+    "qaid4",
+    "qaid6",
+    "qaid7",
+    "qaid9"
+  ),
+  `H` = c(
+    "qaid1",
+    "qaid2",
+    "qaid4",
+    "qaid6",
+    "qaid7",
+    "qaid9"
+  ),
+  `3B` = c(
+    "qaid1",
+    "qaid2",
+    "qaid4",
+    "qaid6",
+    "qaid7",
+    "qaid9"
+  ),
+  `MB` = c(
+    "maid1",
+    "maid2",
+    "maid4",
+    "maid6",
+    "maid7",
+    "maid9"
+  ),
+  `I` = c(
+    "qaid1",
+    "qaid2",
+    "qaid4",
+    "qaid6",
+    "qaid7",
+    "qaid9"
+  ),
+  `J` = c(
+    "qaid1",
+    "qaid2",
+    "qaid4",
+    "qaid6",
+    "qaid7",
+    "qaid9"
+  ),
+  `K` = c(
+    "qaid1",
+    "qaid2",
+    "qaid4",
+    "qaid6",
+    "qaid7",
+    "qaid9"
+  )
+)
+
 variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels[c("qaid1", "qaid2", "qaid3", "qaid4", "qaid5", "qaid6", "qaid7", "qaid8")],
-  Wave_2B_labels = harmonized_labels[c("qaid1", "qaid2", "qaid3", "qaid4", "qaid5", "qaid6", "qaid7", "qaid8")],
-  Wave_F_labels = harmonized_labels[c("qaid1", "qaid2", "qaid3", "qaid4", "qaid5", "qaid6", "qaid7", "qaid8")],
-  Wave_G_labels = harmonized_labels[c("qaid1", "qaid2", "qaid4", "qaid6", "qaid7", "qaid9")],
-  Wave_H_labels = harmonized_labels[c("qaid1", "qaid2", "qaid4", "qaid6", "qaid7", "qaid9")],
-  Wave_3B_labels = harmonized_labels[c("qaid1", "qaid2", "qaid4", "qaid6", "qaid7", "qaid9")],
-  Wave_MB_labels = harmonized_labels[c("maid1", "maid2", "maid4", "maid6", "maid7", "maid9")],
-  Wave_I_labels = harmonized_labels[c("qaid1", "qaid2", "qaid4", "qaid6", "qaid7", "qaid9")],
-  Wave_J_labels = harmonized_labels[c("qaid1", "qaid2", "qaid4", "qaid6", "qaid7", "qaid9")],
-  Wave_K_labels = harmonized_labels[c("qaid1", "qaid2", "qaid4", "qaid6", "qaid7", "qaid9")],
+  Wave_B_labels = harmonized_labels,
+  Wave_2B_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_3B_labels = harmonized_labels,
+  Wave_MB_labels = harmonized_labels,
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
+)
+
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "strongly disagree",
+  `2` = "disagree",
+  `3` = "neither agree nor disagree",
+  `4` = "agree",
+  `5` = "strongly agree"
 )
 
 standardized_value_labels <- list(
   maid1 = c(
     `-2` = "not available, interview terminated",
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "neither agree nor disagree",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   maid2 = c(
     `-2` = "not available, interview terminated",
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "neither agree nor disagree",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   maid4 = c(
     `-2` = "not available, interview terminated",
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "neither agree nor disagree",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   maid6 = c(
     `-2` = "not available, interview terminated",
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "neither agree nor disagree",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   maid7 = c(
     `-2` = "not available, interview terminated",
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "neither agree nor disagree",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   maid9 = c(
     `-2` = "not available, interview terminated",
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "neither agree nor disagree",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qaid1 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "neither agree nor disagree",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qaid2 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "neither agree nor disagree",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qaid3 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "neither agree nor disagree",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qaid4 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "neither agree nor disagree",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qaid5 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "neither agree nor disagree",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qaid6 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "neither agree nor disagree",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qaid7 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "neither agree nor disagree",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qaid8 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "neither agree nor disagree",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qaid9 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "neither agree nor disagree",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   )
 )
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("qaid1", "qaid2", "qaid3", "qaid4", "qaid5", "qaid6", "qaid7", "qaid8")],
+    standardized_value_labels,
     qaid1 = .replace_labels(
     standardized_value_labels$qaid1,
     `-1` = "no answer",
@@ -212,7 +256,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("qaid1", "qaid2", "qaid3", "qaid4", "qaid5", "qaid6", "qaid7", "qaid8")],
+    standardized_value_labels,
     qaid1 = .replace_labels(
     standardized_value_labels$qaid1,
     `-1` = "no answer",
@@ -255,7 +299,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("qaid1", "qaid2", "qaid3", "qaid4", "qaid5", "qaid6", "qaid7", "qaid8")],
+    standardized_value_labels,
     qaid1 = .replace_labels(
     standardized_value_labels$qaid1,
     `-1` = "no answer",
@@ -298,7 +342,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("qaid1", "qaid2", "qaid4", "qaid6", "qaid7", "qaid9")],
+    standardized_value_labels,
     qaid1 = .replace_labels(
     standardized_value_labels$qaid1,
     `-1` = "na, asked",
@@ -331,7 +375,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("qaid1", "qaid2", "qaid4", "qaid6", "qaid7", "qaid9")],
+    standardized_value_labels,
     qaid1 = .replace_labels(
     standardized_value_labels$qaid1,
     `-1` = "na, asked",
@@ -364,7 +408,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("qaid1", "qaid2", "qaid4", "qaid6", "qaid7", "qaid9")],
+    standardized_value_labels,
     qaid1 = .replace_labels(
     standardized_value_labels$qaid1,
     `-1` = "na, asked",
@@ -397,7 +441,7 @@ value_labels_list <- list(
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c("maid1", "maid2", "maid4", "maid6", "maid7", "maid9")],
+    standardized_value_labels,
     maid1 = .replace_labels(
     standardized_value_labels$maid1,
     `-2` = "na, interview broken off",
@@ -436,7 +480,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("qaid1", "qaid2", "qaid4", "qaid6", "qaid7", "qaid9")],
+    standardized_value_labels,
     qaid1 = .replace_labels(
     standardized_value_labels$qaid1,
     `-1` = "na, asked",
@@ -469,7 +513,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c("qaid1", "qaid2", "qaid4", "qaid6", "qaid7", "qaid9")],
+    standardized_value_labels,
     qaid1 = .replace_labels(
     standardized_value_labels$qaid1,
     `-1` = "na, asked",
@@ -502,7 +546,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c("qaid1", "qaid2", "qaid4", "qaid6", "qaid7", "qaid9")],
+    standardized_value_labels,
     qaid1 = .replace_labels(
     standardized_value_labels$qaid1,
     `-1` = "na, asked",
@@ -555,9 +599,12 @@ var_types_vec <- c(
   qaid9 = "categorical"
 )
 
-.lasa_fc_112 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "112", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "112", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "112", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "112", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_112 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

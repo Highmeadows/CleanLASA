@@ -50,9 +50,12 @@ harmonized_labels <- c(
   mDWrem = "reason no D-word fluency trial"
 )
 
-variable_labels_list <- list(
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `H` = c(
     "mAcor",
     "mAdub",
     "mAnot",
@@ -73,28 +76,8 @@ variable_labels_list <- list(
     "mDWpa_3",
     "mDWpa_4",
     "mDWpa_5"
-  )],
-    mAdub = "number of animals double",
-    mAnot = "fluency animals done?",
-    mAoth = "number of other Animals",
-    mApa_0 = "Animals particularities",
-    mApa_1 = "Animals particularities: others present",
-    mApa_2 = "Animals particularities: auditory handicap",
-    mApa_3 = "Animals particularities: radio or tv noise",
-    mApa_4 = "Animals particularities: interrupted",
-    mApa_5 = "Animals particularities: other reason",
-    mDWdub = "number of D-words double",
-    mDWnot = "fluency D-words done?",
-    mDWoth = "number of other than D-words",
-    mDWpa_0 = "D-words particularities",
-    mDWpa_1 = "D-words particularities: others present",
-    mDWpa_2 = "D-words particularities: auditory handicap",
-    mDWpa_3 = "D-words particularities: radio or tv noise",
-    mDWpa_4 = "D-words particularities: interrupted",
-    mDWpa_5 = "D-words particularities: other reason"
   ),
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
+  `3B` = c(
     "mAcor",
     "mAdub",
     "mAnot",
@@ -115,28 +98,8 @@ variable_labels_list <- list(
     "mDWpa_3",
     "mDWpa_4",
     "mDWpa_5"
-  )],
-    mAdub = "number of animals double",
-    mAnot = "fluency animals done?",
-    mAoth = "number of other Animals",
-    mApa_0 = "Animals particularities",
-    mApa_1 = "Animals particularities: others present",
-    mApa_2 = "Animals particularities: visually handicapped",
-    mApa_3 = "Animals particularities: radio or tv noise",
-    mApa_4 = "Animals particularities: interrupted",
-    mApa_5 = "Animals particularities: other reason",
-    mDWdub = "number of D-words double",
-    mDWnot = "fluency D-words done?",
-    mDWoth = "number of other than D-words",
-    mDWpa_0 = "D-words particularities",
-    mDWpa_1 = "D-words particularities: others present",
-    mDWpa_2 = "D-words particularities: visually handicapped",
-    mDWpa_3 = "D-words particularities: radio or tv noise",
-    mDWpa_4 = "D-words particularities: interrupted",
-    mDWpa_5 = "D-words particularities: other reason"
   ),
-  Wave_MB_labels = .replace_labels(
-    harmonized_labels[c(
+  `MB` = c(
     "Acor",
     "Adub",
     "Anot",
@@ -154,27 +117,8 @@ variable_labels_list <- list(
     "SWpa_5",
     "SWpa_5sp",
     "SWrm"
-  )],
-    Acor = "number of Animals correct",
-    Adub = "number of Animals double",
-    Anot = "fluency Animals done?",
-    Aoth = "number of other Animals",
-    Arm = "fluency: reason no Animals trial",
-    SWcor = "number of Supermarket-words correct",
-    SWdub = "number of Supermarket-words double",
-    SWnot = "fluency Supermarket-words done?",
-    SWoth = "number of other than Supermarket-words",
-    SWpa_0 = "Supermarket words particularities",
-    SWpa_1 = "Supermarket words part.: others present",
-    SWpa_2 = "Supermarket words part.: auditory handicap",
-    SWpa_3 = "Supermarket words part.: radio or tv noise",
-    SWpa_4 = "Supermarket words part.: interrupted",
-    SWpa_5 = "Supermarket words part.: other reason",
-    SWpa_5sp = "specification part.: other reason",
-    SWrm = "fluency: reason no Supermarket-words trial"
   ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
+  `I` = c(
     "mAcor",
     "mAdub",
     "mAnot",
@@ -199,7 +143,118 @@ variable_labels_list <- list(
     "mDWpa_5",
     "mDWpa_5sp",
     "mDWrem"
-  )],
+  ),
+  `J` = c(
+    "mAcor",
+    "mAdub",
+    "mAnot",
+    "mAoth",
+    "mApa_0",
+    "mApa_1",
+    "mApa_2",
+    "mApa_3",
+    "mApa_4",
+    "mApa_5",
+    "mDWcor",
+    "mDWdub",
+    "mDWnot",
+    "mDWoth",
+    "mDWpa_0",
+    "mDWpa_1",
+    "mDWpa_2",
+    "mDWpa_3",
+    "mDWpa_4",
+    "mDWpa_5"
+  ),
+  `K` = c(
+    "mAcor",
+    "mAdub",
+    "mAnot",
+    "mAoth",
+    "mApa_0",
+    "mApa_1",
+    "mApa_2",
+    "mApa_3",
+    "mApa_4",
+    "mApa_5",
+    "mDWcor",
+    "mDWdub",
+    "mDWnot",
+    "mDWoth",
+    "mDWpa_0",
+    "mDWpa_1",
+    "mDWpa_2",
+    "mDWpa_3",
+    "mDWpa_4",
+    "mDWpa_5"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
+    mAdub = "number of animals double",
+    mAnot = "fluency animals done?",
+    mAoth = "number of other Animals",
+    mApa_0 = "Animals particularities",
+    mApa_1 = "Animals particularities: others present",
+    mApa_2 = "Animals particularities: auditory handicap",
+    mApa_3 = "Animals particularities: radio or tv noise",
+    mApa_4 = "Animals particularities: interrupted",
+    mApa_5 = "Animals particularities: other reason",
+    mDWdub = "number of D-words double",
+    mDWnot = "fluency D-words done?",
+    mDWoth = "number of other than D-words",
+    mDWpa_0 = "D-words particularities",
+    mDWpa_1 = "D-words particularities: others present",
+    mDWpa_2 = "D-words particularities: auditory handicap",
+    mDWpa_3 = "D-words particularities: radio or tv noise",
+    mDWpa_4 = "D-words particularities: interrupted",
+    mDWpa_5 = "D-words particularities: other reason"
+  ),
+  Wave_3B_labels = .replace_labels(
+    harmonized_labels,
+    mAdub = "number of animals double",
+    mAnot = "fluency animals done?",
+    mAoth = "number of other Animals",
+    mApa_0 = "Animals particularities",
+    mApa_1 = "Animals particularities: others present",
+    mApa_2 = "Animals particularities: visually handicapped",
+    mApa_3 = "Animals particularities: radio or tv noise",
+    mApa_4 = "Animals particularities: interrupted",
+    mApa_5 = "Animals particularities: other reason",
+    mDWdub = "number of D-words double",
+    mDWnot = "fluency D-words done?",
+    mDWoth = "number of other than D-words",
+    mDWpa_0 = "D-words particularities",
+    mDWpa_1 = "D-words particularities: others present",
+    mDWpa_2 = "D-words particularities: visually handicapped",
+    mDWpa_3 = "D-words particularities: radio or tv noise",
+    mDWpa_4 = "D-words particularities: interrupted",
+    mDWpa_5 = "D-words particularities: other reason"
+  ),
+  Wave_MB_labels = .replace_labels(
+    harmonized_labels,
+    Acor = "number of Animals correct",
+    Adub = "number of Animals double",
+    Anot = "fluency Animals done?",
+    Aoth = "number of other Animals",
+    Arm = "fluency: reason no Animals trial",
+    SWcor = "number of Supermarket-words correct",
+    SWdub = "number of Supermarket-words double",
+    SWnot = "fluency Supermarket-words done?",
+    SWoth = "number of other than Supermarket-words",
+    SWpa_0 = "Supermarket words particularities",
+    SWpa_1 = "Supermarket words part.: others present",
+    SWpa_2 = "Supermarket words part.: auditory handicap",
+    SWpa_3 = "Supermarket words part.: radio or tv noise",
+    SWpa_4 = "Supermarket words part.: interrupted",
+    SWpa_5 = "Supermarket words part.: other reason",
+    SWpa_5sp = "specification part.: other reason",
+    SWrm = "fluency: reason no Supermarket-words trial"
+  ),
+  Wave_I_labels = .replace_labels(
+    harmonized_labels,
     mAdub = "number of animals double",
     mAnot = "fluency animals done?",
     mAoth = "number of other Animals",
@@ -224,28 +279,7 @@ variable_labels_list <- list(
     mDWrem = "fluency: reason no D-words trial"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
-    "mAcor",
-    "mAdub",
-    "mAnot",
-    "mAoth",
-    "mApa_0",
-    "mApa_1",
-    "mApa_2",
-    "mApa_3",
-    "mApa_4",
-    "mApa_5",
-    "mDWcor",
-    "mDWdub",
-    "mDWnot",
-    "mDWoth",
-    "mDWpa_0",
-    "mDWpa_1",
-    "mDWpa_2",
-    "mDWpa_3",
-    "mDWpa_4",
-    "mDWpa_5"
-  )],
+    harmonized_labels,
     mAdub = "number of animals double",
     mAnot = "fluency animals done?",
     mAoth = "number of other Animals",
@@ -266,28 +300,7 @@ variable_labels_list <- list(
     mDWpa_5 = "D-words particularities: other reason"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
-    "mAcor",
-    "mAdub",
-    "mAnot",
-    "mAoth",
-    "mApa_0",
-    "mApa_1",
-    "mApa_2",
-    "mApa_3",
-    "mApa_4",
-    "mApa_5",
-    "mDWcor",
-    "mDWdub",
-    "mDWnot",
-    "mDWoth",
-    "mDWpa_0",
-    "mDWpa_1",
-    "mDWpa_2",
-    "mDWpa_3",
-    "mDWpa_4",
-    "mDWpa_5"
-  )],
+    harmonized_labels,
     mAdub = "number of animals double",
     mAnot = "fluency animals done?",
     mAoth = "number of other Animals",
@@ -310,6 +323,13 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "mentioned"
+)
+
 standardized_value_labels <- list(
   Acor = c(`-1` = "no trial"),
   Adub = c(`-1` = "no trial"),
@@ -321,11 +341,36 @@ standardized_value_labels <- list(
   SWnot = c(`-1` = "missing", `0` = "test not done", `1` = "test done", `2` = "test done, score 0"),
   SWoth = c(`-1` = "no trial"),
   SWpa_0 = c(`-3` = "no test", `0` = "no", `1` = "yes"),
-  SWpa_1 = c(`-3` = "no test", `-2` = "no", `0` = "not mentioned", `1` = "mentioned"),
-  SWpa_2 = c(`-3` = "no test", `-2` = "no", `0` = "not mentioned", `1` = "mentioned"),
-  SWpa_3 = c(`-3` = "no test", `-2` = "no", `0` = "not mentioned", `1` = "mentioned"),
-  SWpa_4 = c(`-3` = "no test", `-2` = "no", `0` = "not mentioned", `1` = "mentioned"),
-  SWpa_5 = c(`-3` = "no test", `-2` = "no", `0` = "not mentioned", `1` = "mentioned"),
+  SWpa_1 = c(
+    `-3` = "no test",
+    `-2` = "no",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  SWpa_2 = c(
+    `-3` = "no test",
+    `-2` = "no",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  SWpa_3 = c(
+    `-3` = "no test",
+    `-2` = "no",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  SWpa_4 = c(
+    `-3` = "no test",
+    `-2` = "no",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  SWpa_5 = c(
+    `-3` = "no test",
+    `-2` = "no",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   SWpa_5sp = stats::setNames(character(0), character(0)),
   SWrm = stats::setNames(character(0), character(0)),
   mAcor = c(`-1` = "no trial"),
@@ -338,11 +383,36 @@ standardized_value_labels <- list(
   ),
   mAoth = c(`-1` = "no trial"),
   mApa_0 = c(`-3` = "no test", `0` = "no", `1` = "yes"),
-  mApa_1 = c(`-3` = "no test", `-2` = "no", `0` = "not mentioned", `1` = "mentioned"),
-  mApa_2 = c(`-3` = "no test", `-2` = "no", `0` = "not mentioned", `1` = "mentioned"),
-  mApa_3 = c(`-3` = "no test", `-2` = "no", `0` = "not mentioned", `1` = "mentioned"),
-  mApa_4 = c(`-3` = "no test", `-2` = "no", `0` = "not mentioned", `1` = "mentioned"),
-  mApa_5 = c(`-3` = "no test", `-2` = "no", `0` = "not mentioned", `1` = "mentioned"),
+  mApa_1 = c(
+    `-3` = "no test",
+    `-2` = "no",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mApa_2 = c(
+    `-3` = "no test",
+    `-2` = "no",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mApa_3 = c(
+    `-3` = "no test",
+    `-2` = "no",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mApa_4 = c(
+    `-3` = "no test",
+    `-2` = "no",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mApa_5 = c(
+    `-3` = "no test",
+    `-2` = "no",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mApa_5sp = stats::setNames(character(0), character(0)),
   mArm = stats::setNames(character(0), character(0)),
   mDWcor = c(`-1` = "no trial"),
@@ -355,39 +425,43 @@ standardized_value_labels <- list(
   ),
   mDWoth = c(`-1` = "no trial"),
   mDWpa_0 = c(`-3` = "no test", `0` = "no", `1` = "yes"),
-  mDWpa_1 = c(`-3` = "no test", `-2` = "no", `0` = "not mentioned", `1` = "mentioned"),
-  mDWpa_2 = c(`-3` = "no test", `-2` = "no", `0` = "not mentioned", `1` = "mentioned"),
-  mDWpa_3 = c(`-3` = "no test", `-2` = "no", `0` = "not mentioned", `1` = "mentioned"),
-  mDWpa_4 = c(`-3` = "no test", `-2` = "no", `0` = "not mentioned", `1` = "mentioned"),
-  mDWpa_5 = c(`-3` = "no test", `-2` = "no", `0` = "not mentioned", `1` = "mentioned"),
+  mDWpa_1 = c(
+    `-3` = "no test",
+    `-2` = "no",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mDWpa_2 = c(
+    `-3` = "no test",
+    `-2` = "no",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mDWpa_3 = c(
+    `-3` = "no test",
+    `-2` = "no",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mDWpa_4 = c(
+    `-3` = "no test",
+    `-2` = "no",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mDWpa_5 = c(
+    `-3` = "no test",
+    `-2` = "no",
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mDWpa_5sp = stats::setNames(character(0), character(0)),
   mDWrem = stats::setNames(character(0), character(0))
 )
 
 value_labels_list <- list(
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mAcor",
-    "mAdub",
-    "mAnot",
-    "mAoth",
-    "mApa_0",
-    "mApa_1",
-    "mApa_2",
-    "mApa_3",
-    "mApa_4",
-    "mApa_5",
-    "mDWcor",
-    "mDWdub",
-    "mDWnot",
-    "mDWoth",
-    "mDWpa_0",
-    "mDWpa_1",
-    "mDWpa_2",
-    "mDWpa_3",
-    "mDWpa_4",
-    "mDWpa_5"
-  )],
+    standardized_value_labels,
     mApa_1 = .replace_labels(
     standardized_value_labels$mApa_1,
     `-2` = "no particularities"
@@ -430,28 +504,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mAcor",
-    "mAdub",
-    "mAnot",
-    "mAoth",
-    "mApa_0",
-    "mApa_1",
-    "mApa_2",
-    "mApa_3",
-    "mApa_4",
-    "mApa_5",
-    "mDWcor",
-    "mDWdub",
-    "mDWnot",
-    "mDWoth",
-    "mDWpa_0",
-    "mDWpa_1",
-    "mDWpa_2",
-    "mDWpa_3",
-    "mDWpa_4",
-    "mDWpa_5"
-  )],
+    standardized_value_labels,
     mApa_1 = .replace_labels(
     standardized_value_labels$mApa_1,
     `-2` = "no particularities"
@@ -494,22 +547,7 @@ value_labels_list <- list(
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "Acor",
-    "Adub",
-    "Anot",
-    "Aoth",
-    "SWcor",
-    "SWdub",
-    "SWnot",
-    "SWoth",
-    "SWpa_0",
-    "SWpa_1",
-    "SWpa_2",
-    "SWpa_3",
-    "SWpa_4",
-    "SWpa_5"
-  )],
+    standardized_value_labels,
     SWpa_1 = .replace_labels(
     standardized_value_labels$SWpa_1,
     `-2` = "no particularities"
@@ -532,28 +570,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mAcor",
-    "mAdub",
-    "mAnot",
-    "mAoth",
-    "mApa_0",
-    "mApa_1",
-    "mApa_2",
-    "mApa_3",
-    "mApa_4",
-    "mApa_5",
-    "mDWcor",
-    "mDWdub",
-    "mDWnot",
-    "mDWoth",
-    "mDWpa_0",
-    "mDWpa_1",
-    "mDWpa_2",
-    "mDWpa_3",
-    "mDWpa_4",
-    "mDWpa_5"
-  )],
+    standardized_value_labels,
     mApa_1 = .replace_labels(
     standardized_value_labels$mApa_1,
     `-2` = "no particularities"
@@ -596,28 +613,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mAcor",
-    "mAdub",
-    "mAnot",
-    "mAoth",
-    "mApa_0",
-    "mApa_1",
-    "mApa_2",
-    "mApa_3",
-    "mApa_4",
-    "mApa_5",
-    "mDWcor",
-    "mDWdub",
-    "mDWnot",
-    "mDWoth",
-    "mDWpa_0",
-    "mDWpa_1",
-    "mDWpa_2",
-    "mDWpa_3",
-    "mDWpa_4",
-    "mDWpa_5"
-  )],
+    standardized_value_labels,
     mApa_1 = .replace_labels(
     standardized_value_labels$mApa_1,
     `-2` = "no particularities"
@@ -660,28 +656,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mAcor",
-    "mAdub",
-    "mAnot",
-    "mAoth",
-    "mApa_0",
-    "mApa_1",
-    "mApa_2",
-    "mApa_3",
-    "mApa_4",
-    "mApa_5",
-    "mDWcor",
-    "mDWdub",
-    "mDWnot",
-    "mDWoth",
-    "mDWpa_0",
-    "mDWpa_1",
-    "mDWpa_2",
-    "mDWpa_3",
-    "mDWpa_4",
-    "mDWpa_5"
-  )],
+    standardized_value_labels,
     mApa_1 = .replace_labels(
     standardized_value_labels$mApa_1,
     `-2` = "no particularities"
@@ -770,9 +745,20 @@ var_types_vec <- c(
   mDWrem = "text"
 )
 
-.lasa_fc_165 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "165", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "165", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "165", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "165", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["Arm"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["SWpa_5sp"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["SWrm"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["mApa_5sp"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["mArm"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["mDWpa_5sp"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["mDWrem"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+
+.lasa_fc_165 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

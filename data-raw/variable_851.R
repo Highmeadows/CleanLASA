@@ -24,8 +24,12 @@ harmonized_labels <- c(
   mbltime = "Time blood sample and questions: hours, minutes"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "mblacltg",
     "mblcc",
     "mblchemo",
@@ -39,24 +43,44 @@ variable_labels_list <- list(
     "mblmealt",
     "mblncomplt",
     "mbltime"
-  )],
+  ),
+  `C` = c(
+    "blage",
+    "bldate"
+  ),
+  `2B` = c(
+    "blage",
+    "bldate"
+  ),
+  `G` = c(
+    "blage",
+    "bldate"
+  ),
+  `3B` = c(
+    "blage",
+    "bldate"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = harmonized_labels,
   Wave_C_labels = .replace_labels(
-    harmonized_labels[c("blage", "bldate")],
+    harmonized_labels,
     blage = "age at blood sampling C-wave",
     bldate = "date of blood sampling C-wave"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c("blage", "bldate")],
+    harmonized_labels,
     blage = "age at blood sampling 2B-wave",
     bldate = "date of blood sampling 2B-wave"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c("blage", "bldate")],
+    harmonized_labels,
     blage = "age at blood sampling G-wave",
     bldate = "date of blood sampling G-wave"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c("blage", "bldate")],
+    harmonized_labels,
     blage = "age at blood sampling 3B-wave",
     bldate = "date of blood sampling 3B-wave"
   ),
@@ -70,7 +94,7 @@ standardized_value_labels <- list(
   mblcc = c(
     `-3` = "no blood, OSS",
     `-2` = "no answer, skipped",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "10cc freezer",
     `2` = "hematology",
     `3` = "chemical"
@@ -79,39 +103,49 @@ standardized_value_labels <- list(
   mblcmplt = c(
     `-3` = "no blood, OSS",
     `-2` = "no answer, skipped",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "complete",
     `2` = "not complete"
   ),
   mbldrinkd = c(
     `-2` = "no answer, skipped",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "today",
     `2` = "yesterday",
     `3` = "day before yesterday"
   ),
   mbldrinkt = c(
     `-2` = "no answer, skipped",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "morning 7-12",
     `2` = "in between 12-13",
     `3` = "afternoon",
     `4` = "evening",
     `5` = "night"
   ),
-  mbldrnk = c(`-2` = "no answer, skipped", `-1` = "no answer, asked", `1` = "no", `2` = "yes"),
-  mblhphl = c(`-2` = "no answer, skipped", `-1` = "no answer, asked", `1` = "no", `2` = "yes"),
+  mbldrnk = c(
+    `-2` = "no answer, skipped",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  mblhphl = c(
+    `-2` = "no answer, skipped",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   mblinsul = stats::setNames(character(0), character(0)),
   mblmeald = c(
     `-2` = "no answer, skipped",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "today",
     `2` = "yesterday",
     `3` = "day before yesterday"
   ),
   mblmealt = c(
     `-2` = "no answer, skipped",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "morning 7-12",
     `2` = "in between 12-13",
     `3` = "afternoon",
@@ -121,7 +155,7 @@ standardized_value_labels <- list(
   mblncomplt = c(
     `-3` = "no blood, OSS",
     `-2` = "no answer, skipped",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "refused",
     `2` = "sick",
     `3` = "fainted",
@@ -136,22 +170,11 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_B_labels = standardized_value_labels[c(
-    "mblcc",
-    "mblcmplt",
-    "mbldrinkd",
-    "mbldrinkt",
-    "mbldrnk",
-    "mblhphl",
-    "mblmeald",
-    "mblmealt",
-    "mblncomplt",
-    "mbltime"
-  )],
-  Wave_C_labels = standardized_value_labels[character(0)],
-  Wave_2B_labels = standardized_value_labels[character(0)],
-  Wave_G_labels = standardized_value_labels[character(0)],
-  Wave_3B_labels = standardized_value_labels[character(0)],
+  Wave_B_labels = standardized_value_labels,
+  Wave_C_labels = standardized_value_labels,
+  Wave_2B_labels = standardized_value_labels,
+  Wave_G_labels = standardized_value_labels,
+  Wave_3B_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -173,7 +196,7 @@ var_types_vec <- c(
   mbltime = "text"
 )
 
-.lasa_fc_851 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "851", waves = .lasa_wave_rows()) |>
     .override_label(wave = "3B", variable = "blage", override_value = "bmblage") |>
     .override_label(wave = "3B", variable = "bldate", override_value = "bmbldate"),
@@ -181,3 +204,18 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "851", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "851", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["mblacltg"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mblchemo"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["mblinsul"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["blage"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["bldate"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["blage"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["bldate"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["blage"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["bldate"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["blage"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["bldate"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+
+.lasa_fc_851 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

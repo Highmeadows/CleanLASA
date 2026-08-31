@@ -33,9 +33,12 @@ harmonized_labels <- c(
   qorh8i = "Oral health 8I: past half year: dry mouth"
 )
 
-variable_labels_list <- list(
-  Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `I` = c(
     "qorh1",
     "qorh2a",
     "qorh2b",
@@ -58,11 +61,36 @@ variable_labels_list <- list(
     "qorh8g",
     "qorh8h",
     "qorh8i"
-  )],
+  ),
+  `J` = c(
+    "qorh1",
+    "qorh2a",
+    "qorh2b",
+    "qorh3",
+    "qorh3d",
+    "qorh7",
+    "qorh8f",
+    "qorh8i"
+  ),
+  `K` = c(
+    "qorh1",
+    "qorh2a",
+    "qorh2b",
+    "qorh3",
+    "qorh3d",
+    "qorh7",
+    "qorh8f",
+    "qorh8i"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_I_labels = .replace_labels(
+    harmonized_labels,
     qorh1 = "Oral health 1: general self-evaluation"
   ),
-  Wave_J_labels = harmonized_labels[c("qorh1", "qorh2a", "qorh2b", "qorh3", "qorh3d", "qorh7", "qorh8f", "qorh8i")],
-  Wave_K_labels = harmonized_labels[c("qorh1", "qorh2a", "qorh2b", "qorh3", "qorh3d", "qorh7", "qorh8f", "qorh8i")],
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
@@ -91,14 +119,14 @@ standardized_value_labels <- list(
     `3` = "no"
   ),
   qorh3c = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "day and night",
     `2` = "always during the day",
     `3` = "occasionally"
   ),
   qorh3d = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "never",
     `2` = "rarely",
@@ -145,8 +173,8 @@ standardized_value_labels <- list(
   qorh8e = c(`-1` = "not available", `1` = "yes", `2` = "no"),
   qorh8f = c(
     `-1` = "not available",
-    `1` = "coding category 1",
-    `2` = "coding category 2",
+    `1` = "label varies by wave",
+    `2` = "label varies by wave",
     `3` = "occasionally",
     `4` = "rather often",
     `5` = "very often"
@@ -155,8 +183,8 @@ standardized_value_labels <- list(
   qorh8h = c(`-1` = "not available", `1` = "yes", `2` = "no"),
   qorh8i = c(
     `-1` = "not available",
-    `1` = "coding category 1",
-    `2` = "coding category 2",
+    `1` = "label varies by wave",
+    `2` = "label varies by wave",
     `3` = "occasionally",
     `4` = "rather often",
     `5` = "very often"
@@ -165,30 +193,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qorh1",
-    "qorh2a",
-    "qorh2b",
-    "qorh3a",
-    "qorh3b",
-    "qorh3c",
-    "qorh4",
-    "qorh5a",
-    "qorh5b",
-    "qorh5c",
-    "qorh6a",
-    "qorh6b",
-    "qorh7",
-    "qorh8a",
-    "qorh8b",
-    "qorh8c",
-    "qorh8d",
-    "qorh8e",
-    "qorh8f",
-    "qorh8g",
-    "qorh8h",
-    "qorh8i"
-  )],
+    standardized_value_labels,
     qorh1 = .replace_labels(
     standardized_value_labels$qorh1,
     `-1` = "no answer"
@@ -274,7 +279,7 @@ value_labels_list <- list(
     qorh8i = c(`-1` = "no answer", `1` = "yes", `2` = "no")
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c("qorh1", "qorh2a", "qorh2b", "qorh3", "qorh3d", "qorh7", "qorh8f", "qorh8i")],
+    standardized_value_labels,
     qorh1 = .replace_labels(
     standardized_value_labels$qorh1,
     `-1` = "no answer"
@@ -314,7 +319,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c("qorh1", "qorh2a", "qorh2b", "qorh3", "qorh3d", "qorh7", "qorh8f", "qorh8i")],
+    standardized_value_labels,
     qorh1 = .replace_labels(
     standardized_value_labels$qorh1,
     `-1` = "no answer"
@@ -383,9 +388,12 @@ var_types_vec <- c(
   qorh8i = "categorical"
 )
 
-.lasa_fc_126 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "126", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "126", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "126", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "126", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_126 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

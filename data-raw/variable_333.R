@@ -12,6 +12,58 @@ harmonized_labels <- c(
   qqulisf = "Physical and mental health (SF-12)"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `D` = c(
+    "qqulims",
+    "qqulips",
+    "qqulisf"
+  ),
+  `E` = c(
+    "qqulims",
+    "qqulips",
+    "qqulisf"
+  ),
+  `F` = c(
+    "qqulims",
+    "qqulips",
+    "qqulisf"
+  ),
+  `G` = c(
+    "qqulims",
+    "qqulips",
+    "qqulisf"
+  ),
+  `H` = c(
+    "qqulims",
+    "qqulips",
+    "qqulisf"
+  ),
+  `3B` = c(
+    "qqulims",
+    "qqulips",
+    "qqulisf"
+  ),
+  `I` = c(
+    "qqulims",
+    "qqulips",
+    "qqulisf"
+  ),
+  `J` = c(
+    "qqulims",
+    "qqulips",
+    "qqulisf"
+  ),
+  `K` = c(
+    "qqulims",
+    "qqulips",
+    "qqulisf"
+  )
+)
+
 variable_labels_list <- list(
   Wave_D_labels = .replace_labels(
     harmonized_labels,
@@ -139,9 +191,12 @@ value_labels_list <- list(
 
 var_types_vec <- c(qqulims = "numeric", qqulips = "numeric", qqulisf = "numeric")
 
-.lasa_fc_333 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "333", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "333", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "333", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "333", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_333 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

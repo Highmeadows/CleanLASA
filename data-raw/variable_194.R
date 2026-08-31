@@ -17,17 +17,47 @@ harmonized_labels <- c(
   msrtnsnote = "hearing: noted score smallband srt test (first test)"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `E` = c(
+    "mhearpv",
+    "mheartd",
+    "mhearup",
+    "mhearwa"
+  ),
+  `F` = c(
+    "mhearpv",
+    "mheartd",
+    "mhearup",
+    "mhearwa"
+  ),
+  `G` = c(
+    "mheartd",
+    "mheartdoth",
+    "mhearup",
+    "mhearwa",
+    "mhearwh",
+    "msrtnbnote",
+    "msrtnsnote"
+  )
+)
+
 variable_labels_list <- list(
-  Wave_E_labels = harmonized_labels[c("mhearpv", "mheartd", "mhearup", "mhearwa")],
-  Wave_F_labels = harmonized_labels[c("mhearpv", "mheartd", "mhearup", "mhearwa")],
-  Wave_G_labels = harmonized_labels[c("mheartd", "mheartdoth", "mhearup", "mhearwa", "mhearwh", "msrtnbnote", "msrtnsnote")],
+  Wave_E_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
 standardized_value_labels <- list(
-  mhearpv = c(`-1` = "na, asked"),
+  mhearpv = c(
+    default_missing_labels[c("-1")]
+  ),
   mheartd = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "test failed",
     `2` = "with very much difficulty",
     `3` = "with a little difficulty",
@@ -38,15 +68,20 @@ standardized_value_labels <- list(
   ),
   mheartdoth = stats::setNames(character(0), character(0)),
   mhearup = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "almost never",
     `2` = "sometimes",
     `3` = "often",
     `4` = "almost always"
   ),
-  mhearwa = c(`-1` = "na, asked", `1` = "none", `2` = "1 hearing aid", `3` = "2 hearing aids"),
+  mhearwa = c(
+    default_missing_labels[c("-1")],
+    `1` = "none",
+    `2` = "1 hearing aid",
+    `3` = "2 hearing aids"
+  ),
   mhearwh = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "I do not have hearing aids",
     `2` = "I do not wear my hearing aids",
     `3` = "<1h",
@@ -54,13 +89,17 @@ standardized_value_labels <- list(
     `5` = "4-8 h",
     `6` = "whole day"
   ),
-  msrtnbnote = c(`-1` = "na, asked"),
-  msrtnsnote = c(`-1` = "na, asked")
+  msrtnbnote = c(
+    default_missing_labels[c("-1")]
+  ),
+  msrtnsnote = c(
+    default_missing_labels[c("-1")]
+  )
 )
 
 value_labels_list <- list(
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("mhearpv", "mheartd", "mhearup", "mhearwa")],
+    standardized_value_labels,
     mheartd = c(
     `-1` = "na, asked",
     `1` = "test failed",
@@ -71,7 +110,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("mhearpv", "mheartd", "mhearup", "mhearwa")],
+    standardized_value_labels,
     mheartd = c(
     `-1` = "na, asked",
     `1` = "test failed",
@@ -81,7 +120,7 @@ value_labels_list <- list(
     `5` = "other: [to be coded]"
   )
   ),
-  Wave_G_labels = standardized_value_labels[c("mheartd", "mhearup", "mhearwa", "mhearwh", "msrtnbnote", "msrtnsnote")],
+  Wave_G_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -96,9 +135,14 @@ var_types_vec <- c(
   msrtnsnote = "numeric"
 )
 
-.lasa_fc_194 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "194", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "194", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "194", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "194", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["mheartdoth"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+
+.lasa_fc_194 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

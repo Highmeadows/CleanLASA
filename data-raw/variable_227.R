@@ -15,14 +15,111 @@ harmonized_labels <- c(
   selfest = "Self-esteem total scale"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "mastery",
+    "rmmas"
+  ),
+  `C` = c(
+    "mastery",
+    "rmmas",
+    "rmself",
+    "selfest"
+  ),
+  `D` = c(
+    "mastery",
+    "mastry7",
+    "rmmas",
+    "rmmas7",
+    "rmself",
+    "selfest"
+  ),
+  `E` = c(
+    "mastery",
+    "mastry7",
+    "rmmas",
+    "rmmas7",
+    "rmself",
+    "selfest"
+  ),
+  `2B` = c(
+    "mastery",
+    "rmmas",
+    "rmself",
+    "selfest"
+  ),
+  `F` = c(
+    "mastery",
+    "mastry7",
+    "rmmas",
+    "rmmas7",
+    "rmself",
+    "selfest"
+  ),
+  `G` = c(
+    "mastery",
+    "mastry7",
+    "rmmas",
+    "rmmas7",
+    "rmself",
+    "selfest"
+  ),
+  `H` = c(
+    "mastery",
+    "mastry7",
+    "rmmas",
+    "rmmas7",
+    "rmself",
+    "selfest"
+  ),
+  `3B` = c(
+    "mastery",
+    "rmmas",
+    "rmself",
+    "selfest"
+  ),
+  `MB` = c(
+    "mastery",
+    "rmmas"
+  ),
+  `I` = c(
+    "mastery",
+    "mastry7",
+    "rmmas",
+    "rmmas7",
+    "rmself",
+    "selfest"
+  ),
+  `J` = c(
+    "mastery",
+    "mastry7",
+    "rmmas",
+    "rmmas7",
+    "rmself",
+    "selfest"
+  ),
+  `K` = c(
+    "mastery",
+    "mastry7",
+    "rmmas",
+    "rmmas7",
+    "rmself",
+    "selfest"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
-    harmonized_labels[c("mastery", "rmmas")],
+    harmonized_labels,
     mastery = "Mastery total scale low-high",
     rmmas = "Reason missing: Mastery"
   ),
   Wave_C_labels = .replace_labels(
-    harmonized_labels[c("mastery", "rmmas", "rmself", "selfest")],
+    harmonized_labels,
     mastery = "Mastery 5-item total scale low-high",
     selfest = "Self-esteem total scale low-high"
   ),
@@ -39,7 +136,7 @@ variable_labels_list <- list(
     selfest = "Self-esteem total scale low-high"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c("mastery", "rmmas", "rmself", "selfest")],
+    harmonized_labels,
     mastery = "Mastery 5-item total scale low-high",
     selfest = "Self-esteem total scale low-high"
   ),
@@ -62,12 +159,12 @@ variable_labels_list <- list(
     selfest = "Self-esteem total scale low-high"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c("mastery", "rmmas", "rmself", "selfest")],
+    harmonized_labels,
     mastery = "Mastery 5-item total scale low-high",
     selfest = "Self-esteem total scale low-high"
   ),
   Wave_MB_labels = .replace_labels(
-    harmonized_labels[c("mastery", "rmmas")],
+    harmonized_labels,
     mastery = "Mastery 5-item total scale low-high"
   ),
   Wave_I_labels = .replace_labels(
@@ -120,7 +217,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("mastery", "rmmas")],
+    standardized_value_labels,
     mastery = .replace_labels(
     standardized_value_labels$mastery,
     `-2` = "na, see BRMMAS"
@@ -133,7 +230,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("mastery", "rmmas", "rmself", "selfest")],
+    standardized_value_labels,
     rmmas = c(
     `-2` = "valid score",
     `1` = "short interview",
@@ -190,7 +287,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("mastery", "rmmas", "rmself", "selfest")],
+    standardized_value_labels,
     rmmas = c(
     `-2` = "valid score",
     `1` = "short interview",
@@ -234,7 +331,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("mastery", "rmmas", "rmself", "selfest")],
+    standardized_value_labels,
     rmmas = .replace_labels(
     standardized_value_labels$rmmas,
     `4` = "refused to answer"
@@ -245,7 +342,7 @@ value_labels_list <- list(
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c("mastery", "rmmas")],
+    standardized_value_labels,
     rmmas = c(
     `-2` = "valid score",
     `1` = "short interview",
@@ -286,9 +383,12 @@ var_types_vec <- c(
   selfest = "numeric"
 )
 
-.lasa_fc_227 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "227", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "227", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "227", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "227", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_227 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

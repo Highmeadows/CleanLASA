@@ -21,6 +21,69 @@ harmonized_labels <- c(
   mvq2 = "different glasses/contacts or change of eyesight in past month"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `E` = c(
+    "mvcm101",
+    "mvcm102",
+    "mvcm103",
+    "mvcm104",
+    "mvcm105",
+    "mvcm106",
+    "mvcm107",
+    "mvcm108",
+    "mvcm109",
+    "mvcm110",
+    "mvq1",
+    "mvq2"
+  ),
+  `F` = c(
+    "mvcm101",
+    "mvcm102",
+    "mvcm103",
+    "mvcm104",
+    "mvcm105",
+    "mvcm106",
+    "mvcm107",
+    "mvcm108",
+    "mvcm109",
+    "mvcm110",
+    "mvq1",
+    "mvq2"
+  ),
+  `G` = c(
+    "mvcm101",
+    "mvcm102",
+    "mvcm103",
+    "mvcm104",
+    "mvcm105",
+    "mvcm106",
+    "mvcm107",
+    "mvcm108",
+    "mvcm109",
+    "mvcm110",
+    "mvq1",
+    "mvq2"
+  ),
+  `H` = c(
+    "mvcm101",
+    "mvcm102",
+    "mvcm103",
+    "mvcm104",
+    "mvcm105",
+    "mvcm106",
+    "mvcm107",
+    "mvcm108",
+    "mvcm109",
+    "mvcm110",
+    "mvq1",
+    "mvq2"
+  )
+)
+
 variable_labels_list <- list(
   Wave_E_labels = harmonized_labels,
   Wave_F_labels = harmonized_labels,
@@ -29,99 +92,69 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "never",
+  `2` = "seldom",
+  `3` = "sometimes",
+  `4` = "reasonably often",
+  `5` = "often",
+  `6` = "very often"
+)
+
 standardized_value_labels <- list(
   mvcm101 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "reasonably often",
-    `5` = "often",
-    `6` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   mvcm102 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "reasonably often",
-    `5` = "often",
-    `6` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   mvcm103 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "reasonably often",
-    `5` = "often",
-    `6` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   mvcm104 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "reasonably often",
-    `5` = "often",
-    `6` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   mvcm105 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "reasonably often",
-    `5` = "often",
-    `6` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   mvcm106 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "reasonably often",
-    `5` = "often",
-    `6` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   mvcm107 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "reasonably often",
-    `5` = "often",
-    `6` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   mvcm108 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "reasonably often",
-    `5` = "often",
-    `6` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   mvcm109 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "reasonably often",
-    `5` = "often",
-    `6` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   mvcm110 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "reasonably often",
-    `5` = "often",
-    `6` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
-  mvq1 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mvq2 = c(`-1` = "na, asked", `1` = "no", `2` = "yes")
+  mvq1 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  mvq2 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  )
 )
 
 value_labels_list <- list(
@@ -147,9 +180,12 @@ var_types_vec <- c(
   mvq2 = "categorical"
 )
 
-.lasa_fc_192 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "192", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "192", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "192", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "192", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_192 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

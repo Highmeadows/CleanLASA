@@ -19,22 +19,89 @@ harmonized_labels <- c(
   mad10 = "AD 10: symptoms starting before 16"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `G` = c(
+    "mad01",
+    "mad02",
+    "mad03",
+    "mad04",
+    "mad05",
+    "mad06",
+    "mad07",
+    "mad08",
+    "mad09",
+    "mad10"
+  )
+)
+
 variable_labels_list <- list(
   Wave_G_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "yes"
+)
+
 standardized_value_labels <- list(
-  mad01 = c(`-1` = "na, asked", `0` = "no", `1` = "yes"),
-  mad02 = c(`-1` = "na, asked", `0` = "no", `1` = "yes"),
-  mad03 = c(`-1` = "na, asked", `0` = "no", `1` = "yes"),
-  mad04 = c(`-1` = "na, asked", `0` = "no", `1` = "yes"),
-  mad05 = c(`-1` = "na, asked", `0` = "no", `1` = "yes"),
-  mad06 = c(`-1` = "na, asked", `0` = "no", `1` = "yes"),
-  mad07 = c(`-1` = "na, asked", `0` = "no", `1` = "yes"),
-  mad08 = c(`-1` = "na, asked", `0` = "no", `1` = "yes"),
-  mad09 = c(`-1` = "na, asked", `0` = "no", `1` = "yes"),
-  mad10 = c(`-2` = "no symptoms mentioned", `-1` = "na, asked", `0` = "no", `1` = "yes")
+  mad01 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  mad02 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  mad03 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  mad04 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  mad05 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  mad06 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  mad07 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  mad08 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  mad09 = c(
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  ),
+  mad10 = c(
+    `-2` = "no symptoms mentioned",
+    default_missing_labels[c("-1")],
+    `0` = "no",
+    default_answer_labels[c("1")]
+  )
 )
 
 value_labels_list <- list(
@@ -55,9 +122,12 @@ var_types_vec <- c(
   mad10 = "categorical"
 )
 
-.lasa_fc_179 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "179", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "179", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "179", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "179", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_179 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

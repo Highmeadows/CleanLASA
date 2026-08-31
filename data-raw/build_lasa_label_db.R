@@ -84,20 +84,45 @@ for (fc in names(fc_objects)) {
   all_row <- which(vt$LASA_Wave == "all")
   real_rows <- which(vt$LASA_Wave != "all")
 
-  # A canonical name whose harmonized/"all" value-label vector contains a
-  # placeholder label (its per-code meaning differs by wave, so no real
-  # cross-wave label could be written) gets no harmonized value labels at
-  # all, and is reclassified "text" so apply_lasa_labels() represents it
-  # as wave-specific label text instead of numeric/factor -- the numeric
-  # codes themselves aren't comparable across waves, but the label text
-  # they resolve to still is (e.g. 0=no/1=yes vs. 1=no/2=yes).
-  placeholder_cns <- character(0)
+  # A harmonized value label can be a human-authored placeholder ("label
+  # varies by wave") when a code's real-world meaning differs by wave and
+  # no single cross-wave label could be written. Two kinds, resolved per
+  # code, not per variable:
+  #  - a placeholder on one of the four near-universal missing-reason
+  #    codes (-1..-4) is backfilled from default_missing_labels -- these
+  #    almost always share one meaning across waves even when a
+  #    variable's answer categories don't, so there's no reason to drop
+  #    them too.
+  #  - a placeholder on any other code (a genuinely inconsistent answer/
+  #    substantive category, or -5 and beyond) is dropped from that one
+  #    code only; it's never backfilled, since there's no shared meaning
+  #    to fall back to.
+  # Either way, an unresolved (non-backfillable) placeholder means the
+  # variable's numeric codes aren't comparable across waves, so the whole
+  # variable is reclassified var_type "text" below (apply_lasa_labels()
+  # then represents it as wave-specific label text instead of numeric/
+  # factor) -- but its *other*, still-consistent codes (very often
+  # exactly the missing-reason codes) keep their harmonized label rather
+  # than being dropped along with it.
+  placeholder_cns <- character(0) # canonical names downgraded to var_type "text"
+  harmonized_vec <- list() # cn -> harmonized vector after backfill/pruning, replaces vv[[cn]][[all_row]]
   for (cn in canonical_cols) {
     vec <- vv[[cn]][[all_row]]
     if (is.null(vec) || length(vec) == 0L) next
-    if (any(label_env$.lasa_is_placeholder_category_label(unname(vec)))) {
-      placeholder_cns <- c(placeholder_cns, cn)
+    is_placeholder <- label_env$.lasa_is_placeholder_category_label(unname(vec))
+    if (!any(is_placeholder)) {
+      harmonized_vec[[cn]] <- vec
+      next
     }
+    backfillable <- is_placeholder & names(vec) %in% names(label_env$default_missing_labels)
+    vec[backfillable] <- label_env$default_missing_labels[names(vec)[backfillable]]
+    unresolved <- is_placeholder & !backfillable
+    # var_type only downgrades to "text" for an *unresolved* placeholder
+    # -- one fully backfilled from default_missing_labels leaves nothing
+    # inconsistent behind, so the variable keeps its authored var_type.
+    if (any(unresolved)) placeholder_cns <- c(placeholder_cns, cn)
+    vec <- vec[!unresolved]
+    if (length(vec) > 0L) harmonized_vec[[cn]] <- vec
   }
   n_placeholder_total <- n_placeholder_total + length(placeholder_cns)
 
@@ -150,10 +175,13 @@ for (fc in names(fc_objects)) {
   value_labels_list[[fc]] <- if (length(vl_rows) > 0L) do.call(rbind, vl_rows) else NULL
 
   # --- value_labels_harmonized: one row per (canonical_name, code), from the "all" row ---
+  # Uses harmonized_vec (backfilled/pruned above), not vv[[cn]][[all_row]]
+  # directly, so a placeholder-tainted variable still documents its
+  # still-consistent codes -- only the unresolved placeholder code itself
+  # is missing.
   hz_rows <- list()
   for (cn in canonical_cols) {
-    if (cn %in% placeholder_cns) next
-    vec <- vv[[cn]][[all_row]]
+    vec <- harmonized_vec[[cn]]
     if (is.null(vec) || length(vec) == 0L) next
     codes <- suppressWarnings(as.numeric(names(vec)))
     hz_rows[[length(hz_rows) + 1L]] <- data.frame(

@@ -22,9 +22,12 @@ harmonized_labels <- c(
   tpyechp = "Year change partner status"
 )
 
-variable_labels_list <- list(
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
     "tphinde",
     "tpmarst",
     "tpmochh",
@@ -35,7 +38,112 @@ variable_labels_list <- list(
     "tpyechh",
     "tpyechm",
     "tpyechp"
-  )],
+  ),
+  `D` = c(
+    "tphinde",
+    "tpmarst",
+    "tpmochh",
+    "tpmochm",
+    "tpmochp",
+    "tpnuper",
+    "tppartn",
+    "tpyechh",
+    "tpyechm",
+    "tpyechp"
+  ),
+  `E` = c(
+    "tphinde",
+    "tpmarst",
+    "tpmochh",
+    "tpmochm",
+    "tpmochp",
+    "tpnuper",
+    "tppartn",
+    "tpyechh",
+    "tpyechm",
+    "tpyechp"
+  ),
+  `F` = c(
+    "tphinde",
+    "tpmarst",
+    "tpmochh",
+    "tpmochm",
+    "tpmochp",
+    "tpnuper",
+    "tppartn",
+    "tpyechh",
+    "tpyechm",
+    "tpyechp"
+  ),
+  `G` = c(
+    "tphinde",
+    "tpmarst",
+    "tpmochh",
+    "tpmochm",
+    "tpmochp",
+    "tpnuper",
+    "tppartn",
+    "tpyechh",
+    "tpyechm",
+    "tpyechp"
+  ),
+  `H` = c(
+    "tphinde",
+    "tpmarst",
+    "tpmochm",
+    "tpmochp",
+    "tpmoved",
+    "tpmovmo",
+    "tpmovye",
+    "tpnuper",
+    "tppartn",
+    "tpyechm",
+    "tpyechp"
+  ),
+  `I` = c(
+    "tphinde",
+    "tpmarst",
+    "tpmochm",
+    "tpmochp",
+    "tpmoved",
+    "tpmovmo",
+    "tpmovye",
+    "tpnuper",
+    "tppartn",
+    "tpyechm",
+    "tpyechp"
+  ),
+  `J` = c(
+    "tphinde",
+    "tpmarst",
+    "tpmochm",
+    "tpmochp",
+    "tpmoved",
+    "tpmovmo",
+    "tpmovye",
+    "tpnuper",
+    "tppartn",
+    "tpyechm",
+    "tpyechp"
+  ),
+  `K` = c(
+    "tphinde",
+    "tpmarst",
+    "tpmochm",
+    "tpmochp",
+    "tpmoved",
+    "tpmovmo",
+    "tpmovye",
+    "tpnuper",
+    "tppartn",
+    "tpyechm",
+    "tpyechp"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
     tphinde = "type of housing",
     tpmarst = "marital status",
     tpmochh = "month change type of housing",
@@ -47,123 +155,31 @@ variable_labels_list <- list(
     tpyechp = "year change partner status"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochh",
-    "tpmochm",
-    "tpmochp",
-    "tpnuper",
-    "tppartn",
-    "tpyechh",
-    "tpyechm",
-    "tpyechp"
-  )],
+    harmonized_labels,
     tpnuper = "Number of other persons in household (partner excluded)"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochh",
-    "tpmochm",
-    "tpmochp",
-    "tpnuper",
-    "tppartn",
-    "tpyechh",
-    "tpyechm",
-    "tpyechp"
-  )],
+    harmonized_labels,
     tpnuper = "Number of other persons in household (partner excluded)"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochh",
-    "tpmochm",
-    "tpmochp",
-    "tpnuper",
-    "tppartn",
-    "tpyechh",
-    "tpyechm",
-    "tpyechp"
-  )],
+    harmonized_labels,
     tpnuper = "Number of other persons in household (partner excluded)"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochh",
-    "tpmochm",
-    "tpmochp",
-    "tpnuper",
-    "tppartn",
-    "tpyechh",
-    "tpyechm",
-    "tpyechp"
-  )],
+    harmonized_labels,
     tpnuper = "Number of other persons in household (partner excluded)"
   ),
-  Wave_H_labels = harmonized_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochm",
-    "tpmochp",
-    "tpmoved",
-    "tpmovmo",
-    "tpmovye",
-    "tpnuper",
-    "tppartn",
-    "tpyechm",
-    "tpyechp"
-  )],
-  Wave_I_labels = harmonized_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochm",
-    "tpmochp",
-    "tpmoved",
-    "tpmovmo",
-    "tpmovye",
-    "tpnuper",
-    "tppartn",
-    "tpyechm",
-    "tpyechp"
-  )],
-  Wave_J_labels = harmonized_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochm",
-    "tpmochp",
-    "tpmoved",
-    "tpmovmo",
-    "tpmovye",
-    "tpnuper",
-    "tppartn",
-    "tpyechm",
-    "tpyechp"
-  )],
-  Wave_K_labels = harmonized_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochm",
-    "tpmochp",
-    "tpmoved",
-    "tpmovmo",
-    "tpmovye",
-    "tpnuper",
-    "tppartn",
-    "tpyechm",
-    "tpyechp"
-  )],
+  Wave_H_labels = harmonized_labels,
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
 standardized_value_labels <- list(
   tphinde = c(
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "independent",
     `2` = "residential home",
     `3` = "nursing home-somatic",
@@ -172,7 +188,7 @@ standardized_value_labels <- list(
     `6` = "psychiatric hospital"
   ),
   tpmarst = c(
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "never married",
     `2` = "married",
     `3` = "divorced",
@@ -181,7 +197,7 @@ standardized_value_labels <- list(
   ),
   tpmochh = c(
     `-2` = "not changed",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -198,7 +214,7 @@ standardized_value_labels <- list(
   tpmochm = c(
     `-3` = "no answer, see TPMARST",
     `-2` = "not changed",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -215,7 +231,7 @@ standardized_value_labels <- list(
   tpmochp = c(
     `-3` = "no answer, see TPPARTN",
     `-2` = "not changed",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -229,10 +245,15 @@ standardized_value_labels <- list(
     `11` = "November",
     `12` = "December"
   ),
-  tpmoved = c(`-1` = "asked, no answer", `1` = "no", `2` = "yes", `3` = "proxy does not know"),
+  tpmoved = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes",
+    `3` = "proxy does not know"
+  ),
   tpmovmo = c(
     `-2` = "not moved",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -246,34 +267,40 @@ standardized_value_labels <- list(
     `11` = "November",
     `12` = "December"
   ),
-  tpmovye = c(`-2` = "not moved", `-1` = "asked, no answer"),
-  tpnuper = c(`-2` = "R not independent", `-1` = "asked, no answer"),
+  tpmovye = c(
+    `-2` = "not moved",
+    default_missing_labels[c("-1")]
+  ),
+  tpnuper = c(
+    `-2` = "R not independent",
+    default_missing_labels[c("-1")]
+  ),
   tppartn = c(
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "not living with partner",
     `2` = "partner, married",
     `3` = "partner, not married",
     `4` = "partner, outside household"
   ),
-  tpyechh = c(`-2` = "not changed", `-1` = "asked, no answer"),
-  tpyechm = c(`-3` = "no answer, see TPMARST", `-2` = "not changed", `-1` = "asked, no answer"),
-  tpyechp = c(`-3` = "no answer, see TPPARTN", `-2` = "not changed", `-1` = "asked, no answer")
+  tpyechh = c(
+    `-2` = "not changed",
+    default_missing_labels[c("-1")]
+  ),
+  tpyechm = c(
+    `-3` = "no answer, see TPMARST",
+    `-2` = "not changed",
+    default_missing_labels[c("-1")]
+  ),
+  tpyechp = c(
+    `-3` = "no answer, see TPPARTN",
+    `-2` = "not changed",
+    default_missing_labels[c("-1")]
+  )
 )
 
 value_labels_list <- list(
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochh",
-    "tpmochm",
-    "tpmochp",
-    "tpnuper",
-    "tppartn",
-    "tpyechh",
-    "tpyechm",
-    "tpyechp"
-  )],
+    standardized_value_labels,
     tpmarst = c(
     `-1` = "asked, no answer",
     `1` = "never married",
@@ -305,18 +332,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochh",
-    "tpmochm",
-    "tpmochp",
-    "tpnuper",
-    "tppartn",
-    "tpyechh",
-    "tpyechm",
-    "tpyechp"
-  )],
+    standardized_value_labels,
     tpmarst = c(
     `-1` = "asked, no answer",
     `1` = "never married",
@@ -346,18 +362,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochh",
-    "tpmochm",
-    "tpmochp",
-    "tpnuper",
-    "tppartn",
-    "tpyechh",
-    "tpyechm",
-    "tpyechp"
-  )],
+    standardized_value_labels,
     tpmarst = c(
     `-1` = "asked, no answer",
     `1` = "never married",
@@ -387,18 +392,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochh",
-    "tpmochm",
-    "tpmochp",
-    "tpnuper",
-    "tppartn",
-    "tpyechh",
-    "tpyechm",
-    "tpyechp"
-  )],
+    standardized_value_labels,
     tpmarst = c(
     `-1` = "asked, no answer",
     `1` = "never married",
@@ -428,18 +422,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochh",
-    "tpmochm",
-    "tpmochp",
-    "tpnuper",
-    "tppartn",
-    "tpyechh",
-    "tpyechm",
-    "tpyechp"
-  )],
+    standardized_value_labels,
     tpmochm = .replace_labels(
     standardized_value_labels$tpmochm,
     `-3` = "no answer D/E/F/GTPMARST"
@@ -462,19 +445,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochm",
-    "tpmochp",
-    "tpmoved",
-    "tpmovmo",
-    "tpmovye",
-    "tpnuper",
-    "tppartn",
-    "tpyechm",
-    "tpyechp"
-  )],
+    standardized_value_labels,
     tpmochm = c(
     `-2` = "not changed",
     `-1` = "asked no answer",
@@ -523,19 +494,7 @@ value_labels_list <- list(
     tpyechp = c(`-2` = "not changed", `-1` = "asked no answer")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochm",
-    "tpmochp",
-    "tpmoved",
-    "tpmovmo",
-    "tpmovye",
-    "tpnuper",
-    "tppartn",
-    "tpyechm",
-    "tpyechp"
-  )],
+    standardized_value_labels,
     tpmochm = c(
     `-2` = "not changed",
     `-1` = "asked no answer",
@@ -584,19 +543,7 @@ value_labels_list <- list(
     tpyechp = c(`-2` = "not changed", `-1` = "asked no answer")
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochm",
-    "tpmochp",
-    "tpmoved",
-    "tpmovmo",
-    "tpmovye",
-    "tpnuper",
-    "tppartn",
-    "tpyechm",
-    "tpyechp"
-  )],
+    standardized_value_labels,
     tpmochm = c(
     `-2` = "not changed",
     `-1` = "asked no answer",
@@ -645,19 +592,7 @@ value_labels_list <- list(
     tpyechp = c(`-2` = "not changed", `-1` = "asked no answer")
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tphinde",
-    "tpmarst",
-    "tpmochm",
-    "tpmochp",
-    "tpmoved",
-    "tpmovmo",
-    "tpmovye",
-    "tpnuper",
-    "tppartn",
-    "tpyechm",
-    "tpyechp"
-  )],
+    standardized_value_labels,
     tpmarst = c(
     `1` = "never married",
     `2` = "married",
@@ -731,9 +666,12 @@ var_types_vec <- c(
   tpyechp = "date"
 )
 
-.lasa_fc_601 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "601", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "601", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "601", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "601", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_601 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

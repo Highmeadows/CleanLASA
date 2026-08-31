@@ -21,9 +21,33 @@ harmonized_labels <- c(
   qdona8 = "decision about organ donation"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `I` = c(
+    "qdona1",
+    "qdona2",
+    "qdona3",
+    "qdona4",
+    "qdona5",
+    "qdona6",
+    "qdona7",
+    "qdona8"
+  ),
+  `J` = c(
+    "qdona1",
+    "qdona1_2",
+    "qdona1_3",
+    "qdona1_4",
+    "qdona1_5"
+  )
+)
+
 variable_labels_list <- list(
-  Wave_I_labels = harmonized_labels[c("qdona1", "qdona2", "qdona3", "qdona4", "qdona5", "qdona6", "qdona7", "qdona8")],
-  Wave_J_labels = harmonized_labels[c("qdona1", "qdona1_2", "qdona1_3", "qdona1_4", "qdona1_5")],
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
@@ -31,7 +55,7 @@ standardized_value_labels <- list(
   qdona1 = c(`-1` = "not available", `1` = "yes, blood", `2` = "yes, plasma", `3` = "no"),
   qdona1_2 = c(`-1` = "not available", `1` = "yes", `2` = "no", `3` = "do not know"),
   qdona1_3 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "I do not make my organs available",
     `2` = "I make all my organs available",
@@ -39,9 +63,14 @@ standardized_value_labels <- list(
     `4` = "I leave the choice to my next of kin",
     `5` = "I do not know / do not want to say it"
   ),
-  qdona1_4 = c(`-2` = "not available, routing", `-1` = "not available", `1` = "yes", `2` = "no"),
+  qdona1_4 = c(
+    default_missing_labels[c("-2")],
+    `-1` = "not available",
+    `1` = "yes",
+    `2` = "no"
+  ),
   qdona1_5 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "I do not make my organs available",
     `2` = "I make all my organs available",
@@ -49,10 +78,18 @@ standardized_value_labels <- list(
     `4` = "I leave the choice to my next of kin",
     `5` = "I do not know / do not want to say it"
   ),
-  qdona2 = c(`-2` = "not available, routing", `1` = "yes, blood", `2` = "yes, plasma", `3` = "no"),
-  qdona3 = c(`-2` = "not available, routing", `-1` = "not available"),
+  qdona2 = c(
+    default_missing_labels[c("-2")],
+    `1` = "yes, blood",
+    `2` = "yes, plasma",
+    `3` = "no"
+  ),
+  qdona3 = c(
+    default_missing_labels[c("-2")],
+    `-1` = "not available"
+  ),
   qdona4 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "disapproved based on age",
     `2` = "disapproved for health reasons",
@@ -60,9 +97,12 @@ standardized_value_labels <- list(
     `4` = "not interested anymore",
     `5` = "other reason"
   ),
-  qdona5 = c(`-2` = "not available, routing", `-1` = "not available"),
+  qdona5 = c(
+    default_missing_labels[c("-2")],
+    `-1` = "not available"
+  ),
   qdona6 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "more than once a month",
     `2` = "once a month",
@@ -73,7 +113,7 @@ standardized_value_labels <- list(
   ),
   qdona7 = c(`-1` = "not available", `1` = "yes", `2` = "no", `3` = "R does not know anymore"),
   qdona8 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available",
     `1` = "I do not make my organs available",
     `2` = "I make all my organs available",
@@ -85,7 +125,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("qdona1", "qdona2", "qdona3", "qdona4", "qdona5", "qdona6", "qdona7", "qdona8")],
+    standardized_value_labels,
     qdona1 = .replace_labels(
     standardized_value_labels$qdona1,
     `-1` = "na, asked"
@@ -125,7 +165,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c("qdona1", "qdona1_2", "qdona1_3", "qdona1_4", "qdona1_5")],
+    standardized_value_labels,
     qdona1 = .replace_labels(
     standardized_value_labels$qdona1,
     `-1` = "na, asked"
@@ -168,9 +208,12 @@ var_types_vec <- c(
   qdona8 = "categorical"
 )
 
-.lasa_fc_128 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "128", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "128", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "128", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "128", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_128 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -20,27 +20,126 @@ harmonized_labels <- c(
   mwvg11 = "WVG 11: Grocery shopping service"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `G` = c(
+    "mwvg01",
+    "mwvg02",
+    "mwvg03",
+    "mwvg04",
+    "mwvg05",
+    "mwvg06",
+    "mwvg07",
+    "mwvg08",
+    "mwvg09",
+    "mwvg10",
+    "mwvg11"
+  ),
+  `H` = c(
+    "mwvg01",
+    "mwvg02",
+    "mwvg03",
+    "mwvg04",
+    "mwvg05",
+    "mwvg06",
+    "mwvg07",
+    "mwvg08",
+    "mwvg09",
+    "mwvg10",
+    "mwvg11"
+  ),
+  `I` = c(
+    "mwvg01",
+    "mwvg02",
+    "mwvg03",
+    "mwvg05",
+    "mwvg06",
+    "mwvg07",
+    "mwvg11"
+  ),
+  `J` = c(
+    "mwvg01",
+    "mwvg02",
+    "mwvg03",
+    "mwvg05",
+    "mwvg06",
+    "mwvg07"
+  ),
+  `K` = c(
+    "mwvg02",
+    "mwvg03",
+    "mwvg05",
+    "mwvg06",
+    "mwvg07"
+  )
+)
+
 variable_labels_list <- list(
   Wave_G_labels = harmonized_labels,
   Wave_H_labels = harmonized_labels,
-  Wave_I_labels = harmonized_labels[c("mwvg01", "mwvg02", "mwvg03", "mwvg05", "mwvg06", "mwvg07", "mwvg11")],
-  Wave_J_labels = harmonized_labels[c("mwvg01", "mwvg02", "mwvg03", "mwvg05", "mwvg06", "mwvg07")],
-  Wave_K_labels = harmonized_labels[c("mwvg02", "mwvg03", "mwvg05", "mwvg06", "mwvg07")],
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "no",
+  `2` = "yes",
+  `3` = "no"
+)
+
 standardized_value_labels <- list(
-  mwvg01 = c(`-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "no"),
-  mwvg02 = c(`-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "no"),
-  mwvg03 = c(`-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "no"),
-  mwvg04 = c(`-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "no"),
-  mwvg05 = c(`-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "no"),
-  mwvg06 = c(`-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "no"),
-  mwvg07 = c(`-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "no"),
-  mwvg08 = c(`-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "no"),
-  mwvg09 = c(`-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "no"),
-  mwvg10 = c(`-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "no"),
-  mwvg11 = c(`-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "no")
+  mwvg01 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  mwvg02 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  mwvg03 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  mwvg04 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  mwvg05 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  mwvg06 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  mwvg07 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  mwvg08 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  mwvg09 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  mwvg10 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  mwvg11 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  )
 )
 
 value_labels_list <- list(
@@ -117,7 +216,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("mwvg01", "mwvg02", "mwvg03", "mwvg05", "mwvg06", "mwvg07", "mwvg11")],
+    standardized_value_labels,
     mwvg01 = .replace_labels(
     standardized_value_labels$mwvg01,
     `1` = "own and use",
@@ -155,7 +254,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c("mwvg01", "mwvg02", "mwvg03", "mwvg05", "mwvg06", "mwvg07")],
+    standardized_value_labels,
     mwvg01 = .replace_labels(
     standardized_value_labels$mwvg01,
     `1` = "own and use",
@@ -188,7 +287,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c("mwvg02", "mwvg03", "mwvg05", "mwvg06", "mwvg07")],
+    standardized_value_labels,
     mwvg02 = .replace_labels(
     standardized_value_labels$mwvg02,
     `1` = "own and use",
@@ -232,9 +331,12 @@ var_types_vec <- c(
   mwvg11 = "categorical"
 )
 
-.lasa_fc_177 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "177", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "177", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "177", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "177", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_177 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

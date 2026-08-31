@@ -19,13 +19,50 @@ harmonized_labels <- c(
   nrecs048 = "Number of children (medical interview)"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `E` = c(
+    "data048"
+  ),
+  `2B` = c(
+    "048stat",
+    "ch_aliv",
+    "child",
+    "choth",
+    "chown",
+    "chstep",
+    "nc_volu",
+    "nchild"
+  ),
+  `F` = c(
+    "data048"
+  ),
+  `3B` = c(
+    "048stat",
+    "ch_aliv",
+    "child",
+    "choth",
+    "chown",
+    "chstep",
+    "nc_volu",
+    "nchild"
+  ),
+  `MB` = c(
+    "nchild",
+    "nrecs048"
+  )
+)
+
 variable_labels_list <- list(
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c("data048")],
+    harmonized_labels,
     data048 = "availability data 048"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c("048stat", "ch_aliv", "child", "choth", "chown", "chstep", "nc_volu", "nchild")],
+    harmonized_labels,
     `048stat` = "status data collected b048",
     ch_aliv = "number of children alive",
     child = "parental status (based on b048)",
@@ -36,11 +73,11 @@ variable_labels_list <- list(
     nchild = "number of children"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c("data048")],
+    harmonized_labels,
     data048 = "availability data 048"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c("048stat", "ch_aliv", "child", "choth", "chown", "chstep", "nc_volu", "nchild")],
+    harmonized_labels,
     `048stat` = "status data collected b048",
     ch_aliv = "number of children alive (biological, step, adoptive, foster)",
     child = "parental status (based on b048)",
@@ -51,7 +88,7 @@ variable_labels_list <- list(
     nchild = "number of children ever (biological, step, adoptive, foster)"
   ),
   Wave_MB_labels = .replace_labels(
-    harmonized_labels[c("nchild", "nrecs048")],
+    harmonized_labels,
     nchild = "number of children (questions in demographic part f-t-f interview)",
     nrecs048 = "number of children (questions in medical interview)"
   ),
@@ -70,7 +107,7 @@ standardized_value_labels <- list(
     `5` = "children in b048, incomplete: refusal questions on stepchildren"
   ),
   ch_aliv = c(
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = NA_character_,
     `4` = NA_character_,
     `6` = NA_character_,
@@ -127,7 +164,7 @@ standardized_value_labels <- list(
   nc_volu = c(
     `-3` = "not childless (answer)",
     `-2` = "not childless / not asked",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "choice",
     `2` = "no suitable partner available",
     `3` = "inadequate life circumstances",
@@ -137,7 +174,7 @@ standardized_value_labels <- list(
   ),
   nchild = c(
     `-3` = "skip questions children",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = NA_character_,
     `1` = NA_character_,
     `4` = NA_character_,
@@ -147,7 +184,7 @@ standardized_value_labels <- list(
   ),
   nrecs048 = c(
     `-2` = "questions 048 not asked",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = NA_character_,
     `1` = NA_character_,
     `13` = NA_character_
@@ -156,7 +193,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("data048")],
+    standardized_value_labels,
     data048 = c(
     `-5` = "all children died",
     `-4` = "no children",
@@ -167,7 +204,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("048stat", "ch_aliv", "child", "choth", "chown", "chstep", "nc_volu", "nchild")],
+    standardized_value_labels,
     `048stat` = c(
     `-3` = "terminated",
     `-2` = "refusal",
@@ -218,7 +255,7 @@ value_labels_list <- list(
     nchild = c(`0` = NA_character_, `4` = NA_character_, `6` = NA_character_, `10` = NA_character_)
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("data048")],
+    standardized_value_labels,
     data048 = c(
     `-3` = "terminated interview",
     `-2` = "short version",
@@ -230,7 +267,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("048stat", "ch_aliv", "child", "choth", "chown", "chstep", "nc_volu", "nchild")],
+    standardized_value_labels,
     `048stat` = c(
     `-3` = "interview terminated",
     `-2` = "refusal on question about number of children",
@@ -276,7 +313,7 @@ value_labels_list <- list(
     nchild = c(`-1` = "no answer")
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c("nchild", "nrecs048")],
+    standardized_value_labels,
     nchild = c(
     `-3` = "skip questions children",
     `-1` = "no answer question no/yes children",
@@ -301,9 +338,12 @@ var_types_vec <- c(
   nrecs048 = "numeric"
 )
 
-.lasa_fc_248 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "248", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "248", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "248", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "248", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_248 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

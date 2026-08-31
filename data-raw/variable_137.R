@@ -28,9 +28,33 @@ harmonized_labels <- c(
   qvall19 = "Value of late life 19: few aims"
 )
 
-variable_labels_list <- list(
-  Wave_E_labels = harmonized_labels,
-  Wave_F_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `E` = c(
+    "qvall01",
+    "qvall02",
+    "qvall03",
+    "qvall04",
+    "qvall05",
+    "qvall06",
+    "qvall07",
+    "qvall08",
+    "qvall09",
+    "qvall10",
+    "qvall11",
+    "qvall12",
+    "qvall13",
+    "qvall14",
+    "qvall15",
+    "qvall16",
+    "qvall17",
+    "qvall18",
+    "qvall19"
+  ),
+  `F` = c(
     "qvall01",
     "qvall04",
     "qvall06",
@@ -43,162 +67,102 @@ variable_labels_list <- list(
     "qvall16",
     "qvall18",
     "qvall19"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_E_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
+)
+
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "strongly agree",
+  `2` = "agree",
+  `3` = "no agreement/disagreement",
+  `4` = "disagree",
+  `5` = "strongly disagree"
 )
 
 standardized_value_labels <- list(
   qvall01 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall02 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall03 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall04 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall05 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall06 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall07 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall08 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall09 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall10 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall11 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall12 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall13 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall14 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall15 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall16 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall17 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall18 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qvall19 = c(
     `-1` = "not available",
-    `1` = "strongly agree",
-    `2` = "agree",
-    `3` = "no agreement/disagreement",
-    `4` = "disagree",
-    `5` = "strongly disagree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   )
 )
 
@@ -283,20 +247,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qvall01",
-    "qvall04",
-    "qvall06",
-    "qvall07",
-    "qvall10",
-    "qvall11",
-    "qvall13",
-    "qvall14",
-    "qvall15",
-    "qvall16",
-    "qvall18",
-    "qvall19"
-  )],
+    standardized_value_labels,
     qvall01 = .replace_labels(
     standardized_value_labels$qvall01,
     `-1` = "no answer"
@@ -371,9 +322,12 @@ var_types_vec <- c(
   qvall19 = "categorical"
 )
 
-.lasa_fc_137 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "137", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "137", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "137", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "137", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_137 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

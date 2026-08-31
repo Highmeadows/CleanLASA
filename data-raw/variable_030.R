@@ -44,9 +44,12 @@ harmonized_labels <- c(
   adl7e = "Take a bath/shower: less than wanted"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "adl1a",
     "adl1b",
     "adl1c",
@@ -59,19 +62,8 @@ variable_labels_list <- list(
     "adl6b",
     "adl6c",
     "adl6d"
-  )],
-    adl1b = "Stairs: using aid (BADL1A > 1)",
-    adl1c = "Stairs: help from someone (BADL1A = 3)",
-    adl1d = "Stairs: R receive help (BADL1A = 2)",
-    adl4b = "Toenails: using aid (BADL4A > 1)",
-    adl4c = "Toenails: help from someone (BADL4A = 3)",
-    adl4d = "Toenails: R receive help (BADL4A = 2)",
-    adl6b = "Transport: using aid (BADL6A > 1)",
-    adl6c = "Transport: help from someone (BADL6A = 3)",
-    adl6d = "Transport: R receive help (BADL6A = 2)"
   ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+  `C` = c(
     "adl1a",
     "adl1b",
     "adl1c",
@@ -102,7 +94,365 @@ variable_labels_list <- list(
     "adl6c",
     "adl6d",
     "adl6e"
-  )],
+  ),
+  `D` = c(
+    "adl1a",
+    "adl1b",
+    "adl1c",
+    "adl1d",
+    "adl1e",
+    "adl2a",
+    "adl2b",
+    "adl2c",
+    "adl2d",
+    "adl2e",
+    "adl3a",
+    "adl3b",
+    "adl3c",
+    "adl3d",
+    "adl3e",
+    "adl4a",
+    "adl4b",
+    "adl4c",
+    "adl4d",
+    "adl4e",
+    "adl5a",
+    "adl5b",
+    "adl5c",
+    "adl5d",
+    "adl5e",
+    "adl6a",
+    "adl6b",
+    "adl6c",
+    "adl6d",
+    "adl6e"
+  ),
+  `E` = c(
+    "adl1a",
+    "adl1b",
+    "adl1c",
+    "adl1d",
+    "adl1e",
+    "adl2a",
+    "adl2b",
+    "adl2c",
+    "adl2d",
+    "adl2e",
+    "adl3a",
+    "adl3b",
+    "adl3c",
+    "adl3d",
+    "adl3e",
+    "adl4a",
+    "adl4b",
+    "adl4c",
+    "adl4d",
+    "adl4e",
+    "adl5a",
+    "adl5b",
+    "adl5c",
+    "adl5d",
+    "adl5e",
+    "adl6a",
+    "adl6b",
+    "adl6c",
+    "adl6d",
+    "adl6e"
+  ),
+  `2B` = c(
+    "adl1a",
+    "adl1b",
+    "adl1c",
+    "adl1d",
+    "adl1e",
+    "adl2a",
+    "adl2b",
+    "adl2c",
+    "adl2d",
+    "adl2e",
+    "adl3a",
+    "adl3b",
+    "adl3c",
+    "adl3d",
+    "adl3e",
+    "adl4a",
+    "adl4b",
+    "adl4c",
+    "adl4d",
+    "adl4e",
+    "adl5a",
+    "adl5b",
+    "adl5c",
+    "adl5d",
+    "adl5e",
+    "adl6a",
+    "adl6b",
+    "adl6c",
+    "adl6d",
+    "adl6e",
+    "adl7a",
+    "adl7b",
+    "adl7c",
+    "adl7d",
+    "adl7e"
+  ),
+  `F` = c(
+    "adl1a",
+    "adl1b",
+    "adl1c",
+    "adl1d",
+    "adl1e",
+    "adl2a",
+    "adl2b",
+    "adl2c",
+    "adl2d",
+    "adl2e",
+    "adl3a",
+    "adl3b",
+    "adl3c",
+    "adl3d",
+    "adl3e",
+    "adl4a",
+    "adl4b",
+    "adl4c",
+    "adl4d",
+    "adl4e",
+    "adl5a",
+    "adl5b",
+    "adl5c",
+    "adl5d",
+    "adl5e",
+    "adl6a",
+    "adl6b",
+    "adl6c",
+    "adl6d",
+    "adl6e",
+    "adl7a",
+    "adl7b",
+    "adl7c",
+    "adl7d",
+    "adl7e"
+  ),
+  `G` = c(
+    "adl1a",
+    "adl1b",
+    "adl1c",
+    "adl1d",
+    "adl1e",
+    "adl2a",
+    "adl2b",
+    "adl2c",
+    "adl2d",
+    "adl2e",
+    "adl3a",
+    "adl3b",
+    "adl3c",
+    "adl3d",
+    "adl3e",
+    "adl4a",
+    "adl4b",
+    "adl4c",
+    "adl4d",
+    "adl4e",
+    "adl5a",
+    "adl5b",
+    "adl5c",
+    "adl5d",
+    "adl5e",
+    "adl6a",
+    "adl6b",
+    "adl6c",
+    "adl6d",
+    "adl6e",
+    "adl7a",
+    "adl7b",
+    "adl7c",
+    "adl7d",
+    "adl7e"
+  ),
+  `H` = c(
+    "adl1a",
+    "adl1b",
+    "adl1c",
+    "adl1d",
+    "adl2a",
+    "adl2b",
+    "adl2c",
+    "adl2d",
+    "adl3a",
+    "adl3b",
+    "adl3c",
+    "adl3d",
+    "adl4a",
+    "adl4b",
+    "adl4c",
+    "adl4d",
+    "adl5a",
+    "adl5b",
+    "adl5c",
+    "adl5d",
+    "adl6a",
+    "adl6b",
+    "adl6c",
+    "adl6d",
+    "adl7a",
+    "adl7b",
+    "adl7c",
+    "adl7d"
+  ),
+  `3B` = c(
+    "adl1a",
+    "adl1b",
+    "adl1c",
+    "adl1d",
+    "adl2a",
+    "adl2b",
+    "adl2c",
+    "adl2d",
+    "adl3a",
+    "adl3b",
+    "adl3c",
+    "adl3d",
+    "adl4a",
+    "adl4b",
+    "adl4c",
+    "adl4d",
+    "adl5a",
+    "adl5b",
+    "adl5c",
+    "adl5d",
+    "adl6a",
+    "adl6b",
+    "adl6c",
+    "adl6d",
+    "adl7a",
+    "adl7b",
+    "adl7c",
+    "adl7d"
+  ),
+  `MB` = c(
+    "adl1a",
+    "adl1b",
+    "adl2a",
+    "adl2b",
+    "adl3a",
+    "adl3b",
+    "adl4a",
+    "adl4b",
+    "adl5a",
+    "adl5b",
+    "adl6a",
+    "adl6b",
+    "adl7a",
+    "adl7b"
+  ),
+  `I` = c(
+    "adl1a",
+    "adl1b",
+    "adl1c",
+    "adl1d",
+    "adl2a",
+    "adl2b",
+    "adl2c",
+    "adl2d",
+    "adl3a",
+    "adl3b",
+    "adl3c",
+    "adl3d",
+    "adl4a",
+    "adl4b",
+    "adl4c",
+    "adl4d",
+    "adl5a",
+    "adl5b",
+    "adl5c",
+    "adl5d",
+    "adl6a",
+    "adl6b",
+    "adl6c",
+    "adl6d",
+    "adl7a",
+    "adl7b",
+    "adl7c",
+    "adl7d"
+  ),
+  `J` = c(
+    "adl1a",
+    "adl1b",
+    "adl1c",
+    "adl1d",
+    "adl2a",
+    "adl2b",
+    "adl2c",
+    "adl2d",
+    "adl3a",
+    "adl3b",
+    "adl3c",
+    "adl3d",
+    "adl4a",
+    "adl4b",
+    "adl4c",
+    "adl4d",
+    "adl5a",
+    "adl5b",
+    "adl5c",
+    "adl5d",
+    "adl6a",
+    "adl6b",
+    "adl6c",
+    "adl6d",
+    "adl7a",
+    "adl7b",
+    "adl7c",
+    "adl7d"
+  ),
+  `K` = c(
+    "adl1a",
+    "adl1b",
+    "adl1c",
+    "adl1d",
+    "adl2a",
+    "adl2b",
+    "adl2c",
+    "adl2d",
+    "adl3a",
+    "adl3b",
+    "adl3c",
+    "adl3d",
+    "adl4a",
+    "adl4b",
+    "adl4c",
+    "adl4d",
+    "adl5a",
+    "adl5b",
+    "adl5c",
+    "adl5d",
+    "adl6a",
+    "adl6b",
+    "adl6c",
+    "adl6d",
+    "adl7a",
+    "adl7b",
+    "adl7c",
+    "adl7d"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
+    adl1b = "Stairs: using aid (BADL1A > 1)",
+    adl1c = "Stairs: help from someone (BADL1A = 3)",
+    adl1d = "Stairs: R receive help (BADL1A = 2)",
+    adl4b = "Toenails: using aid (BADL4A > 1)",
+    adl4c = "Toenails: help from someone (BADL4A = 3)",
+    adl4d = "Toenails: R receive help (BADL4A = 2)",
+    adl6b = "Transport: using aid (BADL6A > 1)",
+    adl6c = "Transport: help from someone (BADL6A = 3)",
+    adl6d = "Transport: R receive help (BADL6A = 2)"
+  ),
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
     adl1b = "Stairs: using aid (C/D/EADL1A > 1)",
     adl1c = "Stairs: help from someone (C/D/EADL1A > 2)",
     adl1d = "Stairs: R receive help (C/D/EADL1A = 2)",
@@ -129,38 +479,7 @@ variable_labels_list <- list(
     adl6e = "Transport: less than wanted (C/D/EADL6A > 1)"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl1e",
-    "adl2a",
-    "adl2b",
-    "adl2c",
-    "adl2d",
-    "adl2e",
-    "adl3a",
-    "adl3b",
-    "adl3c",
-    "adl3d",
-    "adl3e",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl4e",
-    "adl5a",
-    "adl5b",
-    "adl5c",
-    "adl5d",
-    "adl5e",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d",
-    "adl6e"
-  )],
+    harmonized_labels,
     adl1b = "Stairs: using aid (C/D/EADL1A > 1)",
     adl1c = "Stairs: help from someone (C/D/EADL1A > 2)",
     adl1d = "Stairs: R receive help (C/D/EADL1A = 2)",
@@ -187,38 +506,7 @@ variable_labels_list <- list(
     adl6e = "Transport: less than wanted (C/D/EADL6A > 1)"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl1e",
-    "adl2a",
-    "adl2b",
-    "adl2c",
-    "adl2d",
-    "adl2e",
-    "adl3a",
-    "adl3b",
-    "adl3c",
-    "adl3d",
-    "adl3e",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl4e",
-    "adl5a",
-    "adl5b",
-    "adl5c",
-    "adl5d",
-    "adl5e",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d",
-    "adl6e"
-  )],
+    harmonized_labels,
     adl1b = "Stairs: using aid (C/D/EADL1A > 1)",
     adl1c = "Stairs: help from someone (C/D/EADL1A > 2)",
     adl1d = "Stairs: R receive help (C/D/EADL1A = 2)",
@@ -338,36 +626,7 @@ variable_labels_list <- list(
     adl7e = "Take a bath/shower: less than wanted (B/F/GADL7A > 1)"
   ),
   Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl2a",
-    "adl2b",
-    "adl2c",
-    "adl2d",
-    "adl3a",
-    "adl3b",
-    "adl3c",
-    "adl3d",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl5a",
-    "adl5b",
-    "adl5c",
-    "adl5d",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d",
-    "adl7a",
-    "adl7b",
-    "adl7c",
-    "adl7d"
-  )],
+    harmonized_labels,
     adl1b = "Stairs: using aid (HADL1A > 1)",
     adl1c = "Stairs: help from someone (HADL1A > 2)",
     adl1d = "Stairs: R receive help (HADL1A = 2)",
@@ -391,36 +650,7 @@ variable_labels_list <- list(
     adl7d = "Take a bath/shower: R receive help (HADL7A = 2)"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl2a",
-    "adl2b",
-    "adl2c",
-    "adl2d",
-    "adl3a",
-    "adl3b",
-    "adl3c",
-    "adl3d",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl5a",
-    "adl5b",
-    "adl5c",
-    "adl5d",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d",
-    "adl7a",
-    "adl7b",
-    "adl7c",
-    "adl7d"
-  )],
+    harmonized_labels,
     adl1b = "Stairs: using aid (B/I/J/KADL1A > 1)",
     adl1c = "Stairs: help from someone (B/I/J/KADL1A > 2)",
     adl1d = "Stairs: R receive help (B/I/J/KADL1A = 2)",
@@ -444,22 +674,7 @@ variable_labels_list <- list(
     adl7d = "Take a bath/shower: R receive help (B/I/J/KADL7A = 2)"
   ),
   Wave_MB_labels = .replace_labels(
-    harmonized_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl2a",
-    "adl2b",
-    "adl3a",
-    "adl3b",
-    "adl4a",
-    "adl4b",
-    "adl5a",
-    "adl5b",
-    "adl6a",
-    "adl6b",
-    "adl7a",
-    "adl7b"
-  )],
+    harmonized_labels,
     adl1b = "Stairs: using aid (BADL1A > 1)",
     adl2b = "(Un)dress: using aid (BADL2A > 1)",
     adl3b = "Chair: using aid (BADL3A > 1)",
@@ -469,36 +684,7 @@ variable_labels_list <- list(
     adl7b = "Take a bath/shower: using aid (BADL7A > 1)"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl2a",
-    "adl2b",
-    "adl2c",
-    "adl2d",
-    "adl3a",
-    "adl3b",
-    "adl3c",
-    "adl3d",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl5a",
-    "adl5b",
-    "adl5c",
-    "adl5d",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d",
-    "adl7a",
-    "adl7b",
-    "adl7c",
-    "adl7d"
-  )],
+    harmonized_labels,
     adl1b = "Stairs: using aid (B/I/J/KADL1A > 1)",
     adl1c = "Stairs: help from someone (B/I/J/KADL1A > 2)",
     adl1d = "Stairs: R receive help (B/I/J/KADL1A = 2)",
@@ -522,36 +708,7 @@ variable_labels_list <- list(
     adl7d = "Take a bath/shower: R receive help (B/I/J/KADL7A = 2)"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl2a",
-    "adl2b",
-    "adl2c",
-    "adl2d",
-    "adl3a",
-    "adl3b",
-    "adl3c",
-    "adl3d",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl5a",
-    "adl5b",
-    "adl5c",
-    "adl5d",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d",
-    "adl7a",
-    "adl7b",
-    "adl7c",
-    "adl7d"
-  )],
+    harmonized_labels,
     adl1b = "Stairs: using aid (B/I/J/KADL1A > 1)",
     adl1c = "Stairs: help from someone (B/I/J/KADL1A > 2)",
     adl1d = "Stairs: R receive help (B/I/J/KADL1A = 2)",
@@ -575,36 +732,7 @@ variable_labels_list <- list(
     adl7d = "Take a bath/shower: R receive help (B/I/J/KADL7A = 2)"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl2a",
-    "adl2b",
-    "adl2c",
-    "adl2d",
-    "adl3a",
-    "adl3b",
-    "adl3c",
-    "adl3d",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl5a",
-    "adl5b",
-    "adl5c",
-    "adl5d",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d",
-    "adl7a",
-    "adl7b",
-    "adl7c",
-    "adl7d"
-  )],
+    harmonized_labels,
     adl1b = "Stairs: using aid (B/I/J/KADL1A > 1)",
     adl1c = "Stairs: help from someone (B/I/J/KADL1A > 2)",
     adl1d = "Stairs: R receive help (B/I/J/KADL1A = 2)",
@@ -630,52 +758,46 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "never",
+  `2` = "seldom",
+  `3` = "occasionally",
+  `4` = "often or always"
+)
+
 standardized_value_labels <- list(
   adl1a = c(
     `-5` = "not available, interview terminated",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "no, I cannot",
     `2` = "only with help",
-    `3` = "functional ability category 3",
-    `4` = "functional ability category 4",
+    `3` = "label varies by wave",
+    `4` = "label varies by wave",
     `5` = "yes, without help"
   ),
   adl1b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   adl1c = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "occasionally",
-    `4` = "often or always"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   adl1d = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "occasionally",
-    `4` = "often or always"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   adl1e = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   adl2a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no, I cannot",
     `2` = "only with help",
     `3` = "yes, with much difficulty",
@@ -683,41 +805,25 @@ standardized_value_labels <- list(
     `5` = "yes, without help"
   ),
   adl2b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   adl2c = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "occasionally",
-    `4` = "often or always"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   adl2d = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "occasionally",
-    `4` = "often or always"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   adl2e = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   adl3a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no, I cannot",
     `2` = "only with help",
     `3` = "yes, with much difficulty",
@@ -725,83 +831,51 @@ standardized_value_labels <- list(
     `5` = "yes, without help"
   ),
   adl3b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   adl3c = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "occasionally",
-    `4` = "often or always"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   adl3d = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "occasionally",
-    `4` = "often or always"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   adl3e = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   adl4a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no, I cannot",
     `2` = "only with help",
-    `3` = "functional ability category 3",
-    `4` = "functional ability category 4",
+    `3` = "label varies by wave",
+    `4` = "label varies by wave",
     `5` = "yes, without help"
   ),
   adl4b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   adl4c = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "occasionally",
-    `4` = "often or always"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   adl4d = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "occasionally",
-    `4` = "often or always"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   adl4e = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   adl5a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no, I cannot",
     `2` = "only with help",
     `3` = "yes, with much difficulty",
@@ -809,83 +883,51 @@ standardized_value_labels <- list(
     `5` = "yes, without help"
   ),
   adl5b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   adl5c = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "occasionally",
-    `4` = "often or always"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   adl5d = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "occasionally",
-    `4` = "often or always"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   adl5e = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   adl6a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no, I cannot",
     `2` = "only with help",
-    `3` = "functional ability category 3",
-    `4` = "functional ability category 4",
+    `3` = "label varies by wave",
+    `4` = "label varies by wave",
     `5` = "yes, without help"
   ),
   adl6b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   adl6c = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "occasionally",
-    `4` = "often or always"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   adl6d = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "occasionally",
-    `4` = "often or always"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   adl6e = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   adl7a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no, I cannot",
     `2` = "only with help",
     `3` = "yes, with much difficulty",
@@ -893,34 +935,20 @@ standardized_value_labels <- list(
     `5` = "yes, without help"
   ),
   adl7b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   adl7c = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "occasionally",
-    `4` = "often or always"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   adl7d = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "occasionally",
-    `4` = "often or always"
+    default_missing_labels[c("-3", "-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   adl7e = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   )
@@ -928,20 +956,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d"
-  )],
+    standardized_value_labels,
     adl1a = c(
     `-5` = "na, interview terminated",
     `-1` = "na, asked",
@@ -952,21 +967,15 @@ value_labels_list <- list(
   ),
     adl1b = .replace_labels(
     standardized_value_labels$adl1b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL1A"
   ),
     adl1c = .replace_labels(
     standardized_value_labels$adl1c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL1A"
   ),
     adl1d = .replace_labels(
     standardized_value_labels$adl1d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL1A"
   ),
     adl4a = c(
     `-3` = "na, wrong skip",
@@ -979,21 +988,15 @@ value_labels_list <- list(
   ),
     adl4b = .replace_labels(
     standardized_value_labels$adl4b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL4A"
   ),
     adl4c = .replace_labels(
     standardized_value_labels$adl4c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL4A"
   ),
     adl4d = .replace_labels(
     standardized_value_labels$adl4d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL4A"
   ),
     adl6a = c(
     `-3` = "na, wrong skip",
@@ -1006,678 +1009,402 @@ value_labels_list <- list(
   ),
     adl6b = .replace_labels(
     standardized_value_labels$adl6b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL6A"
   ),
     adl6c = .replace_labels(
     standardized_value_labels$adl6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL6A"
   ),
     adl6d = .replace_labels(
     standardized_value_labels$adl6d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL6A"
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl1e",
-    "adl2a",
-    "adl2b",
-    "adl2c",
-    "adl2d",
-    "adl2e",
-    "adl3a",
-    "adl3b",
-    "adl3c",
-    "adl3d",
-    "adl3e",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl4e",
-    "adl5a",
-    "adl5b",
-    "adl5c",
-    "adl5d",
-    "adl5e",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d",
-    "adl6e"
-  )],
+    standardized_value_labels,
     adl1a = .replace_labels(
     standardized_value_labels$adl1a,
     `-5` = "na, interview terminated",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl1b = .replace_labels(
     standardized_value_labels$adl1b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl1c = .replace_labels(
     standardized_value_labels$adl1c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl1d = .replace_labels(
     standardized_value_labels$adl1d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl1e = .replace_labels(
     standardized_value_labels$adl1e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl2a = .replace_labels(
     standardized_value_labels$adl2a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl2b = .replace_labels(
     standardized_value_labels$adl2b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL2A"
   ),
     adl2c = .replace_labels(
     standardized_value_labels$adl2c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL2A"
   ),
     adl2d = .replace_labels(
     standardized_value_labels$adl2d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL2A"
   ),
     adl2e = .replace_labels(
     standardized_value_labels$adl2e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL2A"
   ),
     adl3a = .replace_labels(
     standardized_value_labels$adl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl3b = .replace_labels(
     standardized_value_labels$adl3b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL3A"
   ),
     adl3c = .replace_labels(
     standardized_value_labels$adl3c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL3A"
   ),
     adl3d = .replace_labels(
     standardized_value_labels$adl3d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL3A"
   ),
     adl3e = .replace_labels(
     standardized_value_labels$adl3e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL3A"
   ),
     adl4a = .replace_labels(
     standardized_value_labels$adl4a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl4b = .replace_labels(
     standardized_value_labels$adl4b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL4A"
   ),
     adl4c = .replace_labels(
     standardized_value_labels$adl4c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL4A"
   ),
     adl4d = .replace_labels(
     standardized_value_labels$adl4d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL4A"
   ),
     adl4e = .replace_labels(
     standardized_value_labels$adl4e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL4A"
   ),
     adl5a = .replace_labels(
     standardized_value_labels$adl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl5b = .replace_labels(
     standardized_value_labels$adl5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL5A"
   ),
     adl5c = .replace_labels(
     standardized_value_labels$adl5c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL5A"
   ),
     adl5d = .replace_labels(
     standardized_value_labels$adl5d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL5A"
   ),
     adl5e = .replace_labels(
     standardized_value_labels$adl5e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL5A"
   ),
     adl6a = .replace_labels(
     standardized_value_labels$adl6a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl6b = .replace_labels(
     standardized_value_labels$adl6b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL6A"
   ),
     adl6c = .replace_labels(
     standardized_value_labels$adl6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL6A"
   ),
     adl6d = .replace_labels(
     standardized_value_labels$adl6d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL6A"
   ),
     adl6e = .replace_labels(
     standardized_value_labels$adl6e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL6A"
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl1e",
-    "adl2a",
-    "adl2b",
-    "adl2c",
-    "adl2d",
-    "adl2e",
-    "adl3a",
-    "adl3b",
-    "adl3c",
-    "adl3d",
-    "adl3e",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl4e",
-    "adl5a",
-    "adl5b",
-    "adl5c",
-    "adl5d",
-    "adl5e",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d",
-    "adl6e"
-  )],
+    standardized_value_labels,
     adl1a = .replace_labels(
     standardized_value_labels$adl1a,
     `-5` = "na, interview terminated",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl1b = .replace_labels(
     standardized_value_labels$adl1b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl1c = .replace_labels(
     standardized_value_labels$adl1c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl1d = .replace_labels(
     standardized_value_labels$adl1d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl1e = .replace_labels(
     standardized_value_labels$adl1e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl2a = .replace_labels(
     standardized_value_labels$adl2a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl2b = .replace_labels(
     standardized_value_labels$adl2b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL2A"
   ),
     adl2c = .replace_labels(
     standardized_value_labels$adl2c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL2A"
   ),
     adl2d = .replace_labels(
     standardized_value_labels$adl2d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL2A"
   ),
     adl2e = .replace_labels(
     standardized_value_labels$adl2e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL2A"
   ),
     adl3a = .replace_labels(
     standardized_value_labels$adl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl3b = .replace_labels(
     standardized_value_labels$adl3b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL3A"
   ),
     adl3c = .replace_labels(
     standardized_value_labels$adl3c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL3A"
   ),
     adl3d = .replace_labels(
     standardized_value_labels$adl3d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL3A"
   ),
     adl3e = .replace_labels(
     standardized_value_labels$adl3e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL3A"
   ),
     adl4a = .replace_labels(
     standardized_value_labels$adl4a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl4b = .replace_labels(
     standardized_value_labels$adl4b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL4A"
   ),
     adl4c = .replace_labels(
     standardized_value_labels$adl4c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL4A"
   ),
     adl4d = .replace_labels(
     standardized_value_labels$adl4d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL4A"
   ),
     adl4e = .replace_labels(
     standardized_value_labels$adl4e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL4A"
   ),
     adl5a = .replace_labels(
     standardized_value_labels$adl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl5b = .replace_labels(
     standardized_value_labels$adl5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL5A"
   ),
     adl5c = .replace_labels(
     standardized_value_labels$adl5c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL5A"
   ),
     adl5d = .replace_labels(
     standardized_value_labels$adl5d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL5A"
   ),
     adl5e = .replace_labels(
     standardized_value_labels$adl5e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL5A"
   ),
     adl6a = .replace_labels(
     standardized_value_labels$adl6a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl6b = .replace_labels(
     standardized_value_labels$adl6b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL6A"
   ),
     adl6c = .replace_labels(
     standardized_value_labels$adl6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL6A"
   ),
     adl6d = .replace_labels(
     standardized_value_labels$adl6d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL6A"
   ),
     adl6e = .replace_labels(
     standardized_value_labels$adl6e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL6A"
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl1e",
-    "adl2a",
-    "adl2b",
-    "adl2c",
-    "adl2d",
-    "adl2e",
-    "adl3a",
-    "adl3b",
-    "adl3c",
-    "adl3d",
-    "adl3e",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl4e",
-    "adl5a",
-    "adl5b",
-    "adl5c",
-    "adl5d",
-    "adl5e",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d",
-    "adl6e"
-  )],
+    standardized_value_labels,
     adl1a = .replace_labels(
     standardized_value_labels$adl1a,
     `-5` = "na, interview terminated",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl1b = .replace_labels(
     standardized_value_labels$adl1b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl1c = .replace_labels(
     standardized_value_labels$adl1c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl1d = .replace_labels(
     standardized_value_labels$adl1d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl1e = .replace_labels(
     standardized_value_labels$adl1e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl2a = .replace_labels(
     standardized_value_labels$adl2a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl2b = .replace_labels(
     standardized_value_labels$adl2b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL2A"
   ),
     adl2c = .replace_labels(
     standardized_value_labels$adl2c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL2A"
   ),
     adl2d = .replace_labels(
     standardized_value_labels$adl2d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL2A"
   ),
     adl2e = .replace_labels(
     standardized_value_labels$adl2e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL2A"
   ),
     adl3a = .replace_labels(
     standardized_value_labels$adl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl3b = .replace_labels(
     standardized_value_labels$adl3b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL3A"
   ),
     adl3c = .replace_labels(
     standardized_value_labels$adl3c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL3A"
   ),
     adl3d = .replace_labels(
     standardized_value_labels$adl3d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL3A"
   ),
     adl3e = .replace_labels(
     standardized_value_labels$adl3e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL3A"
   ),
     adl4a = .replace_labels(
     standardized_value_labels$adl4a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl4b = .replace_labels(
     standardized_value_labels$adl4b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL4A"
   ),
     adl4c = .replace_labels(
     standardized_value_labels$adl4c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL4A"
   ),
     adl4d = .replace_labels(
     standardized_value_labels$adl4d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL4A"
   ),
     adl4e = .replace_labels(
     standardized_value_labels$adl4e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL4A"
   ),
     adl5a = .replace_labels(
     standardized_value_labels$adl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL1A"
   ),
     adl5b = .replace_labels(
     standardized_value_labels$adl5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL5A"
   ),
     adl5c = .replace_labels(
     standardized_value_labels$adl5c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL5A"
   ),
     adl5d = .replace_labels(
     standardized_value_labels$adl5d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL5A"
   ),
     adl5e = .replace_labels(
     standardized_value_labels$adl5e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL5A"
   ),
     adl6a = .replace_labels(
     standardized_value_labels$adl6a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/EADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl6b = .replace_labels(
     standardized_value_labels$adl6b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL6A"
   ),
     adl6c = .replace_labels(
     standardized_value_labels$adl6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL6A"
   ),
     adl6d = .replace_labels(
     standardized_value_labels$adl6d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL6A"
   ),
     adl6e = .replace_labels(
     standardized_value_labels$adl6e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/EADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/EADL6A"
   )
   ),
   Wave_2B_labels = .replace_in_list(
@@ -1685,217 +1412,148 @@ value_labels_list <- list(
     adl1a = .replace_labels(
     standardized_value_labels$adl1a,
     `-5` = "na, interview terminated",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl1b = .replace_labels(
     standardized_value_labels$adl1b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl1c = .replace_labels(
     standardized_value_labels$adl1c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl1d = .replace_labels(
     standardized_value_labels$adl1d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl1e = .replace_labels(
     standardized_value_labels$adl1e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl2a = .replace_labels(
     standardized_value_labels$adl2a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl2b = .replace_labels(
     standardized_value_labels$adl2b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL2A"
   ),
     adl2c = .replace_labels(
     standardized_value_labels$adl2c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL2A"
   ),
     adl2d = .replace_labels(
     standardized_value_labels$adl2d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL2A"
   ),
     adl2e = .replace_labels(
     standardized_value_labels$adl2e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL2A"
   ),
     adl3a = .replace_labels(
     standardized_value_labels$adl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl3b = .replace_labels(
     standardized_value_labels$adl3b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL3A"
   ),
     adl3c = .replace_labels(
     standardized_value_labels$adl3c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL3A"
   ),
     adl3d = .replace_labels(
     standardized_value_labels$adl3d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL3A"
   ),
     adl3e = .replace_labels(
     standardized_value_labels$adl3e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL3A"
   ),
     adl4a = .replace_labels(
     standardized_value_labels$adl4a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl4b = .replace_labels(
     standardized_value_labels$adl4b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL4A"
   ),
     adl4c = .replace_labels(
     standardized_value_labels$adl4c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL4A"
   ),
     adl4d = .replace_labels(
     standardized_value_labels$adl4d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL4A"
   ),
     adl4e = .replace_labels(
     standardized_value_labels$adl4e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL4A"
   ),
     adl5a = .replace_labels(
     standardized_value_labels$adl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl5b = .replace_labels(
     standardized_value_labels$adl5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL5A"
   ),
     adl5c = .replace_labels(
     standardized_value_labels$adl5c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL5A"
   ),
     adl5d = .replace_labels(
     standardized_value_labels$adl5d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL5A"
   ),
     adl5e = .replace_labels(
     standardized_value_labels$adl5e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL5A"
   ),
     adl6a = .replace_labels(
     standardized_value_labels$adl6a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl6b = .replace_labels(
     standardized_value_labels$adl6b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL6A"
   ),
     adl6c = .replace_labels(
     standardized_value_labels$adl6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL6A"
   ),
     adl6d = .replace_labels(
     standardized_value_labels$adl6d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL6A"
   ),
     adl6e = .replace_labels(
     standardized_value_labels$adl6e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL6A"
   ),
     adl7a = .replace_labels(
     standardized_value_labels$adl7a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl7b = .replace_labels(
     standardized_value_labels$adl7b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL7A"
   ),
     adl7c = .replace_labels(
     standardized_value_labels$adl7c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL7A"
   ),
     adl7d = .replace_labels(
     standardized_value_labels$adl7d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL7A"
   ),
     adl7e = .replace_labels(
     standardized_value_labels$adl7e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL7A"
   )
   ),
   Wave_F_labels = .replace_in_list(
@@ -1903,217 +1561,148 @@ value_labels_list <- list(
     adl1a = .replace_labels(
     standardized_value_labels$adl1a,
     `-5` = "na, interview terminated",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl1b = .replace_labels(
     standardized_value_labels$adl1b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl1c = .replace_labels(
     standardized_value_labels$adl1c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl1d = .replace_labels(
     standardized_value_labels$adl1d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl1e = .replace_labels(
     standardized_value_labels$adl1e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl2a = .replace_labels(
     standardized_value_labels$adl2a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl2b = .replace_labels(
     standardized_value_labels$adl2b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL2A"
   ),
     adl2c = .replace_labels(
     standardized_value_labels$adl2c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL2A"
   ),
     adl2d = .replace_labels(
     standardized_value_labels$adl2d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL2A"
   ),
     adl2e = .replace_labels(
     standardized_value_labels$adl2e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL2A"
   ),
     adl3a = .replace_labels(
     standardized_value_labels$adl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl3b = .replace_labels(
     standardized_value_labels$adl3b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL3A"
   ),
     adl3c = .replace_labels(
     standardized_value_labels$adl3c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL3A"
   ),
     adl3d = .replace_labels(
     standardized_value_labels$adl3d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL3A"
   ),
     adl3e = .replace_labels(
     standardized_value_labels$adl3e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL3A"
   ),
     adl4a = .replace_labels(
     standardized_value_labels$adl4a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl4b = .replace_labels(
     standardized_value_labels$adl4b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL4A"
   ),
     adl4c = .replace_labels(
     standardized_value_labels$adl4c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL4A"
   ),
     adl4d = .replace_labels(
     standardized_value_labels$adl4d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL4A"
   ),
     adl4e = .replace_labels(
     standardized_value_labels$adl4e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL4A"
   ),
     adl5a = .replace_labels(
     standardized_value_labels$adl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl5b = .replace_labels(
     standardized_value_labels$adl5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL5A"
   ),
     adl5c = .replace_labels(
     standardized_value_labels$adl5c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL5A"
   ),
     adl5d = .replace_labels(
     standardized_value_labels$adl5d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL5A"
   ),
     adl5e = .replace_labels(
     standardized_value_labels$adl5e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL5A"
   ),
     adl6a = .replace_labels(
     standardized_value_labels$adl6a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl6b = .replace_labels(
     standardized_value_labels$adl6b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL6A"
   ),
     adl6c = .replace_labels(
     standardized_value_labels$adl6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL6A"
   ),
     adl6d = .replace_labels(
     standardized_value_labels$adl6d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL6A"
   ),
     adl6e = .replace_labels(
     standardized_value_labels$adl6e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL6A"
   ),
     adl7a = .replace_labels(
     standardized_value_labels$adl7a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl7b = .replace_labels(
     standardized_value_labels$adl7b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL7A"
   ),
     adl7c = .replace_labels(
     standardized_value_labels$adl7c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL7A"
   ),
     adl7d = .replace_labels(
     standardized_value_labels$adl7d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL7A"
   ),
     adl7e = .replace_labels(
     standardized_value_labels$adl7e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL7A"
   )
   ),
   Wave_G_labels = .replace_in_list(
@@ -2121,1349 +1710,818 @@ value_labels_list <- list(
     adl1a = .replace_labels(
     standardized_value_labels$adl1a,
     `-5` = "na, interview terminated",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl1b = .replace_labels(
     standardized_value_labels$adl1b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl1c = .replace_labels(
     standardized_value_labels$adl1c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl1d = .replace_labels(
     standardized_value_labels$adl1d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl1e = .replace_labels(
     standardized_value_labels$adl1e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl2a = .replace_labels(
     standardized_value_labels$adl2a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl2b = .replace_labels(
     standardized_value_labels$adl2b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL2A"
   ),
     adl2c = .replace_labels(
     standardized_value_labels$adl2c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL2A"
   ),
     adl2d = .replace_labels(
     standardized_value_labels$adl2d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL2A"
   ),
     adl2e = .replace_labels(
     standardized_value_labels$adl2e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL2A"
   ),
     adl3a = .replace_labels(
     standardized_value_labels$adl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl3b = .replace_labels(
     standardized_value_labels$adl3b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL3A"
   ),
     adl3c = .replace_labels(
     standardized_value_labels$adl3c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL3A"
   ),
     adl3d = .replace_labels(
     standardized_value_labels$adl3d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL3A"
   ),
     adl3e = .replace_labels(
     standardized_value_labels$adl3e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL3A"
   ),
     adl4a = .replace_labels(
     standardized_value_labels$adl4a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl4b = .replace_labels(
     standardized_value_labels$adl4b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL4A"
   ),
     adl4c = .replace_labels(
     standardized_value_labels$adl4c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL4A"
   ),
     adl4d = .replace_labels(
     standardized_value_labels$adl4d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL4A"
   ),
     adl4e = .replace_labels(
     standardized_value_labels$adl4e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL4A"
   ),
     adl5a = .replace_labels(
     standardized_value_labels$adl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl5b = .replace_labels(
     standardized_value_labels$adl5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL5A"
   ),
     adl5c = .replace_labels(
     standardized_value_labels$adl5c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL5A"
   ),
     adl5d = .replace_labels(
     standardized_value_labels$adl5d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL5A"
   ),
     adl5e = .replace_labels(
     standardized_value_labels$adl5e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL5A"
   ),
     adl6a = .replace_labels(
     standardized_value_labels$adl6a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl6b = .replace_labels(
     standardized_value_labels$adl6b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL6A"
   ),
     adl6c = .replace_labels(
     standardized_value_labels$adl6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL6A"
   ),
     adl6d = .replace_labels(
     standardized_value_labels$adl6d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL6A"
   ),
     adl6e = .replace_labels(
     standardized_value_labels$adl6e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL6A"
   ),
     adl7a = .replace_labels(
     standardized_value_labels$adl7a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL1A"
   ),
     adl7b = .replace_labels(
     standardized_value_labels$adl7b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL7A"
   ),
     adl7c = .replace_labels(
     standardized_value_labels$adl7c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL7A"
   ),
     adl7d = .replace_labels(
     standardized_value_labels$adl7d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL7A"
   ),
     adl7e = .replace_labels(
     standardized_value_labels$adl7e,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/F/GADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/F/GADL7A"
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl2a",
-    "adl2b",
-    "adl2c",
-    "adl2d",
-    "adl3a",
-    "adl3b",
-    "adl3c",
-    "adl3d",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl5a",
-    "adl5b",
-    "adl5c",
-    "adl5d",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d",
-    "adl7a",
-    "adl7b",
-    "adl7c",
-    "adl7d"
-  )],
+    standardized_value_labels,
     adl1a = .replace_labels(
     standardized_value_labels$adl1a,
     `-5` = "na, interview terminated",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl1b = .replace_labels(
     standardized_value_labels$adl1b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL1A"
   ),
     adl1c = .replace_labels(
     standardized_value_labels$adl1c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL1A"
   ),
     adl1d = .replace_labels(
     standardized_value_labels$adl1d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL1A"
   ),
     adl2a = .replace_labels(
     standardized_value_labels$adl2a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL1A"
   ),
     adl2b = .replace_labels(
     standardized_value_labels$adl2b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL2A"
   ),
     adl2c = .replace_labels(
     standardized_value_labels$adl2c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL2A"
   ),
     adl2d = .replace_labels(
     standardized_value_labels$adl2d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL2A"
   ),
     adl3a = .replace_labels(
     standardized_value_labels$adl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL1A"
   ),
     adl3b = .replace_labels(
     standardized_value_labels$adl3b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL3A"
   ),
     adl3c = .replace_labels(
     standardized_value_labels$adl3c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL3A"
   ),
     adl3d = .replace_labels(
     standardized_value_labels$adl3d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL3A"
   ),
     adl4a = .replace_labels(
     standardized_value_labels$adl4a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see HADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl4b = .replace_labels(
     standardized_value_labels$adl4b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL4A"
   ),
     adl4c = .replace_labels(
     standardized_value_labels$adl4c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL4A"
   ),
     adl4d = .replace_labels(
     standardized_value_labels$adl4d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL4A"
   ),
     adl5a = .replace_labels(
     standardized_value_labels$adl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL1A"
   ),
     adl5b = .replace_labels(
     standardized_value_labels$adl5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL5A"
   ),
     adl5c = .replace_labels(
     standardized_value_labels$adl5c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL5A"
   ),
     adl5d = .replace_labels(
     standardized_value_labels$adl5d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL5A"
   ),
     adl6a = .replace_labels(
     standardized_value_labels$adl6a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see HADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl6b = .replace_labels(
     standardized_value_labels$adl6b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL6A"
   ),
     adl6c = .replace_labels(
     standardized_value_labels$adl6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL6A"
   ),
     adl6d = .replace_labels(
     standardized_value_labels$adl6d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL6A"
   ),
     adl7a = .replace_labels(
     standardized_value_labels$adl7a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL1A"
   ),
     adl7b = .replace_labels(
     standardized_value_labels$adl7b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL7A"
   ),
     adl7c = .replace_labels(
     standardized_value_labels$adl7c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL7A"
   ),
     adl7d = .replace_labels(
     standardized_value_labels$adl7d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see HADL7A"
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl2a",
-    "adl2b",
-    "adl2c",
-    "adl2d",
-    "adl3a",
-    "adl3b",
-    "adl3c",
-    "adl3d",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl5a",
-    "adl5b",
-    "adl5c",
-    "adl5d",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d",
-    "adl7a",
-    "adl7b",
-    "adl7c",
-    "adl7d"
-  )],
+    standardized_value_labels,
     adl1a = .replace_labels(
     standardized_value_labels$adl1a,
     `-5` = "na, interview terminated",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl1b = .replace_labels(
     standardized_value_labels$adl1b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl1c = .replace_labels(
     standardized_value_labels$adl1c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl1d = .replace_labels(
     standardized_value_labels$adl1d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl2a = .replace_labels(
     standardized_value_labels$adl2a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl2b = .replace_labels(
     standardized_value_labels$adl2b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL2A"
   ),
     adl2c = .replace_labels(
     standardized_value_labels$adl2c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL2A"
   ),
     adl2d = .replace_labels(
     standardized_value_labels$adl2d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL2A"
   ),
     adl3a = .replace_labels(
     standardized_value_labels$adl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl3b = .replace_labels(
     standardized_value_labels$adl3b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL3A"
   ),
     adl3c = .replace_labels(
     standardized_value_labels$adl3c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL3A"
   ),
     adl3d = .replace_labels(
     standardized_value_labels$adl3d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL3A"
   ),
     adl4a = .replace_labels(
     standardized_value_labels$adl4a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl4b = .replace_labels(
     standardized_value_labels$adl4b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL4A"
   ),
     adl4c = .replace_labels(
     standardized_value_labels$adl4c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL4A"
   ),
     adl4d = .replace_labels(
     standardized_value_labels$adl4d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL4A"
   ),
     adl5a = .replace_labels(
     standardized_value_labels$adl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl5b = .replace_labels(
     standardized_value_labels$adl5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL5A"
   ),
     adl5c = .replace_labels(
     standardized_value_labels$adl5c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL5A"
   ),
     adl5d = .replace_labels(
     standardized_value_labels$adl5d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL5A"
   ),
     adl6a = .replace_labels(
     standardized_value_labels$adl6a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl6b = .replace_labels(
     standardized_value_labels$adl6b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL6A"
   ),
     adl6c = .replace_labels(
     standardized_value_labels$adl6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL6A"
   ),
     adl6d = .replace_labels(
     standardized_value_labels$adl6d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL6A"
   ),
     adl7a = .replace_labels(
     standardized_value_labels$adl7a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl7b = .replace_labels(
     standardized_value_labels$adl7b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL7A"
   ),
     adl7c = .replace_labels(
     standardized_value_labels$adl7c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL7A"
   ),
     adl7d = .replace_labels(
     standardized_value_labels$adl7d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL7A"
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl2a",
-    "adl2b",
-    "adl3a",
-    "adl3b",
-    "adl4a",
-    "adl4b",
-    "adl5a",
-    "adl5b",
-    "adl6a",
-    "adl6b",
-    "adl7a",
-    "adl7b"
-  )],
+    standardized_value_labels,
     adl1a = .replace_labels(
     standardized_value_labels$adl1a,
     `-5` = "na, interview terminated",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl1b = .replace_labels(
     standardized_value_labels$adl1b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL1A"
   ),
     adl2a = .replace_labels(
     standardized_value_labels$adl2a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL1A"
   ),
     adl2b = .replace_labels(
     standardized_value_labels$adl2b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL2A"
   ),
     adl3a = .replace_labels(
     standardized_value_labels$adl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL1A"
   ),
     adl3b = .replace_labels(
     standardized_value_labels$adl3b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL3A"
   ),
     adl4a = .replace_labels(
     standardized_value_labels$adl4a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl4b = .replace_labels(
     standardized_value_labels$adl4b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL4A"
   ),
     adl5a = .replace_labels(
     standardized_value_labels$adl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL1A"
   ),
     adl5b = .replace_labels(
     standardized_value_labels$adl5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL5A"
   ),
     adl6a = .replace_labels(
     standardized_value_labels$adl6a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl6b = .replace_labels(
     standardized_value_labels$adl6b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL6A"
   ),
     adl7a = .replace_labels(
     standardized_value_labels$adl7a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL1A"
   ),
     adl7b = .replace_labels(
     standardized_value_labels$adl7b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see BADL7A"
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl2a",
-    "adl2b",
-    "adl2c",
-    "adl2d",
-    "adl3a",
-    "adl3b",
-    "adl3c",
-    "adl3d",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl5a",
-    "adl5b",
-    "adl5c",
-    "adl5d",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d",
-    "adl7a",
-    "adl7b",
-    "adl7c",
-    "adl7d"
-  )],
+    standardized_value_labels,
     adl1a = .replace_labels(
     standardized_value_labels$adl1a,
     `-5` = "na, interview terminated",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl1b = .replace_labels(
     standardized_value_labels$adl1b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl1c = .replace_labels(
     standardized_value_labels$adl1c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl1d = .replace_labels(
     standardized_value_labels$adl1d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl2a = .replace_labels(
     standardized_value_labels$adl2a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl2b = .replace_labels(
     standardized_value_labels$adl2b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL2A"
   ),
     adl2c = .replace_labels(
     standardized_value_labels$adl2c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL2A"
   ),
     adl2d = .replace_labels(
     standardized_value_labels$adl2d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL2A"
   ),
     adl3a = .replace_labels(
     standardized_value_labels$adl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl3b = .replace_labels(
     standardized_value_labels$adl3b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL3A"
   ),
     adl3c = .replace_labels(
     standardized_value_labels$adl3c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL3A"
   ),
     adl3d = .replace_labels(
     standardized_value_labels$adl3d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL3A"
   ),
     adl4a = .replace_labels(
     standardized_value_labels$adl4a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl4b = .replace_labels(
     standardized_value_labels$adl4b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL4A"
   ),
     adl4c = .replace_labels(
     standardized_value_labels$adl4c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL4A"
   ),
     adl4d = .replace_labels(
     standardized_value_labels$adl4d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL4A"
   ),
     adl5a = .replace_labels(
     standardized_value_labels$adl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl5b = .replace_labels(
     standardized_value_labels$adl5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL5A"
   ),
     adl5c = .replace_labels(
     standardized_value_labels$adl5c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL5A"
   ),
     adl5d = .replace_labels(
     standardized_value_labels$adl5d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL5A"
   ),
     adl6a = .replace_labels(
     standardized_value_labels$adl6a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl6b = .replace_labels(
     standardized_value_labels$adl6b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL6A"
   ),
     adl6c = .replace_labels(
     standardized_value_labels$adl6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL6A"
   ),
     adl6d = .replace_labels(
     standardized_value_labels$adl6d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL6A"
   ),
     adl7a = .replace_labels(
     standardized_value_labels$adl7a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl7b = .replace_labels(
     standardized_value_labels$adl7b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL7A"
   ),
     adl7c = .replace_labels(
     standardized_value_labels$adl7c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL7A"
   ),
     adl7d = .replace_labels(
     standardized_value_labels$adl7d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL7A"
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl2a",
-    "adl2b",
-    "adl2c",
-    "adl2d",
-    "adl3a",
-    "adl3b",
-    "adl3c",
-    "adl3d",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl5a",
-    "adl5b",
-    "adl5c",
-    "adl5d",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d",
-    "adl7a",
-    "adl7b",
-    "adl7c",
-    "adl7d"
-  )],
+    standardized_value_labels,
     adl1a = .replace_labels(
     standardized_value_labels$adl1a,
     `-5` = "na, interview terminated",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl1b = .replace_labels(
     standardized_value_labels$adl1b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl1c = .replace_labels(
     standardized_value_labels$adl1c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl1d = .replace_labels(
     standardized_value_labels$adl1d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl2a = .replace_labels(
     standardized_value_labels$adl2a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl2b = .replace_labels(
     standardized_value_labels$adl2b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL2A"
   ),
     adl2c = .replace_labels(
     standardized_value_labels$adl2c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL2A"
   ),
     adl2d = .replace_labels(
     standardized_value_labels$adl2d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL2A"
   ),
     adl3a = .replace_labels(
     standardized_value_labels$adl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl3b = .replace_labels(
     standardized_value_labels$adl3b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL3A"
   ),
     adl3c = .replace_labels(
     standardized_value_labels$adl3c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL3A"
   ),
     adl3d = .replace_labels(
     standardized_value_labels$adl3d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL3A"
   ),
     adl4a = .replace_labels(
     standardized_value_labels$adl4a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl4b = .replace_labels(
     standardized_value_labels$adl4b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL4A"
   ),
     adl4c = .replace_labels(
     standardized_value_labels$adl4c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL4A"
   ),
     adl4d = .replace_labels(
     standardized_value_labels$adl4d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL4A"
   ),
     adl5a = .replace_labels(
     standardized_value_labels$adl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl5b = .replace_labels(
     standardized_value_labels$adl5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL5A"
   ),
     adl5c = .replace_labels(
     standardized_value_labels$adl5c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL5A"
   ),
     adl5d = .replace_labels(
     standardized_value_labels$adl5d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL5A"
   ),
     adl6a = .replace_labels(
     standardized_value_labels$adl6a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl6b = .replace_labels(
     standardized_value_labels$adl6b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL6A"
   ),
     adl6c = .replace_labels(
     standardized_value_labels$adl6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL6A"
   ),
     adl6d = .replace_labels(
     standardized_value_labels$adl6d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL6A"
   ),
     adl7a = .replace_labels(
     standardized_value_labels$adl7a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl7b = .replace_labels(
     standardized_value_labels$adl7b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL7A"
   ),
     adl7c = .replace_labels(
     standardized_value_labels$adl7c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL7A"
   ),
     adl7d = .replace_labels(
     standardized_value_labels$adl7d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL7A"
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "adl1a",
-    "adl1b",
-    "adl1c",
-    "adl1d",
-    "adl2a",
-    "adl2b",
-    "adl2c",
-    "adl2d",
-    "adl3a",
-    "adl3b",
-    "adl3c",
-    "adl3d",
-    "adl4a",
-    "adl4b",
-    "adl4c",
-    "adl4d",
-    "adl5a",
-    "adl5b",
-    "adl5c",
-    "adl5d",
-    "adl6a",
-    "adl6b",
-    "adl6c",
-    "adl6d",
-    "adl7a",
-    "adl7b",
-    "adl7c",
-    "adl7d"
-  )],
+    standardized_value_labels,
     adl1a = .replace_labels(
     standardized_value_labels$adl1a,
     `-5` = "na, interview terminated",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl1b = .replace_labels(
     standardized_value_labels$adl1b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl1c = .replace_labels(
     standardized_value_labels$adl1c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl1d = .replace_labels(
     standardized_value_labels$adl1d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl2a = .replace_labels(
     standardized_value_labels$adl2a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl2b = .replace_labels(
     standardized_value_labels$adl2b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL2A"
   ),
     adl2c = .replace_labels(
     standardized_value_labels$adl2c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL2A"
   ),
     adl2d = .replace_labels(
     standardized_value_labels$adl2d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL2A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL2A"
   ),
     adl3a = .replace_labels(
     standardized_value_labels$adl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl3b = .replace_labels(
     standardized_value_labels$adl3b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL3A"
   ),
     adl3c = .replace_labels(
     standardized_value_labels$adl3c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL3A"
   ),
     adl3d = .replace_labels(
     standardized_value_labels$adl3d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL3A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL3A"
   ),
     adl4a = .replace_labels(
     standardized_value_labels$adl4a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl4b = .replace_labels(
     standardized_value_labels$adl4b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL4A"
   ),
     adl4c = .replace_labels(
     standardized_value_labels$adl4c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL4A"
   ),
     adl4d = .replace_labels(
     standardized_value_labels$adl4d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL4A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL4A"
   ),
     adl5a = .replace_labels(
     standardized_value_labels$adl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl5b = .replace_labels(
     standardized_value_labels$adl5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL5A"
   ),
     adl5c = .replace_labels(
     standardized_value_labels$adl5c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL5A"
   ),
     adl5d = .replace_labels(
     standardized_value_labels$adl5d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL5A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL5A"
   ),
     adl6a = .replace_labels(
     standardized_value_labels$adl6a,
-    `-3` = "na, wrong skip",
     `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked",
     `3` = "yes, with much difficulty",
     `4` = "yes, with some difficulty"
   ),
     adl6b = .replace_labels(
     standardized_value_labels$adl6b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL6A"
   ),
     adl6c = .replace_labels(
     standardized_value_labels$adl6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL6A"
   ),
     adl6d = .replace_labels(
     standardized_value_labels$adl6d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL6A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL6A"
   ),
     adl7a = .replace_labels(
     standardized_value_labels$adl7a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL1A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL1A"
   ),
     adl7b = .replace_labels(
     standardized_value_labels$adl7b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL7A"
   ),
     adl7c = .replace_labels(
     standardized_value_labels$adl7c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL7A"
   ),
     adl7d = .replace_labels(
     standardized_value_labels$adl7d,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/I/J/KADL7A",
-    `-1` = "na, asked"
+    `-2` = "na, see B/I/J/KADL7A"
   )
   ),
   Harmonized_labels = standardized_value_labels
@@ -3507,9 +2565,12 @@ var_types_vec <- c(
   adl7e = "categorical"
 )
 
-.lasa_fc_030 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "030", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "030", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "030", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "030", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_030 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

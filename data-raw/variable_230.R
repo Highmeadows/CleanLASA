@@ -12,23 +12,90 @@ harmonized_labels <- c(
   flwdiff = "Functional limitations with difficulties, 3-item score"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "flwdiff"
+  ),
+  `C` = c(
+    "flwd6",
+    "flwdiff"
+  ),
+  `D` = c(
+    "flwd6",
+    "flwdiff"
+  ),
+  `E` = c(
+    "flwd6",
+    "flwdiff"
+  ),
+  `2B` = c(
+    "flwd6",
+    "flwd7",
+    "flwdiff"
+  ),
+  `F` = c(
+    "flwd6",
+    "flwd7",
+    "flwdiff"
+  ),
+  `G` = c(
+    "flwd6",
+    "flwd7",
+    "flwdiff"
+  ),
+  `H` = c(
+    "flwd6",
+    "flwd7",
+    "flwdiff"
+  ),
+  `3B` = c(
+    "flwd6",
+    "flwd7",
+    "flwdiff"
+  ),
+  `MB` = c(
+    "flwd6",
+    "flwd7",
+    "flwdiff"
+  ),
+  `I` = c(
+    "flwd6",
+    "flwd7",
+    "flwdiff"
+  ),
+  `J` = c(
+    "flwd6",
+    "flwd7",
+    "flwdiff"
+  ),
+  `K` = c(
+    "flwd6",
+    "flwd7",
+    "flwdiff"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
-    harmonized_labels[c("flwdiff")],
+    harmonized_labels,
     flwdiff = "functional limitations, with difficulties #3"
   ),
   Wave_C_labels = .replace_labels(
-    harmonized_labels[c("flwd6", "flwdiff")],
+    harmonized_labels,
     flwd6 = "functional limitations, with difficulties #6",
     flwdiff = "functional limitations, with difficulties #3"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c("flwd6", "flwdiff")],
+    harmonized_labels,
     flwd6 = "functional limitations, with difficulties #6",
     flwdiff = "functional limitations, with difficulties #3"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c("flwd6", "flwdiff")],
+    harmonized_labels,
     flwd6 = "functional limitations, with difficulties #6",
     flwdiff = "functional limitations, with difficulties #3"
   ),
@@ -121,10 +188,10 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_B_labels = standardized_value_labels[c("flwdiff")],
-  Wave_C_labels = standardized_value_labels[c("flwd6", "flwdiff")],
-  Wave_D_labels = standardized_value_labels[c("flwd6", "flwdiff")],
-  Wave_E_labels = standardized_value_labels[c("flwd6", "flwdiff")],
+  Wave_B_labels = standardized_value_labels,
+  Wave_C_labels = standardized_value_labels,
+  Wave_D_labels = standardized_value_labels,
+  Wave_E_labels = standardized_value_labels,
   Wave_2B_labels = standardized_value_labels,
   Wave_F_labels = standardized_value_labels,
   Wave_G_labels = standardized_value_labels,
@@ -139,9 +206,12 @@ value_labels_list <- list(
 
 var_types_vec <- c(flwd6 = "categorical", flwd7 = "categorical", flwdiff = "categorical")
 
-.lasa_fc_230 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "230", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "230", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "230", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "230", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_230 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

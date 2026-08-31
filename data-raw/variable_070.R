@@ -175,9 +175,12 @@ harmonized_labels <- c(
   sp97s8 = "IT support: other"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "socp01",
     "socp02",
     "socp03",
@@ -247,52 +250,8 @@ variable_labels_list <- list(
     "socp71",
     "socpr50",
     "socpyn"
-  )],
-    socp01 = "Association for the elderly",
-    socp02 = "Trade union, employers organisation",
-    socp03 = "Political party",
-    socp04 = "Church or religious organisation",
-    socp05 = "Neighbourhood organisation",
-    socp06 = "Organisation for women",
-    socp07 = "Organisation for helping the elderly",
-    socp08 = "Organisation with a social purpose",
-    socp09 = "Organisation for patient",
-    socp10 = "Organisation for singing, music or theatre",
-    socp11 = "Organisation for relaxation hobby",
-    socp12 = "Sportclub",
-    socp14 = "Visiting: Association for the elderly",
-    socp15 = "Visiting: Trade union, employers organisation",
-    socp16 = "Visiting: Political party",
-    socp17 = "Visiting: Church or religious organisation",
-    socp18 = "Visiting: Neighbourhood organisation",
-    socp19 = "Visiting: Organisation for women",
-    socp20 = "Visiting: Organisation for helping the elderly",
-    socp21 = "Visiting: Organisation with a social purpose",
-    socp22 = "Visiting: Organisation for patients",
-    socp23 = "Visiting: Organisation for singing, music or theatre",
-    socp24 = "Visiting: Organisation for relaxation hobby",
-    socp25 = "Visiting: Sportclub",
-    socp27 = "Visiting: Organisations all",
-    socp30 = "Participation: administrative minutes (total)",
-    socp33 = "Participation: volunteers work minutes (total)",
-    socp46 = "Cultural: museum",
-    socp47 = "Cultural: recreation",
-    socp48 = "Cultural: centrum",
-    socp49 = "Cultural: horeca",
-    socp51 = "Cultural: sport games",
-    socp52 = "Cultural: shopping",
-    socp54 = "Hobbies: minutes a day (total)",
-    socp56 = "Study: certified diploma",
-    socp57 = "Study: hobby",
-    socp58 = "Study: general knowledge",
-    socp60 = "Study: emancipation elderly",
-    socp67 = "Paid work: Age",
-    socp69 = "Volunteers work: Age",
-    socpr50 = "Cultural: sport self",
-    socpyn = "Involved in association"
   ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+  `C` = c(
     "socp01",
     "socp02",
     "socp03",
@@ -343,15 +302,8 @@ variable_labels_list <- list(
     "socp67",
     "socpr50",
     "socpyn"
-  )],
-    socp01 = "Association/organization for the elderly",
-    socp02 = "Trade union, employers organisation",
-    socp04 = "Church or religious organisation",
-    socp27 = "Visiting: Organisations all",
-    socp67 = "Paid work: Age"
   ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
+  `D` = c(
     "socp01",
     "socp02",
     "socp03",
@@ -402,15 +354,8 @@ variable_labels_list <- list(
     "socp67",
     "socpr50",
     "socpyn"
-  )],
-    socp01 = "Association/organization for the elderly",
-    socp02 = "Trade union, employers organisation",
-    socp04 = "Church or religious organisation",
-    socp27 = "Visiting: Organisations all",
-    socp67 = "Paid work: Age"
   ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
+  `E` = c(
     "rmso",
     "socp01",
     "socp02",
@@ -475,12 +420,8 @@ variable_labels_list <- list(
     "socp92",
     "socpr50",
     "socpyn"
-  )],
-    socp72 = "Personal computer: usage",
-    socp73 = "Personal computer: minutes/week"
   ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
+  `2B` = c(
     "rmso",
     "socp01",
     "socp02",
@@ -566,12 +507,8 @@ variable_labels_list <- list(
     "socp92",
     "socpr50",
     "socpyn"
-  )],
-    socp72 = "Personal computer: usage",
-    socp73 = "Personal computer: minutes/week"
   ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
+  `F` = c(
     "rmso",
     "socp01",
     "socp02",
@@ -657,12 +594,8 @@ variable_labels_list <- list(
     "socp92",
     "socpr50",
     "socpyn"
-  )],
-    socp72 = "Personal computer: usage",
-    socp73 = "Personal computer: minutes/week"
   ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
+  `G` = c(
     "altru1",
     "altru2",
     "altru3",
@@ -752,12 +685,8 @@ variable_labels_list <- list(
     "socp92",
     "socpr50",
     "socpyn"
-  )],
-    socp72 = "Personal computer: usage",
-    socp73 = "Personal computer: minutes/week"
   ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+  `H` = c(
     "rmso",
     "socp01",
     "socp02",
@@ -862,15 +791,8 @@ variable_labels_list <- list(
     "sp97s6",
     "sp97s7",
     "sp97s8"
-  )],
-    socp55 = "Study: yes/no",
-    socp72 = "Personal computer: usage",
-    socp73 = "Personal computer: minutes/week",
-    socp93 = "Mobile phone: usage",
-    socp94 = "Mobile phone usage: how"
   ),
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
+  `3B` = c(
     "rmso",
     "socp01",
     "socp02",
@@ -975,15 +897,8 @@ variable_labels_list <- list(
     "sp97s6",
     "sp97s7",
     "sp97s8"
-  )],
-    socp55 = "Study: yes/no",
-    socp72 = "Personal computer: usage",
-    socp73 = "Personal computer: minutes/week",
-    socp93 = "Mobile phone: usage",
-    socp94 = "Mobile phone usage: how"
   ),
-  Wave_MB_labels = .replace_labels(
-    harmonized_labels[c(
+  `MB` = c(
     "rmso",
     "socp01",
     "socp01n",
@@ -1008,17 +923,8 @@ variable_labels_list <- list(
     "socp72",
     "socp95",
     "socpyn"
-  )],
-    socp01 = "Organization for the elderly, employers organization",
-    socp04 = "Church, mosque or religious organization",
-    socp08 = "Action group or association with social aim",
-    socp10 = "Cultural organization",
-    socp11 = "Recreation, music or hobby club",
-    socp72 = "Personal computer: usage",
-    socpyn = "Active member or involved in organization"
   ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
+  `I` = c(
     "rmso",
     "socp01",
     "socp02",
@@ -1122,15 +1028,8 @@ variable_labels_list <- list(
     "sp97s6",
     "sp97s7",
     "sp97s8"
-  )],
-    socp55 = "Study: yes/no",
-    socp72 = "Personal computer: usage",
-    socp73 = "Personal computer: minutes/week",
-    socp93 = "Mobile phone: usage",
-    socp94 = "Mobile phone usage: how"
   ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
+  `J` = c(
     "rmso",
     "socp01",
     "socp02",
@@ -1234,7 +1133,127 @@ variable_labels_list <- list(
     "sp97s6",
     "sp97s7",
     "sp97s8"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
+    socp01 = "Association for the elderly",
+    socp02 = "Trade union, employers organisation",
+    socp03 = "Political party",
+    socp04 = "Church or religious organisation",
+    socp05 = "Neighbourhood organisation",
+    socp06 = "Organisation for women",
+    socp07 = "Organisation for helping the elderly",
+    socp08 = "Organisation with a social purpose",
+    socp09 = "Organisation for patient",
+    socp10 = "Organisation for singing, music or theatre",
+    socp11 = "Organisation for relaxation hobby",
+    socp12 = "Sportclub",
+    socp14 = "Visiting: Association for the elderly",
+    socp15 = "Visiting: Trade union, employers organisation",
+    socp16 = "Visiting: Political party",
+    socp17 = "Visiting: Church or religious organisation",
+    socp18 = "Visiting: Neighbourhood organisation",
+    socp19 = "Visiting: Organisation for women",
+    socp20 = "Visiting: Organisation for helping the elderly",
+    socp21 = "Visiting: Organisation with a social purpose",
+    socp22 = "Visiting: Organisation for patients",
+    socp23 = "Visiting: Organisation for singing, music or theatre",
+    socp24 = "Visiting: Organisation for relaxation hobby",
+    socp25 = "Visiting: Sportclub",
+    socp27 = "Visiting: Organisations all",
+    socp30 = "Participation: administrative minutes (total)",
+    socp33 = "Participation: volunteers work minutes (total)",
+    socp46 = "Cultural: museum",
+    socp47 = "Cultural: recreation",
+    socp48 = "Cultural: centrum",
+    socp49 = "Cultural: horeca",
+    socp51 = "Cultural: sport games",
+    socp52 = "Cultural: shopping",
+    socp54 = "Hobbies: minutes a day (total)",
+    socp56 = "Study: certified diploma",
+    socp57 = "Study: hobby",
+    socp58 = "Study: general knowledge",
+    socp60 = "Study: emancipation elderly",
+    socp67 = "Paid work: Age",
+    socp69 = "Volunteers work: Age",
+    socpr50 = "Cultural: sport self",
+    socpyn = "Involved in association"
+  ),
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
+    socp01 = "Association/organization for the elderly",
+    socp02 = "Trade union, employers organisation",
+    socp04 = "Church or religious organisation",
+    socp27 = "Visiting: Organisations all",
+    socp67 = "Paid work: Age"
+  ),
+  Wave_D_labels = .replace_labels(
+    harmonized_labels,
+    socp01 = "Association/organization for the elderly",
+    socp02 = "Trade union, employers organisation",
+    socp04 = "Church or religious organisation",
+    socp27 = "Visiting: Organisations all",
+    socp67 = "Paid work: Age"
+  ),
+  Wave_E_labels = .replace_labels(
+    harmonized_labels,
+    socp72 = "Personal computer: usage",
+    socp73 = "Personal computer: minutes/week"
+  ),
+  Wave_2B_labels = .replace_labels(
+    harmonized_labels,
+    socp72 = "Personal computer: usage",
+    socp73 = "Personal computer: minutes/week"
+  ),
+  Wave_F_labels = .replace_labels(
+    harmonized_labels,
+    socp72 = "Personal computer: usage",
+    socp73 = "Personal computer: minutes/week"
+  ),
+  Wave_G_labels = .replace_labels(
+    harmonized_labels,
+    socp72 = "Personal computer: usage",
+    socp73 = "Personal computer: minutes/week"
+  ),
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
+    socp55 = "Study: yes/no",
+    socp72 = "Personal computer: usage",
+    socp73 = "Personal computer: minutes/week",
+    socp93 = "Mobile phone: usage",
+    socp94 = "Mobile phone usage: how"
+  ),
+  Wave_3B_labels = .replace_labels(
+    harmonized_labels,
+    socp55 = "Study: yes/no",
+    socp72 = "Personal computer: usage",
+    socp73 = "Personal computer: minutes/week",
+    socp93 = "Mobile phone: usage",
+    socp94 = "Mobile phone usage: how"
+  ),
+  Wave_MB_labels = .replace_labels(
+    harmonized_labels,
+    socp01 = "Organization for the elderly, employers organization",
+    socp04 = "Church, mosque or religious organization",
+    socp08 = "Action group or association with social aim",
+    socp10 = "Cultural organization",
+    socp11 = "Recreation, music or hobby club",
+    socp72 = "Personal computer: usage",
+    socpyn = "Active member or involved in organization"
+  ),
+  Wave_I_labels = .replace_labels(
+    harmonized_labels,
+    socp55 = "Study: yes/no",
+    socp72 = "Personal computer: usage",
+    socp73 = "Personal computer: minutes/week",
+    socp93 = "Mobile phone: usage",
+    socp94 = "Mobile phone usage: how"
+  ),
+  Wave_J_labels = .replace_labels(
+    harmonized_labels,
     socp55 = "Study: yes/no",
     socp72 = "PC, laptop, tablet, smartphone: usage",
     socp73 = "PC, laptop, tablet, smartphone: minutes/week",
@@ -1263,11 +1282,20 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "mentioned",
+  `2` = "yes",
+  `3` = "a little applicable",
+  `4` = "not applicable"
+)
+
 standardized_value_labels <- list(
   altru1 = c(
     `-3` = "working for own well-being not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "does not apply to me at all",
     `2` = "does not apply to me",
     `3` = "applies to me a little",
@@ -1276,8 +1304,7 @@ standardized_value_labels <- list(
   ),
   altru2 = c(
     `-3` = "working for own well-being not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "does not apply to me at all",
     `2` = "does not apply to me",
     `3` = "applies to me a little",
@@ -1286,8 +1313,7 @@ standardized_value_labels <- list(
   ),
   altru3 = c(
     `-3` = "working for own well-being not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "does not apply to me at all",
     `2` = "does not apply to me",
     `3` = "applies to me a little",
@@ -1296,8 +1322,7 @@ standardized_value_labels <- list(
   ),
   altru4 = c(
     `-3` = "working for own well-being not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "does not apply to me at all",
     `2` = "does not apply to me",
     `3` = "applies to me a little",
@@ -1306,8 +1331,7 @@ standardized_value_labels <- list(
   ),
   altru5 = c(
     `-3` = "working for own well-being not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "does not apply to me at all",
     `2` = "does not apply to me",
     `3` = "applies to me a little",
@@ -1317,218 +1341,167 @@ standardized_value_labels <- list(
   rmso = c(`-2` = "valid data", `1` = "not available, short interview", `2` = "interview terminated"),
   socp01 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp01n = c(
     `-3` = "many dutch members: organization for the elderly, employers organization not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "mainly dutch members",
     `2` = "many dutch members",
     `3` = "little to none dutch members"
   ),
   socp02 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp03 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp04 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp04n = c(
     `-3` = "many dutch members: church, mosque or religious organization not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "mainly dutch members",
     `2` = "many dutch members",
     `3` = "little to none dutch members"
   ),
   socp05 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp05n = c(
     `-3` = "many dutch members: neighbourhood association not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "mainly dutch members",
     `2` = "many dutch members",
     `3` = "little to none dutch members"
   ),
   socp06 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp06n = c(
     `-3` = "many dutch members: womens association, womens circle not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "mainly dutch members",
     `2` = "many dutch members",
     `3` = "little to none dutch members"
   ),
   socp07 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp08 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp08n = c(
     `-3` = "many dutch members: action group or association with social aim not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "mainly dutch members",
     `2` = "many dutch members",
     `3` = "little to none dutch members"
   ),
   socp09 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp09n = c(
     `-3` = "many dutch members: patients association not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "mainly dutch members",
     `2` = "many dutch members",
     `3` = "little to none dutch members"
   ),
   socp10 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp10n = c(
     `-3` = "many dutch members: cultural organization not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "mainly dutch members",
     `2` = "many dutch members",
     `3` = "little to none dutch members"
   ),
   socp11 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp11n = c(
     `-3` = "many dutch members: recreation, music or hobby club not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "mainly dutch members",
     `2` = "many dutch members",
     `3` = "little to none dutch members"
   ),
   socp12 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp12n = c(
     `-3` = "many dutch members: sporting club not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "mainly dutch members",
     `2` = "many dutch members",
     `3` = "little to none dutch members"
   ),
   socp13 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp13n = c(
     `-3` = "many dutch members: other not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "mainly dutch members",
     `2` = "many dutch members",
     `3` = "little to none dutch members"
   ),
   socp13x = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "- to be coded -",
     `1` = "garden & pets",
     `2` = "cult.hist. ass.",
@@ -1537,685 +1510,458 @@ standardized_value_labels <- list(
   ),
   socp14 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp15 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp16 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp17 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp18 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp19 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp20 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp21 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp22 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp23 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp24 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp25 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp26 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp27 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "does not visit"
   ),
   socp28 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "does not visit",
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp30 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-4", "-3", "-2", "-1")]
   ),
   socp31 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp33 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-4", "-3", "-2", "-1")]
   ),
   socp34 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp35 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp36 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp37 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp38 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp39 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp40 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp41 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp42 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp43 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp44 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp44b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp45 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp46 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "does not visit"
   ),
   socp47 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "does not visit"
   ),
   socp48 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "does not visit"
   ),
   socp49 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "does not visit"
   ),
   socp50 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   socp51 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "does not visit"
   ),
   socp52 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "does not visit"
   ),
   socp54 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-4", "-3", "-2", "-1")]
   ),
   socp55 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp56 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp57 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp58 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp59 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp60 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp61 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "coding category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   socp62 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp63 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp64 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp65 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "very applicable",
     `2` = "applicable",
-    `3` = "a little applicable",
-    `4` = "not applicable"
+    default_answer_labels[c("3", "4")]
   ),
   socp66 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "agree",
     `2` = "disagree",
     `3` = "no opinion/don't know"
   ),
   socp67 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "dependent on person",
     `3` = "not available, wrong skip"
   ),
   socp68 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "agree",
     `2` = "disagree",
     `3` = "no opinion/don't know"
   ),
   socp69 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "dependent on person"
   ),
   socp70 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "agree",
     `2` = "disagree",
     `3` = "no opinion/don't know"
   ),
   socp71 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "dependent on person"
   ),
   socp72 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp73 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   socp74 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   socp75 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   socp76 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   socp77 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   socp78 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   socp79 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   socp80 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "- to be coded -"
   ),
   socp81 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   socp82 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   socp83 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   socp84 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   socp85 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   socp86 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   socp87 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   socp88 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   socp89 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "- to be coded -"
   ),
   socp90 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   socp91 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "never",
     `2` = "rarely",
     `3` = "sometimes",
     `4` = "often"
   ),
   socp92 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "never",
     `2` = "rarely",
     `3` = "sometimes",
     `4` = "often"
   ),
   socp93 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp94 = c(
     `-3` = "often not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "daily",
     `2` = "a few times a week",
     `3` = "a few times a month",
@@ -2223,16 +1969,12 @@ standardized_value_labels <- list(
     `5` = "less than a few times a year"
   ),
   socp95 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp96 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "daily",
     `2` = "a few times a week",
     `3` = "a few times a month",
@@ -2241,14 +1983,13 @@ standardized_value_labels <- list(
   ),
   socp97 = c(
     `-2` = "not available, wrong skip)-3), not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   socp98 = c(
     `-3` = "often not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "daily",
     `2` = "a few times a week",
     `3` = "a few times a month",
@@ -2256,107 +1997,86 @@ standardized_value_labels <- list(
     `5` = "less than a few times a year"
   ),
   socp99 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes",
+    default_answer_labels[c("2")],
     `3` = "not allowed to vote"
   ),
   socpr50 = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "does not visit"
   ),
   socpyn = c(
     `-5` = "interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   sp72n1 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp72n10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp72n11 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp72n12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp72n2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp72n3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp72n4 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp72n5 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp72n6 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp72n7 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp72n8 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp72n9 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp93n1 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp93n11 = stats::setNames(character(0), character(0)),
   sp93n12 = stats::setNames(character(0), character(0)),
@@ -2371,238 +2091,135 @@ standardized_value_labels <- list(
   sp93n8 = stats::setNames(character(0), character(0)),
   sp93n9 = stats::setNames(character(0), character(0)),
   sp95f1 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f11 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f13 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f14 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f15 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f16 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f17 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f4 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f5 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f6 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f7 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f8 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp95f9 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp97s1 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp97s2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp97s3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp97s4 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp97s5 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp97s6 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp97s7 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   sp97s8 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   )
 )
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "socp01",
-    "socp02",
-    "socp03",
-    "socp04",
-    "socp05",
-    "socp06",
-    "socp07",
-    "socp08",
-    "socp09",
-    "socp10",
-    "socp11",
-    "socp12",
-    "socp13",
-    "socp14",
-    "socp15",
-    "socp16",
-    "socp17",
-    "socp18",
-    "socp19",
-    "socp20",
-    "socp21",
-    "socp22",
-    "socp23",
-    "socp24",
-    "socp25",
-    "socp26",
-    "socp27",
-    "socp28",
-    "socp30",
-    "socp31",
-    "socp33",
-    "socp34",
-    "socp35",
-    "socp36",
-    "socp37",
-    "socp38",
-    "socp39",
-    "socp40",
-    "socp41",
-    "socp42",
-    "socp43",
-    "socp44",
-    "socp45",
-    "socp46",
-    "socp47",
-    "socp48",
-    "socp49",
-    "socp51",
-    "socp52",
-    "socp54",
-    "socp55",
-    "socp56",
-    "socp57",
-    "socp58",
-    "socp59",
-    "socp60",
-    "socp61",
-    "socp62",
-    "socp63",
-    "socp64",
-    "socp65",
-    "socp66",
-    "socp67",
-    "socp68",
-    "socp69",
-    "socp70",
-    "socp71",
-    "socpr50",
-    "socpyn"
-  )],
+    standardized_value_labels,
     socp01 = c(
     `-5` = "interview broken off",
     `-4` = "no answer, short version",
@@ -3181,58 +2798,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "socp01",
-    "socp02",
-    "socp03",
-    "socp04",
-    "socp05",
-    "socp06",
-    "socp07",
-    "socp08",
-    "socp09",
-    "socp10",
-    "socp11",
-    "socp12",
-    "socp13",
-    "socp13x",
-    "socp14",
-    "socp15",
-    "socp16",
-    "socp17",
-    "socp18",
-    "socp19",
-    "socp20",
-    "socp21",
-    "socp22",
-    "socp23",
-    "socp24",
-    "socp25",
-    "socp26",
-    "socp27",
-    "socp28",
-    "socp30",
-    "socp31",
-    "socp33",
-    "socp46",
-    "socp47",
-    "socp48",
-    "socp49",
-    "socp51",
-    "socp52",
-    "socp54",
-    "socp55",
-    "socp56",
-    "socp57",
-    "socp58",
-    "socp59",
-    "socp60",
-    "socp61",
-    "socp66",
-    "socp67",
-    "socpr50",
-    "socpyn"
-  )],
+    standardized_value_labels,
     socp01 = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see C/DSOCPYN",
@@ -3326,9 +2892,7 @@ value_labels_list <- list(
   ),
     socp13x = .replace_labels(
     standardized_value_labels$socp13x,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DSOCP13",
-    `-1` = "na, asked"
+    `-2` = "na, see C/DSOCP13"
   ),
     socp14 = c(
     `-3` = "na, wrong skip",
@@ -3518,58 +3082,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "socp01",
-    "socp02",
-    "socp03",
-    "socp04",
-    "socp05",
-    "socp06",
-    "socp07",
-    "socp08",
-    "socp09",
-    "socp10",
-    "socp11",
-    "socp12",
-    "socp13",
-    "socp13x",
-    "socp14",
-    "socp15",
-    "socp16",
-    "socp17",
-    "socp18",
-    "socp19",
-    "socp20",
-    "socp21",
-    "socp22",
-    "socp23",
-    "socp24",
-    "socp25",
-    "socp26",
-    "socp27",
-    "socp28",
-    "socp30",
-    "socp31",
-    "socp33",
-    "socp46",
-    "socp47",
-    "socp48",
-    "socp49",
-    "socp51",
-    "socp52",
-    "socp54",
-    "socp55",
-    "socp56",
-    "socp57",
-    "socp58",
-    "socp59",
-    "socp60",
-    "socp61",
-    "socp66",
-    "socp67",
-    "socpr50",
-    "socpyn"
-  )],
+    standardized_value_labels,
     socp01 = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see C/DSOCPYN",
@@ -3663,9 +3176,7 @@ value_labels_list <- list(
   ),
     socp13x = .replace_labels(
     standardized_value_labels$socp13x,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DSOCP13",
-    `-1` = "na, asked"
+    `-2` = "na, see C/DSOCP13"
   ),
     socp14 = c(
     `-3` = "na, wrong skip",
@@ -3855,72 +3366,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "rmso",
-    "socp01",
-    "socp02",
-    "socp03",
-    "socp04",
-    "socp05",
-    "socp06",
-    "socp07",
-    "socp08",
-    "socp09",
-    "socp10",
-    "socp11",
-    "socp12",
-    "socp13",
-    "socp13x",
-    "socp14",
-    "socp15",
-    "socp16",
-    "socp17",
-    "socp18",
-    "socp19",
-    "socp20",
-    "socp21",
-    "socp22",
-    "socp23",
-    "socp24",
-    "socp25",
-    "socp26",
-    "socp27",
-    "socp28",
-    "socp30",
-    "socp31",
-    "socp33",
-    "socp46",
-    "socp47",
-    "socp48",
-    "socp49",
-    "socp51",
-    "socp52",
-    "socp54",
-    "socp55",
-    "socp72",
-    "socp73",
-    "socp74",
-    "socp75",
-    "socp76",
-    "socp77",
-    "socp78",
-    "socp79",
-    "socp80",
-    "socp81",
-    "socp82",
-    "socp83",
-    "socp84",
-    "socp85",
-    "socp86",
-    "socp87",
-    "socp88",
-    "socp89",
-    "socp90",
-    "socp91",
-    "socp92",
-    "socpr50",
-    "socpyn"
-  )],
+    standardized_value_labels,
     rmso = c(`-2` = "valid data", `1` = "short interview"),
     socp01 = c(
     `-3` = "na, wrong skip",
@@ -4015,9 +3461,7 @@ value_labels_list <- list(
   ),
     socp13x = .replace_labels(
     standardized_value_labels$socp13x,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP13",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP13"
   ),
     socp14 = c(
     `-3` = "na, wrong skip",
@@ -4143,221 +3587,93 @@ value_labels_list <- list(
     socp55 = c(`-3` = "na, wrong skip", `-2` = "na, see ERMSO", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     socp72 = .replace_labels(
     standardized_value_labels$socp72,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see ERMSO"
   ),
     socp73 = .replace_labels(
     standardized_value_labels$socp73,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP72"
   ),
     socp74 = .replace_labels(
     standardized_value_labels$socp74,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP72"
   ),
     socp75 = .replace_labels(
     standardized_value_labels$socp75,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP72"
   ),
     socp76 = .replace_labels(
     standardized_value_labels$socp76,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP72"
   ),
     socp77 = .replace_labels(
     standardized_value_labels$socp77,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP72"
   ),
     socp78 = .replace_labels(
     standardized_value_labels$socp78,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP72"
   ),
     socp79 = .replace_labels(
     standardized_value_labels$socp79,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP72"
   ),
     socp80 = .replace_labels(
     standardized_value_labels$socp80,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP79",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP79"
   ),
     socp81 = .replace_labels(
     standardized_value_labels$socp81,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP78"
   ),
     socp82 = .replace_labels(
     standardized_value_labels$socp82,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP78"
   ),
     socp83 = .replace_labels(
     standardized_value_labels$socp83,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP78"
   ),
     socp84 = .replace_labels(
     standardized_value_labels$socp84,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP78"
   ),
     socp85 = .replace_labels(
     standardized_value_labels$socp85,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP78"
   ),
     socp86 = .replace_labels(
     standardized_value_labels$socp86,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP78"
   ),
     socp87 = .replace_labels(
     standardized_value_labels$socp87,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP78"
   ),
     socp88 = .replace_labels(
     standardized_value_labels$socp88,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP78"
   ),
     socp89 = .replace_labels(
     standardized_value_labels$socp89,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP88",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP88"
   ),
     socp90 = .replace_labels(
     standardized_value_labels$socp90,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP78"
   ),
     socp91 = .replace_labels(
     standardized_value_labels$socp91,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP78"
   ),
     socp92 = .replace_labels(
     standardized_value_labels$socp92,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ESOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see ESOCP78"
   ),
     socpr50 = c(`-3` = "na, wrong skip", `-2` = "na, see ERMSO", `-1` = "na, asked"),
     socpyn = c(`-3` = "na, wrong skip", `-2` = "na, see ERMSO", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "rmso",
-    "socp01",
-    "socp02",
-    "socp03",
-    "socp04",
-    "socp05",
-    "socp06",
-    "socp07",
-    "socp08",
-    "socp09",
-    "socp10",
-    "socp11",
-    "socp12",
-    "socp13",
-    "socp13x",
-    "socp14",
-    "socp15",
-    "socp16",
-    "socp17",
-    "socp18",
-    "socp19",
-    "socp20",
-    "socp21",
-    "socp22",
-    "socp23",
-    "socp24",
-    "socp25",
-    "socp26",
-    "socp27",
-    "socp28",
-    "socp30",
-    "socp31",
-    "socp33",
-    "socp34",
-    "socp35",
-    "socp36",
-    "socp37",
-    "socp38",
-    "socp39",
-    "socp40",
-    "socp41",
-    "socp42",
-    "socp43",
-    "socp44",
-    "socp44b",
-    "socp45",
-    "socp46",
-    "socp47",
-    "socp48",
-    "socp49",
-    "socp51",
-    "socp52",
-    "socp54",
-    "socp55",
-    "socp56",
-    "socp57",
-    "socp58",
-    "socp59",
-    "socp60",
-    "socp61",
-    "socp66",
-    "socp67",
-    "socp72",
-    "socp73",
-    "socp74",
-    "socp75",
-    "socp76",
-    "socp77",
-    "socp78",
-    "socp79",
-    "socp80",
-    "socp81",
-    "socp82",
-    "socp83",
-    "socp84",
-    "socp85",
-    "socp86",
-    "socp87",
-    "socp88",
-    "socp89",
-    "socp90",
-    "socp91",
-    "socp92",
-    "socpr50",
-    "socpyn"
-  )],
+    standardized_value_labels,
     rmso = c(`-2` = "valid data", `1` = "short interview"),
     socp01 = c(
     `-3` = "na, wrong skip",
@@ -4452,9 +3768,7 @@ value_labels_list <- list(
   ),
     socp13x = .replace_labels(
     standardized_value_labels$socp13x,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP13",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP13"
   ),
     socp14 = c(
     `-3` = "na, wrong skip",
@@ -4671,9 +3985,7 @@ value_labels_list <- list(
   ),
     socp44b = .replace_labels(
     standardized_value_labels$socp44b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCPYN,14-33",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCPYN,14-33"
   ),
     socp45 = c(
     `-3` = "na, wrong skip",
@@ -4756,129 +4068,87 @@ value_labels_list <- list(
   ),
     socp72 = .replace_labels(
     standardized_value_labels$socp72,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FRMSO"
   ),
     socp73 = .replace_labels(
     standardized_value_labels$socp73,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP72"
   ),
     socp74 = .replace_labels(
     standardized_value_labels$socp74,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP72"
   ),
     socp75 = .replace_labels(
     standardized_value_labels$socp75,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP72"
   ),
     socp76 = .replace_labels(
     standardized_value_labels$socp76,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP72"
   ),
     socp77 = .replace_labels(
     standardized_value_labels$socp77,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP72"
   ),
     socp78 = .replace_labels(
     standardized_value_labels$socp78,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP72"
   ),
     socp79 = .replace_labels(
     standardized_value_labels$socp79,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP72"
   ),
     socp80 = .replace_labels(
     standardized_value_labels$socp80,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP79",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP79"
   ),
     socp81 = .replace_labels(
     standardized_value_labels$socp81,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp82 = .replace_labels(
     standardized_value_labels$socp82,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp83 = .replace_labels(
     standardized_value_labels$socp83,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp84 = .replace_labels(
     standardized_value_labels$socp84,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp85 = .replace_labels(
     standardized_value_labels$socp85,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp86 = .replace_labels(
     standardized_value_labels$socp86,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp87 = .replace_labels(
     standardized_value_labels$socp87,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp88 = .replace_labels(
     standardized_value_labels$socp88,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp89 = .replace_labels(
     standardized_value_labels$socp89,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP88",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP88"
   ),
     socp90 = .replace_labels(
     standardized_value_labels$socp90,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp91 = .replace_labels(
     standardized_value_labels$socp91,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp92 = .replace_labels(
     standardized_value_labels$socp92,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socpr50 = c(`-3` = "na, wrong skip", `-2` = "na, see B/FRMSO", `-1` = "na, asked"),
     socpyn = c(
@@ -4890,93 +4160,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "rmso",
-    "socp01",
-    "socp02",
-    "socp03",
-    "socp04",
-    "socp05",
-    "socp06",
-    "socp07",
-    "socp08",
-    "socp09",
-    "socp10",
-    "socp11",
-    "socp12",
-    "socp13",
-    "socp13x",
-    "socp14",
-    "socp15",
-    "socp16",
-    "socp17",
-    "socp18",
-    "socp19",
-    "socp20",
-    "socp21",
-    "socp22",
-    "socp23",
-    "socp24",
-    "socp25",
-    "socp26",
-    "socp27",
-    "socp28",
-    "socp30",
-    "socp31",
-    "socp33",
-    "socp34",
-    "socp35",
-    "socp36",
-    "socp37",
-    "socp38",
-    "socp39",
-    "socp40",
-    "socp41",
-    "socp42",
-    "socp43",
-    "socp44",
-    "socp44b",
-    "socp45",
-    "socp46",
-    "socp47",
-    "socp48",
-    "socp49",
-    "socp51",
-    "socp52",
-    "socp54",
-    "socp55",
-    "socp56",
-    "socp57",
-    "socp58",
-    "socp59",
-    "socp60",
-    "socp61",
-    "socp66",
-    "socp67",
-    "socp72",
-    "socp73",
-    "socp74",
-    "socp75",
-    "socp76",
-    "socp77",
-    "socp78",
-    "socp79",
-    "socp80",
-    "socp81",
-    "socp82",
-    "socp83",
-    "socp84",
-    "socp85",
-    "socp86",
-    "socp87",
-    "socp88",
-    "socp89",
-    "socp90",
-    "socp91",
-    "socp92",
-    "socpr50",
-    "socpyn"
-  )],
+    standardized_value_labels,
     rmso = c(`-2` = "valid data", `1` = "short interview"),
     socp01 = c(
     `-3` = "na, wrong skip",
@@ -5071,9 +4255,7 @@ value_labels_list <- list(
   ),
     socp13x = .replace_labels(
     standardized_value_labels$socp13x,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP13",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP13"
   ),
     socp14 = c(
     `-3` = "na, wrong skip",
@@ -5290,9 +4472,7 @@ value_labels_list <- list(
   ),
     socp44b = .replace_labels(
     standardized_value_labels$socp44b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCPYN,14-33",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCPYN,14-33"
   ),
     socp45 = c(
     `-3` = "na, wrong skip",
@@ -5375,129 +4555,87 @@ value_labels_list <- list(
   ),
     socp72 = .replace_labels(
     standardized_value_labels$socp72,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FRMSO"
   ),
     socp73 = .replace_labels(
     standardized_value_labels$socp73,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP72"
   ),
     socp74 = .replace_labels(
     standardized_value_labels$socp74,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP72"
   ),
     socp75 = .replace_labels(
     standardized_value_labels$socp75,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP72"
   ),
     socp76 = .replace_labels(
     standardized_value_labels$socp76,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP72"
   ),
     socp77 = .replace_labels(
     standardized_value_labels$socp77,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP72"
   ),
     socp78 = .replace_labels(
     standardized_value_labels$socp78,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP72"
   ),
     socp79 = .replace_labels(
     standardized_value_labels$socp79,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP72"
   ),
     socp80 = .replace_labels(
     standardized_value_labels$socp80,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP79",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP79"
   ),
     socp81 = .replace_labels(
     standardized_value_labels$socp81,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp82 = .replace_labels(
     standardized_value_labels$socp82,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp83 = .replace_labels(
     standardized_value_labels$socp83,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp84 = .replace_labels(
     standardized_value_labels$socp84,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp85 = .replace_labels(
     standardized_value_labels$socp85,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp86 = .replace_labels(
     standardized_value_labels$socp86,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp87 = .replace_labels(
     standardized_value_labels$socp87,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp88 = .replace_labels(
     standardized_value_labels$socp88,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp89 = .replace_labels(
     standardized_value_labels$socp89,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP88",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP88"
   ),
     socp90 = .replace_labels(
     standardized_value_labels$socp90,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp91 = .replace_labels(
     standardized_value_labels$socp91,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socp92 = .replace_labels(
     standardized_value_labels$socp92,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/FSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see B/FSOCP78"
   ),
     socpr50 = c(`-3` = "na, wrong skip", `-2` = "na, see B/FRMSO", `-1` = "na, asked"),
     socpyn = c(
@@ -5509,126 +4647,31 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "altru1",
-    "altru2",
-    "altru3",
-    "altru4",
-    "altru5",
-    "rmso",
-    "socp01",
-    "socp02",
-    "socp03",
-    "socp04",
-    "socp05",
-    "socp06",
-    "socp07",
-    "socp08",
-    "socp09",
-    "socp10",
-    "socp11",
-    "socp12",
-    "socp13",
-    "socp14",
-    "socp15",
-    "socp16",
-    "socp17",
-    "socp18",
-    "socp19",
-    "socp20",
-    "socp21",
-    "socp22",
-    "socp23",
-    "socp24",
-    "socp25",
-    "socp26",
-    "socp27",
-    "socp28",
-    "socp30",
-    "socp31",
-    "socp33",
-    "socp34",
-    "socp35",
-    "socp36",
-    "socp37",
-    "socp38",
-    "socp39",
-    "socp40",
-    "socp41",
-    "socp42",
-    "socp43",
-    "socp44",
-    "socp44b",
-    "socp45",
-    "socp46",
-    "socp47",
-    "socp48",
-    "socp49",
-    "socp51",
-    "socp52",
-    "socp54",
-    "socp55",
-    "socp56",
-    "socp57",
-    "socp58",
-    "socp59",
-    "socp60",
-    "socp61",
-    "socp66",
-    "socp67",
-    "socp72",
-    "socp73",
-    "socp74",
-    "socp75",
-    "socp76",
-    "socp77",
-    "socp78",
-    "socp79",
-    "socp80",
-    "socp81",
-    "socp82",
-    "socp83",
-    "socp84",
-    "socp85",
-    "socp86",
-    "socp87",
-    "socp88",
-    "socp89",
-    "socp90",
-    "socp91",
-    "socp92",
-    "socpr50",
-    "socpyn"
-  )],
+    standardized_value_labels,
     altru1 = .replace_labels(
     standardized_value_labels$altru1,
     `-3` = "working for own well-being na, wrong skip",
-    `-2` = "na, see GRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see GRMSO"
   ),
     altru2 = .replace_labels(
     standardized_value_labels$altru2,
     `-3` = "working for own well-being na, wrong skip",
-    `-2` = "na, see GRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see GRMSO"
   ),
     altru3 = .replace_labels(
     standardized_value_labels$altru3,
     `-3` = "working for own well-being na, wrong skip",
-    `-2` = "na, see GRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see GRMSO"
   ),
     altru4 = .replace_labels(
     standardized_value_labels$altru4,
     `-3` = "working for own well-being na, wrong skip",
-    `-2` = "na, see GRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see GRMSO"
   ),
     altru5 = .replace_labels(
     standardized_value_labels$altru5,
     `-3` = "working for own well-being na, wrong skip",
-    `-2` = "na, see GRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see GRMSO"
   ),
     rmso = c(`-2` = "valid data", `1` = "short interview"),
     socp01 = c(
@@ -5937,9 +4980,7 @@ value_labels_list <- list(
   ),
     socp44b = .replace_labels(
     standardized_value_labels$socp44b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCPYN,14-33",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCPYN,14-33"
   ),
     socp45 = c(
     `-3` = "na, wrong skip",
@@ -6016,229 +5057,93 @@ value_labels_list <- list(
   ),
     socp72 = .replace_labels(
     standardized_value_labels$socp72,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see GRMSO"
   ),
     socp73 = .replace_labels(
     standardized_value_labels$socp73,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP72"
   ),
     socp74 = .replace_labels(
     standardized_value_labels$socp74,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP72"
   ),
     socp75 = .replace_labels(
     standardized_value_labels$socp75,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP72"
   ),
     socp76 = .replace_labels(
     standardized_value_labels$socp76,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP72"
   ),
     socp77 = .replace_labels(
     standardized_value_labels$socp77,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP72"
   ),
     socp78 = .replace_labels(
     standardized_value_labels$socp78,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP72"
   ),
     socp79 = .replace_labels(
     standardized_value_labels$socp79,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP72"
   ),
     socp80 = .replace_labels(
     standardized_value_labels$socp80,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP79",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP79"
   ),
     socp81 = .replace_labels(
     standardized_value_labels$socp81,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP78"
   ),
     socp82 = .replace_labels(
     standardized_value_labels$socp82,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP78"
   ),
     socp83 = .replace_labels(
     standardized_value_labels$socp83,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP78"
   ),
     socp84 = .replace_labels(
     standardized_value_labels$socp84,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP78"
   ),
     socp85 = .replace_labels(
     standardized_value_labels$socp85,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP78"
   ),
     socp86 = .replace_labels(
     standardized_value_labels$socp86,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP78"
   ),
     socp87 = .replace_labels(
     standardized_value_labels$socp87,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP78"
   ),
     socp88 = .replace_labels(
     standardized_value_labels$socp88,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP78"
   ),
     socp89 = .replace_labels(
     standardized_value_labels$socp89,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP88",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP88"
   ),
     socp90 = .replace_labels(
     standardized_value_labels$socp90,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP78"
   ),
     socp91 = .replace_labels(
     standardized_value_labels$socp91,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP78"
   ),
     socp92 = .replace_labels(
     standardized_value_labels$socp92,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GSOCP78",
-    `-1` = "na, asked"
+    `-2` = "na, see GSOCP78"
   ),
     socpr50 = c(`-3` = "na, wrong skip", `-2` = "na, see GRMSO", `-1` = "na, asked"),
     socpyn = c(`-3` = "na, wrong skip", `-2` = "na, see GRMSO", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "rmso",
-    "socp01",
-    "socp02",
-    "socp03",
-    "socp04",
-    "socp05",
-    "socp06",
-    "socp07",
-    "socp08",
-    "socp09",
-    "socp10",
-    "socp11",
-    "socp12",
-    "socp13",
-    "socp14",
-    "socp15",
-    "socp16",
-    "socp17",
-    "socp18",
-    "socp19",
-    "socp20",
-    "socp21",
-    "socp22",
-    "socp23",
-    "socp24",
-    "socp25",
-    "socp26",
-    "socp27",
-    "socp28",
-    "socp30",
-    "socp31",
-    "socp33",
-    "socp46",
-    "socp47",
-    "socp48",
-    "socp49",
-    "socp50",
-    "socp51",
-    "socp52",
-    "socp55",
-    "socp56",
-    "socp57",
-    "socp58",
-    "socp59",
-    "socp60",
-    "socp61",
-    "socp66",
-    "socp67",
-    "socp68",
-    "socp69",
-    "socp72",
-    "socp73",
-    "socp93",
-    "socp94",
-    "socp95",
-    "socp96",
-    "socp98",
-    "socp99",
-    "socpyn",
-    "sp72n1",
-    "sp72n10",
-    "sp72n11",
-    "sp72n12",
-    "sp72n2",
-    "sp72n3",
-    "sp72n4",
-    "sp72n5",
-    "sp72n6",
-    "sp72n7",
-    "sp72n8",
-    "sp72n9",
-    "sp93n1",
-    "sp95f1",
-    "sp95f10",
-    "sp95f11",
-    "sp95f12",
-    "sp95f13",
-    "sp95f2",
-    "sp95f3",
-    "sp95f4",
-    "sp95f5",
-    "sp95f6",
-    "sp95f7",
-    "sp95f8",
-    "sp95f9",
-    "sp97s1",
-    "sp97s2",
-    "sp97s3",
-    "sp97s4",
-    "sp97s5",
-    "sp97s6",
-    "sp97s7",
-    "sp97s8"
-  )],
+    standardized_value_labels,
     rmso = .replace_labels(
     standardized_value_labels$rmso,
     `1` = "short interview"
@@ -6449,9 +5354,7 @@ value_labels_list <- list(
     socp49 = c(`-3` = "na, wrong skip", `-2` = "na, see H/B/IRMSO", `-1` = "na, asked"),
     socp50 = .replace_labels(
     standardized_value_labels$socp50,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/IRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/IRMSO"
   ),
     socp51 = c(`-3` = "na, wrong skip", `-2` = "na, see H/B/IRMSO", `-1` = "na, asked"),
     socp52 = c(`-3` = "na, wrong skip", `-2` = "na, see H/B/IRMSO", `-1` = "na, asked"),
@@ -6534,51 +5437,37 @@ value_labels_list <- list(
   ),
     socp72 = .replace_labels(
     standardized_value_labels$socp72,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/IRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/IRMSO"
   ),
     socp73 = .replace_labels(
     standardized_value_labels$socp73,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/ISOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/ISOCP72"
   ),
     socp93 = .replace_labels(
     standardized_value_labels$socp93,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/IRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/IRMSO"
   ),
     socp94 = .replace_labels(
     standardized_value_labels$socp94,
     `-3` = "often na, wrong skip",
-    `-2` = "na, see H/B/ISOCP93",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/ISOCP93"
   ),
     socp95 = .replace_labels(
     standardized_value_labels$socp95,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/IRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/IRMSO"
   ),
     socp96 = .replace_labels(
     standardized_value_labels$socp96,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/ISP95F6",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/ISP95F6"
   ),
     socp98 = .replace_labels(
     standardized_value_labels$socp98,
     `-3` = "often na, wrong skip",
-    `-2` = "na, see H/B/ISOCP97",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/ISOCP97"
   ),
     socp99 = .replace_labels(
     standardized_value_labels$socp99,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/BRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see H/BRMSO"
   ),
     socpyn = c(
     `-3` = "na, wrong skip",
@@ -6589,132 +5478,106 @@ value_labels_list <- list(
   ),
     sp72n1 = .replace_labels(
     standardized_value_labels$sp72n1,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n10 = .replace_labels(
     standardized_value_labels$sp72n10,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n11 = .replace_labels(
     standardized_value_labels$sp72n11,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n12 = .replace_labels(
     standardized_value_labels$sp72n12,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n2 = .replace_labels(
     standardized_value_labels$sp72n2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n3 = .replace_labels(
     standardized_value_labels$sp72n3,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n4 = .replace_labels(
     standardized_value_labels$sp72n4,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n5 = .replace_labels(
     standardized_value_labels$sp72n5,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n6 = .replace_labels(
     standardized_value_labels$sp72n6,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n7 = .replace_labels(
     standardized_value_labels$sp72n7,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n8 = .replace_labels(
     standardized_value_labels$sp72n8,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n9 = .replace_labels(
     standardized_value_labels$sp72n9,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp93n1 = .replace_labels(
     standardized_value_labels$sp93n1,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP93"
   ),
     sp95f1 = .replace_labels(
     standardized_value_labels$sp95f1,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f10 = .replace_labels(
     standardized_value_labels$sp95f10,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f11 = .replace_labels(
     standardized_value_labels$sp95f11,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f12 = .replace_labels(
     standardized_value_labels$sp95f12,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f13 = .replace_labels(
     standardized_value_labels$sp95f13,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f2 = .replace_labels(
     standardized_value_labels$sp95f2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f3 = .replace_labels(
     standardized_value_labels$sp95f3,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f4 = .replace_labels(
     standardized_value_labels$sp95f4,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f5 = .replace_labels(
     standardized_value_labels$sp95f5,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f6 = .replace_labels(
     standardized_value_labels$sp95f6,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f7 = .replace_labels(
     standardized_value_labels$sp95f7,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f8 = .replace_labels(
     standardized_value_labels$sp95f8,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f9 = .replace_labels(
     standardized_value_labels$sp95f9,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp97s1 = c(
@@ -6767,101 +5630,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "rmso",
-    "socp01",
-    "socp02",
-    "socp03",
-    "socp04",
-    "socp05",
-    "socp06",
-    "socp07",
-    "socp08",
-    "socp09",
-    "socp10",
-    "socp11",
-    "socp12",
-    "socp13",
-    "socp14",
-    "socp15",
-    "socp16",
-    "socp17",
-    "socp18",
-    "socp19",
-    "socp20",
-    "socp21",
-    "socp22",
-    "socp23",
-    "socp24",
-    "socp25",
-    "socp26",
-    "socp27",
-    "socp28",
-    "socp30",
-    "socp31",
-    "socp33",
-    "socp46",
-    "socp47",
-    "socp48",
-    "socp49",
-    "socp50",
-    "socp51",
-    "socp52",
-    "socp55",
-    "socp56",
-    "socp57",
-    "socp58",
-    "socp59",
-    "socp60",
-    "socp61",
-    "socp66",
-    "socp67",
-    "socp68",
-    "socp69",
-    "socp72",
-    "socp73",
-    "socp93",
-    "socp94",
-    "socp95",
-    "socp96",
-    "socp98",
-    "socp99",
-    "socpyn",
-    "sp72n1",
-    "sp72n10",
-    "sp72n11",
-    "sp72n12",
-    "sp72n2",
-    "sp72n3",
-    "sp72n4",
-    "sp72n5",
-    "sp72n6",
-    "sp72n7",
-    "sp72n8",
-    "sp72n9",
-    "sp93n1",
-    "sp95f1",
-    "sp95f10",
-    "sp95f11",
-    "sp95f12",
-    "sp95f13",
-    "sp95f2",
-    "sp95f3",
-    "sp95f4",
-    "sp95f5",
-    "sp95f6",
-    "sp95f7",
-    "sp95f8",
-    "sp95f9",
-    "sp97s1",
-    "sp97s2",
-    "sp97s3",
-    "sp97s4",
-    "sp97s5",
-    "sp97s6",
-    "sp97s7",
-    "sp97s8"
-  )],
+    standardized_value_labels,
     rmso = .replace_labels(
     standardized_value_labels$rmso,
     `1` = "short interview"
@@ -7072,9 +5841,7 @@ value_labels_list <- list(
     socp49 = c(`-3` = "na, wrong skip", `-2` = "na, see H/B/IRMSO", `-1` = "na, asked"),
     socp50 = .replace_labels(
     standardized_value_labels$socp50,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/IRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/IRMSO"
   ),
     socp51 = c(`-3` = "na, wrong skip", `-2` = "na, see H/B/IRMSO", `-1` = "na, asked"),
     socp52 = c(`-3` = "na, wrong skip", `-2` = "na, see H/B/IRMSO", `-1` = "na, asked"),
@@ -7157,51 +5924,37 @@ value_labels_list <- list(
   ),
     socp72 = .replace_labels(
     standardized_value_labels$socp72,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/IRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/IRMSO"
   ),
     socp73 = .replace_labels(
     standardized_value_labels$socp73,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/ISOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/ISOCP72"
   ),
     socp93 = .replace_labels(
     standardized_value_labels$socp93,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/IRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/IRMSO"
   ),
     socp94 = .replace_labels(
     standardized_value_labels$socp94,
     `-3` = "often na, wrong skip",
-    `-2` = "na, see H/B/ISOCP93",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/ISOCP93"
   ),
     socp95 = .replace_labels(
     standardized_value_labels$socp95,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/IRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/IRMSO"
   ),
     socp96 = .replace_labels(
     standardized_value_labels$socp96,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/ISP95F6",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/ISP95F6"
   ),
     socp98 = .replace_labels(
     standardized_value_labels$socp98,
     `-3` = "often na, wrong skip",
-    `-2` = "na, see H/B/ISOCP97",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/ISOCP97"
   ),
     socp99 = .replace_labels(
     standardized_value_labels$socp99,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/BRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see H/BRMSO"
   ),
     socpyn = c(
     `-3` = "na, wrong skip",
@@ -7212,132 +5965,106 @@ value_labels_list <- list(
   ),
     sp72n1 = .replace_labels(
     standardized_value_labels$sp72n1,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n10 = .replace_labels(
     standardized_value_labels$sp72n10,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n11 = .replace_labels(
     standardized_value_labels$sp72n11,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n12 = .replace_labels(
     standardized_value_labels$sp72n12,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n2 = .replace_labels(
     standardized_value_labels$sp72n2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n3 = .replace_labels(
     standardized_value_labels$sp72n3,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n4 = .replace_labels(
     standardized_value_labels$sp72n4,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n5 = .replace_labels(
     standardized_value_labels$sp72n5,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n6 = .replace_labels(
     standardized_value_labels$sp72n6,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n7 = .replace_labels(
     standardized_value_labels$sp72n7,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n8 = .replace_labels(
     standardized_value_labels$sp72n8,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n9 = .replace_labels(
     standardized_value_labels$sp72n9,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp93n1 = .replace_labels(
     standardized_value_labels$sp93n1,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP93"
   ),
     sp95f1 = .replace_labels(
     standardized_value_labels$sp95f1,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f10 = .replace_labels(
     standardized_value_labels$sp95f10,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f11 = .replace_labels(
     standardized_value_labels$sp95f11,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f12 = .replace_labels(
     standardized_value_labels$sp95f12,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f13 = .replace_labels(
     standardized_value_labels$sp95f13,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f2 = .replace_labels(
     standardized_value_labels$sp95f2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f3 = .replace_labels(
     standardized_value_labels$sp95f3,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f4 = .replace_labels(
     standardized_value_labels$sp95f4,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f5 = .replace_labels(
     standardized_value_labels$sp95f5,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f6 = .replace_labels(
     standardized_value_labels$sp95f6,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f7 = .replace_labels(
     standardized_value_labels$sp95f7,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f8 = .replace_labels(
     standardized_value_labels$sp95f8,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f9 = .replace_labels(
     standardized_value_labels$sp95f9,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp97s1 = c(
@@ -7390,32 +6117,7 @@ value_labels_list <- list(
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "rmso",
-    "socp01",
-    "socp01n",
-    "socp04",
-    "socp04n",
-    "socp05",
-    "socp05n",
-    "socp06",
-    "socp06n",
-    "socp08",
-    "socp08n",
-    "socp09",
-    "socp09n",
-    "socp10",
-    "socp10n",
-    "socp11",
-    "socp11n",
-    "socp12",
-    "socp12n",
-    "socp13",
-    "socp13n",
-    "socp72",
-    "socp95",
-    "socpyn"
-  )],
+    standardized_value_labels,
     rmso = .replace_labels(
     standardized_value_labels$rmso,
     `1` = "short interview"
@@ -7431,7 +6133,6 @@ value_labels_list <- list(
     standardized_value_labels$socp01n,
     `-3` = "many Dutch members: organization for the elderly, employers organization na, wrong skip",
     `-2` = "na, see BSOCP01",
-    `-1` = "na, asked",
     `1` = "mainly Dutch members",
     `2` = "many Dutch members",
     `3` = "little to none Dutch members"
@@ -7447,7 +6148,6 @@ value_labels_list <- list(
     standardized_value_labels$socp04n,
     `-3` = "many Dutch members: church, mosque or religious organization na, wrong skip",
     `-2` = "na, see BSOCP04",
-    `-1` = "na, asked",
     `1` = "mainly Dutch members",
     `2` = "many Dutch members",
     `3` = "little to none Dutch members"
@@ -7463,7 +6163,6 @@ value_labels_list <- list(
     standardized_value_labels$socp05n,
     `-3` = "many Dutch members: neighbourhood association na, wrong skip",
     `-2` = "na, see SOCP05",
-    `-1` = "na, asked",
     `1` = "mainly Dutch members",
     `2` = "many Dutch members",
     `3` = "little to none Dutch members"
@@ -7479,7 +6178,6 @@ value_labels_list <- list(
     standardized_value_labels$socp06n,
     `-3` = "many Dutch members: womens association, womens circle na, wrong skip",
     `-2` = "na, see BSOCP06",
-    `-1` = "na, asked",
     `1` = "mainly Dutch members",
     `2` = "many Dutch members",
     `3` = "little to none Dutch members"
@@ -7495,7 +6193,6 @@ value_labels_list <- list(
     standardized_value_labels$socp08n,
     `-3` = "many Dutch members: action group or association with social aim na, wrong skip",
     `-2` = "na, see BSOCP08",
-    `-1` = "na, asked",
     `1` = "mainly Dutch members",
     `2` = "many Dutch members",
     `3` = "little to none Dutch members"
@@ -7511,7 +6208,6 @@ value_labels_list <- list(
     standardized_value_labels$socp09n,
     `-3` = "many Dutch members: patients association na, wrong skip",
     `-2` = "na, see BSOCP09",
-    `-1` = "na, asked",
     `1` = "mainly Dutch members",
     `2` = "many Dutch members",
     `3` = "little to none Dutch members"
@@ -7527,7 +6223,6 @@ value_labels_list <- list(
     standardized_value_labels$socp10n,
     `-3` = "many Dutch members: cultural organization na, wrong skip",
     `-2` = "na, see BSOCP10",
-    `-1` = "na, asked",
     `1` = "mainly Dutch members",
     `2` = "many Dutch members",
     `3` = "little to none Dutch members"
@@ -7543,7 +6238,6 @@ value_labels_list <- list(
     standardized_value_labels$socp11n,
     `-3` = "many Dutch members: recreation, music or hobby club na, wrong skip",
     `-2` = "na, see BSOCP11",
-    `-1` = "na, asked",
     `1` = "mainly Dutch members",
     `2` = "many Dutch members",
     `3` = "little to none Dutch members"
@@ -7559,7 +6253,6 @@ value_labels_list <- list(
     standardized_value_labels$socp12n,
     `-3` = "many Dutch members: sporting club na, wrong skip",
     `-2` = "na, see BSOCP12",
-    `-1` = "na, asked",
     `1` = "mainly Dutch members",
     `2` = "many Dutch members",
     `3` = "little to none Dutch members"
@@ -7575,120 +6268,22 @@ value_labels_list <- list(
     standardized_value_labels$socp13n,
     `-3` = "many Dutch members: other na, wrong skip",
     `-2` = "na, see BSOCP13",
-    `-1` = "na, asked",
     `1` = "mainly Dutch members",
     `2` = "many Dutch members",
     `3` = "little to none Dutch members"
   ),
     socp72 = .replace_labels(
     standardized_value_labels$socp72,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMSO"
   ),
     socp95 = .replace_labels(
     standardized_value_labels$socp95,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMSO"
   ),
     socpyn = c(`-3` = "na, wrong skip", `-2` = "na, see BRMSO", `-1` = "na, asked", `1` = "no", `2` = "yes")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "rmso",
-    "socp01",
-    "socp02",
-    "socp03",
-    "socp04",
-    "socp05",
-    "socp06",
-    "socp07",
-    "socp08",
-    "socp09",
-    "socp10",
-    "socp11",
-    "socp12",
-    "socp13",
-    "socp14",
-    "socp15",
-    "socp16",
-    "socp17",
-    "socp18",
-    "socp19",
-    "socp20",
-    "socp21",
-    "socp22",
-    "socp23",
-    "socp24",
-    "socp25",
-    "socp26",
-    "socp27",
-    "socp28",
-    "socp30",
-    "socp31",
-    "socp33",
-    "socp46",
-    "socp47",
-    "socp48",
-    "socp49",
-    "socp50",
-    "socp51",
-    "socp52",
-    "socp55",
-    "socp56",
-    "socp57",
-    "socp58",
-    "socp59",
-    "socp60",
-    "socp61",
-    "socp66",
-    "socp67",
-    "socp68",
-    "socp69",
-    "socp72",
-    "socp73",
-    "socp93",
-    "socp94",
-    "socp95",
-    "socp96",
-    "socp98",
-    "socpyn",
-    "sp72n1",
-    "sp72n10",
-    "sp72n11",
-    "sp72n12",
-    "sp72n2",
-    "sp72n3",
-    "sp72n4",
-    "sp72n5",
-    "sp72n6",
-    "sp72n7",
-    "sp72n8",
-    "sp72n9",
-    "sp93n1",
-    "sp95f1",
-    "sp95f10",
-    "sp95f11",
-    "sp95f12",
-    "sp95f13",
-    "sp95f2",
-    "sp95f3",
-    "sp95f4",
-    "sp95f5",
-    "sp95f6",
-    "sp95f7",
-    "sp95f8",
-    "sp95f9",
-    "sp97s1",
-    "sp97s2",
-    "sp97s3",
-    "sp97s4",
-    "sp97s5",
-    "sp97s6",
-    "sp97s7",
-    "sp97s8"
-  )],
+    standardized_value_labels,
     rmso = .replace_labels(
     standardized_value_labels$rmso,
     `1` = "short interview"
@@ -7899,9 +6494,7 @@ value_labels_list <- list(
     socp49 = c(`-3` = "na, wrong skip", `-2` = "na, see H/B/IRMSO", `-1` = "na, asked"),
     socp50 = .replace_labels(
     standardized_value_labels$socp50,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/IRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/IRMSO"
   ),
     socp51 = c(`-3` = "na, wrong skip", `-2` = "na, see H/B/IRMSO", `-1` = "na, asked"),
     socp52 = c(`-3` = "na, wrong skip", `-2` = "na, see H/B/IRMSO", `-1` = "na, asked"),
@@ -7984,45 +6577,33 @@ value_labels_list <- list(
   ),
     socp72 = .replace_labels(
     standardized_value_labels$socp72,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/IRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/IRMSO"
   ),
     socp73 = .replace_labels(
     standardized_value_labels$socp73,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/ISOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/ISOCP72"
   ),
     socp93 = .replace_labels(
     standardized_value_labels$socp93,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/IRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/IRMSO"
   ),
     socp94 = .replace_labels(
     standardized_value_labels$socp94,
     `-3` = "often na, wrong skip",
-    `-2` = "na, see H/B/ISOCP93",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/ISOCP93"
   ),
     socp95 = .replace_labels(
     standardized_value_labels$socp95,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/IRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/IRMSO"
   ),
     socp96 = .replace_labels(
     standardized_value_labels$socp96,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/ISP95F6",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/ISP95F6"
   ),
     socp98 = .replace_labels(
     standardized_value_labels$socp98,
     `-3` = "often na, wrong skip",
-    `-2` = "na, see H/B/ISOCP97",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/ISOCP97"
   ),
     socpyn = c(
     `-3` = "na, wrong skip",
@@ -8033,132 +6614,106 @@ value_labels_list <- list(
   ),
     sp72n1 = .replace_labels(
     standardized_value_labels$sp72n1,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n10 = .replace_labels(
     standardized_value_labels$sp72n10,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n11 = .replace_labels(
     standardized_value_labels$sp72n11,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n12 = .replace_labels(
     standardized_value_labels$sp72n12,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n2 = .replace_labels(
     standardized_value_labels$sp72n2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n3 = .replace_labels(
     standardized_value_labels$sp72n3,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n4 = .replace_labels(
     standardized_value_labels$sp72n4,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n5 = .replace_labels(
     standardized_value_labels$sp72n5,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n6 = .replace_labels(
     standardized_value_labels$sp72n6,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n7 = .replace_labels(
     standardized_value_labels$sp72n7,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n8 = .replace_labels(
     standardized_value_labels$sp72n8,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp72n9 = .replace_labels(
     standardized_value_labels$sp72n9,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP72"
   ),
     sp93n1 = .replace_labels(
     standardized_value_labels$sp93n1,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP93"
   ),
     sp95f1 = .replace_labels(
     standardized_value_labels$sp95f1,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f10 = .replace_labels(
     standardized_value_labels$sp95f10,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f11 = .replace_labels(
     standardized_value_labels$sp95f11,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f12 = .replace_labels(
     standardized_value_labels$sp95f12,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f13 = .replace_labels(
     standardized_value_labels$sp95f13,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f2 = .replace_labels(
     standardized_value_labels$sp95f2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f3 = .replace_labels(
     standardized_value_labels$sp95f3,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f4 = .replace_labels(
     standardized_value_labels$sp95f4,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f5 = .replace_labels(
     standardized_value_labels$sp95f5,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f6 = .replace_labels(
     standardized_value_labels$sp95f6,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f7 = .replace_labels(
     standardized_value_labels$sp95f7,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f8 = .replace_labels(
     standardized_value_labels$sp95f8,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp95f9 = .replace_labels(
     standardized_value_labels$sp95f9,
-    `-3` = "na, wrong skip",
     `-2` = "na, see H/B/ISOCP95"
   ),
     sp97s1 = c(
@@ -8211,101 +6766,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "rmso",
-    "socp01",
-    "socp02",
-    "socp03",
-    "socp04",
-    "socp05",
-    "socp06",
-    "socp07",
-    "socp08",
-    "socp09",
-    "socp10",
-    "socp11",
-    "socp12",
-    "socp13",
-    "socp14",
-    "socp15",
-    "socp16",
-    "socp17",
-    "socp18",
-    "socp19",
-    "socp20",
-    "socp21",
-    "socp22",
-    "socp23",
-    "socp24",
-    "socp25",
-    "socp26",
-    "socp27",
-    "socp28",
-    "socp30",
-    "socp31",
-    "socp33",
-    "socp46",
-    "socp47",
-    "socp48",
-    "socp49",
-    "socp51",
-    "socp52",
-    "socp55",
-    "socp56",
-    "socp57",
-    "socp58",
-    "socp59",
-    "socp60",
-    "socp61",
-    "socp66",
-    "socp67",
-    "socp68",
-    "socp69",
-    "socp72",
-    "socp73",
-    "socp93",
-    "socp94",
-    "socp95",
-    "socp96",
-    "socp97",
-    "socp98",
-    "socpr50",
-    "socpyn",
-    "sp72n1",
-    "sp72n10",
-    "sp72n11",
-    "sp72n2",
-    "sp72n3",
-    "sp72n4",
-    "sp72n5",
-    "sp72n6",
-    "sp72n7",
-    "sp72n8",
-    "sp93n1",
-    "sp95f1",
-    "sp95f11",
-    "sp95f13",
-    "sp95f14",
-    "sp95f15",
-    "sp95f16",
-    "sp95f17",
-    "sp95f2",
-    "sp95f3",
-    "sp95f4",
-    "sp95f5",
-    "sp95f6",
-    "sp95f7",
-    "sp95f8",
-    "sp95f9",
-    "sp97s1",
-    "sp97s2",
-    "sp97s3",
-    "sp97s4",
-    "sp97s5",
-    "sp97s6",
-    "sp97s7",
-    "sp97s8"
-  )],
+    standardized_value_labels,
     rmso = c(`-2` = "valid data", `1` = "short interview"),
     socp01 = c(
     `-3` = "na, wrong skip",
@@ -8586,230 +7047,175 @@ value_labels_list <- list(
   ),
     socp72 = .replace_labels(
     standardized_value_labels$socp72,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see JRMSO"
   ),
     socp73 = .replace_labels(
     standardized_value_labels$socp73,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see JSOCP72"
   ),
     socp93 = .replace_labels(
     standardized_value_labels$socp93,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JRMSO",
-    `-1` = "na, asked"
+    `-2` = "na, see JRMSO"
   ),
     socp94 = .replace_labels(
     standardized_value_labels$socp94,
     `-3` = "often na, wrong skip",
-    `-2` = "na, see JSOCP93",
-    `-1` = "na, asked"
+    `-2` = "na, see JSOCP93"
   ),
     socp95 = .replace_labels(
     standardized_value_labels$socp95,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JSOCP72",
-    `-1` = "na, asked"
+    `-2` = "na, see JSOCP72"
   ),
     socp96 = .replace_labels(
     standardized_value_labels$socp96,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JSP95F6",
-    `-1` = "na, asked"
+    `-2` = "na, see JSP95F6"
   ),
     socp97 = .replace_labels(
     standardized_value_labels$socp97,
-    `-2` = "na, wrong skip)-3), na, see JSOCP72 & JSOCP93 & JSOCP95",
-    `-1` = "na, asked"
+    `-2` = "na, wrong skip)-3), na, see JSOCP72 & JSOCP93 & JSOCP95"
   ),
     socp98 = .replace_labels(
     standardized_value_labels$socp98,
     `-3` = "often na, wrong skip",
-    `-2` = "na, see JSOCP97",
-    `-1` = "na, asked"
+    `-2` = "na, see JSOCP97"
   ),
     socpr50 = c(`-3` = "na, wrong skip", `-2` = "na, see JRMSO", `-1` = "na, asked"),
     socpyn = c(`-3` = "na, wrong skip", `-2` = "na, see JRMSO", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     sp72n1 = .replace_labels(
     standardized_value_labels$sp72n1,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP72"
   ),
     sp72n10 = .replace_labels(
     standardized_value_labels$sp72n10,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP72"
   ),
     sp72n11 = .replace_labels(
     standardized_value_labels$sp72n11,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP72"
   ),
     sp72n2 = .replace_labels(
     standardized_value_labels$sp72n2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP72"
   ),
     sp72n3 = .replace_labels(
     standardized_value_labels$sp72n3,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP72"
   ),
     sp72n4 = .replace_labels(
     standardized_value_labels$sp72n4,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP72"
   ),
     sp72n5 = .replace_labels(
     standardized_value_labels$sp72n5,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP72"
   ),
     sp72n6 = .replace_labels(
     standardized_value_labels$sp72n6,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP72"
   ),
     sp72n7 = .replace_labels(
     standardized_value_labels$sp72n7,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP72"
   ),
     sp72n8 = .replace_labels(
     standardized_value_labels$sp72n8,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP72"
   ),
     sp93n1 = .replace_labels(
     standardized_value_labels$sp93n1,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP93"
   ),
     sp95f1 = .replace_labels(
     standardized_value_labels$sp95f1,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP95"
   ),
     sp95f11 = .replace_labels(
     standardized_value_labels$sp95f11,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP95"
   ),
     sp95f13 = .replace_labels(
     standardized_value_labels$sp95f13,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP95"
   ),
     sp95f14 = .replace_labels(
     standardized_value_labels$sp95f14,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP95"
   ),
     sp95f15 = .replace_labels(
     standardized_value_labels$sp95f15,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP95"
   ),
     sp95f16 = .replace_labels(
     standardized_value_labels$sp95f16,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP95"
   ),
     sp95f17 = .replace_labels(
     standardized_value_labels$sp95f17,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP95"
   ),
     sp95f2 = .replace_labels(
     standardized_value_labels$sp95f2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP95"
   ),
     sp95f3 = .replace_labels(
     standardized_value_labels$sp95f3,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP95"
   ),
     sp95f4 = .replace_labels(
     standardized_value_labels$sp95f4,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP95"
   ),
     sp95f5 = .replace_labels(
     standardized_value_labels$sp95f5,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP95"
   ),
     sp95f6 = .replace_labels(
     standardized_value_labels$sp95f6,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP95"
   ),
     sp95f7 = .replace_labels(
     standardized_value_labels$sp95f7,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP95"
   ),
     sp95f8 = .replace_labels(
     standardized_value_labels$sp95f8,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP95"
   ),
     sp95f9 = .replace_labels(
     standardized_value_labels$sp95f9,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JSOCP95"
   ),
     sp97s1 = .replace_labels(
     standardized_value_labels$sp97s1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JSOCP97",
-    `-1` = "na, asked"
+    `-2` = "na, see JSOCP97"
   ),
     sp97s2 = .replace_labels(
     standardized_value_labels$sp97s2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JSOCP97",
-    `-1` = "na, asked"
+    `-2` = "na, see JSOCP97"
   ),
     sp97s3 = .replace_labels(
     standardized_value_labels$sp97s3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JSOCP97",
-    `-1` = "na, asked"
+    `-2` = "na, see JSOCP97"
   ),
     sp97s4 = .replace_labels(
     standardized_value_labels$sp97s4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JSOCP97",
-    `-1` = "na, asked"
+    `-2` = "na, see JSOCP97"
   ),
     sp97s5 = .replace_labels(
     standardized_value_labels$sp97s5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JSOCP97",
-    `-1` = "na, asked"
+    `-2` = "na, see JSOCP97"
   ),
     sp97s6 = .replace_labels(
     standardized_value_labels$sp97s6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JSOCP97",
-    `-1` = "na, asked"
+    `-2` = "na, see JSOCP97"
   ),
     sp97s7 = .replace_labels(
     standardized_value_labels$sp97s7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JSOCP97",
-    `-1` = "na, asked"
+    `-2` = "na, see JSOCP97"
   ),
     sp97s8 = .replace_labels(
     standardized_value_labels$sp97s8,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JSOCP97",
-    `-1` = "na, asked"
+    `-2` = "na, see JSOCP97"
   )
   ),
   Harmonized_labels = standardized_value_labels
@@ -8984,9 +7390,56 @@ var_types_vec <- c(
   sp97s8 = "categorical"
 )
 
-.lasa_fc_070 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "070", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "070", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "070", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "070", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["socp97"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["sp93n11"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["sp93n12"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["sp93n2"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["sp93n3"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["sp93n4"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["sp93n5"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["sp93n6"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["sp93n7"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["sp93n8"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["sp93n9"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["socp97"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["sp93n11"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["sp93n12"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["sp93n2"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["sp93n3"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["sp93n4"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["sp93n5"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["sp93n6"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["sp93n7"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["sp93n8"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["sp93n9"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["socp97"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["sp93n11"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["sp93n12"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["sp93n2"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["sp93n3"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["sp93n4"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["sp93n5"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["sp93n6"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["sp93n7"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["sp93n8"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["sp93n9"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["sp93n11"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["sp93n13"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["sp93n14"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["sp93n2"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["sp93n3"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["sp93n4"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["sp93n5"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["sp93n6"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["sp93n7"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["sp93n8"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+
+.lasa_fc_070 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

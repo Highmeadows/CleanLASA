@@ -24,9 +24,43 @@ harmonized_labels <- c(
   qvgdem5 = "vignet dementia: euthanasia"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `G` = c(
+    "qeoldt1",
+    "qeoldt2",
+    "qeoldt3",
+    "qeoldt4",
+    "qeoldt5",
+    "qvgcan1",
+    "qvgcan2",
+    "qvgcan3",
+    "qvgcan4",
+    "qvgcan5",
+    "qvgdem1",
+    "qvgdem2",
+    "qvgdem3",
+    "qvgdem4",
+    "qvgdem5"
+  )
+)
+
 variable_labels_list <- list(
   Wave_G_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
+)
+
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "yes",
+  `2` = "probably yes",
+  `3` = "probably not",
+  `4` = "no"
 )
 
 standardized_value_labels <- list(
@@ -35,16 +69,46 @@ standardized_value_labels <- list(
   qeoldt3 = c(`-1` = "not available", `0` = "not mentioned"),
   qeoldt4 = c(`-1` = "not available", `0` = "not mentioned"),
   qeoldt5 = c(`-1` = "not available", `0` = "not mentioned"),
-  qvgcan1 = c(`-1` = "not available", `1` = "yes", `2` = "probably yes", `3` = "probably not", `4` = "no"),
-  qvgcan2 = c(`-1` = "not available", `1` = "yes", `2` = "probably yes", `3` = "probably not", `4` = "no"),
-  qvgcan3 = c(`-1` = "not available", `1` = "yes", `2` = "probably yes", `3` = "probably not", `4` = "no"),
-  qvgcan4 = c(`-1` = "not available", `1` = "yes", `2` = "probably yes", `3` = "probably not", `4` = "no"),
-  qvgcan5 = c(`-1` = "not available", `1` = "yes", `2` = "probably yes", `3` = "probably not", `4` = "no"),
-  qvgdem1 = c(`-1` = "not available", `1` = "yes", `2` = "probably yes", `3` = "probably not", `4` = "no"),
-  qvgdem2 = c(`-1` = "not available", `1` = "yes", `2` = "probably yes", `3` = "probably not", `4` = "no"),
-  qvgdem3 = c(`-1` = "not available", `1` = "yes", `2` = "probably yes", `3` = "probably not", `4` = "no"),
-  qvgdem4 = c(`-1` = "not available", `1` = "yes", `2` = "probably yes", `3` = "probably not", `4` = "no"),
-  qvgdem5 = c(`-1` = "not available", `1` = "yes", `2` = "probably yes", `3` = "probably not", `4` = "no")
+  qvgcan1 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3", "4")]
+  ),
+  qvgcan2 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3", "4")]
+  ),
+  qvgcan3 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3", "4")]
+  ),
+  qvgcan4 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3", "4")]
+  ),
+  qvgcan5 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3", "4")]
+  ),
+  qvgdem1 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3", "4")]
+  ),
+  qvgdem2 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3", "4")]
+  ),
+  qvgdem3 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3", "4")]
+  ),
+  qvgdem4 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3", "4")]
+  ),
+  qvgdem5 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3", "4")]
+  )
 )
 
 value_labels_list <- list(
@@ -132,9 +196,12 @@ var_types_vec <- c(
   qvgdem5 = "categorical"
 )
 
-.lasa_fc_148 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "148", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "148", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "148", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "148", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_148 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -11,9 +11,23 @@ harmonized_labels <- c(
   alg_DM_ruw = "diabetes mellitus status unadjusted for previous-wave status"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `3B` = c(
+    "DM"
+  ),
+  `I` = c(
+    "DM",
+    "alg_DM_ruw"
+  )
+)
+
 variable_labels_list <- list(
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c("DM")],
+    harmonized_labels,
     DM = "3B wave: diabetes mellitus"
   ),
   Wave_I_labels = .replace_labels(
@@ -45,7 +59,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("DM")],
+    standardized_value_labels,
     DM = c(
     `-1` = "missing",
     `0` = "no DM",
@@ -60,7 +74,7 @@ value_labels_list <- list(
 
 var_types_vec <- c(DM = "categorical", alg_DM_ruw = "categorical")
 
-.lasa_fc_zdc3 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "zdc3", waves = .lasa_wave_rows()) |>
     .override_label(wave = "3B", variable = "DM", override_value = "b_DM") |>
     .override_label(wave = "I", variable = "DM", override_value = "i_DM") |>
@@ -69,3 +83,6 @@ var_types_vec <- c(DM = "categorical", alg_DM_ruw = "categorical")
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "zdc3", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "zdc3", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_zdc3 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -23,91 +23,152 @@ harmonized_labels <- c(
   quli14 = "WHOQOL: feeling life is meaningful"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `D` = c(
+    "quli01",
+    "quli02",
+    "quli03",
+    "quli04",
+    "quli05",
+    "quli06",
+    "quli07",
+    "quli08",
+    "quli09",
+    "quli10",
+    "quli11",
+    "quli12"
+  ),
+  `E` = c(
+    "quli01",
+    "quli02",
+    "quli03",
+    "quli04",
+    "quli05",
+    "quli06",
+    "quli07",
+    "quli08",
+    "quli09",
+    "quli10",
+    "quli11",
+    "quli12"
+  ),
+  `F` = c(
+    "quli01",
+    "quli02",
+    "quli03",
+    "quli04",
+    "quli05",
+    "quli06",
+    "quli07",
+    "quli08",
+    "quli09",
+    "quli10",
+    "quli11",
+    "quli12"
+  ),
+  `G` = c(
+    "quli01",
+    "quli02",
+    "quli03",
+    "quli04",
+    "quli05",
+    "quli06",
+    "quli07",
+    "quli08",
+    "quli09",
+    "quli10",
+    "quli11",
+    "quli12"
+  ),
+  `H` = c(
+    "quli01",
+    "quli02",
+    "quli03",
+    "quli04",
+    "quli05",
+    "quli06",
+    "quli07",
+    "quli08",
+    "quli09",
+    "quli10",
+    "quli11",
+    "quli12"
+  ),
+  `3B` = c(
+    "quli01",
+    "quli02",
+    "quli03",
+    "quli04",
+    "quli05",
+    "quli06",
+    "quli07",
+    "quli08",
+    "quli09",
+    "quli10",
+    "quli11",
+    "quli12"
+  ),
+  `I` = c(
+    "quli01",
+    "quli02",
+    "quli03",
+    "quli04",
+    "quli05",
+    "quli06",
+    "quli07",
+    "quli08",
+    "quli09",
+    "quli10",
+    "quli11",
+    "quli12",
+    "quli13",
+    "quli14"
+  ),
+  `J` = c(
+    "quli01",
+    "quli02",
+    "quli03",
+    "quli04",
+    "quli05",
+    "quli06",
+    "quli07",
+    "quli08",
+    "quli09",
+    "quli10",
+    "quli11",
+    "quli12",
+    "quli13",
+    "quli14"
+  ),
+  `K` = c(
+    "quli01",
+    "quli02",
+    "quli03",
+    "quli04",
+    "quli05",
+    "quli06",
+    "quli07",
+    "quli08",
+    "quli09",
+    "quli10",
+    "quli11",
+    "quli12",
+    "quli13",
+    "quli14"
+  )
+)
+
 variable_labels_list <- list(
-  Wave_D_labels = harmonized_labels[c(
-    "quli01",
-    "quli02",
-    "quli03",
-    "quli04",
-    "quli05",
-    "quli06",
-    "quli07",
-    "quli08",
-    "quli09",
-    "quli10",
-    "quli11",
-    "quli12"
-  )],
-  Wave_E_labels = harmonized_labels[c(
-    "quli01",
-    "quli02",
-    "quli03",
-    "quli04",
-    "quli05",
-    "quli06",
-    "quli07",
-    "quli08",
-    "quli09",
-    "quli10",
-    "quli11",
-    "quli12"
-  )],
-  Wave_F_labels = harmonized_labels[c(
-    "quli01",
-    "quli02",
-    "quli03",
-    "quli04",
-    "quli05",
-    "quli06",
-    "quli07",
-    "quli08",
-    "quli09",
-    "quli10",
-    "quli11",
-    "quli12"
-  )],
-  Wave_G_labels = harmonized_labels[c(
-    "quli01",
-    "quli02",
-    "quli03",
-    "quli04",
-    "quli05",
-    "quli06",
-    "quli07",
-    "quli08",
-    "quli09",
-    "quli10",
-    "quli11",
-    "quli12"
-  )],
-  Wave_H_labels = harmonized_labels[c(
-    "quli01",
-    "quli02",
-    "quli03",
-    "quli04",
-    "quli05",
-    "quli06",
-    "quli07",
-    "quli08",
-    "quli09",
-    "quli10",
-    "quli11",
-    "quli12"
-  )],
-  Wave_3B_labels = harmonized_labels[c(
-    "quli01",
-    "quli02",
-    "quli03",
-    "quli04",
-    "quli05",
-    "quli06",
-    "quli07",
-    "quli08",
-    "quli09",
-    "quli10",
-    "quli11",
-    "quli12"
-  )],
+  Wave_D_labels = harmonized_labels,
+  Wave_E_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_3B_labels = harmonized_labels,
   Wave_I_labels = harmonized_labels,
   Wave_J_labels = harmonized_labels,
   Wave_K_labels = harmonized_labels,
@@ -203,20 +264,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "quli01",
-    "quli02",
-    "quli03",
-    "quli04",
-    "quli05",
-    "quli06",
-    "quli07",
-    "quli08",
-    "quli09",
-    "quli10",
-    "quli11",
-    "quli12"
-  )],
+    standardized_value_labels,
     quli01 = .replace_labels(
     standardized_value_labels$quli01,
     `-1` = "asked, no answer"
@@ -267,20 +315,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "quli01",
-    "quli02",
-    "quli03",
-    "quli04",
-    "quli05",
-    "quli06",
-    "quli07",
-    "quli08",
-    "quli09",
-    "quli10",
-    "quli11",
-    "quli12"
-  )],
+    standardized_value_labels,
     quli01 = .replace_labels(
     standardized_value_labels$quli01,
     `-1` = "asked, no answer"
@@ -331,20 +366,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "quli01",
-    "quli02",
-    "quli03",
-    "quli04",
-    "quli05",
-    "quli06",
-    "quli07",
-    "quli08",
-    "quli09",
-    "quli10",
-    "quli11",
-    "quli12"
-  )],
+    standardized_value_labels,
     quli01 = .replace_labels(
     standardized_value_labels$quli01,
     `-1` = "asked, no answer"
@@ -395,20 +417,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "quli01",
-    "quli02",
-    "quli03",
-    "quli04",
-    "quli05",
-    "quli06",
-    "quli07",
-    "quli08",
-    "quli09",
-    "quli10",
-    "quli11",
-    "quli12"
-  )],
+    standardized_value_labels,
     quli01 = .replace_labels(
     standardized_value_labels$quli01,
     `-1` = "asked, no answer"
@@ -459,20 +468,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "quli01",
-    "quli02",
-    "quli03",
-    "quli04",
-    "quli05",
-    "quli06",
-    "quli07",
-    "quli08",
-    "quli09",
-    "quli10",
-    "quli11",
-    "quli12"
-  )],
+    standardized_value_labels,
     quli01 = .replace_labels(
     standardized_value_labels$quli01,
     `-1` = "asked, no answer"
@@ -523,20 +519,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "quli01",
-    "quli02",
-    "quli03",
-    "quli04",
-    "quli05",
-    "quli06",
-    "quli07",
-    "quli08",
-    "quli09",
-    "quli10",
-    "quli11",
-    "quli12"
-  )],
+    standardized_value_labels,
     quli01 = .replace_labels(
     standardized_value_labels$quli01,
     `-1` = "asked, no answer"
@@ -783,9 +766,12 @@ var_types_vec <- c(
   quli14 = "categorical"
 )
 
-.lasa_fc_133 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "133", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "133", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "133", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "133", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_133 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

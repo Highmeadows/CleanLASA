@@ -57,9 +57,12 @@ harmonized_labels <- c(
   mmsevrs = "MMSE version"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "memory1",
     "memory2",
     "mmse01",
@@ -85,7 +88,359 @@ variable_labels_list <- list(
     "mmse21",
     "mmse22",
     "mmse23"
-  )],
+  ),
+  `C` = c(
+    "memory1",
+    "memory2",
+    "mmse01",
+    "mmse02",
+    "mmse03",
+    "mmse04",
+    "mmse05",
+    "mmse06",
+    "mmse07",
+    "mmse08",
+    "mmse09",
+    "mmse10",
+    "mmse11",
+    "mmse12",
+    "mmse13",
+    "mmse14",
+    "mmse15",
+    "mmse16",
+    "mmse17",
+    "mmse18",
+    "mmse19",
+    "mmse20",
+    "mmse21",
+    "mmse22",
+    "mmse23"
+  ),
+  `D` = c(
+    "memory1",
+    "memory2",
+    "mmse01",
+    "mmse02",
+    "mmse03",
+    "mmse04",
+    "mmse05",
+    "mmse06",
+    "mmse07",
+    "mmse08",
+    "mmse09",
+    "mmse10",
+    "mmse11",
+    "mmse12",
+    "mmse13",
+    "mmse14",
+    "mmse15",
+    "mmse16",
+    "mmse17",
+    "mmse18",
+    "mmse19",
+    "mmse20",
+    "mmse21",
+    "mmse22",
+    "mmse23"
+  ),
+  `E` = c(
+    "memory1",
+    "memory2",
+    "mmse01",
+    "mmse02",
+    "mmse03",
+    "mmse04",
+    "mmse05",
+    "mmse06",
+    "mmse07",
+    "mmse08",
+    "mmse09",
+    "mmse10",
+    "mmse11",
+    "mmse12",
+    "mmse13",
+    "mmse14",
+    "mmse15",
+    "mmse16",
+    "mmse17",
+    "mmse18",
+    "mmse19",
+    "mmse20",
+    "mmse21",
+    "mmse22",
+    "mmse23"
+  ),
+  `2B` = c(
+    "memory1",
+    "memory2",
+    "mmse01",
+    "mmse02",
+    "mmse03",
+    "mmse04",
+    "mmse05",
+    "mmse06",
+    "mmse07",
+    "mmse08",
+    "mmse09",
+    "mmse10",
+    "mmse11",
+    "mmse12",
+    "mmse13",
+    "mmse14",
+    "mmse15",
+    "mmse16",
+    "mmse17",
+    "mmse18",
+    "mmse19",
+    "mmse20",
+    "mmse21",
+    "mmse22",
+    "mmse23"
+  ),
+  `F` = c(
+    "memory1",
+    "memory2",
+    "mmse01",
+    "mmse02",
+    "mmse03",
+    "mmse04",
+    "mmse05",
+    "mmse06",
+    "mmse07",
+    "mmse08",
+    "mmse09",
+    "mmse10",
+    "mmse11",
+    "mmse12",
+    "mmse13",
+    "mmse14",
+    "mmse15",
+    "mmse16",
+    "mmse17",
+    "mmse18",
+    "mmse19",
+    "mmse20",
+    "mmse21",
+    "mmse22",
+    "mmse23"
+  ),
+  `G` = c(
+    "memory1",
+    "memory2",
+    "mmse01",
+    "mmse02",
+    "mmse03",
+    "mmse04",
+    "mmse05",
+    "mmse06",
+    "mmse07",
+    "mmse08",
+    "mmse09",
+    "mmse10",
+    "mmse11",
+    "mmse12",
+    "mmse13",
+    "mmse14",
+    "mmse15",
+    "mmse16",
+    "mmse17",
+    "mmse18",
+    "mmse19",
+    "mmse20",
+    "mmse21",
+    "mmse22",
+    "mmse23"
+  ),
+  `H` = c(
+    "memory1",
+    "memory2",
+    "mmse01",
+    "mmse02",
+    "mmse03",
+    "mmse04",
+    "mmse05",
+    "mmse06",
+    "mmse07",
+    "mmse08",
+    "mmse09",
+    "mmse10",
+    "mmse11",
+    "mmse12",
+    "mmse13",
+    "mmse14",
+    "mmse15",
+    "mmse16",
+    "mmse17",
+    "mmse18",
+    "mmse19",
+    "mmse20",
+    "mmse21",
+    "mmse22",
+    "mmse23"
+  ),
+  `3B` = c(
+    "memory1",
+    "memory2",
+    "mmse01",
+    "mmse02",
+    "mmse03",
+    "mmse04",
+    "mmse05",
+    "mmse06",
+    "mmse07",
+    "mmse08",
+    "mmse09",
+    "mmse10",
+    "mmse11",
+    "mmse12",
+    "mmse13",
+    "mmse14",
+    "mmse15",
+    "mmse16",
+    "mmse17",
+    "mmse18",
+    "mmse19",
+    "mmse20",
+    "mmse21",
+    "mmse22",
+    "mmse23"
+  ),
+  `MB` = c(
+    "immse01",
+    "immse02",
+    "immse03",
+    "immse04",
+    "immse05",
+    "immse06",
+    "immse07",
+    "immse08",
+    "immse09",
+    "immse10",
+    "immse11",
+    "immse13",
+    "immse14",
+    "immse15",
+    "immse16",
+    "immse17",
+    "immse18",
+    "immse19",
+    "immse20",
+    "immse21",
+    "immse22",
+    "immse23",
+    "memory1",
+    "memory2",
+    "mmse01",
+    "mmse02",
+    "mmse03",
+    "mmse04",
+    "mmse05",
+    "mmse06",
+    "mmse07",
+    "mmse08",
+    "mmse09",
+    "mmse10",
+    "mmse11",
+    "mmse12",
+    "mmse13",
+    "mmse14",
+    "mmse15",
+    "mmse16",
+    "mmse17",
+    "mmse18",
+    "mmse19",
+    "mmse20",
+    "mmse21",
+    "mmse22",
+    "mmse23",
+    "mmsevrs"
+  ),
+  `I` = c(
+    "memory1",
+    "memory2",
+    "mmse01",
+    "mmse02",
+    "mmse03",
+    "mmse04",
+    "mmse05",
+    "mmse06",
+    "mmse07",
+    "mmse08",
+    "mmse09",
+    "mmse10",
+    "mmse11",
+    "mmse12",
+    "mmse13",
+    "mmse14",
+    "mmse15",
+    "mmse16",
+    "mmse17",
+    "mmse18",
+    "mmse19",
+    "mmse20",
+    "mmse21",
+    "mmse22",
+    "mmse23"
+  ),
+  `J` = c(
+    "memory1",
+    "memory2",
+    "mmse01",
+    "mmse02",
+    "mmse03",
+    "mmse04",
+    "mmse05",
+    "mmse06",
+    "mmse07",
+    "mmse08",
+    "mmse09",
+    "mmse10",
+    "mmse11",
+    "mmse12",
+    "mmse13",
+    "mmse14",
+    "mmse15",
+    "mmse16",
+    "mmse17",
+    "mmse18",
+    "mmse19",
+    "mmse20",
+    "mmse21",
+    "mmse22",
+    "mmse23"
+  ),
+  `K` = c(
+    "memory1",
+    "memory2",
+    "mmse01",
+    "mmse02",
+    "mmse03",
+    "mmse04",
+    "mmse05",
+    "mmse06",
+    "mmse07",
+    "mmse08",
+    "mmse09",
+    "mmse10",
+    "mmse11",
+    "mmse12",
+    "mmse13",
+    "mmse14",
+    "mmse15",
+    "mmse16",
+    "mmse17",
+    "mmse18",
+    "mmse19",
+    "mmse20",
+    "mmse21",
+    "mmse22",
+    "mmse23"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
     mmse03 = "MMSE item03: Date",
     mmse06 = "MMSE item06: Province",
     mmse07 = "MMSE item07: Municipality",
@@ -94,33 +449,7 @@ variable_labels_list <- list(
     mmse13 = "MMSE item13: Spelling backwards"
   ),
   Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    harmonized_labels,
     mmse03 = "MMSE item03: Date",
     mmse06 = "MMSE item06: Province",
     mmse07 = "MMSE item07: Municipality",
@@ -129,33 +458,7 @@ variable_labels_list <- list(
     mmse13 = "MMSE item13: Spelling backwards"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    harmonized_labels,
     mmse03 = "MMSE item03: Date",
     mmse06 = "MMSE item06: Province",
     mmse07 = "MMSE item07: Municipality",
@@ -164,33 +467,7 @@ variable_labels_list <- list(
     mmse13 = "MMSE item13: Spelling backwards"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    harmonized_labels,
     mmse03 = "MMSE item03: Date",
     mmse06 = "MMSE item06: Province",
     mmse07 = "MMSE item07: Municipality",
@@ -199,33 +476,7 @@ variable_labels_list <- list(
     mmse13 = "MMSE item13: Spelling backwards"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    harmonized_labels,
     mmse03 = "MMSE item03: Date",
     mmse06 = "MMSE item06: Province",
     mmse07 = "MMSE item07: Municipality",
@@ -234,33 +485,7 @@ variable_labels_list <- list(
     mmse13 = "MMSE item13: Spelling backwards"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    harmonized_labels,
     mmse03 = "MMSE item03: Date",
     mmse06 = "MMSE item06: Province",
     mmse07 = "MMSE item07: Municipality",
@@ -269,33 +494,7 @@ variable_labels_list <- list(
     mmse13 = "MMSE item13: Spelling backwards"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    harmonized_labels,
     mmse03 = "MMSE item03: Date",
     mmse06 = "MMSE item06: Province",
     mmse07 = "MMSE item07: Municipality",
@@ -304,33 +503,7 @@ variable_labels_list <- list(
     mmse13 = "MMSE item13: Spelling backwards"
   ),
   Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    harmonized_labels,
     mmse03 = "MMSE item03: Date",
     mmse06 = "MMSE item06: Province",
     mmse07 = "MMSE item07: Municipality",
@@ -339,33 +512,7 @@ variable_labels_list <- list(
     mmse13 = "MMSE item13: Spelling backwards"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    harmonized_labels,
     mmse03 = "MMSE item03: Date",
     mmse06 = "MMSE item06: Province",
     mmse07 = "MMSE item07: Municipality",
@@ -400,33 +547,7 @@ variable_labels_list <- list(
     mmse23 = "MMSE: Drawing"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    harmonized_labels,
     mmse03 = "MMSE item03: Date",
     mmse06 = "MMSE item06: Province",
     mmse07 = "MMSE item07: Municipality",
@@ -435,33 +556,7 @@ variable_labels_list <- list(
     mmse13 = "MMSE item13: Spelling backwards"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    harmonized_labels,
     mmse03 = "MMSE item03: Date",
     mmse06 = "MMSE item06: Province",
     mmse07 = "MMSE item07: Municipality",
@@ -470,33 +565,7 @@ variable_labels_list <- list(
     mmse13 = "MMSE item13: Spelling backwards"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    harmonized_labels,
     mmse03 = "MMSE item03: Date",
     mmse06 = "MMSE item06: Province",
     mmse07 = "MMSE item07: Municipality",
@@ -507,78 +576,64 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "wrong",
+  `2` = "correct"
+)
+
 standardized_value_labels <- list(
   immse01 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse02 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse03 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse04 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse05 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse06 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse07 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse08 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse09 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse10 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse11 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "0 right",
     `1` = "1 right",
     `2` = "2 right",
     `3` = "3 right"
   ),
   immse13 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "0 right",
     `1` = "1 right",
     `2` = "2 right",
@@ -587,156 +642,116 @@ standardized_value_labels <- list(
     `5` = "5 right"
   ),
   immse14 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "0 right",
     `1` = "1 right",
     `2` = "2 right",
     `3` = "3 right"
   ),
   immse15 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse16 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse17 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse18 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse19 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse20 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse21 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse22 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   immse23 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
-  memory1 = c(`-2` = "not available, routing", `-1` = "not available, asked", `1` = "no", `2` = "yes"),
+  memory1 = c(
+    default_missing_labels[c("-2", "-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   memory2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   mmse01 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse02 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse03 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse04 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse05 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse06 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse07 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse08 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse09 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse10 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse11 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "0 right",
     `1` = "1 right",
     `2` = "2 right",
     `3` = "3 right"
   ),
   mmse12 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "0 right",
-    `1` = "MMSE item12 response category 1",
-    `2` = "MMSE item12 response category 2",
+    `1` = "label varies by wave",
+    `2` = "label varies by wave",
     `3` = "3 right",
     `4` = "4 right",
     `5` = "5 right"
   ),
   mmse13 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "0 right",
     `1` = "1 right",
     `2` = "2 right",
@@ -745,105 +760,58 @@ standardized_value_labels <- list(
     `5` = "5 right"
   ),
   mmse14 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "0 right",
     `1` = "1 right",
     `2` = "2 right",
     `3` = "3 right"
   ),
   mmse15 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse16 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse17 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse18 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse19 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse20 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse21 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse22 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmse23 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "wrong",
-    `2` = "correct"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2")]
   ),
   mmsevrs = c(`-2` = "MMSE version", `1` = "regular version MMSE", `2` = "regular version MMSE")
 )
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    standardized_value_labels,
     memory1 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
     memory2 = .replace_labels(
     standardized_value_labels$memory2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/CMEMORY1",
-    `-1` = "na, asked"
+    `-2` = "na, see B/CMEMORY1"
   ),
     mmse01 = c(`-1` = "na, asked", `1` = "wrong", `2` = "correct"),
     mmse02 = c(`-1` = "na, asked", `1` = "wrong", `2` = "correct"),
@@ -886,39 +854,11 @@ value_labels_list <- list(
     mmse23 = c(`-1` = "na, asked", `1` = "wrong", `2` = "correct")
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    standardized_value_labels,
     memory1 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
     memory2 = .replace_labels(
     standardized_value_labels$memory2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see B/CMEMORY1",
-    `-1` = "na, asked"
+    `-2` = "na, see B/CMEMORY1"
   ),
     mmse01 = c(`-1` = "na, asked", `1` = "wrong", `2` = "correct"),
     mmse02 = c(`-1` = "na, asked", `1` = "wrong", `2` = "correct"),
@@ -961,1808 +901,1241 @@ value_labels_list <- list(
     mmse23 = c(`-1` = "na, asked", `1` = "wrong", `2` = "correct")
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    standardized_value_labels,
     memory1 = .replace_labels(
     standardized_value_labels$memory1,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     memory2 = .replace_labels(
     standardized_value_labels$memory2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1"
   ),
     mmse01 = .replace_labels(
     standardized_value_labels$mmse01,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse02 = .replace_labels(
     standardized_value_labels$mmse02,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse03 = .replace_labels(
     standardized_value_labels$mmse03,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse04 = .replace_labels(
     standardized_value_labels$mmse04,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse05 = .replace_labels(
     standardized_value_labels$mmse05,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse06 = .replace_labels(
     standardized_value_labels$mmse06,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse07 = .replace_labels(
     standardized_value_labels$mmse07,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse08 = .replace_labels(
     standardized_value_labels$mmse08,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse09 = .replace_labels(
     standardized_value_labels$mmse09,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse10 = .replace_labels(
     standardized_value_labels$mmse10,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse11 = .replace_labels(
     standardized_value_labels$mmse11,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse12 = .replace_labels(
     standardized_value_labels$mmse12,
     `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked",
     `1` = "1 right",
     `2` = "2 right"
   ),
     mmse13 = .replace_labels(
     standardized_value_labels$mmse13,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse14 = .replace_labels(
     standardized_value_labels$mmse14,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse15 = .replace_labels(
     standardized_value_labels$mmse15,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse16 = .replace_labels(
     standardized_value_labels$mmse16,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse17 = .replace_labels(
     standardized_value_labels$mmse17,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse18 = .replace_labels(
     standardized_value_labels$mmse18,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse19 = .replace_labels(
     standardized_value_labels$mmse19,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse20 = .replace_labels(
     standardized_value_labels$mmse20,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse21 = .replace_labels(
     standardized_value_labels$mmse21,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse22 = .replace_labels(
     standardized_value_labels$mmse22,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse23 = .replace_labels(
     standardized_value_labels$mmse23,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    standardized_value_labels,
     memory1 = .replace_labels(
     standardized_value_labels$memory1,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     memory2 = .replace_labels(
     standardized_value_labels$memory2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1"
   ),
     mmse01 = .replace_labels(
     standardized_value_labels$mmse01,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse02 = .replace_labels(
     standardized_value_labels$mmse02,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse03 = .replace_labels(
     standardized_value_labels$mmse03,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse04 = .replace_labels(
     standardized_value_labels$mmse04,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse05 = .replace_labels(
     standardized_value_labels$mmse05,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse06 = .replace_labels(
     standardized_value_labels$mmse06,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse07 = .replace_labels(
     standardized_value_labels$mmse07,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse08 = .replace_labels(
     standardized_value_labels$mmse08,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse09 = .replace_labels(
     standardized_value_labels$mmse09,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse10 = .replace_labels(
     standardized_value_labels$mmse10,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse11 = .replace_labels(
     standardized_value_labels$mmse11,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse12 = .replace_labels(
     standardized_value_labels$mmse12,
     `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked",
     `1` = "1 right",
     `2` = "2 right"
   ),
     mmse13 = .replace_labels(
     standardized_value_labels$mmse13,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse14 = .replace_labels(
     standardized_value_labels$mmse14,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse15 = .replace_labels(
     standardized_value_labels$mmse15,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse16 = .replace_labels(
     standardized_value_labels$mmse16,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse17 = .replace_labels(
     standardized_value_labels$mmse17,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse18 = .replace_labels(
     standardized_value_labels$mmse18,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse19 = .replace_labels(
     standardized_value_labels$mmse19,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse20 = .replace_labels(
     standardized_value_labels$mmse20,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse21 = .replace_labels(
     standardized_value_labels$mmse21,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse22 = .replace_labels(
     standardized_value_labels$mmse22,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse23 = .replace_labels(
     standardized_value_labels$mmse23,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    standardized_value_labels,
     memory1 = .replace_labels(
     standardized_value_labels$memory1,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     memory2 = .replace_labels(
     standardized_value_labels$memory2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1"
   ),
     mmse01 = .replace_labels(
     standardized_value_labels$mmse01,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse02 = .replace_labels(
     standardized_value_labels$mmse02,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse03 = .replace_labels(
     standardized_value_labels$mmse03,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse04 = .replace_labels(
     standardized_value_labels$mmse04,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse05 = .replace_labels(
     standardized_value_labels$mmse05,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse06 = .replace_labels(
     standardized_value_labels$mmse06,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse07 = .replace_labels(
     standardized_value_labels$mmse07,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse08 = .replace_labels(
     standardized_value_labels$mmse08,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse09 = .replace_labels(
     standardized_value_labels$mmse09,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse10 = .replace_labels(
     standardized_value_labels$mmse10,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse11 = .replace_labels(
     standardized_value_labels$mmse11,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse12 = .replace_labels(
     standardized_value_labels$mmse12,
     `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked",
     `1` = "1 right",
     `2` = "2 right"
   ),
     mmse13 = .replace_labels(
     standardized_value_labels$mmse13,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse14 = .replace_labels(
     standardized_value_labels$mmse14,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse15 = .replace_labels(
     standardized_value_labels$mmse15,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse16 = .replace_labels(
     standardized_value_labels$mmse16,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse17 = .replace_labels(
     standardized_value_labels$mmse17,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse18 = .replace_labels(
     standardized_value_labels$mmse18,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse19 = .replace_labels(
     standardized_value_labels$mmse19,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse20 = .replace_labels(
     standardized_value_labels$mmse20,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse21 = .replace_labels(
     standardized_value_labels$mmse21,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse22 = .replace_labels(
     standardized_value_labels$mmse22,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse23 = .replace_labels(
     standardized_value_labels$mmse23,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    standardized_value_labels,
     memory1 = .replace_labels(
     standardized_value_labels$memory1,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     memory2 = .replace_labels(
     standardized_value_labels$memory2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1"
   ),
     mmse01 = .replace_labels(
     standardized_value_labels$mmse01,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse02 = .replace_labels(
     standardized_value_labels$mmse02,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse03 = .replace_labels(
     standardized_value_labels$mmse03,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse04 = .replace_labels(
     standardized_value_labels$mmse04,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse05 = .replace_labels(
     standardized_value_labels$mmse05,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse06 = .replace_labels(
     standardized_value_labels$mmse06,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse07 = .replace_labels(
     standardized_value_labels$mmse07,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse08 = .replace_labels(
     standardized_value_labels$mmse08,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse09 = .replace_labels(
     standardized_value_labels$mmse09,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse10 = .replace_labels(
     standardized_value_labels$mmse10,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse11 = .replace_labels(
     standardized_value_labels$mmse11,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse12 = .replace_labels(
     standardized_value_labels$mmse12,
     `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked",
     `1` = "1 right",
     `2` = "2 right"
   ),
     mmse13 = .replace_labels(
     standardized_value_labels$mmse13,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse14 = .replace_labels(
     standardized_value_labels$mmse14,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse15 = .replace_labels(
     standardized_value_labels$mmse15,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse16 = .replace_labels(
     standardized_value_labels$mmse16,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse17 = .replace_labels(
     standardized_value_labels$mmse17,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse18 = .replace_labels(
     standardized_value_labels$mmse18,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse19 = .replace_labels(
     standardized_value_labels$mmse19,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse20 = .replace_labels(
     standardized_value_labels$mmse20,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse21 = .replace_labels(
     standardized_value_labels$mmse21,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse22 = .replace_labels(
     standardized_value_labels$mmse22,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse23 = .replace_labels(
     standardized_value_labels$mmse23,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    standardized_value_labels,
     memory1 = .replace_labels(
     standardized_value_labels$memory1,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     memory2 = .replace_labels(
     standardized_value_labels$memory2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1"
   ),
     mmse01 = .replace_labels(
     standardized_value_labels$mmse01,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse02 = .replace_labels(
     standardized_value_labels$mmse02,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse03 = .replace_labels(
     standardized_value_labels$mmse03,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse04 = .replace_labels(
     standardized_value_labels$mmse04,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse05 = .replace_labels(
     standardized_value_labels$mmse05,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse06 = .replace_labels(
     standardized_value_labels$mmse06,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse07 = .replace_labels(
     standardized_value_labels$mmse07,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse08 = .replace_labels(
     standardized_value_labels$mmse08,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse09 = .replace_labels(
     standardized_value_labels$mmse09,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse10 = .replace_labels(
     standardized_value_labels$mmse10,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse11 = .replace_labels(
     standardized_value_labels$mmse11,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse12 = .replace_labels(
     standardized_value_labels$mmse12,
     `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked",
     `1` = "1 right",
     `2` = "2 right"
   ),
     mmse13 = .replace_labels(
     standardized_value_labels$mmse13,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse14 = .replace_labels(
     standardized_value_labels$mmse14,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse15 = .replace_labels(
     standardized_value_labels$mmse15,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse16 = .replace_labels(
     standardized_value_labels$mmse16,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse17 = .replace_labels(
     standardized_value_labels$mmse17,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse18 = .replace_labels(
     standardized_value_labels$mmse18,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse19 = .replace_labels(
     standardized_value_labels$mmse19,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse20 = .replace_labels(
     standardized_value_labels$mmse20,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse21 = .replace_labels(
     standardized_value_labels$mmse21,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse22 = .replace_labels(
     standardized_value_labels$mmse22,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse23 = .replace_labels(
     standardized_value_labels$mmse23,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    standardized_value_labels,
     memory1 = .replace_labels(
     standardized_value_labels$memory1,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     memory2 = .replace_labels(
     standardized_value_labels$memory2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1"
   ),
     mmse01 = .replace_labels(
     standardized_value_labels$mmse01,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse02 = .replace_labels(
     standardized_value_labels$mmse02,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse03 = .replace_labels(
     standardized_value_labels$mmse03,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse04 = .replace_labels(
     standardized_value_labels$mmse04,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse05 = .replace_labels(
     standardized_value_labels$mmse05,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse06 = .replace_labels(
     standardized_value_labels$mmse06,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse07 = .replace_labels(
     standardized_value_labels$mmse07,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse08 = .replace_labels(
     standardized_value_labels$mmse08,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse09 = .replace_labels(
     standardized_value_labels$mmse09,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse10 = .replace_labels(
     standardized_value_labels$mmse10,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse11 = .replace_labels(
     standardized_value_labels$mmse11,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse12 = .replace_labels(
     standardized_value_labels$mmse12,
     `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked",
     `1` = "1 right",
     `2` = "2 right"
   ),
     mmse13 = .replace_labels(
     standardized_value_labels$mmse13,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse14 = .replace_labels(
     standardized_value_labels$mmse14,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse15 = .replace_labels(
     standardized_value_labels$mmse15,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse16 = .replace_labels(
     standardized_value_labels$mmse16,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse17 = .replace_labels(
     standardized_value_labels$mmse17,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse18 = .replace_labels(
     standardized_value_labels$mmse18,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse19 = .replace_labels(
     standardized_value_labels$mmse19,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse20 = .replace_labels(
     standardized_value_labels$mmse20,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse21 = .replace_labels(
     standardized_value_labels$mmse21,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse22 = .replace_labels(
     standardized_value_labels$mmse22,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse23 = .replace_labels(
     standardized_value_labels$mmse23,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    standardized_value_labels,
     memory1 = .replace_labels(
     standardized_value_labels$memory1,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     memory2 = .replace_labels(
     standardized_value_labels$memory2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1"
   ),
     mmse01 = .replace_labels(
     standardized_value_labels$mmse01,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse02 = .replace_labels(
     standardized_value_labels$mmse02,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse03 = .replace_labels(
     standardized_value_labels$mmse03,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse04 = .replace_labels(
     standardized_value_labels$mmse04,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse05 = .replace_labels(
     standardized_value_labels$mmse05,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse06 = .replace_labels(
     standardized_value_labels$mmse06,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse07 = .replace_labels(
     standardized_value_labels$mmse07,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse08 = .replace_labels(
     standardized_value_labels$mmse08,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse09 = .replace_labels(
     standardized_value_labels$mmse09,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse10 = .replace_labels(
     standardized_value_labels$mmse10,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse11 = .replace_labels(
     standardized_value_labels$mmse11,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse12 = .replace_labels(
     standardized_value_labels$mmse12,
     `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked",
     `1` = "1 right",
     `2` = "2 right"
   ),
     mmse13 = .replace_labels(
     standardized_value_labels$mmse13,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse14 = .replace_labels(
     standardized_value_labels$mmse14,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse15 = .replace_labels(
     standardized_value_labels$mmse15,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse16 = .replace_labels(
     standardized_value_labels$mmse16,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse17 = .replace_labels(
     standardized_value_labels$mmse17,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse18 = .replace_labels(
     standardized_value_labels$mmse18,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse19 = .replace_labels(
     standardized_value_labels$mmse19,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse20 = .replace_labels(
     standardized_value_labels$mmse20,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse21 = .replace_labels(
     standardized_value_labels$mmse21,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse22 = .replace_labels(
     standardized_value_labels$mmse22,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse23 = .replace_labels(
     standardized_value_labels$mmse23,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   )
   ),
   Wave_MB_labels = .replace_in_list(
     standardized_value_labels,
     immse01 = .replace_labels(
     standardized_value_labels$immse01,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse02 = .replace_labels(
     standardized_value_labels$immse02,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse03 = .replace_labels(
     standardized_value_labels$immse03,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse04 = .replace_labels(
     standardized_value_labels$immse04,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse05 = .replace_labels(
     standardized_value_labels$immse05,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse06 = .replace_labels(
     standardized_value_labels$immse06,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse07 = .replace_labels(
     standardized_value_labels$immse07,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse08 = .replace_labels(
     standardized_value_labels$immse08,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse09 = .replace_labels(
     standardized_value_labels$immse09,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse10 = .replace_labels(
     standardized_value_labels$immse10,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse11 = .replace_labels(
     standardized_value_labels$immse11,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse13 = .replace_labels(
     standardized_value_labels$immse13,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse14 = .replace_labels(
     standardized_value_labels$immse14,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse15 = .replace_labels(
     standardized_value_labels$immse15,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse16 = .replace_labels(
     standardized_value_labels$immse16,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse17 = .replace_labels(
     standardized_value_labels$immse17,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse18 = .replace_labels(
     standardized_value_labels$immse18,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse19 = .replace_labels(
     standardized_value_labels$immse19,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse20 = .replace_labels(
     standardized_value_labels$immse20,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse21 = .replace_labels(
     standardized_value_labels$immse21,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse22 = .replace_labels(
     standardized_value_labels$immse22,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     immse23 = .replace_labels(
     standardized_value_labels$immse23,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     memory1 = .replace_labels(
     standardized_value_labels$memory1,
-    `-2` = "na, see BMMSESC in LASMB221",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSESC in LASMB221"
   ),
     memory2 = .replace_labels(
     standardized_value_labels$memory2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BMEMORY1",
-    `-1` = "na, asked"
+    `-2` = "na, see BMEMORY1"
   ),
     mmse01 = .replace_labels(
     standardized_value_labels$mmse01,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse02 = .replace_labels(
     standardized_value_labels$mmse02,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse03 = .replace_labels(
     standardized_value_labels$mmse03,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse04 = .replace_labels(
     standardized_value_labels$mmse04,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse05 = .replace_labels(
     standardized_value_labels$mmse05,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse06 = .replace_labels(
     standardized_value_labels$mmse06,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse07 = .replace_labels(
     standardized_value_labels$mmse07,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse08 = .replace_labels(
     standardized_value_labels$mmse08,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse09 = .replace_labels(
     standardized_value_labels$mmse09,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse10 = .replace_labels(
     standardized_value_labels$mmse10,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse11 = .replace_labels(
     standardized_value_labels$mmse11,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse12 = c(`-2` = "na, see BMMSEVRS", `-1` = "na, asked", `1` = "wrong", `2` = "correct"),
     mmse13 = .replace_labels(
     standardized_value_labels$mmse13,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse14 = .replace_labels(
     standardized_value_labels$mmse14,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse15 = .replace_labels(
     standardized_value_labels$mmse15,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse16 = .replace_labels(
     standardized_value_labels$mmse16,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse17 = .replace_labels(
     standardized_value_labels$mmse17,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse18 = .replace_labels(
     standardized_value_labels$mmse18,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse19 = .replace_labels(
     standardized_value_labels$mmse19,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse20 = .replace_labels(
     standardized_value_labels$mmse20,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse21 = .replace_labels(
     standardized_value_labels$mmse21,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse22 = .replace_labels(
     standardized_value_labels$mmse22,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   ),
     mmse23 = .replace_labels(
     standardized_value_labels$mmse23,
-    `-2` = "na, see BMMSEVRS",
-    `-1` = "na, asked"
+    `-2` = "na, see BMMSEVRS"
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    standardized_value_labels,
     memory1 = .replace_labels(
     standardized_value_labels$memory1,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     memory2 = .replace_labels(
     standardized_value_labels$memory2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1"
   ),
     mmse01 = .replace_labels(
     standardized_value_labels$mmse01,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse02 = .replace_labels(
     standardized_value_labels$mmse02,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse03 = .replace_labels(
     standardized_value_labels$mmse03,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse04 = .replace_labels(
     standardized_value_labels$mmse04,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse05 = .replace_labels(
     standardized_value_labels$mmse05,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse06 = .replace_labels(
     standardized_value_labels$mmse06,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse07 = .replace_labels(
     standardized_value_labels$mmse07,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse08 = .replace_labels(
     standardized_value_labels$mmse08,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse09 = .replace_labels(
     standardized_value_labels$mmse09,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse10 = .replace_labels(
     standardized_value_labels$mmse10,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse11 = .replace_labels(
     standardized_value_labels$mmse11,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse12 = .replace_labels(
     standardized_value_labels$mmse12,
     `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked",
     `1` = "1 right",
     `2` = "2 right"
   ),
     mmse13 = .replace_labels(
     standardized_value_labels$mmse13,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse14 = .replace_labels(
     standardized_value_labels$mmse14,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse15 = .replace_labels(
     standardized_value_labels$mmse15,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse16 = .replace_labels(
     standardized_value_labels$mmse16,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse17 = .replace_labels(
     standardized_value_labels$mmse17,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse18 = .replace_labels(
     standardized_value_labels$mmse18,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse19 = .replace_labels(
     standardized_value_labels$mmse19,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse20 = .replace_labels(
     standardized_value_labels$mmse20,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse21 = .replace_labels(
     standardized_value_labels$mmse21,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse22 = .replace_labels(
     standardized_value_labels$mmse22,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse23 = .replace_labels(
     standardized_value_labels$mmse23,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    standardized_value_labels,
     memory1 = .replace_labels(
     standardized_value_labels$memory1,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     memory2 = .replace_labels(
     standardized_value_labels$memory2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1"
   ),
     mmse01 = .replace_labels(
     standardized_value_labels$mmse01,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse02 = .replace_labels(
     standardized_value_labels$mmse02,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse03 = .replace_labels(
     standardized_value_labels$mmse03,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse04 = .replace_labels(
     standardized_value_labels$mmse04,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse05 = .replace_labels(
     standardized_value_labels$mmse05,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse06 = .replace_labels(
     standardized_value_labels$mmse06,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse07 = .replace_labels(
     standardized_value_labels$mmse07,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse08 = .replace_labels(
     standardized_value_labels$mmse08,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse09 = .replace_labels(
     standardized_value_labels$mmse09,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse10 = .replace_labels(
     standardized_value_labels$mmse10,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse11 = .replace_labels(
     standardized_value_labels$mmse11,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse12 = .replace_labels(
     standardized_value_labels$mmse12,
     `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked",
     `1` = "1 right",
     `2` = "2 right"
   ),
     mmse13 = .replace_labels(
     standardized_value_labels$mmse13,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse14 = .replace_labels(
     standardized_value_labels$mmse14,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse15 = .replace_labels(
     standardized_value_labels$mmse15,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse16 = .replace_labels(
     standardized_value_labels$mmse16,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse17 = .replace_labels(
     standardized_value_labels$mmse17,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse18 = .replace_labels(
     standardized_value_labels$mmse18,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse19 = .replace_labels(
     standardized_value_labels$mmse19,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse20 = .replace_labels(
     standardized_value_labels$mmse20,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse21 = .replace_labels(
     standardized_value_labels$mmse21,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse22 = .replace_labels(
     standardized_value_labels$mmse22,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse23 = .replace_labels(
     standardized_value_labels$mmse23,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "memory1",
-    "memory2",
-    "mmse01",
-    "mmse02",
-    "mmse03",
-    "mmse04",
-    "mmse05",
-    "mmse06",
-    "mmse07",
-    "mmse08",
-    "mmse09",
-    "mmse10",
-    "mmse11",
-    "mmse12",
-    "mmse13",
-    "mmse14",
-    "mmse15",
-    "mmse16",
-    "mmse17",
-    "mmse18",
-    "mmse19",
-    "mmse20",
-    "mmse21",
-    "mmse22",
-    "mmse23"
-  )],
+    standardized_value_labels,
     memory1 = .replace_labels(
     standardized_value_labels$memory1,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     memory2 = .replace_labels(
     standardized_value_labels$memory2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1"
   ),
     mmse01 = .replace_labels(
     standardized_value_labels$mmse01,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse02 = .replace_labels(
     standardized_value_labels$mmse02,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse03 = .replace_labels(
     standardized_value_labels$mmse03,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse04 = .replace_labels(
     standardized_value_labels$mmse04,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse05 = .replace_labels(
     standardized_value_labels$mmse05,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse06 = .replace_labels(
     standardized_value_labels$mmse06,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse07 = .replace_labels(
     standardized_value_labels$mmse07,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse08 = .replace_labels(
     standardized_value_labels$mmse08,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse09 = .replace_labels(
     standardized_value_labels$mmse09,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse10 = .replace_labels(
     standardized_value_labels$mmse10,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse11 = .replace_labels(
     standardized_value_labels$mmse11,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse12 = .replace_labels(
     standardized_value_labels$mmse12,
     `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked",
     `1` = "1 right",
     `2` = "2 right"
   ),
     mmse13 = .replace_labels(
     standardized_value_labels$mmse13,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse14 = .replace_labels(
     standardized_value_labels$mmse14,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse15 = .replace_labels(
     standardized_value_labels$mmse15,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse16 = .replace_labels(
     standardized_value_labels$mmse16,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse17 = .replace_labels(
     standardized_value_labels$mmse17,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse18 = .replace_labels(
     standardized_value_labels$mmse18,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse19 = .replace_labels(
     standardized_value_labels$mmse19,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse20 = .replace_labels(
     standardized_value_labels$mmse20,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse21 = .replace_labels(
     standardized_value_labels$mmse21,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse22 = .replace_labels(
     standardized_value_labels$mmse22,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   ),
     mmse23 = .replace_labels(
     standardized_value_labels$mmse23,
-    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
-    `-1` = "na, asked"
+    `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221"
   )
   ),
   Harmonized_labels = standardized_value_labels
@@ -2819,9 +2192,12 @@ var_types_vec <- c(
   mmsevrs = "categorical"
 )
 
-.lasa_fc_021 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "021", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "021", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "021", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "021", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_021 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

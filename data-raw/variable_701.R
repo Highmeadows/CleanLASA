@@ -22,9 +22,12 @@ harmonized_labels <- c(
   tryechp = "Year change partner status"
 )
 
-variable_labels_list <- list(
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
     "trhinde",
     "trmarst",
     "trmochh",
@@ -35,7 +38,112 @@ variable_labels_list <- list(
     "tryechh",
     "tryechm",
     "tryechp"
-  )],
+  ),
+  `D` = c(
+    "trhinde",
+    "trmarst",
+    "trmochh",
+    "trmochm",
+    "trmochp",
+    "trnuper",
+    "trpartn",
+    "tryechh",
+    "tryechm",
+    "tryechp"
+  ),
+  `E` = c(
+    "trhinde",
+    "trmarst",
+    "trmochh",
+    "trmochm",
+    "trmochp",
+    "trnuper",
+    "trpartn",
+    "tryechh",
+    "tryechm",
+    "tryechp"
+  ),
+  `F` = c(
+    "trhinde",
+    "trmarst",
+    "trmochh",
+    "trmochm",
+    "trmochp",
+    "trnuper",
+    "trpartn",
+    "tryechh",
+    "tryechm",
+    "tryechp"
+  ),
+  `G` = c(
+    "trhinde",
+    "trmarst",
+    "trmochh",
+    "trmochm",
+    "trmochp",
+    "trnuper",
+    "trpartn",
+    "tryechh",
+    "tryechm",
+    "tryechp"
+  ),
+  `H` = c(
+    "trhinde",
+    "trmarst",
+    "trmochm",
+    "trmochp",
+    "trmoved",
+    "trmovmo",
+    "trmovye",
+    "trnuper",
+    "trpartn",
+    "tryechm",
+    "tryechp"
+  ),
+  `I` = c(
+    "trhinde",
+    "trmarst",
+    "trmochm",
+    "trmochp",
+    "trmoved",
+    "trmovmo",
+    "trmovye",
+    "trnuper",
+    "trpartn",
+    "tryechm",
+    "tryechp"
+  ),
+  `J` = c(
+    "trhinde",
+    "trmarst",
+    "trmochm",
+    "trmochp",
+    "trmoved",
+    "trmovmo",
+    "trmovye",
+    "trnuper",
+    "trpartn",
+    "tryechm",
+    "tryechp"
+  ),
+  `K` = c(
+    "trhinde",
+    "trmarst",
+    "trmochm",
+    "trmochp",
+    "trmoved",
+    "trmovmo",
+    "trmovye",
+    "trnuper",
+    "trpartn",
+    "tryechm",
+    "tryechp"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
     trhinde = "type of housing",
     trmarst = "marital status",
     trmochh = "month change type of housing",
@@ -47,127 +155,35 @@ variable_labels_list <- list(
     tryechp = "year change partner status"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochh",
-    "trmochm",
-    "trmochp",
-    "trnuper",
-    "trpartn",
-    "tryechh",
-    "tryechm",
-    "tryechp"
-  )],
+    harmonized_labels,
     trnuper = "number of other persons in household (partner excluded)"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochh",
-    "trmochm",
-    "trmochp",
-    "trnuper",
-    "trpartn",
-    "tryechh",
-    "tryechm",
-    "tryechp"
-  )],
+    harmonized_labels,
     trnuper = "number of other persons in household (partner excluded)"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochh",
-    "trmochm",
-    "trmochp",
-    "trnuper",
-    "trpartn",
-    "tryechh",
-    "tryechm",
-    "tryechp"
-  )],
+    harmonized_labels,
     trnuper = "number of other persons in household (partner excluded)"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochh",
-    "trmochm",
-    "trmochp",
-    "trnuper",
-    "trpartn",
-    "tryechh",
-    "tryechm",
-    "tryechp"
-  )],
+    harmonized_labels,
     trnuper = "number of other persons in household (partner excluded)"
   ),
   Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochm",
-    "trmochp",
-    "trmoved",
-    "trmovmo",
-    "trmovye",
-    "trnuper",
-    "trpartn",
-    "tryechm",
-    "tryechp"
-  )],
+    harmonized_labels,
     trnuper = "Number of other persons in household"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochm",
-    "trmochp",
-    "trmoved",
-    "trmovmo",
-    "trmovye",
-    "trnuper",
-    "trpartn",
-    "tryechm",
-    "tryechp"
-  )],
+    harmonized_labels,
     trnuper = "Number of other persons in household"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochm",
-    "trmochp",
-    "trmoved",
-    "trmovmo",
-    "trmovye",
-    "trnuper",
-    "trpartn",
-    "tryechm",
-    "tryechp"
-  )],
+    harmonized_labels,
     trnuper = "Number of other persons in household"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochm",
-    "trmochp",
-    "trmoved",
-    "trmovmo",
-    "trmovye",
-    "trnuper",
-    "trpartn",
-    "tryechm",
-    "tryechp"
-  )],
+    harmonized_labels,
     trnuper = "Number of other persons in household"
   ),
   Harmonized_labels = harmonized_labels
@@ -175,7 +191,7 @@ variable_labels_list <- list(
 
 standardized_value_labels <- list(
   trhinde = c(
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "independent",
     `2` = "residential home",
     `3` = "nursing home-somatic",
@@ -185,7 +201,7 @@ standardized_value_labels <- list(
     `8` = "monastery"
   ),
   trmarst = c(
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "never married",
     `2` = "married",
     `3` = "divorced",
@@ -194,7 +210,7 @@ standardized_value_labels <- list(
   ),
   trmochh = c(
     `-2` = "not changed",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -211,7 +227,7 @@ standardized_value_labels <- list(
   trmochm = c(
     `-3` = "no answer TRMARST",
     `-2` = "not changed",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -228,7 +244,7 @@ standardized_value_labels <- list(
   trmochp = c(
     `-3` = "no answer TRPARTN",
     `-2` = "not changed",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -242,10 +258,14 @@ standardized_value_labels <- list(
     `11` = "November",
     `12` = "December"
   ),
-  trmoved = c(`-1` = "asked, no answer", `1` = "no", `2` = "yes"),
+  trmoved = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   trmovmo = c(
     `-2` = "not moved",
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -259,35 +279,41 @@ standardized_value_labels <- list(
     `11` = "November",
     `12` = "December"
   ),
-  trmovye = c(`-2` = "not moved", `-1` = "asked, no answer"),
-  trnuper = c(`-2` = "R not independent", `-1` = "asked, no answer"),
+  trmovye = c(
+    `-2` = "not moved",
+    default_missing_labels[c("-1")]
+  ),
+  trnuper = c(
+    `-2` = "R not independent",
+    default_missing_labels[c("-1")]
+  ),
   trpartn = c(
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "not living with a partner",
     `2` = "partner, married",
     `3` = "partner, not married",
     `4` = "partner, outside household",
     `5` = "combination 2 + 4"
   ),
-  tryechh = c(`-2` = "not changed", `-1` = "asked, no answer"),
-  tryechm = c(`-3` = "no answer TRMARST", `-2` = "not changed", `-1` = "asked, no answer"),
-  tryechp = c(`-3` = "no answer TRPARTN", `-2` = "not changed", `-1` = "asked, no answer")
+  tryechh = c(
+    `-2` = "not changed",
+    default_missing_labels[c("-1")]
+  ),
+  tryechm = c(
+    `-3` = "no answer TRMARST",
+    `-2` = "not changed",
+    default_missing_labels[c("-1")]
+  ),
+  tryechp = c(
+    `-3` = "no answer TRPARTN",
+    `-2` = "not changed",
+    default_missing_labels[c("-1")]
+  )
 )
 
 value_labels_list <- list(
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochh",
-    "trmochm",
-    "trmochp",
-    "trnuper",
-    "trpartn",
-    "tryechh",
-    "tryechm",
-    "tryechp"
-  )],
+    standardized_value_labels,
     trhinde = c(
     `-1` = "asked, no answer",
     `1` = "independent",
@@ -328,18 +354,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochh",
-    "trmochm",
-    "trmochp",
-    "trnuper",
-    "trpartn",
-    "tryechh",
-    "tryechm",
-    "tryechp"
-  )],
+    standardized_value_labels,
     trmarst = c(
     `-1` = "asked, no answer",
     `1` = "never married",
@@ -372,18 +387,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochh",
-    "trmochm",
-    "trmochp",
-    "trnuper",
-    "trpartn",
-    "tryechh",
-    "tryechm",
-    "tryechp"
-  )],
+    standardized_value_labels,
     trmarst = c(
     `-1` = "asked, no answer",
     `1` = "never married",
@@ -416,18 +420,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochh",
-    "trmochm",
-    "trmochp",
-    "trnuper",
-    "trpartn",
-    "tryechh",
-    "tryechm",
-    "tryechp"
-  )],
+    standardized_value_labels,
     trmarst = c(
     `-1` = "asked, no answer",
     `1` = "never married",
@@ -453,18 +446,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochh",
-    "trmochm",
-    "trmochp",
-    "trnuper",
-    "trpartn",
-    "tryechh",
-    "tryechm",
-    "tryechp"
-  )],
+    standardized_value_labels,
     trmochm = .replace_labels(
     standardized_value_labels$trmochm,
     `-3` = "no answer GTRMARST"
@@ -483,19 +465,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochm",
-    "trmochp",
-    "trmoved",
-    "trmovmo",
-    "trmovye",
-    "trnuper",
-    "trpartn",
-    "tryechm",
-    "tryechp"
-  )],
+    standardized_value_labels,
     trmochm = c(
     `-2` = "not changed",
     `-1` = "asked no answer",
@@ -547,19 +517,7 @@ value_labels_list <- list(
     tryechp = c(`-2` = "not changed", `-1` = "asked no answer")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochm",
-    "trmochp",
-    "trmoved",
-    "trmovmo",
-    "trmovye",
-    "trnuper",
-    "trpartn",
-    "tryechm",
-    "tryechp"
-  )],
+    standardized_value_labels,
     trmochm = c(
     `-2` = "not changed",
     `-1` = "asked no answer",
@@ -611,19 +569,7 @@ value_labels_list <- list(
     tryechp = c(`-2` = "not changed", `-1` = "asked no answer")
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochm",
-    "trmochp",
-    "trmoved",
-    "trmovmo",
-    "trmovye",
-    "trnuper",
-    "trpartn",
-    "tryechm",
-    "tryechp"
-  )],
+    standardized_value_labels,
     trmochm = c(
     `-2` = "not changed",
     `-1` = "asked no answer",
@@ -675,19 +621,7 @@ value_labels_list <- list(
     tryechp = c(`-2` = "not changed", `-1` = "asked no answer")
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "trhinde",
-    "trmarst",
-    "trmochm",
-    "trmochp",
-    "trmoved",
-    "trmovmo",
-    "trmovye",
-    "trnuper",
-    "trpartn",
-    "tryechm",
-    "tryechp"
-  )],
+    standardized_value_labels,
     trmarst = c(
     `1` = "never married",
     `2` = "married",
@@ -764,9 +698,12 @@ var_types_vec <- c(
   tryechp = "numeric"
 )
 
-.lasa_fc_701 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "701", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "701", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "701", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "701", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_701 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

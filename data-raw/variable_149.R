@@ -23,138 +23,119 @@ harmonized_labels <- c(
   qgsr14 = "AP2: for my goals make detailed plans when to implement"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `G` = c(
+    "qgsr01",
+    "qgsr02",
+    "qgsr03",
+    "qgsr04",
+    "qgsr05",
+    "qgsr06",
+    "qgsr07",
+    "qgsr08",
+    "qgsr09",
+    "qgsr10",
+    "qgsr11",
+    "qgsr12",
+    "qgsr13",
+    "qgsr14"
+  ),
+  `H` = c(
+    "qgsr01",
+    "qgsr02",
+    "qgsr03",
+    "qgsr04",
+    "qgsr05",
+    "qgsr06",
+    "qgsr07",
+    "qgsr08",
+    "qgsr09",
+    "qgsr10",
+    "qgsr11",
+    "qgsr12",
+    "qgsr13",
+    "qgsr14"
+  )
+)
+
 variable_labels_list <- list(
   Wave_G_labels = harmonized_labels,
   Wave_H_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "strongly disagree",
+  `2` = "disagree",
+  `3` = "slightly disagree",
+  `4` = "slightly agree",
+  `5` = "agree",
+  `6` = "strongly agree"
+)
+
 standardized_value_labels <- list(
   qgsr01 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "slightly disagree",
-    `4` = "slightly agree",
-    `5` = "agree",
-    `6` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   qgsr02 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "slightly disagree",
-    `4` = "slightly agree",
-    `5` = "agree",
-    `6` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   qgsr03 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "slightly disagree",
-    `4` = "slightly agree",
-    `5` = "agree",
-    `6` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   qgsr04 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "slightly disagree",
-    `4` = "slightly agree",
-    `5` = "agree",
-    `6` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   qgsr05 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "slightly disagree",
-    `4` = "slightly agree",
-    `5` = "agree",
-    `6` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   qgsr06 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "slightly disagree",
-    `4` = "slightly agree",
-    `5` = "agree",
-    `6` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   qgsr07 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "slightly disagree",
-    `4` = "slightly agree",
-    `5` = "agree",
-    `6` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   qgsr08 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "slightly disagree",
-    `4` = "slightly agree",
-    `5` = "agree",
-    `6` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   qgsr09 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "slightly disagree",
-    `4` = "slightly agree",
-    `5` = "agree",
-    `6` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   qgsr10 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "slightly disagree",
-    `4` = "slightly agree",
-    `5` = "agree",
-    `6` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   qgsr11 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "slightly disagree",
-    `4` = "slightly agree",
-    `5` = "agree",
-    `6` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   qgsr12 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "slightly disagree",
-    `4` = "slightly agree",
-    `5` = "agree",
-    `6` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   qgsr13 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "slightly disagree",
-    `4` = "slightly agree",
-    `5` = "agree",
-    `6` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   ),
   qgsr14 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "slightly disagree",
-    `4` = "slightly agree",
-    `5` = "agree",
-    `6` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
   )
 )
 
@@ -297,9 +278,12 @@ var_types_vec <- c(
   qgsr14 = "categorical"
 )
 
-.lasa_fc_149 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "149", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "149", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "149", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "149", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_149 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -11,6 +11,53 @@ harmonized_labels <- c(
   urbyear = "year of urbanization observation"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `A` = c(
+    "urb",
+    "urbyear"
+  ),
+  `B` = c(
+    "urb",
+    "urbyear"
+  ),
+  `C` = c(
+    "urb",
+    "urbyear"
+  ),
+  `D` = c(
+    "urb",
+    "urbyear"
+  ),
+  `E` = c(
+    "urb",
+    "urbyear"
+  ),
+  `F` = c(
+    "urb",
+    "urbyear"
+  ),
+  `G` = c(
+    "urb",
+    "urbyear"
+  ),
+  `H` = c(
+    "urb",
+    "urbyear"
+  ),
+  `I` = c(
+    "urb",
+    "urbyear"
+  ),
+  `J` = c(
+    "urb",
+    "urbyear"
+  )
+)
+
 variable_labels_list <- list(
   Wave_A_labels = .replace_labels(
     harmonized_labels,
@@ -218,9 +265,12 @@ value_labels_list <- list(
 
 var_types_vec <- c(urb = "categorical", urbyear = "numeric")
 
-.lasa_fc_z095 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "z095", waves = .lasa_wave_rows(has_wave_a = TRUE)),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "z095", waves = .lasa_wave_rows(has_wave_a = TRUE)),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "z095", waves = .lasa_wave_rows(has_wave_a = TRUE)),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "z095", waves = .lasa_wave_rows(has_wave_a = TRUE))
 )
+
+.lasa_fc_z095 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

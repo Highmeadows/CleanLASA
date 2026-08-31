@@ -8,6 +8,17 @@
 
 harmonized_labels <- c(tprel09 = "Influences daily life", tprel10 = "Role in important decisions")
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
+    "tprel09",
+    "tprel10"
+  )
+)
+
 variable_labels_list <- list(
   Wave_C_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
@@ -15,7 +26,7 @@ variable_labels_list <- list(
 
 standardized_value_labels <- list(
   tprel09 = c(
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "strongly agree",
     `2` = "agree",
     `3` = "no agreement/no disagreement",
@@ -23,7 +34,7 @@ standardized_value_labels <- list(
     `5` = "strongly disagree"
   ),
   tprel10 = c(
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "strongly agree",
     `2` = "agree",
     `3` = "no agreement/no disagreement",
@@ -39,9 +50,12 @@ value_labels_list <- list(
 
 var_types_vec <- c(tprel09 = "categorical", tprel10 = "categorical")
 
-.lasa_fc_608 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "608", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "608", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "608", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "608", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_608 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

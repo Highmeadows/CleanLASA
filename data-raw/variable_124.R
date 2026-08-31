@@ -50,8 +50,12 @@ harmonized_labels <- c(
   qmemo41 = "memory 41: well"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "qmemo01",
     "qmemo02",
     "qmemo03",
@@ -82,10 +86,111 @@ variable_labels_list <- list(
     "qmemo28",
     "qmemo29",
     "qmemo30"
-  )],
+  ),
+  `C` = c(
+    "qmemo01",
+    "qmemo02",
+    "qmemo03",
+    "qmemo04",
+    "qmemo05",
+    "qmemo06",
+    "qmemo07",
+    "qmemo08",
+    "qmemo09",
+    "qmemo10",
+    "qmemo11",
+    "qmemo12",
+    "qmemo13",
+    "qmemo14",
+    "qmemo15",
+    "qmemo16",
+    "qmemo17",
+    "qmemo18",
+    "qmemo19",
+    "qmemo20",
+    "qmemo21",
+    "qmemo22",
+    "qmemo23",
+    "qmemo24",
+    "qmemo25",
+    "qmemo26",
+    "qmemo27",
+    "qmemo28",
+    "qmemo29",
+    "qmemo30",
+    "qmemo31",
+    "qmemo32",
+    "qmemo33",
+    "qmemo34",
+    "qmemo35",
+    "qmemo36",
+    "qmemo37",
+    "qmemo38",
+    "qmemo39",
+    "qmemo40",
+    "qmemo41"
+  ),
+  `D` = c(
+    "qmemo01",
+    "qmemo02",
+    "qmemo03",
+    "qmemo04",
+    "qmemo05",
+    "qmemo06",
+    "qmemo07",
+    "qmemo08",
+    "qmemo09",
+    "qmemo10",
+    "qmemo11",
+    "qmemo12",
+    "qmemo13",
+    "qmemo14",
+    "qmemo15",
+    "qmemo16",
+    "qmemo17",
+    "qmemo18",
+    "qmemo19",
+    "qmemo20",
+    "qmemo21",
+    "qmemo22",
+    "qmemo23",
+    "qmemo24",
+    "qmemo25",
+    "qmemo26",
+    "qmemo27",
+    "qmemo28",
+    "qmemo29",
+    "qmemo30",
+    "qmemo31",
+    "qmemo32",
+    "qmemo33",
+    "qmemo34",
+    "qmemo35",
+    "qmemo36",
+    "qmemo37",
+    "qmemo38",
+    "qmemo39",
+    "qmemo40",
+    "qmemo41"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = harmonized_labels,
   Wave_C_labels = harmonized_labels,
   Wave_D_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
+)
+
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "strongly disagree",
+  `2` = "disagree",
+  `3` = "no agreement/agreement",
+  `4` = "agree",
+  `5` = "strongly agree"
 )
 
 standardized_value_labels <- list(
@@ -171,288 +276,133 @@ standardized_value_labels <- list(
   ),
   qmemo11 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo12 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo13 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo14 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo15 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo16 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo17 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo18 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo19 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo20 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo21 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo22 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo23 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo24 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo25 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo26 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo27 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo28 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo29 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo30 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo31 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo32 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo33 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo34 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo35 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo36 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo37 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo38 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo39 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo40 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qmemo41 = c(
     `-1` = "not available",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no agreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   )
 )
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qmemo01",
-    "qmemo02",
-    "qmemo03",
-    "qmemo04",
-    "qmemo05",
-    "qmemo06",
-    "qmemo07",
-    "qmemo08",
-    "qmemo09",
-    "qmemo10",
-    "qmemo11",
-    "qmemo12",
-    "qmemo13",
-    "qmemo14",
-    "qmemo15",
-    "qmemo16",
-    "qmemo17",
-    "qmemo18",
-    "qmemo19",
-    "qmemo20",
-    "qmemo21",
-    "qmemo22",
-    "qmemo23",
-    "qmemo24",
-    "qmemo25",
-    "qmemo26",
-    "qmemo27",
-    "qmemo28",
-    "qmemo29",
-    "qmemo30"
-  )],
+    standardized_value_labels,
     qmemo01 = .replace_labels(
     standardized_value_labels$qmemo01,
     `-1` = "no answer"
@@ -955,9 +905,12 @@ var_types_vec <- c(
   qmemo41 = "categorical"
 )
 
-.lasa_fc_124 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "124", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "124", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "124", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "124", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_124 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

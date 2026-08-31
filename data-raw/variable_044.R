@@ -84,9 +84,12 @@ harmonized_labels <- c(
   lst2k15 = "Know. Residential home - social or creative"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "lst1c01",
     "lst1c02",
     "lst1c03",
@@ -155,7 +158,372 @@ variable_labels_list <- list(
     "lst2k13",
     "lst2k14",
     "lst2k15"
-  )],
+  ),
+  `C` = c(
+    "lst1c01",
+    "lst1c02",
+    "lst1c03",
+    "lst1c04",
+    "lst1c05",
+    "lst1c06",
+    "lst1c07",
+    "lst1c08",
+    "lst1c09",
+    "lst1c10",
+    "lst1c11",
+    "lst1c12",
+    "lst1c13",
+    "lst1c14",
+    "lst1c15",
+    "lst1c16",
+    "lst1c17",
+    "lst1c18",
+    "lst1c19",
+    "lst2c01",
+    "lst2c02",
+    "lst2c03",
+    "lst2c04",
+    "lst2c05",
+    "lst2c06",
+    "lst2c07",
+    "lst2c08",
+    "lst2c09",
+    "lst2c10",
+    "lst2c11",
+    "lst2c12",
+    "lst2c13",
+    "lst2c14",
+    "lst2c15",
+    "lst2k09"
+  ),
+  `D` = c(
+    "lst1c01",
+    "lst1c02",
+    "lst1c03",
+    "lst1c04",
+    "lst1c05",
+    "lst1c06",
+    "lst1c07",
+    "lst1c08",
+    "lst1c09",
+    "lst1c10",
+    "lst1c11",
+    "lst1c12",
+    "lst1c13",
+    "lst1c14",
+    "lst1c15",
+    "lst1c16",
+    "lst1c17",
+    "lst1c18",
+    "lst1c19",
+    "lst2c01",
+    "lst2c02",
+    "lst2c03",
+    "lst2c04",
+    "lst2c05",
+    "lst2c06",
+    "lst2c07",
+    "lst2c08",
+    "lst2c09",
+    "lst2c10",
+    "lst2c11",
+    "lst2c12",
+    "lst2c13",
+    "lst2c14",
+    "lst2c15",
+    "lst2k09"
+  ),
+  `E` = c(
+    "lst1c01",
+    "lst1c02",
+    "lst1c03",
+    "lst1c04",
+    "lst1c05",
+    "lst1c06",
+    "lst1c07",
+    "lst1c08",
+    "lst1c09",
+    "lst1c10",
+    "lst1c11",
+    "lst1c12",
+    "lst1c13",
+    "lst1c14",
+    "lst1c15",
+    "lst1c16",
+    "lst1c17",
+    "lst1c18",
+    "lst1c19",
+    "lst2c01",
+    "lst2c02",
+    "lst2c03",
+    "lst2c04",
+    "lst2c05",
+    "lst2c06",
+    "lst2c07",
+    "lst2c08",
+    "lst2c09",
+    "lst2c10",
+    "lst2c11",
+    "lst2c12",
+    "lst2c13",
+    "lst2c14",
+    "lst2c15",
+    "lst2k09"
+  ),
+  `2B` = c(
+    "lst1c01",
+    "lst1c02",
+    "lst1c03",
+    "lst1c04",
+    "lst1c05",
+    "lst1c06",
+    "lst1c07",
+    "lst1c08",
+    "lst1c09",
+    "lst1c10",
+    "lst1c11",
+    "lst1c12",
+    "lst1c13",
+    "lst1c14",
+    "lst1c15",
+    "lst1c16",
+    "lst1c17",
+    "lst1c18",
+    "lst1c19",
+    "lst2c01",
+    "lst2c02",
+    "lst2c03",
+    "lst2c04",
+    "lst2c05",
+    "lst2c06",
+    "lst2c07",
+    "lst2c08",
+    "lst2c09",
+    "lst2c10",
+    "lst2c11",
+    "lst2c12",
+    "lst2c13",
+    "lst2c14",
+    "lst2c15",
+    "lst2k09"
+  ),
+  `F` = c(
+    "lst1c01",
+    "lst1c02",
+    "lst1c03",
+    "lst1c04",
+    "lst1c05",
+    "lst1c06",
+    "lst1c07",
+    "lst1c08",
+    "lst1c09",
+    "lst1c10",
+    "lst1c11",
+    "lst1c12",
+    "lst1c13",
+    "lst1c14",
+    "lst1c15",
+    "lst1c16",
+    "lst1c17",
+    "lst1c18",
+    "lst1c19",
+    "lst2c01",
+    "lst2c02",
+    "lst2c03",
+    "lst2c04",
+    "lst2c05",
+    "lst2c06",
+    "lst2c07",
+    "lst2c08",
+    "lst2c09",
+    "lst2c10",
+    "lst2c11",
+    "lst2c12",
+    "lst2c13",
+    "lst2c14",
+    "lst2c15",
+    "lst2k09"
+  ),
+  `G` = c(
+    "lst1c01",
+    "lst1c02",
+    "lst1c03",
+    "lst1c04",
+    "lst1c05",
+    "lst1c06",
+    "lst1c07",
+    "lst1c08",
+    "lst1c09",
+    "lst1c10",
+    "lst1c11",
+    "lst1c12",
+    "lst1c13",
+    "lst1c14",
+    "lst1c15",
+    "lst1c16",
+    "lst1c17",
+    "lst1c18",
+    "lst1c19",
+    "lst1c1n",
+    "lst2c01",
+    "lst2c02",
+    "lst2c03",
+    "lst2c04",
+    "lst2c05",
+    "lst2c06",
+    "lst2c07",
+    "lst2c08",
+    "lst2c09",
+    "lst2c10",
+    "lst2c11",
+    "lst2c12",
+    "lst2c13",
+    "lst2c14",
+    "lst2c15",
+    "lst2k09"
+  ),
+  `H` = c(
+    "lst1c01",
+    "lst1c02",
+    "lst1c03",
+    "lst1c04",
+    "lst1c05",
+    "lst1c06",
+    "lst1c07",
+    "lst1c08",
+    "lst1c09",
+    "lst1c10",
+    "lst1c11",
+    "lst1c12",
+    "lst1c13",
+    "lst1c14",
+    "lst1c16",
+    "lst1c17",
+    "lst1c19",
+    "lst1c1n",
+    "lst2c01",
+    "lst2c02",
+    "lst2c03",
+    "lst2c04",
+    "lst2c05",
+    "lst2c06",
+    "lst2c07",
+    "lst2c08",
+    "lst2c09",
+    "lst2c10",
+    "lst2c11",
+    "lst2c12",
+    "lst2c13",
+    "lst2c14",
+    "lst2c15"
+  ),
+  `3B` = c(
+    "lst1c01",
+    "lst1c02",
+    "lst1c03",
+    "lst1c04",
+    "lst1c05",
+    "lst1c06",
+    "lst1c07",
+    "lst1c08",
+    "lst1c09",
+    "lst1c10",
+    "lst1c11",
+    "lst1c12",
+    "lst1c13",
+    "lst1c14",
+    "lst1c16",
+    "lst1c17",
+    "lst1c19",
+    "lst1c1n",
+    "lst2c01",
+    "lst2c02",
+    "lst2c03",
+    "lst2c04",
+    "lst2c05",
+    "lst2c06",
+    "lst2c07",
+    "lst2c08",
+    "lst2c09",
+    "lst2c10",
+    "lst2c11",
+    "lst2c12",
+    "lst2c13",
+    "lst2c14",
+    "lst2c15"
+  ),
+  `MB` = c(
+    "fac1",
+    "fac2",
+    "fac3",
+    "facil",
+    "lst1c01",
+    "lst1c02",
+    "lst1c03",
+    "lst1c04",
+    "lst1c12",
+    "lst1c14",
+    "lst1c16",
+    "lst1c17",
+    "lst1c1n",
+    "lst2c01",
+    "lst2c02",
+    "lst2c06"
+  ),
+  `I` = c(
+    "lst1c01",
+    "lst1c02",
+    "lst1c03",
+    "lst1c04",
+    "lst1c08",
+    "lst1c09",
+    "lst1c10",
+    "lst1c11",
+    "lst1c12",
+    "lst1c13",
+    "lst1c14",
+    "lst1c16",
+    "lst1c17",
+    "lst1c18",
+    "lst1c19",
+    "lst1c1n",
+    "lst2c01",
+    "lst2c02",
+    "lst2c03",
+    "lst2c04",
+    "lst2c06",
+    "lst2c20",
+    "lst2c21"
+  ),
+  `J` = c(
+    "lst1c01",
+    "lst1c02",
+    "lst1c03",
+    "lst1c04",
+    "lst1c08",
+    "lst1c09",
+    "lst1c10",
+    "lst1c11",
+    "lst1c12",
+    "lst1c13",
+    "lst1c14",
+    "lst1c16",
+    "lst1c17",
+    "lst1c18",
+    "lst1c19",
+    "lst1c1n",
+    "lst2c01",
+    "lst2c02",
+    "lst2c03",
+    "lst2c04",
+    "lst2c06",
+    "lst2c20"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
     lst1c01 = "Cont. p 6 mo. Family physician",
     lst1c02 = "Cont. p 6 mo. Dentist",
     lst1c03 = "Cont. p 6 mo. Physiotherapist",
@@ -192,43 +560,7 @@ variable_labels_list <- list(
     lst2c15 = "Cont. p 6 mo. Res home - soci./creative"
   ),
   Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c15",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15",
-    "lst2k09"
-  )],
+    harmonized_labels,
     lst1c01 = "Cont. p 6 mo. Family physician",
     lst1c02 = "Cont. p 6 mo. Dentist",
     lst1c03 = "Cont. p 6 mo. Physiotherapist",
@@ -265,43 +597,7 @@ variable_labels_list <- list(
     lst2c15 = "Cont. p 6 mo. Res home - social/creative activities"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c15",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15",
-    "lst2k09"
-  )],
+    harmonized_labels,
     lst1c01 = "Cont. p 6 mo. Family physician",
     lst1c02 = "Cont. p 6 mo. Dentist",
     lst1c03 = "Cont. p 6 mo. Physiotherapist",
@@ -338,43 +634,7 @@ variable_labels_list <- list(
     lst2c15 = "Cont. p 6 mo. Res home - social/creative activities"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c15",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15",
-    "lst2k09"
-  )],
+    harmonized_labels,
     lst1c01 = "Cont. p 6 mo. Family physician",
     lst1c02 = "Cont. p 6 mo. Dentist",
     lst1c03 = "Cont. p 6 mo. Physiotherapist",
@@ -411,43 +671,7 @@ variable_labels_list <- list(
     lst2c15 = "Cont. p 6 mo. Res home - social/creative activities"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c15",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15",
-    "lst2k09"
-  )],
+    harmonized_labels,
     lst1c01 = "Cont. p 6 mo. Family physician",
     lst1c02 = "Cont. p 6 mo. Dentist",
     lst1c03 = "Cont. p 6 mo. Physiotherapist",
@@ -484,43 +708,7 @@ variable_labels_list <- list(
     lst2c15 = "Cont. p 6 mo. Res home - social/creative activities"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c15",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15",
-    "lst2k09"
-  )],
+    harmonized_labels,
     lst1c01 = "Cont. p 6 mo. Family physician",
     lst1c02 = "Cont. p 6 mo. Dentist",
     lst1c03 = "Cont. p 6 mo. Physiotherapist",
@@ -557,44 +745,7 @@ variable_labels_list <- list(
     lst2c15 = "Cont. p 6 mo. Res home - social/creative activities"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c15",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst1c1n",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15",
-    "lst2k09"
-  )],
+    harmonized_labels,
     lst1c01 = "Cont. p 6 mo. Family physician",
     lst1c02 = "Cont. p 6 mo. Dentist",
     lst1c03 = "Cont. p 6 mo. Physiotherapist",
@@ -631,41 +782,7 @@ variable_labels_list <- list(
     lst2c15 = "Cont. p 6 mo. Res home - social/creative activities"
   ),
   Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c16",
-    "lst1c17",
-    "lst1c19",
-    "lst1c1n",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15"
-  )],
+    harmonized_labels,
     lst1c01 = "Cont. p 6 mo. Family physician",
     lst1c02 = "Cont. p 6 mo. Dentist",
     lst1c03 = "Cont. p 6 mo. Physiotherapist",
@@ -700,41 +817,7 @@ variable_labels_list <- list(
     lst2c15 = "Cont. p 6 mo. Res home - social/creative activities"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c16",
-    "lst1c17",
-    "lst1c19",
-    "lst1c1n",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15"
-  )],
+    harmonized_labels,
     lst1c01 = "Cont. p 6 mo. Family physician",
     lst1c02 = "Cont. p 6 mo. Dentist",
     lst1c03 = "Cont. p 6 mo. Physiotherapist",
@@ -769,24 +852,7 @@ variable_labels_list <- list(
     lst2c15 = "Cont. p 6 mo. Res home - social/creative activities"
   ),
   Wave_MB_labels = .replace_labels(
-    harmonized_labels[c(
-    "fac1",
-    "fac2",
-    "fac3",
-    "facil",
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c12",
-    "lst1c14",
-    "lst1c16",
-    "lst1c17",
-    "lst1c1n",
-    "lst2c01",
-    "lst2c02",
-    "lst2c06"
-  )],
+    harmonized_labels,
     lst1c01 = "Cont. p 6 mo. Family physician",
     lst1c02 = "Cont. p 6 mo. Dentist",
     lst1c03 = "Cont. p 6 mo. Physiotherapist",
@@ -800,31 +866,7 @@ variable_labels_list <- list(
     lst2c06 = "Cont. p 6 mo. Alternative practitioner"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst1c1n",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c06",
-    "lst2c20",
-    "lst2c21"
-  )],
+    harmonized_labels,
     lst1c01 = "Cont. p 6 mo. Family physician",
     lst1c02 = "Cont. p 6 mo. Dentist",
     lst1c03 = "Cont. p 6 mo. Physiotherapist",
@@ -849,30 +891,7 @@ variable_labels_list <- list(
     lst2c21 = "Cont. p 6 mo. Daycare: social/creative activities in group"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst1c1n",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c06",
-    "lst2c20"
-  )],
+    harmonized_labels,
     lst1c01 = "Cont. p 6 mo. Family physician",
     lst1c02 = "Cont. p 6 mo. Dentist",
     lst1c03 = "Cont. p 6 mo. Physiotherapist",
@@ -898,633 +917,493 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "mentioned"
+)
+
 standardized_value_labels <- list(
-  fac1 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  fac2 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  fac3 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
+  fac1 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  fac2 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  fac3 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   facil = c(`-4` = "not available, interview terminated", `1` = "no", `2` = "yes"),
   lst1c01 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c02 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c03 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c04 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c05 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c06 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c07 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c08 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c09 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c10 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c11 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c12 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c13 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c14 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c15 = c(
     `-5` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c16 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c17 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c18 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c19 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1c1n = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available, asked: r does not know",
     `98` = "98 times or more"
   ),
   lst1k01 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k02 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k03 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k04 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k05 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k06 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k07 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k08 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k09 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k10 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k11 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k12 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k13 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k14 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k15 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k16 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k17 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k18 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst1k19 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
+    default_missing_labels[c("-4")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c01 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c02 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c03 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c04 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c05 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c06 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c07 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c08 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c09 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c10 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c11 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c12 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c13 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c14 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c15 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c20 = c(
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2c21 = c(
     `-4` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2k01 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2k02 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2k03 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2k04 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2k05 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2k06 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2k07 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2k08 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2k09 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2k10 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2k11 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2k12 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2k13 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2k14 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   lst2k15 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-4", "-2")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   )
 )
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c15",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst1k01",
-    "lst1k02",
-    "lst1k03",
-    "lst1k04",
-    "lst1k05",
-    "lst1k06",
-    "lst1k07",
-    "lst1k08",
-    "lst1k09",
-    "lst1k10",
-    "lst1k11",
-    "lst1k12",
-    "lst1k13",
-    "lst1k14",
-    "lst1k15",
-    "lst1k16",
-    "lst1k17",
-    "lst1k18",
-    "lst1k19",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15",
-    "lst2k01",
-    "lst2k02",
-    "lst2k03",
-    "lst2k04",
-    "lst2k05",
-    "lst2k06",
-    "lst2k07",
-    "lst2k08",
-    "lst2k09",
-    "lst2k10",
-    "lst2k11",
-    "lst2k12",
-    "lst2k13",
-    "lst2k14",
-    "lst2k15"
-  )],
+    standardized_value_labels,
     lst1c01 = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see BLST1C01",
@@ -1660,98 +1539,79 @@ value_labels_list <- list(
   ),
     lst1k01 = .replace_labels(
     standardized_value_labels$lst1k01,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k02 = .replace_labels(
     standardized_value_labels$lst1k02,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k03 = .replace_labels(
     standardized_value_labels$lst1k03,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k04 = .replace_labels(
     standardized_value_labels$lst1k04,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k05 = .replace_labels(
     standardized_value_labels$lst1k05,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k06 = .replace_labels(
     standardized_value_labels$lst1k06,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k07 = .replace_labels(
     standardized_value_labels$lst1k07,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k08 = .replace_labels(
     standardized_value_labels$lst1k08,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k09 = .replace_labels(
     standardized_value_labels$lst1k09,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k10 = .replace_labels(
     standardized_value_labels$lst1k10,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k11 = .replace_labels(
     standardized_value_labels$lst1k11,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k12 = .replace_labels(
     standardized_value_labels$lst1k12,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k13 = .replace_labels(
     standardized_value_labels$lst1k13,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k14 = .replace_labels(
     standardized_value_labels$lst1k14,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k15 = .replace_labels(
     standardized_value_labels$lst1k15,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k16 = .replace_labels(
     standardized_value_labels$lst1k16,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k17 = .replace_labels(
     standardized_value_labels$lst1k17,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k18 = .replace_labels(
     standardized_value_labels$lst1k18,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst1k19 = .replace_labels(
     standardized_value_labels$lst1k19,
-    `-5` = "na, interview terminated",
-    `-4` = "na, short interview"
+    `-5` = "na, interview terminated"
   ),
     lst2c01 = c(
     `-4` = "na, short interview",
@@ -1864,49 +1724,41 @@ value_labels_list <- list(
     lst2k01 = .replace_labels(
     standardized_value_labels$lst2k01,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
     `-2` = "na, see BHINDEP"
   ),
     lst2k02 = .replace_labels(
     standardized_value_labels$lst2k02,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
     `-2` = "na, see BHINDEP"
   ),
     lst2k03 = .replace_labels(
     standardized_value_labels$lst2k03,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
     `-2` = "na, see BHINDEP"
   ),
     lst2k04 = .replace_labels(
     standardized_value_labels$lst2k04,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
     `-2` = "na, see BHINDEP"
   ),
     lst2k05 = .replace_labels(
     standardized_value_labels$lst2k05,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
     `-2` = "na, see BHINDEP"
   ),
     lst2k06 = .replace_labels(
     standardized_value_labels$lst2k06,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
     `-2` = "na, see BHINDEP"
   ),
     lst2k07 = .replace_labels(
     standardized_value_labels$lst2k07,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
     `-2` = "na, see BHINDEP"
   ),
     lst2k08 = .replace_labels(
     standardized_value_labels$lst2k08,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
     `-2` = "na, see BHINDEP"
   ),
     lst2k09 = c(
@@ -1919,78 +1771,36 @@ value_labels_list <- list(
     lst2k10 = .replace_labels(
     standardized_value_labels$lst2k10,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
     `-2` = "na, see BHINDEP"
   ),
     lst2k11 = .replace_labels(
     standardized_value_labels$lst2k11,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
     `-2` = "na, see BHINDEP"
   ),
     lst2k12 = .replace_labels(
     standardized_value_labels$lst2k12,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
     `-2` = "na, see BHINDEP"
   ),
     lst2k13 = .replace_labels(
     standardized_value_labels$lst2k13,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
     `-2` = "na, see BHINDEP"
   ),
     lst2k14 = .replace_labels(
     standardized_value_labels$lst2k14,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
     `-2` = "na, see BHINDEP"
   ),
     lst2k15 = .replace_labels(
     standardized_value_labels$lst2k15,
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
     `-2` = "na, see BHINDEP"
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c15",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15",
-    "lst2k09"
-  )],
+    standardized_value_labels,
     lst1c01 = c(
     `-5` = "na, interview terminated",
     `-1` = "na, asked",
@@ -2235,43 +2045,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c15",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15",
-    "lst2k09"
-  )],
+    standardized_value_labels,
     lst1c01 = c(
     `-5` = "na, interview terminated",
     `-1` = "na, asked",
@@ -2516,43 +2290,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c15",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15",
-    "lst2k09"
-  )],
+    standardized_value_labels,
     lst1c01 = c(
     `-5` = "na, interview terminated",
     `-1` = "na, asked",
@@ -2797,43 +2535,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c15",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15",
-    "lst2k09"
-  )],
+    standardized_value_labels,
     lst1c01 = c(
     `-5` = "na, interview terminated",
     `-1` = "na, asked",
@@ -3078,43 +2780,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c15",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15",
-    "lst2k09"
-  )],
+    standardized_value_labels,
     lst1c01 = c(
     `-5` = "na, interview terminated",
     `-1` = "na, asked",
@@ -3359,44 +3025,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c15",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst1c1n",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15",
-    "lst2k09"
-  )],
+    standardized_value_labels,
     lst1c01 = c(
     `-5` = "na, interview terminated",
     `-1` = "na, asked",
@@ -3647,41 +3276,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c16",
-    "lst1c17",
-    "lst1c19",
-    "lst1c1n",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15"
-  )],
+    standardized_value_labels,
     lst1c01 = c(
     `-4` = "na, short/terminated interview",
     `-1` = "na, asked",
@@ -3907,41 +3502,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c05",
-    "lst1c06",
-    "lst1c07",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c16",
-    "lst1c17",
-    "lst1c19",
-    "lst1c1n",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c05",
-    "lst2c06",
-    "lst2c07",
-    "lst2c08",
-    "lst2c09",
-    "lst2c10",
-    "lst2c11",
-    "lst2c12",
-    "lst2c13",
-    "lst2c14",
-    "lst2c15"
-  )],
+    standardized_value_labels,
     lst1c01 = c(
     `-4` = "na, short/terminated interview",
     `-1` = "na, asked",
@@ -4167,24 +3728,7 @@ value_labels_list <- list(
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "fac1",
-    "fac2",
-    "fac3",
-    "facil",
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c12",
-    "lst1c14",
-    "lst1c16",
-    "lst1c17",
-    "lst1c1n",
-    "lst2c01",
-    "lst2c02",
-    "lst2c06"
-  )],
+    standardized_value_labels,
     fac1 = .replace_labels(
     standardized_value_labels$fac1,
     `-2` = "na, see BFACIL"
@@ -4215,31 +3759,7 @@ value_labels_list <- list(
     lst2c06 = c(`-4` = "na, short/terminated interview", `0` = "not mentioned", `1` = "mentioned")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst1c1n",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c06",
-    "lst2c20",
-    "lst2c21"
-  )],
+    standardized_value_labels,
     lst1c01 = c(
     `-4` = "na, short/terminated interview",
     `-1` = "na, asked",
@@ -4374,43 +3894,16 @@ value_labels_list <- list(
     lst2c20 = .replace_labels(
     standardized_value_labels$lst2c20,
     `-4` = "na, short/terminated interview",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IHINDEP",
-    `-1` = "na, asked"
+    `-2` = "na, see IHINDEP"
   ),
     lst2c21 = .replace_labels(
     standardized_value_labels$lst2c21,
     `-4` = "na, short/terminated interview",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IHINDEP",
-    `-1` = "na, asked"
+    `-2` = "na, see IHINDEP"
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "lst1c01",
-    "lst1c02",
-    "lst1c03",
-    "lst1c04",
-    "lst1c08",
-    "lst1c09",
-    "lst1c10",
-    "lst1c11",
-    "lst1c12",
-    "lst1c13",
-    "lst1c14",
-    "lst1c16",
-    "lst1c17",
-    "lst1c18",
-    "lst1c19",
-    "lst1c1n",
-    "lst2c01",
-    "lst2c02",
-    "lst2c03",
-    "lst2c04",
-    "lst2c06",
-    "lst2c20"
-  )],
+    standardized_value_labels,
     lst1c01 = c(
     `-4` = "na, terminated interview",
     `-1` = "na, asked",
@@ -4620,9 +4113,12 @@ var_types_vec <- c(
   lst2k15 = "categorical"
 )
 
-.lasa_fc_044 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "044", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "044", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "044", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "044", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_044 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

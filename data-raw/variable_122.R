@@ -32,8 +32,12 @@ harmonized_labels <- c(
   qvalu18e = "circumstances using suicide medication: other"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "qvalu01",
     "qvalu02",
     "qvalu03",
@@ -49,17 +53,69 @@ variable_labels_list <- list(
     "qvalu13",
     "qvalu14",
     "qvalu15"
-  )],
-  Wave_C_labels = harmonized_labels[c("qvalu01", "qvalu02", "qvalu03")],
-  Wave_D_labels = harmonized_labels[c("qvalu01", "qvalu02", "qvalu03")],
-  Wave_E_labels = harmonized_labels[c("qvalu01", "qvalu02", "qvalu03", "qvalu16", "qvalu17", "qvalu18")],
-  Wave_2B_labels = harmonized_labels[c("qvalu01", "qvalu02", "qvalu03")],
-  Wave_F_labels = harmonized_labels[c("qvalu01", "qvalu02", "qvalu03", "qvalu16", "qvalu17", "qvalu18")],
-  Wave_G_labels = harmonized_labels[c("qvalu01", "qvalu02", "qvalu03", "qvalu16", "qvalu17", "qvalu18")],
-  Wave_H_labels = harmonized_labels[c("qvalu01", "qvalu02", "qvalu03", "qvalu16", "qvalu17", "qvalu18")],
-  Wave_3B_labels = harmonized_labels[c("qvalu03", "qvalu16", "qvalu17", "qvalu18")],
-  Wave_I_labels = harmonized_labels[c("qvalu01", "qvalu02", "qvalu03", "qvalu16", "qvalu17", "qvalu18")],
-  Wave_J_labels = harmonized_labels[c(
+  ),
+  `C` = c(
+    "qvalu01",
+    "qvalu02",
+    "qvalu03"
+  ),
+  `D` = c(
+    "qvalu01",
+    "qvalu02",
+    "qvalu03"
+  ),
+  `E` = c(
+    "qvalu01",
+    "qvalu02",
+    "qvalu03",
+    "qvalu16",
+    "qvalu17",
+    "qvalu18"
+  ),
+  `2B` = c(
+    "qvalu01",
+    "qvalu02",
+    "qvalu03"
+  ),
+  `F` = c(
+    "qvalu01",
+    "qvalu02",
+    "qvalu03",
+    "qvalu16",
+    "qvalu17",
+    "qvalu18"
+  ),
+  `G` = c(
+    "qvalu01",
+    "qvalu02",
+    "qvalu03",
+    "qvalu16",
+    "qvalu17",
+    "qvalu18"
+  ),
+  `H` = c(
+    "qvalu01",
+    "qvalu02",
+    "qvalu03",
+    "qvalu16",
+    "qvalu17",
+    "qvalu18"
+  ),
+  `3B` = c(
+    "qvalu03",
+    "qvalu16",
+    "qvalu17",
+    "qvalu18"
+  ),
+  `I` = c(
+    "qvalu01",
+    "qvalu02",
+    "qvalu03",
+    "qvalu16",
+    "qvalu17",
+    "qvalu18"
+  ),
+  `J` = c(
     "qvalu02",
     "qvalu16",
     "qvalu17",
@@ -69,7 +125,21 @@ variable_labels_list <- list(
     "qvalu18c",
     "qvalu18d",
     "qvalu18e"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = harmonized_labels,
+  Wave_C_labels = harmonized_labels,
+  Wave_D_labels = harmonized_labels,
+  Wave_E_labels = harmonized_labels,
+  Wave_2B_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_3B_labels = harmonized_labels,
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
@@ -85,7 +155,7 @@ standardized_value_labels <- list(
     `-1` = "not available",
     `1` = "yes, there are",
     `2` = "no, there are not",
-    `3` = "coding category 3"
+    `3` = "label varies by wave"
   ),
   qvalu03 = c(
     `-1` = "not available",
@@ -158,33 +228,37 @@ standardized_value_labels <- list(
   ),
   qvalu16 = c(`-1` = "not available", `1` = "yes", `2` = "no"),
   qvalu17 = c(`-1` = "not available", `1` = "yes", `2` = "no", `3` = "no opinion"),
-  qvalu18 = c(`-1` = "not available", `1` = "coding category 1", `2` = "coding category 2", `3` = "no"),
-  qvalu18a = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  qvalu18b = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  qvalu18c = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  qvalu18d = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  qvalu18e = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned")
+  qvalu18 = c(`-1` = "not available", `1` = "label varies by wave", `2` = "label varies by wave", `3` = "no"),
+  qvalu18a = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  qvalu18b = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  qvalu18c = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  qvalu18d = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  qvalu18e = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  )
 )
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qvalu01",
-    "qvalu02",
-    "qvalu03",
-    "qvalu04",
-    "qvalu05",
-    "qvalu06",
-    "qvalu07",
-    "qvalu08",
-    "qvalu09",
-    "qvalu10",
-    "qvalu11",
-    "qvalu12",
-    "qvalu13",
-    "qvalu14",
-    "qvalu15"
-  )],
+    standardized_value_labels,
     qvalu01 = .replace_labels(
     standardized_value_labels$qvalu01,
     `-1` = "no answer"
@@ -250,7 +324,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("qvalu01", "qvalu02", "qvalu03")],
+    standardized_value_labels,
     qvalu01 = .replace_labels(
     standardized_value_labels$qvalu01,
     `-1` = "no answer"
@@ -266,7 +340,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("qvalu01", "qvalu02", "qvalu03")],
+    standardized_value_labels,
     qvalu01 = .replace_labels(
     standardized_value_labels$qvalu01,
     `-1` = "no answer"
@@ -282,7 +356,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("qvalu01", "qvalu02", "qvalu03", "qvalu16", "qvalu17", "qvalu18")],
+    standardized_value_labels,
     qvalu01 = .replace_labels(
     standardized_value_labels$qvalu01,
     `-1` = "no answer"
@@ -307,7 +381,7 @@ value_labels_list <- list(
     qvalu18 = c(`-1` = "no answer", `1` = "yes", `2` = "no")
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("qvalu01", "qvalu02", "qvalu03")],
+    standardized_value_labels,
     qvalu01 = .replace_labels(
     standardized_value_labels$qvalu01,
     `-1` = "no answer"
@@ -323,7 +397,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("qvalu01", "qvalu02", "qvalu03", "qvalu16", "qvalu17", "qvalu18")],
+    standardized_value_labels,
     qvalu01 = .replace_labels(
     standardized_value_labels$qvalu01,
     `-1` = "no answer"
@@ -348,7 +422,7 @@ value_labels_list <- list(
     qvalu18 = c(`-1` = "no answer", `1` = "yes", `2` = "no")
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("qvalu01", "qvalu02", "qvalu03", "qvalu16", "qvalu17", "qvalu18")],
+    standardized_value_labels,
     qvalu01 = .replace_labels(
     standardized_value_labels$qvalu01,
     `-1` = "no answer"
@@ -373,7 +447,7 @@ value_labels_list <- list(
     qvalu18 = c(`-1` = "no answer", `1` = "yes", `2` = "no")
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("qvalu01", "qvalu02", "qvalu03", "qvalu16", "qvalu17", "qvalu18")],
+    standardized_value_labels,
     qvalu01 = .replace_labels(
     standardized_value_labels$qvalu01,
     `-1` = "no answer"
@@ -398,7 +472,7 @@ value_labels_list <- list(
     qvalu18 = c(`-1` = "no answer", `1` = "yes", `2` = "no")
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("qvalu03", "qvalu16", "qvalu17", "qvalu18")],
+    standardized_value_labels,
     qvalu03 = .replace_labels(
     standardized_value_labels$qvalu03,
     `-1` = "no answer"
@@ -414,7 +488,7 @@ value_labels_list <- list(
     qvalu18 = c(`-1` = "no answer", `1` = "yes", `2` = "no")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("qvalu01", "qvalu02", "qvalu03", "qvalu16", "qvalu17", "qvalu18")],
+    standardized_value_labels,
     qvalu01 = .replace_labels(
     standardized_value_labels$qvalu01,
     `-1` = "no answer"
@@ -439,17 +513,7 @@ value_labels_list <- list(
     qvalu18 = c(`-1` = "no answer", `1` = "yes", `2` = "no")
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qvalu02",
-    "qvalu16",
-    "qvalu17",
-    "qvalu18",
-    "qvalu18a",
-    "qvalu18b",
-    "qvalu18c",
-    "qvalu18d",
-    "qvalu18e"
-  )],
+    standardized_value_labels,
     qvalu02 = .replace_labels(
     standardized_value_labels$qvalu02,
     `-1` = "no answer",
@@ -519,7 +583,7 @@ var_types_vec <- c(
   qvalu18e = "categorical"
 )
 
-.lasa_fc_122 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "122", waves = .lasa_wave_rows()) |>
     .override_label(wave = "J", variable = "qvalu16", override_value = "bqvalu16") |>
     .override_label(wave = "J", variable = "qvalu17", override_value = "bqvalu17") |>
@@ -528,3 +592,6 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "122", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "122", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_122 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

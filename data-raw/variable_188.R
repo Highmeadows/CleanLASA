@@ -28,88 +28,95 @@ harmonized_labels <- c(
   mpain9 = "Pain: call doctor or nurse"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `E` = c(
+    "mpain1",
+    "mpain10",
+    "mpain11",
+    "mpain12",
+    "mpain13",
+    "mpain14",
+    "mpain15",
+    "mpain16",
+    "mpain17",
+    "mpain18",
+    "mpain19",
+    "mpain2",
+    "mpain3",
+    "mpain4",
+    "mpain5",
+    "mpain6",
+    "mpain7",
+    "mpain8",
+    "mpain9"
+  )
+)
+
 variable_labels_list <- list(
   Wave_E_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "never",
+  `2` = "seldom",
+  `3` = "sometimes",
+  `4` = "often",
+  `5` = "very often"
+)
+
 standardized_value_labels <- list(
-  mpain1 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
+  mpain1 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   mpain10 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain11 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain12 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain13 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain14 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain15 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain16 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain17 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain18 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain19 = c(
     `-2` = "no valid data",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "not applicable",
     `2` = "drawing filled in",
     `3` = "drawing partial filled in",
@@ -117,68 +124,36 @@ standardized_value_labels <- list(
     `5` = "interviewer filled in drawing"
   ),
   mpain2 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain3 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain4 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain5 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain6 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain7 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain8 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   mpain9 = c(
-    `-1` = "na, asked",
-    `1` = "never",
-    `2` = "seldom",
-    `3` = "sometimes",
-    `4` = "often",
-    `5` = "very often"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   )
 )
 
@@ -215,9 +190,12 @@ var_types_vec <- c(
   mpain9 = "categorical"
 )
 
-.lasa_fc_188 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "188", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "188", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "188", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "188", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_188 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

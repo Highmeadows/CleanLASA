@@ -218,9 +218,12 @@ harmonized_labels <- c(
   workret = "Present job: practice until retirement age"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "cjclass",
     "cjlevel",
     "cjpresi",
@@ -257,33 +260,8 @@ variable_labels_list <- list(
     "retirf4",
     "retirf5",
     "retirf6"
-  )],
-    cjclass = "cur. job: occupational class SBC92",
-    cjlevel = "cur. job: occupational skill-level SBC92",
-    cjpresi = "cur. job: occup prestige (Sixma & Ultee)",
-    cjsbc92 = "cur. job: standard classification occupation",
-    cjtype = "cur. job: main type of skills in occupation",
-    job1 = "paid job at present?",
-    job4 = "Present job: management Yes/No",
-    job5 = "Present job: management # of people",
-    job6 = "Present job: hours",
-    job8 = "Is present job longest job?",
-    joblo4 = "Longest job: management Yes/No",
-    joblo5 = "Longest job: management # of people",
-    ljclass = "long. job: occupational class SBC92",
-    ljlevel = "long. job: occupational skill-level SBC92",
-    ljpresi = "long. job: occup prestige (Sixma & Ultee)",
-    ljsbc92 = "long. job: standard classification occupation",
-    ljtype = "long. job: main type of skills in occupation",
-    retirf1 = "Fut. retirement: now less working hours",
-    retirf2 = "Fut. retirement: now more hobbies",
-    retirf3 = "Fut. retirement: now volunteering work",
-    retirf4 = "Fut. retirement: now administrative work",
-    retirf5 = "Fut. retirement: now more holidays",
-    retirf6 = "Fut. retirement: other"
   ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+  `C` = c(
     "cjclass",
     "cjlevel",
     "cjpresi",
@@ -311,25 +289,8 @@ variable_labels_list <- list(
     "retirf4",
     "retirf5",
     "retirf6"
-  )],
-    cjclass = "cur. job: occupational class SBC92",
-    cjlevel = "cur. job: occupational skill-level SBC92",
-    cjpresi = "cur. job: occup prestige (Sixma & Ultee)",
-    cjsbc92 = "cur. job: standard classification occupation",
-    cjtype = "cur. job: main type of skills in occupation",
-    job4 = "present job: management Yes/No (constructed)",
-    job5 = "Management # people",
-    jobstam = "Start working: month",
-    jobstay = "Start working: year",
-    retirf1 = "Fut. retirement: now less working hours",
-    retirf2 = "Fut. retirement: now more hobbies",
-    retirf3 = "Fut. retirement: now volunteering work",
-    retirf4 = "Fut. retirement: now administrative work",
-    retirf5 = "Fut. retirement: now more holidays",
-    retirf6 = "Fut. retirement: other specification"
   ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
+  `D` = c(
     "cjclass",
     "cjlevel",
     "cjpresi",
@@ -357,25 +318,8 @@ variable_labels_list <- list(
     "retirf4",
     "retirf5",
     "retirf6"
-  )],
-    cjclass = "cur. job: occupational class SBC92",
-    cjlevel = "cur. job: occupational skill-level SBC92",
-    cjpresi = "cur. job: occup prestige (Sixma & Ultee)",
-    cjsbc92 = "cur. job: standard classification occupation",
-    cjtype = "cur. job: main type of skills in occupation",
-    job4 = "present job: management Yes/No (constructed)",
-    job5 = "Management # people",
-    jobstam = "Start working: month",
-    jobstay = "Start working: year",
-    retirf1 = "Fut. retirement: now less working hours",
-    retirf2 = "Fut. retirement: now more hobbies",
-    retirf3 = "Fut. retirement: now volunteering work",
-    retirf4 = "Fut. retirement: now administrative work",
-    retirf5 = "Fut. retirement: now more holidays",
-    retirf6 = "Fut. retirement: other specification"
   ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
+  `E` = c(
     "cjclass",
     "cjlevel",
     "cjpresi",
@@ -403,25 +347,8 @@ variable_labels_list <- list(
     "retirf4",
     "retirf5",
     "retirf6"
-  )],
-    cjclass = "cur. job: occupational class SBC92",
-    cjlevel = "cur. job: occupational skill-level SBC92",
-    cjpresi = "cur. job: occup prestige (Sixma & Ultee)",
-    cjsbc92 = "cur. job: standard classification occupation",
-    cjtype = "cur. job: main type of skills in occupation",
-    job4 = "present job: management Yes/No (constructed)",
-    job5 = "Management # people",
-    jobstam = "Start working: month",
-    jobstay = "Start working: year",
-    retirf1 = "Fut. retirement: now less working hours",
-    retirf2 = "Fut. retirement: now more hobbies",
-    retirf3 = "Fut. retirement: now volunteering work",
-    retirf4 = "Fut. retirement: now administrative work",
-    retirf5 = "Fut. retirement: now more holidays",
-    retirf6 = "Fut. retirement: other specification"
   ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
+  `2B` = c(
     "cjclass",
     "cjlevel",
     "cjpresi",
@@ -475,63 +402,8 @@ variable_labels_list <- list(
     "rlsbc92",
     "rltype",
     "work65"
-  )],
-    cjclass = "cur. job: occupational class SBC92",
-    cjlevel = "cur. job: occupational skill-level SBC92",
-    cjpresi = "cur. job: occup prestige (Sixma & Ultee)",
-    cjsbc92 = "cur. job: standard classification occupation",
-    cjtype = "cur. job: main type of skills in occupation",
-    disabl = "disability insurance act",
-    disablp = "disability insurance act: percentage",
-    employ = "employment office: registered",
-    flclass = "father: last job: occup. class SBC92",
-    fllevel = "father: last job: occup. skill-level SBC92",
-    flpresi = "father: last job: occup. prestige (Sixma & Ultee)",
-    flsbc92 = "father: last job: standard class. occup.",
-    fltype = "father: last job: main type of skills",
-    job1 = "paid job at present",
-    job6 = "current job: hours/week",
-    jobl1 = "paid job before (last)",
-    jobl6 = "last job: hours/week",
-    jobstom = "stopped working: month",
-    jobstoy = "stopped working: year",
-    nretr = "cur. job: reason no early retirement",
-    pcclass = "partner: cur. job: occup. class SBC92",
-    pclevel = "partner: cur. job: occup. skill-level SBC92",
-    pcpresi = "partner: cur. job: occup. prestige (Sixma & Ultee)",
-    pcsbc92 = "partner: cur. job: standard class. occup.",
-    pctype = "partner: cur. job: main type of skills",
-    pdisabl = "partner: disability insurance act",
-    pdisabp = "partner: disability insurance act: percentage",
-    pemploy = "partner: employment office: registered",
-    pjob1 = "partner: paid job at present",
-    pjob6 = "partner: current job: hours/week",
-    pjobl1 = "partner: paid job before (last)",
-    pjobl6 = "partner: last job: hours/week",
-    pjobstm = "partner: stopped working: month",
-    pjobsty = "partner: stopped working: year",
-    plclass = "partner: last job: occup. class SBC92",
-    pllevel = "partner: last job: occup. skill-level SBC92",
-    plpresi = "partner: last job: occup. prestige (Sixma & Ultee)",
-    plsbc92 = "partner: last job: standard class. occup.",
-    pltype = "partner: last job: main type of skills",
-    pretifu = "partner: future retirement: anticipation",
-    pretire = "partner: (partial) early retirement",
-    retfin = "cur. job: consider retirement (financial possible)",
-    retifut = "future retirement: anticipation",
-    retired = "(partial) early retirement",
-    retnfr = "cur. job: reason no full early retirement",
-    retreas = "stopped working: reason (partial) early retirement",
-    retyr = "cur. job: reason (partial) early retirement",
-    rlclass = "last job: occupational class SBC92",
-    rllevel = "last job: occupational skill-level SBC92",
-    rlpresi = "last job: occup. prestige (Sixma & Ultee)",
-    rlsbc92 = "last job: standard classification occupation",
-    rltype = "last job: main type of skills in occupation",
-    work65 = "cur. job: practise until 65"
   ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
+  `F` = c(
     "cjclass",
     "cjlevel",
     "cjpresi",
@@ -559,25 +431,8 @@ variable_labels_list <- list(
     "retirf4",
     "retirf5",
     "retirf6"
-  )],
-    cjclass = "cur. job: occupational class SBC92",
-    cjlevel = "cur. job: occupational skill-level SBC92",
-    cjpresi = "cur. job: occup prestige (Sixma & Ultee)",
-    cjsbc92 = "cur. job: standard classification occupation",
-    cjtype = "cur. job: main type of skills in occupation",
-    job4 = "present job: management Yes/No (constructed)",
-    job5 = "Management # people",
-    jobstam = "Start working: month",
-    jobstay = "Start working: year",
-    retirf1 = "Fut. retirement: now less working hours",
-    retirf2 = "Fut. retirement: now more hobbies",
-    retirf3 = "Fut. retirement: now volunteering work",
-    retirf4 = "Fut. retirement: now administrative work",
-    retirf5 = "Fut. retirement: now more holidays",
-    retirf6 = "Fut. retirement: other specification"
   ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
+  `G` = c(
     "cjclass",
     "cjlevel",
     "cjpresi",
@@ -606,25 +461,8 @@ variable_labels_list <- list(
     "retirf5",
     "retirf6",
     "retivol"
-  )],
-    cjclass = "cur. job: occupational class SBC92",
-    cjlevel = "cur. job: occupational skill-level SBC92",
-    cjpresi = "cur. job: occup prestige (Sixma & Ultee)",
-    cjsbc92 = "cur. job: standard classification occupation",
-    cjtype = "cur. job: main type of skills in occupation",
-    job4 = "present job: management Yes/No (constructed)",
-    job5 = "Management # people",
-    jobstam = "Start working: month",
-    jobstay = "Start working: year",
-    retirf1 = "Fut. retirement: now less working hours",
-    retirf2 = "Fut. retirement: now more hobbies",
-    retirf3 = "Fut. retirement: now volunteering work",
-    retirf4 = "Fut. retirement: now administrative work",
-    retirf5 = "Fut. retirement: now more holidays",
-    retirf6 = "Fut. retirement: other specification"
   ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+  `H` = c(
     "cjclass",
     "cjlevel",
     "cjsbc",
@@ -666,18 +504,8 @@ variable_labels_list <- list(
     "retirf5",
     "retirf6",
     "retivol"
-  )],
-    cjclass = "current job: occupational class SBC 92",
-    cjlevel = "current job: occupational skill-level SBC 92",
-    cjsbc = "current job: standard classification occupation (SBC 2010)",
-    cjtype = "current job: occupational skill-level SBC 92",
-    job4 = "present job: management",
-    job5 = "Present job: management # people",
-    pjob5 = "Partner: present job: management # people",
-    retivol = "(partial) Early retirement voluntarily"
   ),
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
+  `3B` = c(
     "cjclass",
     "cjlevel",
     "cjsbc",
@@ -758,88 +586,8 @@ variable_labels_list <- list(
     "rlsbc",
     "rltype",
     "work65"
-  )],
-    cjclass = "current job: occupational class SBC92",
-    cjlevel = "current job: occupational skill-level SBC92",
-    cjsbc = "current job: standard classification occupation (SBC 2010)",
-    cjtype = "current job: main type of skills in occupation",
-    disabl = "disability insurance act",
-    disablp = "disability insurance act: percentage",
-    employ = "employment office: registered",
-    jlstam = "last job: start working: month",
-    jlstay = "last job: start working year",
-    job3 = "present job: type",
-    job3a = "present job: level work activities",
-    job4 = "present job: management",
-    job5 = "present job: management: number of people",
-    job5a = "present job: management: more than half of the time",
-    job5b = "present job: management: financial responsibility",
-    job6 = "present job: hours/week",
-    job7 = "present job: regularity",
-    jobl1 = "paid job before (last)",
-    jobl3 = "last job: type",
-    jobl3a = "last job: level work activities",
-    jobl4 = "last job: management",
-    jobl5 = "last job: management: number of people",
-    jobl5a = "last job: management: more than half of the time",
-    jobl5b = "last job: management: financial responsibility",
-    jobl6 = "last job: hours/week",
-    jobl7 = "last job: regularity",
-    jobstam = "present job: start working: month",
-    jobstay = "present job: start working: year",
-    jobstom = "last job: stopped working: month",
-    jobstoy = "last job: stopped working: year",
-    nretr = "reason no early retirement",
-    pcclass = "partner: current job: occupational class SBC92",
-    pclevel = "partner: current job: occupational skill-level SBC92",
-    pcsbc = "partner: current job: standard classification occupation (SBC 2010)",
-    pctype = "partner: current job: main type of skills in occupation",
-    pdisabl = "partner: disability insurance act",
-    pdisabp = "partner: disability insurance act: percentage",
-    pemploy = "partner: employment office: registered",
-    pjdata = "job data partner about current or former partner",
-    pjlstam = "partner: last job: start working: month",
-    pjlstay = "partner: last job: start working year",
-    pjob1 = "partner: paid job at present",
-    pjob3 = "partner: present job: type",
-    pjob3a = "partner: present job: level work activities",
-    pjob4 = "partner: present job: management",
-    pjob5 = "partner: present job: management: number of people",
-    pjob5a = "partner: present job: management: more than half of the time",
-    pjob5b = "partner: present job: management: financial responsibility",
-    pjob6 = "partner: present job: hours/week",
-    pjob7 = "partner: present job: regularity",
-    pjobl1 = "partner: paid job before (last)",
-    pjobl3 = "partner: last job: type",
-    pjobl3a = "partner: last job: level work activities",
-    pjobl4 = "partner: last job: management",
-    pjobl5 = "partner: last job: management: number of people",
-    pjobl5a = "partner: last job: management: more than half of the time",
-    pjobl5b = "partner: last job: management: financial responsibility",
-    pjobl6 = "partner: last job: hours/week",
-    pjobl7 = "partner: last job: regularity",
-    pjobstm = "last job: stopped working: month",
-    pjobsty = "partner: last job: stopped working: year",
-    pjstam = "partner: present job: start working: month",
-    pjstay = "partner: present job: start working: year",
-    plclass = "partner: last job: occupational class SBC92",
-    pllevel = "partner: last job: occupational skill-level SBC92",
-    plsbc = "partner: last job: standard classification occupation (SBC 2010)",
-    pltype = "partner: last job: main type of skills in occupation",
-    pretire = "partner: (partial) early retirement",
-    retired = "(partial) early retirement",
-    retnfr = "reason no full early retirement",
-    retnfr2 = "would be reason no full early retirement",
-    retreas = "stopped working: reason (partial) early retirement",
-    retyr = "future: reason (partial) early retirement",
-    rlclass = "last job: occupational class SBC92",
-    rllevel = "last job: occupational skill-level SBC92",
-    rlsbc = "last job: standard classification occupation (SBC 2010)",
-    rltype = "last job: main type of skills in occupation",
-    work65 = "present job: practise until 65"
   ),
-  Wave_MB_labels = .replace_labels(
-    harmonized_labels[c(
+  `MB` = c(
     "disabl",
     "disablp",
     "employ",
@@ -891,60 +639,8 @@ variable_labels_list <- list(
     "retired",
     "retivol",
     "workret"
-  )],
-    disabl = "disability insurance act",
-    disablp = "disability insurance act: percentage",
-    employ = "employment office: registered",
-    jlstam = "last job: start working: month",
-    jlstay = "last job: start working year",
-    job1 = "paid job at present",
-    job3 = "present job: type",
-    job3a = "present job: level work activities",
-    job4 = "present job: management",
-    job5 = "present job: management: number of people",
-    job5a = "present job: management: more than half of the time",
-    job6 = "present job: hours/week",
-    job7 = "present job: regularity",
-    jobl1 = "paid job before (last)",
-    jobl3 = "last job: type",
-    jobl3a = "last job: level work activities",
-    jobl4 = "last job: management",
-    jobl5 = "last job: management: number of people",
-    jobl5a = "last job: management: more than half of the time",
-    jobl6 = "last job: hours/week",
-    jobl7 = "last job: regularity",
-    jobstam = "present job: start working: month",
-    jobstay = "present job: start working: year",
-    jobstom = "last job: stopped working: month",
-    jobstoy = "last job: stopped working: year",
-    pdisabl = "partner: disability insurance act",
-    pdisabp = "partner: disability insurance act: percentage",
-    pemploy = "partner: employment office: registered",
-    pjob1 = "partner: paid job at present",
-    pjob3 = "partner: present job: type",
-    pjob3a = "partner: present job: level work activities",
-    pjob4 = "partner: present job: management",
-    pjob5 = "partner: present job: management: number of people",
-    pjob5a = "partner: present job: management: more than half of the time",
-    pjob6 = "partner: present job: hours/week",
-    pjob7 = "partner: present job: regularity",
-    pjobl1 = "partner: paid job before (last)",
-    pjobl3 = "partner: last job: type",
-    pjobl3a = "partner: last job: level work activities",
-    pjobl4 = "partner: last job: management",
-    pjobl5 = "partner: last job: management: number of people",
-    pjobl5a = "partner: last job: management: more than half of the time",
-    pjobl6 = "partner: last job: hours/week",
-    pjobl7 = "partner: last job: regularity",
-    pjobstm = "last job: stopped working: month",
-    pjobsty = "partner: last job: stopped working: year",
-    pjstam = "partner: present job: start working: month",
-    pjstay = "partner: present job: start working: year",
-    retired = "(partial) early retirement",
-    workret = "present job: practise until retirement age"
   ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
+  `I` = c(
     "cjclass",
     "cjlevel",
     "cjsbc",
@@ -987,51 +683,8 @@ variable_labels_list <- list(
     "retired",
     "retivol",
     "workret"
-  )],
-    cjclass = "current job: occupational class SBC92",
-    cjlevel = "current job: occupational skill-level SBC92",
-    cjsbc = "current job: standard classification occupation (SBC 2010)",
-    cjtype = "current job: main type of skills in occupation",
-    disabl = "disability insurance act",
-    disablp = "disability insurance act: percentage",
-    employ = "employment office: registered",
-    job1 = "paid job at present",
-    job3 = "present job: type",
-    job3a = "present job: level work activities",
-    job4 = "present job: management",
-    job5 = "present job: management: number of people",
-    job5a = "present job: management: more than half of the time",
-    job5b = "present job: management: financial responsibility",
-    job6 = "present job: hours/week",
-    job7 = "present job: regularity",
-    jobc = "paid job, changed",
-    jobs = "present job: same job as in last interview",
-    jobstam = "present job: start working: month",
-    jobstay = "present job: start working: year",
-    jobstom = "stopped working: month",
-    jobstoy = "stopped working: year",
-    pcjclass = "partner: current job: occupational class SBC 92",
-    pcjlevel = "partner: current job: occupational skill-level SBC 92",
-    pcjsbc = "partner: current job: standard classification occupation (SBC 2010)",
-    pcjtype = "partner: current job: main type of skills in occupation",
-    pjob1 = "partner: paid job at present",
-    pjob3 = "partner: present job: type",
-    pjob3a = "partner: present job: level work activities",
-    pjob4 = "partner: present job: management",
-    pjob5 = "partner: present job: management: number of people",
-    pjob5a = "partner: present job: management: more than half of the time",
-    pjob5b = "partner: present job: management: financial responsibility",
-    pjob6 = "partner: present job: hours/week",
-    pjob7 = "partner: present job: regularity",
-    pjobc = "partner: paid job, changed",
-    pjobs = "partner: present job: same job as in last interview",
-    pjstam = "partner: present job: start working: month",
-    pjstay = "partner: present job: start working: year",
-    retired = "(partial) early retirement",
-    workret = "present job: practise until retirement age (66y)"
   ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
+  `J` = c(
     "abstot",
     "abswd",
     "cjclass",
@@ -1116,94 +769,8 @@ variable_labels_list <- list(
     "tasks",
     "wjobchange",
     "workret"
-  )],
-    abstot = "absence: total number of times in past 12 months",
-    abswd = "absence: on working days in past 12 months",
-    cjclass = "current job: occupational class SBC92",
-    cjlevel = "current job: occupational skill-level SBC92",
-    cjsbc = "current job: standard classification occupation (SBC 2010)",
-    cjtype = "current job: main type of skills in occupation (SBC 92)",
-    disabl = "disability insurance act",
-    disablp = "disability insurance act: percentage",
-    employ = "employment office: registered",
-    eretfin = "early retirement if made financially possible",
-    fretage = "preferred age at full retirement",
-    healthp = "present job: productivity influenced by health problem(s) past 7 days",
-    job1 = "paid job at present",
-    job3 = "present job: type",
-    job3a = "present job: level work activities",
-    job4 = "present job: management",
-    job5 = "present job: management: number of people",
-    job5a = "present job: management: more than half of the time",
-    job5b = "present job: management: financial responsibility",
-    job6c = "present job: hours/week on contract",
-    job6r = "present job: hours/week in reality",
-    job7 = "present job: regularity",
-    jobc = "paid job, changed",
-    jobs = "present job: same job as in last interview",
-    jobstam = "present job: start working: month",
-    jobstar01 = "reason start new job: I need the income",
-    jobstar02 = "reason start new job: I enjoy this job",
-    jobstar03 = "reason start new job: I value contact with other people",
-    jobstar04 = "reason start new job: I want something to do",
-    jobstar05 = "reason start new job: other reason",
-    jobstar06 = "reason start new job: to stay active",
-    jobstar07 = "reason start new job: on request",
-    jobstar08 = "reason start new job: family related factors",
-    jobstar09 = "reason start new job: other work related factors",
-    jobstay = "present job: start working: year",
-    jobstom = "stopped working: month",
-    jobstoy = "stopped working: year",
-    mability = "present job: ability to meet mental/pshychological demands",
-    nretr = "future: reason no early (full) retirement",
-    pability = "present job: ability to meet physical demands",
-    pcjclass = "partner: current job: occupational class (SBC 92)",
-    pcjlevel = "partner: current job: occupational skill-level (SBC 92)",
-    pcjsbc = "partner: current job: standard classification occupation (SBC 2010)",
-    pcjtype = "partner: current job: main type of skills in occupation (SBC 92)",
-    peretfin = "partial early retirement if made financially possible",
-    pjob1 = "partner: paid job at present",
-    pjob3 = "partner: present job: type",
-    pjob3a = "partner: present job: level work activities",
-    pjob4 = "partner: present job: management",
-    pjob5 = "partner: present job: management: number of people",
-    pjob5a = "partner: present job: management: more than half of the time",
-    pjob5b = "partner: present job: management: financial responsibility",
-    pjob6c = "partner: present job: hours/week on contract",
-    pjob6r = "partner: present job: hours/week in reality",
-    pjob7 = "partner: present job: regularity",
-    pjobc = "partner: paid job, changed",
-    pjobs = "partner: present job: same job as in last interview",
-    pjstam = "partner: present job: start working: month",
-    pjstay = "partner: present job: start working: year",
-    prefret = "preference for partial or full retirement",
-    pretage = "preferred age at partial retirement",
-    pretivol = "partial retirement voluntarily",
-    pretreas = "stopped working: reason partial early retirement",
-    retage = "preferred retirement age",
-    retired = "(partial) retirement",
-    retivol = "retirement voluntarily",
-    retreas = "stopped working: reason early retirement",
-    retyr = "future: reason (partial) early retirement",
-    rjobchange01 = "reason change job/tasks: better working hours",
-    rjobchange02 = "reason change job/tasks: better salary",
-    rjobchange03 = "reason change job/tasks: better employment conditions",
-    rjobchange04 = "reason change job/tasks: professional development/growth",
-    rjobchange05 = "reason change job/tasks: work related accident",
-    rjobchange06 = "reason change job/tasks: other health reasons",
-    rjobchange07 = "reason change job/tasks: better combination work and family tasks",
-    rjobchange08 = "reason change job/tasks: avoiding unemployment",
-    rjobchange09 = "reason change job/tasks: different occupation after retirement",
-    rjobchange10 = "reason change job/tasks: other reason",
-    rjobchange11 = "reason change job/tasks: other work related factors",
-    rjobchange12 = "reason change job/tasks: on request",
-    rjobchange13 = "reason change job/tasks: preparing for retirement",
-    tasks = "present job: kind of tasks",
-    wjobchange = "who initiated the change in job/tasks",
-    workret = "present job: practice until retirement age (67y)"
   ),
-  Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
+  `K` = c(
     "abstot",
     "abswd",
     "cjsbc",
@@ -1320,7 +887,460 @@ variable_labels_list <- list(
     "tasks",
     "wjobchange",
     "workret"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
+    cjclass = "cur. job: occupational class SBC92",
+    cjlevel = "cur. job: occupational skill-level SBC92",
+    cjpresi = "cur. job: occup prestige (Sixma & Ultee)",
+    cjsbc92 = "cur. job: standard classification occupation",
+    cjtype = "cur. job: main type of skills in occupation",
+    job1 = "paid job at present?",
+    job4 = "Present job: management Yes/No",
+    job5 = "Present job: management # of people",
+    job6 = "Present job: hours",
+    job8 = "Is present job longest job?",
+    joblo4 = "Longest job: management Yes/No",
+    joblo5 = "Longest job: management # of people",
+    ljclass = "long. job: occupational class SBC92",
+    ljlevel = "long. job: occupational skill-level SBC92",
+    ljpresi = "long. job: occup prestige (Sixma & Ultee)",
+    ljsbc92 = "long. job: standard classification occupation",
+    ljtype = "long. job: main type of skills in occupation",
+    retirf1 = "Fut. retirement: now less working hours",
+    retirf2 = "Fut. retirement: now more hobbies",
+    retirf3 = "Fut. retirement: now volunteering work",
+    retirf4 = "Fut. retirement: now administrative work",
+    retirf5 = "Fut. retirement: now more holidays",
+    retirf6 = "Fut. retirement: other"
+  ),
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
+    cjclass = "cur. job: occupational class SBC92",
+    cjlevel = "cur. job: occupational skill-level SBC92",
+    cjpresi = "cur. job: occup prestige (Sixma & Ultee)",
+    cjsbc92 = "cur. job: standard classification occupation",
+    cjtype = "cur. job: main type of skills in occupation",
+    job4 = "present job: management Yes/No (constructed)",
+    job5 = "Management # people",
+    jobstam = "Start working: month",
+    jobstay = "Start working: year",
+    retirf1 = "Fut. retirement: now less working hours",
+    retirf2 = "Fut. retirement: now more hobbies",
+    retirf3 = "Fut. retirement: now volunteering work",
+    retirf4 = "Fut. retirement: now administrative work",
+    retirf5 = "Fut. retirement: now more holidays",
+    retirf6 = "Fut. retirement: other specification"
+  ),
+  Wave_D_labels = .replace_labels(
+    harmonized_labels,
+    cjclass = "cur. job: occupational class SBC92",
+    cjlevel = "cur. job: occupational skill-level SBC92",
+    cjpresi = "cur. job: occup prestige (Sixma & Ultee)",
+    cjsbc92 = "cur. job: standard classification occupation",
+    cjtype = "cur. job: main type of skills in occupation",
+    job4 = "present job: management Yes/No (constructed)",
+    job5 = "Management # people",
+    jobstam = "Start working: month",
+    jobstay = "Start working: year",
+    retirf1 = "Fut. retirement: now less working hours",
+    retirf2 = "Fut. retirement: now more hobbies",
+    retirf3 = "Fut. retirement: now volunteering work",
+    retirf4 = "Fut. retirement: now administrative work",
+    retirf5 = "Fut. retirement: now more holidays",
+    retirf6 = "Fut. retirement: other specification"
+  ),
+  Wave_E_labels = .replace_labels(
+    harmonized_labels,
+    cjclass = "cur. job: occupational class SBC92",
+    cjlevel = "cur. job: occupational skill-level SBC92",
+    cjpresi = "cur. job: occup prestige (Sixma & Ultee)",
+    cjsbc92 = "cur. job: standard classification occupation",
+    cjtype = "cur. job: main type of skills in occupation",
+    job4 = "present job: management Yes/No (constructed)",
+    job5 = "Management # people",
+    jobstam = "Start working: month",
+    jobstay = "Start working: year",
+    retirf1 = "Fut. retirement: now less working hours",
+    retirf2 = "Fut. retirement: now more hobbies",
+    retirf3 = "Fut. retirement: now volunteering work",
+    retirf4 = "Fut. retirement: now administrative work",
+    retirf5 = "Fut. retirement: now more holidays",
+    retirf6 = "Fut. retirement: other specification"
+  ),
+  Wave_2B_labels = .replace_labels(
+    harmonized_labels,
+    cjclass = "cur. job: occupational class SBC92",
+    cjlevel = "cur. job: occupational skill-level SBC92",
+    cjpresi = "cur. job: occup prestige (Sixma & Ultee)",
+    cjsbc92 = "cur. job: standard classification occupation",
+    cjtype = "cur. job: main type of skills in occupation",
+    disabl = "disability insurance act",
+    disablp = "disability insurance act: percentage",
+    employ = "employment office: registered",
+    flclass = "father: last job: occup. class SBC92",
+    fllevel = "father: last job: occup. skill-level SBC92",
+    flpresi = "father: last job: occup. prestige (Sixma & Ultee)",
+    flsbc92 = "father: last job: standard class. occup.",
+    fltype = "father: last job: main type of skills",
+    job1 = "paid job at present",
+    job6 = "current job: hours/week",
+    jobl1 = "paid job before (last)",
+    jobl6 = "last job: hours/week",
+    jobstom = "stopped working: month",
+    jobstoy = "stopped working: year",
+    nretr = "cur. job: reason no early retirement",
+    pcclass = "partner: cur. job: occup. class SBC92",
+    pclevel = "partner: cur. job: occup. skill-level SBC92",
+    pcpresi = "partner: cur. job: occup. prestige (Sixma & Ultee)",
+    pcsbc92 = "partner: cur. job: standard class. occup.",
+    pctype = "partner: cur. job: main type of skills",
+    pdisabl = "partner: disability insurance act",
+    pdisabp = "partner: disability insurance act: percentage",
+    pemploy = "partner: employment office: registered",
+    pjob1 = "partner: paid job at present",
+    pjob6 = "partner: current job: hours/week",
+    pjobl1 = "partner: paid job before (last)",
+    pjobl6 = "partner: last job: hours/week",
+    pjobstm = "partner: stopped working: month",
+    pjobsty = "partner: stopped working: year",
+    plclass = "partner: last job: occup. class SBC92",
+    pllevel = "partner: last job: occup. skill-level SBC92",
+    plpresi = "partner: last job: occup. prestige (Sixma & Ultee)",
+    plsbc92 = "partner: last job: standard class. occup.",
+    pltype = "partner: last job: main type of skills",
+    pretifu = "partner: future retirement: anticipation",
+    pretire = "partner: (partial) early retirement",
+    retfin = "cur. job: consider retirement (financial possible)",
+    retifut = "future retirement: anticipation",
+    retired = "(partial) early retirement",
+    retnfr = "cur. job: reason no full early retirement",
+    retreas = "stopped working: reason (partial) early retirement",
+    retyr = "cur. job: reason (partial) early retirement",
+    rlclass = "last job: occupational class SBC92",
+    rllevel = "last job: occupational skill-level SBC92",
+    rlpresi = "last job: occup. prestige (Sixma & Ultee)",
+    rlsbc92 = "last job: standard classification occupation",
+    rltype = "last job: main type of skills in occupation",
+    work65 = "cur. job: practise until 65"
+  ),
+  Wave_F_labels = .replace_labels(
+    harmonized_labels,
+    cjclass = "cur. job: occupational class SBC92",
+    cjlevel = "cur. job: occupational skill-level SBC92",
+    cjpresi = "cur. job: occup prestige (Sixma & Ultee)",
+    cjsbc92 = "cur. job: standard classification occupation",
+    cjtype = "cur. job: main type of skills in occupation",
+    job4 = "present job: management Yes/No (constructed)",
+    job5 = "Management # people",
+    jobstam = "Start working: month",
+    jobstay = "Start working: year",
+    retirf1 = "Fut. retirement: now less working hours",
+    retirf2 = "Fut. retirement: now more hobbies",
+    retirf3 = "Fut. retirement: now volunteering work",
+    retirf4 = "Fut. retirement: now administrative work",
+    retirf5 = "Fut. retirement: now more holidays",
+    retirf6 = "Fut. retirement: other specification"
+  ),
+  Wave_G_labels = .replace_labels(
+    harmonized_labels,
+    cjclass = "cur. job: occupational class SBC92",
+    cjlevel = "cur. job: occupational skill-level SBC92",
+    cjpresi = "cur. job: occup prestige (Sixma & Ultee)",
+    cjsbc92 = "cur. job: standard classification occupation",
+    cjtype = "cur. job: main type of skills in occupation",
+    job4 = "present job: management Yes/No (constructed)",
+    job5 = "Management # people",
+    jobstam = "Start working: month",
+    jobstay = "Start working: year",
+    retirf1 = "Fut. retirement: now less working hours",
+    retirf2 = "Fut. retirement: now more hobbies",
+    retirf3 = "Fut. retirement: now volunteering work",
+    retirf4 = "Fut. retirement: now administrative work",
+    retirf5 = "Fut. retirement: now more holidays",
+    retirf6 = "Fut. retirement: other specification"
+  ),
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
+    cjclass = "current job: occupational class SBC 92",
+    cjlevel = "current job: occupational skill-level SBC 92",
+    cjsbc = "current job: standard classification occupation (SBC 2010)",
+    cjtype = "current job: occupational skill-level SBC 92",
+    job4 = "present job: management",
+    job5 = "Present job: management # people",
+    pjob5 = "Partner: present job: management # people",
+    retivol = "(partial) Early retirement voluntarily"
+  ),
+  Wave_3B_labels = .replace_labels(
+    harmonized_labels,
+    cjclass = "current job: occupational class SBC92",
+    cjlevel = "current job: occupational skill-level SBC92",
+    cjsbc = "current job: standard classification occupation (SBC 2010)",
+    cjtype = "current job: main type of skills in occupation",
+    disabl = "disability insurance act",
+    disablp = "disability insurance act: percentage",
+    employ = "employment office: registered",
+    jlstam = "last job: start working: month",
+    jlstay = "last job: start working year",
+    job3 = "present job: type",
+    job3a = "present job: level work activities",
+    job4 = "present job: management",
+    job5 = "present job: management: number of people",
+    job5a = "present job: management: more than half of the time",
+    job5b = "present job: management: financial responsibility",
+    job6 = "present job: hours/week",
+    job7 = "present job: regularity",
+    jobl1 = "paid job before (last)",
+    jobl3 = "last job: type",
+    jobl3a = "last job: level work activities",
+    jobl4 = "last job: management",
+    jobl5 = "last job: management: number of people",
+    jobl5a = "last job: management: more than half of the time",
+    jobl5b = "last job: management: financial responsibility",
+    jobl6 = "last job: hours/week",
+    jobl7 = "last job: regularity",
+    jobstam = "present job: start working: month",
+    jobstay = "present job: start working: year",
+    jobstom = "last job: stopped working: month",
+    jobstoy = "last job: stopped working: year",
+    nretr = "reason no early retirement",
+    pcclass = "partner: current job: occupational class SBC92",
+    pclevel = "partner: current job: occupational skill-level SBC92",
+    pcsbc = "partner: current job: standard classification occupation (SBC 2010)",
+    pctype = "partner: current job: main type of skills in occupation",
+    pdisabl = "partner: disability insurance act",
+    pdisabp = "partner: disability insurance act: percentage",
+    pemploy = "partner: employment office: registered",
+    pjdata = "job data partner about current or former partner",
+    pjlstam = "partner: last job: start working: month",
+    pjlstay = "partner: last job: start working year",
+    pjob1 = "partner: paid job at present",
+    pjob3 = "partner: present job: type",
+    pjob3a = "partner: present job: level work activities",
+    pjob4 = "partner: present job: management",
+    pjob5 = "partner: present job: management: number of people",
+    pjob5a = "partner: present job: management: more than half of the time",
+    pjob5b = "partner: present job: management: financial responsibility",
+    pjob6 = "partner: present job: hours/week",
+    pjob7 = "partner: present job: regularity",
+    pjobl1 = "partner: paid job before (last)",
+    pjobl3 = "partner: last job: type",
+    pjobl3a = "partner: last job: level work activities",
+    pjobl4 = "partner: last job: management",
+    pjobl5 = "partner: last job: management: number of people",
+    pjobl5a = "partner: last job: management: more than half of the time",
+    pjobl5b = "partner: last job: management: financial responsibility",
+    pjobl6 = "partner: last job: hours/week",
+    pjobl7 = "partner: last job: regularity",
+    pjobstm = "last job: stopped working: month",
+    pjobsty = "partner: last job: stopped working: year",
+    pjstam = "partner: present job: start working: month",
+    pjstay = "partner: present job: start working: year",
+    plclass = "partner: last job: occupational class SBC92",
+    pllevel = "partner: last job: occupational skill-level SBC92",
+    plsbc = "partner: last job: standard classification occupation (SBC 2010)",
+    pltype = "partner: last job: main type of skills in occupation",
+    pretire = "partner: (partial) early retirement",
+    retired = "(partial) early retirement",
+    retnfr = "reason no full early retirement",
+    retnfr2 = "would be reason no full early retirement",
+    retreas = "stopped working: reason (partial) early retirement",
+    retyr = "future: reason (partial) early retirement",
+    rlclass = "last job: occupational class SBC92",
+    rllevel = "last job: occupational skill-level SBC92",
+    rlsbc = "last job: standard classification occupation (SBC 2010)",
+    rltype = "last job: main type of skills in occupation",
+    work65 = "present job: practise until 65"
+  ),
+  Wave_MB_labels = .replace_labels(
+    harmonized_labels,
+    disabl = "disability insurance act",
+    disablp = "disability insurance act: percentage",
+    employ = "employment office: registered",
+    jlstam = "last job: start working: month",
+    jlstay = "last job: start working year",
+    job1 = "paid job at present",
+    job3 = "present job: type",
+    job3a = "present job: level work activities",
+    job4 = "present job: management",
+    job5 = "present job: management: number of people",
+    job5a = "present job: management: more than half of the time",
+    job6 = "present job: hours/week",
+    job7 = "present job: regularity",
+    jobl1 = "paid job before (last)",
+    jobl3 = "last job: type",
+    jobl3a = "last job: level work activities",
+    jobl4 = "last job: management",
+    jobl5 = "last job: management: number of people",
+    jobl5a = "last job: management: more than half of the time",
+    jobl6 = "last job: hours/week",
+    jobl7 = "last job: regularity",
+    jobstam = "present job: start working: month",
+    jobstay = "present job: start working: year",
+    jobstom = "last job: stopped working: month",
+    jobstoy = "last job: stopped working: year",
+    pdisabl = "partner: disability insurance act",
+    pdisabp = "partner: disability insurance act: percentage",
+    pemploy = "partner: employment office: registered",
+    pjob1 = "partner: paid job at present",
+    pjob3 = "partner: present job: type",
+    pjob3a = "partner: present job: level work activities",
+    pjob4 = "partner: present job: management",
+    pjob5 = "partner: present job: management: number of people",
+    pjob5a = "partner: present job: management: more than half of the time",
+    pjob6 = "partner: present job: hours/week",
+    pjob7 = "partner: present job: regularity",
+    pjobl1 = "partner: paid job before (last)",
+    pjobl3 = "partner: last job: type",
+    pjobl3a = "partner: last job: level work activities",
+    pjobl4 = "partner: last job: management",
+    pjobl5 = "partner: last job: management: number of people",
+    pjobl5a = "partner: last job: management: more than half of the time",
+    pjobl6 = "partner: last job: hours/week",
+    pjobl7 = "partner: last job: regularity",
+    pjobstm = "last job: stopped working: month",
+    pjobsty = "partner: last job: stopped working: year",
+    pjstam = "partner: present job: start working: month",
+    pjstay = "partner: present job: start working: year",
+    retired = "(partial) early retirement",
+    workret = "present job: practise until retirement age"
+  ),
+  Wave_I_labels = .replace_labels(
+    harmonized_labels,
+    cjclass = "current job: occupational class SBC92",
+    cjlevel = "current job: occupational skill-level SBC92",
+    cjsbc = "current job: standard classification occupation (SBC 2010)",
+    cjtype = "current job: main type of skills in occupation",
+    disabl = "disability insurance act",
+    disablp = "disability insurance act: percentage",
+    employ = "employment office: registered",
+    job1 = "paid job at present",
+    job3 = "present job: type",
+    job3a = "present job: level work activities",
+    job4 = "present job: management",
+    job5 = "present job: management: number of people",
+    job5a = "present job: management: more than half of the time",
+    job5b = "present job: management: financial responsibility",
+    job6 = "present job: hours/week",
+    job7 = "present job: regularity",
+    jobc = "paid job, changed",
+    jobs = "present job: same job as in last interview",
+    jobstam = "present job: start working: month",
+    jobstay = "present job: start working: year",
+    jobstom = "stopped working: month",
+    jobstoy = "stopped working: year",
+    pcjclass = "partner: current job: occupational class SBC 92",
+    pcjlevel = "partner: current job: occupational skill-level SBC 92",
+    pcjsbc = "partner: current job: standard classification occupation (SBC 2010)",
+    pcjtype = "partner: current job: main type of skills in occupation",
+    pjob1 = "partner: paid job at present",
+    pjob3 = "partner: present job: type",
+    pjob3a = "partner: present job: level work activities",
+    pjob4 = "partner: present job: management",
+    pjob5 = "partner: present job: management: number of people",
+    pjob5a = "partner: present job: management: more than half of the time",
+    pjob5b = "partner: present job: management: financial responsibility",
+    pjob6 = "partner: present job: hours/week",
+    pjob7 = "partner: present job: regularity",
+    pjobc = "partner: paid job, changed",
+    pjobs = "partner: present job: same job as in last interview",
+    pjstam = "partner: present job: start working: month",
+    pjstay = "partner: present job: start working: year",
+    retired = "(partial) early retirement",
+    workret = "present job: practise until retirement age (66y)"
+  ),
+  Wave_J_labels = .replace_labels(
+    harmonized_labels,
+    abstot = "absence: total number of times in past 12 months",
+    abswd = "absence: on working days in past 12 months",
+    cjclass = "current job: occupational class SBC92",
+    cjlevel = "current job: occupational skill-level SBC92",
+    cjsbc = "current job: standard classification occupation (SBC 2010)",
+    cjtype = "current job: main type of skills in occupation (SBC 92)",
+    disabl = "disability insurance act",
+    disablp = "disability insurance act: percentage",
+    employ = "employment office: registered",
+    eretfin = "early retirement if made financially possible",
+    fretage = "preferred age at full retirement",
+    healthp = "present job: productivity influenced by health problem(s) past 7 days",
+    job1 = "paid job at present",
+    job3 = "present job: type",
+    job3a = "present job: level work activities",
+    job4 = "present job: management",
+    job5 = "present job: management: number of people",
+    job5a = "present job: management: more than half of the time",
+    job5b = "present job: management: financial responsibility",
+    job6c = "present job: hours/week on contract",
+    job6r = "present job: hours/week in reality",
+    job7 = "present job: regularity",
+    jobc = "paid job, changed",
+    jobs = "present job: same job as in last interview",
+    jobstam = "present job: start working: month",
+    jobstar01 = "reason start new job: I need the income",
+    jobstar02 = "reason start new job: I enjoy this job",
+    jobstar03 = "reason start new job: I value contact with other people",
+    jobstar04 = "reason start new job: I want something to do",
+    jobstar05 = "reason start new job: other reason",
+    jobstar06 = "reason start new job: to stay active",
+    jobstar07 = "reason start new job: on request",
+    jobstar08 = "reason start new job: family related factors",
+    jobstar09 = "reason start new job: other work related factors",
+    jobstay = "present job: start working: year",
+    jobstom = "stopped working: month",
+    jobstoy = "stopped working: year",
+    mability = "present job: ability to meet mental/pshychological demands",
+    nretr = "future: reason no early (full) retirement",
+    pability = "present job: ability to meet physical demands",
+    pcjclass = "partner: current job: occupational class (SBC 92)",
+    pcjlevel = "partner: current job: occupational skill-level (SBC 92)",
+    pcjsbc = "partner: current job: standard classification occupation (SBC 2010)",
+    pcjtype = "partner: current job: main type of skills in occupation (SBC 92)",
+    peretfin = "partial early retirement if made financially possible",
+    pjob1 = "partner: paid job at present",
+    pjob3 = "partner: present job: type",
+    pjob3a = "partner: present job: level work activities",
+    pjob4 = "partner: present job: management",
+    pjob5 = "partner: present job: management: number of people",
+    pjob5a = "partner: present job: management: more than half of the time",
+    pjob5b = "partner: present job: management: financial responsibility",
+    pjob6c = "partner: present job: hours/week on contract",
+    pjob6r = "partner: present job: hours/week in reality",
+    pjob7 = "partner: present job: regularity",
+    pjobc = "partner: paid job, changed",
+    pjobs = "partner: present job: same job as in last interview",
+    pjstam = "partner: present job: start working: month",
+    pjstay = "partner: present job: start working: year",
+    prefret = "preference for partial or full retirement",
+    pretage = "preferred age at partial retirement",
+    pretivol = "partial retirement voluntarily",
+    pretreas = "stopped working: reason partial early retirement",
+    retage = "preferred retirement age",
+    retired = "(partial) retirement",
+    retivol = "retirement voluntarily",
+    retreas = "stopped working: reason early retirement",
+    retyr = "future: reason (partial) early retirement",
+    rjobchange01 = "reason change job/tasks: better working hours",
+    rjobchange02 = "reason change job/tasks: better salary",
+    rjobchange03 = "reason change job/tasks: better employment conditions",
+    rjobchange04 = "reason change job/tasks: professional development/growth",
+    rjobchange05 = "reason change job/tasks: work related accident",
+    rjobchange06 = "reason change job/tasks: other health reasons",
+    rjobchange07 = "reason change job/tasks: better combination work and family tasks",
+    rjobchange08 = "reason change job/tasks: avoiding unemployment",
+    rjobchange09 = "reason change job/tasks: different occupation after retirement",
+    rjobchange10 = "reason change job/tasks: other reason",
+    rjobchange11 = "reason change job/tasks: other work related factors",
+    rjobchange12 = "reason change job/tasks: on request",
+    rjobchange13 = "reason change job/tasks: preparing for retirement",
+    tasks = "present job: kind of tasks",
+    wjobchange = "who initiated the change in job/tasks",
+    workret = "present job: practice until retirement age (67y)"
+  ),
+  Wave_K_labels = .replace_labels(
+    harmonized_labels,
     abstot = "absence: total number of times in past 12 months",
     abswd = "absence: on working days in past 12 months",
     cjsbc = "current job: standard classification occupation (SBC 2010)",
@@ -1441,20 +1461,26 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "mentioned",
+  `2` = "yes",
+  `3` = "medium",
+  `4` = "high",
+  `5` = "scientific"
+)
+
 standardized_value_labels <- list(
   abstot = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   abswd = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   cjclass = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "-to be coded-",
     `11` = "elementary occupations",
@@ -1502,38 +1528,30 @@ standardized_value_labels <- list(
     `98` = "scientific managers"
   ),
   cjlevel = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "-to be coded-",
     `1` = "elementary",
     `2` = "low",
-    `3` = "medium",
-    `4` = "high",
-    `5` = "scientific"
+    default_answer_labels[c("3", "4", "5")]
   ),
   cjpresi = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "-to be coded-",
     `13` = "NA",
     `87` = "NA"
   ),
   cjsbc = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   cjsbc92 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "-to be coded-"
   ),
   cjtype = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "-to be coded-",
     `1` = "general",
@@ -1552,35 +1570,30 @@ standardized_value_labels <- list(
   ),
   disabl = c(
     `-5` = "not available, above age threshold",
-    `-4` = "no answer, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "no",
-    `1` = "binary category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
-  disablp = c(`-3` = "not available", `-2` = "not available, routing", `-1` = "not available"),
+  disablp = c(
+    `-3` = "not available",
+    default_missing_labels[c("-2")],
+    `-1` = "not available"
+  ),
   employ = c(
     `-5` = "not available, above age threshold",
-    `-4` = "no answer, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "no",
-    `1` = "binary category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   eretfin = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   flclass = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `11` = "elementary occupations",
@@ -1628,19 +1641,15 @@ standardized_value_labels <- list(
     `98` = "scientific managers"
   ),
   fllevel = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `1` = "elementary",
     `2` = "low",
-    `3` = "medium",
-    `4` = "high",
-    `5` = "scientific"
+    default_answer_labels[c("3", "4", "5")]
   ),
   flpresi = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `13` = "NA",
@@ -1648,13 +1657,11 @@ standardized_value_labels <- list(
   ),
   flsbc92 = c(
     `-5` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-1")],
     `0` = "-to be coded-"
   ),
   fltype = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `1` = "general",
@@ -1672,21 +1679,15 @@ standardized_value_labels <- list(
     `18` = "management"
   ),
   fretage = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   healthp = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "no health problems/productivity not influenced by health problems",
     `10` = "not productive due to health problems"
   ),
   jlstam = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "january",
     `2` = "february",
     `3` = "march",
@@ -1701,21 +1702,16 @@ standardized_value_labels <- list(
     `12` = "december"
   ),
   jlstay = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   job1 = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short version",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   job3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "steady job",
     `2` = "temporary job with contract",
     `3` = "temporary job via employment agency",
@@ -1726,63 +1722,42 @@ standardized_value_labels <- list(
     `8` = "0-hours/stand-by contract"
   ),
   job3a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "elementary",
     `2` = "low",
-    `3` = "medium",
-    `4` = "high",
-    `5` = "scientific"
+    default_answer_labels[c("3", "4", "5")]
   ),
   job4 = c(
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "no",
-    `1` = "binary category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   job5 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `98` = "NA"
   ),
   job5a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   job5b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   job6 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   job6c = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   job6r = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   job7 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "regular hours (9 to 5)",
     `2` = "regular hours, including night/weekend shifts",
     `3` = "shift work, no weekend shifts",
@@ -1791,15 +1766,12 @@ standardized_value_labels <- list(
     `6` = "irregular hours, including weekend shifts"
   ),
   job8 = c(
-    `-4` = "no answer, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "no",
     `1` = "yes"
   ),
   jobc = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "never had job, unknown before",
     `0` = "unknown",
     `1` = "no job, not changed",
@@ -1810,16 +1782,12 @@ standardized_value_labels <- list(
     `6` = "job, unknown before"
   ),
   jobl1 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   jobl3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "steady job",
     `2` = "temporary job with contract",
     `3` = "temporary job via employment agency",
@@ -1829,50 +1797,34 @@ standardized_value_labels <- list(
     `7` = "other"
   ),
   jobl3a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "elementary",
     `2` = "low",
-    `3` = "medium",
-    `4` = "high",
-    `5` = "scientific"
+    default_answer_labels[c("3", "4", "5")]
   ),
   jobl4 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   jobl5 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   jobl5a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   jobl5b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   jobl6 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   jobl7 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "regular hours (9 to 5)",
     `2` = "regular hours, including night/weekend shifts",
     `3` = "shift work, no weekend shifts",
@@ -1881,17 +1833,12 @@ standardized_value_labels <- list(
     `6` = "irregular hours, including weekend shifts"
   ),
   joblo1 = c(
-    `-4` = "no answer, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "no",
     `1` = "yes"
   ),
   joblo3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "steady job",
     `2` = "temporary job with contract",
     `3` = "temporary job via employment agency",
@@ -1901,28 +1848,20 @@ standardized_value_labels <- list(
     `7` = "other"
   ),
   joblo4 = c(
-    `-4` = "no answer, short version",
-    `-3` = "not available, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "not available, bjob8 & bjoblo1",
-    `-1` = "not available, asked",
     `0` = "no",
     `1` = "yes"
   ),
   joblo5 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `98` = "NA"
   ),
   joblo6 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   joblo7 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "regular hours (9 to 5)",
     `2` = "regular hours, including night/weekend shifts",
     `3` = "shift work, no weekend shifts",
@@ -1932,8 +1871,7 @@ standardized_value_labels <- list(
   ),
   jobmon = c(
     `-5` = "no answer, info nestor",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "do not know",
     `1` = "january",
     `2` = "february",
@@ -1949,16 +1887,14 @@ standardized_value_labels <- list(
     `12` = "december"
   ),
   jobs = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available, routing",
     `1` = "no",
     `2` = "not sure",
     `3` = "yes"
   ),
   jobstam = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "january",
     `2` = "february",
     `3` = "march",
@@ -1972,24 +1908,56 @@ standardized_value_labels <- list(
     `11` = "november",
     `12` = "december"
   ),
-  jobstar01 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  jobstar02 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  jobstar03 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  jobstar04 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  jobstar05 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  jobstar06 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  jobstar07 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  jobstar08 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  jobstar09 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
+  jobstar01 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  jobstar02 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  jobstar03 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  jobstar04 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  jobstar05 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  jobstar06 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  jobstar07 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  jobstar08 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  jobstar09 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   jobstay = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   jobstom = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "january",
     `2` = "february",
     `3` = "march",
@@ -2004,22 +1972,20 @@ standardized_value_labels <- list(
     `12` = "december"
   ),
   jobstoy = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   jobyear = c(
     `-5` = "no answer, info nestor",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "do not know"
   ),
-  kob1 = c(`-4` = "not available, short version", `-1` = "not available, asked", `1` = "no", `2` = "yes"),
+  kob1 = c(
+    default_missing_labels[c("-4", "-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
   ljclass = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `11` = "elementary occupations",
     `21` = "lower non-specialized occupations",
     `22` = "lower teaching & instruction occupations",
@@ -2065,31 +2031,23 @@ standardized_value_labels <- list(
     `98` = "scientific managers"
   ),
   ljlevel = c(
-    `-3` = "not available, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "not available, bjob8 & bjoblo1",
-    `-1` = "not available, asked",
     `1` = "elementary",
     `2` = "low",
-    `3` = "medium",
-    `4` = "high",
-    `5` = "scientific"
+    default_answer_labels[c("3", "4", "5")]
   ),
   ljpresi = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `13` = "NA",
     `87` = "NA"
   ),
   ljsbc92 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, bjob8 & bjoblo1",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "not available, bjob8 & bjoblo1"
   ),
   ljtype = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "general",
     `2` = "pedagogical",
     `4` = "agricultural",
@@ -2105,9 +2063,7 @@ standardized_value_labels <- list(
     `18` = "management"
   ),
   mability = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "very good",
     `2` = "good",
     `3` = "moderate",
@@ -2115,65 +2071,49 @@ standardized_value_labels <- list(
     `5` = "very bad"
   ),
   nretr = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "enough challenges at work",
-    `2` = "reason category 2",
-    `3` = "reason category 3",
-    `4` = "reason category 4",
-    `5` = "reason category 5",
-    `6` = "reason category 6",
+    `2` = "label varies by wave",
+    `3` = "label varies by wave",
+    `4` = "label varies by wave",
+    `5` = "label varies by wave",
+    `6` = "label varies by wave",
     `7` = "other reason",
     `8` = "partner is still working",
     `9` = "loyalty towards employer/colleagues"
   ),
   nretr01 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   nretr02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   nretr03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   nretr04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   nretr05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   nretr06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   pability = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "very good",
     `2` = "good",
     `3` = "moderate",
@@ -2181,8 +2121,7 @@ standardized_value_labels <- list(
     `5` = "very bad"
   ),
   pcclass = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `11` = "elementary occupations",
@@ -2230,7 +2169,7 @@ standardized_value_labels <- list(
     `98` = "scientific managers"
   ),
   pcjclass = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `11` = "elementary occupations",
     `21` = "lower non-specialized occupations",
     `22` = "lower teaching & instruction occupations",
@@ -2276,20 +2215,16 @@ standardized_value_labels <- list(
     `98` = "scientific managers"
   ),
   pcjlevel = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `1` = "elementary",
     `2` = "low",
-    `3` = "medium",
-    `4` = "high",
-    `5` = "scientific"
+    default_answer_labels[c("3", "4", "5")]
   ),
   pcjsbc = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   pcjtype = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `1` = "general",
     `2` = "pedagogical",
     `4` = "agricultural",
@@ -2305,38 +2240,29 @@ standardized_value_labels <- list(
     `18` = "management"
   ),
   pclevel = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `1` = "elementary",
     `2` = "low",
-    `3` = "medium",
-    `4` = "high",
-    `5` = "scientific"
+    default_answer_labels[c("3", "4", "5")]
   ),
   pcpresi = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `13` = "NA",
     `87` = "NA"
   ),
   pcsbc = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   pcsbc92 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "-to be coded-"
   ),
   pctype = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `1` = "general",
@@ -2354,36 +2280,27 @@ standardized_value_labels <- list(
     `18` = "management"
   ),
   pdisabl = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   pdisabp = c(
     `-3` = "not available, refused",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-2", "-1")]
   ),
   pemploy = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   peretfin = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   pjdata = c(`0` = "no partner", `1` = "current partner", `2` = "former partner"),
   pjlstam = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "january",
     `2` = "february",
     `3` = "march",
@@ -2398,23 +2315,18 @@ standardized_value_labels <- list(
     `12` = "december"
   ),
   pjlstay = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   pjob1 = c(
     `-5` = "not available, interview terminated",
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "negative code -2",
-    `-1` = "not available, asked",
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   pjob3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "steady job",
     `2` = "temporary job with contract",
     `3` = "temporary job via employment agency",
@@ -2425,60 +2337,40 @@ standardized_value_labels <- list(
     `8` = "0-hours/stand-by contract"
   ),
   pjob3a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "elementary",
     `2` = "low",
-    `3` = "medium",
-    `4` = "high",
-    `5` = "scientific"
+    default_answer_labels[c("3", "4", "5")]
   ),
   pjob4 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   pjob5 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   pjob5a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   pjob5b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   pjob6 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   pjob6c = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   pjob6r = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   pjob7 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "regular hours (9 to 5)",
     `2` = "regular hours, including night/weekend shifts",
     `3` = "shift work, no weekend shifts",
@@ -2487,7 +2379,7 @@ standardized_value_labels <- list(
     `6` = "irregular hours, including weekend shifts"
   ),
   pjobc = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "never had job, unknown before",
     `0` = "unknown",
     `1` = "no job, not changed",
@@ -2498,16 +2390,12 @@ standardized_value_labels <- list(
     `6` = "job, unknown before"
   ),
   pjobl1 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   pjobl3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "steady job",
     `2` = "temporary job with contract",
     `3` = "temporary job via employment agency",
@@ -2517,50 +2405,34 @@ standardized_value_labels <- list(
     `7` = "other"
   ),
   pjobl3a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "elementary",
     `2` = "low",
-    `3` = "medium",
-    `4` = "high",
-    `5` = "scientific"
+    default_answer_labels[c("3", "4", "5")]
   ),
   pjobl4 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   pjobl5 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   pjobl5a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   pjobl5b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   pjobl6 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   pjobl7 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "regular hours (9 to 5)",
     `2` = "regular hours, including night/weekend shifts",
     `3` = "shift work, no weekend shifts",
@@ -2569,17 +2441,14 @@ standardized_value_labels <- list(
     `6` = "irregular hours, including weekend shifts"
   ),
   pjobs = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available, routing",
     `1` = "no",
     `2` = "not sure",
     `3` = "yes"
   ),
   pjobstm = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "january",
     `2` = "february",
     `3` = "march",
@@ -2594,14 +2463,10 @@ standardized_value_labels <- list(
     `12` = "december"
   ),
   pjobsty = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   pjstam = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "january",
     `2` = "february",
     `3` = "march",
@@ -2616,13 +2481,10 @@ standardized_value_labels <- list(
     `12` = "december"
   ),
   pjstay = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   plclass = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `11` = "elementary occupations",
@@ -2670,38 +2532,29 @@ standardized_value_labels <- list(
     `98` = "scientific managers"
   ),
   pllevel = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `1` = "elementary",
     `2` = "low",
-    `3` = "medium",
-    `4` = "high",
-    `5` = "scientific"
+    default_answer_labels[c("3", "4", "5")]
   ),
   plpresi = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `13` = "NA",
     `87` = "NA"
   ),
   plsbc = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   plsbc92 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "-to be coded-"
   ),
   pltype = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `1` = "general",
@@ -2720,45 +2573,33 @@ standardized_value_labels <- list(
   ),
   prefret = c(
     `-5` = "not available, above age threshold",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "partial retirement first",
     `2` = "full retirement right away",
     `3` = "dont know yet"
   ),
   pretage = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   pretifu = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   pretire = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes, partly",
     `3` = "yes, completely"
   ),
   pretivol = c(
     `-5` = "not available, above age threshold",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "yes",
     `2` = "no, not (entirely) voluntarily"
   ),
   pretreas = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "stress and pressure of work too high",
     `2` = "other work related factors (organisational changes/conflicts)",
     `3` = "physically too heavy",
@@ -2774,200 +2615,142 @@ standardized_value_labels <- list(
     `13` = "more time needed for activities outside work"
   ),
   pretreas01 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   pretreas02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   pretreas03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   pretreas04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   pretreas05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   pretreas06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   pretreas07 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   pretreas08 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   pretreas09 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   pretreas10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   pretreas11 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   pretreas12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   pretreas13 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retage = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   retfin = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   retifut = c(
-    `-4` = "no answer, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "no",
-    `1` = "binary category 1",
-    `2` = "yes"
+    `1` = "label varies by wave",
+    default_answer_labels[c("2")]
   ),
   retired = c(
     `-5` = "not available, above age threshold",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "no",
-    `1` = "category 1",
-    `2` = "category 2",
+    `1` = "label varies by wave",
+    `2` = "label varies by wave",
     `3` = "yes, completely"
   ),
   retirf1 = c(
-    `-4` = "no answer, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retirf2 = c(
-    `-4` = "no answer, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retirf3 = c(
-    `-4` = "no answer, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retirf4 = c(
-    `-4` = "no answer, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retirf5 = c(
-    `-4` = "no answer, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retirf6 = c(
-    `-4` = "no answer, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retivol = c(
     `-5` = "not available, above age threshold",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "category 1",
-    `2` = "category 2",
+    default_missing_labels[c("-3", "-2", "-1")],
+    `1` = "label varies by wave",
+    `2` = "label varies by wave",
     `3` = "yes, retired but not entirely voluntarily"
   ),
   retnfr = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "enough challenges at work",
     `2` = "maintain social contacts",
     `3` = "other pastime less pleasant",
-    `4` = "reason category 4",
-    `5` = "reason category 5",
+    `4` = "label varies by wave",
+    `5` = "label varies by wave",
     `6` = "should work on to have adequate pension",
     `7` = "other reason"
   ),
   retnfr2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "enough challenges at work",
     `2` = "maintain social contacts",
     `3` = "other pastime less pleasant",
@@ -2977,16 +2760,14 @@ standardized_value_labels <- list(
     `7` = "other reason"
   ),
   retreas = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "stress and pressure of work too high",
-    `2` = "reason category 2",
-    `3` = "reason category 3",
-    `4` = "reason category 4",
-    `5` = "reason category 5",
-    `6` = "reason category 6",
-    `7` = "reason category 7",
+    `2` = "label varies by wave",
+    `3` = "label varies by wave",
+    `4` = "label varies by wave",
+    `5` = "label varies by wave",
+    `6` = "label varies by wave",
+    `7` = "label varies by wave",
     `8` = "enjoy life as long as health permits",
     `9` = "not possible anymore in the future",
     `10` = "other reason",
@@ -2995,107 +2776,79 @@ standardized_value_labels <- list(
     `13` = "more time needed for activities outside work"
   ),
   retreas01 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retreas02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retreas03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retreas04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retreas05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retreas06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retreas07 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retreas08 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retreas09 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retreas10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retreas11 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retreas12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retreas13 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retyr = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "stress and pressure of work too high",
-    `2` = "reason category 2",
-    `3` = "reason category 3",
-    `4` = "reason category 4",
-    `5` = "reason category 5",
-    `6` = "reason category 6",
-    `7` = "reason category 7",
+    `2` = "label varies by wave",
+    `3` = "label varies by wave",
+    `4` = "label varies by wave",
+    `5` = "label varies by wave",
+    `6` = "label varies by wave",
+    `7` = "label varies by wave",
     `8` = "enjoy life as long as health permits",
     `9` = "not possible anymore in the future",
     `10` = "other reason",
@@ -3105,91 +2858,122 @@ standardized_value_labels <- list(
     `14` = "commute is burdensome"
   ),
   retyr01 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retyr02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retyr03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retyr04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retyr05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retyr06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retyr07 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retyr08 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retyr09 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   retyr10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
-  rjobchange01 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  rjobchange02 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  rjobchange03 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  rjobchange04 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  rjobchange05 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  rjobchange06 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  rjobchange07 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  rjobchange08 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  rjobchange09 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  rjobchange10 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  rjobchange11 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  rjobchange12 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  rjobchange13 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
+  rjobchange01 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  rjobchange02 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  rjobchange03 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  rjobchange04 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  rjobchange05 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  rjobchange06 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  rjobchange07 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  rjobchange08 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  rjobchange09 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  rjobchange10 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  rjobchange11 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  rjobchange12 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  rjobchange13 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   rlclass = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `11` = "elementary occupations",
@@ -3237,38 +3021,29 @@ standardized_value_labels <- list(
     `98` = "scientific managers"
   ),
   rllevel = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `1` = "elementary",
     `2` = "low",
-    `3` = "medium",
-    `4` = "high",
-    `5` = "scientific"
+    default_answer_labels[c("3", "4", "5")]
   ),
   rlpresi = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `13` = "NA",
     `87` = "NA"
   ),
   rlsbc = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   rlsbc92 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "-to be coded-"
   ),
   rltype = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "unknown",
     `0` = "-to be coded-",
     `1` = "general",
@@ -3286,76 +3061,34 @@ standardized_value_labels <- list(
     `18` = "management"
   ),
   tasks = c(
-    `-3` = "not available, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "negative code -2",
     `-1` = "negative code -1",
     `3` = "both mentally and physically demanding tasks"
   ),
   wjobchange = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "me",
     `2` = "my employer",
     `3` = "i switched employers"
   ),
   work65 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no, i do not think so",
     `2` = "i am sometimes not sure about this",
     `3` = "yes, i do think so"
   ),
   workret = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no, i do not think so",
-    `2` = "ordinal category 2",
+    `2` = "label varies by wave",
     `3` = "yes, i do think so"
   )
 )
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cjclass",
-    "cjlevel",
-    "cjpresi",
-    "cjsbc92",
-    "cjtype",
-    "disabl",
-    "disablp",
-    "employ",
-    "job1",
-    "job3",
-    "job4",
-    "job5",
-    "job6",
-    "job7",
-    "job8",
-    "joblo1",
-    "joblo3",
-    "joblo4",
-    "joblo5",
-    "joblo6",
-    "joblo7",
-    "jobmon",
-    "jobyear",
-    "ljclass",
-    "ljlevel",
-    "ljpresi",
-    "ljsbc92",
-    "ljtype",
-    "retifut",
-    "retired",
-    "retirf1",
-    "retirf2",
-    "retirf3",
-    "retirf4",
-    "retirf5",
-    "retirf6"
-  )],
+    standardized_value_labels,
     cjclass = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see BJOB1",
@@ -3479,27 +3212,19 @@ value_labels_list <- list(
   ),
     job5 = .replace_labels(
     standardized_value_labels$job5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     job6 = .replace_labels(
     standardized_value_labels$job6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     job7 = .replace_labels(
     standardized_value_labels$job7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     job8 = .replace_labels(
     standardized_value_labels$job8,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     joblo1 = .replace_labels(
     standardized_value_labels$joblo1,
@@ -3509,33 +3234,23 @@ value_labels_list <- list(
   ),
     joblo3 = .replace_labels(
     standardized_value_labels$joblo3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB8 & BJOBLO1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB8 & BJOBLO1"
   ),
     joblo4 = .replace_labels(
     standardized_value_labels$joblo4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, BJOB8 & BJOBLO1",
-    `-1` = "na, asked"
+    `-2` = "na, BJOB8 & BJOBLO1"
   ),
     joblo5 = .replace_labels(
     standardized_value_labels$joblo5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB8 & BJOBLO1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB8 & BJOBLO1"
   ),
     joblo6 = .replace_labels(
     standardized_value_labels$joblo6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB8 & BJOBLO1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB8 & BJOBLO1"
   ),
     joblo7 = .replace_labels(
     standardized_value_labels$joblo7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB8 & BJOBLO1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB8 & BJOBLO1"
   ),
     jobmon = .replace_labels(
     standardized_value_labels$jobmon,
@@ -3564,33 +3279,23 @@ value_labels_list <- list(
   ),
     ljclass = .replace_labels(
     standardized_value_labels$ljclass,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB8 & BJOBLO1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB8 & BJOBLO1"
   ),
     ljlevel = .replace_labels(
     standardized_value_labels$ljlevel,
-    `-3` = "na, wrong skip",
-    `-2` = "na, BJOB8 & BJOBLO1",
-    `-1` = "na, asked"
+    `-2` = "na, BJOB8 & BJOBLO1"
   ),
     ljpresi = .replace_labels(
     standardized_value_labels$ljpresi,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB8 & BJOBLO1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB8 & BJOBLO1"
   ),
     ljsbc92 = .replace_labels(
     standardized_value_labels$ljsbc92,
-    `-3` = "na, wrong skip",
-    `-2` = "na, BJOB8 & BJOBLO1",
-    `-1` = "na, asked"
+    `-2` = "na, BJOB8 & BJOBLO1"
   ),
     ljtype = .replace_labels(
     standardized_value_labels$ljtype,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB8 & BJOBLO1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB8 & BJOBLO1"
   ),
     retifut = c(
     `-4` = "no answer, short version",
@@ -3611,71 +3316,31 @@ value_labels_list <- list(
   ),
     retirf1 = .replace_labels(
     standardized_value_labels$retirf1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRETIFUT",
-    `-1` = "na, asked"
+    `-2` = "na, see BRETIFUT"
   ),
     retirf2 = .replace_labels(
     standardized_value_labels$retirf2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRETIFUT",
-    `-1` = "na, asked"
+    `-2` = "na, see BRETIFUT"
   ),
     retirf3 = .replace_labels(
     standardized_value_labels$retirf3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRETIFUT",
-    `-1` = "na, asked"
+    `-2` = "na, see BRETIFUT"
   ),
     retirf4 = .replace_labels(
     standardized_value_labels$retirf4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRETIFUT",
-    `-1` = "na, asked"
+    `-2` = "na, see BRETIFUT"
   ),
     retirf5 = .replace_labels(
     standardized_value_labels$retirf5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRETIFUT",
-    `-1` = "na, asked"
+    `-2` = "na, see BRETIFUT"
   ),
     retirf6 = .replace_labels(
     standardized_value_labels$retirf6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRETIFUT",
-    `-1` = "na, asked"
+    `-2` = "na, see BRETIFUT"
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cjclass",
-    "cjlevel",
-    "cjpresi",
-    "cjsbc92",
-    "cjtype",
-    "disabl",
-    "disablp",
-    "employ",
-    "job1",
-    "job3",
-    "job4",
-    "job5",
-    "job6",
-    "job7",
-    "jobc",
-    "jobstam",
-    "jobstay",
-    "jobstom",
-    "jobstoy",
-    "retifut",
-    "retired",
-    "retirf1",
-    "retirf2",
-    "retirf3",
-    "retirf4",
-    "retirf5",
-    "retirf6"
-  )],
+    standardized_value_labels,
     cjclass = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
@@ -3800,15 +3465,11 @@ value_labels_list <- list(
     job5 = c(`-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/GJOB4", `-1` = "na, asked"),
     job6 = .replace_labels(
     standardized_value_labels$job6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     job7 = .replace_labels(
     standardized_value_labels$job7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     jobc = c(
     `-2` = "na, see C/D/E/F/GJOB1",
@@ -3841,7 +3502,6 @@ value_labels_list <- list(
     standardized_value_labels$jobstom,
     `-3` = "na wrong skip",
     `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -3857,9 +3517,7 @@ value_labels_list <- list(
   ),
     jobstoy = .replace_labels(
     standardized_value_labels$jobstoy,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     retifut = c(`-2` = "na, see C/D/E/F/GRETIRED", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     retired = c(
@@ -3909,66 +3567,33 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cjclass",
-    "cjlevel",
-    "cjpresi",
-    "cjsbc92",
-    "cjtype",
-    "disabl",
-    "disablp",
-    "employ",
-    "job1",
-    "job3",
-    "job4",
-    "job5",
-    "job6",
-    "job7",
-    "jobc",
-    "jobstam",
-    "jobstay",
-    "jobstom",
-    "jobstoy",
-    "retifut",
-    "retired",
-    "retirf1",
-    "retirf2",
-    "retirf3",
-    "retirf4",
-    "retirf5",
-    "retirf6"
-  )],
+    standardized_value_labels,
     cjclass = .replace_labels(
     standardized_value_labels$cjclass,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
     `-1` = "na, asked / not classified",
     `0` = "- to be coded -"
   ),
     cjlevel = .replace_labels(
     standardized_value_labels$cjlevel,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
     `-1` = "na, asked / not classified",
     `0` = "- to be coded -"
   ),
     cjpresi = .replace_labels(
     standardized_value_labels$cjpresi,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
     `-1` = "na, asked / not classified",
     `0` = "- to be coded -"
   ),
     cjsbc92 = .replace_labels(
     standardized_value_labels$cjsbc92,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
     `-1` = "na, asked",
     `0` = "- to be coded -"
   ),
     cjtype = .replace_labels(
     standardized_value_labels$cjtype,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
     `-1` = "na, asked / not classified",
     `0` = "- to be coded -"
@@ -4013,15 +3638,11 @@ value_labels_list <- list(
     job5 = c(`-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/GJOB4", `-1` = "na, asked"),
     job6 = .replace_labels(
     standardized_value_labels$job6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     job7 = .replace_labels(
     standardized_value_labels$job7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     jobc = c(
     `-2` = "na, see C/D/E/F/GJOB1",
@@ -4054,7 +3675,6 @@ value_labels_list <- list(
     standardized_value_labels$jobstom,
     `-3` = "na wrong skip",
     `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -4070,9 +3690,7 @@ value_labels_list <- list(
   ),
     jobstoy = .replace_labels(
     standardized_value_labels$jobstoy,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     retifut = c(`-2` = "na, see C/D/E/F/GRETIRED", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     retired = c(
@@ -4122,35 +3740,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cjclass",
-    "cjlevel",
-    "cjpresi",
-    "cjsbc92",
-    "cjtype",
-    "disabl",
-    "disablp",
-    "employ",
-    "job1",
-    "job3",
-    "job4",
-    "job5",
-    "job6",
-    "job7",
-    "jobc",
-    "jobstam",
-    "jobstay",
-    "jobstom",
-    "jobstoy",
-    "retifut",
-    "retired",
-    "retirf1",
-    "retirf2",
-    "retirf3",
-    "retirf4",
-    "retirf5",
-    "retirf6"
-  )],
+    standardized_value_labels,
     cjclass = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
@@ -4275,15 +3865,11 @@ value_labels_list <- list(
     job5 = c(`-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/GJOB4", `-1` = "na, asked"),
     job6 = .replace_labels(
     standardized_value_labels$job6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     job7 = .replace_labels(
     standardized_value_labels$job7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     jobc = c(
     `-2` = "na, see C/D/E/F/GJOB1",
@@ -4313,15 +3899,12 @@ value_labels_list <- list(
   ),
     jobstay = .replace_labels(
     standardized_value_labels$jobstay,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     jobstom = .replace_labels(
     standardized_value_labels$jobstom,
     `-3` = "na wrong skip",
     `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -4337,9 +3920,7 @@ value_labels_list <- list(
   ),
     jobstoy = .replace_labels(
     standardized_value_labels$jobstoy,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     retifut = c(`-2` = "na, see C/D/E/F/GRETIRED", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     retired = c(
@@ -4389,92 +3970,33 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cjclass",
-    "cjlevel",
-    "cjpresi",
-    "cjsbc92",
-    "cjtype",
-    "disabl",
-    "disablp",
-    "employ",
-    "flclass",
-    "fllevel",
-    "flpresi",
-    "flsbc92",
-    "fltype",
-    "job1",
-    "job6",
-    "jobl1",
-    "jobl6",
-    "jobstom",
-    "jobstoy",
-    "nretr",
-    "pcclass",
-    "pclevel",
-    "pcpresi",
-    "pcsbc92",
-    "pctype",
-    "pdisabl",
-    "pdisabp",
-    "pemploy",
-    "pjob1",
-    "pjob6",
-    "pjobl1",
-    "pjobl6",
-    "pjobstm",
-    "pjobsty",
-    "plclass",
-    "pllevel",
-    "plpresi",
-    "plsbc92",
-    "pltype",
-    "pretifu",
-    "pretire",
-    "retfin",
-    "retifut",
-    "retired",
-    "retnfr",
-    "retreas",
-    "retyr",
-    "rlclass",
-    "rllevel",
-    "rlpresi",
-    "rlsbc92",
-    "rltype",
-    "work65"
-  )],
+    standardized_value_labels,
     cjclass = .replace_labels(
     standardized_value_labels$cjclass,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BCJSBC92",
     `-1` = "unknown",
     `0` = "- to be coded -"
   ),
     cjlevel = .replace_labels(
     standardized_value_labels$cjlevel,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BCJSBC92",
     `-1` = "unknown",
     `0` = "- to be coded -"
   ),
     cjpresi = .replace_labels(
     standardized_value_labels$cjpresi,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BCJSBC92",
     `-1` = "unknown",
     `0` = "- to be coded -"
   ),
     cjsbc92 = .replace_labels(
     standardized_value_labels$cjsbc92,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BJOB1",
     `-1` = "na, asked",
     `0` = "- to be coded -"
   ),
     cjtype = .replace_labels(
     standardized_value_labels$cjtype,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BCJSBC92",
     `-1` = "unknown",
     `0` = "- to be coded -"
@@ -4498,59 +4020,46 @@ value_labels_list <- list(
   ),
     flclass = .replace_labels(
     standardized_value_labels$flclass,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BFLSBC92",
     `0` = "- to be coded -"
   ),
     fllevel = .replace_labels(
     standardized_value_labels$fllevel,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BFLSBC92",
     `0` = "- to be coded -"
   ),
     flpresi = .replace_labels(
     standardized_value_labels$flpresi,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BFLSBC92",
     `0` = "- to be coded -"
   ),
     flsbc92 = .replace_labels(
     standardized_value_labels$flsbc92,
     `-5` = "na, interview terminated",
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked",
     `0` = "- to be coded -"
   ),
     fltype = .replace_labels(
     standardized_value_labels$fltype,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BFLSBC92",
     `0` = "- to be coded -"
   ),
     job1 = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     job6 = .replace_labels(
     standardized_value_labels$job6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     jobl1 = .replace_labels(
     standardized_value_labels$jobl1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     jobl6 = .replace_labels(
     standardized_value_labels$jobl6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     jobstom = .replace_labels(
     standardized_value_labels$jobstom,
     `-3` = "na wrong skip",
     `-2` = "na, see BJOBL1",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -4566,9 +4075,7 @@ value_labels_list <- list(
   ),
     jobstoy = .replace_labels(
     standardized_value_labels$jobstoy,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     nretr = c(
     `-3` = "na, wrong skip",
@@ -4582,47 +4089,37 @@ value_labels_list <- list(
   ),
     pcclass = .replace_labels(
     standardized_value_labels$pcclass,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BPCSBC92",
     `0` = "- to be coded -"
   ),
     pclevel = .replace_labels(
     standardized_value_labels$pclevel,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BPCSBC92",
     `0` = "- to be coded -"
   ),
     pcpresi = .replace_labels(
     standardized_value_labels$pcpresi,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BPCSBC92",
     `0` = "- to be coded -"
   ),
     pcsbc92 = .replace_labels(
     standardized_value_labels$pcsbc92,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BPJOB1",
-    `-1` = "na, asked",
     `0` = "- to be coded -"
   ),
     pctype = .replace_labels(
     standardized_value_labels$pctype,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BPCSBC92",
     `0` = "- to be coded -"
   ),
     pdisabl = .replace_labels(
     standardized_value_labels$pdisabl,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1 & BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1 & BPJOBL1"
   ),
     pdisabp = c(`-2` = "na, see BPDISABL", `-1` = "na, asked"),
     pemploy = .replace_labels(
     standardized_value_labels$pemploy,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pjob1 = c(
     `-5` = "na, interview terminated",
@@ -4633,27 +4130,20 @@ value_labels_list <- list(
   ),
     pjob6 = .replace_labels(
     standardized_value_labels$pjob6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pjobl1 = .replace_labels(
     standardized_value_labels$pjobl1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pjobl6 = .replace_labels(
     standardized_value_labels$pjobl6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     pjobstm = .replace_labels(
     standardized_value_labels$pjobstm,
     `-3` = "na wrong skip",
     `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -4669,58 +4159,44 @@ value_labels_list <- list(
   ),
     pjobsty = .replace_labels(
     standardized_value_labels$pjobsty,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     plclass = .replace_labels(
     standardized_value_labels$plclass,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BPLSBC92",
     `0` = "- to be coded -"
   ),
     pllevel = .replace_labels(
     standardized_value_labels$pllevel,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BPLSBC92",
     `0` = "- to be coded -"
   ),
     plpresi = .replace_labels(
     standardized_value_labels$plpresi,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BPLSBC92",
     `0` = "- to be coded -"
   ),
     plsbc92 = .replace_labels(
     standardized_value_labels$plsbc92,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BPJOB1",
-    `-1` = "na, asked",
     `0` = "- to be coded -"
   ),
     pltype = .replace_labels(
     standardized_value_labels$pltype,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BPLSBC92",
     `0` = "- to be coded -"
   ),
     pretifu = .replace_labels(
     standardized_value_labels$pretifu,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRETIRE",
-    `-1` = "na, asked"
+    `-2` = "na, see BRETIRE"
   ),
     pretire = .replace_labels(
     standardized_value_labels$pretire,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1 & BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1 & BPJOBL1"
   ),
     retfin = .replace_labels(
     standardized_value_labels$retfin,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRETIRED & BJOB6",
-    `-1` = "na, asked"
+    `-2` = "na, see BRETIRED & BJOB6"
   ),
     retifut = c(
     `-3` = "na, wrong skip",
@@ -4774,106 +4250,65 @@ value_labels_list <- list(
   ),
     rlclass = .replace_labels(
     standardized_value_labels$rlclass,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BRLSBC92",
     `0` = "- to be coded -"
   ),
     rllevel = .replace_labels(
     standardized_value_labels$rllevel,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BRLSBC92",
     `0` = "- to be coded -"
   ),
     rlpresi = .replace_labels(
     standardized_value_labels$rlpresi,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BRLSBC92",
     `0` = "- to be coded -"
   ),
     rlsbc92 = .replace_labels(
     standardized_value_labels$rlsbc92,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BJOB1",
-    `-1` = "na, asked",
     `0` = "- to be coded -"
   ),
     rltype = .replace_labels(
     standardized_value_labels$rltype,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BRLSBC92",
     `0` = "- to be coded -"
   ),
     work65 = .replace_labels(
     standardized_value_labels$work65,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BRETIRED & BJOB6",
-    `-1` = "na, asked",
     `1` = "no, I do not think so",
     `2` = "I am sometimes not sure about this",
     `3` = "yes, I do think so"
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cjclass",
-    "cjlevel",
-    "cjpresi",
-    "cjsbc92",
-    "cjtype",
-    "disabl",
-    "disablp",
-    "employ",
-    "job1",
-    "job3",
-    "job4",
-    "job5",
-    "job6",
-    "job7",
-    "jobc",
-    "jobstam",
-    "jobstay",
-    "jobstom",
-    "jobstoy",
-    "retifut",
-    "retired",
-    "retirf1",
-    "retirf2",
-    "retirf3",
-    "retirf4",
-    "retirf5",
-    "retirf6"
-  )],
+    standardized_value_labels,
     cjclass = .replace_labels(
     standardized_value_labels$cjclass,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
     `-1` = "na, asked",
     `0` = "- to be coded -"
   ),
     cjlevel = .replace_labels(
     standardized_value_labels$cjlevel,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
     `-1` = "na, asked",
     `0` = "- to be coded -"
   ),
     cjpresi = .replace_labels(
     standardized_value_labels$cjpresi,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
     `-1` = "na, asked",
     `0` = "- to be coded -"
   ),
     cjsbc92 = .replace_labels(
     standardized_value_labels$cjsbc92,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
     `-1` = "na, asked",
     `0` = "- to be coded -"
   ),
     cjtype = .replace_labels(
     standardized_value_labels$cjtype,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
     `-1` = "na, asked",
     `0` = "- to be coded -"
@@ -4917,21 +4352,15 @@ value_labels_list <- list(
   ),
     job5 = .replace_labels(
     standardized_value_labels$job5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOB4"
   ),
     job6 = .replace_labels(
     standardized_value_labels$job6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     job7 = .replace_labels(
     standardized_value_labels$job7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     jobc = c(
     `-2` = "na, see C/D/E/F/GJOB1",
@@ -4947,7 +4376,6 @@ value_labels_list <- list(
     standardized_value_labels$jobstam,
     `-3` = "na wrong skip",
     `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -4963,15 +4391,12 @@ value_labels_list <- list(
   ),
     jobstay = .replace_labels(
     standardized_value_labels$jobstay,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     jobstom = .replace_labels(
     standardized_value_labels$jobstom,
     `-3` = "na wrong skip",
     `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -4987,9 +4412,7 @@ value_labels_list <- list(
   ),
     jobstoy = .replace_labels(
     standardized_value_labels$jobstoy,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     retifut = c(`-2` = "na, see C/D/E/F/GRETIRED", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     retired = c(
@@ -5039,67 +4462,33 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cjclass",
-    "cjlevel",
-    "cjpresi",
-    "cjsbc92",
-    "cjtype",
-    "disabl",
-    "disablp",
-    "employ",
-    "job1",
-    "job3",
-    "job4",
-    "job5",
-    "job6",
-    "job7",
-    "jobc",
-    "jobstam",
-    "jobstay",
-    "jobstom",
-    "jobstoy",
-    "retifut",
-    "retired",
-    "retirf1",
-    "retirf2",
-    "retirf3",
-    "retirf4",
-    "retirf5",
-    "retirf6",
-    "retivol"
-  )],
+    standardized_value_labels,
     cjclass = .replace_labels(
     standardized_value_labels$cjclass,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
     `-1` = "na, asked",
     `0` = "- to be coded -"
   ),
     cjlevel = .replace_labels(
     standardized_value_labels$cjlevel,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
     `-1` = "na, asked",
     `0` = "- to be coded -"
   ),
     cjpresi = .replace_labels(
     standardized_value_labels$cjpresi,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
     `-1` = "na, asked",
     `0` = "- to be coded -"
   ),
     cjsbc92 = .replace_labels(
     standardized_value_labels$cjsbc92,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
     `-1` = "na, asked",
     `0` = "- to be coded -"
   ),
     cjtype = .replace_labels(
     standardized_value_labels$cjtype,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/GJOB1",
     `-1` = "na, asked",
     `0` = "- to be coded -"
@@ -5143,21 +4532,15 @@ value_labels_list <- list(
   ),
     job5 = .replace_labels(
     standardized_value_labels$job5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOB4"
   ),
     job6 = .replace_labels(
     standardized_value_labels$job6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     job7 = .replace_labels(
     standardized_value_labels$job7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     jobc = c(
     `-2` = "na, see C/D/E/F/GJOB1",
@@ -5173,7 +4556,6 @@ value_labels_list <- list(
     standardized_value_labels$jobstam,
     `-3` = "na wrong skip",
     `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -5189,15 +4571,12 @@ value_labels_list <- list(
   ),
     jobstay = .replace_labels(
     standardized_value_labels$jobstay,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     jobstom = .replace_labels(
     standardized_value_labels$jobstom,
     `-3` = "na wrong skip",
     `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -5213,9 +4592,7 @@ value_labels_list <- list(
   ),
     jobstoy = .replace_labels(
     standardized_value_labels$jobstoy,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/GJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/GJOBC"
   ),
     retifut = c(`-2` = "na, see C/D/E/F/GRETIRED", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     retired = c(
@@ -5273,49 +4650,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cjclass",
-    "cjlevel",
-    "cjsbc",
-    "cjtype",
-    "disabl",
-    "disablp",
-    "employ",
-    "job1",
-    "job3",
-    "job3a",
-    "job4",
-    "job5",
-    "job5a",
-    "job5b",
-    "job6",
-    "job7",
-    "jobc",
-    "jobstam",
-    "jobstay",
-    "jobstom",
-    "jobstoy",
-    "pcjclass",
-    "pcjlevel",
-    "pcjsbc",
-    "pcjtype",
-    "pjob1",
-    "pjob3a",
-    "pjob4",
-    "pjob5",
-    "pjob5a",
-    "pjob5b",
-    "pjob6",
-    "retifut",
-    "retired",
-    "retirf1",
-    "retirf2",
-    "retirf3",
-    "retirf4",
-    "retirf5",
-    "retirf6",
-    "retivol"
-  )],
+    standardized_value_labels,
     cjclass = c(
     `-2` = "na, see HCJSBC",
     `11` = "elementary occupations",
@@ -5372,9 +4707,7 @@ value_labels_list <- list(
   ),
     cjsbc = .replace_labels(
     standardized_value_labels$cjsbc,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see HJOBC"
   ),
     cjtype = c(
     `-2` = "na, see HCJSBC",
@@ -5424,40 +4757,28 @@ value_labels_list <- list(
   ),
     job3a = .replace_labels(
     standardized_value_labels$job3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see HJOBC"
   ),
     job4 = c(`-3` = "na, wrong skip", `-2` = "na, see HJOBC", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     job5 = .replace_labels(
     standardized_value_labels$job5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see HJOB4"
   ),
     job5a = .replace_labels(
     standardized_value_labels$job5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see HJOB4"
   ),
     job5b = .replace_labels(
     standardized_value_labels$job5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see HJOB4"
   ),
     job6 = .replace_labels(
     standardized_value_labels$job6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see HJOBC"
   ),
     job7 = .replace_labels(
     standardized_value_labels$job7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see HJOBC"
   ),
     jobc = .replace_labels(
     standardized_value_labels$jobc,
@@ -5467,7 +4788,6 @@ value_labels_list <- list(
     standardized_value_labels$jobstam,
     `-3` = "na wrong skip",
     `-2` = "na, see HJOBC",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -5483,15 +4803,12 @@ value_labels_list <- list(
   ),
     jobstay = .replace_labels(
     standardized_value_labels$jobstay,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see HJOBC"
   ),
     jobstom = .replace_labels(
     standardized_value_labels$jobstom,
     `-3` = "na wrong skip",
     `-2` = "na, see HJOBC",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -5507,9 +4824,7 @@ value_labels_list <- list(
   ),
     jobstoy = .replace_labels(
     standardized_value_labels$jobstoy,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see HJOBC"
   ),
     pcjclass = .replace_labels(
     standardized_value_labels$pcjclass,
@@ -5521,9 +4836,7 @@ value_labels_list <- list(
   ),
     pcjsbc = .replace_labels(
     standardized_value_labels$pcjsbc,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see HPJOB1"
   ),
     pcjtype = .replace_labels(
     standardized_value_labels$pcjtype,
@@ -5539,39 +4852,27 @@ value_labels_list <- list(
   ),
     pjob3a = .replace_labels(
     standardized_value_labels$pjob3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see HPJOB1"
   ),
     pjob4 = .replace_labels(
     standardized_value_labels$pjob4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see HPJOB1"
   ),
     pjob5 = .replace_labels(
     standardized_value_labels$pjob5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see HPJOB4"
   ),
     pjob5a = .replace_labels(
     standardized_value_labels$pjob5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see HPJOB4"
   ),
     pjob5b = .replace_labels(
     standardized_value_labels$pjob5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see HPJOB4"
   ),
     pjob6 = .replace_labels(
     standardized_value_labels$pjob6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see HPJOB1"
   ),
     retifut = c(`-2` = "na, see HRETIRED", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     retired = c(
@@ -5592,96 +4893,13 @@ value_labels_list <- list(
     retivol = .replace_labels(
     standardized_value_labels$retivol,
     `-5` = "na, age >=65",
-    `-3` = "na, wrong skip",
     `-2` = "na, see HJOBC",
-    `-1` = "na, asked",
     `1` = "no, not retired",
     `2` = "yes, retired entirely voluntarily"
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cjclass",
-    "cjlevel",
-    "cjsbc",
-    "cjtype",
-    "disabl",
-    "disablp",
-    "employ",
-    "jlstam",
-    "jlstay",
-    "job1",
-    "job3",
-    "job3a",
-    "job4",
-    "job5",
-    "job5a",
-    "job5b",
-    "job6",
-    "job7",
-    "jobl1",
-    "jobl3",
-    "jobl3a",
-    "jobl4",
-    "jobl5",
-    "jobl5a",
-    "jobl5b",
-    "jobl6",
-    "jobl7",
-    "jobstam",
-    "jobstay",
-    "jobstom",
-    "jobstoy",
-    "nretr",
-    "pcclass",
-    "pclevel",
-    "pcsbc",
-    "pctype",
-    "pdisabl",
-    "pdisabp",
-    "pemploy",
-    "pjdata",
-    "pjlstam",
-    "pjlstay",
-    "pjob1",
-    "pjob3",
-    "pjob3a",
-    "pjob4",
-    "pjob5",
-    "pjob5a",
-    "pjob5b",
-    "pjob6",
-    "pjob7",
-    "pjobl1",
-    "pjobl3",
-    "pjobl3a",
-    "pjobl4",
-    "pjobl5",
-    "pjobl5a",
-    "pjobl5b",
-    "pjobl6",
-    "pjobl7",
-    "pjobstm",
-    "pjobsty",
-    "pjstam",
-    "pjstay",
-    "plclass",
-    "pllevel",
-    "plsbc",
-    "pltype",
-    "pretire",
-    "retired",
-    "retivol",
-    "retnfr",
-    "retnfr2",
-    "retreas",
-    "retyr",
-    "rlclass",
-    "rllevel",
-    "rlsbc",
-    "rltype",
-    "work65"
-  )],
+    standardized_value_labels,
     cjclass = c(
     `-2` = "na, see BCJSBC",
     `11` = "elementary occupations",
@@ -5738,9 +4956,7 @@ value_labels_list <- list(
   ),
     cjsbc = .replace_labels(
     standardized_value_labels$cjsbc,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     cjtype = c(
     `-2` = "na, see BCJSBC",
@@ -5771,7 +4987,6 @@ value_labels_list <- list(
     standardized_value_labels$jlstam,
     `-3` = "na wrong skip",
     `-2` = "na, see BJOBL1",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -5788,8 +5003,7 @@ value_labels_list <- list(
     jlstay = .replace_labels(
     standardized_value_labels$jlstay,
     `-3` = "na wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     job1 = c(`-4` = "na, short version", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     job3 = c(
@@ -5806,95 +5020,66 @@ value_labels_list <- list(
   ),
     job3a = .replace_labels(
     standardized_value_labels$job3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     job4 = c(`-3` = "na, wrong skip", `-2` = "na, see BJOB1", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     job5 = c(`-3` = "na, wrong skip", `-2` = "na, see BJOB4", `-1` = "na, asked"),
     job5a = .replace_labels(
     standardized_value_labels$job5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB4"
   ),
     job5b = .replace_labels(
     standardized_value_labels$job5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB4"
   ),
     job6 = .replace_labels(
     standardized_value_labels$job6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     job7 = .replace_labels(
     standardized_value_labels$job7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     jobl1 = .replace_labels(
     standardized_value_labels$jobl1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     jobl3 = .replace_labels(
     standardized_value_labels$jobl3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     jobl3a = .replace_labels(
     standardized_value_labels$jobl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     jobl4 = .replace_labels(
     standardized_value_labels$jobl4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     jobl5 = .replace_labels(
     standardized_value_labels$jobl5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL4",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL4"
   ),
     jobl5a = .replace_labels(
     standardized_value_labels$jobl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB4"
   ),
     jobl5b = .replace_labels(
     standardized_value_labels$jobl5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB4"
   ),
     jobl6 = .replace_labels(
     standardized_value_labels$jobl6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     jobl7 = .replace_labels(
     standardized_value_labels$jobl7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     jobstam = .replace_labels(
     standardized_value_labels$jobstam,
     `-3` = "na wrong skip",
     `-2` = "na, see BJOB1",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -5911,14 +5096,12 @@ value_labels_list <- list(
     jobstay = .replace_labels(
     standardized_value_labels$jobstay,
     `-3` = "na wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     jobstom = .replace_labels(
     standardized_value_labels$jobstom,
     `-3` = "na wrong skip",
     `-2` = "na, see BJOBL1",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -5934,9 +5117,7 @@ value_labels_list <- list(
   ),
     jobstoy = .replace_labels(
     standardized_value_labels$jobstoy,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     nretr = c(
     `-3` = "na, wrong skip",
@@ -6006,9 +5187,7 @@ value_labels_list <- list(
   ),
     pcsbc = .replace_labels(
     standardized_value_labels$pcsbc,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pctype = c(
     `-2` = "na, see BPCSBC",
@@ -6028,22 +5207,17 @@ value_labels_list <- list(
   ),
     pdisabl = .replace_labels(
     standardized_value_labels$pdisabl,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1 & BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1 & BPJOBL1"
   ),
     pdisabp = c(`-2` = "na, see BPDISABL", `-1` = "na, asked"),
     pemploy = .replace_labels(
     standardized_value_labels$pemploy,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pjlstam = .replace_labels(
     standardized_value_labels$pjlstam,
     `-3` = "na wrong skip",
     `-2` = "na, see BJOBL1",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -6060,8 +5234,7 @@ value_labels_list <- list(
     pjlstay = .replace_labels(
     standardized_value_labels$pjlstay,
     `-3` = "na wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     pjob1 = c(`-2` = "na, see BPJDATA", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     pjob3 = c(
@@ -6078,105 +5251,72 @@ value_labels_list <- list(
   ),
     pjob3a = .replace_labels(
     standardized_value_labels$pjob3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pjob4 = .replace_labels(
     standardized_value_labels$pjob4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pjob5 = .replace_labels(
     standardized_value_labels$pjob5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB4"
   ),
     pjob5a = .replace_labels(
     standardized_value_labels$pjob5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB4"
   ),
     pjob5b = .replace_labels(
     standardized_value_labels$pjob5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB4"
   ),
     pjob6 = .replace_labels(
     standardized_value_labels$pjob6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pjob7 = .replace_labels(
     standardized_value_labels$pjob7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pjobl1 = .replace_labels(
     standardized_value_labels$pjobl1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pjobl3 = .replace_labels(
     standardized_value_labels$pjobl3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     pjobl3a = .replace_labels(
     standardized_value_labels$pjobl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     pjobl4 = .replace_labels(
     standardized_value_labels$pjobl4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     pjobl5 = .replace_labels(
     standardized_value_labels$pjobl5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL4",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL4"
   ),
     pjobl5a = .replace_labels(
     standardized_value_labels$pjobl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL4",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL4"
   ),
     pjobl5b = .replace_labels(
     standardized_value_labels$pjobl5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL4",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL4"
   ),
     pjobl6 = .replace_labels(
     standardized_value_labels$pjobl6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     pjobl7 = .replace_labels(
     standardized_value_labels$pjobl7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     pjobstm = .replace_labels(
     standardized_value_labels$pjobstm,
     `-3` = "na wrong skip",
     `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -6192,15 +5332,12 @@ value_labels_list <- list(
   ),
     pjobsty = .replace_labels(
     standardized_value_labels$pjobsty,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     pjstam = .replace_labels(
     standardized_value_labels$pjstam,
     `-3` = "na wrong skip",
     `-2` = "na, see BPJOB1",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -6217,8 +5354,7 @@ value_labels_list <- list(
     pjstay = .replace_labels(
     standardized_value_labels$pjstay,
     `-3` = "na wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     plclass = c(
     `-2` = "na, see BPLSBC",
@@ -6276,9 +5412,7 @@ value_labels_list <- list(
   ),
     plsbc = .replace_labels(
     standardized_value_labels$plsbc,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     pltype = c(
     `-2` = "na, see BPLSBC",
@@ -6298,9 +5432,7 @@ value_labels_list <- list(
   ),
     pretire = .replace_labels(
     standardized_value_labels$pretire,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1 & BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1 & BPJOBL1"
   ),
     retired = c(
     `-3` = "na, wrong skip",
@@ -6320,17 +5452,13 @@ value_labels_list <- list(
   ),
     retnfr = .replace_labels(
     standardized_value_labels$retnfr,
-    `-3` = "na, wrong skip",
     `-2` = "see BRETIRED",
-    `-1` = "na, asked",
     `4` = "no possibility for early retirement",
     `5` = "financially more favourable"
   ),
     retnfr2 = .replace_labels(
     standardized_value_labels$retnfr2,
-    `-3` = "na, wrong skip",
-    `-2` = "see BRETIRED",
-    `-1` = "na, asked"
+    `-2` = "see BRETIRED"
   ),
     retreas = c(
     `-3` = "na, wrong skip",
@@ -6412,9 +5540,7 @@ value_labels_list <- list(
   ),
     rlsbc = .replace_labels(
     standardized_value_labels$rlsbc,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     rltype = c(
     `-2` = "na, see BRLSBC",
@@ -6434,68 +5560,14 @@ value_labels_list <- list(
   ),
     work65 = .replace_labels(
     standardized_value_labels$work65,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BJOB1 & BRETIRED",
-    `-1` = "na, asked",
     `1` = "no, I do not think so",
     `2` = "I am sometimes not sure about this",
     `3` = "yes, I do think so"
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "disabl",
-    "disablp",
-    "employ",
-    "jlstam",
-    "jlstay",
-    "job1",
-    "job3",
-    "job3a",
-    "job4",
-    "job5",
-    "job5a",
-    "job6",
-    "job7",
-    "jobl1",
-    "jobl3",
-    "jobl3a",
-    "jobl4",
-    "jobl5",
-    "jobl5a",
-    "jobl6",
-    "jobl7",
-    "jobstam",
-    "jobstay",
-    "jobstom",
-    "jobstoy",
-    "pdisabl",
-    "pdisabp",
-    "pemploy",
-    "pjob1",
-    "pjob3",
-    "pjob3a",
-    "pjob4",
-    "pjob5",
-    "pjob5a",
-    "pjob6",
-    "pjob7",
-    "pjobl1",
-    "pjobl3",
-    "pjobl3a",
-    "pjobl4",
-    "pjobl5",
-    "pjobl5a",
-    "pjobl6",
-    "pjobl7",
-    "pjobstm",
-    "pjobsty",
-    "pjstam",
-    "pjstay",
-    "retired",
-    "retivol",
-    "workret"
-  )],
+    standardized_value_labels,
     disabl = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see BJOB1/BJOBL1",
@@ -6514,7 +5586,6 @@ value_labels_list <- list(
     standardized_value_labels$jlstam,
     `-3` = "na wrong skip",
     `-2` = "na, see BJOBL1",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -6531,8 +5602,7 @@ value_labels_list <- list(
     jlstay = .replace_labels(
     standardized_value_labels$jlstay,
     `-3` = "na wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     job1 = c(`-4` = "na, short version", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     job3 = c(
@@ -6549,83 +5619,58 @@ value_labels_list <- list(
   ),
     job3a = .replace_labels(
     standardized_value_labels$job3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     job4 = c(`-3` = "na, wrong skip", `-2` = "na, see BJOB1", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     job5 = c(`-3` = "na, wrong skip", `-2` = "na, see BJOB4", `-1` = "na, asked"),
     job5a = .replace_labels(
     standardized_value_labels$job5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB4"
   ),
     job6 = .replace_labels(
     standardized_value_labels$job6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     job7 = .replace_labels(
     standardized_value_labels$job7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     jobl1 = .replace_labels(
     standardized_value_labels$jobl1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     jobl3 = .replace_labels(
     standardized_value_labels$jobl3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     jobl3a = .replace_labels(
     standardized_value_labels$jobl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     jobl4 = .replace_labels(
     standardized_value_labels$jobl4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     jobl5 = .replace_labels(
     standardized_value_labels$jobl5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL4",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL4"
   ),
     jobl5a = .replace_labels(
     standardized_value_labels$jobl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL4",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL4"
   ),
     jobl6 = .replace_labels(
     standardized_value_labels$jobl6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     jobl7 = .replace_labels(
     standardized_value_labels$jobl7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     jobstam = .replace_labels(
     standardized_value_labels$jobstam,
     `-3` = "na wrong skip",
     `-2` = "na, see BJOB1",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -6642,14 +5687,12 @@ value_labels_list <- list(
     jobstay = .replace_labels(
     standardized_value_labels$jobstay,
     `-3` = "na wrong skip",
-    `-2` = "na, see BJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOB1"
   ),
     jobstom = .replace_labels(
     standardized_value_labels$jobstom,
     `-3` = "na wrong skip",
     `-2` = "na, see BJOBL1",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -6665,27 +5708,20 @@ value_labels_list <- list(
   ),
     jobstoy = .replace_labels(
     standardized_value_labels$jobstoy,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BJOBL1"
   ),
     pdisabl = .replace_labels(
     standardized_value_labels$pdisabl,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1/BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1/BPJOBL1"
   ),
     pdisabp = .replace_labels(
     standardized_value_labels$pdisabp,
     `-3` = "na, refused",
-    `-2` = "na, see BPDISABL",
-    `-1` = "na, asked"
+    `-2` = "na, see BPDISABL"
   ),
     pemploy = .replace_labels(
     standardized_value_labels$pemploy,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pjob1 = c(
     `-3` = "na, wrong skip",
@@ -6708,93 +5744,64 @@ value_labels_list <- list(
   ),
     pjob3a = .replace_labels(
     standardized_value_labels$pjob3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pjob4 = .replace_labels(
     standardized_value_labels$pjob4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pjob5 = .replace_labels(
     standardized_value_labels$pjob5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB4"
   ),
     pjob5a = .replace_labels(
     standardized_value_labels$pjob5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB4"
   ),
     pjob6 = .replace_labels(
     standardized_value_labels$pjob6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pjob7 = .replace_labels(
     standardized_value_labels$pjob7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pjobl1 = .replace_labels(
     standardized_value_labels$pjobl1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     pjobl3 = .replace_labels(
     standardized_value_labels$pjobl3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     pjobl3a = .replace_labels(
     standardized_value_labels$pjobl3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     pjobl4 = .replace_labels(
     standardized_value_labels$pjobl4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     pjobl5 = .replace_labels(
     standardized_value_labels$pjobl5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL4",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL4"
   ),
     pjobl5a = .replace_labels(
     standardized_value_labels$pjobl5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL4",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL4"
   ),
     pjobl6 = .replace_labels(
     standardized_value_labels$pjobl6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     pjobl7 = .replace_labels(
     standardized_value_labels$pjobl7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     pjobstm = .replace_labels(
     standardized_value_labels$pjobstm,
     `-3` = "na wrong skip",
     `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -6810,15 +5817,12 @@ value_labels_list <- list(
   ),
     pjobsty = .replace_labels(
     standardized_value_labels$pjobsty,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPJOBL1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOBL1"
   ),
     pjstam = .replace_labels(
     standardized_value_labels$pjstam,
     `-3` = "na wrong skip",
     `-2` = "na, see BPJOB1",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -6835,8 +5839,7 @@ value_labels_list <- list(
     pjstay = .replace_labels(
     standardized_value_labels$pjstay,
     `-3` = "na wrong skip",
-    `-2` = "na, see BPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see BPJOB1"
   ),
     retired = c(
     `-3` = "na, wrong skip",
@@ -6856,59 +5859,14 @@ value_labels_list <- list(
   ),
     workret = .replace_labels(
     standardized_value_labels$workret,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BJOB1/BRETIRED",
-    `-1` = "na, asked",
     `1` = "no, I do not think so",
     `2` = "I am sometimes not sure about this",
     `3` = "yes, I do think so"
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cjclass",
-    "cjlevel",
-    "cjsbc",
-    "cjtype",
-    "disabl",
-    "disablp",
-    "employ",
-    "job1",
-    "job3",
-    "job3a",
-    "job4",
-    "job5",
-    "job5a",
-    "job5b",
-    "job6",
-    "job7",
-    "jobc",
-    "jobs",
-    "jobstam",
-    "jobstay",
-    "jobstom",
-    "jobstoy",
-    "pcjclass",
-    "pcjlevel",
-    "pcjsbc",
-    "pcjtype",
-    "pjob1",
-    "pjob3",
-    "pjob3a",
-    "pjob4",
-    "pjob5",
-    "pjob5a",
-    "pjob5b",
-    "pjob6",
-    "pjob7",
-    "pjobc",
-    "pjobs",
-    "pjstam",
-    "pjstay",
-    "retired",
-    "retivol",
-    "workret"
-  )],
+    standardized_value_labels,
     cjclass = c(
     `-2` = "na, see ICJSBC",
     `11` = "elementary occupations",
@@ -6965,9 +5923,7 @@ value_labels_list <- list(
   ),
     cjsbc = .replace_labels(
     standardized_value_labels$cjsbc,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see IJOBC/S"
   ),
     cjtype = c(
     `-2` = "na, see ICJSBC",
@@ -7017,9 +5973,7 @@ value_labels_list <- list(
   ),
     job3a = .replace_labels(
     standardized_value_labels$job3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see IJOBC/S"
   ),
     job4 = c(
     `-3` = "na, wrong skip",
@@ -7030,33 +5984,23 @@ value_labels_list <- list(
   ),
     job5 = .replace_labels(
     standardized_value_labels$job5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see IJOB4"
   ),
     job5a = .replace_labels(
     standardized_value_labels$job5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see IJOB4"
   ),
     job5b = .replace_labels(
     standardized_value_labels$job5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see IJOB4"
   ),
     job6 = .replace_labels(
     standardized_value_labels$job6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see IJOBC/S"
   ),
     job7 = .replace_labels(
     standardized_value_labels$job7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see IJOBC/S"
   ),
     jobc = .replace_labels(
     standardized_value_labels$jobc,
@@ -7071,7 +6015,6 @@ value_labels_list <- list(
     standardized_value_labels$jobstam,
     `-3` = "na wrong skip",
     `-2` = "na, see IJOBC/S",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -7087,15 +6030,12 @@ value_labels_list <- list(
   ),
     jobstay = .replace_labels(
     standardized_value_labels$jobstay,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see IJOBC/S"
   ),
     jobstom = .replace_labels(
     standardized_value_labels$jobstom,
     `-3` = "na wrong skip",
     `-2` = "na, see IJOBC",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -7111,9 +6051,7 @@ value_labels_list <- list(
   ),
     jobstoy = .replace_labels(
     standardized_value_labels$jobstoy,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see IJOBC"
   ),
     pcjclass = .replace_labels(
     standardized_value_labels$pcjclass,
@@ -7125,9 +6063,7 @@ value_labels_list <- list(
   ),
     pcjsbc = .replace_labels(
     standardized_value_labels$pcjsbc,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see IPJOBC"
   ),
     pcjtype = .replace_labels(
     standardized_value_labels$pcjtype,
@@ -7155,45 +6091,31 @@ value_labels_list <- list(
   ),
     pjob3a = .replace_labels(
     standardized_value_labels$pjob3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see IPJOBC/S"
   ),
     pjob4 = .replace_labels(
     standardized_value_labels$pjob4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see IPJOBC/S"
   ),
     pjob5 = .replace_labels(
     standardized_value_labels$pjob5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see IPJOB4"
   ),
     pjob5a = .replace_labels(
     standardized_value_labels$pjob5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see IPJOB4"
   ),
     pjob5b = .replace_labels(
     standardized_value_labels$pjob5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see IPJOB4"
   ),
     pjob6 = .replace_labels(
     standardized_value_labels$pjob6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see IPJOB1"
   ),
     pjob7 = .replace_labels(
     standardized_value_labels$pjob7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see IPJOB1"
   ),
     pjobc = .replace_labels(
     standardized_value_labels$pjobc,
@@ -7204,7 +6126,6 @@ value_labels_list <- list(
     standardized_value_labels$pjstam,
     `-3` = "na wrong skip",
     `-2` = "na, see IPJOBC/S",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -7220,9 +6141,7 @@ value_labels_list <- list(
   ),
     pjstay = .replace_labels(
     standardized_value_labels$pjstay,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see IPJOBC/S"
   ),
     retired = c(
     `-5` = "na, age >= 66",
@@ -7236,120 +6155,27 @@ value_labels_list <- list(
     retivol = .replace_labels(
     standardized_value_labels$retivol,
     `-5` = "na, age >=66",
-    `-3` = "na, wrong skip",
     `-2` = "na, see IJOBC",
-    `-1` = "na, asked",
     `1` = "no, not retired",
     `2` = "yes, retired entirely voluntarily"
   ),
     workret = .replace_labels(
     standardized_value_labels$workret,
-    `-3` = "na, wrong skip",
     `-2` = "na, see IJOB1/IRETIRED",
-    `-1` = "na, asked",
     `1` = "no, I do not think so",
     `2` = "I am not sure about this",
     `3` = "yes, I do think so"
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "abstot",
-    "abswd",
-    "cjclass",
-    "cjlevel",
-    "cjsbc",
-    "cjtype",
-    "disabl",
-    "disablp",
-    "employ",
-    "eretfin",
-    "fretage",
-    "healthp",
-    "job1",
-    "job3",
-    "job3a",
-    "job4",
-    "job5",
-    "job5a",
-    "job5b",
-    "job6c",
-    "job6r",
-    "job7",
-    "jobc",
-    "jobs",
-    "jobstam",
-    "jobstar01",
-    "jobstar02",
-    "jobstar03",
-    "jobstar04",
-    "jobstar05",
-    "jobstar06",
-    "jobstar07",
-    "jobstar08",
-    "jobstar09",
-    "jobstay",
-    "jobstom",
-    "jobstoy",
-    "mability",
-    "nretr",
-    "pability",
-    "pcjclass",
-    "pcjlevel",
-    "pcjsbc",
-    "pcjtype",
-    "peretfin",
-    "pjob1",
-    "pjob3",
-    "pjob3a",
-    "pjob4",
-    "pjob5",
-    "pjob5a",
-    "pjob5b",
-    "pjob6c",
-    "pjob6r",
-    "pjob7",
-    "pjobc",
-    "pjobs",
-    "pjstam",
-    "pjstay",
-    "prefret",
-    "pretage",
-    "pretivol",
-    "pretreas",
-    "retage",
-    "retired",
-    "retivol",
-    "retreas",
-    "retyr",
-    "rjobchange01",
-    "rjobchange02",
-    "rjobchange03",
-    "rjobchange04",
-    "rjobchange05",
-    "rjobchange06",
-    "rjobchange07",
-    "rjobchange08",
-    "rjobchange09",
-    "rjobchange10",
-    "rjobchange11",
-    "rjobchange12",
-    "rjobchange13",
-    "tasks",
-    "wjobchange",
-    "workret"
-  )],
+    standardized_value_labels,
     abstot = .replace_labels(
     standardized_value_labels$abstot,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOBC/S"
   ),
     abswd = .replace_labels(
     standardized_value_labels$abswd,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOBC/S"
   ),
     cjclass = c(
     `-2` = "na, see JCJSBC",
@@ -7407,9 +6233,7 @@ value_labels_list <- list(
   ),
     cjsbc = .replace_labels(
     standardized_value_labels$cjsbc,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOBC/S"
   ),
     cjtype = c(
     `-2` = "na, see JCJSBC",
@@ -7451,21 +6275,15 @@ value_labels_list <- list(
   ),
     eretfin = .replace_labels(
     standardized_value_labels$eretfin,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see JRETIRED"
   ),
     fretage = .replace_labels(
     standardized_value_labels$fretage,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see JRETIRED"
   ),
     healthp = .replace_labels(
     standardized_value_labels$healthp,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOBC/S"
   ),
     job1 = c(`-4` = "na, short version", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     job3 = c(
@@ -7482,9 +6300,7 @@ value_labels_list <- list(
   ),
     job3a = .replace_labels(
     standardized_value_labels$job3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOBC/S"
   ),
     job4 = c(
     `-3` = "na, wrong skip",
@@ -7495,39 +6311,27 @@ value_labels_list <- list(
   ),
     job5 = .replace_labels(
     standardized_value_labels$job5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOB4"
   ),
     job5a = .replace_labels(
     standardized_value_labels$job5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOB4"
   ),
     job5b = .replace_labels(
     standardized_value_labels$job5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOB4"
   ),
     job6c = .replace_labels(
     standardized_value_labels$job6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOBC/S"
   ),
     job6r = .replace_labels(
     standardized_value_labels$job6r,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOBC/S"
   ),
     job7 = .replace_labels(
     standardized_value_labels$job7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOBC/S"
   ),
     jobc = .replace_labels(
     standardized_value_labels$jobc,
@@ -7542,7 +6346,6 @@ value_labels_list <- list(
     standardized_value_labels$jobstam,
     `-3` = "na wrong skip",
     `-2` = "na, see JJOBC/S",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -7594,15 +6397,12 @@ value_labels_list <- list(
   ),
     jobstay = .replace_labels(
     standardized_value_labels$jobstay,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOBC/S"
   ),
     jobstom = .replace_labels(
     standardized_value_labels$jobstom,
     `-3` = "na wrong skip",
     `-2` = "na, see JJOBC",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -7618,21 +6418,15 @@ value_labels_list <- list(
   ),
     jobstoy = .replace_labels(
     standardized_value_labels$jobstoy,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOBC"
   ),
     mability = .replace_labels(
     standardized_value_labels$mability,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOBC/S"
   ),
     nretr = .replace_labels(
     standardized_value_labels$nretr,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JRETIRED",
-    `-1` = "na, asked",
     `2` = "maintain social contacts at work",
     `3` = "other pastimes less pleasant than work",
     `4` = "financially more favourable",
@@ -7641,9 +6435,7 @@ value_labels_list <- list(
   ),
     pability = .replace_labels(
     standardized_value_labels$pability,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOBC/S"
   ),
     pcjclass = .replace_labels(
     standardized_value_labels$pcjclass,
@@ -7655,9 +6447,7 @@ value_labels_list <- list(
   ),
     pcjsbc = .replace_labels(
     standardized_value_labels$pcjsbc,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JPJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see JPJOBC"
   ),
     pcjtype = .replace_labels(
     standardized_value_labels$pcjtype,
@@ -7665,9 +6455,7 @@ value_labels_list <- list(
   ),
     peretfin = .replace_labels(
     standardized_value_labels$peretfin,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see JRETIRED"
   ),
     pjob1 = c(
     `-4` = "na, short version",
@@ -7691,51 +6479,35 @@ value_labels_list <- list(
   ),
     pjob3a = .replace_labels(
     standardized_value_labels$pjob3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JPJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see JPJOBC/S"
   ),
     pjob4 = .replace_labels(
     standardized_value_labels$pjob4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JPJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see JPJOBC/S"
   ),
     pjob5 = .replace_labels(
     standardized_value_labels$pjob5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see JPJOB4"
   ),
     pjob5a = .replace_labels(
     standardized_value_labels$pjob5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see JPJOB4"
   ),
     pjob5b = .replace_labels(
     standardized_value_labels$pjob5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see JPJOB4"
   ),
     pjob6c = .replace_labels(
     standardized_value_labels$pjob6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see JPJOB1"
   ),
     pjob6r = .replace_labels(
     standardized_value_labels$pjob6r,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see JPJOB1"
   ),
     pjob7 = .replace_labels(
     standardized_value_labels$pjob7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see JPJOB1"
   ),
     pjobc = .replace_labels(
     standardized_value_labels$pjobc,
@@ -7743,7 +6515,6 @@ value_labels_list <- list(
   ),
     pjobs = .replace_labels(
     standardized_value_labels$pjobs,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JPJOB1",
     `-1` = "na, see JPJOBC"
   ),
@@ -7751,7 +6522,6 @@ value_labels_list <- list(
     standardized_value_labels$pjstam,
     `-3` = "na wrong skip",
     `-2` = "na, see JPJOBC/S",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -7767,41 +6537,29 @@ value_labels_list <- list(
   ),
     pjstay = .replace_labels(
     standardized_value_labels$pjstay,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JPJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see JPJOBC/S"
   ),
     prefret = .replace_labels(
     standardized_value_labels$prefret,
     `-5` = "na, age >= 71",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOBC"
   ),
     pretage = .replace_labels(
     standardized_value_labels$pretage,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see JRETIRED"
   ),
     pretivol = .replace_labels(
     standardized_value_labels$pretivol,
     `-5` = "na, age >=67",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see JJOBC"
   ),
     pretreas = .replace_labels(
     standardized_value_labels$pretreas,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see JRETIRED"
   ),
     retage = .replace_labels(
     standardized_value_labels$retage,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see JRETIRED"
   ),
     retired = c(
     `-5` = "na, age >= 71",
@@ -7822,9 +6580,7 @@ value_labels_list <- list(
   ),
     retreas = .replace_labels(
     standardized_value_labels$retreas,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JRETIRED",
-    `-1` = "na, asked",
     `2` = "other work related factors (organisational changes/conflicts)",
     `3` = "physically too heavy",
     `4` = "health complaints too hampering",
@@ -7834,9 +6590,7 @@ value_labels_list <- list(
   ),
     retyr = .replace_labels(
     standardized_value_labels$retyr,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JRETIRED",
-    `-1` = "na, asked",
     `2` = "other work related factors (organisational changes/conflicts)",
     `3` = "physically too demanding",
     `4` = "health complaints too limiting",
@@ -7898,162 +6652,35 @@ value_labels_list <- list(
   ),
     tasks = .replace_labels(
     standardized_value_labels$tasks,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JJOBC/S",
     `-1` = "na, asked"
   ),
     wjobchange = .replace_labels(
     standardized_value_labels$wjobchange,
     `-2` = "na, see JJOBS",
-    `-1` = "na, asked",
     `3` = "I switched employers"
   ),
     workret = .replace_labels(
     standardized_value_labels$workret,
-    `-3` = "na, wrong skip",
     `-2` = "na, see JJOB1/JRETIRED",
-    `-1` = "na, asked",
     `1` = "no, I do not think so",
     `2` = "I am not sure about this",
     `3` = "yes, I do think so"
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "abstot",
-    "abswd",
-    "cjsbc",
-    "disabl",
-    "disablp",
-    "employ",
-    "eretfin",
-    "fretage",
-    "healthp",
-    "job3",
-    "job3a",
-    "job4",
-    "job5",
-    "job5a",
-    "job5b",
-    "job6c",
-    "job6r",
-    "job7",
-    "jobc",
-    "jobs",
-    "jobstam",
-    "jobstar01",
-    "jobstar02",
-    "jobstar03",
-    "jobstar04",
-    "jobstar05",
-    "jobstar06",
-    "jobstar07",
-    "jobstar08",
-    "jobstar09",
-    "jobstay",
-    "jobstom",
-    "jobstoy",
-    "kob1",
-    "mability",
-    "nretr01",
-    "nretr02",
-    "nretr03",
-    "nretr04",
-    "nretr05",
-    "nretr06",
-    "pability",
-    "pcjsbc",
-    "peretfin",
-    "pjob1",
-    "pjob3",
-    "pjob3a",
-    "pjob4",
-    "pjob5",
-    "pjob5a",
-    "pjob5b",
-    "pjob6c",
-    "pjob6r",
-    "pjob7",
-    "pjobc",
-    "pjobs",
-    "pjstam",
-    "pjstay",
-    "prefret",
-    "pretage",
-    "pretivol",
-    "pretreas01",
-    "pretreas02",
-    "pretreas03",
-    "pretreas04",
-    "pretreas05",
-    "pretreas06",
-    "pretreas07",
-    "pretreas08",
-    "pretreas09",
-    "pretreas10",
-    "pretreas11",
-    "pretreas12",
-    "pretreas13",
-    "retage",
-    "retired",
-    "retivol",
-    "retreas01",
-    "retreas02",
-    "retreas03",
-    "retreas04",
-    "retreas05",
-    "retreas06",
-    "retreas07",
-    "retreas08",
-    "retreas09",
-    "retreas10",
-    "retreas11",
-    "retreas12",
-    "retreas13",
-    "retyr01",
-    "retyr02",
-    "retyr03",
-    "retyr04",
-    "retyr05",
-    "retyr06",
-    "retyr07",
-    "retyr08",
-    "retyr09",
-    "retyr10",
-    "rjobchange01",
-    "rjobchange02",
-    "rjobchange03",
-    "rjobchange04",
-    "rjobchange05",
-    "rjobchange06",
-    "rjobchange07",
-    "rjobchange08",
-    "rjobchange09",
-    "rjobchange10",
-    "rjobchange11",
-    "rjobchange12",
-    "rjobchange13",
-    "tasks",
-    "wjobchange",
-    "workret"
-  )],
+    standardized_value_labels,
     abstot = .replace_labels(
     standardized_value_labels$abstot,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOBC/S"
   ),
     abswd = .replace_labels(
     standardized_value_labels$abswd,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOBC/S"
   ),
     cjsbc = .replace_labels(
     standardized_value_labels$cjsbc,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOBC/S"
   ),
     disabl = c(
     `-5` = "na, age >= 67",
@@ -8079,33 +6706,23 @@ value_labels_list <- list(
   ),
     eretfin = .replace_labels(
     standardized_value_labels$eretfin,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     fretage = .replace_labels(
     standardized_value_labels$fretage,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     healthp = .replace_labels(
     standardized_value_labels$healthp,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOBC/S"
   ),
     job3 = .replace_labels(
     standardized_value_labels$job3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOBC/S"
   ),
     job3a = .replace_labels(
     standardized_value_labels$job3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOBC/S"
   ),
     job4 = c(
     `-3` = "na, wrong skip",
@@ -8116,39 +6733,27 @@ value_labels_list <- list(
   ),
     job5 = .replace_labels(
     standardized_value_labels$job5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOB4"
   ),
     job5a = .replace_labels(
     standardized_value_labels$job5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOB4"
   ),
     job5b = .replace_labels(
     standardized_value_labels$job5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOB4"
   ),
     job6c = .replace_labels(
     standardized_value_labels$job6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOBC/S"
   ),
     job6r = .replace_labels(
     standardized_value_labels$job6r,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOBC/S"
   ),
     job7 = .replace_labels(
     standardized_value_labels$job7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOBC/S"
   ),
     jobc = .replace_labels(
     standardized_value_labels$jobc,
@@ -8163,7 +6768,6 @@ value_labels_list <- list(
     standardized_value_labels$jobstam,
     `-3` = "na wrong skip",
     `-2` = "na, see KJOBC/S",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -8215,15 +6819,12 @@ value_labels_list <- list(
   ),
     jobstay = .replace_labels(
     standardized_value_labels$jobstay,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOBC/S"
   ),
     jobstom = .replace_labels(
     standardized_value_labels$jobstom,
     `-3` = "na wrong skip",
     `-2` = "na, see KJOBC",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -8239,74 +6840,51 @@ value_labels_list <- list(
   ),
     jobstoy = .replace_labels(
     standardized_value_labels$jobstoy,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOBC"
   ),
     kob1 = .replace_labels(
     standardized_value_labels$kob1,
-    `-4` = "na, short version",
-    `-1` = "na, asked"
+    `-4` = "na, short version"
   ),
     mability = .replace_labels(
     standardized_value_labels$mability,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOBC/S"
   ),
     nretr01 = .replace_labels(
     standardized_value_labels$nretr01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     nretr02 = .replace_labels(
     standardized_value_labels$nretr02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     nretr03 = .replace_labels(
     standardized_value_labels$nretr03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     nretr04 = .replace_labels(
     standardized_value_labels$nretr04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     nretr05 = .replace_labels(
     standardized_value_labels$nretr05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     nretr06 = .replace_labels(
     standardized_value_labels$nretr06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     pability = .replace_labels(
     standardized_value_labels$pability,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOBC/S"
   ),
     pcjsbc = .replace_labels(
     standardized_value_labels$pcjsbc,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KPJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see KPJOBC"
   ),
     peretfin = .replace_labels(
     standardized_value_labels$peretfin,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     pjob1 = c(
     `-4` = "na, short version",
@@ -8318,57 +6896,39 @@ value_labels_list <- list(
   ),
     pjob3 = .replace_labels(
     standardized_value_labels$pjob3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KPJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KPJOBC/S"
   ),
     pjob3a = .replace_labels(
     standardized_value_labels$pjob3a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KPJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KPJOBC/S"
   ),
     pjob4 = .replace_labels(
     standardized_value_labels$pjob4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KPJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KPJOBC/S"
   ),
     pjob5 = .replace_labels(
     standardized_value_labels$pjob5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see KPJOB4"
   ),
     pjob5a = .replace_labels(
     standardized_value_labels$pjob5a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see KPJOB4"
   ),
     pjob5b = .replace_labels(
     standardized_value_labels$pjob5b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KPJOB4",
-    `-1` = "na, asked"
+    `-2` = "na, see KPJOB4"
   ),
     pjob6c = .replace_labels(
     standardized_value_labels$pjob6c,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see KPJOB1"
   ),
     pjob6r = .replace_labels(
     standardized_value_labels$pjob6r,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see KPJOB1"
   ),
     pjob7 = .replace_labels(
     standardized_value_labels$pjob7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KPJOB1",
-    `-1` = "na, asked"
+    `-2` = "na, see KPJOB1"
   ),
     pjobc = .replace_labels(
     standardized_value_labels$pjobc,
@@ -8376,7 +6936,6 @@ value_labels_list <- list(
   ),
     pjobs = .replace_labels(
     standardized_value_labels$pjobs,
-    `-3` = "na, wrong skip",
     `-2` = "na, see KPJOB1",
     `-1` = "na, see KPJOBC"
   ),
@@ -8384,7 +6943,6 @@ value_labels_list <- list(
     standardized_value_labels$pjstam,
     `-3` = "na wrong skip",
     `-2` = "na, see KPJOBC/S",
-    `-1` = "na, asked",
     `1` = "January",
     `2` = "February",
     `3` = "March",
@@ -8400,113 +6958,77 @@ value_labels_list <- list(
   ),
     pjstay = .replace_labels(
     standardized_value_labels$pjstay,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KPJOBC/S",
-    `-1` = "na, asked"
+    `-2` = "na, see KPJOBC/S"
   ),
     prefret = .replace_labels(
     standardized_value_labels$prefret,
     `-5` = "na, age >= 71",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOBC"
   ),
     pretage = .replace_labels(
     standardized_value_labels$pretage,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     pretivol = .replace_labels(
     standardized_value_labels$pretivol,
     `-5` = "na, age >=67",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KJOBC",
-    `-1` = "na, asked"
+    `-2` = "na, see KJOBC"
   ),
     pretreas01 = .replace_labels(
     standardized_value_labels$pretreas01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     pretreas02 = .replace_labels(
     standardized_value_labels$pretreas02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     pretreas03 = .replace_labels(
     standardized_value_labels$pretreas03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     pretreas04 = .replace_labels(
     standardized_value_labels$pretreas04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     pretreas05 = .replace_labels(
     standardized_value_labels$pretreas05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     pretreas06 = .replace_labels(
     standardized_value_labels$pretreas06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     pretreas07 = .replace_labels(
     standardized_value_labels$pretreas07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     pretreas08 = .replace_labels(
     standardized_value_labels$pretreas08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     pretreas09 = .replace_labels(
     standardized_value_labels$pretreas09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     pretreas10 = .replace_labels(
     standardized_value_labels$pretreas10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     pretreas11 = .replace_labels(
     standardized_value_labels$pretreas11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     pretreas12 = .replace_labels(
     standardized_value_labels$pretreas12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     pretreas13 = .replace_labels(
     standardized_value_labels$pretreas13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retage = .replace_labels(
     standardized_value_labels$retage,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retired = c(
     `-5` = "na, age >= 71",
@@ -8527,141 +7049,95 @@ value_labels_list <- list(
   ),
     retreas01 = .replace_labels(
     standardized_value_labels$retreas01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retreas02 = .replace_labels(
     standardized_value_labels$retreas02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retreas03 = .replace_labels(
     standardized_value_labels$retreas03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retreas04 = .replace_labels(
     standardized_value_labels$retreas04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retreas05 = .replace_labels(
     standardized_value_labels$retreas05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retreas06 = .replace_labels(
     standardized_value_labels$retreas06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retreas07 = .replace_labels(
     standardized_value_labels$retreas07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retreas08 = .replace_labels(
     standardized_value_labels$retreas08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retreas09 = .replace_labels(
     standardized_value_labels$retreas09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retreas10 = .replace_labels(
     standardized_value_labels$retreas10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retreas11 = .replace_labels(
     standardized_value_labels$retreas11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retreas12 = .replace_labels(
     standardized_value_labels$retreas12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retreas13 = .replace_labels(
     standardized_value_labels$retreas13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retyr01 = .replace_labels(
     standardized_value_labels$retyr01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retyr02 = .replace_labels(
     standardized_value_labels$retyr02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retyr03 = .replace_labels(
     standardized_value_labels$retyr03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retyr04 = .replace_labels(
     standardized_value_labels$retyr04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retyr05 = .replace_labels(
     standardized_value_labels$retyr05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retyr06 = .replace_labels(
     standardized_value_labels$retyr06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retyr07 = .replace_labels(
     standardized_value_labels$retyr07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retyr08 = .replace_labels(
     standardized_value_labels$retyr08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retyr09 = .replace_labels(
     standardized_value_labels$retyr09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     retyr10 = .replace_labels(
     standardized_value_labels$retyr10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see KRETIRED",
-    `-1` = "na, asked"
+    `-2` = "na, see KRETIRED"
   ),
     rjobchange01 = .replace_labels(
     standardized_value_labels$rjobchange01,
@@ -8717,21 +7193,17 @@ value_labels_list <- list(
   ),
     tasks = .replace_labels(
     standardized_value_labels$tasks,
-    `-3` = "na, wrong skip",
     `-2` = "na, see KJOBC/S",
     `-1` = "na, asked"
   ),
     wjobchange = .replace_labels(
     standardized_value_labels$wjobchange,
     `-2` = "na, see KJOBS",
-    `-1` = "na, asked",
     `3` = "I switched employers"
   ),
     workret = .replace_labels(
     standardized_value_labels$workret,
-    `-3` = "na, wrong skip",
     `-2` = "na, see KJOB1/KRETIRED",
-    `-1` = "na, asked",
     `1` = "no, I do not think so",
     `2` = "I am not sure about this",
     `3` = "yes, I do think so"
@@ -8952,9 +7424,12 @@ var_types_vec <- c(
   workret = "categorical"
 )
 
-.lasa_fc_016 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "016", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "016", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "016", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "016", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_016 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

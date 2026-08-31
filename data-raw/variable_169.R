@@ -23,6 +23,29 @@ harmonized_labels <- c(
   mdexp69 = "perceived reason for experience: other"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `J` = c(
+    "mdexp1",
+    "mdexp2",
+    "mdexp3",
+    "mdexp4",
+    "mdexp5",
+    "mdexp61",
+    "mdexp62",
+    "mdexp63",
+    "mdexp64",
+    "mdexp65",
+    "mdexp66",
+    "mdexp67",
+    "mdexp68",
+    "mdexp69"
+  )
+)
+
 variable_labels_list <- list(
   Wave_J_labels = .replace_labels(
     harmonized_labels,
@@ -41,7 +64,7 @@ variable_labels_list <- list(
 
 standardized_value_labels <- list(
   mdexp1 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "almost daily",
     `2` = "at least once a week",
     `3` = "few times a month",
@@ -50,7 +73,7 @@ standardized_value_labels <- list(
     `6` = "never"
   ),
   mdexp2 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "almost daily",
     `2` = "at least once a week",
     `3` = "few times a month",
@@ -59,7 +82,7 @@ standardized_value_labels <- list(
     `6` = "never"
   ),
   mdexp3 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "almost daily",
     `2` = "at least once a week",
     `3` = "few times a month",
@@ -68,7 +91,7 @@ standardized_value_labels <- list(
     `6` = "never"
   ),
   mdexp4 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "almost daily",
     `2` = "at least once a week",
     `3` = "few times a month",
@@ -77,7 +100,7 @@ standardized_value_labels <- list(
     `6` = "never"
   ),
   mdexp5 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "almost daily",
     `2` = "at least once a week",
     `3` = "few times a month",
@@ -85,15 +108,60 @@ standardized_value_labels <- list(
     `5` = "less than once a year",
     `6` = "never"
   ),
-  mdexp61 = c(`-2` = "na, never experienced", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mdexp62 = c(`-2` = "na, never experienced", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mdexp63 = c(`-2` = "na, never experienced", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mdexp64 = c(`-2` = "na, never experienced", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mdexp65 = c(`-2` = "na, never experienced", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mdexp66 = c(`-2` = "na, never experienced", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mdexp67 = c(`-2` = "na, never experienced", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mdexp68 = c(`-2` = "na, never experienced", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mdexp69 = c(`-2` = "na, never experienced", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned")
+  mdexp61 = c(
+    `-2` = "na, never experienced",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  mdexp62 = c(
+    `-2` = "na, never experienced",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  mdexp63 = c(
+    `-2` = "na, never experienced",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  mdexp64 = c(
+    `-2` = "na, never experienced",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  mdexp65 = c(
+    `-2` = "na, never experienced",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  mdexp66 = c(
+    `-2` = "na, never experienced",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  mdexp67 = c(
+    `-2` = "na, never experienced",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  mdexp68 = c(
+    `-2` = "na, never experienced",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  mdexp69 = c(
+    `-2` = "na, never experienced",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  )
 )
 
 value_labels_list <- list(
@@ -118,9 +186,12 @@ var_types_vec <- c(
   mdexp69 = "categorical"
 )
 
-.lasa_fc_169 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "169", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "169", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "169", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "169", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_169 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

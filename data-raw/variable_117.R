@@ -16,29 +16,126 @@ harmonized_labels <- c(
   qsleepm = "going to sleep: minute"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "qsleep1",
+    "qsleep2",
+    "qsleep3",
+    "qsleep4"
+  ),
+  `C` = c(
+    "qsleep1",
+    "qsleep2",
+    "qsleep3",
+    "qsleep4"
+  ),
+  `D` = c(
+    "qsleep1",
+    "qsleep2",
+    "qsleep3",
+    "qsleep4"
+  ),
+  `E` = c(
+    "qsleep1",
+    "qsleep2",
+    "qsleep3",
+    "qsleep4"
+  ),
+  `2B` = c(
+    "qsleep1",
+    "qsleep2",
+    "qsleep3",
+    "qsleep4"
+  ),
+  `F` = c(
+    "qsleep1",
+    "qsleep2",
+    "qsleep3",
+    "qsleep4"
+  ),
+  `G` = c(
+    "qsleep1",
+    "qsleep2",
+    "qsleep3",
+    "qsleep4",
+    "qsleep5",
+    "qsleeph",
+    "qsleepm"
+  ),
+  `H` = c(
+    "qsleep1",
+    "qsleep2",
+    "qsleep3",
+    "qsleep4",
+    "qsleep5",
+    "qsleeph",
+    "qsleepm"
+  ),
+  `3B` = c(
+    "qsleep1",
+    "qsleep2",
+    "qsleep3",
+    "qsleep4",
+    "qsleep5",
+    "qsleeph",
+    "qsleepm"
+  ),
+  `I` = c(
+    "qsleep1",
+    "qsleep2",
+    "qsleep3",
+    "qsleep4",
+    "qsleep5",
+    "qsleeph",
+    "qsleepm"
+  ),
+  `J` = c(
+    "qsleep1",
+    "qsleep2",
+    "qsleep3",
+    "qsleep4",
+    "qsleep5",
+    "qsleeph",
+    "qsleepm"
+  ),
+  `K` = c(
+    "qsleep1",
+    "qsleep2",
+    "qsleep3",
+    "qsleep4",
+    "qsleep5",
+    "qsleeph",
+    "qsleepm"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
-    harmonized_labels[c("qsleep1", "qsleep2", "qsleep3", "qsleep4")],
+    harmonized_labels,
     qsleep4 = "Sleep 4: awake to early"
   ),
   Wave_C_labels = .replace_labels(
-    harmonized_labels[c("qsleep1", "qsleep2", "qsleep3", "qsleep4")],
+    harmonized_labels,
     qsleep4 = "Sleep 4: awake to early"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c("qsleep1", "qsleep2", "qsleep3", "qsleep4")],
+    harmonized_labels,
     qsleep4 = "Sleep 4: awake to early"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c("qsleep1", "qsleep2", "qsleep3", "qsleep4")],
+    harmonized_labels,
     qsleep4 = "Sleep 4: awake to early"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c("qsleep1", "qsleep2", "qsleep3", "qsleep4")],
+    harmonized_labels,
     qsleep4 = "Sleep 4: awake to early"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c("qsleep1", "qsleep2", "qsleep3", "qsleep4")],
+    harmonized_labels,
     qsleep4 = "Sleep 4: awake to early"
   ),
   Wave_G_labels = .replace_labels(
@@ -104,7 +201,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("qsleep1", "qsleep2", "qsleep3", "qsleep4")],
+    standardized_value_labels,
     qsleep1 = .replace_labels(
     standardized_value_labels$qsleep1,
     `-1` = "no answer"
@@ -123,7 +220,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("qsleep1", "qsleep2", "qsleep3", "qsleep4")],
+    standardized_value_labels,
     qsleep1 = .replace_labels(
     standardized_value_labels$qsleep1,
     `-1` = "no answer"
@@ -142,7 +239,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("qsleep1", "qsleep2", "qsleep3", "qsleep4")],
+    standardized_value_labels,
     qsleep1 = .replace_labels(
     standardized_value_labels$qsleep1,
     `-1` = "no answer"
@@ -161,7 +258,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("qsleep1", "qsleep2", "qsleep3", "qsleep4")],
+    standardized_value_labels,
     qsleep1 = .replace_labels(
     standardized_value_labels$qsleep1,
     `-1` = "no answer"
@@ -180,7 +277,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("qsleep1", "qsleep2", "qsleep3", "qsleep4")],
+    standardized_value_labels,
     qsleep1 = .replace_labels(
     standardized_value_labels$qsleep1,
     `-1` = "no answer"
@@ -199,7 +296,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("qsleep1", "qsleep2", "qsleep3", "qsleep4")],
+    standardized_value_labels,
     qsleep1 = .replace_labels(
     standardized_value_labels$qsleep1,
     `-1` = "no answer"
@@ -218,7 +315,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("qsleep1", "qsleep2", "qsleep3", "qsleep4", "qsleep5")],
+    standardized_value_labels,
     qsleep1 = .replace_labels(
     standardized_value_labels$qsleep1,
     `-1` = "no answer"
@@ -365,7 +462,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c("qsleep1", "qsleep2", "qsleep3", "qsleep4", "qsleep5", "qsleeph")],
+    standardized_value_labels,
     qsleep1 = .replace_labels(
     standardized_value_labels$qsleep1,
     `-1` = "no answer"
@@ -404,9 +501,16 @@ var_types_vec <- c(
   qsleepm = "numeric"
 )
 
-.lasa_fc_117 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "117", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "117", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "117", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "117", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["qsleeph"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["qsleepm"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["qsleepm"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+
+.lasa_fc_117 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

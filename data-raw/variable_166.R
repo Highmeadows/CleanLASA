@@ -39,9 +39,12 @@ harmonized_labels <- c(
   mdsfwp_5 = "Digit Span forwards particularity: other"
 )
 
-variable_labels_list <- list(
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `H` = c(
     "mDSb01",
     "mDSb02",
     "mDSb03",
@@ -62,59 +65,98 @@ variable_labels_list <- list(
     "mDSfsp",
     "mDSfw",
     "mDStot"
-  )],
+  ),
+  `I` = c(
+    "mDSb01",
+    "mDSb02",
+    "mDSb03",
+    "mDSb04",
+    "mDSb05",
+    "mDSb06",
+    "mDSb07",
+    "mDSbsp",
+    "mDSbw",
+    "mDSf01",
+    "mDSf02",
+    "mDSf03",
+    "mDSf04",
+    "mDSf05",
+    "mDSf06",
+    "mDSf07",
+    "mDSf08",
+    "mDSfsp",
+    "mDSfw",
+    "mDStot"
+  ),
+  `J` = c(
+    "mDSb01",
+    "mDSb02",
+    "mDSb03",
+    "mDSb04",
+    "mDSb05",
+    "mDSb06",
+    "mDSb07",
+    "mDSbsp",
+    "mDSbw",
+    "mDSf01",
+    "mDSf02",
+    "mDSf03",
+    "mDSf04",
+    "mDSf05",
+    "mDSf06",
+    "mDSf07",
+    "mDSf08",
+    "mDSfsp",
+    "mDSfw",
+    "mDStot"
+  ),
+  `K` = c(
+    "mDSb01",
+    "mDSb02",
+    "mDSb03",
+    "mDSb04",
+    "mDSb05",
+    "mDSb06",
+    "mDSb07",
+    "mDSbsp",
+    "mDSbw",
+    "mDSf01",
+    "mDSf02",
+    "mDSf03",
+    "mDSf04",
+    "mDSf05",
+    "mDSf06",
+    "mDSf07",
+    "mDSf08",
+    "mDSfsp",
+    "mDSfw",
+    "mDStot",
+    "mdsbwp_1",
+    "mdsbwp_2",
+    "mdsbwp_3",
+    "mdsbwp_4",
+    "mdsbwp_5",
+    "mdsfwp_1",
+    "mdsfwp_2",
+    "mdsfwp_3",
+    "mdsfwp_4",
+    "mdsfwp_5"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
     mDSbsp = "WAIS Digit Span: Span backwards",
     mDSfsp = "WAIS Digit Span: Span forwards"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
-    "mDSb01",
-    "mDSb02",
-    "mDSb03",
-    "mDSb04",
-    "mDSb05",
-    "mDSb06",
-    "mDSb07",
-    "mDSbsp",
-    "mDSbw",
-    "mDSf01",
-    "mDSf02",
-    "mDSf03",
-    "mDSf04",
-    "mDSf05",
-    "mDSf06",
-    "mDSf07",
-    "mDSf08",
-    "mDSfsp",
-    "mDSfw",
-    "mDStot"
-  )],
+    harmonized_labels,
     mDSbsp = "WAIS Digit Span: Span backwards",
     mDSfsp = "WAIS Digit Span: Span forwards"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
-    "mDSb01",
-    "mDSb02",
-    "mDSb03",
-    "mDSb04",
-    "mDSb05",
-    "mDSb06",
-    "mDSb07",
-    "mDSbsp",
-    "mDSbw",
-    "mDSf01",
-    "mDSf02",
-    "mDSf03",
-    "mDSf04",
-    "mDSf05",
-    "mDSf06",
-    "mDSf07",
-    "mDSf08",
-    "mDSfsp",
-    "mDSfw",
-    "mDStot"
-  )],
+    harmonized_labels,
     mDSbsp = "WAIS Digit Span: Span backwards",
     mDSfsp = "WAIS Digit Span: Span forwards"
   ),
@@ -136,6 +178,14 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "1 correct",
+  `2` = "2 correct"
+)
+
 standardized_value_labels <- list(
   mDSb01 = c(
     `-9` = "test not done",
@@ -143,8 +193,7 @@ standardized_value_labels <- list(
     `-2` = "not asked, previous answers incorrect",
     `-1` = "no item response",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   mDSb02 = c(
     `-9` = "test not done",
@@ -152,8 +201,7 @@ standardized_value_labels <- list(
     `-2` = "not asked, previous answers incorrect",
     `-1` = "no item response",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   mDSb03 = c(
     `-9` = "test not done",
@@ -161,8 +209,7 @@ standardized_value_labels <- list(
     `-2` = "not asked, previous answers incorrect",
     `-1` = "no item response",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   mDSb04 = c(
     `-9` = "test not done",
@@ -170,8 +217,7 @@ standardized_value_labels <- list(
     `-2` = "not asked, previous answers incorrect",
     `-1` = "no item response",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   mDSb05 = c(
     `-9` = "test not done",
@@ -179,8 +225,7 @@ standardized_value_labels <- list(
     `-2` = "not asked, previous answers incorrect",
     `-1` = "no item response",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   mDSb06 = c(
     `-9` = "test not done",
@@ -188,8 +233,7 @@ standardized_value_labels <- list(
     `-2` = "not asked, previous answers incorrect",
     `-1` = "no item response",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   mDSb07 = c(
     `-9` = "test not done",
@@ -197,8 +241,7 @@ standardized_value_labels <- list(
     `-2` = "not asked, previous answers incorrect",
     `-1` = "no item response",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   mDSbsp = c(`-9` = "test not done", `-3` = "test not done", `-1` = "no score, too many missings"),
   mDSbw = c(`-9` = "test not done", `-3` = "test not done", `-1` = "no score, too many missings"),
@@ -208,8 +251,7 @@ standardized_value_labels <- list(
     `-2` = "not asked, previous answers incorrect",
     `-1` = "no item response",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   mDSf02 = c(
     `-9` = "test not done",
@@ -217,8 +259,7 @@ standardized_value_labels <- list(
     `-2` = "not asked, previous answers incorrect",
     `-1` = "no item response",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   mDSf03 = c(
     `-9` = "test not done",
@@ -226,8 +267,7 @@ standardized_value_labels <- list(
     `-2` = "not asked, previous answers incorrect",
     `-1` = "no item response",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   mDSf04 = c(
     `-9` = "test not done",
@@ -235,8 +275,7 @@ standardized_value_labels <- list(
     `-2` = "not asked, previous answers incorrect",
     `-1` = "no item response",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   mDSf05 = c(
     `-9` = "test not done",
@@ -244,8 +283,7 @@ standardized_value_labels <- list(
     `-2` = "not asked, previous answers incorrect",
     `-1` = "no item response",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   mDSf06 = c(
     `-9` = "test not done",
@@ -253,8 +291,7 @@ standardized_value_labels <- list(
     `-2` = "not asked, previous answers incorrect",
     `-1` = "no item response",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   mDSf07 = c(
     `-9` = "test not done",
@@ -262,8 +299,7 @@ standardized_value_labels <- list(
     `-2` = "not asked, previous answers incorrect",
     `-1` = "no item response",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   mDSf08 = c(
     `-9` = "test not done",
@@ -271,8 +307,7 @@ standardized_value_labels <- list(
     `-2` = "not asked, previous answers incorrect",
     `-1` = "no item response",
     `0` = "0 correct",
-    `1` = "1 correct",
-    `2` = "2 correct"
+    default_answer_labels[c("1", "2")]
   ),
   mDSfsp = c(`-9` = "test not done", `-3` = "test not done", `-1` = "no score, too many missings"),
   mDSfw = c(`-9` = "test not done", `-3` = "test not done", `-1` = "no score, too many missings"),
@@ -296,28 +331,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mDSb01",
-    "mDSb02",
-    "mDSb03",
-    "mDSb04",
-    "mDSb05",
-    "mDSb06",
-    "mDSb07",
-    "mDSbsp",
-    "mDSbw",
-    "mDSf01",
-    "mDSf02",
-    "mDSf03",
-    "mDSf04",
-    "mDSf05",
-    "mDSf06",
-    "mDSf07",
-    "mDSf08",
-    "mDSfsp",
-    "mDSfw",
-    "mDStot"
-  )],
+    standardized_value_labels,
     mDSb01 = c(
     `-3` = "test not done",
     `-2` = "not asked, previous answers incorrect",
@@ -445,28 +459,7 @@ value_labels_list <- list(
     mDStot = c(`-3` = "test not done", `-2` = "DS backwards not done", `-1` = "no score, too many missings")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mDSb01",
-    "mDSb02",
-    "mDSb03",
-    "mDSb04",
-    "mDSb05",
-    "mDSb06",
-    "mDSb07",
-    "mDSbsp",
-    "mDSbw",
-    "mDSf01",
-    "mDSf02",
-    "mDSf03",
-    "mDSf04",
-    "mDSf05",
-    "mDSf06",
-    "mDSf07",
-    "mDSf08",
-    "mDSfsp",
-    "mDSfw",
-    "mDStot"
-  )],
+    standardized_value_labels,
     mDSb01 = c(
     `-3` = "test not done",
     `-2` = "not asked, previous answers incorrect",
@@ -579,28 +572,7 @@ value_labels_list <- list(
     mDStot = c(`-3` = "test not done")
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mDSb01",
-    "mDSb02",
-    "mDSb03",
-    "mDSb04",
-    "mDSb05",
-    "mDSb06",
-    "mDSb07",
-    "mDSbsp",
-    "mDSbw",
-    "mDSf01",
-    "mDSf02",
-    "mDSf03",
-    "mDSf04",
-    "mDSf05",
-    "mDSf06",
-    "mDSf07",
-    "mDSf08",
-    "mDSfsp",
-    "mDSfw",
-    "mDStot"
-  )],
+    standardized_value_labels,
     mDSb01 = c(
     `-3` = "test not done",
     `-2` = "not asked, previous answers incorrect",
@@ -916,9 +888,12 @@ var_types_vec <- c(
   mdsfwp_5 = "categorical"
 )
 
-.lasa_fc_166 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "166", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "166", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "166", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "166", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_166 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

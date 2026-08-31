@@ -31,8 +31,12 @@ harmonized_labels <- c(
   mvasrst = "Visual Acuity Score, number of letters read correctly (right eye pinhole)"
 )
 
-variable_labels_list <- list(
-  Wave_E_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `E` = c(
     "macl",
     "maclst",
     "macr",
@@ -43,8 +47,8 @@ variable_labels_list <- list(
     "mvaslst",
     "mvasr",
     "mvasrst"
-  )],
-  Wave_F_labels = harmonized_labels[c(
+  ),
+  `F` = c(
     "mrm191",
     "mrm191_1",
     "mrm191_10",
@@ -62,8 +66,8 @@ variable_labels_list <- list(
     "mvaslst",
     "mvasr",
     "mvasrst"
-  )],
-  Wave_G_labels = harmonized_labels[c(
+  ),
+  `G` = c(
     "mrm191",
     "mrm191_1",
     "mrm191_10",
@@ -81,8 +85,8 @@ variable_labels_list <- list(
     "mvaslst",
     "mvasr",
     "mvasrst"
-  )],
-  Wave_H_labels = harmonized_labels[c(
+  ),
+  `H` = c(
     "macl",
     "maclst",
     "macr",
@@ -103,8 +107,8 @@ variable_labels_list <- list(
     "mvaslst",
     "mvasr",
     "mvasrst"
-  )],
-  Wave_3B_labels = harmonized_labels[c(
+  ),
+  `3B` = c(
     "macl",
     "maclst",
     "macr",
@@ -125,8 +129,23 @@ variable_labels_list <- list(
     "mvaslst",
     "mvasr",
     "mvasrst"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_E_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_3B_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
+)
+
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "mentioned"
 )
 
 standardized_value_labels <- list(
@@ -145,16 +164,46 @@ standardized_value_labels <- list(
     `6` = "equipment failure",
     `7` = "refused"
   ),
-  mrm191_1 = c(`0` = "not mentioned", `1` = "mentioned"),
-  mrm191_10 = c(`0` = "not mentioned", `1` = "mentioned"),
-  mrm191_2 = c(`0` = "not mentioned", `1` = "mentioned"),
-  mrm191_3 = c(`0` = "not mentioned", `1` = "mentioned"),
-  mrm191_4 = c(`0` = "not mentioned", `1` = "mentioned"),
-  mrm191_5 = c(`0` = "not mentioned", `1` = "mentioned"),
-  mrm191_6 = c(`0` = "not mentioned", `1` = "mentioned"),
-  mrm191_7 = c(`0` = "not mentioned", `1` = "mentioned"),
-  mrm191_8 = c(`0` = "not mentioned", `1` = "mentioned"),
-  mrm191_9 = c(`0` = "not mentioned", `1` = "mentioned"),
+  mrm191_1 = c(
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mrm191_10 = c(
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mrm191_2 = c(
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mrm191_3 = c(
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mrm191_4 = c(
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mrm191_5 = c(
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mrm191_6 = c(
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mrm191_7 = c(
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mrm191_8 = c(
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mrm191_9 = c(
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mrm191_rem = stats::setNames(character(0), character(0)),
   mrm191s1 = c(
     `-2` = "no valid data",
@@ -176,7 +225,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("macl", "maclst", "macr", "macrst", "mrm191", "mvasl", "mvaslst", "mvasr", "mvasrst")],
+    standardized_value_labels,
     macl = .replace_labels(
     standardized_value_labels$macl,
     `-3` = "no data"
@@ -215,25 +264,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mrm191",
-    "mrm191_1",
-    "mrm191_10",
-    "mrm191_2",
-    "mrm191_3",
-    "mrm191_4",
-    "mrm191_5",
-    "mrm191_6",
-    "mrm191_7",
-    "mrm191_8",
-    "mrm191_9",
-    "mrm191s1",
-    "mrm191s2",
-    "mvasl",
-    "mvaslst",
-    "mvasr",
-    "mvasrst"
-  )],
+    standardized_value_labels,
     mrm191 = .replace_labels(
     standardized_value_labels$mrm191,
     `-3` = "no data"
@@ -264,25 +295,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mrm191",
-    "mrm191_1",
-    "mrm191_10",
-    "mrm191_2",
-    "mrm191_3",
-    "mrm191_4",
-    "mrm191_5",
-    "mrm191_6",
-    "mrm191_7",
-    "mrm191_8",
-    "mrm191_9",
-    "mrm191s1",
-    "mrm191s2",
-    "mvasl",
-    "mvaslst",
-    "mvasr",
-    "mvasrst"
-  )],
+    standardized_value_labels,
     mrm191 = .replace_labels(
     standardized_value_labels$mrm191,
     `-3` = "no data"
@@ -313,28 +326,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "macl",
-    "maclst",
-    "macr",
-    "macrst",
-    "mrm191_1",
-    "mrm191_10",
-    "mrm191_2",
-    "mrm191_3",
-    "mrm191_4",
-    "mrm191_5",
-    "mrm191_6",
-    "mrm191_7",
-    "mrm191_8",
-    "mrm191_9",
-    "mrm191s1",
-    "mrm191s2",
-    "mvasl",
-    "mvaslst",
-    "mvasr",
-    "mvasrst"
-  )],
+    standardized_value_labels,
     macl = .replace_labels(
     standardized_value_labels$macl,
     `-3` = "no data"
@@ -377,28 +369,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "macl",
-    "maclst",
-    "macr",
-    "macrst",
-    "mrm191_1",
-    "mrm191_10",
-    "mrm191_2",
-    "mrm191_3",
-    "mrm191_4",
-    "mrm191_5",
-    "mrm191_6",
-    "mrm191_7",
-    "mrm191_8",
-    "mrm191_9",
-    "mrm191s1",
-    "mrm191s2",
-    "mvasl",
-    "mvaslst",
-    "mvasr",
-    "mvasrst"
-  )],
+    standardized_value_labels,
     macl = .replace_labels(
     standardized_value_labels$macl,
     `-3` = "no data"
@@ -468,9 +439,14 @@ var_types_vec <- c(
   mvasrst = "numeric"
 )
 
-.lasa_fc_191 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "191", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "191", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "191", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "191", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["mrm191_rem"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+
+.lasa_fc_191 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

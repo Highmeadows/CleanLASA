@@ -16,9 +16,27 @@ harmonized_labels <- c(
   selg868 = "Selection g868: APO E4 allele present"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
+    "msap"
+  ),
+  `G` = c(
+    "mab1_40",
+    "mab1_42",
+    "mgfap",
+    "mnflight",
+    "mp_tau181",
+    "selg868"
+  )
+)
+
 variable_labels_list <- list(
-  Wave_C_labels = harmonized_labels[c("msap")],
-  Wave_G_labels = harmonized_labels[c("mab1_40", "mab1_42", "mgfap", "mnflight", "mp_tau181", "selg868")],
+  Wave_C_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
@@ -33,8 +51,8 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_C_labels = standardized_value_labels[character(0)],
-  Wave_G_labels = standardized_value_labels[c("selg868")],
+  Wave_C_labels = standardized_value_labels,
+  Wave_G_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -48,10 +66,20 @@ var_types_vec <- c(
   selg868 = "categorical"
 )
 
-.lasa_fc_868 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "868", waves = .lasa_wave_rows()) |>
     .override_label(wave = "G", variable = "selg868", override_value = "selg868"),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "868", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "868", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "868", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["msap"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["mab1_40"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mab1_42"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mgfap"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mnflight"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mp_tau181"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+
+.lasa_fc_868 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

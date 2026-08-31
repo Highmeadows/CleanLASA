@@ -1071,9 +1071,12 @@ harmonized_labels <- c(
   suffoth = "insufficient help problem: other"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "dhelp01",
     "dhelp02",
     "dhelp03",
@@ -1183,11 +1186,8 @@ variable_labels_list <- list(
     "rsick27",
     "rsick28",
     "suffic"
-  )],
-    health4 = "Past month: days limited in activities",
-    rhelp06 = "Help R: (neighbours/friends/acquaintances"
   ),
-  Wave_C_labels = harmonized_labels[c(
+  `C` = c(
     "dhelp01",
     "dhelp02",
     "dhelp03",
@@ -1296,8 +1296,8 @@ variable_labels_list <- list(
     "rsick27",
     "rsick28",
     "suffic"
-  )],
-  Wave_D_labels = harmonized_labels[c(
+  ),
+  `D` = c(
     "dhelp01",
     "dhelp02",
     "dhelp03",
@@ -1406,8 +1406,8 @@ variable_labels_list <- list(
     "rsick27",
     "rsick28",
     "suffic"
-  )],
-  Wave_E_labels = harmonized_labels[c(
+  ),
+  `E` = c(
     "dhelp01",
     "dhelp02",
     "dhelp03",
@@ -1488,9 +1488,8 @@ variable_labels_list <- list(
     "rhour11",
     "rhour12",
     "suffic"
-  )],
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
+  ),
+  `2B` = c(
     "dhelp01",
     "dhelp02",
     "dhelp03",
@@ -1600,10 +1599,8 @@ variable_labels_list <- list(
     "rsick27",
     "rsick28",
     "suffic"
-  )],
-    hmunici = "(nb.: not in D) Sufficient help facilities in municipality"
   ),
-  Wave_F_labels = harmonized_labels[c(
+  `F` = c(
     "dhelp01",
     "dhelp02",
     "dhelp03",
@@ -1718,9 +1715,8 @@ variable_labels_list <- list(
     "rsick27",
     "rsick28",
     "suffic"
-  )],
-  Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
+  ),
+  `G` = c(
     "dhelp01",
     "dhelp02",
     "dhelp03",
@@ -1833,13 +1829,8 @@ variable_labels_list <- list(
     "rsick27",
     "rsick28",
     "suffic"
-  )],
-    phlp01b = "Helpp: burden for respondent",
-    phlp01m = "Helpp: respondent, start month",
-    phlp01y = "Helpp: respondent, start year"
   ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+  `H` = c(
     "ahelp01",
     "ahelp02",
     "ahelp03",
@@ -2795,85 +2786,8 @@ variable_labels_list <- list(
     "suffic3",
     "suffic4",
     "suffoth"
-  )],
-    ahelp01 = "administrative help R: partner",
-    ahelp02 = "administrative help R: resident child",
-    ahelp03 = "administrative help R: resident other",
-    ahelp04 = "administrative help R: non-resident child",
-    ahelp05 = "administrative help R: non-resident other family",
-    ahelp07 = "administrative help R: volunteers",
-    ahelp08 = "administrative help R: district nurse",
-    ahelp09 = "administrative help R: elderly/home/alpha",
-    ahelp10 = "administrative help R: private",
-    ahelp11 = "administrative help R: personnel home/hospital",
-    ahelp12 = "administrative help R: other",
-    ahour02 = "Hours administrative help R: resident child",
-    ahour04 = "Hours administrative help R: non-resident child",
-    ahour10 = "Hours administrative help R: private help",
-    ahourtot = "Hours administrative help R: total",
-    dhelp01 = "domestic help R: partner",
-    dhelp02 = "domestic help R: resident child",
-    dhelp03 = "domestic help R: resident other",
-    dhelp04 = "domestic help R: non-resident child",
-    dhelp05 = "domestic help R: non-resident other family",
-    dhelp06 = "domestic help R: neighbours/friends/acquaintances",
-    dhelp07 = "domestic help R: volunteers",
-    dhelp08 = "domestic help R: district nurse",
-    dhelp09 = "domestic help R: elderly/home/alpha",
-    dhelp10 = "domestic help R: private",
-    dhelp11 = "domestic help R: personnel home/hospital",
-    dhelp12 = "domestic help R: other",
-    dhelpyn = "Help R with domestic tasks Y/N",
-    dhour01 = "Hours domestic help R: partner",
-    dhour02 = "Hours domestic help R: resident child",
-    dhour03 = "Hours domestic help R: resident other",
-    dhour04 = "Hours domestic help R: non-resident child",
-    dhour05 = "Hours domestic help R: non-resident other family",
-    dhour06 = "Hours domestic help R: neighbours/friends/acquaintances",
-    dhour07 = "Hours domestic help R: volunteers",
-    dhour08 = "Hours domestic help R: district nurse",
-    dhour09 = "Hours domestic help R: elderly/home/alpha",
-    dhour10 = "Hours domestic help R: private help",
-    dhour11 = "Hours domestic help R: personnel home/hospital",
-    dhour12 = "Hours domestic help R: other",
-    dhourtot = "Hours domestic help R: total",
-    ghelpyn = "Help R with guidance Y/N",
-    ghourtot = "Hours guidance help R: total",
-    nhour10 = "Hours nursing help R: private help",
-    nhourtot = "Hours nursing help R: total",
-    phelp01 = "Help P: respondent",
-    phelp02 = "Help P: resident child",
-    phelp03 = "Help P: resident other",
-    phelp04 = "Help P: non-resident child",
-    phelp05 = "Help P: non-resident other family",
-    phelp06 = "Help P: neighbours/friends/acquaintances",
-    phelp07 = "Help P: volunteers",
-    phelp08 = "Help P: district nurse",
-    phelp09 = "Help P: elderly/home/alpha",
-    phelp10 = "Help P: private",
-    phelp11 = "Help P: personnel home/hospital",
-    phelp12 = "Help P: other",
-    phour01 = "Hours help P: respondent",
-    phour02 = "Hours help P: resident other",
-    phour03 = "Hours help P: resident other",
-    phour04 = "Hours help P: non-resident child",
-    phour05 = "Hours help P: non-resident other family",
-    phour06 = "Hours help P: neighbours/friends/acquaintances",
-    phour07 = "Hours help P: volunteers",
-    phour08 = "Hours help P: district nurse",
-    phour09 = "Hours help P: elderly/home/alpha",
-    phour10 = "Hours help P: private",
-    phour11 = "Hours help P: personnel home/hospital",
-    phour12 = "Hours help P: other",
-    phourtot = "Hours help P: total",
-    rhelp09 = "Help R: elderly/home/alpha",
-    rhour09 = "Hours help R: elderly/home/alpha",
-    rhourtot = "Hours help R: total",
-    rsick10 = "Sick: pers care by elderly/home/alpha",
-    rsick24 = "Sick: domestic care by elderly/home/alpha"
   ),
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
+  `3B` = c(
     "dhelp01",
     "dhelp02",
     "dhelp03",
@@ -3036,62 +2950,8 @@ variable_labels_list <- list(
     "suffic3",
     "suffic4",
     "suffoth"
-  )],
-    dhelp01 = "domestic help R: partner",
-    dhelp02 = "domestic help R: resident child",
-    dhelp03 = "domestic help R: resident other",
-    dhelp04 = "domestic help R: non-resident child",
-    dhelp05 = "domestic help R: non-resident other family",
-    dhelp06 = "domestic help R: neighbours/friends/acquaintances",
-    dhelp07 = "domestic help R: volunteers",
-    dhelp08 = "domestic help R: district nurse",
-    dhelp09 = "domestic help R: elderly/home/alpha help",
-    dhelp10 = "domestic help R: private",
-    dhelp11 = "domestic help R: personnel home/hospital",
-    dhelp12 = "domestic help R: other",
-    dhelpyn = "Help R with domestic tasks Y/N",
-    dhour01 = "Hours domestic help R: partner",
-    dhour02 = "Hours domestic help R: resident child",
-    dhour03 = "Hours domestic help R: resident other",
-    dhour04 = "Hours domestic help R: non-resident child",
-    dhour05 = "Hours domestic help R: non-resident other family",
-    dhour06 = "Hours domestic help R: neighbours/friends/acquaintances",
-    dhour07 = "Hours domestic help R: volunteers",
-    dhour08 = "Hours domestic help R: district nurse",
-    dhour09 = "Hours domestic help R: elderly/home/alpha help",
-    dhour10 = "Hours domestic help R: private help",
-    dhour11 = "Hours domestic help R: personnel home/hospital",
-    dhour12 = "Hours domestic help R: other",
-    nhelp09 = "nursing help R: elderly/home/alpha help",
-    nhour09 = "Hours nursing help R: elderly/home/alpha help",
-    nhour10 = "Hours nursing help R: private help",
-    phelp01 = "Help P: respondent",
-    phelp02 = "Help P: resident child",
-    phelp03 = "Help P: resident other",
-    phelp04 = "Help P: non-resident child",
-    phelp05 = "Help P: non-resident other family",
-    phelp06 = "Help P: neighbours/friends/acquaintances",
-    phelp07 = "Help P: volunteers",
-    phelp08 = "Help P: district nurse",
-    phelp09 = "Help P: elderly/home/alpha help",
-    phelp10 = "Help P: private",
-    phelp11 = "Help P: personnel home/hospital",
-    phelp12 = "Help P: other",
-    phour01 = "Hours help P: respondent",
-    phour02 = "Hours help P: resident other",
-    phour03 = "Hours help P: resident other",
-    phour04 = "Hours help P: non-resident child",
-    phour05 = "Hours help P: non-resident other family",
-    phour06 = "Hours help P: neighbours/friends/acquaintances",
-    phour07 = "Hours help P: volunteers",
-    phour08 = "Hours help P: district nurse",
-    phour09 = "Hours help P: elderly/home/alpha help",
-    phour10 = "Hours help P: private",
-    phour11 = "Hours help P: personnel home/hospital",
-    phour12 = "Hours help P: other"
   ),
-  Wave_MB_labels = .replace_labels(
-    harmonized_labels[c(
+  `MB` = c(
     "dhelp01",
     "dhelp02",
     "dhelp03",
@@ -3218,64 +3078,8 @@ variable_labels_list <- list(
     "suffic2",
     "suffic3",
     "suffic4"
-  )],
-    dhelp01 = "domestic help R: partner",
-    dhelp02 = "domestic help R: resident child",
-    dhelp03 = "domestic help R: resident other",
-    dhelp04 = "domestic help R: non-resident child",
-    dhelp05 = "domestic help R: non-resident other family",
-    dhelp06 = "domestic help R: neighbrs/frnds/acquaint.",
-    dhelp07 = "domestic help R: volunteers",
-    dhelp08 = "domestic help R: district nurse",
-    dhelp09 = "domestic help R: elderly/home/alpha help",
-    dhelp10 = "domestic help R: private",
-    dhelp11 = "domestic help R: personnel home/hospital",
-    dhelp12 = "domestic help R: other",
-    dhelpyn = "Help R with domestic tasks Y/N",
-    dhour01 = "Hours domestic help R: partner",
-    dhour02 = "Hours domestic help R: resident child",
-    dhour03 = "Hours domestic help R: resident other",
-    dhour04 = "Hours domestic help R: non-resident child",
-    dhour05 = "Hours domestic help R: non-resident other family",
-    dhour06 = "Hours domestic help R: neighbrs/frnds/acquaint.",
-    dhour07 = "Hours domestic help R: volunteers",
-    dhour08 = "Hours domestic help R: district nurse",
-    dhour09 = "Hours domestic help R: elderly/home/alpha",
-    dhour10 = "Hours domestic help R: private",
-    dhour11 = "Hours domestic help R: personnel home/hospital",
-    dhour12 = "Hours domestic help R: other",
-    nhelp06 = "nursing help R: neighbrs/frnds/acquaint.",
-    nhour06 = "Hours nursing help R: neighbrs/frnds/acquaint.",
-    phelp01 = "Help P: respondent",
-    phelp02 = "Help P: resident child",
-    phelp03 = "Help P: resident other",
-    phelp04 = "Help P: non-resident child",
-    phelp05 = "Help P: non-resident other family",
-    phelp06 = "Help P: neighbours/friends/acquaintances",
-    phelp07 = "Help P: volunteers",
-    phelp08 = "Help P: district nurse",
-    phelp09 = "Help P: elderly/home/alpha",
-    phelp10 = "Help P: private",
-    phelp11 = "Help P: personnel home/hospital",
-    phelp12 = "Help P: other",
-    phour01 = "Hours help P: respondent",
-    phour02 = "Hours help P: resident other",
-    phour03 = "Hours help P: resident other",
-    phour04 = "Hours help P: non-resident child",
-    phour05 = "Hours help P: non-resident other family",
-    phour06 = "Hours help P: neighbours/friends/acquaintances",
-    phour07 = "Hours help P: volunteers",
-    phour08 = "Hours help P: district nurse",
-    phour09 = "Hours help P: elderly/home/alpha",
-    phour10 = "Hours help P: private",
-    phour11 = "Hours help P: personnel home/hospital",
-    phour12 = "Hours help P: other",
-    rhelp09 = "Help R: elderly/home/alpha",
-    rhour09 = "Hours help R: elderly/home/alpha",
-    suff406 = "preferably help from: neighbrs/frnds/acquaint."
   ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
+  `I` = c(
     "ahelp01",
     "ahelp02",
     "ahelp03",
@@ -3497,7 +3301,725 @@ variable_labels_list <- list(
     "rsick28a",
     "rsick28b",
     "suffic"
-  )],
+  ),
+  `J` = c(
+    "ahelp01",
+    "ahelp02a",
+    "ahelp02b",
+    "ahelp03",
+    "ahelp04a",
+    "ahelp04b",
+    "ahelp05",
+    "ahelp06a",
+    "ahelp06b",
+    "ahelp07",
+    "ahelp08",
+    "ahelp09",
+    "ahelp10",
+    "ahelp11",
+    "ahelp12",
+    "ahelpyn",
+    "ahour01",
+    "ahour02a",
+    "ahour02b",
+    "ahour03",
+    "ahour04a",
+    "ahour04b",
+    "ahour05",
+    "ahour06a",
+    "ahour06b",
+    "ahour07",
+    "ahour08",
+    "ahour09",
+    "ahour10",
+    "ahour11",
+    "ahour12",
+    "ahourtot",
+    "dhelp01",
+    "dhelp02a",
+    "dhelp02b",
+    "dhelp03",
+    "dhelp04a",
+    "dhelp04b",
+    "dhelp05",
+    "dhelp06a",
+    "dhelp06b",
+    "dhelp07",
+    "dhelp08",
+    "dhelp09",
+    "dhelp10",
+    "dhelp11",
+    "dhelp12",
+    "dhelpyn",
+    "dhour01",
+    "dhour02a",
+    "dhour02b",
+    "dhour03",
+    "dhour04a",
+    "dhour04b",
+    "dhour05",
+    "dhour06a",
+    "dhour06b",
+    "dhour07",
+    "dhour08",
+    "dhour09",
+    "dhour10",
+    "dhour11",
+    "dhour12",
+    "dhourtot",
+    "ghelp01",
+    "ghelp02a",
+    "ghelp02b",
+    "ghelp03",
+    "ghelp04a",
+    "ghelp04b",
+    "ghelp05",
+    "ghelp06a",
+    "ghelp06b",
+    "ghelp07",
+    "ghelp08",
+    "ghelp09",
+    "ghelp10",
+    "ghelp11",
+    "ghelp12",
+    "ghelpyn",
+    "ghour01",
+    "ghour02a",
+    "ghour02b",
+    "ghour03",
+    "ghour04a",
+    "ghour04b",
+    "ghour05",
+    "ghour06a",
+    "ghour06b",
+    "ghour07",
+    "ghour08",
+    "ghour09",
+    "ghour10",
+    "ghour11",
+    "ghour12",
+    "ghourtot",
+    "health1",
+    "health2",
+    "health3",
+    "health4",
+    "helpr",
+    "hhnic",
+    "hhnprof",
+    "hhnvol",
+    "hn1",
+    "hn2",
+    "hn3",
+    "hn4",
+    "hn5",
+    "hn6",
+    "nhelp01",
+    "nhelp02a",
+    "nhelp02b",
+    "nhelp03",
+    "nhelp04a",
+    "nhelp04b",
+    "nhelp05",
+    "nhelp06a",
+    "nhelp06b",
+    "nhelp07",
+    "nhelp08",
+    "nhelp09",
+    "nhelp10",
+    "nhelp11",
+    "nhelp12",
+    "nhelpyn",
+    "nhour01",
+    "nhour02a",
+    "nhour02b",
+    "nhour03",
+    "nhour04a",
+    "nhour04b",
+    "nhour05",
+    "nhour06a",
+    "nhour06b",
+    "nhour07",
+    "nhour08",
+    "nhour09",
+    "nhour10",
+    "nhour11",
+    "nhour12",
+    "nhourtot",
+    "phelp01",
+    "phelp02a",
+    "phelp02b",
+    "phelp03",
+    "phelp04a",
+    "phelp04b",
+    "phelp05",
+    "phelp06a",
+    "phelp06b",
+    "phelp07",
+    "phelp08",
+    "phelp09",
+    "phelp10",
+    "phelp11",
+    "phelp12",
+    "phelpyn",
+    "phlp01b",
+    "phlp01m",
+    "phlp01y",
+    "phour01",
+    "phour02a",
+    "phour02b",
+    "phour03",
+    "phour04a",
+    "phour04b",
+    "phour05",
+    "phour06a",
+    "phour06b",
+    "phour07",
+    "phour08",
+    "phour09",
+    "phour10",
+    "phour11",
+    "phour12",
+    "phourtot",
+    "regie1",
+    "regie2",
+    "regie3",
+    "regie4",
+    "rhelp01",
+    "rhelp02a",
+    "rhelp02b",
+    "rhelp03",
+    "rhelp04a",
+    "rhelp04b",
+    "rhelp05",
+    "rhelp07",
+    "rhelp08",
+    "rhelp09",
+    "rhelp10",
+    "rhelp11",
+    "rhelp12",
+    "rhelp6a",
+    "rhelp6b",
+    "rhelpyn",
+    "rhour01",
+    "rhour02a",
+    "rhour02b",
+    "rhour03",
+    "rhour04a",
+    "rhour04b",
+    "rhour05",
+    "rhour06a",
+    "rhour06b",
+    "rhour07",
+    "rhour08",
+    "rhour09",
+    "rhour10",
+    "rhour11",
+    "rhour12",
+    "rhourtot",
+    "rsick01",
+    "rsick02",
+    "rsick03a",
+    "rsick03b",
+    "rsick04",
+    "rsick05a",
+    "rsick05b",
+    "rsick06",
+    "rsick07a",
+    "rsick07b",
+    "rsick08",
+    "rsick09",
+    "rsick10",
+    "rsick11",
+    "rsick12",
+    "rsick13",
+    "rsick14a",
+    "rsick14b",
+    "rsick15",
+    "rsick16",
+    "rsick17a",
+    "rsick17b",
+    "rsick18",
+    "rsick19a",
+    "rsick19b",
+    "rsick20",
+    "rsick21a",
+    "rsick21b",
+    "rsick22",
+    "rsick23",
+    "rsick24",
+    "rsick25",
+    "rsick26",
+    "rsick27",
+    "rsick28a",
+    "rsick28b",
+    "suffic"
+  ),
+  `K` = c(
+    "ahelp01",
+    "ahelp02a",
+    "ahelp02b",
+    "ahelp03",
+    "ahelp04a",
+    "ahelp04b",
+    "ahelp05",
+    "ahelp06a",
+    "ahelp06b",
+    "ahelp07",
+    "ahelp08",
+    "ahelp09",
+    "ahelp10",
+    "ahelp11",
+    "ahelp12",
+    "ahelpyn",
+    "ahour01",
+    "ahour02a",
+    "ahour02b",
+    "ahour03",
+    "ahour04a",
+    "ahour04b",
+    "ahour05",
+    "ahour06a",
+    "ahour06b",
+    "ahour07",
+    "ahour08",
+    "ahour09",
+    "ahour10",
+    "ahour11",
+    "ahour12",
+    "ahourtot",
+    "dhelp01",
+    "dhelp02a",
+    "dhelp02b",
+    "dhelp03",
+    "dhelp04a",
+    "dhelp04b",
+    "dhelp05",
+    "dhelp06a",
+    "dhelp06b",
+    "dhelp07",
+    "dhelp08",
+    "dhelp09",
+    "dhelp10",
+    "dhelp11",
+    "dhelp12",
+    "dhelpyn",
+    "dhour01",
+    "dhour02a",
+    "dhour02b",
+    "dhour03",
+    "dhour04a",
+    "dhour04b",
+    "dhour05",
+    "dhour06a",
+    "dhour06b",
+    "dhour07",
+    "dhour08",
+    "dhour09",
+    "dhour10",
+    "dhour11",
+    "dhour12",
+    "dhourtot",
+    "ghelp01",
+    "ghelp02a",
+    "ghelp02b",
+    "ghelp03",
+    "ghelp04a",
+    "ghelp04b",
+    "ghelp05",
+    "ghelp06a",
+    "ghelp06b",
+    "ghelp07",
+    "ghelp08",
+    "ghelp09",
+    "ghelp10",
+    "ghelp11",
+    "ghelp12",
+    "ghelpyn",
+    "ghour01",
+    "ghour02a",
+    "ghour02b",
+    "ghour03",
+    "ghour04a",
+    "ghour04b",
+    "ghour05",
+    "ghour06a",
+    "ghour06b",
+    "ghour07",
+    "ghour08",
+    "ghour09",
+    "ghour10",
+    "ghour11",
+    "ghour12",
+    "ghourtot",
+    "health1",
+    "health2",
+    "health3",
+    "health4",
+    "helpr",
+    "hhnic",
+    "hhnprof",
+    "hhnvol",
+    "hn1",
+    "hn2",
+    "hn3",
+    "hn4",
+    "hn5",
+    "hn6",
+    "nhelp01",
+    "nhelp02a",
+    "nhelp02b",
+    "nhelp03",
+    "nhelp04a",
+    "nhelp04b",
+    "nhelp05",
+    "nhelp06a",
+    "nhelp06b",
+    "nhelp07",
+    "nhelp08",
+    "nhelp09",
+    "nhelp10",
+    "nhelp11",
+    "nhelp12",
+    "nhelpyn",
+    "nhour01",
+    "nhour02a",
+    "nhour02b",
+    "nhour03",
+    "nhour04a",
+    "nhour04b",
+    "nhour05",
+    "nhour06a",
+    "nhour06b",
+    "nhour07",
+    "nhour08",
+    "nhour09",
+    "nhour10",
+    "nhour11",
+    "nhour12",
+    "nhourtot",
+    "phelp01",
+    "phelp02a",
+    "phelp02b",
+    "phelp03",
+    "phelp04a",
+    "phelp04b",
+    "phelp05",
+    "phelp06a",
+    "phelp06b",
+    "phelp07",
+    "phelp08",
+    "phelp09",
+    "phelp10",
+    "phelp11",
+    "phelp12",
+    "phelpyn",
+    "phlp01b",
+    "phlp01m",
+    "phlp01y",
+    "phour01",
+    "phour02a",
+    "phour02b",
+    "phour03",
+    "phour04a",
+    "phour04b",
+    "phour05",
+    "phour06a",
+    "phour06b",
+    "phour07",
+    "phour08",
+    "phour09",
+    "phour10",
+    "phour11",
+    "phour12",
+    "phourtot",
+    "regie1",
+    "regie2",
+    "regie3",
+    "regie4",
+    "rhelp01",
+    "rhelp02a",
+    "rhelp02b",
+    "rhelp03",
+    "rhelp04a",
+    "rhelp04b",
+    "rhelp05",
+    "rhelp07",
+    "rhelp08",
+    "rhelp09",
+    "rhelp10",
+    "rhelp11",
+    "rhelp12",
+    "rhelp6a",
+    "rhelp6b",
+    "rhelpyn",
+    "rhour01",
+    "rhour02a",
+    "rhour02b",
+    "rhour03",
+    "rhour04a",
+    "rhour04b",
+    "rhour05",
+    "rhour06a",
+    "rhour06b",
+    "rhour07",
+    "rhour08",
+    "rhour09",
+    "rhour10",
+    "rhour11",
+    "rhour12",
+    "rhourtot",
+    "rsick01",
+    "rsick02",
+    "rsick03a",
+    "rsick03b",
+    "rsick04",
+    "rsick05a",
+    "rsick05b",
+    "rsick06",
+    "rsick07a",
+    "rsick07b",
+    "rsick08",
+    "rsick09",
+    "rsick10",
+    "rsick11",
+    "rsick12",
+    "rsick13",
+    "rsick14a",
+    "rsick14b",
+    "rsick15",
+    "rsick16",
+    "rsick17a",
+    "rsick17b",
+    "rsick18",
+    "rsick19a",
+    "rsick19b",
+    "rsick20",
+    "rsick21a",
+    "rsick21b",
+    "rsick22",
+    "rsick23",
+    "rsick24",
+    "rsick25",
+    "rsick26",
+    "rsick27",
+    "rsick28a",
+    "rsick28b",
+    "suffic"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
+    health4 = "Past month: days limited in activities",
+    rhelp06 = "Help R: (neighbours/friends/acquaintances"
+  ),
+  Wave_C_labels = harmonized_labels,
+  Wave_D_labels = harmonized_labels,
+  Wave_E_labels = harmonized_labels,
+  Wave_2B_labels = .replace_labels(
+    harmonized_labels,
+    hmunici = "(nb.: not in D) Sufficient help facilities in municipality"
+  ),
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = .replace_labels(
+    harmonized_labels,
+    phlp01b = "Helpp: burden for respondent",
+    phlp01m = "Helpp: respondent, start month",
+    phlp01y = "Helpp: respondent, start year"
+  ),
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
+    ahelp01 = "administrative help R: partner",
+    ahelp02 = "administrative help R: resident child",
+    ahelp03 = "administrative help R: resident other",
+    ahelp04 = "administrative help R: non-resident child",
+    ahelp05 = "administrative help R: non-resident other family",
+    ahelp07 = "administrative help R: volunteers",
+    ahelp08 = "administrative help R: district nurse",
+    ahelp09 = "administrative help R: elderly/home/alpha",
+    ahelp10 = "administrative help R: private",
+    ahelp11 = "administrative help R: personnel home/hospital",
+    ahelp12 = "administrative help R: other",
+    ahour02 = "Hours administrative help R: resident child",
+    ahour04 = "Hours administrative help R: non-resident child",
+    ahour10 = "Hours administrative help R: private help",
+    ahourtot = "Hours administrative help R: total",
+    dhelp01 = "domestic help R: partner",
+    dhelp02 = "domestic help R: resident child",
+    dhelp03 = "domestic help R: resident other",
+    dhelp04 = "domestic help R: non-resident child",
+    dhelp05 = "domestic help R: non-resident other family",
+    dhelp06 = "domestic help R: neighbours/friends/acquaintances",
+    dhelp07 = "domestic help R: volunteers",
+    dhelp08 = "domestic help R: district nurse",
+    dhelp09 = "domestic help R: elderly/home/alpha",
+    dhelp10 = "domestic help R: private",
+    dhelp11 = "domestic help R: personnel home/hospital",
+    dhelp12 = "domestic help R: other",
+    dhelpyn = "Help R with domestic tasks Y/N",
+    dhour01 = "Hours domestic help R: partner",
+    dhour02 = "Hours domestic help R: resident child",
+    dhour03 = "Hours domestic help R: resident other",
+    dhour04 = "Hours domestic help R: non-resident child",
+    dhour05 = "Hours domestic help R: non-resident other family",
+    dhour06 = "Hours domestic help R: neighbours/friends/acquaintances",
+    dhour07 = "Hours domestic help R: volunteers",
+    dhour08 = "Hours domestic help R: district nurse",
+    dhour09 = "Hours domestic help R: elderly/home/alpha",
+    dhour10 = "Hours domestic help R: private help",
+    dhour11 = "Hours domestic help R: personnel home/hospital",
+    dhour12 = "Hours domestic help R: other",
+    dhourtot = "Hours domestic help R: total",
+    ghelpyn = "Help R with guidance Y/N",
+    ghourtot = "Hours guidance help R: total",
+    nhour10 = "Hours nursing help R: private help",
+    nhourtot = "Hours nursing help R: total",
+    phelp01 = "Help P: respondent",
+    phelp02 = "Help P: resident child",
+    phelp03 = "Help P: resident other",
+    phelp04 = "Help P: non-resident child",
+    phelp05 = "Help P: non-resident other family",
+    phelp06 = "Help P: neighbours/friends/acquaintances",
+    phelp07 = "Help P: volunteers",
+    phelp08 = "Help P: district nurse",
+    phelp09 = "Help P: elderly/home/alpha",
+    phelp10 = "Help P: private",
+    phelp11 = "Help P: personnel home/hospital",
+    phelp12 = "Help P: other",
+    phour01 = "Hours help P: respondent",
+    phour02 = "Hours help P: resident other",
+    phour03 = "Hours help P: resident other",
+    phour04 = "Hours help P: non-resident child",
+    phour05 = "Hours help P: non-resident other family",
+    phour06 = "Hours help P: neighbours/friends/acquaintances",
+    phour07 = "Hours help P: volunteers",
+    phour08 = "Hours help P: district nurse",
+    phour09 = "Hours help P: elderly/home/alpha",
+    phour10 = "Hours help P: private",
+    phour11 = "Hours help P: personnel home/hospital",
+    phour12 = "Hours help P: other",
+    phourtot = "Hours help P: total",
+    rhelp09 = "Help R: elderly/home/alpha",
+    rhour09 = "Hours help R: elderly/home/alpha",
+    rhourtot = "Hours help R: total",
+    rsick10 = "Sick: pers care by elderly/home/alpha",
+    rsick24 = "Sick: domestic care by elderly/home/alpha"
+  ),
+  Wave_3B_labels = .replace_labels(
+    harmonized_labels,
+    dhelp01 = "domestic help R: partner",
+    dhelp02 = "domestic help R: resident child",
+    dhelp03 = "domestic help R: resident other",
+    dhelp04 = "domestic help R: non-resident child",
+    dhelp05 = "domestic help R: non-resident other family",
+    dhelp06 = "domestic help R: neighbours/friends/acquaintances",
+    dhelp07 = "domestic help R: volunteers",
+    dhelp08 = "domestic help R: district nurse",
+    dhelp09 = "domestic help R: elderly/home/alpha help",
+    dhelp10 = "domestic help R: private",
+    dhelp11 = "domestic help R: personnel home/hospital",
+    dhelp12 = "domestic help R: other",
+    dhelpyn = "Help R with domestic tasks Y/N",
+    dhour01 = "Hours domestic help R: partner",
+    dhour02 = "Hours domestic help R: resident child",
+    dhour03 = "Hours domestic help R: resident other",
+    dhour04 = "Hours domestic help R: non-resident child",
+    dhour05 = "Hours domestic help R: non-resident other family",
+    dhour06 = "Hours domestic help R: neighbours/friends/acquaintances",
+    dhour07 = "Hours domestic help R: volunteers",
+    dhour08 = "Hours domestic help R: district nurse",
+    dhour09 = "Hours domestic help R: elderly/home/alpha help",
+    dhour10 = "Hours domestic help R: private help",
+    dhour11 = "Hours domestic help R: personnel home/hospital",
+    dhour12 = "Hours domestic help R: other",
+    nhelp09 = "nursing help R: elderly/home/alpha help",
+    nhour09 = "Hours nursing help R: elderly/home/alpha help",
+    nhour10 = "Hours nursing help R: private help",
+    phelp01 = "Help P: respondent",
+    phelp02 = "Help P: resident child",
+    phelp03 = "Help P: resident other",
+    phelp04 = "Help P: non-resident child",
+    phelp05 = "Help P: non-resident other family",
+    phelp06 = "Help P: neighbours/friends/acquaintances",
+    phelp07 = "Help P: volunteers",
+    phelp08 = "Help P: district nurse",
+    phelp09 = "Help P: elderly/home/alpha help",
+    phelp10 = "Help P: private",
+    phelp11 = "Help P: personnel home/hospital",
+    phelp12 = "Help P: other",
+    phour01 = "Hours help P: respondent",
+    phour02 = "Hours help P: resident other",
+    phour03 = "Hours help P: resident other",
+    phour04 = "Hours help P: non-resident child",
+    phour05 = "Hours help P: non-resident other family",
+    phour06 = "Hours help P: neighbours/friends/acquaintances",
+    phour07 = "Hours help P: volunteers",
+    phour08 = "Hours help P: district nurse",
+    phour09 = "Hours help P: elderly/home/alpha help",
+    phour10 = "Hours help P: private",
+    phour11 = "Hours help P: personnel home/hospital",
+    phour12 = "Hours help P: other"
+  ),
+  Wave_MB_labels = .replace_labels(
+    harmonized_labels,
+    dhelp01 = "domestic help R: partner",
+    dhelp02 = "domestic help R: resident child",
+    dhelp03 = "domestic help R: resident other",
+    dhelp04 = "domestic help R: non-resident child",
+    dhelp05 = "domestic help R: non-resident other family",
+    dhelp06 = "domestic help R: neighbrs/frnds/acquaint.",
+    dhelp07 = "domestic help R: volunteers",
+    dhelp08 = "domestic help R: district nurse",
+    dhelp09 = "domestic help R: elderly/home/alpha help",
+    dhelp10 = "domestic help R: private",
+    dhelp11 = "domestic help R: personnel home/hospital",
+    dhelp12 = "domestic help R: other",
+    dhelpyn = "Help R with domestic tasks Y/N",
+    dhour01 = "Hours domestic help R: partner",
+    dhour02 = "Hours domestic help R: resident child",
+    dhour03 = "Hours domestic help R: resident other",
+    dhour04 = "Hours domestic help R: non-resident child",
+    dhour05 = "Hours domestic help R: non-resident other family",
+    dhour06 = "Hours domestic help R: neighbrs/frnds/acquaint.",
+    dhour07 = "Hours domestic help R: volunteers",
+    dhour08 = "Hours domestic help R: district nurse",
+    dhour09 = "Hours domestic help R: elderly/home/alpha",
+    dhour10 = "Hours domestic help R: private",
+    dhour11 = "Hours domestic help R: personnel home/hospital",
+    dhour12 = "Hours domestic help R: other",
+    nhelp06 = "nursing help R: neighbrs/frnds/acquaint.",
+    nhour06 = "Hours nursing help R: neighbrs/frnds/acquaint.",
+    phelp01 = "Help P: respondent",
+    phelp02 = "Help P: resident child",
+    phelp03 = "Help P: resident other",
+    phelp04 = "Help P: non-resident child",
+    phelp05 = "Help P: non-resident other family",
+    phelp06 = "Help P: neighbours/friends/acquaintances",
+    phelp07 = "Help P: volunteers",
+    phelp08 = "Help P: district nurse",
+    phelp09 = "Help P: elderly/home/alpha",
+    phelp10 = "Help P: private",
+    phelp11 = "Help P: personnel home/hospital",
+    phelp12 = "Help P: other",
+    phour01 = "Hours help P: respondent",
+    phour02 = "Hours help P: resident other",
+    phour03 = "Hours help P: resident other",
+    phour04 = "Hours help P: non-resident child",
+    phour05 = "Hours help P: non-resident other family",
+    phour06 = "Hours help P: neighbours/friends/acquaintances",
+    phour07 = "Hours help P: volunteers",
+    phour08 = "Hours help P: district nurse",
+    phour09 = "Hours help P: elderly/home/alpha",
+    phour10 = "Hours help P: private",
+    phour11 = "Hours help P: personnel home/hospital",
+    phour12 = "Hours help P: other",
+    rhelp09 = "Help R: elderly/home/alpha",
+    rhour09 = "Hours help R: elderly/home/alpha",
+    suff406 = "preferably help from: neighbrs/frnds/acquaint."
+  ),
+  Wave_I_labels = .replace_labels(
+    harmonized_labels,
     ahelp01 = "admin help R: partner",
     ahelp03 = "admin help R: resident other",
     ahelp05 = "admin help R: non-resident other family",
@@ -3585,258 +4107,7 @@ variable_labels_list <- list(
     rsick24 = "Sick: domestic care by elderly/home/alpha"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
-    "ahelp01",
-    "ahelp02a",
-    "ahelp02b",
-    "ahelp03",
-    "ahelp04a",
-    "ahelp04b",
-    "ahelp05",
-    "ahelp06a",
-    "ahelp06b",
-    "ahelp07",
-    "ahelp08",
-    "ahelp09",
-    "ahelp10",
-    "ahelp11",
-    "ahelp12",
-    "ahelpyn",
-    "ahour01",
-    "ahour02a",
-    "ahour02b",
-    "ahour03",
-    "ahour04a",
-    "ahour04b",
-    "ahour05",
-    "ahour06a",
-    "ahour06b",
-    "ahour07",
-    "ahour08",
-    "ahour09",
-    "ahour10",
-    "ahour11",
-    "ahour12",
-    "ahourtot",
-    "dhelp01",
-    "dhelp02a",
-    "dhelp02b",
-    "dhelp03",
-    "dhelp04a",
-    "dhelp04b",
-    "dhelp05",
-    "dhelp06a",
-    "dhelp06b",
-    "dhelp07",
-    "dhelp08",
-    "dhelp09",
-    "dhelp10",
-    "dhelp11",
-    "dhelp12",
-    "dhelpyn",
-    "dhour01",
-    "dhour02a",
-    "dhour02b",
-    "dhour03",
-    "dhour04a",
-    "dhour04b",
-    "dhour05",
-    "dhour06a",
-    "dhour06b",
-    "dhour07",
-    "dhour08",
-    "dhour09",
-    "dhour10",
-    "dhour11",
-    "dhour12",
-    "dhourtot",
-    "ghelp01",
-    "ghelp02a",
-    "ghelp02b",
-    "ghelp03",
-    "ghelp04a",
-    "ghelp04b",
-    "ghelp05",
-    "ghelp06a",
-    "ghelp06b",
-    "ghelp07",
-    "ghelp08",
-    "ghelp09",
-    "ghelp10",
-    "ghelp11",
-    "ghelp12",
-    "ghelpyn",
-    "ghour01",
-    "ghour02a",
-    "ghour02b",
-    "ghour03",
-    "ghour04a",
-    "ghour04b",
-    "ghour05",
-    "ghour06a",
-    "ghour06b",
-    "ghour07",
-    "ghour08",
-    "ghour09",
-    "ghour10",
-    "ghour11",
-    "ghour12",
-    "ghourtot",
-    "health1",
-    "health2",
-    "health3",
-    "health4",
-    "helpr",
-    "hhnic",
-    "hhnprof",
-    "hhnvol",
-    "hn1",
-    "hn2",
-    "hn3",
-    "hn4",
-    "hn5",
-    "hn6",
-    "nhelp01",
-    "nhelp02a",
-    "nhelp02b",
-    "nhelp03",
-    "nhelp04a",
-    "nhelp04b",
-    "nhelp05",
-    "nhelp06a",
-    "nhelp06b",
-    "nhelp07",
-    "nhelp08",
-    "nhelp09",
-    "nhelp10",
-    "nhelp11",
-    "nhelp12",
-    "nhelpyn",
-    "nhour01",
-    "nhour02a",
-    "nhour02b",
-    "nhour03",
-    "nhour04a",
-    "nhour04b",
-    "nhour05",
-    "nhour06a",
-    "nhour06b",
-    "nhour07",
-    "nhour08",
-    "nhour09",
-    "nhour10",
-    "nhour11",
-    "nhour12",
-    "nhourtot",
-    "phelp01",
-    "phelp02a",
-    "phelp02b",
-    "phelp03",
-    "phelp04a",
-    "phelp04b",
-    "phelp05",
-    "phelp06a",
-    "phelp06b",
-    "phelp07",
-    "phelp08",
-    "phelp09",
-    "phelp10",
-    "phelp11",
-    "phelp12",
-    "phelpyn",
-    "phlp01b",
-    "phlp01m",
-    "phlp01y",
-    "phour01",
-    "phour02a",
-    "phour02b",
-    "phour03",
-    "phour04a",
-    "phour04b",
-    "phour05",
-    "phour06a",
-    "phour06b",
-    "phour07",
-    "phour08",
-    "phour09",
-    "phour10",
-    "phour11",
-    "phour12",
-    "phourtot",
-    "regie1",
-    "regie2",
-    "regie3",
-    "regie4",
-    "rhelp01",
-    "rhelp02a",
-    "rhelp02b",
-    "rhelp03",
-    "rhelp04a",
-    "rhelp04b",
-    "rhelp05",
-    "rhelp07",
-    "rhelp08",
-    "rhelp09",
-    "rhelp10",
-    "rhelp11",
-    "rhelp12",
-    "rhelp6a",
-    "rhelp6b",
-    "rhelpyn",
-    "rhour01",
-    "rhour02a",
-    "rhour02b",
-    "rhour03",
-    "rhour04a",
-    "rhour04b",
-    "rhour05",
-    "rhour06a",
-    "rhour06b",
-    "rhour07",
-    "rhour08",
-    "rhour09",
-    "rhour10",
-    "rhour11",
-    "rhour12",
-    "rhourtot",
-    "rsick01",
-    "rsick02",
-    "rsick03a",
-    "rsick03b",
-    "rsick04",
-    "rsick05a",
-    "rsick05b",
-    "rsick06",
-    "rsick07a",
-    "rsick07b",
-    "rsick08",
-    "rsick09",
-    "rsick10",
-    "rsick11",
-    "rsick12",
-    "rsick13",
-    "rsick14a",
-    "rsick14b",
-    "rsick15",
-    "rsick16",
-    "rsick17a",
-    "rsick17b",
-    "rsick18",
-    "rsick19a",
-    "rsick19b",
-    "rsick20",
-    "rsick21a",
-    "rsick21b",
-    "rsick22",
-    "rsick23",
-    "rsick24",
-    "rsick25",
-    "rsick26",
-    "rsick27",
-    "rsick28a",
-    "rsick28b",
-    "suffic"
-  )],
+    harmonized_labels,
     dhelp01 = "domestic help R: partner",
     dhelp03 = "domestic help R: resident other",
     dhelp05 = "domestic help R: non-resident other family",
@@ -3880,258 +4151,7 @@ variable_labels_list <- list(
     rhour09 = "Hours help R: elderly/home/alpha"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
-    "ahelp01",
-    "ahelp02a",
-    "ahelp02b",
-    "ahelp03",
-    "ahelp04a",
-    "ahelp04b",
-    "ahelp05",
-    "ahelp06a",
-    "ahelp06b",
-    "ahelp07",
-    "ahelp08",
-    "ahelp09",
-    "ahelp10",
-    "ahelp11",
-    "ahelp12",
-    "ahelpyn",
-    "ahour01",
-    "ahour02a",
-    "ahour02b",
-    "ahour03",
-    "ahour04a",
-    "ahour04b",
-    "ahour05",
-    "ahour06a",
-    "ahour06b",
-    "ahour07",
-    "ahour08",
-    "ahour09",
-    "ahour10",
-    "ahour11",
-    "ahour12",
-    "ahourtot",
-    "dhelp01",
-    "dhelp02a",
-    "dhelp02b",
-    "dhelp03",
-    "dhelp04a",
-    "dhelp04b",
-    "dhelp05",
-    "dhelp06a",
-    "dhelp06b",
-    "dhelp07",
-    "dhelp08",
-    "dhelp09",
-    "dhelp10",
-    "dhelp11",
-    "dhelp12",
-    "dhelpyn",
-    "dhour01",
-    "dhour02a",
-    "dhour02b",
-    "dhour03",
-    "dhour04a",
-    "dhour04b",
-    "dhour05",
-    "dhour06a",
-    "dhour06b",
-    "dhour07",
-    "dhour08",
-    "dhour09",
-    "dhour10",
-    "dhour11",
-    "dhour12",
-    "dhourtot",
-    "ghelp01",
-    "ghelp02a",
-    "ghelp02b",
-    "ghelp03",
-    "ghelp04a",
-    "ghelp04b",
-    "ghelp05",
-    "ghelp06a",
-    "ghelp06b",
-    "ghelp07",
-    "ghelp08",
-    "ghelp09",
-    "ghelp10",
-    "ghelp11",
-    "ghelp12",
-    "ghelpyn",
-    "ghour01",
-    "ghour02a",
-    "ghour02b",
-    "ghour03",
-    "ghour04a",
-    "ghour04b",
-    "ghour05",
-    "ghour06a",
-    "ghour06b",
-    "ghour07",
-    "ghour08",
-    "ghour09",
-    "ghour10",
-    "ghour11",
-    "ghour12",
-    "ghourtot",
-    "health1",
-    "health2",
-    "health3",
-    "health4",
-    "helpr",
-    "hhnic",
-    "hhnprof",
-    "hhnvol",
-    "hn1",
-    "hn2",
-    "hn3",
-    "hn4",
-    "hn5",
-    "hn6",
-    "nhelp01",
-    "nhelp02a",
-    "nhelp02b",
-    "nhelp03",
-    "nhelp04a",
-    "nhelp04b",
-    "nhelp05",
-    "nhelp06a",
-    "nhelp06b",
-    "nhelp07",
-    "nhelp08",
-    "nhelp09",
-    "nhelp10",
-    "nhelp11",
-    "nhelp12",
-    "nhelpyn",
-    "nhour01",
-    "nhour02a",
-    "nhour02b",
-    "nhour03",
-    "nhour04a",
-    "nhour04b",
-    "nhour05",
-    "nhour06a",
-    "nhour06b",
-    "nhour07",
-    "nhour08",
-    "nhour09",
-    "nhour10",
-    "nhour11",
-    "nhour12",
-    "nhourtot",
-    "phelp01",
-    "phelp02a",
-    "phelp02b",
-    "phelp03",
-    "phelp04a",
-    "phelp04b",
-    "phelp05",
-    "phelp06a",
-    "phelp06b",
-    "phelp07",
-    "phelp08",
-    "phelp09",
-    "phelp10",
-    "phelp11",
-    "phelp12",
-    "phelpyn",
-    "phlp01b",
-    "phlp01m",
-    "phlp01y",
-    "phour01",
-    "phour02a",
-    "phour02b",
-    "phour03",
-    "phour04a",
-    "phour04b",
-    "phour05",
-    "phour06a",
-    "phour06b",
-    "phour07",
-    "phour08",
-    "phour09",
-    "phour10",
-    "phour11",
-    "phour12",
-    "phourtot",
-    "regie1",
-    "regie2",
-    "regie3",
-    "regie4",
-    "rhelp01",
-    "rhelp02a",
-    "rhelp02b",
-    "rhelp03",
-    "rhelp04a",
-    "rhelp04b",
-    "rhelp05",
-    "rhelp07",
-    "rhelp08",
-    "rhelp09",
-    "rhelp10",
-    "rhelp11",
-    "rhelp12",
-    "rhelp6a",
-    "rhelp6b",
-    "rhelpyn",
-    "rhour01",
-    "rhour02a",
-    "rhour02b",
-    "rhour03",
-    "rhour04a",
-    "rhour04b",
-    "rhour05",
-    "rhour06a",
-    "rhour06b",
-    "rhour07",
-    "rhour08",
-    "rhour09",
-    "rhour10",
-    "rhour11",
-    "rhour12",
-    "rhourtot",
-    "rsick01",
-    "rsick02",
-    "rsick03a",
-    "rsick03b",
-    "rsick04",
-    "rsick05a",
-    "rsick05b",
-    "rsick06",
-    "rsick07a",
-    "rsick07b",
-    "rsick08",
-    "rsick09",
-    "rsick10",
-    "rsick11",
-    "rsick12",
-    "rsick13",
-    "rsick14a",
-    "rsick14b",
-    "rsick15",
-    "rsick16",
-    "rsick17a",
-    "rsick17b",
-    "rsick18",
-    "rsick19a",
-    "rsick19b",
-    "rsick20",
-    "rsick21a",
-    "rsick21b",
-    "rsick22",
-    "rsick23",
-    "rsick24",
-    "rsick25",
-    "rsick26",
-    "rsick27",
-    "rsick28a",
-    "rsick28b",
-    "suffic"
-  )],
+    harmonized_labels,
     dhelp01 = "domestic help R: partner",
     dhelp03 = "domestic help R: resident other",
     dhelp05 = "domestic help R: non-resident other family",
@@ -4177,136 +4197,110 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "man",
+  `2` = "woman",
+  `112` = "continuously day and night",
+  `168` = "continuously day and night"
+)
+
 standardized_value_labels <- list(
   ahelp01 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp02a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp02b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp04a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp04b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp06a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp06b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp07 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp08 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp09 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp11 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelp12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ahelpyn = c(
     `-5` = "not available, interview terminated",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes",
     `3` = "do not know",
@@ -4314,131 +4308,99 @@ standardized_value_labels <- list(
   ),
   ahour01 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour02 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour02a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour02b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour03 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour04 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour04a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour04b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour05 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour06 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour06a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour06b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour07 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour08 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour09 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour10 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour1001 = stats::setNames(character(0), character(0)),
   ahour1002 = stats::setNames(character(0), character(0)),
@@ -4447,11 +4409,9 @@ standardized_value_labels <- list(
   ahour1005 = stats::setNames(character(0), character(0)),
   ahour11 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour1101 = stats::setNames(character(0), character(0)),
   ahour1102 = stats::setNames(character(0), character(0)),
@@ -4460,11 +4420,9 @@ standardized_value_labels <- list(
   ahour1105 = stats::setNames(character(0), character(0)),
   ahour12 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ahour1201 = stats::setNames(character(0), character(0)),
   ahour1202 = stats::setNames(character(0), character(0)),
@@ -4513,67 +4471,175 @@ standardized_value_labels <- list(
   ahour905 = stats::setNames(character(0), character(0)),
   ahourtot = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
-  asex1001 = c(`1` = "man", `2` = "woman"),
-  asex1002 = c(`1` = "man", `2` = "woman"),
-  asex1003 = c(`1` = "man", `2` = "woman"),
-  asex1004 = c(`1` = "man", `2` = "woman"),
-  asex1005 = c(`1` = "man", `2` = "woman"),
-  asex1101 = c(`1` = "man", `2` = "woman"),
-  asex1102 = c(`1` = "man", `2` = "woman"),
-  asex1103 = c(`1` = "man", `2` = "woman"),
-  asex1104 = c(`1` = "man", `2` = "woman"),
-  asex1105 = c(`1` = "man", `2` = "woman"),
-  asex1201 = c(`1` = "man", `2` = "woman"),
-  asex1202 = c(`1` = "man", `2` = "woman"),
-  asex1203 = c(`1` = "man", `2` = "woman"),
-  asex1204 = c(`1` = "man", `2` = "woman"),
-  asex1205 = c(`1` = "man", `2` = "woman"),
-  asex201 = c(`1` = "man", `2` = "woman"),
-  asex202 = c(`1` = "man", `2` = "woman"),
-  asex203 = c(`1` = "man", `2` = "woman"),
-  asex204 = c(`1` = "man", `2` = "woman"),
-  asex205 = c(`1` = "man", `2` = "woman"),
-  asex301 = c(`1` = "man", `2` = "woman"),
-  asex302 = c(`1` = "man", `2` = "woman"),
-  asex303 = c(`1` = "man", `2` = "woman"),
-  asex304 = c(`1` = "man", `2` = "woman"),
-  asex305 = c(`1` = "man", `2` = "woman"),
-  asex401 = c(`1` = "man", `2` = "woman"),
-  asex402 = c(`1` = "man", `2` = "woman"),
-  asex403 = c(`1` = "man", `2` = "woman"),
-  asex404 = c(`1` = "man", `2` = "woman"),
-  asex405 = c(`1` = "man", `2` = "woman"),
-  asex501 = c(`1` = "man", `2` = "woman"),
-  asex502 = c(`1` = "man", `2` = "woman"),
-  asex503 = c(`1` = "man", `2` = "woman"),
-  asex504 = c(`1` = "man", `2` = "woman"),
-  asex505 = c(`1` = "man", `2` = "woman"),
-  asex601 = c(`1` = "man", `2` = "woman"),
-  asex602 = c(`1` = "man", `2` = "woman"),
-  asex603 = c(`1` = "man", `2` = "woman"),
-  asex604 = c(`1` = "man", `2` = "woman"),
-  asex605 = c(`1` = "man", `2` = "woman"),
-  asex701 = c(`1` = "man", `2` = "woman"),
-  asex702 = c(`1` = "man", `2` = "woman"),
-  asex703 = c(`1` = "man", `2` = "woman"),
-  asex704 = c(`1` = "man", `2` = "woman"),
-  asex705 = c(`1` = "man", `2` = "woman"),
-  asex801 = c(`1` = "man", `2` = "woman"),
-  asex802 = c(`1` = "man", `2` = "woman"),
-  asex803 = c(`1` = "man", `2` = "woman"),
-  asex804 = c(`1` = "man", `2` = "woman"),
-  asex805 = c(`1` = "man", `2` = "woman"),
-  asex901 = c(`1` = "man", `2` = "woman"),
-  asex902 = c(`1` = "man", `2` = "woman"),
-  asex903 = c(`1` = "man", `2` = "woman"),
-  asex904 = c(`1` = "man", `2` = "woman"),
-  asex905 = c(`1` = "man", `2` = "woman"),
+  asex1001 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex1002 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex1003 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex1004 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex1005 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex1101 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex1102 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex1103 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex1104 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex1105 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex1201 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex1202 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex1203 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex1204 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex1205 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex201 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex202 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex203 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex204 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex205 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex301 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex302 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex303 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex304 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex305 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex401 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex402 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex403 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex404 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex405 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex501 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex502 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex503 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex504 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex505 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex601 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex602 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex603 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex604 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex605 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex701 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex702 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex703 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex704 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex705 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex801 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex802 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex803 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex804 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex805 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex901 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex902 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex903 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex904 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  asex905 = c(
+    default_answer_labels[c("1", "2")]
+  ),
   ax02 = stats::setNames(character(0), character(0)),
   ax03 = stats::setNames(character(0), character(0)),
   ax04 = stats::setNames(character(0), character(0)),
@@ -4586,9 +4652,7 @@ standardized_value_labels <- list(
   ax11 = stats::setNames(character(0), character(0)),
   ax12 = stats::setNames(character(0), character(0)),
   coop1 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "strongly disagree",
     `2` = "disagree",
     `3` = "no disagreement/agreement",
@@ -4596,9 +4660,7 @@ standardized_value_labels <- list(
     `5` = "strongly agree"
   ),
   coop2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "strongly disagree",
     `2` = "disagree",
     `3` = "no disagreement/agreement",
@@ -4606,135 +4668,98 @@ standardized_value_labels <- list(
     `5` = "strongly agree"
   ),
   dhelp01 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp02a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp02b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp04a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp04b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp06a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp06b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp07 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp08 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp09 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp11 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelp12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   dhelpyn = c(
     `-5` = "not available, interview terminated",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "no",
     `2` = "yes",
     `3` = "do not know",
@@ -4742,141 +4767,109 @@ standardized_value_labels <- list(
   ),
   dhour01 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   dhour02 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   dhour02a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   dhour02b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   dhour03 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   dhour04 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   dhour04a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   dhour04b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   dhour05 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   dhour06 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   dhour06a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   dhour06b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   dhour07 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   dhour08 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   dhour09 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   dhour10 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   dhour1001 = stats::setNames(character(0), character(0)),
   dhour1002 = stats::setNames(character(0), character(0)),
@@ -4885,12 +4878,10 @@ standardized_value_labels <- list(
   dhour1005 = stats::setNames(character(0), character(0)),
   dhour11 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   dhour1101 = stats::setNames(character(0), character(0)),
   dhour1102 = stats::setNames(character(0), character(0)),
@@ -4899,12 +4890,10 @@ standardized_value_labels <- list(
   dhour1105 = stats::setNames(character(0), character(0)),
   dhour12 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   dhour1201 = stats::setNames(character(0), character(0)),
   dhour1202 = stats::setNames(character(0), character(0)),
@@ -4953,67 +4942,175 @@ standardized_value_labels <- list(
   dhour905 = stats::setNames(character(0), character(0)),
   dhourtot = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
-  dsex1001 = c(`1` = "man", `2` = "woman"),
-  dsex1002 = c(`1` = "man", `2` = "woman"),
-  dsex1003 = c(`1` = "man", `2` = "woman"),
-  dsex1004 = c(`1` = "man", `2` = "woman"),
-  dsex1005 = c(`1` = "man", `2` = "woman"),
-  dsex1101 = c(`1` = "man", `2` = "woman"),
-  dsex1102 = c(`1` = "man", `2` = "woman"),
-  dsex1103 = c(`1` = "man", `2` = "woman"),
-  dsex1104 = c(`1` = "man", `2` = "woman"),
-  dsex1105 = c(`1` = "man", `2` = "woman"),
-  dsex1201 = c(`1` = "man", `2` = "woman"),
-  dsex1202 = c(`1` = "man", `2` = "woman"),
-  dsex1203 = c(`1` = "man", `2` = "woman"),
-  dsex1204 = c(`1` = "man", `2` = "woman"),
-  dsex1205 = c(`1` = "man", `2` = "woman"),
-  dsex201 = c(`1` = "man", `2` = "woman"),
-  dsex202 = c(`1` = "man", `2` = "woman"),
-  dsex203 = c(`1` = "man", `2` = "woman"),
-  dsex204 = c(`1` = "man", `2` = "woman"),
-  dsex205 = c(`1` = "man", `2` = "woman"),
-  dsex301 = c(`1` = "man", `2` = "woman"),
-  dsex302 = c(`1` = "man", `2` = "woman"),
-  dsex303 = c(`1` = "man", `2` = "woman"),
-  dsex304 = c(`1` = "man", `2` = "woman"),
-  dsex305 = c(`1` = "man", `2` = "woman"),
-  dsex401 = c(`1` = "man", `2` = "woman"),
-  dsex402 = c(`1` = "man", `2` = "woman"),
-  dsex403 = c(`1` = "man", `2` = "woman"),
-  dsex404 = c(`1` = "man", `2` = "woman"),
-  dsex405 = c(`1` = "man", `2` = "woman"),
-  dsex501 = c(`1` = "man", `2` = "woman"),
-  dsex502 = c(`1` = "man", `2` = "woman"),
-  dsex503 = c(`1` = "man", `2` = "woman"),
-  dsex504 = c(`1` = "man", `2` = "woman"),
-  dsex505 = c(`1` = "man", `2` = "woman"),
-  dsex601 = c(`1` = "man", `2` = "woman"),
-  dsex602 = c(`1` = "man", `2` = "woman"),
-  dsex603 = c(`1` = "man", `2` = "woman"),
-  dsex604 = c(`1` = "man", `2` = "woman"),
-  dsex605 = c(`1` = "man", `2` = "woman"),
-  dsex701 = c(`1` = "man", `2` = "woman"),
-  dsex702 = c(`1` = "man", `2` = "woman"),
-  dsex703 = c(`1` = "man", `2` = "woman"),
-  dsex704 = c(`1` = "man", `2` = "woman"),
-  dsex705 = c(`1` = "man", `2` = "woman"),
-  dsex801 = c(`1` = "man", `2` = "woman"),
-  dsex802 = c(`1` = "man", `2` = "woman"),
-  dsex803 = c(`1` = "man", `2` = "woman"),
-  dsex804 = c(`1` = "man", `2` = "woman"),
-  dsex805 = c(`1` = "man", `2` = "woman"),
-  dsex901 = c(`1` = "man", `2` = "woman"),
-  dsex902 = c(`1` = "man", `2` = "woman"),
-  dsex903 = c(`1` = "man", `2` = "woman"),
-  dsex904 = c(`1` = "man", `2` = "woman"),
-  dsex905 = c(`1` = "man", `2` = "woman"),
+  dsex1001 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex1002 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex1003 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex1004 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex1005 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex1101 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex1102 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex1103 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex1104 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex1105 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex1201 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex1202 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex1203 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex1204 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex1205 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex201 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex202 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex203 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex204 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex205 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex301 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex302 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex303 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex304 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex305 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex401 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex402 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex403 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex404 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex405 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex501 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex502 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex503 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex504 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex505 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex601 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex602 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex603 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex604 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex605 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex701 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex702 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex703 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex704 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex705 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex801 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex802 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex803 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex804 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex805 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex901 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex902 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex903 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex904 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  dsex905 = c(
+    default_answer_labels[c("1", "2")]
+  ),
   dx02 = stats::setNames(character(0), character(0)),
   dx03 = stats::setNames(character(0), character(0)),
   dx04 = stats::setNames(character(0), character(0)),
@@ -5026,134 +5123,98 @@ standardized_value_labels <- list(
   dx11 = stats::setNames(character(0), character(0)),
   dx12 = stats::setNames(character(0), character(0)),
   ghelp01 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp02a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp02b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp04a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp04b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp06a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp06b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp07 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp08 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp09 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp11 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelp12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   ghelpyn = c(
     `-5` = "not available, interview terminated",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes",
     `3` = "do not know",
@@ -5161,131 +5222,99 @@ standardized_value_labels <- list(
   ),
   ghour01 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour02 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour02a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour02b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour03 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour04 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour04a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour04b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour05 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour06 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour06a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour06b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour07 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour08 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour09 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour10 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour1001 = stats::setNames(character(0), character(0)),
   ghour1002 = stats::setNames(character(0), character(0)),
@@ -5294,11 +5323,9 @@ standardized_value_labels <- list(
   ghour1005 = stats::setNames(character(0), character(0)),
   ghour11 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour1101 = stats::setNames(character(0), character(0)),
   ghour1102 = stats::setNames(character(0), character(0)),
@@ -5307,11 +5334,9 @@ standardized_value_labels <- list(
   ghour1105 = stats::setNames(character(0), character(0)),
   ghour12 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   ghour1201 = stats::setNames(character(0), character(0)),
   ghour1202 = stats::setNames(character(0), character(0)),
@@ -5360,67 +5385,175 @@ standardized_value_labels <- list(
   ghour905 = stats::setNames(character(0), character(0)),
   ghourtot = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
-  gsex1001 = c(`1` = "man", `2` = "woman"),
-  gsex1002 = c(`1` = "man", `2` = "woman"),
-  gsex1003 = c(`1` = "man", `2` = "woman"),
-  gsex1004 = c(`1` = "man", `2` = "woman"),
-  gsex1005 = c(`1` = "man", `2` = "woman"),
-  gsex1101 = c(`1` = "man", `2` = "woman"),
-  gsex1102 = c(`1` = "man", `2` = "woman"),
-  gsex1103 = c(`1` = "man", `2` = "woman"),
-  gsex1104 = c(`1` = "man", `2` = "woman"),
-  gsex1105 = c(`1` = "man", `2` = "woman"),
-  gsex1201 = c(`1` = "man", `2` = "woman"),
-  gsex1202 = c(`1` = "man", `2` = "woman"),
-  gsex1203 = c(`1` = "man", `2` = "woman"),
-  gsex1204 = c(`1` = "man", `2` = "woman"),
-  gsex1205 = c(`1` = "man", `2` = "woman"),
-  gsex201 = c(`1` = "man", `2` = "woman"),
-  gsex202 = c(`1` = "man", `2` = "woman"),
-  gsex203 = c(`1` = "man", `2` = "woman"),
-  gsex204 = c(`1` = "man", `2` = "woman"),
-  gsex205 = c(`1` = "man", `2` = "woman"),
-  gsex301 = c(`1` = "man", `2` = "woman"),
-  gsex302 = c(`1` = "man", `2` = "woman"),
-  gsex303 = c(`1` = "man", `2` = "woman"),
-  gsex304 = c(`1` = "man", `2` = "woman"),
-  gsex305 = c(`1` = "man", `2` = "woman"),
-  gsex401 = c(`1` = "man", `2` = "woman"),
-  gsex402 = c(`1` = "man", `2` = "woman"),
-  gsex403 = c(`1` = "man", `2` = "woman"),
-  gsex404 = c(`1` = "man", `2` = "woman"),
-  gsex405 = c(`1` = "man", `2` = "woman"),
-  gsex501 = c(`1` = "man", `2` = "woman"),
-  gsex502 = c(`1` = "man", `2` = "woman"),
-  gsex503 = c(`1` = "man", `2` = "woman"),
-  gsex504 = c(`1` = "man", `2` = "woman"),
-  gsex505 = c(`1` = "man", `2` = "woman"),
-  gsex601 = c(`1` = "man", `2` = "woman"),
-  gsex602 = c(`1` = "man", `2` = "woman"),
-  gsex603 = c(`1` = "man", `2` = "woman"),
-  gsex604 = c(`1` = "man", `2` = "woman"),
-  gsex605 = c(`1` = "man", `2` = "woman"),
-  gsex701 = c(`1` = "man", `2` = "woman"),
-  gsex702 = c(`1` = "man", `2` = "woman"),
-  gsex703 = c(`1` = "man", `2` = "woman"),
-  gsex704 = c(`1` = "man", `2` = "woman"),
-  gsex705 = c(`1` = "man", `2` = "woman"),
-  gsex801 = c(`1` = "man", `2` = "woman"),
-  gsex802 = c(`1` = "man", `2` = "woman"),
-  gsex803 = c(`1` = "man", `2` = "woman"),
-  gsex804 = c(`1` = "man", `2` = "woman"),
-  gsex805 = c(`1` = "man", `2` = "woman"),
-  gsex901 = c(`1` = "man", `2` = "woman"),
-  gsex902 = c(`1` = "man", `2` = "woman"),
-  gsex903 = c(`1` = "man", `2` = "woman"),
-  gsex904 = c(`1` = "man", `2` = "woman"),
-  gsex905 = c(`1` = "man", `2` = "woman"),
+  gsex1001 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex1002 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex1003 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex1004 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex1005 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex1101 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex1102 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex1103 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex1104 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex1105 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex1201 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex1202 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex1203 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex1204 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex1205 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex201 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex202 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex203 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex204 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex205 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex301 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex302 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex303 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex304 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex305 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex401 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex402 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex403 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex404 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex405 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex501 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex502 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex503 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex504 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex505 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex601 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex602 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex603 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex604 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex605 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex701 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex702 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex703 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex704 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex705 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex801 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex802 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex803 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex804 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex805 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex901 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex902 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex903 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex904 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  gsex905 = c(
+    default_answer_labels[c("1", "2")]
+  ),
   gx02 = stats::setNames(character(0), character(0)),
   gx03 = stats::setNames(character(0), character(0)),
   gx04 = stats::setNames(character(0), character(0)),
@@ -5435,8 +5568,7 @@ standardized_value_labels <- list(
   health1 = c(
     `-6` = "not available, technical reason",
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-1")],
     `1` = "yes, severely",
     `2` = "yes, slightly",
     `3` = "no",
@@ -5444,18 +5576,14 @@ standardized_value_labels <- list(
     `5` = "refused to answer"
   ),
   health2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "> 3 months",
     `2` = "< 3 months",
     `3` = "do not know",
-    `4` = "coding category 4"
+    `4` = "label varies by wave"
   ),
   health3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "0 days",
     `2` = "1-3 days",
     `3` = "4-7 days",
@@ -5465,9 +5593,7 @@ standardized_value_labels <- list(
     `7` = "refused to answer"
   ),
   health4 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "0 days",
     `2` = "1-3 days",
     `3` = "4-7 days",
@@ -5481,106 +5607,86 @@ standardized_value_labels <- list(
     `1` = "respondent gets any help (personal, domestic, nursing, guidance or administrative)"
   ),
   hhnic = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   hhnprof = c(
     `-4` = "not available, not living independently",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   hhnvol = c(
     `-4` = "not available, not living independently",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   hmunici = c(
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes",
     `3` = "do not know",
     `4` = "refused to answer"
   ),
   hn1 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no, I do not need help with this",
     `2` = "no, I get enough hours of help with this",
     `3` = "yes, I would like to have more hours help with this"
   ),
   hn2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no, I do not need help with this",
     `2` = "no, I get enough hours of help with this",
     `3` = "yes, I would like to have more hours help with this"
   ),
   hn3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no, I do not need help with this",
     `2` = "no, I get enough hours of help with this",
     `3` = "yes, I would like to have more hours help with this"
   ),
   hn4 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no, I do not need help with this",
     `2` = "no, I get enough hours of help with this",
     `3` = "yes, I would like to have more hours help with this"
   ),
   hn5 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no, I do not need help with this",
     `2` = "no, I get enough hours of help with this",
     `3` = "yes, I would like to have more hours help with this"
   ),
   hn6 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no, I do not need help with this",
     `2` = "no, I get enough hours of help with this",
     `3` = "yes, I would like to have more hours help with this"
   ),
   homec1 = c(
     `-5` = "not available, interview terminated",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes"
   ),
   homec2 = c(
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `1` = "applied and received",
     `2` = "applied and not received",
     `3` = "not applied"
   ),
   homec3 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "on waiting list/waiting for indication",
     `2` = "CIZ: use informal network",
     `3` = "CIZ: need for care not severe enough",
     `4` = "I do not know",
     `5` = "other reason"
   ),
-  homec3s = c(`-2` = "not available, routing", `0` = "to be coded"),
+  homec3s = c(
+    default_missing_labels[c("-2")],
+    `0` = "to be coded"
+  ),
   homec4 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "do not know how",
     `2` = "I do not qualify",
     `3` = "I can not pay for it",
@@ -5588,136 +5694,103 @@ standardized_value_labels <- list(
     `5` = "do not want strangers in home",
     `6` = "other reason"
   ),
-  homec4s = c(`-2` = "not available, routing", `0` = "to be coded"),
+  homec4s = c(
+    default_missing_labels[c("-2")],
+    `0` = "to be coded"
+  ),
   nhelp01 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp02a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp02b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp04a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp04b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp06a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp06b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp07 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp08 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp09 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp11 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelp12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   nhelpyn = c(
     `-5` = "not available, interview terminated",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "no",
     `2` = "yes",
     `3` = "do not know",
@@ -5725,131 +5798,99 @@ standardized_value_labels <- list(
   ),
   nhour01 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour02 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour02a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour02b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour03 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour04 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour04a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour04b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour05 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour06 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour06a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour06b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour07 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour08 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour09 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour10 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour1001 = stats::setNames(character(0), character(0)),
   nhour1002 = stats::setNames(character(0), character(0)),
@@ -5858,11 +5899,9 @@ standardized_value_labels <- list(
   nhour1005 = stats::setNames(character(0), character(0)),
   nhour11 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour1101 = stats::setNames(character(0), character(0)),
   nhour1102 = stats::setNames(character(0), character(0)),
@@ -5871,11 +5910,9 @@ standardized_value_labels <- list(
   nhour1105 = stats::setNames(character(0), character(0)),
   nhour12 = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   nhour1201 = stats::setNames(character(0), character(0)),
   nhour1202 = stats::setNames(character(0), character(0)),
@@ -5924,67 +5961,175 @@ standardized_value_labels <- list(
   nhour905 = stats::setNames(character(0), character(0)),
   nhourtot = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
-  nsex1001 = c(`1` = "man", `2` = "woman"),
-  nsex1002 = c(`1` = "man", `2` = "woman"),
-  nsex1003 = c(`1` = "man", `2` = "woman"),
-  nsex1004 = c(`1` = "man", `2` = "woman"),
-  nsex1005 = c(`1` = "man", `2` = "woman"),
-  nsex1101 = c(`1` = "man", `2` = "woman"),
-  nsex1102 = c(`1` = "man", `2` = "woman"),
-  nsex1103 = c(`1` = "man", `2` = "woman"),
-  nsex1104 = c(`1` = "man", `2` = "woman"),
-  nsex1105 = c(`1` = "man", `2` = "woman"),
-  nsex1201 = c(`1` = "man", `2` = "woman"),
-  nsex1202 = c(`1` = "man", `2` = "woman"),
-  nsex1203 = c(`1` = "man", `2` = "woman"),
-  nsex1204 = c(`1` = "man", `2` = "woman"),
-  nsex1205 = c(`1` = "man", `2` = "woman"),
-  nsex201 = c(`1` = "man", `2` = "woman"),
-  nsex202 = c(`1` = "man", `2` = "woman"),
-  nsex203 = c(`1` = "man", `2` = "woman"),
-  nsex204 = c(`1` = "man", `2` = "woman"),
-  nsex205 = c(`1` = "man", `2` = "woman"),
-  nsex301 = c(`1` = "man", `2` = "woman"),
-  nsex302 = c(`1` = "man", `2` = "woman"),
-  nsex303 = c(`1` = "man", `2` = "woman"),
-  nsex304 = c(`1` = "man", `2` = "woman"),
-  nsex305 = c(`1` = "man", `2` = "woman"),
-  nsex401 = c(`1` = "man", `2` = "woman"),
-  nsex402 = c(`1` = "man", `2` = "woman"),
-  nsex403 = c(`1` = "man", `2` = "woman"),
-  nsex404 = c(`1` = "man", `2` = "woman"),
-  nsex405 = c(`1` = "man", `2` = "woman"),
-  nsex501 = c(`1` = "man", `2` = "woman"),
-  nsex502 = c(`1` = "man", `2` = "woman"),
-  nsex503 = c(`1` = "man", `2` = "woman"),
-  nsex504 = c(`1` = "man", `2` = "woman"),
-  nsex505 = c(`1` = "man", `2` = "woman"),
-  nsex601 = c(`1` = "man", `2` = "woman"),
-  nsex602 = c(`1` = "man", `2` = "woman"),
-  nsex603 = c(`1` = "man", `2` = "woman"),
-  nsex604 = c(`1` = "man", `2` = "woman"),
-  nsex605 = c(`1` = "man", `2` = "woman"),
-  nsex701 = c(`1` = "man", `2` = "woman"),
-  nsex702 = c(`1` = "man", `2` = "woman"),
-  nsex703 = c(`1` = "man", `2` = "woman"),
-  nsex704 = c(`1` = "man", `2` = "woman"),
-  nsex705 = c(`1` = "man", `2` = "woman"),
-  nsex801 = c(`1` = "man", `2` = "woman"),
-  nsex802 = c(`1` = "man", `2` = "woman"),
-  nsex803 = c(`1` = "man", `2` = "woman"),
-  nsex804 = c(`1` = "man", `2` = "woman"),
-  nsex805 = c(`1` = "man", `2` = "woman"),
-  nsex901 = c(`1` = "man", `2` = "woman"),
-  nsex902 = c(`1` = "man", `2` = "woman"),
-  nsex903 = c(`1` = "man", `2` = "woman"),
-  nsex904 = c(`1` = "man", `2` = "woman"),
-  nsex905 = c(`1` = "man", `2` = "woman"),
+  nsex1001 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex1002 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex1003 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex1004 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex1005 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex1101 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex1102 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex1103 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex1104 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex1105 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex1201 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex1202 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex1203 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex1204 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex1205 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex201 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex202 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex203 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex204 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex205 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex301 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex302 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex303 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex304 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex305 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex401 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex402 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex403 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex404 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex405 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex501 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex502 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex503 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex504 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex505 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex601 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex602 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex603 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex604 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex605 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex701 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex702 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex703 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex704 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex705 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex801 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex802 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex803 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex804 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex805 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex901 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex902 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex903 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex904 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  nsex905 = c(
+    default_answer_labels[c("1", "2")]
+  ),
   nx02 = stats::setNames(character(0), character(0)),
   nx03 = stats::setNames(character(0), character(0)),
   nx04 = stats::setNames(character(0), character(0)),
@@ -5997,221 +6142,160 @@ standardized_value_labels <- list(
   nx11 = stats::setNames(character(0), character(0)),
   nx12 = stats::setNames(character(0), character(0)),
   pgb01 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   pgb02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   pgb03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   pgb04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   pgb05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   pgb06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   pgb07 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   pgb08 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   pgb09 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   pgb10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   pgb11 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   pgb12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   pgbyn = c(
     `-5` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-1")],
     `1` = "no",
-    `2` = "coding category 2",
+    `2` = "label varies by wave",
     `3` = "do not know",
     `4` = "refused to answer"
   ),
   phelp01 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp02a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp02b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp04a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp04b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp06a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp06b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp07 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp08 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp09 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp11 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   phelp12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
@@ -6219,19 +6303,14 @@ standardized_value_labels <- list(
     `-7` = "not available",
     `-6` = "not available, no partner",
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes",
     `3` = "do not know",
     `4` = "refused to answer"
   ),
   phlp01b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "not at all or hardly a burden",
     `2` = "somewhat a burden",
     `3` = "rather heavy burden",
@@ -6239,154 +6318,118 @@ standardized_value_labels <- list(
     `5` = "overburdened"
   ),
   phlp01m = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "January",
     `12` = "... December"
   ),
   phlp01y = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   phour01 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   phour02 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   phour02a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   phour02b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   phour03 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   phour04 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   phour04a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   phour04b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   phour05 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   phour06 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   phour06a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   phour06b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   phour07 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   phour08 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   phour09 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   phour10 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   phour1001 = stats::setNames(character(0), character(0)),
   phour1002 = stats::setNames(character(0), character(0)),
@@ -6395,12 +6438,10 @@ standardized_value_labels <- list(
   phour1005 = stats::setNames(character(0), character(0)),
   phour11 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   phour1101 = stats::setNames(character(0), character(0)),
   phour1102 = stats::setNames(character(0), character(0)),
@@ -6409,12 +6450,10 @@ standardized_value_labels <- list(
   phour1105 = stats::setNames(character(0), character(0)),
   phour12 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   phour1201 = stats::setNames(character(0), character(0)),
   phour1202 = stats::setNames(character(0), character(0)),
@@ -6463,67 +6502,175 @@ standardized_value_labels <- list(
   phour905 = stats::setNames(character(0), character(0)),
   phourtot = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
-  psex1001 = c(`1` = "man", `2` = "woman"),
-  psex1002 = c(`1` = "man", `2` = "woman"),
-  psex1003 = c(`1` = "man", `2` = "woman"),
-  psex1004 = c(`1` = "man", `2` = "woman"),
-  psex1005 = c(`1` = "man", `2` = "woman"),
-  psex1101 = c(`1` = "man", `2` = "woman"),
-  psex1102 = c(`1` = "man", `2` = "woman"),
-  psex1103 = c(`1` = "man", `2` = "woman"),
-  psex1104 = c(`1` = "man", `2` = "woman"),
-  psex1105 = c(`1` = "man", `2` = "woman"),
-  psex1201 = c(`1` = "man", `2` = "woman"),
-  psex1202 = c(`1` = "man", `2` = "woman"),
-  psex1203 = c(`1` = "man", `2` = "woman"),
-  psex1204 = c(`1` = "man", `2` = "woman"),
-  psex1205 = c(`1` = "man", `2` = "woman"),
-  psex201 = c(`1` = "man", `2` = "woman"),
-  psex202 = c(`1` = "man", `2` = "woman"),
-  psex203 = c(`1` = "man", `2` = "woman"),
-  psex204 = c(`1` = "man", `2` = "woman"),
-  psex205 = c(`1` = "man", `2` = "woman"),
-  psex301 = c(`1` = "man", `2` = "woman"),
-  psex302 = c(`1` = "man", `2` = "woman"),
-  psex303 = c(`1` = "man", `2` = "woman"),
-  psex304 = c(`1` = "man", `2` = "woman"),
-  psex305 = c(`1` = "man", `2` = "woman"),
-  psex401 = c(`1` = "man", `2` = "woman"),
-  psex402 = c(`1` = "man", `2` = "woman"),
-  psex403 = c(`1` = "man", `2` = "woman"),
-  psex404 = c(`1` = "man", `2` = "woman"),
-  psex405 = c(`1` = "man", `2` = "woman"),
-  psex501 = c(`1` = "man", `2` = "woman"),
-  psex502 = c(`1` = "man", `2` = "woman"),
-  psex503 = c(`1` = "man", `2` = "woman"),
-  psex504 = c(`1` = "man", `2` = "woman"),
-  psex505 = c(`1` = "man", `2` = "woman"),
-  psex601 = c(`1` = "man", `2` = "woman"),
-  psex602 = c(`1` = "man", `2` = "woman"),
-  psex603 = c(`1` = "man", `2` = "woman"),
-  psex604 = c(`1` = "man", `2` = "woman"),
-  psex605 = c(`1` = "man", `2` = "woman"),
-  psex701 = c(`1` = "man", `2` = "woman"),
-  psex702 = c(`1` = "man", `2` = "woman"),
-  psex703 = c(`1` = "man", `2` = "woman"),
-  psex704 = c(`1` = "man", `2` = "woman"),
-  psex705 = c(`1` = "man", `2` = "woman"),
-  psex801 = c(`1` = "man", `2` = "woman"),
-  psex802 = c(`1` = "man", `2` = "woman"),
-  psex803 = c(`1` = "man", `2` = "woman"),
-  psex804 = c(`1` = "man", `2` = "woman"),
-  psex805 = c(`1` = "man", `2` = "woman"),
-  psex901 = c(`1` = "man", `2` = "woman"),
-  psex902 = c(`1` = "man", `2` = "woman"),
-  psex903 = c(`1` = "man", `2` = "woman"),
-  psex904 = c(`1` = "man", `2` = "woman"),
-  psex905 = c(`1` = "man", `2` = "woman"),
+  psex1001 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex1002 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex1003 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex1004 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex1005 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex1101 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex1102 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex1103 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex1104 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex1105 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex1201 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex1202 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex1203 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex1204 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex1205 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex201 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex202 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex203 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex204 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex205 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex301 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex302 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex303 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex304 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex305 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex401 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex402 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex403 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex404 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex405 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex501 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex502 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex503 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex504 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex505 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex601 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex602 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex603 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex604 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex605 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex701 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex702 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex703 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex704 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex705 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex801 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex802 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex803 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex804 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex805 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex901 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex902 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex903 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex904 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  psex905 = c(
+    default_answer_labels[c("1", "2")]
+  ),
   px02 = stats::setNames(character(0), character(0)),
   px03 = stats::setNames(character(0), character(0)),
   px04 = stats::setNames(character(0), character(0)),
@@ -6536,33 +6683,25 @@ standardized_value_labels <- list(
   px11 = stats::setNames(character(0), character(0)),
   px12 = stats::setNames(character(0), character(0)),
   regie1 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "leave it all to others",
     `2` = "determine it somewhat by myself",
     `3` = "determine it all by myself"
   ),
   regie2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "leave it all to others",
     `2` = "determine it somewhat by myself",
     `3` = "determine it all by myself"
   ),
   regie3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "leave it all to others",
     `2` = "determine it somewhat by myself",
     `3` = "determine it all by myself"
   ),
   regie4 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "very unimportant",
     `2` = "unimportant",
     `3` = "not important / not unimportant",
@@ -6570,150 +6709,108 @@ standardized_value_labels <- list(
     `5` = "very important"
   ),
   rhelp01 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp02a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp02b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp04a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp04b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp06a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp06b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp07 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp08 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp09 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp11 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp6a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelp6b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rhelpyn = c(
     `-5` = "not available, interview terminated",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes",
     `3` = "do not know",
@@ -6721,141 +6818,109 @@ standardized_value_labels <- list(
   ),
   rhour01 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   rhour02 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   rhour02a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   rhour02b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   rhour03 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   rhour04 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   rhour04a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   rhour04b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   rhour05 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   rhour06 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   rhour06a = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   rhour06b = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
   rhour07 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   rhour08 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   rhour09 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   rhour10 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   rhour1001 = stats::setNames(character(0), character(0)),
   rhour1002 = stats::setNames(character(0), character(0)),
@@ -6864,12 +6929,10 @@ standardized_value_labels <- list(
   rhour1005 = stats::setNames(character(0), character(0)),
   rhour11 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   rhour1101 = stats::setNames(character(0), character(0)),
   rhour1102 = stats::setNames(character(0), character(0)),
@@ -6878,12 +6941,10 @@ standardized_value_labels <- list(
   rhour1105 = stats::setNames(character(0), character(0)),
   rhour12 = c(
     `-4` = "not available",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available",
     `0` = "<30 minutes",
-    `112` = "continuously day and night",
-    `168` = "continuously day and night"
+    default_answer_labels[c("112", "168")]
   ),
   rhour1201 = stats::setNames(character(0), character(0)),
   rhour1202 = stats::setNames(character(0), character(0)),
@@ -6932,366 +6993,392 @@ standardized_value_labels <- list(
   rhour905 = stats::setNames(character(0), character(0)),
   rhourtot = c(
     `-4` = "not available, refused",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<30 minutes",
-    `112` = "continuously day and night"
+    default_answer_labels[c("112")]
   ),
-  rsex1001 = c(`1` = "man", `2` = "woman"),
-  rsex1002 = c(`1` = "man", `2` = "woman"),
-  rsex1003 = c(`1` = "man", `2` = "woman"),
-  rsex1004 = c(`1` = "man", `2` = "woman"),
-  rsex1005 = c(`1` = "man", `2` = "woman"),
-  rsex1101 = c(`1` = "man", `2` = "woman"),
-  rsex1102 = c(`1` = "man", `2` = "woman"),
-  rsex1103 = c(`1` = "man", `2` = "woman"),
-  rsex1104 = c(`1` = "man", `2` = "woman"),
-  rsex1105 = c(`1` = "man", `2` = "woman"),
-  rsex1201 = c(`1` = "man", `2` = "woman"),
-  rsex1202 = c(`1` = "man", `2` = "woman"),
-  rsex1203 = c(`1` = "man", `2` = "woman"),
-  rsex1204 = c(`1` = "man", `2` = "woman"),
-  rsex1205 = c(`1` = "man", `2` = "woman"),
-  rsex201 = c(`1` = "man", `2` = "woman"),
-  rsex202 = c(`1` = "man", `2` = "woman"),
-  rsex203 = c(`1` = "man", `2` = "woman"),
-  rsex204 = c(`1` = "man", `2` = "woman"),
-  rsex205 = c(`1` = "man", `2` = "woman"),
-  rsex301 = c(`1` = "man", `2` = "woman"),
-  rsex302 = c(`1` = "man", `2` = "woman"),
-  rsex303 = c(`1` = "man", `2` = "woman"),
-  rsex304 = c(`1` = "man", `2` = "woman"),
-  rsex305 = c(`1` = "man", `2` = "woman"),
-  rsex401 = c(`1` = "man", `2` = "woman"),
-  rsex402 = c(`1` = "man", `2` = "woman"),
-  rsex403 = c(`1` = "man", `2` = "woman"),
-  rsex404 = c(`1` = "man", `2` = "woman"),
-  rsex405 = c(`1` = "man", `2` = "woman"),
-  rsex501 = c(`1` = "man", `2` = "woman"),
-  rsex502 = c(`1` = "man", `2` = "woman"),
-  rsex503 = c(`1` = "man", `2` = "woman"),
-  rsex504 = c(`1` = "man", `2` = "woman"),
-  rsex505 = c(`1` = "man", `2` = "woman"),
-  rsex601 = c(`1` = "man", `2` = "woman"),
-  rsex602 = c(`1` = "man", `2` = "woman"),
-  rsex603 = c(`1` = "man", `2` = "woman"),
-  rsex604 = c(`1` = "man", `2` = "woman"),
-  rsex605 = c(`1` = "man", `2` = "woman"),
-  rsex701 = c(`1` = "man", `2` = "woman"),
-  rsex702 = c(`1` = "man", `2` = "woman"),
-  rsex703 = c(`1` = "man", `2` = "woman"),
-  rsex704 = c(`1` = "man", `2` = "woman"),
-  rsex705 = c(`1` = "man", `2` = "woman"),
-  rsex801 = c(`1` = "man", `2` = "woman"),
-  rsex802 = c(`1` = "man", `2` = "woman"),
-  rsex803 = c(`1` = "man", `2` = "woman"),
-  rsex804 = c(`1` = "man", `2` = "woman"),
-  rsex805 = c(`1` = "man", `2` = "woman"),
-  rsex901 = c(`1` = "man", `2` = "woman"),
-  rsex902 = c(`1` = "man", `2` = "woman"),
-  rsex903 = c(`1` = "man", `2` = "woman"),
-  rsex904 = c(`1` = "man", `2` = "woman"),
-  rsex905 = c(`1` = "man", `2` = "woman"),
+  rsex1001 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex1002 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex1003 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex1004 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex1005 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex1101 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex1102 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex1103 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex1104 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex1105 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex1201 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex1202 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex1203 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex1204 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex1205 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex201 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex202 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex203 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex204 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex205 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex301 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex302 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex303 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex304 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex305 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex401 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex402 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex403 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex404 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex405 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex501 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex502 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex503 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex504 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex505 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex601 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex602 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex603 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex604 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex605 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex701 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex702 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex703 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex704 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex705 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex801 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex802 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex803 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex804 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex805 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex901 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex902 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex903 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex904 = c(
+    default_answer_labels[c("1", "2")]
+  ),
+  rsex905 = c(
+    default_answer_labels[c("1", "2")]
+  ),
   rsick01 = c(
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick03a = c(
-    `-3` = "not available, wrong skip",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick03b = c(
-    `-3` = "not available, wrong skip",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick05a = c(
-    `-3` = "not available, wrong skip",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick05b = c(
-    `-3` = "not available, wrong skip",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick07 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick07a = c(
-    `-3` = "not available, wrong skip",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick07b = c(
-    `-3` = "not available, wrong skip",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick08 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick09 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick11 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick13 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick14 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick14a = c(
-    `-3` = "not available, wrong skip",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick14b = c(
-    `-3` = "not available, wrong skip",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick15 = c(
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick16 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick17 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick17a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick17b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick18 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick19 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick19a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick19b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick20 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick21 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick21a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick21b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick22 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick23 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick24 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick25 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick26 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick27 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick28 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick28a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   rsick28b = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
@@ -7307,128 +7394,103 @@ standardized_value_labels <- list(
   rx11 = stats::setNames(character(0), character(0)),
   rx12 = stats::setNames(character(0), character(0)),
   suff401 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   suff402 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   suff403 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   suff404 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   suff405 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   suff406 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   suff407 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   suff408 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   suff409 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   suff410 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   suff411 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   suff412 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   suff413 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "not mentioned",
     `1` = "mentioned"
   ),
   suffic = c(
     `-6` = "not available, r not need help",
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "not available",
-    `-1` = "not available, asked",
     `1` = "insufficient",
-    `2` = "ordinal category 2",
+    `2` = "label varies by wave",
     `3` = "sufficient",
-    `4` = "ordinal category 4",
+    `4` = "label varies by wave",
     `5` = "refused to answer"
   ),
   suffic1 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   suffic2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   suffic3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   suffic4 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   suffoth = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   )
@@ -7436,117 +7498,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "dhelp01",
-    "dhelp02",
-    "dhelp03",
-    "dhelp04",
-    "dhelp05",
-    "dhelp06",
-    "dhelp07",
-    "dhelp08",
-    "dhelp09",
-    "dhelp10",
-    "dhelp11",
-    "dhelp12",
-    "dhelpyn",
-    "dhour01",
-    "dhour02",
-    "dhour03",
-    "dhour04",
-    "dhour05",
-    "dhour06",
-    "dhour07",
-    "dhour08",
-    "dhour09",
-    "dhour10",
-    "dhour11",
-    "dhour12",
-    "health1",
-    "health2",
-    "health3",
-    "health4",
-    "hmunici",
-    "phelp01",
-    "phelp02",
-    "phelp03",
-    "phelp04",
-    "phelp05",
-    "phelp06",
-    "phelp07",
-    "phelp08",
-    "phelp09",
-    "phelp10",
-    "phelp11",
-    "phelp12",
-    "phelpyn",
-    "phour01",
-    "phour02",
-    "phour03",
-    "phour04",
-    "phour05",
-    "phour06",
-    "phour07",
-    "phour08",
-    "phour09",
-    "phour10",
-    "phour11",
-    "phour12",
-    "rhelp01",
-    "rhelp02",
-    "rhelp03",
-    "rhelp04",
-    "rhelp05",
-    "rhelp06",
-    "rhelp07",
-    "rhelp08",
-    "rhelp09",
-    "rhelp10",
-    "rhelp11",
-    "rhelp12",
-    "rhelpyn",
-    "rhour01",
-    "rhour02",
-    "rhour03",
-    "rhour04",
-    "rhour05",
-    "rhour06",
-    "rhour07",
-    "rhour08",
-    "rhour09",
-    "rhour10",
-    "rhour11",
-    "rhour12",
-    "rsick01",
-    "rsick02",
-    "rsick03",
-    "rsick04",
-    "rsick05",
-    "rsick06",
-    "rsick07",
-    "rsick08",
-    "rsick09",
-    "rsick10",
-    "rsick11",
-    "rsick12",
-    "rsick13",
-    "rsick14",
-    "rsick15",
-    "rsick16",
-    "rsick17",
-    "rsick18",
-    "rsick19",
-    "rsick20",
-    "rsick21",
-    "rsick22",
-    "rsick23",
-    "rsick24",
-    "rsick25",
-    "rsick26",
-    "rsick27",
-    "rsick28",
-    "suffic"
-  )],
+    standardized_value_labels,
     dhelp01 = c(`-2` = "na, see BDHELPYN", `0` = "not mentioned", `1` = "mentioned"),
     dhelp02 = c(`-2` = "na, see BDHELPYN", `0` = "not mentioned", `1` = "mentioned"),
     dhelp03 = c(`-2` = "na, see BDHELPYN", `0` = "not mentioned", `1` = "mentioned"),
@@ -7654,9 +7606,7 @@ value_labels_list <- list(
     health1 = .replace_labels(
     standardized_value_labels$health1,
     `-6` = "na, technical missing",
-    `-5` = "interview terminated",
-    `-4` = "na, short interview",
-    `-1` = "na, asked"
+    `-5` = "interview terminated"
   ),
     health2 = c(
     `-3` = "na, wrong skip",
@@ -7668,15 +7618,11 @@ value_labels_list <- list(
   ),
     health3 = .replace_labels(
     standardized_value_labels$health3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see BHEALTH1"
   ),
     health4 = .replace_labels(
     standardized_value_labels$health4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see BHEALTH1"
   ),
     hmunici = c(
     `-4` = "na, short interview",
@@ -7923,9 +7869,7 @@ value_labels_list <- list(
     rsick15 = .replace_labels(
     standardized_value_labels$rsick15,
     `-4` = "na short interview",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     rsick16 = c(`-2` = "na, see BRSICK15", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick17 = c(`-2` = "na, see BRSICK15", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
@@ -7953,187 +7897,66 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "dhelp01",
-    "dhelp02",
-    "dhelp03",
-    "dhelp04",
-    "dhelp05",
-    "dhelp06",
-    "dhelp07",
-    "dhelp08",
-    "dhelp09",
-    "dhelp10",
-    "dhelp11",
-    "dhelp12",
-    "dhelpyn",
-    "dhour01",
-    "dhour02",
-    "dhour03",
-    "dhour04",
-    "dhour05",
-    "dhour06",
-    "dhour07",
-    "dhour08",
-    "dhour09",
-    "dhour10",
-    "dhour11",
-    "dhour12",
-    "health1",
-    "health2",
-    "health3",
-    "health4",
-    "phelp01",
-    "phelp02",
-    "phelp03",
-    "phelp04",
-    "phelp05",
-    "phelp06",
-    "phelp07",
-    "phelp08",
-    "phelp09",
-    "phelp10",
-    "phelp11",
-    "phelp12",
-    "phelpyn",
-    "phour01",
-    "phour02",
-    "phour03",
-    "phour04",
-    "phour05",
-    "phour06",
-    "phour07",
-    "phour08",
-    "phour09",
-    "phour10",
-    "phour11",
-    "phour12",
-    "rhelp01",
-    "rhelp02",
-    "rhelp03",
-    "rhelp04",
-    "rhelp05",
-    "rhelp06",
-    "rhelp07",
-    "rhelp08",
-    "rhelp09",
-    "rhelp10",
-    "rhelp11",
-    "rhelp12",
-    "rhelpyn",
-    "rhour01",
-    "rhour02",
-    "rhour03",
-    "rhour04",
-    "rhour05",
-    "rhour06",
-    "rhour07",
-    "rhour08",
-    "rhour09",
-    "rhour10",
-    "rhour11",
-    "rhour12",
-    "rsick01",
-    "rsick02",
-    "rsick03",
-    "rsick04",
-    "rsick05",
-    "rsick06",
-    "rsick07",
-    "rsick08",
-    "rsick09",
-    "rsick10",
-    "rsick11",
-    "rsick12",
-    "rsick13",
-    "rsick14",
-    "rsick15",
-    "rsick16",
-    "rsick17",
-    "rsick18",
-    "rsick19",
-    "rsick20",
-    "rsick21",
-    "rsick22",
-    "rsick23",
-    "rsick24",
-    "rsick25",
-    "rsick26",
-    "rsick27",
-    "rsick28",
-    "suffic"
-  )],
+    standardized_value_labels,
     dhelp01 = .replace_labels(
     standardized_value_labels$dhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     dhelp02 = .replace_labels(
     standardized_value_labels$dhelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     dhelp03 = .replace_labels(
     standardized_value_labels$dhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     dhelp04 = .replace_labels(
     standardized_value_labels$dhelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     dhelp05 = .replace_labels(
     standardized_value_labels$dhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     dhelp06 = .replace_labels(
     standardized_value_labels$dhelp06,
     `-3` = "na wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     dhelp07 = .replace_labels(
     standardized_value_labels$dhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     dhelp08 = .replace_labels(
     standardized_value_labels$dhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     dhelp09 = .replace_labels(
     standardized_value_labels$dhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     dhelp10 = .replace_labels(
     standardized_value_labels$dhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     dhelp11 = .replace_labels(
     standardized_value_labels$dhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     dhelp12 = .replace_labels(
     standardized_value_labels$dhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     dhelpyn = c(
     `-5` = "na, interv broken off",
@@ -8238,94 +8061,64 @@ value_labels_list <- list(
   ),
     health2 = .replace_labels(
     standardized_value_labels$health2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see CHEALTH1",
-    `-1` = "na, asked",
     `4` = "refused to answer"
   ),
     health3 = .replace_labels(
     standardized_value_labels$health3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see CHEALTH1"
   ),
     health4 = .replace_labels(
     standardized_value_labels$health4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see CHEALTH1"
   ),
     phelp01 = .replace_labels(
     standardized_value_labels$phelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CPHELPYN"
   ),
     phelp02 = .replace_labels(
     standardized_value_labels$phelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CPHELPYN"
   ),
     phelp03 = .replace_labels(
     standardized_value_labels$phelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CPHELPYN"
   ),
     phelp04 = .replace_labels(
     standardized_value_labels$phelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CPHELPYN"
   ),
     phelp05 = .replace_labels(
     standardized_value_labels$phelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CPHELPYN"
   ),
     phelp06 = .replace_labels(
     standardized_value_labels$phelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CPHELPYN"
   ),
     phelp07 = .replace_labels(
     standardized_value_labels$phelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CPHELPYN"
   ),
     phelp08 = .replace_labels(
     standardized_value_labels$phelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CPHELPYN"
   ),
     phelp09 = .replace_labels(
     standardized_value_labels$phelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CPHELPYN"
   ),
     phelp10 = .replace_labels(
     standardized_value_labels$phelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CPHELPYN"
   ),
     phelp11 = .replace_labels(
     standardized_value_labels$phelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CPHELPYN"
   ),
     phelp12 = .replace_labels(
     standardized_value_labels$phelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CPHELPYN"
   ),
     phelpyn = c(
     `-7` = "na, P outside HH",
@@ -8424,75 +8217,51 @@ value_labels_list <- list(
   ),
     rhelp01 = .replace_labels(
     standardized_value_labels$rhelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rhelp02 = .replace_labels(
     standardized_value_labels$rhelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rhelp03 = .replace_labels(
     standardized_value_labels$rhelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rhelp04 = .replace_labels(
     standardized_value_labels$rhelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rhelp05 = .replace_labels(
     standardized_value_labels$rhelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rhelp06 = .replace_labels(
     standardized_value_labels$rhelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rhelp07 = .replace_labels(
     standardized_value_labels$rhelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rhelp08 = .replace_labels(
     standardized_value_labels$rhelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rhelp09 = .replace_labels(
     standardized_value_labels$rhelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rhelp10 = .replace_labels(
     standardized_value_labels$rhelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rhelp11 = .replace_labels(
     standardized_value_labels$rhelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rhelp12 = .replace_labels(
     standardized_value_labels$rhelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rhelpyn = c(
     `-5` = "na, interv broken off",
@@ -8606,81 +8375,55 @@ value_labels_list <- list(
   ),
     rsick02 = .replace_labels(
     standardized_value_labels$rsick02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rsick03 = .replace_labels(
     standardized_value_labels$rsick03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rsick04 = .replace_labels(
     standardized_value_labels$rsick04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rsick05 = .replace_labels(
     standardized_value_labels$rsick05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rsick06 = .replace_labels(
     standardized_value_labels$rsick06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rsick07 = .replace_labels(
     standardized_value_labels$rsick07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rsick08 = .replace_labels(
     standardized_value_labels$rsick08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rsick09 = .replace_labels(
     standardized_value_labels$rsick09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rsick10 = .replace_labels(
     standardized_value_labels$rsick10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rsick11 = .replace_labels(
     standardized_value_labels$rsick11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rsick12 = .replace_labels(
     standardized_value_labels$rsick12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rsick13 = .replace_labels(
     standardized_value_labels$rsick13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rsick14 = .replace_labels(
     standardized_value_labels$rsick14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CRHELPYN"
   ),
     rsick15 = c(
     `-3` = "na, wrong skip",
@@ -8691,81 +8434,55 @@ value_labels_list <- list(
   ),
     rsick16 = .replace_labels(
     standardized_value_labels$rsick16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     rsick17 = .replace_labels(
     standardized_value_labels$rsick17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     rsick18 = .replace_labels(
     standardized_value_labels$rsick18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     rsick19 = .replace_labels(
     standardized_value_labels$rsick19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     rsick20 = .replace_labels(
     standardized_value_labels$rsick20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     rsick21 = .replace_labels(
     standardized_value_labels$rsick21,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     rsick22 = .replace_labels(
     standardized_value_labels$rsick22,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     rsick23 = .replace_labels(
     standardized_value_labels$rsick23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     rsick24 = .replace_labels(
     standardized_value_labels$rsick24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     rsick25 = .replace_labels(
     standardized_value_labels$rsick25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     rsick26 = .replace_labels(
     standardized_value_labels$rsick26,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     rsick27 = .replace_labels(
     standardized_value_labels$rsick27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     rsick28 = .replace_labels(
     standardized_value_labels$rsick28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see CDHELPYN"
   ),
     suffic = c(
     `-3` = "na, wrong skip",
@@ -8779,187 +8496,66 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "dhelp01",
-    "dhelp02",
-    "dhelp03",
-    "dhelp04",
-    "dhelp05",
-    "dhelp06",
-    "dhelp07",
-    "dhelp08",
-    "dhelp09",
-    "dhelp10",
-    "dhelp11",
-    "dhelp12",
-    "dhelpyn",
-    "dhour01",
-    "dhour02",
-    "dhour03",
-    "dhour04",
-    "dhour05",
-    "dhour06",
-    "dhour07",
-    "dhour08",
-    "dhour09",
-    "dhour10",
-    "dhour11",
-    "dhour12",
-    "health1",
-    "health2",
-    "health3",
-    "health4",
-    "phelp01",
-    "phelp02",
-    "phelp03",
-    "phelp04",
-    "phelp05",
-    "phelp06",
-    "phelp07",
-    "phelp08",
-    "phelp09",
-    "phelp10",
-    "phelp11",
-    "phelp12",
-    "phelpyn",
-    "phour01",
-    "phour02",
-    "phour03",
-    "phour04",
-    "phour05",
-    "phour06",
-    "phour07",
-    "phour08",
-    "phour09",
-    "phour10",
-    "phour11",
-    "phour12",
-    "rhelp01",
-    "rhelp02",
-    "rhelp03",
-    "rhelp04",
-    "rhelp05",
-    "rhelp06",
-    "rhelp07",
-    "rhelp08",
-    "rhelp09",
-    "rhelp10",
-    "rhelp11",
-    "rhelp12",
-    "rhelpyn",
-    "rhour01",
-    "rhour02",
-    "rhour03",
-    "rhour04",
-    "rhour05",
-    "rhour06",
-    "rhour07",
-    "rhour08",
-    "rhour09",
-    "rhour10",
-    "rhour11",
-    "rhour12",
-    "rsick01",
-    "rsick02",
-    "rsick03",
-    "rsick04",
-    "rsick05",
-    "rsick06",
-    "rsick07",
-    "rsick08",
-    "rsick09",
-    "rsick10",
-    "rsick11",
-    "rsick12",
-    "rsick13",
-    "rsick14",
-    "rsick15",
-    "rsick16",
-    "rsick17",
-    "rsick18",
-    "rsick19",
-    "rsick20",
-    "rsick21",
-    "rsick22",
-    "rsick23",
-    "rsick24",
-    "rsick25",
-    "rsick26",
-    "rsick27",
-    "rsick28",
-    "suffic"
-  )],
+    standardized_value_labels,
     dhelp01 = .replace_labels(
     standardized_value_labels$dhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp02 = .replace_labels(
     standardized_value_labels$dhelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp03 = .replace_labels(
     standardized_value_labels$dhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp04 = .replace_labels(
     standardized_value_labels$dhelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp05 = .replace_labels(
     standardized_value_labels$dhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp06 = .replace_labels(
     standardized_value_labels$dhelp06,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp07 = .replace_labels(
     standardized_value_labels$dhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp08 = .replace_labels(
     standardized_value_labels$dhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp09 = .replace_labels(
     standardized_value_labels$dhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp10 = .replace_labels(
     standardized_value_labels$dhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp11 = .replace_labels(
     standardized_value_labels$dhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp12 = .replace_labels(
     standardized_value_labels$dhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelpyn = c(
     `-5` = "na, terminated interview",
@@ -9064,94 +8660,64 @@ value_labels_list <- list(
   ),
     health2 = .replace_labels(
     standardized_value_labels$health2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see D/BHEALTH1",
-    `-1` = "na, asked",
     `4` = "refused to answer"
   ),
     health3 = .replace_labels(
     standardized_value_labels$health3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BHEALTH1"
   ),
     health4 = .replace_labels(
     standardized_value_labels$health4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BHEALTH1"
   ),
     phelp01 = .replace_labels(
     standardized_value_labels$phelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp02 = .replace_labels(
     standardized_value_labels$phelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp03 = .replace_labels(
     standardized_value_labels$phelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp04 = .replace_labels(
     standardized_value_labels$phelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp05 = .replace_labels(
     standardized_value_labels$phelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp06 = .replace_labels(
     standardized_value_labels$phelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp07 = .replace_labels(
     standardized_value_labels$phelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp08 = .replace_labels(
     standardized_value_labels$phelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp09 = .replace_labels(
     standardized_value_labels$phelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp10 = .replace_labels(
     standardized_value_labels$phelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp11 = .replace_labels(
     standardized_value_labels$phelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp12 = .replace_labels(
     standardized_value_labels$phelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelpyn = c(
     `-7` = "na, P outside HH",
@@ -9250,75 +8816,51 @@ value_labels_list <- list(
   ),
     rhelp01 = .replace_labels(
     standardized_value_labels$rhelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp02 = .replace_labels(
     standardized_value_labels$rhelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp03 = .replace_labels(
     standardized_value_labels$rhelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp04 = .replace_labels(
     standardized_value_labels$rhelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp05 = .replace_labels(
     standardized_value_labels$rhelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp06 = .replace_labels(
     standardized_value_labels$rhelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp07 = .replace_labels(
     standardized_value_labels$rhelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp08 = .replace_labels(
     standardized_value_labels$rhelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp09 = .replace_labels(
     standardized_value_labels$rhelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp10 = .replace_labels(
     standardized_value_labels$rhelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp11 = .replace_labels(
     standardized_value_labels$rhelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp12 = .replace_labels(
     standardized_value_labels$rhelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelpyn = c(
     `-5` = "na, terminated interview",
@@ -9432,81 +8974,55 @@ value_labels_list <- list(
   ),
     rsick02 = .replace_labels(
     standardized_value_labels$rsick02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick03 = .replace_labels(
     standardized_value_labels$rsick03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick04 = .replace_labels(
     standardized_value_labels$rsick04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick05 = .replace_labels(
     standardized_value_labels$rsick05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick06 = .replace_labels(
     standardized_value_labels$rsick06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick07 = .replace_labels(
     standardized_value_labels$rsick07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick08 = .replace_labels(
     standardized_value_labels$rsick08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick09 = .replace_labels(
     standardized_value_labels$rsick09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick10 = .replace_labels(
     standardized_value_labels$rsick10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick11 = .replace_labels(
     standardized_value_labels$rsick11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick12 = .replace_labels(
     standardized_value_labels$rsick12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick13 = .replace_labels(
     standardized_value_labels$rsick13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick14 = .replace_labels(
     standardized_value_labels$rsick14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick15 = c(
     `-3` = "na, wrong skip",
@@ -9517,81 +9033,55 @@ value_labels_list <- list(
   ),
     rsick16 = .replace_labels(
     standardized_value_labels$rsick16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick17 = .replace_labels(
     standardized_value_labels$rsick17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick18 = .replace_labels(
     standardized_value_labels$rsick18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick19 = .replace_labels(
     standardized_value_labels$rsick19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick20 = .replace_labels(
     standardized_value_labels$rsick20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick21 = .replace_labels(
     standardized_value_labels$rsick21,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick22 = .replace_labels(
     standardized_value_labels$rsick22,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick23 = .replace_labels(
     standardized_value_labels$rsick23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick24 = .replace_labels(
     standardized_value_labels$rsick24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick25 = .replace_labels(
     standardized_value_labels$rsick25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick26 = .replace_labels(
     standardized_value_labels$rsick26,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick27 = .replace_labels(
     standardized_value_labels$rsick27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick28 = .replace_labels(
     standardized_value_labels$rsick28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     suffic = c(
     `-5` = "na, terminated interview",
@@ -9606,159 +9096,66 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "dhelp01",
-    "dhelp02",
-    "dhelp03",
-    "dhelp04",
-    "dhelp05",
-    "dhelp06",
-    "dhelp07",
-    "dhelp08",
-    "dhelp09",
-    "dhelp10",
-    "dhelp11",
-    "dhelp12",
-    "dhelpyn",
-    "dhour01",
-    "dhour02",
-    "dhour03",
-    "dhour04",
-    "dhour05",
-    "dhour06",
-    "dhour07",
-    "dhour08",
-    "dhour09",
-    "dhour10",
-    "dhour11",
-    "dhour12",
-    "health1",
-    "health2",
-    "health3",
-    "health4",
-    "phelp01",
-    "phelp02",
-    "phelp03",
-    "phelp04",
-    "phelp05",
-    "phelp06",
-    "phelp07",
-    "phelp08",
-    "phelp09",
-    "phelp10",
-    "phelp11",
-    "phelp12",
-    "phelpyn",
-    "phour01",
-    "phour02",
-    "phour03",
-    "phour04",
-    "phour05",
-    "phour06",
-    "phour07",
-    "phour08",
-    "phour09",
-    "phour10",
-    "phour11",
-    "phour12",
-    "rhelp01",
-    "rhelp02",
-    "rhelp03",
-    "rhelp04",
-    "rhelp05",
-    "rhelp06",
-    "rhelp07",
-    "rhelp08",
-    "rhelp09",
-    "rhelp10",
-    "rhelp11",
-    "rhelp12",
-    "rhelpyn",
-    "rhour01",
-    "rhour02",
-    "rhour03",
-    "rhour04",
-    "rhour05",
-    "rhour06",
-    "rhour07",
-    "rhour08",
-    "rhour09",
-    "rhour10",
-    "rhour11",
-    "rhour12",
-    "suffic"
-  )],
+    standardized_value_labels,
     dhelp01 = .replace_labels(
     standardized_value_labels$dhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see EDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EDHELPYN"
   ),
     dhelp02 = .replace_labels(
     standardized_value_labels$dhelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see EDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EDHELPYN"
   ),
     dhelp03 = .replace_labels(
     standardized_value_labels$dhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see EDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EDHELPYN"
   ),
     dhelp04 = .replace_labels(
     standardized_value_labels$dhelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see EDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EDHELPYN"
   ),
     dhelp05 = .replace_labels(
     standardized_value_labels$dhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see EDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EDHELPYN"
   ),
     dhelp06 = .replace_labels(
     standardized_value_labels$dhelp06,
     `-3` = "na wrong skip",
-    `-2` = "na, see EDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EDHELPYN"
   ),
     dhelp07 = .replace_labels(
     standardized_value_labels$dhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see EDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EDHELPYN"
   ),
     dhelp08 = .replace_labels(
     standardized_value_labels$dhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see EDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EDHELPYN"
   ),
     dhelp09 = .replace_labels(
     standardized_value_labels$dhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see EDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EDHELPYN"
   ),
     dhelp10 = .replace_labels(
     standardized_value_labels$dhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see EDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EDHELPYN"
   ),
     dhelp11 = .replace_labels(
     standardized_value_labels$dhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see EDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EDHELPYN"
   ),
     dhelp12 = .replace_labels(
     standardized_value_labels$dhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see EDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EDHELPYN"
   ),
     dhelpyn = c(
     `-5` = "na, terminated interview",
@@ -9863,94 +9260,64 @@ value_labels_list <- list(
   ),
     health2 = .replace_labels(
     standardized_value_labels$health2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see EHEALTH1",
-    `-1` = "na, asked",
     `4` = "refused to answer"
   ),
     health3 = .replace_labels(
     standardized_value_labels$health3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see EHEALTH1"
   ),
     health4 = .replace_labels(
     standardized_value_labels$health4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see EHEALTH1"
   ),
     phelp01 = .replace_labels(
     standardized_value_labels$phelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EPHELPYN"
   ),
     phelp02 = .replace_labels(
     standardized_value_labels$phelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EPHELPYN"
   ),
     phelp03 = .replace_labels(
     standardized_value_labels$phelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EPHELPYN"
   ),
     phelp04 = .replace_labels(
     standardized_value_labels$phelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EPHELPYN"
   ),
     phelp05 = .replace_labels(
     standardized_value_labels$phelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EPHELPYN"
   ),
     phelp06 = .replace_labels(
     standardized_value_labels$phelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EPHELPYN"
   ),
     phelp07 = .replace_labels(
     standardized_value_labels$phelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EPHELPYN"
   ),
     phelp08 = .replace_labels(
     standardized_value_labels$phelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EPHELPYN"
   ),
     phelp09 = .replace_labels(
     standardized_value_labels$phelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EPHELPYN"
   ),
     phelp10 = .replace_labels(
     standardized_value_labels$phelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EPHELPYN"
   ),
     phelp11 = .replace_labels(
     standardized_value_labels$phelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EPHELPYN"
   ),
     phelp12 = .replace_labels(
     standardized_value_labels$phelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see EPHELPYN"
   ),
     phelpyn = c(
     `-7` = "na, P outside HH",
@@ -10049,75 +9416,51 @@ value_labels_list <- list(
   ),
     rhelp01 = .replace_labels(
     standardized_value_labels$rhelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see ERHELPYN"
   ),
     rhelp02 = .replace_labels(
     standardized_value_labels$rhelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see ERHELPYN"
   ),
     rhelp03 = .replace_labels(
     standardized_value_labels$rhelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see ERHELPYN"
   ),
     rhelp04 = .replace_labels(
     standardized_value_labels$rhelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see ERHELPYN"
   ),
     rhelp05 = .replace_labels(
     standardized_value_labels$rhelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see ERHELPYN"
   ),
     rhelp06 = .replace_labels(
     standardized_value_labels$rhelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see ERHELPYN"
   ),
     rhelp07 = .replace_labels(
     standardized_value_labels$rhelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see ERHELPYN"
   ),
     rhelp08 = .replace_labels(
     standardized_value_labels$rhelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see ERHELPYN"
   ),
     rhelp09 = .replace_labels(
     standardized_value_labels$rhelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see ERHELPYN"
   ),
     rhelp10 = .replace_labels(
     standardized_value_labels$rhelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see ERHELPYN"
   ),
     rhelp11 = .replace_labels(
     standardized_value_labels$rhelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see ERHELPYN"
   ),
     rhelp12 = .replace_labels(
     standardized_value_labels$rhelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see ERHELPYN"
   ),
     rhelpyn = c(
     `-5` = "na, terminated interview",
@@ -10235,188 +9578,66 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "dhelp01",
-    "dhelp02",
-    "dhelp03",
-    "dhelp04",
-    "dhelp05",
-    "dhelp06",
-    "dhelp07",
-    "dhelp08",
-    "dhelp09",
-    "dhelp10",
-    "dhelp11",
-    "dhelp12",
-    "dhelpyn",
-    "dhour01",
-    "dhour02",
-    "dhour03",
-    "dhour04",
-    "dhour05",
-    "dhour06",
-    "dhour07",
-    "dhour08",
-    "dhour09",
-    "dhour10",
-    "dhour11",
-    "dhour12",
-    "health1",
-    "health2",
-    "health3",
-    "health4",
-    "hmunici",
-    "phelp01",
-    "phelp02",
-    "phelp03",
-    "phelp04",
-    "phelp05",
-    "phelp06",
-    "phelp07",
-    "phelp08",
-    "phelp09",
-    "phelp10",
-    "phelp11",
-    "phelp12",
-    "phelpyn",
-    "phour01",
-    "phour02",
-    "phour03",
-    "phour04",
-    "phour05",
-    "phour06",
-    "phour07",
-    "phour08",
-    "phour09",
-    "phour10",
-    "phour11",
-    "phour12",
-    "rhelp01",
-    "rhelp02",
-    "rhelp03",
-    "rhelp04",
-    "rhelp05",
-    "rhelp06",
-    "rhelp07",
-    "rhelp08",
-    "rhelp09",
-    "rhelp10",
-    "rhelp11",
-    "rhelp12",
-    "rhelpyn",
-    "rhour01",
-    "rhour02",
-    "rhour03",
-    "rhour04",
-    "rhour05",
-    "rhour06",
-    "rhour07",
-    "rhour08",
-    "rhour09",
-    "rhour10",
-    "rhour11",
-    "rhour12",
-    "rsick01",
-    "rsick02",
-    "rsick03",
-    "rsick04",
-    "rsick05",
-    "rsick06",
-    "rsick07",
-    "rsick08",
-    "rsick09",
-    "rsick10",
-    "rsick11",
-    "rsick12",
-    "rsick13",
-    "rsick14",
-    "rsick15",
-    "rsick16",
-    "rsick17",
-    "rsick18",
-    "rsick19",
-    "rsick20",
-    "rsick21",
-    "rsick22",
-    "rsick23",
-    "rsick24",
-    "rsick25",
-    "rsick26",
-    "rsick27",
-    "rsick28",
-    "suffic"
-  )],
+    standardized_value_labels,
     dhelp01 = .replace_labels(
     standardized_value_labels$dhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp02 = .replace_labels(
     standardized_value_labels$dhelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp03 = .replace_labels(
     standardized_value_labels$dhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp04 = .replace_labels(
     standardized_value_labels$dhelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp05 = .replace_labels(
     standardized_value_labels$dhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp06 = .replace_labels(
     standardized_value_labels$dhelp06,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp07 = .replace_labels(
     standardized_value_labels$dhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp08 = .replace_labels(
     standardized_value_labels$dhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp09 = .replace_labels(
     standardized_value_labels$dhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp10 = .replace_labels(
     standardized_value_labels$dhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp11 = .replace_labels(
     standardized_value_labels$dhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelp12 = .replace_labels(
     standardized_value_labels$dhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     dhelpyn = c(
     `-5` = "na, terminated interview",
@@ -10521,22 +9742,16 @@ value_labels_list <- list(
   ),
     health2 = .replace_labels(
     standardized_value_labels$health2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see D/BHEALTH1",
-    `-1` = "na, asked",
     `4` = "refused to answer"
   ),
     health3 = .replace_labels(
     standardized_value_labels$health3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BHEALTH1"
   ),
     health4 = .replace_labels(
     standardized_value_labels$health4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BHEALTH1"
   ),
     hmunici = c(
     `-5` = "na, terminated interview",
@@ -10549,75 +9764,51 @@ value_labels_list <- list(
   ),
     phelp01 = .replace_labels(
     standardized_value_labels$phelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp02 = .replace_labels(
     standardized_value_labels$phelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp03 = .replace_labels(
     standardized_value_labels$phelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp04 = .replace_labels(
     standardized_value_labels$phelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp05 = .replace_labels(
     standardized_value_labels$phelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp06 = .replace_labels(
     standardized_value_labels$phelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp07 = .replace_labels(
     standardized_value_labels$phelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp08 = .replace_labels(
     standardized_value_labels$phelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp09 = .replace_labels(
     standardized_value_labels$phelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp10 = .replace_labels(
     standardized_value_labels$phelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp11 = .replace_labels(
     standardized_value_labels$phelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelp12 = .replace_labels(
     standardized_value_labels$phelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BPHELPYN"
   ),
     phelpyn = c(
     `-7` = "na, P outside HH",
@@ -10716,75 +9907,51 @@ value_labels_list <- list(
   ),
     rhelp01 = .replace_labels(
     standardized_value_labels$rhelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp02 = .replace_labels(
     standardized_value_labels$rhelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp03 = .replace_labels(
     standardized_value_labels$rhelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp04 = .replace_labels(
     standardized_value_labels$rhelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp05 = .replace_labels(
     standardized_value_labels$rhelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp06 = .replace_labels(
     standardized_value_labels$rhelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp07 = .replace_labels(
     standardized_value_labels$rhelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp08 = .replace_labels(
     standardized_value_labels$rhelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp09 = .replace_labels(
     standardized_value_labels$rhelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp10 = .replace_labels(
     standardized_value_labels$rhelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp11 = .replace_labels(
     standardized_value_labels$rhelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelp12 = .replace_labels(
     standardized_value_labels$rhelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rhelpyn = c(
     `-5` = "na, terminated interview",
@@ -10898,81 +10065,55 @@ value_labels_list <- list(
   ),
     rsick02 = .replace_labels(
     standardized_value_labels$rsick02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick03 = .replace_labels(
     standardized_value_labels$rsick03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick04 = .replace_labels(
     standardized_value_labels$rsick04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick05 = .replace_labels(
     standardized_value_labels$rsick05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick06 = .replace_labels(
     standardized_value_labels$rsick06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick07 = .replace_labels(
     standardized_value_labels$rsick07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick08 = .replace_labels(
     standardized_value_labels$rsick08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick09 = .replace_labels(
     standardized_value_labels$rsick09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick10 = .replace_labels(
     standardized_value_labels$rsick10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick11 = .replace_labels(
     standardized_value_labels$rsick11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick12 = .replace_labels(
     standardized_value_labels$rsick12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick13 = .replace_labels(
     standardized_value_labels$rsick13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick14 = .replace_labels(
     standardized_value_labels$rsick14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BRHELPYN"
   ),
     rsick15 = c(
     `-3` = "na, wrong skip",
@@ -10983,81 +10124,55 @@ value_labels_list <- list(
   ),
     rsick16 = .replace_labels(
     standardized_value_labels$rsick16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick17 = .replace_labels(
     standardized_value_labels$rsick17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick18 = .replace_labels(
     standardized_value_labels$rsick18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick19 = .replace_labels(
     standardized_value_labels$rsick19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick20 = .replace_labels(
     standardized_value_labels$rsick20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick21 = .replace_labels(
     standardized_value_labels$rsick21,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick22 = .replace_labels(
     standardized_value_labels$rsick22,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick23 = .replace_labels(
     standardized_value_labels$rsick23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick24 = .replace_labels(
     standardized_value_labels$rsick24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick25 = .replace_labels(
     standardized_value_labels$rsick25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick26 = .replace_labels(
     standardized_value_labels$rsick26,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick27 = .replace_labels(
     standardized_value_labels$rsick27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     rsick28 = .replace_labels(
     standardized_value_labels$rsick28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see D/BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see D/BDHELPYN"
   ),
     suffic = c(
     `-5` = "na, terminated interview",
@@ -11072,193 +10187,66 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "dhelp01",
-    "dhelp02",
-    "dhelp03",
-    "dhelp04",
-    "dhelp05",
-    "dhelp06",
-    "dhelp07",
-    "dhelp08",
-    "dhelp09",
-    "dhelp10",
-    "dhelp11",
-    "dhelp12",
-    "dhelpyn",
-    "dhour01",
-    "dhour02",
-    "dhour03",
-    "dhour04",
-    "dhour05",
-    "dhour06",
-    "dhour07",
-    "dhour08",
-    "dhour09",
-    "dhour10",
-    "dhour11",
-    "dhour12",
-    "health1",
-    "health2",
-    "health3",
-    "health4",
-    "homec1",
-    "homec2",
-    "homec3",
-    "homec3s",
-    "homec4",
-    "homec4s",
-    "phelp01",
-    "phelp02",
-    "phelp03",
-    "phelp04",
-    "phelp05",
-    "phelp06",
-    "phelp07",
-    "phelp08",
-    "phelp09",
-    "phelp10",
-    "phelp11",
-    "phelp12",
-    "phelpyn",
-    "phour01",
-    "phour02",
-    "phour03",
-    "phour04",
-    "phour05",
-    "phour06",
-    "phour07",
-    "phour08",
-    "phour09",
-    "phour10",
-    "phour11",
-    "phour12",
-    "rhelp01",
-    "rhelp02",
-    "rhelp03",
-    "rhelp04",
-    "rhelp05",
-    "rhelp06",
-    "rhelp07",
-    "rhelp08",
-    "rhelp09",
-    "rhelp10",
-    "rhelp11",
-    "rhelp12",
-    "rhelpyn",
-    "rhour01",
-    "rhour02",
-    "rhour03",
-    "rhour04",
-    "rhour05",
-    "rhour06",
-    "rhour07",
-    "rhour08",
-    "rhour09",
-    "rhour10",
-    "rhour11",
-    "rhour12",
-    "rsick01",
-    "rsick02",
-    "rsick03",
-    "rsick04",
-    "rsick05",
-    "rsick06",
-    "rsick07",
-    "rsick08",
-    "rsick09",
-    "rsick10",
-    "rsick11",
-    "rsick12",
-    "rsick13",
-    "rsick14",
-    "rsick15",
-    "rsick16",
-    "rsick17",
-    "rsick18",
-    "rsick19",
-    "rsick20",
-    "rsick21",
-    "rsick22",
-    "rsick23",
-    "rsick24",
-    "rsick25",
-    "rsick26",
-    "rsick27",
-    "rsick28",
-    "suffic"
-  )],
+    standardized_value_labels,
     dhelp01 = .replace_labels(
     standardized_value_labels$dhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see FDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FDHELPYN"
   ),
     dhelp02 = .replace_labels(
     standardized_value_labels$dhelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see FDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FDHELPYN"
   ),
     dhelp03 = .replace_labels(
     standardized_value_labels$dhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see FDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FDHELPYN"
   ),
     dhelp04 = .replace_labels(
     standardized_value_labels$dhelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see FDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FDHELPYN"
   ),
     dhelp05 = .replace_labels(
     standardized_value_labels$dhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see FDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FDHELPYN"
   ),
     dhelp06 = .replace_labels(
     standardized_value_labels$dhelp06,
     `-3` = "na wrong skip",
-    `-2` = "na, see FDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FDHELPYN"
   ),
     dhelp07 = .replace_labels(
     standardized_value_labels$dhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see FDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FDHELPYN"
   ),
     dhelp08 = .replace_labels(
     standardized_value_labels$dhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see FDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FDHELPYN"
   ),
     dhelp09 = .replace_labels(
     standardized_value_labels$dhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see FDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FDHELPYN"
   ),
     dhelp10 = .replace_labels(
     standardized_value_labels$dhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see FDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FDHELPYN"
   ),
     dhelp11 = .replace_labels(
     standardized_value_labels$dhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see FDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FDHELPYN"
   ),
     dhelp12 = .replace_labels(
     standardized_value_labels$dhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see FDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FDHELPYN"
   ),
     dhelpyn = c(
     `-5` = "na, terminated interview",
@@ -11363,27 +10351,20 @@ value_labels_list <- list(
   ),
     health2 = .replace_labels(
     standardized_value_labels$health2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see FHEALTH1",
-    `-1` = "na, asked",
     `4` = "refused to answer"
   ),
     health3 = .replace_labels(
     standardized_value_labels$health3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see FHEALTH1"
   ),
     health4 = .replace_labels(
     standardized_value_labels$health4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see FHEALTH1"
   ),
     homec1 = .replace_labels(
     standardized_value_labels$homec1,
-    `-5` = "na, terminated interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated interview"
   ),
     homec2 = .replace_labels(
     standardized_value_labels$homec2,
@@ -11391,8 +10372,7 @@ value_labels_list <- list(
   ),
     homec3 = .replace_labels(
     standardized_value_labels$homec3,
-    `-2` = "na, see FHOMEC2",
-    `-1` = "na, asked"
+    `-2` = "na, see FHOMEC2"
   ),
     homec3s = .replace_labels(
     standardized_value_labels$homec3s,
@@ -11400,8 +10380,7 @@ value_labels_list <- list(
   ),
     homec4 = .replace_labels(
     standardized_value_labels$homec4,
-    `-2` = "na, see FHOMEC2",
-    `-1` = "na, asked"
+    `-2` = "na, see FHOMEC2"
   ),
     homec4s = .replace_labels(
     standardized_value_labels$homec4s,
@@ -11409,75 +10388,51 @@ value_labels_list <- list(
   ),
     phelp01 = .replace_labels(
     standardized_value_labels$phelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FPHELPYN"
   ),
     phelp02 = .replace_labels(
     standardized_value_labels$phelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FPHELPYN"
   ),
     phelp03 = .replace_labels(
     standardized_value_labels$phelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FPHELPYN"
   ),
     phelp04 = .replace_labels(
     standardized_value_labels$phelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FPHELPYN"
   ),
     phelp05 = .replace_labels(
     standardized_value_labels$phelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FPHELPYN"
   ),
     phelp06 = .replace_labels(
     standardized_value_labels$phelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FPHELPYN"
   ),
     phelp07 = .replace_labels(
     standardized_value_labels$phelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FPHELPYN"
   ),
     phelp08 = .replace_labels(
     standardized_value_labels$phelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FPHELPYN"
   ),
     phelp09 = .replace_labels(
     standardized_value_labels$phelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FPHELPYN"
   ),
     phelp10 = .replace_labels(
     standardized_value_labels$phelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FPHELPYN"
   ),
     phelp11 = .replace_labels(
     standardized_value_labels$phelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FPHELPYN"
   ),
     phelp12 = .replace_labels(
     standardized_value_labels$phelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FPHELPYN"
   ),
     phelpyn = c(
     `-7` = "na, P outside HH",
@@ -11576,75 +10531,51 @@ value_labels_list <- list(
   ),
     rhelp01 = .replace_labels(
     standardized_value_labels$rhelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rhelp02 = .replace_labels(
     standardized_value_labels$rhelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rhelp03 = .replace_labels(
     standardized_value_labels$rhelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rhelp04 = .replace_labels(
     standardized_value_labels$rhelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rhelp05 = .replace_labels(
     standardized_value_labels$rhelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rhelp06 = .replace_labels(
     standardized_value_labels$rhelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rhelp07 = .replace_labels(
     standardized_value_labels$rhelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rhelp08 = .replace_labels(
     standardized_value_labels$rhelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rhelp09 = .replace_labels(
     standardized_value_labels$rhelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rhelp10 = .replace_labels(
     standardized_value_labels$rhelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rhelp11 = .replace_labels(
     standardized_value_labels$rhelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rhelp12 = .replace_labels(
     standardized_value_labels$rhelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rhelpyn = c(
     `-5` = "na, terminated interview",
@@ -11758,81 +10689,55 @@ value_labels_list <- list(
   ),
     rsick02 = .replace_labels(
     standardized_value_labels$rsick02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick03 = .replace_labels(
     standardized_value_labels$rsick03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick04 = .replace_labels(
     standardized_value_labels$rsick04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick05 = .replace_labels(
     standardized_value_labels$rsick05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick06 = .replace_labels(
     standardized_value_labels$rsick06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick07 = .replace_labels(
     standardized_value_labels$rsick07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick08 = .replace_labels(
     standardized_value_labels$rsick08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick09 = .replace_labels(
     standardized_value_labels$rsick09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick10 = .replace_labels(
     standardized_value_labels$rsick10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick11 = .replace_labels(
     standardized_value_labels$rsick11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick12 = .replace_labels(
     standardized_value_labels$rsick12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick13 = .replace_labels(
     standardized_value_labels$rsick13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick14 = .replace_labels(
     standardized_value_labels$rsick14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick15 = c(
     `-3` = "na, wrong skip",
@@ -11843,81 +10748,55 @@ value_labels_list <- list(
   ),
     rsick16 = .replace_labels(
     standardized_value_labels$rsick16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick17 = .replace_labels(
     standardized_value_labels$rsick17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick18 = .replace_labels(
     standardized_value_labels$rsick18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick19 = .replace_labels(
     standardized_value_labels$rsick19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick20 = .replace_labels(
     standardized_value_labels$rsick20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick21 = .replace_labels(
     standardized_value_labels$rsick21,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick22 = .replace_labels(
     standardized_value_labels$rsick22,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick23 = .replace_labels(
     standardized_value_labels$rsick23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick24 = .replace_labels(
     standardized_value_labels$rsick24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick25 = .replace_labels(
     standardized_value_labels$rsick25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick26 = .replace_labels(
     standardized_value_labels$rsick26,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick27 = .replace_labels(
     standardized_value_labels$rsick27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     rsick28 = .replace_labels(
     standardized_value_labels$rsick28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see FRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see FRHELPYN"
   ),
     suffic = c(
     `-5` = "na, terminated interview",
@@ -11932,191 +10811,66 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "dhelp01",
-    "dhelp02",
-    "dhelp03",
-    "dhelp04",
-    "dhelp05",
-    "dhelp06",
-    "dhelp07",
-    "dhelp08",
-    "dhelp09",
-    "dhelp10",
-    "dhelp11",
-    "dhelp12",
-    "dhelpyn",
-    "dhour01",
-    "dhour02",
-    "dhour03",
-    "dhour04",
-    "dhour05",
-    "dhour06",
-    "dhour07",
-    "dhour08",
-    "dhour09",
-    "dhour10",
-    "dhour11",
-    "dhour12",
-    "health1",
-    "health2",
-    "health3",
-    "health4",
-    "homec1",
-    "phelp01",
-    "phelp02",
-    "phelp03",
-    "phelp04",
-    "phelp05",
-    "phelp06",
-    "phelp07",
-    "phelp08",
-    "phelp09",
-    "phelp10",
-    "phelp11",
-    "phelp12",
-    "phelpyn",
-    "phlp01b",
-    "phlp01m",
-    "phlp01y",
-    "phour01",
-    "phour02",
-    "phour03",
-    "phour04",
-    "phour05",
-    "phour06",
-    "phour07",
-    "phour08",
-    "phour09",
-    "phour10",
-    "phour11",
-    "phour12",
-    "rhelp01",
-    "rhelp02",
-    "rhelp03",
-    "rhelp04",
-    "rhelp05",
-    "rhelp06",
-    "rhelp07",
-    "rhelp08",
-    "rhelp09",
-    "rhelp10",
-    "rhelp11",
-    "rhelp12",
-    "rhelpyn",
-    "rhour01",
-    "rhour02",
-    "rhour03",
-    "rhour04",
-    "rhour05",
-    "rhour06",
-    "rhour07",
-    "rhour08",
-    "rhour09",
-    "rhour10",
-    "rhour11",
-    "rhour12",
-    "rsick01",
-    "rsick02",
-    "rsick03",
-    "rsick04",
-    "rsick05",
-    "rsick06",
-    "rsick07",
-    "rsick08",
-    "rsick09",
-    "rsick10",
-    "rsick11",
-    "rsick12",
-    "rsick13",
-    "rsick14",
-    "rsick15",
-    "rsick16",
-    "rsick17",
-    "rsick18",
-    "rsick19",
-    "rsick20",
-    "rsick21",
-    "rsick22",
-    "rsick23",
-    "rsick24",
-    "rsick25",
-    "rsick26",
-    "rsick27",
-    "rsick28",
-    "suffic"
-  )],
+    standardized_value_labels,
     dhelp01 = .replace_labels(
     standardized_value_labels$dhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     dhelp02 = .replace_labels(
     standardized_value_labels$dhelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     dhelp03 = .replace_labels(
     standardized_value_labels$dhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     dhelp04 = .replace_labels(
     standardized_value_labels$dhelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     dhelp05 = .replace_labels(
     standardized_value_labels$dhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     dhelp06 = .replace_labels(
     standardized_value_labels$dhelp06,
     `-3` = "na wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     dhelp07 = .replace_labels(
     standardized_value_labels$dhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     dhelp08 = .replace_labels(
     standardized_value_labels$dhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     dhelp09 = .replace_labels(
     standardized_value_labels$dhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     dhelp10 = .replace_labels(
     standardized_value_labels$dhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     dhelp11 = .replace_labels(
     standardized_value_labels$dhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     dhelp12 = .replace_labels(
     standardized_value_labels$dhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     dhelpyn = c(
     `-5` = "na, terminated interview",
@@ -12233,99 +10987,68 @@ value_labels_list <- list(
   ),
     health2 = .replace_labels(
     standardized_value_labels$health2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see GHEALTH1",
-    `-1` = "na, asked",
     `4` = "refused to answer"
   ),
     health3 = .replace_labels(
     standardized_value_labels$health3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see GHEALTH1"
   ),
     health4 = .replace_labels(
     standardized_value_labels$health4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see GHEALTH1"
   ),
     homec1 = .replace_labels(
     standardized_value_labels$homec1,
-    `-5` = "na, terminated interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated interview"
   ),
     phelp01 = .replace_labels(
     standardized_value_labels$phelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GPHELPYN"
   ),
     phelp02 = .replace_labels(
     standardized_value_labels$phelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GPHELPYN"
   ),
     phelp03 = .replace_labels(
     standardized_value_labels$phelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GPHELPYN"
   ),
     phelp04 = .replace_labels(
     standardized_value_labels$phelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GPHELPYN"
   ),
     phelp05 = .replace_labels(
     standardized_value_labels$phelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GPHELPYN"
   ),
     phelp06 = .replace_labels(
     standardized_value_labels$phelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GPHELPYN"
   ),
     phelp07 = .replace_labels(
     standardized_value_labels$phelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GPHELPYN"
   ),
     phelp08 = .replace_labels(
     standardized_value_labels$phelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GPHELPYN"
   ),
     phelp09 = .replace_labels(
     standardized_value_labels$phelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GPHELPYN"
   ),
     phelp10 = .replace_labels(
     standardized_value_labels$phelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GPHELPYN"
   ),
     phelp11 = .replace_labels(
     standardized_value_labels$phelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GPHELPYN"
   ),
     phelp12 = .replace_labels(
     standardized_value_labels$phelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GPHELPYN"
   ),
     phelpyn = c(
     `-7` = "na, P outside HH",
@@ -12340,21 +11063,15 @@ value_labels_list <- list(
   ),
     phlp01b = .replace_labels(
     standardized_value_labels$phlp01b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see GPHELP01"
   ),
     phlp01m = .replace_labels(
     standardized_value_labels$phlp01m,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see GPHELP01"
   ),
     phlp01y = .replace_labels(
     standardized_value_labels$phlp01y,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see GPHELP01"
   ),
     phour01 = c(
     `-4` = "na, refused",
@@ -12454,75 +11171,51 @@ value_labels_list <- list(
   ),
     rhelp01 = .replace_labels(
     standardized_value_labels$rhelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rhelp02 = .replace_labels(
     standardized_value_labels$rhelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rhelp03 = .replace_labels(
     standardized_value_labels$rhelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rhelp04 = .replace_labels(
     standardized_value_labels$rhelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rhelp05 = .replace_labels(
     standardized_value_labels$rhelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rhelp06 = .replace_labels(
     standardized_value_labels$rhelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rhelp07 = .replace_labels(
     standardized_value_labels$rhelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rhelp08 = .replace_labels(
     standardized_value_labels$rhelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rhelp09 = .replace_labels(
     standardized_value_labels$rhelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rhelp10 = .replace_labels(
     standardized_value_labels$rhelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rhelp11 = .replace_labels(
     standardized_value_labels$rhelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rhelp12 = .replace_labels(
     standardized_value_labels$rhelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rhelpyn = c(
     `-5` = "na, terminated interview",
@@ -12637,81 +11330,55 @@ value_labels_list <- list(
   ),
     rsick02 = .replace_labels(
     standardized_value_labels$rsick02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rsick03 = .replace_labels(
     standardized_value_labels$rsick03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rsick04 = .replace_labels(
     standardized_value_labels$rsick04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rsick05 = .replace_labels(
     standardized_value_labels$rsick05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rsick06 = .replace_labels(
     standardized_value_labels$rsick06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rsick07 = .replace_labels(
     standardized_value_labels$rsick07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rsick08 = .replace_labels(
     standardized_value_labels$rsick08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rsick09 = .replace_labels(
     standardized_value_labels$rsick09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rsick10 = .replace_labels(
     standardized_value_labels$rsick10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rsick11 = .replace_labels(
     standardized_value_labels$rsick11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rsick12 = .replace_labels(
     standardized_value_labels$rsick12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rsick13 = .replace_labels(
     standardized_value_labels$rsick13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rsick14 = .replace_labels(
     standardized_value_labels$rsick14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GRHELPYN"
   ),
     rsick15 = c(
     `-3` = "na, wrong skip",
@@ -12722,81 +11389,55 @@ value_labels_list <- list(
   ),
     rsick16 = .replace_labels(
     standardized_value_labels$rsick16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     rsick17 = .replace_labels(
     standardized_value_labels$rsick17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     rsick18 = .replace_labels(
     standardized_value_labels$rsick18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     rsick19 = .replace_labels(
     standardized_value_labels$rsick19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     rsick20 = .replace_labels(
     standardized_value_labels$rsick20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     rsick21 = .replace_labels(
     standardized_value_labels$rsick21,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     rsick22 = .replace_labels(
     standardized_value_labels$rsick22,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     rsick23 = .replace_labels(
     standardized_value_labels$rsick23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     rsick24 = .replace_labels(
     standardized_value_labels$rsick24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     rsick25 = .replace_labels(
     standardized_value_labels$rsick25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     rsick26 = .replace_labels(
     standardized_value_labels$rsick26,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     rsick27 = .replace_labels(
     standardized_value_labels$rsick27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     rsick28 = .replace_labels(
     standardized_value_labels$rsick28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see GDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see GDHELPYN"
   ),
     suffic = c(
     `-5` = "na, terminated interview",
@@ -12811,818 +11452,203 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "ahelp01",
-    "ahelp02",
-    "ahelp03",
-    "ahelp04",
-    "ahelp05",
-    "ahelp06",
-    "ahelp07",
-    "ahelp08",
-    "ahelp09",
-    "ahelp10",
-    "ahelp11",
-    "ahelp12",
-    "ahelpyn",
-    "ahour01",
-    "ahour02",
-    "ahour03",
-    "ahour04",
-    "ahour05",
-    "ahour06",
-    "ahour07",
-    "ahour08",
-    "ahour09",
-    "ahour10",
-    "ahour11",
-    "ahour12",
-    "ahourtot",
-    "asex1001",
-    "asex1002",
-    "asex1003",
-    "asex1004",
-    "asex1005",
-    "asex1101",
-    "asex1102",
-    "asex1103",
-    "asex1104",
-    "asex1105",
-    "asex1201",
-    "asex1202",
-    "asex1203",
-    "asex1204",
-    "asex1205",
-    "asex201",
-    "asex202",
-    "asex203",
-    "asex204",
-    "asex205",
-    "asex301",
-    "asex302",
-    "asex303",
-    "asex304",
-    "asex305",
-    "asex401",
-    "asex402",
-    "asex403",
-    "asex404",
-    "asex405",
-    "asex501",
-    "asex502",
-    "asex503",
-    "asex504",
-    "asex505",
-    "asex601",
-    "asex602",
-    "asex603",
-    "asex604",
-    "asex605",
-    "asex701",
-    "asex702",
-    "asex703",
-    "asex704",
-    "asex705",
-    "asex801",
-    "asex802",
-    "asex803",
-    "asex804",
-    "asex805",
-    "asex901",
-    "asex902",
-    "asex903",
-    "asex904",
-    "asex905",
-    "coop1",
-    "coop2",
-    "dhelp01",
-    "dhelp02",
-    "dhelp03",
-    "dhelp04",
-    "dhelp05",
-    "dhelp06",
-    "dhelp07",
-    "dhelp08",
-    "dhelp09",
-    "dhelp10",
-    "dhelp11",
-    "dhelp12",
-    "dhelpyn",
-    "dhour01",
-    "dhour02",
-    "dhour03",
-    "dhour04",
-    "dhour05",
-    "dhour06",
-    "dhour07",
-    "dhour08",
-    "dhour09",
-    "dhour10",
-    "dhour11",
-    "dhour12",
-    "dhourtot",
-    "dsex1001",
-    "dsex1002",
-    "dsex1003",
-    "dsex1004",
-    "dsex1005",
-    "dsex1101",
-    "dsex1102",
-    "dsex1103",
-    "dsex1104",
-    "dsex1105",
-    "dsex1201",
-    "dsex1202",
-    "dsex1203",
-    "dsex1204",
-    "dsex1205",
-    "dsex201",
-    "dsex202",
-    "dsex203",
-    "dsex204",
-    "dsex205",
-    "dsex301",
-    "dsex302",
-    "dsex303",
-    "dsex304",
-    "dsex305",
-    "dsex401",
-    "dsex402",
-    "dsex403",
-    "dsex404",
-    "dsex405",
-    "dsex501",
-    "dsex502",
-    "dsex503",
-    "dsex504",
-    "dsex505",
-    "dsex601",
-    "dsex602",
-    "dsex603",
-    "dsex604",
-    "dsex605",
-    "dsex701",
-    "dsex702",
-    "dsex703",
-    "dsex704",
-    "dsex705",
-    "dsex801",
-    "dsex802",
-    "dsex803",
-    "dsex804",
-    "dsex805",
-    "dsex901",
-    "dsex902",
-    "dsex903",
-    "dsex904",
-    "dsex905",
-    "ghelp01",
-    "ghelp02",
-    "ghelp03",
-    "ghelp04",
-    "ghelp05",
-    "ghelp06",
-    "ghelp07",
-    "ghelp08",
-    "ghelp09",
-    "ghelp10",
-    "ghelp11",
-    "ghelp12",
-    "ghelpyn",
-    "ghour01",
-    "ghour02",
-    "ghour03",
-    "ghour04",
-    "ghour05",
-    "ghour06",
-    "ghour07",
-    "ghour08",
-    "ghour09",
-    "ghour10",
-    "ghour11",
-    "ghour12",
-    "ghourtot",
-    "gsex1001",
-    "gsex1002",
-    "gsex1003",
-    "gsex1004",
-    "gsex1005",
-    "gsex1101",
-    "gsex1102",
-    "gsex1103",
-    "gsex1104",
-    "gsex1105",
-    "gsex1201",
-    "gsex1202",
-    "gsex1203",
-    "gsex1204",
-    "gsex1205",
-    "gsex201",
-    "gsex202",
-    "gsex203",
-    "gsex204",
-    "gsex205",
-    "gsex301",
-    "gsex302",
-    "gsex303",
-    "gsex304",
-    "gsex305",
-    "gsex401",
-    "gsex402",
-    "gsex403",
-    "gsex404",
-    "gsex405",
-    "gsex501",
-    "gsex502",
-    "gsex503",
-    "gsex504",
-    "gsex505",
-    "gsex601",
-    "gsex602",
-    "gsex603",
-    "gsex604",
-    "gsex605",
-    "gsex701",
-    "gsex702",
-    "gsex703",
-    "gsex704",
-    "gsex705",
-    "gsex801",
-    "gsex802",
-    "gsex803",
-    "gsex804",
-    "gsex805",
-    "gsex901",
-    "gsex902",
-    "gsex903",
-    "gsex904",
-    "gsex905",
-    "health1",
-    "health2",
-    "health3",
-    "health4",
-    "nhelp01",
-    "nhelp02",
-    "nhelp03",
-    "nhelp04",
-    "nhelp05",
-    "nhelp06",
-    "nhelp07",
-    "nhelp08",
-    "nhelp09",
-    "nhelp10",
-    "nhelp11",
-    "nhelp12",
-    "nhelpyn",
-    "nhour01",
-    "nhour02",
-    "nhour03",
-    "nhour04",
-    "nhour05",
-    "nhour06",
-    "nhour07",
-    "nhour08",
-    "nhour09",
-    "nhour10",
-    "nhour11",
-    "nhour12",
-    "nhourtot",
-    "nsex1001",
-    "nsex1002",
-    "nsex1003",
-    "nsex1004",
-    "nsex1005",
-    "nsex1101",
-    "nsex1102",
-    "nsex1103",
-    "nsex1104",
-    "nsex1105",
-    "nsex1201",
-    "nsex1202",
-    "nsex1203",
-    "nsex1204",
-    "nsex1205",
-    "nsex201",
-    "nsex202",
-    "nsex203",
-    "nsex204",
-    "nsex205",
-    "nsex301",
-    "nsex302",
-    "nsex303",
-    "nsex304",
-    "nsex305",
-    "nsex401",
-    "nsex402",
-    "nsex403",
-    "nsex404",
-    "nsex405",
-    "nsex501",
-    "nsex502",
-    "nsex503",
-    "nsex504",
-    "nsex505",
-    "nsex601",
-    "nsex602",
-    "nsex603",
-    "nsex604",
-    "nsex605",
-    "nsex701",
-    "nsex702",
-    "nsex703",
-    "nsex704",
-    "nsex705",
-    "nsex801",
-    "nsex802",
-    "nsex803",
-    "nsex804",
-    "nsex805",
-    "nsex901",
-    "nsex902",
-    "nsex903",
-    "nsex904",
-    "nsex905",
-    "pgb01",
-    "pgb02",
-    "pgb03",
-    "pgb04",
-    "pgb05",
-    "pgb06",
-    "pgb07",
-    "pgb08",
-    "pgb09",
-    "pgb10",
-    "pgb11",
-    "pgb12",
-    "pgbyn",
-    "phelp01",
-    "phelp02",
-    "phelp03",
-    "phelp04",
-    "phelp05",
-    "phelp06",
-    "phelp07",
-    "phelp08",
-    "phelp09",
-    "phelp10",
-    "phelp11",
-    "phelp12",
-    "phelpyn",
-    "phlp01b",
-    "phlp01m",
-    "phlp01y",
-    "phour01",
-    "phour02",
-    "phour03",
-    "phour04",
-    "phour05",
-    "phour06",
-    "phour07",
-    "phour08",
-    "phour09",
-    "phour10",
-    "phour11",
-    "phour12",
-    "phourtot",
-    "psex1001",
-    "psex1002",
-    "psex1003",
-    "psex1004",
-    "psex1005",
-    "psex1101",
-    "psex1102",
-    "psex1103",
-    "psex1104",
-    "psex1105",
-    "psex1201",
-    "psex1202",
-    "psex1203",
-    "psex1204",
-    "psex1205",
-    "psex201",
-    "psex202",
-    "psex203",
-    "psex204",
-    "psex205",
-    "psex301",
-    "psex302",
-    "psex303",
-    "psex304",
-    "psex305",
-    "psex401",
-    "psex402",
-    "psex403",
-    "psex404",
-    "psex405",
-    "psex501",
-    "psex502",
-    "psex503",
-    "psex504",
-    "psex505",
-    "psex601",
-    "psex602",
-    "psex603",
-    "psex604",
-    "psex605",
-    "psex701",
-    "psex702",
-    "psex703",
-    "psex704",
-    "psex705",
-    "psex801",
-    "psex802",
-    "psex803",
-    "psex804",
-    "psex805",
-    "psex901",
-    "psex902",
-    "psex903",
-    "psex904",
-    "psex905",
-    "regie1",
-    "regie2",
-    "regie3",
-    "regie4",
-    "rhelp01",
-    "rhelp02",
-    "rhelp03",
-    "rhelp04",
-    "rhelp05",
-    "rhelp06",
-    "rhelp07",
-    "rhelp08",
-    "rhelp09",
-    "rhelp10",
-    "rhelp11",
-    "rhelp12",
-    "rhelpyn",
-    "rhour01",
-    "rhour02",
-    "rhour03",
-    "rhour04",
-    "rhour05",
-    "rhour06",
-    "rhour07",
-    "rhour08",
-    "rhour09",
-    "rhour10",
-    "rhour11",
-    "rhour12",
-    "rhourtot",
-    "rsex1001",
-    "rsex1002",
-    "rsex1003",
-    "rsex1004",
-    "rsex1005",
-    "rsex1101",
-    "rsex1102",
-    "rsex1103",
-    "rsex1104",
-    "rsex1105",
-    "rsex1201",
-    "rsex1202",
-    "rsex1203",
-    "rsex1204",
-    "rsex1205",
-    "rsex201",
-    "rsex202",
-    "rsex203",
-    "rsex204",
-    "rsex205",
-    "rsex301",
-    "rsex302",
-    "rsex303",
-    "rsex304",
-    "rsex305",
-    "rsex401",
-    "rsex402",
-    "rsex403",
-    "rsex404",
-    "rsex405",
-    "rsex501",
-    "rsex502",
-    "rsex503",
-    "rsex504",
-    "rsex505",
-    "rsex601",
-    "rsex602",
-    "rsex603",
-    "rsex604",
-    "rsex605",
-    "rsex701",
-    "rsex702",
-    "rsex703",
-    "rsex704",
-    "rsex705",
-    "rsex801",
-    "rsex802",
-    "rsex803",
-    "rsex804",
-    "rsex805",
-    "rsex901",
-    "rsex902",
-    "rsex903",
-    "rsex904",
-    "rsex905",
-    "rsick01",
-    "rsick02",
-    "rsick03",
-    "rsick04",
-    "rsick05",
-    "rsick06",
-    "rsick07",
-    "rsick08",
-    "rsick09",
-    "rsick10",
-    "rsick11",
-    "rsick12",
-    "rsick13",
-    "rsick14",
-    "rsick15",
-    "rsick16",
-    "rsick17",
-    "rsick18",
-    "rsick19",
-    "rsick20",
-    "rsick21",
-    "rsick22",
-    "rsick23",
-    "rsick24",
-    "rsick25",
-    "rsick26",
-    "rsick27",
-    "rsick28",
-    "suff401",
-    "suff402",
-    "suff403",
-    "suff404",
-    "suff405",
-    "suff406",
-    "suff407",
-    "suff408",
-    "suff409",
-    "suff410",
-    "suff411",
-    "suff412",
-    "suff413",
-    "suffic",
-    "suffic1",
-    "suffic2",
-    "suffic3",
-    "suffic4",
-    "suffoth"
-  )],
+    standardized_value_labels,
     ahelp01 = .replace_labels(
     standardized_value_labels$ahelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahelp02 = .replace_labels(
     standardized_value_labels$ahelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahelp03 = .replace_labels(
     standardized_value_labels$ahelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahelp04 = .replace_labels(
     standardized_value_labels$ahelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahelp05 = .replace_labels(
     standardized_value_labels$ahelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahelp06 = .replace_labels(
     standardized_value_labels$ahelp06,
     `-3` = "na wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahelp07 = .replace_labels(
     standardized_value_labels$ahelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahelp08 = .replace_labels(
     standardized_value_labels$ahelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahelp09 = .replace_labels(
     standardized_value_labels$ahelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahelp10 = .replace_labels(
     standardized_value_labels$ahelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahelp11 = .replace_labels(
     standardized_value_labels$ahelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahelp12 = .replace_labels(
     standardized_value_labels$ahelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahelpyn = .replace_labels(
     standardized_value_labels$ahelpyn,
-    `-5` = "na, terminated interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated interview"
   ),
     ahour01 = .replace_labels(
     standardized_value_labels$ahour01,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahour02 = .replace_labels(
     standardized_value_labels$ahour02,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahour03 = .replace_labels(
     standardized_value_labels$ahour03,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahour04 = .replace_labels(
     standardized_value_labels$ahour04,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahour05 = .replace_labels(
     standardized_value_labels$ahour05,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahour06 = .replace_labels(
     standardized_value_labels$ahour06,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahour07 = .replace_labels(
     standardized_value_labels$ahour07,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahour08 = .replace_labels(
     standardized_value_labels$ahour08,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahour09 = .replace_labels(
     standardized_value_labels$ahour09,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahour10 = .replace_labels(
     standardized_value_labels$ahour10,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahour11 = .replace_labels(
     standardized_value_labels$ahour11,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahour12 = .replace_labels(
     standardized_value_labels$ahour12,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     ahourtot = .replace_labels(
     standardized_value_labels$ahourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HAHELPYN"
   ),
     coop1 = .replace_labels(
     standardized_value_labels$coop1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HR-, HD-, HN-, HG- & HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HR-, HD-, HN-, HG- & HAHELPYN"
   ),
     coop2 = .replace_labels(
     standardized_value_labels$coop2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HR-, HD-, HN-, HG- & HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HR-, HD-, HN-, HG- & HAHELPYN"
   ),
     dhelp01 = .replace_labels(
     standardized_value_labels$dhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     dhelp02 = .replace_labels(
     standardized_value_labels$dhelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     dhelp03 = .replace_labels(
     standardized_value_labels$dhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     dhelp04 = .replace_labels(
     standardized_value_labels$dhelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     dhelp05 = .replace_labels(
     standardized_value_labels$dhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     dhelp06 = .replace_labels(
     standardized_value_labels$dhelp06,
     `-3` = "na wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     dhelp07 = .replace_labels(
     standardized_value_labels$dhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     dhelp08 = .replace_labels(
     standardized_value_labels$dhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     dhelp09 = .replace_labels(
     standardized_value_labels$dhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     dhelp10 = .replace_labels(
     standardized_value_labels$dhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     dhelp11 = .replace_labels(
     standardized_value_labels$dhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     dhelp12 = .replace_labels(
     standardized_value_labels$dhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     dhelpyn = c(
     `-5` = "na, terminated interview",
@@ -13731,177 +11757,136 @@ value_labels_list <- list(
     dhourtot = .replace_labels(
     standardized_value_labels$dhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     ghelp01 = .replace_labels(
     standardized_value_labels$ghelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghelp02 = .replace_labels(
     standardized_value_labels$ghelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghelp03 = .replace_labels(
     standardized_value_labels$ghelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghelp04 = .replace_labels(
     standardized_value_labels$ghelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghelp05 = .replace_labels(
     standardized_value_labels$ghelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghelp06 = .replace_labels(
     standardized_value_labels$ghelp06,
     `-3` = "na wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghelp07 = .replace_labels(
     standardized_value_labels$ghelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghelp08 = .replace_labels(
     standardized_value_labels$ghelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghelp09 = .replace_labels(
     standardized_value_labels$ghelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghelp10 = .replace_labels(
     standardized_value_labels$ghelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghelp11 = .replace_labels(
     standardized_value_labels$ghelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghelp12 = .replace_labels(
     standardized_value_labels$ghelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghelpyn = .replace_labels(
     standardized_value_labels$ghelpyn,
-    `-5` = "na, terminated interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated interview"
   ),
     ghour01 = .replace_labels(
     standardized_value_labels$ghour01,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghour02 = .replace_labels(
     standardized_value_labels$ghour02,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghour03 = .replace_labels(
     standardized_value_labels$ghour03,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghour04 = .replace_labels(
     standardized_value_labels$ghour04,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghour05 = .replace_labels(
     standardized_value_labels$ghour05,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghour06 = .replace_labels(
     standardized_value_labels$ghour06,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghour07 = .replace_labels(
     standardized_value_labels$ghour07,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghour08 = .replace_labels(
     standardized_value_labels$ghour08,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghour09 = .replace_labels(
     standardized_value_labels$ghour09,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghour10 = .replace_labels(
     standardized_value_labels$ghour10,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghour11 = .replace_labels(
     standardized_value_labels$ghour11,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghour12 = .replace_labels(
     standardized_value_labels$ghour12,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     ghourtot = .replace_labels(
     standardized_value_labels$ghourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HGHELPYN"
   ),
     health1 = c(
     `-5` = "na, terminated interview",
@@ -13914,341 +11899,258 @@ value_labels_list <- list(
   ),
     health2 = .replace_labels(
     standardized_value_labels$health2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see HHEALTH1",
-    `-1` = "na, asked",
     `4` = "refused to answer"
   ),
     health3 = .replace_labels(
     standardized_value_labels$health3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see HHEALTH1"
   ),
     health4 = .replace_labels(
     standardized_value_labels$health4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HHEALTH1",
-    `-1` = "na, asked"
+    `-2` = "na, see HHEALTH1"
   ),
     nhelp01 = .replace_labels(
     standardized_value_labels$nhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhelp02 = .replace_labels(
     standardized_value_labels$nhelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhelp03 = .replace_labels(
     standardized_value_labels$nhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhelp04 = .replace_labels(
     standardized_value_labels$nhelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhelp05 = .replace_labels(
     standardized_value_labels$nhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhelp06 = .replace_labels(
     standardized_value_labels$nhelp06,
     `-3` = "na wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhelp07 = .replace_labels(
     standardized_value_labels$nhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhelp08 = .replace_labels(
     standardized_value_labels$nhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhelp09 = .replace_labels(
     standardized_value_labels$nhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhelp10 = .replace_labels(
     standardized_value_labels$nhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhelp11 = .replace_labels(
     standardized_value_labels$nhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhelp12 = .replace_labels(
     standardized_value_labels$nhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhelpyn = .replace_labels(
     standardized_value_labels$nhelpyn,
-    `-5` = "na, terminated interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated interview"
   ),
     nhour01 = .replace_labels(
     standardized_value_labels$nhour01,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhour02 = .replace_labels(
     standardized_value_labels$nhour02,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhour03 = .replace_labels(
     standardized_value_labels$nhour03,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhour04 = .replace_labels(
     standardized_value_labels$nhour04,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhour05 = .replace_labels(
     standardized_value_labels$nhour05,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhour06 = .replace_labels(
     standardized_value_labels$nhour06,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhour07 = .replace_labels(
     standardized_value_labels$nhour07,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhour08 = .replace_labels(
     standardized_value_labels$nhour08,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhour09 = .replace_labels(
     standardized_value_labels$nhour09,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhour10 = .replace_labels(
     standardized_value_labels$nhour10,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhour11 = .replace_labels(
     standardized_value_labels$nhour11,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhour12 = .replace_labels(
     standardized_value_labels$nhour12,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     nhourtot = .replace_labels(
     standardized_value_labels$nhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HNHELPYN"
   ),
     pgb01 = .replace_labels(
     standardized_value_labels$pgb01,
     `-3` = "na wrong skip",
-    `-2` = "na, see HPGBYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPGBYN"
   ),
     pgb02 = .replace_labels(
     standardized_value_labels$pgb02,
     `-3` = "na wrong skip",
-    `-2` = "na, see HPGBYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPGBYN"
   ),
     pgb03 = .replace_labels(
     standardized_value_labels$pgb03,
     `-3` = "na wrong skip",
-    `-2` = "na, see HPGBYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPGBYN"
   ),
     pgb04 = .replace_labels(
     standardized_value_labels$pgb04,
     `-3` = "na wrong skip",
-    `-2` = "na, see HPGBYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPGBYN"
   ),
     pgb05 = .replace_labels(
     standardized_value_labels$pgb05,
     `-3` = "na wrong skip",
-    `-2` = "na, see HPGBYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPGBYN"
   ),
     pgb06 = .replace_labels(
     standardized_value_labels$pgb06,
     `-3` = "na wrong skip",
-    `-2` = "na, see HPGBYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPGBYN"
   ),
     pgb07 = .replace_labels(
     standardized_value_labels$pgb07,
     `-3` = "na wrong skip",
-    `-2` = "na, see HPGBYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPGBYN"
   ),
     pgb08 = .replace_labels(
     standardized_value_labels$pgb08,
     `-3` = "na wrong skip",
-    `-2` = "na, see HPGBYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPGBYN"
   ),
     pgb09 = .replace_labels(
     standardized_value_labels$pgb09,
     `-3` = "na wrong skip",
-    `-2` = "na, see HPGBYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPGBYN"
   ),
     pgb10 = .replace_labels(
     standardized_value_labels$pgb10,
     `-3` = "na wrong skip",
-    `-2` = "na, see HPGBYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPGBYN"
   ),
     pgb11 = .replace_labels(
     standardized_value_labels$pgb11,
     `-3` = "na wrong skip",
-    `-2` = "na, see HPGBYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPGBYN"
   ),
     pgb12 = .replace_labels(
     standardized_value_labels$pgb12,
     `-3` = "na wrong skip",
-    `-2` = "na, see HPGBYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPGBYN"
   ),
     pgbyn = .replace_labels(
     standardized_value_labels$pgbyn,
     `-5` = "na, terminated interview",
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked",
     `2` = "na, see HR-, HD-, HN-, HG- & HAHELPYN"
   ),
     phelp01 = .replace_labels(
     standardized_value_labels$phelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELPYN"
   ),
     phelp02 = .replace_labels(
     standardized_value_labels$phelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELPYN"
   ),
     phelp03 = .replace_labels(
     standardized_value_labels$phelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELPYN"
   ),
     phelp04 = .replace_labels(
     standardized_value_labels$phelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELPYN"
   ),
     phelp05 = .replace_labels(
     standardized_value_labels$phelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELPYN"
   ),
     phelp06 = .replace_labels(
     standardized_value_labels$phelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELPYN"
   ),
     phelp07 = .replace_labels(
     standardized_value_labels$phelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELPYN"
   ),
     phelp08 = .replace_labels(
     standardized_value_labels$phelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELPYN"
   ),
     phelp09 = .replace_labels(
     standardized_value_labels$phelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELPYN"
   ),
     phelp10 = .replace_labels(
     standardized_value_labels$phelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELPYN"
   ),
     phelp11 = .replace_labels(
     standardized_value_labels$phelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELPYN"
   ),
     phelp12 = .replace_labels(
     standardized_value_labels$phelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELPYN"
   ),
     phelpyn = c(
     `-7` = "na, P outside HH",
@@ -14263,21 +12165,15 @@ value_labels_list <- list(
   ),
     phlp01b = .replace_labels(
     standardized_value_labels$phlp01b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELP01"
   ),
     phlp01m = .replace_labels(
     standardized_value_labels$phlp01m,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELP01"
   ),
     phlp01y = .replace_labels(
     standardized_value_labels$phlp01y,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELP01"
   ),
     phour01 = c(
     `-4` = "na, refused",
@@ -14378,105 +12274,71 @@ value_labels_list <- list(
     phourtot = .replace_labels(
     standardized_value_labels$phourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HPHELPYN"
   ),
     regie1 = .replace_labels(
     standardized_value_labels$regie1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HR-, HD-, HN-, HG- & HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HR-, HD-, HN-, HG- & HAHELPYN"
   ),
     regie2 = .replace_labels(
     standardized_value_labels$regie2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HR-, HD-, HN-, HG- & HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HR-, HD-, HN-, HG- & HAHELPYN"
   ),
     regie3 = .replace_labels(
     standardized_value_labels$regie3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HR-, HD-, HN-, HG- & HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HR-, HD-, HN-, HG- & HAHELPYN"
   ),
     regie4 = .replace_labels(
     standardized_value_labels$regie4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HR-, HD-, HN-, HG- & HAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HR-, HD-, HN-, HG- & HAHELPYN"
   ),
     rhelp01 = .replace_labels(
     standardized_value_labels$rhelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HRHELPYN"
   ),
     rhelp02 = .replace_labels(
     standardized_value_labels$rhelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HRHELPYN"
   ),
     rhelp03 = .replace_labels(
     standardized_value_labels$rhelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HRHELPYN"
   ),
     rhelp04 = .replace_labels(
     standardized_value_labels$rhelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HRHELPYN"
   ),
     rhelp05 = .replace_labels(
     standardized_value_labels$rhelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HRHELPYN"
   ),
     rhelp06 = .replace_labels(
     standardized_value_labels$rhelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HRHELPYN"
   ),
     rhelp07 = .replace_labels(
     standardized_value_labels$rhelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HRHELPYN"
   ),
     rhelp08 = .replace_labels(
     standardized_value_labels$rhelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HRHELPYN"
   ),
     rhelp09 = .replace_labels(
     standardized_value_labels$rhelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HRHELPYN"
   ),
     rhelp10 = .replace_labels(
     standardized_value_labels$rhelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HRHELPYN"
   ),
     rhelp11 = .replace_labels(
     standardized_value_labels$rhelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HRHELPYN"
   ),
     rhelp12 = .replace_labels(
     standardized_value_labels$rhelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HRHELPYN"
   ),
     rhelpyn = c(
     `-5` = "na, terminated interview",
@@ -14585,9 +12447,7 @@ value_labels_list <- list(
     rhourtot = .replace_labels(
     standardized_value_labels$rhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HRHELPYN"
   ),
     rsick01 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick02 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
@@ -14612,146 +12472,107 @@ value_labels_list <- list(
   ),
     rsick16 = .replace_labels(
     standardized_value_labels$rsick16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     rsick17 = .replace_labels(
     standardized_value_labels$rsick17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     rsick18 = .replace_labels(
     standardized_value_labels$rsick18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     rsick19 = .replace_labels(
     standardized_value_labels$rsick19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     rsick20 = .replace_labels(
     standardized_value_labels$rsick20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     rsick21 = .replace_labels(
     standardized_value_labels$rsick21,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     rsick22 = .replace_labels(
     standardized_value_labels$rsick22,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     rsick23 = .replace_labels(
     standardized_value_labels$rsick23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     rsick24 = .replace_labels(
     standardized_value_labels$rsick24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     rsick25 = .replace_labels(
     standardized_value_labels$rsick25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     rsick26 = .replace_labels(
     standardized_value_labels$rsick26,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     rsick27 = .replace_labels(
     standardized_value_labels$rsick27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     rsick28 = .replace_labels(
     standardized_value_labels$rsick28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see HDHELPYN"
   ),
     suff401 = .replace_labels(
     standardized_value_labels$suff401,
-    `-2` = "na, see HSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC4"
   ),
     suff402 = .replace_labels(
     standardized_value_labels$suff402,
-    `-2` = "na, see HSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC4"
   ),
     suff403 = .replace_labels(
     standardized_value_labels$suff403,
-    `-2` = "na, see HSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC4"
   ),
     suff404 = .replace_labels(
     standardized_value_labels$suff404,
-    `-2` = "na, see HSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC4"
   ),
     suff405 = .replace_labels(
     standardized_value_labels$suff405,
-    `-2` = "na, see HSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC4"
   ),
     suff406 = .replace_labels(
     standardized_value_labels$suff406,
-    `-2` = "na, see HSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC4"
   ),
     suff407 = .replace_labels(
     standardized_value_labels$suff407,
-    `-2` = "na, see HSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC4"
   ),
     suff408 = .replace_labels(
     standardized_value_labels$suff408,
-    `-2` = "na, see HSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC4"
   ),
     suff409 = .replace_labels(
     standardized_value_labels$suff409,
-    `-2` = "na, see HSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC4"
   ),
     suff410 = .replace_labels(
     standardized_value_labels$suff410,
-    `-2` = "na, see HSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC4"
   ),
     suff411 = .replace_labels(
     standardized_value_labels$suff411,
-    `-2` = "na, see HSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC4"
   ),
     suff412 = .replace_labels(
     standardized_value_labels$suff412,
-    `-2` = "na, see HSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC4"
   ),
     suff413 = .replace_labels(
     standardized_value_labels$suff413,
-    `-2` = "na, see HSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC4"
   ),
     suffic = c(
     `-3` = "na, wrong skip",
@@ -14765,271 +12586,86 @@ value_labels_list <- list(
   ),
     suffic1 = .replace_labels(
     standardized_value_labels$suffic1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC"
   ),
     suffic2 = .replace_labels(
     standardized_value_labels$suffic2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC"
   ),
     suffic3 = .replace_labels(
     standardized_value_labels$suffic3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC"
   ),
     suffic4 = .replace_labels(
     standardized_value_labels$suffic4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC"
   ),
     suffoth = .replace_labels(
     standardized_value_labels$suffoth,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see HSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see HSUFFIC"
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "dhelp01",
-    "dhelp02",
-    "dhelp03",
-    "dhelp04",
-    "dhelp05",
-    "dhelp06",
-    "dhelp07",
-    "dhelp08",
-    "dhelp09",
-    "dhelp10",
-    "dhelp11",
-    "dhelp12",
-    "dhelpyn",
-    "dhour01",
-    "dhour02",
-    "dhour03",
-    "dhour04",
-    "dhour05",
-    "dhour06",
-    "dhour07",
-    "dhour08",
-    "dhour09",
-    "dhour10",
-    "dhour11",
-    "dhour12",
-    "dhourtot",
-    "health1",
-    "health2",
-    "health3",
-    "health4",
-    "nhelp01",
-    "nhelp02",
-    "nhelp03",
-    "nhelp04",
-    "nhelp05",
-    "nhelp06",
-    "nhelp07",
-    "nhelp08",
-    "nhelp09",
-    "nhelp10",
-    "nhelp11",
-    "nhelp12",
-    "nhelpyn",
-    "nhour01",
-    "nhour02",
-    "nhour03",
-    "nhour04",
-    "nhour05",
-    "nhour06",
-    "nhour07",
-    "nhour08",
-    "nhour09",
-    "nhour10",
-    "nhour11",
-    "nhour12",
-    "nhourtot",
-    "phelp01",
-    "phelp02",
-    "phelp03",
-    "phelp04",
-    "phelp05",
-    "phelp06",
-    "phelp07",
-    "phelp08",
-    "phelp09",
-    "phelp10",
-    "phelp11",
-    "phelp12",
-    "phelpyn",
-    "phlp01b",
-    "phlp01m",
-    "phlp01y",
-    "phour01",
-    "phour02",
-    "phour03",
-    "phour04",
-    "phour05",
-    "phour06",
-    "phour07",
-    "phour08",
-    "phour09",
-    "phour10",
-    "phour11",
-    "phour12",
-    "phourtot",
-    "regie1",
-    "regie2",
-    "regie3",
-    "regie4",
-    "rhelp01",
-    "rhelp02",
-    "rhelp03",
-    "rhelp04",
-    "rhelp05",
-    "rhelp06",
-    "rhelp07",
-    "rhelp08",
-    "rhelp09",
-    "rhelp10",
-    "rhelp11",
-    "rhelp12",
-    "rhelpyn",
-    "rhour01",
-    "rhour02",
-    "rhour03",
-    "rhour04",
-    "rhour05",
-    "rhour06",
-    "rhour07",
-    "rhour08",
-    "rhour09",
-    "rhour10",
-    "rhour11",
-    "rhour12",
-    "rhourtot",
-    "rsick01",
-    "rsick02",
-    "rsick03",
-    "rsick04",
-    "rsick05",
-    "rsick06",
-    "rsick07",
-    "rsick08",
-    "rsick09",
-    "rsick10",
-    "rsick11",
-    "rsick12",
-    "rsick13",
-    "rsick14",
-    "rsick15",
-    "rsick16",
-    "rsick17",
-    "rsick18",
-    "rsick19",
-    "rsick20",
-    "rsick21",
-    "rsick22",
-    "rsick23",
-    "rsick24",
-    "rsick25",
-    "rsick26",
-    "rsick27",
-    "rsick28",
-    "suff401",
-    "suff402",
-    "suff403",
-    "suff404",
-    "suff405",
-    "suff406",
-    "suff407",
-    "suff408",
-    "suff409",
-    "suff410",
-    "suff411",
-    "suff412",
-    "suff413",
-    "suffic",
-    "suffic1",
-    "suffic2",
-    "suffic3",
-    "suffic4",
-    "suffoth"
-  )],
+    standardized_value_labels,
     dhelp01 = .replace_labels(
     standardized_value_labels$dhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp02 = .replace_labels(
     standardized_value_labels$dhelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp03 = .replace_labels(
     standardized_value_labels$dhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp04 = .replace_labels(
     standardized_value_labels$dhelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp05 = .replace_labels(
     standardized_value_labels$dhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp06 = .replace_labels(
     standardized_value_labels$dhelp06,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp07 = .replace_labels(
     standardized_value_labels$dhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp08 = .replace_labels(
     standardized_value_labels$dhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp09 = .replace_labels(
     standardized_value_labels$dhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp10 = .replace_labels(
     standardized_value_labels$dhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp11 = .replace_labels(
     standardized_value_labels$dhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp12 = .replace_labels(
     standardized_value_labels$dhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelpyn = c(
     `-5` = "na, terminated interview",
@@ -15138,9 +12774,7 @@ value_labels_list <- list(
     dhourtot = .replace_labels(
     standardized_value_labels$dhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     health1 = c(
     `-5` = "na, terminated interview",
@@ -15153,9 +12787,7 @@ value_labels_list <- list(
   ),
     health2 = .replace_labels(
     standardized_value_labels$health2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BHEALTH1",
-    `-1` = "na, asked",
     `4` = "refused to answer"
   ),
     health3 = c(
@@ -15183,242 +12815,179 @@ value_labels_list <- list(
     nhelp01 = .replace_labels(
     standardized_value_labels$nhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp02 = .replace_labels(
     standardized_value_labels$nhelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp03 = .replace_labels(
     standardized_value_labels$nhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp04 = .replace_labels(
     standardized_value_labels$nhelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp05 = .replace_labels(
     standardized_value_labels$nhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp06 = .replace_labels(
     standardized_value_labels$nhelp06,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp07 = .replace_labels(
     standardized_value_labels$nhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp08 = .replace_labels(
     standardized_value_labels$nhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp09 = .replace_labels(
     standardized_value_labels$nhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp10 = .replace_labels(
     standardized_value_labels$nhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp11 = .replace_labels(
     standardized_value_labels$nhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp12 = .replace_labels(
     standardized_value_labels$nhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelpyn = .replace_labels(
     standardized_value_labels$nhelpyn,
-    `-5` = "na, terminated interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated interview"
   ),
     nhour01 = .replace_labels(
     standardized_value_labels$nhour01,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour02 = .replace_labels(
     standardized_value_labels$nhour02,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour03 = .replace_labels(
     standardized_value_labels$nhour03,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour04 = .replace_labels(
     standardized_value_labels$nhour04,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour05 = .replace_labels(
     standardized_value_labels$nhour05,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour06 = .replace_labels(
     standardized_value_labels$nhour06,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour07 = .replace_labels(
     standardized_value_labels$nhour07,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour08 = .replace_labels(
     standardized_value_labels$nhour08,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour09 = .replace_labels(
     standardized_value_labels$nhour09,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour10 = .replace_labels(
     standardized_value_labels$nhour10,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour11 = .replace_labels(
     standardized_value_labels$nhour11,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour12 = .replace_labels(
     standardized_value_labels$nhour12,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhourtot = .replace_labels(
     standardized_value_labels$nhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     phelp01 = .replace_labels(
     standardized_value_labels$phelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp02 = .replace_labels(
     standardized_value_labels$phelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp03 = .replace_labels(
     standardized_value_labels$phelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp04 = .replace_labels(
     standardized_value_labels$phelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp05 = .replace_labels(
     standardized_value_labels$phelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp06 = .replace_labels(
     standardized_value_labels$phelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp07 = .replace_labels(
     standardized_value_labels$phelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp08 = .replace_labels(
     standardized_value_labels$phelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp09 = .replace_labels(
     standardized_value_labels$phelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp10 = .replace_labels(
     standardized_value_labels$phelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp11 = .replace_labels(
     standardized_value_labels$phelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp12 = .replace_labels(
     standardized_value_labels$phelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelpyn = c(
     `-7` = "na, P outside HH",
@@ -15433,21 +13002,15 @@ value_labels_list <- list(
   ),
     phlp01b = .replace_labels(
     standardized_value_labels$phlp01b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELP01"
   ),
     phlp01m = .replace_labels(
     standardized_value_labels$phlp01m,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELP01"
   ),
     phlp01y = .replace_labels(
     standardized_value_labels$phlp01y,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELP01"
   ),
     phour01 = c(
     `-4` = "na, refused",
@@ -15548,105 +13111,71 @@ value_labels_list <- list(
     phourtot = .replace_labels(
     standardized_value_labels$phourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     regie1 = .replace_labels(
     standardized_value_labels$regie1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see Na, see BR-, BD-, & BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see Na, see BR-, BD-, & BNHELPYN"
   ),
     regie2 = .replace_labels(
     standardized_value_labels$regie2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see Na, see BR-, BD-, & BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see Na, see BR-, BD-, & BNHELPYN"
   ),
     regie3 = .replace_labels(
     standardized_value_labels$regie3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see Na, see BR-, BD-, & BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see Na, see BR-, BD-, & BNHELPYN"
   ),
     regie4 = .replace_labels(
     standardized_value_labels$regie4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BR-, BD-, & BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BR-, BD-, & BNHELPYN"
   ),
     rhelp01 = .replace_labels(
     standardized_value_labels$rhelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp02 = .replace_labels(
     standardized_value_labels$rhelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp03 = .replace_labels(
     standardized_value_labels$rhelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp04 = .replace_labels(
     standardized_value_labels$rhelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp05 = .replace_labels(
     standardized_value_labels$rhelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp06 = .replace_labels(
     standardized_value_labels$rhelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp07 = .replace_labels(
     standardized_value_labels$rhelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp08 = .replace_labels(
     standardized_value_labels$rhelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp09 = .replace_labels(
     standardized_value_labels$rhelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp10 = .replace_labels(
     standardized_value_labels$rhelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp11 = .replace_labels(
     standardized_value_labels$rhelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp12 = .replace_labels(
     standardized_value_labels$rhelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelpyn = c(
     `-5` = "na, terminated interview",
@@ -15755,9 +13284,7 @@ value_labels_list <- list(
     rhourtot = .replace_labels(
     standardized_value_labels$rhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rsick01 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick02 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
@@ -15782,146 +13309,107 @@ value_labels_list <- list(
   ),
     rsick16 = .replace_labels(
     standardized_value_labels$rsick16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     rsick17 = .replace_labels(
     standardized_value_labels$rsick17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     rsick18 = .replace_labels(
     standardized_value_labels$rsick18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     rsick19 = .replace_labels(
     standardized_value_labels$rsick19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     rsick20 = .replace_labels(
     standardized_value_labels$rsick20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     rsick21 = .replace_labels(
     standardized_value_labels$rsick21,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     rsick22 = .replace_labels(
     standardized_value_labels$rsick22,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     rsick23 = .replace_labels(
     standardized_value_labels$rsick23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     rsick24 = .replace_labels(
     standardized_value_labels$rsick24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     rsick25 = .replace_labels(
     standardized_value_labels$rsick25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     rsick26 = .replace_labels(
     standardized_value_labels$rsick26,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     rsick27 = .replace_labels(
     standardized_value_labels$rsick27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     rsick28 = .replace_labels(
     standardized_value_labels$rsick28,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     suff401 = .replace_labels(
     standardized_value_labels$suff401,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff402 = .replace_labels(
     standardized_value_labels$suff402,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff403 = .replace_labels(
     standardized_value_labels$suff403,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff404 = .replace_labels(
     standardized_value_labels$suff404,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff405 = .replace_labels(
     standardized_value_labels$suff405,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff406 = .replace_labels(
     standardized_value_labels$suff406,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff407 = .replace_labels(
     standardized_value_labels$suff407,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff408 = .replace_labels(
     standardized_value_labels$suff408,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff409 = .replace_labels(
     standardized_value_labels$suff409,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff410 = .replace_labels(
     standardized_value_labels$suff410,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff411 = .replace_labels(
     standardized_value_labels$suff411,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff412 = .replace_labels(
     standardized_value_labels$suff412,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff413 = .replace_labels(
     standardized_value_labels$suff413,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suffic = c(
     `-3` = "na, wrong skip",
@@ -15935,235 +13423,86 @@ value_labels_list <- list(
   ),
     suffic1 = .replace_labels(
     standardized_value_labels$suffic1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC"
   ),
     suffic2 = .replace_labels(
     standardized_value_labels$suffic2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC"
   ),
     suffic3 = .replace_labels(
     standardized_value_labels$suffic3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC"
   ),
     suffic4 = .replace_labels(
     standardized_value_labels$suffic4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC"
   ),
     suffoth = .replace_labels(
     standardized_value_labels$suffoth,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC"
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "dhelp01",
-    "dhelp02",
-    "dhelp03",
-    "dhelp04",
-    "dhelp05",
-    "dhelp06",
-    "dhelp07",
-    "dhelp08",
-    "dhelp09",
-    "dhelp10",
-    "dhelp11",
-    "dhelp12",
-    "dhelpyn",
-    "dhour01",
-    "dhour02",
-    "dhour03",
-    "dhour04",
-    "dhour05",
-    "dhour06",
-    "dhour07",
-    "dhour08",
-    "dhour09",
-    "dhour10",
-    "dhour11",
-    "dhour12",
-    "dhourtot",
-    "nhelp01",
-    "nhelp02",
-    "nhelp03",
-    "nhelp04",
-    "nhelp05",
-    "nhelp06",
-    "nhelp07",
-    "nhelp08",
-    "nhelp09",
-    "nhelp10",
-    "nhelp11",
-    "nhelp12",
-    "nhelpyn",
-    "nhour01",
-    "nhour02",
-    "nhour03",
-    "nhour04",
-    "nhour05",
-    "nhour06",
-    "nhour07",
-    "nhour08",
-    "nhour09",
-    "nhour10",
-    "nhour11",
-    "nhour12",
-    "nhourtot",
-    "phelp01",
-    "phelp02",
-    "phelp03",
-    "phelp04",
-    "phelp05",
-    "phelp06",
-    "phelp07",
-    "phelp08",
-    "phelp09",
-    "phelp10",
-    "phelp11",
-    "phelp12",
-    "phelpyn",
-    "phour01",
-    "phour02",
-    "phour03",
-    "phour04",
-    "phour05",
-    "phour06",
-    "phour07",
-    "phour08",
-    "phour09",
-    "phour10",
-    "phour11",
-    "phour12",
-    "phourtot",
-    "regie1",
-    "regie2",
-    "regie3",
-    "regie4",
-    "rhelp01",
-    "rhelp02",
-    "rhelp03",
-    "rhelp04",
-    "rhelp05",
-    "rhelp06",
-    "rhelp07",
-    "rhelp08",
-    "rhelp09",
-    "rhelp10",
-    "rhelp11",
-    "rhelp12",
-    "rhelpyn",
-    "rhour01",
-    "rhour02",
-    "rhour03",
-    "rhour04",
-    "rhour05",
-    "rhour06",
-    "rhour07",
-    "rhour08",
-    "rhour09",
-    "rhour10",
-    "rhour11",
-    "rhour12",
-    "rhourtot",
-    "suff401",
-    "suff402",
-    "suff403",
-    "suff404",
-    "suff405",
-    "suff406",
-    "suff407",
-    "suff408",
-    "suff409",
-    "suff410",
-    "suff411",
-    "suff412",
-    "suff413",
-    "suffic",
-    "suffic1",
-    "suffic2",
-    "suffic3",
-    "suffic4"
-  )],
+    standardized_value_labels,
     dhelp01 = .replace_labels(
     standardized_value_labels$dhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp02 = .replace_labels(
     standardized_value_labels$dhelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp03 = .replace_labels(
     standardized_value_labels$dhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp04 = .replace_labels(
     standardized_value_labels$dhelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp05 = .replace_labels(
     standardized_value_labels$dhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp06 = .replace_labels(
     standardized_value_labels$dhelp06,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp07 = .replace_labels(
     standardized_value_labels$dhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp08 = .replace_labels(
     standardized_value_labels$dhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp09 = .replace_labels(
     standardized_value_labels$dhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp10 = .replace_labels(
     standardized_value_labels$dhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp11 = .replace_labels(
     standardized_value_labels$dhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelp12 = .replace_labels(
     standardized_value_labels$dhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     dhelpyn = c(
     `-5` = "na, terminated interview",
@@ -16272,249 +13611,184 @@ value_labels_list <- list(
     dhourtot = .replace_labels(
     standardized_value_labels$dhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BDHELPYN"
   ),
     nhelp01 = .replace_labels(
     standardized_value_labels$nhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp02 = .replace_labels(
     standardized_value_labels$nhelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp03 = .replace_labels(
     standardized_value_labels$nhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp04 = .replace_labels(
     standardized_value_labels$nhelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp05 = .replace_labels(
     standardized_value_labels$nhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp06 = .replace_labels(
     standardized_value_labels$nhelp06,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp07 = .replace_labels(
     standardized_value_labels$nhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp08 = .replace_labels(
     standardized_value_labels$nhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp09 = .replace_labels(
     standardized_value_labels$nhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp10 = .replace_labels(
     standardized_value_labels$nhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp11 = .replace_labels(
     standardized_value_labels$nhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelp12 = .replace_labels(
     standardized_value_labels$nhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhelpyn = .replace_labels(
     standardized_value_labels$nhelpyn,
-    `-5` = "na, terminated interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated interview"
   ),
     nhour01 = .replace_labels(
     standardized_value_labels$nhour01,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour02 = .replace_labels(
     standardized_value_labels$nhour02,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour03 = .replace_labels(
     standardized_value_labels$nhour03,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour04 = .replace_labels(
     standardized_value_labels$nhour04,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour05 = .replace_labels(
     standardized_value_labels$nhour05,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour06 = .replace_labels(
     standardized_value_labels$nhour06,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour07 = .replace_labels(
     standardized_value_labels$nhour07,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour08 = .replace_labels(
     standardized_value_labels$nhour08,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour09 = .replace_labels(
     standardized_value_labels$nhour09,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour10 = .replace_labels(
     standardized_value_labels$nhour10,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour11 = .replace_labels(
     standardized_value_labels$nhour11,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhour12 = .replace_labels(
     standardized_value_labels$nhour12,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     nhourtot = .replace_labels(
     standardized_value_labels$nhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BNHELPYN"
   ),
     phelp01 = .replace_labels(
     standardized_value_labels$phelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp02 = .replace_labels(
     standardized_value_labels$phelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp03 = .replace_labels(
     standardized_value_labels$phelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp04 = .replace_labels(
     standardized_value_labels$phelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp05 = .replace_labels(
     standardized_value_labels$phelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp06 = .replace_labels(
     standardized_value_labels$phelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp07 = .replace_labels(
     standardized_value_labels$phelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp08 = .replace_labels(
     standardized_value_labels$phelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp09 = .replace_labels(
     standardized_value_labels$phelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp10 = .replace_labels(
     standardized_value_labels$phelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp11 = .replace_labels(
     standardized_value_labels$phelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelp12 = .replace_labels(
     standardized_value_labels$phelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     phelpyn = c(
     `-7` = "na, P outside HH",
@@ -16626,105 +13900,71 @@ value_labels_list <- list(
     phourtot = .replace_labels(
     standardized_value_labels$phourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BPHELPYN"
   ),
     regie1 = .replace_labels(
     standardized_value_labels$regie1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BR-, BD-, & BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BR-, BD-, & BNHELPYN"
   ),
     regie2 = .replace_labels(
     standardized_value_labels$regie2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BR-, BD-, & BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BR-, BD-, & BNHELPYN"
   ),
     regie3 = .replace_labels(
     standardized_value_labels$regie3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BR-, BD-, & BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BR-, BD-, & BNHELPYN"
   ),
     regie4 = .replace_labels(
     standardized_value_labels$regie4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BR-, BD-, & BNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BR-, BD-, & BNHELPYN"
   ),
     rhelp01 = .replace_labels(
     standardized_value_labels$rhelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp02 = .replace_labels(
     standardized_value_labels$rhelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp03 = .replace_labels(
     standardized_value_labels$rhelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp04 = .replace_labels(
     standardized_value_labels$rhelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp05 = .replace_labels(
     standardized_value_labels$rhelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp06 = .replace_labels(
     standardized_value_labels$rhelp06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp07 = .replace_labels(
     standardized_value_labels$rhelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp08 = .replace_labels(
     standardized_value_labels$rhelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp09 = .replace_labels(
     standardized_value_labels$rhelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp10 = .replace_labels(
     standardized_value_labels$rhelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp11 = .replace_labels(
     standardized_value_labels$rhelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelp12 = .replace_labels(
     standardized_value_labels$rhelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     rhelpyn = c(
     `-5` = "na, terminated interview",
@@ -16833,74 +14073,59 @@ value_labels_list <- list(
     rhourtot = .replace_labels(
     standardized_value_labels$rhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see BRHELPYN"
   ),
     suff401 = .replace_labels(
     standardized_value_labels$suff401,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff402 = .replace_labels(
     standardized_value_labels$suff402,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff403 = .replace_labels(
     standardized_value_labels$suff403,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff404 = .replace_labels(
     standardized_value_labels$suff404,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff405 = .replace_labels(
     standardized_value_labels$suff405,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff406 = .replace_labels(
     standardized_value_labels$suff406,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff407 = .replace_labels(
     standardized_value_labels$suff407,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff408 = .replace_labels(
     standardized_value_labels$suff408,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff409 = .replace_labels(
     standardized_value_labels$suff409,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff410 = .replace_labels(
     standardized_value_labels$suff410,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff411 = .replace_labels(
     standardized_value_labels$suff411,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff412 = .replace_labels(
     standardized_value_labels$suff412,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suff413 = .replace_labels(
     standardized_value_labels$suff413,
-    `-2` = "na, see BSUFFIC4",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC4"
   ),
     suffic = c(
     `-5` = "na, terminated interview",
@@ -16914,511 +14139,226 @@ value_labels_list <- list(
   ),
     suffic1 = .replace_labels(
     standardized_value_labels$suffic1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC"
   ),
     suffic2 = .replace_labels(
     standardized_value_labels$suffic2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC"
   ),
     suffic3 = .replace_labels(
     standardized_value_labels$suffic3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC"
   ),
     suffic4 = .replace_labels(
     standardized_value_labels$suffic4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see BSUFFIC"
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "ahelp01",
-    "ahelp02",
-    "ahelp03",
-    "ahelp04",
-    "ahelp05",
-    "ahelp06a",
-    "ahelp06b",
-    "ahelp07",
-    "ahelp08",
-    "ahelp09",
-    "ahelp10",
-    "ahelp11",
-    "ahelp12",
-    "ahelpyn",
-    "ahour01",
-    "ahour02",
-    "ahour03",
-    "ahour04",
-    "ahour05",
-    "ahour06a",
-    "ahour06b",
-    "ahour07",
-    "ahour08",
-    "ahour09",
-    "ahour10",
-    "ahour11",
-    "ahour12",
-    "ahourtot",
-    "dhelp01",
-    "dhelp02",
-    "dhelp03",
-    "dhelp04",
-    "dhelp05",
-    "dhelp06a",
-    "dhelp06b",
-    "dhelp07",
-    "dhelp08",
-    "dhelp09",
-    "dhelp10",
-    "dhelp11",
-    "dhelp12",
-    "dhelpyn",
-    "dhour01",
-    "dhour02",
-    "dhour03",
-    "dhour04",
-    "dhour05",
-    "dhour06a",
-    "dhour06b",
-    "dhour07",
-    "dhour08",
-    "dhour09",
-    "dhour10",
-    "dhour11",
-    "dhour12",
-    "dhourtot",
-    "ghelp01",
-    "ghelp02",
-    "ghelp03",
-    "ghelp04",
-    "ghelp05",
-    "ghelp06a",
-    "ghelp06b",
-    "ghelp07",
-    "ghelp08",
-    "ghelp09",
-    "ghelp10",
-    "ghelp11",
-    "ghelp12",
-    "ghelpyn",
-    "ghour01",
-    "ghour02",
-    "ghour03",
-    "ghour04",
-    "ghour05",
-    "ghour06a",
-    "ghour06b",
-    "ghour07",
-    "ghour08",
-    "ghour09",
-    "ghour10",
-    "ghour11",
-    "ghour12",
-    "ghourtot",
-    "health1",
-    "health2",
-    "health3",
-    "health4",
-    "hhnic",
-    "hhnprof",
-    "hhnvol",
-    "hn1",
-    "hn2",
-    "hn3",
-    "hn4",
-    "hn5",
-    "hn6",
-    "nhelp01",
-    "nhelp02",
-    "nhelp03",
-    "nhelp04",
-    "nhelp05",
-    "nhelp06a",
-    "nhelp06b",
-    "nhelp07",
-    "nhelp08",
-    "nhelp09",
-    "nhelp10",
-    "nhelp11",
-    "nhelp12",
-    "nhelpyn",
-    "nhour01",
-    "nhour02",
-    "nhour03",
-    "nhour04",
-    "nhour05",
-    "nhour06a",
-    "nhour06b",
-    "nhour07",
-    "nhour08",
-    "nhour09",
-    "nhour10",
-    "nhour11",
-    "nhour12",
-    "nhourtot",
-    "phelp01",
-    "phelp02",
-    "phelp03",
-    "phelp04",
-    "phelp05",
-    "phelp06a",
-    "phelp06b",
-    "phelp07",
-    "phelp08",
-    "phelp09",
-    "phelp10",
-    "phelp11",
-    "phelp12",
-    "phelpyn",
-    "phlp01b",
-    "phlp01m",
-    "phlp01y",
-    "phour01",
-    "phour02",
-    "phour03",
-    "phour04",
-    "phour05",
-    "phour06a",
-    "phour06b",
-    "phour07",
-    "phour08",
-    "phour09",
-    "phour10",
-    "phour11",
-    "phour12",
-    "phourtot",
-    "regie1",
-    "regie2",
-    "regie3",
-    "regie4",
-    "rhelp01",
-    "rhelp02",
-    "rhelp03",
-    "rhelp04",
-    "rhelp05",
-    "rhelp06a",
-    "rhelp06b",
-    "rhelp07",
-    "rhelp08",
-    "rhelp09",
-    "rhelp10",
-    "rhelp11",
-    "rhelp12",
-    "rhelpyn",
-    "rhour01",
-    "rhour02",
-    "rhour03",
-    "rhour04",
-    "rhour05",
-    "rhour06a",
-    "rhour06b",
-    "rhour07",
-    "rhour08",
-    "rhour09",
-    "rhour10",
-    "rhour11",
-    "rhour12",
-    "rhourtot",
-    "rsick01",
-    "rsick02",
-    "rsick03",
-    "rsick04",
-    "rsick05",
-    "rsick06",
-    "rsick07a",
-    "rsick07b",
-    "rsick08",
-    "rsick09",
-    "rsick10",
-    "rsick11",
-    "rsick12",
-    "rsick13",
-    "rsick14a",
-    "rsick14b",
-    "rsick15",
-    "rsick16",
-    "rsick17",
-    "rsick18",
-    "rsick19",
-    "rsick20",
-    "rsick21a",
-    "rsick21b",
-    "rsick22",
-    "rsick23",
-    "rsick24",
-    "rsick25",
-    "rsick26",
-    "rsick27",
-    "rsick28a",
-    "rsick28b",
-    "suffic"
-  )],
+    standardized_value_labels,
     ahelp01 = .replace_labels(
     standardized_value_labels$ahelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELPYN"
   ),
     ahelp02 = .replace_labels(
     standardized_value_labels$ahelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELPYN"
   ),
     ahelp03 = .replace_labels(
     standardized_value_labels$ahelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELPYN"
   ),
     ahelp04 = .replace_labels(
     standardized_value_labels$ahelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELPYN"
   ),
     ahelp05 = .replace_labels(
     standardized_value_labels$ahelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELPYN"
   ),
     ahelp06a = .replace_labels(
     standardized_value_labels$ahelp06a,
     `-3` = "na wrong skip",
-    `-2` = "na, see IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELPYN"
   ),
     ahelp06b = .replace_labels(
     standardized_value_labels$ahelp06b,
     `-3` = "na wrong skip",
-    `-2` = "na, see IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELPYN"
   ),
     ahelp07 = .replace_labels(
     standardized_value_labels$ahelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELPYN"
   ),
     ahelp08 = .replace_labels(
     standardized_value_labels$ahelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELPYN"
   ),
     ahelp09 = .replace_labels(
     standardized_value_labels$ahelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELPYN"
   ),
     ahelp10 = .replace_labels(
     standardized_value_labels$ahelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELPYN"
   ),
     ahelp11 = .replace_labels(
     standardized_value_labels$ahelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELPYN"
   ),
     ahelp12 = .replace_labels(
     standardized_value_labels$ahelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELPYN"
   ),
     ahelpyn = .replace_labels(
     standardized_value_labels$ahelpyn,
-    `-5` = "na, terminated interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated interview"
   ),
     ahour01 = .replace_labels(
     standardized_value_labels$ahour01,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELP01"
   ),
     ahour02 = .replace_labels(
     standardized_value_labels$ahour02,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELP01"
   ),
     ahour03 = .replace_labels(
     standardized_value_labels$ahour03,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELP01"
   ),
     ahour04 = .replace_labels(
     standardized_value_labels$ahour04,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELP01"
   ),
     ahour05 = .replace_labels(
     standardized_value_labels$ahour05,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELP01"
   ),
     ahour06a = .replace_labels(
     standardized_value_labels$ahour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELP01"
   ),
     ahour06b = .replace_labels(
     standardized_value_labels$ahour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELP01"
   ),
     ahour07 = .replace_labels(
     standardized_value_labels$ahour07,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELP01"
   ),
     ahour08 = .replace_labels(
     standardized_value_labels$ahour08,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELP01"
   ),
     ahour09 = .replace_labels(
     standardized_value_labels$ahour09,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELP01"
   ),
     ahour10 = .replace_labels(
     standardized_value_labels$ahour10,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELP01"
   ),
     ahour11 = .replace_labels(
     standardized_value_labels$ahour11,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELP01"
   ),
     ahour12 = .replace_labels(
     standardized_value_labels$ahour12,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELP01"
   ),
     ahourtot = .replace_labels(
     standardized_value_labels$ahourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELPYN"
   ),
     dhelp01 = .replace_labels(
     standardized_value_labels$dhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     dhelp02 = .replace_labels(
     standardized_value_labels$dhelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     dhelp03 = .replace_labels(
     standardized_value_labels$dhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     dhelp04 = .replace_labels(
     standardized_value_labels$dhelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     dhelp05 = .replace_labels(
     standardized_value_labels$dhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     dhelp06a = .replace_labels(
     standardized_value_labels$dhelp06a,
     `-3` = "na wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     dhelp06b = .replace_labels(
     standardized_value_labels$dhelp06b,
     `-3` = "na wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     dhelp07 = .replace_labels(
     standardized_value_labels$dhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     dhelp08 = .replace_labels(
     standardized_value_labels$dhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     dhelp09 = .replace_labels(
     standardized_value_labels$dhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     dhelp10 = .replace_labels(
     standardized_value_labels$dhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     dhelp11 = .replace_labels(
     standardized_value_labels$dhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     dhelp12 = .replace_labels(
     standardized_value_labels$dhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     dhelpyn = c(
     `-5` = "na, terminated interview",
@@ -17471,16 +14411,12 @@ value_labels_list <- list(
     dhour06a = .replace_labels(
     standardized_value_labels$dhour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELP01"
   ),
     dhour06b = .replace_labels(
     standardized_value_labels$dhour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELP01"
   ),
     dhour07 = c(
     `-4` = "na, refused",
@@ -17533,190 +14469,146 @@ value_labels_list <- list(
     dhourtot = .replace_labels(
     standardized_value_labels$dhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     ghelp01 = .replace_labels(
     standardized_value_labels$ghelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see IGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELPYN"
   ),
     ghelp02 = .replace_labels(
     standardized_value_labels$ghelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see IGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELPYN"
   ),
     ghelp03 = .replace_labels(
     standardized_value_labels$ghelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see IGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELPYN"
   ),
     ghelp04 = .replace_labels(
     standardized_value_labels$ghelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see IGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELPYN"
   ),
     ghelp05 = .replace_labels(
     standardized_value_labels$ghelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see IGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELPYN"
   ),
     ghelp06a = .replace_labels(
     standardized_value_labels$ghelp06a,
     `-3` = "na wrong skip",
-    `-2` = "na, see IGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELPYN"
   ),
     ghelp06b = .replace_labels(
     standardized_value_labels$ghelp06b,
     `-3` = "na wrong skip",
-    `-2` = "na, see IGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELPYN"
   ),
     ghelp07 = .replace_labels(
     standardized_value_labels$ghelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see IGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELPYN"
   ),
     ghelp08 = .replace_labels(
     standardized_value_labels$ghelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see IGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELPYN"
   ),
     ghelp09 = .replace_labels(
     standardized_value_labels$ghelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see IGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELPYN"
   ),
     ghelp10 = .replace_labels(
     standardized_value_labels$ghelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see IGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELPYN"
   ),
     ghelp11 = .replace_labels(
     standardized_value_labels$ghelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see IGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELPYN"
   ),
     ghelp12 = .replace_labels(
     standardized_value_labels$ghelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see IGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELPYN"
   ),
     ghelpyn = .replace_labels(
     standardized_value_labels$ghelpyn,
-    `-5` = "na, terminated Interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated Interview"
   ),
     ghour01 = .replace_labels(
     standardized_value_labels$ghour01,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELP01"
   ),
     ghour02 = .replace_labels(
     standardized_value_labels$ghour02,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELP01"
   ),
     ghour03 = .replace_labels(
     standardized_value_labels$ghour03,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELP01"
   ),
     ghour04 = .replace_labels(
     standardized_value_labels$ghour04,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELP01"
   ),
     ghour05 = .replace_labels(
     standardized_value_labels$ghour05,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELP01"
   ),
     ghour06a = .replace_labels(
     standardized_value_labels$ghour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELP01"
   ),
     ghour06b = .replace_labels(
     standardized_value_labels$ghour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELP01"
   ),
     ghour07 = .replace_labels(
     standardized_value_labels$ghour07,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELP01"
   ),
     ghour08 = .replace_labels(
     standardized_value_labels$ghour08,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELP01"
   ),
     ghour09 = .replace_labels(
     standardized_value_labels$ghour09,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELP01"
   ),
     ghour10 = .replace_labels(
     standardized_value_labels$ghour10,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELP01"
   ),
     ghour11 = .replace_labels(
     standardized_value_labels$ghour11,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELP01"
   ),
     ghour12 = .replace_labels(
     standardized_value_labels$ghour12,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELP01"
   ),
     ghourtot = .replace_labels(
     standardized_value_labels$ghourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IGHELPYN"
   ),
     health1 = c(
     `-5` = "na, terminated interview",
@@ -17729,9 +14621,7 @@ value_labels_list <- list(
   ),
     health2 = .replace_labels(
     standardized_value_labels$health2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see IHEALTH1",
-    `-1` = "na, asked",
     `4` = "refused to answer"
   ),
     health3 = c(
@@ -17758,9 +14648,7 @@ value_labels_list <- list(
   ),
     hhnic = .replace_labels(
     standardized_value_labels$hhnic,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IAHELP12",
-    `-1` = "na, asked"
+    `-2` = "na, see IAHELP12"
   ),
     hhnprof = c(`-3` = "na, wrong skip", `-2` = "na, see IAHELP12", `-1` = "na, asked"),
     hhnvol = c(`-3` = "na, wrong skip", `-2` = "na, see IAHELP12", `-1` = "na, asked"),
@@ -17809,261 +14697,193 @@ value_labels_list <- list(
     nhelp01 = .replace_labels(
     standardized_value_labels$nhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see INHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELPYN"
   ),
     nhelp02 = .replace_labels(
     standardized_value_labels$nhelp02,
     `-3` = "na wrong skip",
-    `-2` = "na, see INHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELPYN"
   ),
     nhelp03 = .replace_labels(
     standardized_value_labels$nhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see INHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELPYN"
   ),
     nhelp04 = .replace_labels(
     standardized_value_labels$nhelp04,
     `-3` = "na wrong skip",
-    `-2` = "na, see INHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELPYN"
   ),
     nhelp05 = .replace_labels(
     standardized_value_labels$nhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see INHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELPYN"
   ),
     nhelp06a = .replace_labels(
     standardized_value_labels$nhelp06a,
     `-3` = "na wrong skip",
-    `-2` = "na, see INHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELPYN"
   ),
     nhelp06b = .replace_labels(
     standardized_value_labels$nhelp06b,
     `-3` = "na wrong skip",
-    `-2` = "na, see INHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELPYN"
   ),
     nhelp07 = .replace_labels(
     standardized_value_labels$nhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see INHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELPYN"
   ),
     nhelp08 = .replace_labels(
     standardized_value_labels$nhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see INHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELPYN"
   ),
     nhelp09 = .replace_labels(
     standardized_value_labels$nhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see INHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELPYN"
   ),
     nhelp10 = .replace_labels(
     standardized_value_labels$nhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see INHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELPYN"
   ),
     nhelp11 = .replace_labels(
     standardized_value_labels$nhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see INHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELPYN"
   ),
     nhelp12 = .replace_labels(
     standardized_value_labels$nhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see INHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELPYN"
   ),
     nhelpyn = .replace_labels(
     standardized_value_labels$nhelpyn,
-    `-5` = "na, terminated interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated interview"
   ),
     nhour01 = .replace_labels(
     standardized_value_labels$nhour01,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see INHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELP01"
   ),
     nhour02 = .replace_labels(
     standardized_value_labels$nhour02,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see INHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELP01"
   ),
     nhour03 = .replace_labels(
     standardized_value_labels$nhour03,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see INHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELP01"
   ),
     nhour04 = .replace_labels(
     standardized_value_labels$nhour04,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see INHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELP01"
   ),
     nhour05 = .replace_labels(
     standardized_value_labels$nhour05,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see INHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELP01"
   ),
     nhour06a = .replace_labels(
     standardized_value_labels$nhour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see INHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELP01"
   ),
     nhour06b = .replace_labels(
     standardized_value_labels$nhour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see INHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELP01"
   ),
     nhour07 = .replace_labels(
     standardized_value_labels$nhour07,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see INHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELP01"
   ),
     nhour08 = .replace_labels(
     standardized_value_labels$nhour08,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see INHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELP01"
   ),
     nhour09 = .replace_labels(
     standardized_value_labels$nhour09,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see INHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELP01"
   ),
     nhour10 = .replace_labels(
     standardized_value_labels$nhour10,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see INHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELP01"
   ),
     nhour11 = .replace_labels(
     standardized_value_labels$nhour11,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see INHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELP01"
   ),
     nhour12 = .replace_labels(
     standardized_value_labels$nhour12,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see INHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELP01"
   ),
     nhourtot = .replace_labels(
     standardized_value_labels$nhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see INHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see INHELPYN"
   ),
     phelp01 = .replace_labels(
     standardized_value_labels$phelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELPYN"
   ),
     phelp02 = .replace_labels(
     standardized_value_labels$phelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELPYN"
   ),
     phelp03 = .replace_labels(
     standardized_value_labels$phelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELPYN"
   ),
     phelp04 = .replace_labels(
     standardized_value_labels$phelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELPYN"
   ),
     phelp05 = .replace_labels(
     standardized_value_labels$phelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELPYN"
   ),
     phelp06a = .replace_labels(
     standardized_value_labels$phelp06a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELPYN"
   ),
     phelp06b = .replace_labels(
     standardized_value_labels$phelp06b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELPYN"
   ),
     phelp07 = .replace_labels(
     standardized_value_labels$phelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELPYN"
   ),
     phelp08 = .replace_labels(
     standardized_value_labels$phelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELPYN"
   ),
     phelp09 = .replace_labels(
     standardized_value_labels$phelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELPYN"
   ),
     phelp10 = .replace_labels(
     standardized_value_labels$phelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELPYN"
   ),
     phelp11 = .replace_labels(
     standardized_value_labels$phelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELPYN"
   ),
     phelp12 = .replace_labels(
     standardized_value_labels$phelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELPYN"
   ),
     phelpyn = c(
     `-7` = "na, P outside HH",
@@ -18078,21 +14898,15 @@ value_labels_list <- list(
   ),
     phlp01b = .replace_labels(
     standardized_value_labels$phlp01b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELP01"
   ),
     phlp01m = .replace_labels(
     standardized_value_labels$phlp01m,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELP01"
   ),
     phlp01y = .replace_labels(
     standardized_value_labels$phlp01y,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELP01"
   ),
     phour01 = c(
     `-4` = "na, refused",
@@ -18137,16 +14951,12 @@ value_labels_list <- list(
     phour06a = .replace_labels(
     standardized_value_labels$phour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELP01"
   ),
     phour06b = .replace_labels(
     standardized_value_labels$phour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELP01"
   ),
     phour07 = c(
     `-4` = "na, refused",
@@ -18199,112 +15009,76 @@ value_labels_list <- list(
     phourtot = .replace_labels(
     standardized_value_labels$phourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IPHELPYN"
   ),
     regie1 = .replace_labels(
     standardized_value_labels$regie1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IR-, ID-, IG-, IG & IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IR-, ID-, IG-, IG & IAHELPYN"
   ),
     regie2 = .replace_labels(
     standardized_value_labels$regie2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IR-, ID-, IG-, IG & IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IR-, ID-, IG-, IG & IAHELPYN"
   ),
     regie3 = .replace_labels(
     standardized_value_labels$regie3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IR-, ID-, IG-, IG & IAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IR-, ID-, IG-, IG & IAHELPYN"
   ),
     regie4 = .replace_labels(
     standardized_value_labels$regie4,
-    `-3` = "na, wrong skip",
     `-2` = "na, see IR-, ID-, IG-, IG & IAHELPYN",
-    `-1` = "na, asked",
     `3` = "not important/not unimportant"
   ),
     rhelp01 = .replace_labels(
     standardized_value_labels$rhelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELPYN"
   ),
     rhelp02 = .replace_labels(
     standardized_value_labels$rhelp02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELPYN"
   ),
     rhelp03 = .replace_labels(
     standardized_value_labels$rhelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELPYN"
   ),
     rhelp04 = .replace_labels(
     standardized_value_labels$rhelp04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELPYN"
   ),
     rhelp05 = .replace_labels(
     standardized_value_labels$rhelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELPYN"
   ),
     rhelp06a = .replace_labels(
     standardized_value_labels$rhelp06a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELPYN"
   ),
     rhelp06b = .replace_labels(
     standardized_value_labels$rhelp06b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELPYN"
   ),
     rhelp07 = .replace_labels(
     standardized_value_labels$rhelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELPYN"
   ),
     rhelp08 = .replace_labels(
     standardized_value_labels$rhelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELPYN"
   ),
     rhelp09 = .replace_labels(
     standardized_value_labels$rhelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELPYN"
   ),
     rhelp10 = .replace_labels(
     standardized_value_labels$rhelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELPYN"
   ),
     rhelp11 = .replace_labels(
     standardized_value_labels$rhelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELPYN"
   ),
     rhelp12 = .replace_labels(
     standardized_value_labels$rhelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELPYN"
   ),
     rhelpyn = c(
     `-5` = "na, terminated interview",
@@ -18357,16 +15131,12 @@ value_labels_list <- list(
     rhour06a = .replace_labels(
     standardized_value_labels$rhour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELP01"
   ),
     rhour06b = .replace_labels(
     standardized_value_labels$rhour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELP01"
   ),
     rhour07 = c(
     `-4` = "na, refused",
@@ -18419,9 +15189,7 @@ value_labels_list <- list(
     rhourtot = .replace_labels(
     standardized_value_labels$rhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IRHELPYN"
   ),
     rsick01 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick02 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
@@ -18429,32 +15197,12 @@ value_labels_list <- list(
     rsick04 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick05 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick06 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    rsick07a = .replace_labels(
-    standardized_value_labels$rsick07a,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
-    rsick07b = .replace_labels(
-    standardized_value_labels$rsick07b,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
     rsick08 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick09 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick10 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick11 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick12 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick13 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    rsick14a = .replace_labels(
-    standardized_value_labels$rsick14a,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
-    rsick14b = .replace_labels(
-    standardized_value_labels$rsick14b,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
     rsick15 = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see IDHELPYN",
@@ -18464,93 +15212,63 @@ value_labels_list <- list(
   ),
     rsick16 = .replace_labels(
     standardized_value_labels$rsick16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     rsick17 = .replace_labels(
     standardized_value_labels$rsick17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     rsick18 = .replace_labels(
     standardized_value_labels$rsick18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     rsick19 = .replace_labels(
     standardized_value_labels$rsick19,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     rsick20 = .replace_labels(
     standardized_value_labels$rsick20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     rsick21a = .replace_labels(
     standardized_value_labels$rsick21a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     rsick21b = .replace_labels(
     standardized_value_labels$rsick21b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     rsick22 = .replace_labels(
     standardized_value_labels$rsick22,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     rsick23 = .replace_labels(
     standardized_value_labels$rsick23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     rsick24 = .replace_labels(
     standardized_value_labels$rsick24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     rsick25 = .replace_labels(
     standardized_value_labels$rsick25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     rsick26 = .replace_labels(
     standardized_value_labels$rsick26,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     rsick27 = .replace_labels(
     standardized_value_labels$rsick27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     rsick28a = .replace_labels(
     standardized_value_labels$rsick28a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     rsick28b = .replace_labels(
     standardized_value_labels$rsick28b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see IDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see IDHELPYN"
   ),
     suffic = c(
     `-3` = "na, wrong skip",
@@ -18564,554 +15282,225 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "ahelp01",
-    "ahelp02a",
-    "ahelp02b",
-    "ahelp03",
-    "ahelp04a",
-    "ahelp04b",
-    "ahelp05",
-    "ahelp06a",
-    "ahelp06b",
-    "ahelp07",
-    "ahelp08",
-    "ahelp09",
-    "ahelp10",
-    "ahelp11",
-    "ahelp12",
-    "ahelpyn",
-    "ahour01",
-    "ahour02a",
-    "ahour02b",
-    "ahour03",
-    "ahour04a",
-    "ahour04b",
-    "ahour05",
-    "ahour06a",
-    "ahour06b",
-    "ahour07",
-    "ahour08",
-    "ahour09",
-    "ahour10",
-    "ahour11",
-    "ahour12",
-    "ahourtot",
-    "dhelp01",
-    "dhelp02a",
-    "dhelp02b",
-    "dhelp03",
-    "dhelp04a",
-    "dhelp04b",
-    "dhelp05",
-    "dhelp06a",
-    "dhelp06b",
-    "dhelp07",
-    "dhelp08",
-    "dhelp09",
-    "dhelp10",
-    "dhelp11",
-    "dhelp12",
-    "dhelpyn",
-    "dhour01",
-    "dhour02a",
-    "dhour02b",
-    "dhour03",
-    "dhour04a",
-    "dhour04b",
-    "dhour05",
-    "dhour06a",
-    "dhour06b",
-    "dhour07",
-    "dhour08",
-    "dhour09",
-    "dhour10",
-    "dhour11",
-    "dhour12",
-    "dhourtot",
-    "ghelp01",
-    "ghelp02a",
-    "ghelp02b",
-    "ghelp03",
-    "ghelp04a",
-    "ghelp04b",
-    "ghelp05",
-    "ghelp06a",
-    "ghelp06b",
-    "ghelp07",
-    "ghelp08",
-    "ghelp09",
-    "ghelp10",
-    "ghelp11",
-    "ghelp12",
-    "ghelpyn",
-    "ghour01",
-    "ghour02a",
-    "ghour02b",
-    "ghour03",
-    "ghour04a",
-    "ghour04b",
-    "ghour05",
-    "ghour06a",
-    "ghour06b",
-    "ghour07",
-    "ghour08",
-    "ghour09",
-    "ghour10",
-    "ghour11",
-    "ghour12",
-    "ghourtot",
-    "health1",
-    "health2",
-    "health3",
-    "health4",
-    "helpr",
-    "hhnic",
-    "hhnprof",
-    "hhnvol",
-    "hn1",
-    "hn2",
-    "hn3",
-    "hn4",
-    "hn5",
-    "hn6",
-    "nhelp01",
-    "nhelp02a",
-    "nhelp02b",
-    "nhelp03",
-    "nhelp04a",
-    "nhelp04b",
-    "nhelp05",
-    "nhelp06a",
-    "nhelp06b",
-    "nhelp07",
-    "nhelp08",
-    "nhelp09",
-    "nhelp10",
-    "nhelp11",
-    "nhelp12",
-    "nhelpyn",
-    "nhour01",
-    "nhour02a",
-    "nhour02b",
-    "nhour03",
-    "nhour04a",
-    "nhour04b",
-    "nhour05",
-    "nhour06a",
-    "nhour06b",
-    "nhour07",
-    "nhour08",
-    "nhour09",
-    "nhour10",
-    "nhour11",
-    "nhour12",
-    "nhourtot",
-    "phelp01",
-    "phelp02a",
-    "phelp02b",
-    "phelp03",
-    "phelp04a",
-    "phelp04b",
-    "phelp05",
-    "phelp06a",
-    "phelp06b",
-    "phelp07",
-    "phelp08",
-    "phelp09",
-    "phelp10",
-    "phelp11",
-    "phelp12",
-    "phelpyn",
-    "phlp01b",
-    "phlp01m",
-    "phlp01y",
-    "phour01",
-    "phour02a",
-    "phour02b",
-    "phour03",
-    "phour04a",
-    "phour04b",
-    "phour05",
-    "phour06a",
-    "phour06b",
-    "phour07",
-    "phour08",
-    "phour09",
-    "phour10",
-    "phour11",
-    "phour12",
-    "phourtot",
-    "regie1",
-    "regie2",
-    "regie3",
-    "regie4",
-    "rhelp01",
-    "rhelp02a",
-    "rhelp02b",
-    "rhelp03",
-    "rhelp04a",
-    "rhelp04b",
-    "rhelp05",
-    "rhelp07",
-    "rhelp08",
-    "rhelp09",
-    "rhelp10",
-    "rhelp11",
-    "rhelp12",
-    "rhelp6a",
-    "rhelp6b",
-    "rhelpyn",
-    "rhour01",
-    "rhour02a",
-    "rhour02b",
-    "rhour03",
-    "rhour04a",
-    "rhour04b",
-    "rhour05",
-    "rhour06a",
-    "rhour06b",
-    "rhour07",
-    "rhour08",
-    "rhour09",
-    "rhour10",
-    "rhour11",
-    "rhour12",
-    "rhourtot",
-    "rsick01",
-    "rsick02",
-    "rsick03a",
-    "rsick03b",
-    "rsick04",
-    "rsick05a",
-    "rsick05b",
-    "rsick06",
-    "rsick07a",
-    "rsick07b",
-    "rsick08",
-    "rsick09",
-    "rsick10",
-    "rsick11",
-    "rsick12",
-    "rsick13",
-    "rsick14a",
-    "rsick14b",
-    "rsick15",
-    "rsick16",
-    "rsick17a",
-    "rsick17b",
-    "rsick18",
-    "rsick19a",
-    "rsick19b",
-    "rsick20",
-    "rsick21a",
-    "rsick21b",
-    "rsick22",
-    "rsick23",
-    "rsick24",
-    "rsick25",
-    "rsick26",
-    "rsick27",
-    "rsick28a",
-    "rsick28b",
-    "suffic"
-  )],
+    standardized_value_labels,
     ahelp01 = .replace_labels(
     standardized_value_labels$ahelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp02a = .replace_labels(
     standardized_value_labels$ahelp02a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp02b = .replace_labels(
     standardized_value_labels$ahelp02b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp03 = .replace_labels(
     standardized_value_labels$ahelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp04a = .replace_labels(
     standardized_value_labels$ahelp04a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp04b = .replace_labels(
     standardized_value_labels$ahelp04b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp05 = .replace_labels(
     standardized_value_labels$ahelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp06a = .replace_labels(
     standardized_value_labels$ahelp06a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp06b = .replace_labels(
     standardized_value_labels$ahelp06b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp07 = .replace_labels(
     standardized_value_labels$ahelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp08 = .replace_labels(
     standardized_value_labels$ahelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp09 = .replace_labels(
     standardized_value_labels$ahelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp10 = .replace_labels(
     standardized_value_labels$ahelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp11 = .replace_labels(
     standardized_value_labels$ahelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp12 = .replace_labels(
     standardized_value_labels$ahelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelpyn = .replace_labels(
     standardized_value_labels$ahelpyn,
-    `-5` = "na, terminated interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated interview"
   ),
     ahour01 = .replace_labels(
     standardized_value_labels$ahour01,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour02a = .replace_labels(
     standardized_value_labels$ahour02a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour02b = .replace_labels(
     standardized_value_labels$ahour02b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour03 = .replace_labels(
     standardized_value_labels$ahour03,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour04a = .replace_labels(
     standardized_value_labels$ahour04a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour04b = .replace_labels(
     standardized_value_labels$ahour04b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour05 = .replace_labels(
     standardized_value_labels$ahour05,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour06a = .replace_labels(
     standardized_value_labels$ahour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour06b = .replace_labels(
     standardized_value_labels$ahour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour07 = .replace_labels(
     standardized_value_labels$ahour07,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour08 = .replace_labels(
     standardized_value_labels$ahour08,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour09 = .replace_labels(
     standardized_value_labels$ahour09,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour10 = .replace_labels(
     standardized_value_labels$ahour10,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour11 = .replace_labels(
     standardized_value_labels$ahour11,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour12 = .replace_labels(
     standardized_value_labels$ahour12,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahourtot = .replace_labels(
     standardized_value_labels$ahourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     dhelp01 = .replace_labels(
     standardized_value_labels$dhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp02a = .replace_labels(
     standardized_value_labels$dhelp02a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp02b = .replace_labels(
     standardized_value_labels$dhelp02b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp03 = .replace_labels(
     standardized_value_labels$dhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp04a = .replace_labels(
     standardized_value_labels$dhelp04a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp04b = .replace_labels(
     standardized_value_labels$dhelp04b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp05 = .replace_labels(
     standardized_value_labels$dhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp06a = .replace_labels(
     standardized_value_labels$dhelp06a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp06b = .replace_labels(
     standardized_value_labels$dhelp06b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp07 = .replace_labels(
     standardized_value_labels$dhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp08 = .replace_labels(
     standardized_value_labels$dhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp09 = .replace_labels(
     standardized_value_labels$dhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp10 = .replace_labels(
     standardized_value_labels$dhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp11 = .replace_labels(
     standardized_value_labels$dhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp12 = .replace_labels(
     standardized_value_labels$dhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelpyn = c(
     `-5` = "na, terminated interview",
@@ -19132,16 +15521,12 @@ value_labels_list <- list(
     dhour02a = .replace_labels(
     standardized_value_labels$dhour02a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELP01"
   ),
     dhour02b = .replace_labels(
     standardized_value_labels$dhour02b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELP01"
   ),
     dhour03 = c(
     `-4` = "na, refused",
@@ -19154,16 +15539,12 @@ value_labels_list <- list(
     dhour04a = .replace_labels(
     standardized_value_labels$dhour04a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELP01"
   ),
     dhour04b = .replace_labels(
     standardized_value_labels$dhour04b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELP01"
   ),
     dhour05 = c(
     `-4` = "na, refused",
@@ -19176,16 +15557,12 @@ value_labels_list <- list(
     dhour06a = .replace_labels(
     standardized_value_labels$dhour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELP01"
   ),
     dhour06b = .replace_labels(
     standardized_value_labels$dhour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELP01"
   ),
     dhour07 = c(
     `-4` = "na, refused",
@@ -19238,216 +15615,166 @@ value_labels_list <- list(
     dhourtot = .replace_labels(
     standardized_value_labels$dhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     ghelp01 = .replace_labels(
     standardized_value_labels$ghelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp02a = .replace_labels(
     standardized_value_labels$ghelp02a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp02b = .replace_labels(
     standardized_value_labels$ghelp02b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp03 = .replace_labels(
     standardized_value_labels$ghelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp04a = .replace_labels(
     standardized_value_labels$ghelp04a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp04b = .replace_labels(
     standardized_value_labels$ghelp04b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp05 = .replace_labels(
     standardized_value_labels$ghelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp06a = .replace_labels(
     standardized_value_labels$ghelp06a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp06b = .replace_labels(
     standardized_value_labels$ghelp06b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp07 = .replace_labels(
     standardized_value_labels$ghelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp08 = .replace_labels(
     standardized_value_labels$ghelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp09 = .replace_labels(
     standardized_value_labels$ghelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp10 = .replace_labels(
     standardized_value_labels$ghelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp11 = .replace_labels(
     standardized_value_labels$ghelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp12 = .replace_labels(
     standardized_value_labels$ghelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelpyn = .replace_labels(
     standardized_value_labels$ghelpyn,
-    `-5` = "na, terminated interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated interview"
   ),
     ghour01 = .replace_labels(
     standardized_value_labels$ghour01,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour02a = .replace_labels(
     standardized_value_labels$ghour02a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour02b = .replace_labels(
     standardized_value_labels$ghour02b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour03 = .replace_labels(
     standardized_value_labels$ghour03,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour04a = .replace_labels(
     standardized_value_labels$ghour04a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour04b = .replace_labels(
     standardized_value_labels$ghour04b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour05 = .replace_labels(
     standardized_value_labels$ghour05,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour06a = .replace_labels(
     standardized_value_labels$ghour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour06b = .replace_labels(
     standardized_value_labels$ghour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour07 = .replace_labels(
     standardized_value_labels$ghour07,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour08 = .replace_labels(
     standardized_value_labels$ghour08,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour09 = .replace_labels(
     standardized_value_labels$ghour09,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour10 = .replace_labels(
     standardized_value_labels$ghour10,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour11 = .replace_labels(
     standardized_value_labels$ghour11,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour12 = .replace_labels(
     standardized_value_labels$ghour12,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghourtot = .replace_labels(
     standardized_value_labels$ghourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     health1 = c(
     `-5` = "na, terminated interview",
@@ -19460,9 +15787,7 @@ value_labels_list <- list(
   ),
     health2 = .replace_labels(
     standardized_value_labels$health2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see J/KHEALTH1",
-    `-1` = "na, asked",
     `4` = "refused to answer"
   ),
     health3 = c(
@@ -19494,356 +15819,260 @@ value_labels_list <- list(
   ),
     hhnic = .replace_labels(
     standardized_value_labels$hhnic,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR"
   ),
     hhnprof = .replace_labels(
     standardized_value_labels$hhnprof,
     `-4` = "na, not living independently",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR"
   ),
     hhnvol = .replace_labels(
     standardized_value_labels$hhnvol,
     `-4` = "na, not living independently",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR"
   ),
     hn1 = .replace_labels(
     standardized_value_labels$hn1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR & J/KSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR & J/KSUFFIC"
   ),
     hn2 = .replace_labels(
     standardized_value_labels$hn2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR & J/KSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR & J/KSUFFIC"
   ),
     hn3 = .replace_labels(
     standardized_value_labels$hn3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR & J/KSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR & J/KSUFFIC"
   ),
     hn4 = .replace_labels(
     standardized_value_labels$hn4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR & J/KSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR & J/KSUFFIC"
   ),
     hn5 = .replace_labels(
     standardized_value_labels$hn5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR & J/KSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR & J/KSUFFIC"
   ),
     hn6 = .replace_labels(
     standardized_value_labels$hn6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR & J/KSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR & J/KSUFFIC"
   ),
     nhelp01 = .replace_labels(
     standardized_value_labels$nhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp02a = .replace_labels(
     standardized_value_labels$nhelp02a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp02b = .replace_labels(
     standardized_value_labels$nhelp02b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp03 = .replace_labels(
     standardized_value_labels$nhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp04a = .replace_labels(
     standardized_value_labels$nhelp04a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp04b = .replace_labels(
     standardized_value_labels$nhelp04b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp05 = .replace_labels(
     standardized_value_labels$nhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp06a = .replace_labels(
     standardized_value_labels$nhelp06a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp06b = .replace_labels(
     standardized_value_labels$nhelp06b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp07 = .replace_labels(
     standardized_value_labels$nhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp08 = .replace_labels(
     standardized_value_labels$nhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp09 = .replace_labels(
     standardized_value_labels$nhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp10 = .replace_labels(
     standardized_value_labels$nhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp11 = .replace_labels(
     standardized_value_labels$nhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp12 = .replace_labels(
     standardized_value_labels$nhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelpyn = .replace_labels(
     standardized_value_labels$nhelpyn,
-    `-5` = "na, terminated interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated interview"
   ),
     nhour01 = .replace_labels(
     standardized_value_labels$nhour01,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour02a = .replace_labels(
     standardized_value_labels$nhour02a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour02b = .replace_labels(
     standardized_value_labels$nhour02b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour03 = .replace_labels(
     standardized_value_labels$nhour03,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour04a = .replace_labels(
     standardized_value_labels$nhour04a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour04b = .replace_labels(
     standardized_value_labels$nhour04b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour05 = .replace_labels(
     standardized_value_labels$nhour05,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour06a = .replace_labels(
     standardized_value_labels$nhour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour06b = .replace_labels(
     standardized_value_labels$nhour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour07 = .replace_labels(
     standardized_value_labels$nhour07,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour08 = .replace_labels(
     standardized_value_labels$nhour08,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour09 = .replace_labels(
     standardized_value_labels$nhour09,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour10 = .replace_labels(
     standardized_value_labels$nhour10,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour11 = .replace_labels(
     standardized_value_labels$nhour11,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour12 = .replace_labels(
     standardized_value_labels$nhour12,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhourtot = .replace_labels(
     standardized_value_labels$nhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     phelp01 = .replace_labels(
     standardized_value_labels$phelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp02a = .replace_labels(
     standardized_value_labels$phelp02a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp02b = .replace_labels(
     standardized_value_labels$phelp02b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp03 = .replace_labels(
     standardized_value_labels$phelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp04a = .replace_labels(
     standardized_value_labels$phelp04a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp04b = .replace_labels(
     standardized_value_labels$phelp04b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp05 = .replace_labels(
     standardized_value_labels$phelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp06a = .replace_labels(
     standardized_value_labels$phelp06a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp06b = .replace_labels(
     standardized_value_labels$phelp06b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp07 = .replace_labels(
     standardized_value_labels$phelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp08 = .replace_labels(
     standardized_value_labels$phelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp09 = .replace_labels(
     standardized_value_labels$phelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp10 = .replace_labels(
     standardized_value_labels$phelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp11 = .replace_labels(
     standardized_value_labels$phelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp12 = .replace_labels(
     standardized_value_labels$phelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelpyn = c(
     `-7` = "na, P outside HH",
@@ -19858,21 +16087,15 @@ value_labels_list <- list(
   ),
     phlp01b = .replace_labels(
     standardized_value_labels$phlp01b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phlp01m = .replace_labels(
     standardized_value_labels$phlp01m,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phlp01y = .replace_labels(
     standardized_value_labels$phlp01y,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phour01 = c(
     `-4` = "na, refused",
@@ -19885,16 +16108,12 @@ value_labels_list <- list(
     phour02a = .replace_labels(
     standardized_value_labels$phour02a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phour02b = .replace_labels(
     standardized_value_labels$phour02b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phour03 = c(
     `-4` = "na, refused",
@@ -19907,16 +16126,12 @@ value_labels_list <- list(
     phour04a = .replace_labels(
     standardized_value_labels$phour04a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phour04b = .replace_labels(
     standardized_value_labels$phour04b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phour05 = c(
     `-4` = "na, refused",
@@ -19929,16 +16144,12 @@ value_labels_list <- list(
     phour06a = .replace_labels(
     standardized_value_labels$phour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phour06b = .replace_labels(
     standardized_value_labels$phour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phour07 = c(
     `-4` = "na, refused",
@@ -19991,123 +16202,83 @@ value_labels_list <- list(
     phourtot = .replace_labels(
     standardized_value_labels$phourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     regie1 = .replace_labels(
     standardized_value_labels$regie1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR"
   ),
     regie2 = .replace_labels(
     standardized_value_labels$regie2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR"
   ),
     regie3 = .replace_labels(
     standardized_value_labels$regie3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR"
   ),
     regie4 = .replace_labels(
     standardized_value_labels$regie4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR"
   ),
     rhelp01 = .replace_labels(
     standardized_value_labels$rhelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp02a = .replace_labels(
     standardized_value_labels$rhelp02a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp02b = .replace_labels(
     standardized_value_labels$rhelp02b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp03 = .replace_labels(
     standardized_value_labels$rhelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp04a = .replace_labels(
     standardized_value_labels$rhelp04a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp04b = .replace_labels(
     standardized_value_labels$rhelp04b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp05 = .replace_labels(
     standardized_value_labels$rhelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp07 = .replace_labels(
     standardized_value_labels$rhelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp08 = .replace_labels(
     standardized_value_labels$rhelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp09 = .replace_labels(
     standardized_value_labels$rhelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp10 = .replace_labels(
     standardized_value_labels$rhelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp11 = .replace_labels(
     standardized_value_labels$rhelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp12 = .replace_labels(
     standardized_value_labels$rhelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp6a = .replace_labels(
     standardized_value_labels$rhelp6a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp6b = .replace_labels(
     standardized_value_labels$rhelp6b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelpyn = c(
     `-5` = "na, terminated interview",
@@ -20128,16 +16299,12 @@ value_labels_list <- list(
     rhour02a = .replace_labels(
     standardized_value_labels$rhour02a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELP01"
   ),
     rhour02b = .replace_labels(
     standardized_value_labels$rhour02b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELP01"
   ),
     rhour03 = c(
     `-4` = "na, refused",
@@ -20150,16 +16317,12 @@ value_labels_list <- list(
     rhour04a = .replace_labels(
     standardized_value_labels$rhour04a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELP01"
   ),
     rhour04b = .replace_labels(
     standardized_value_labels$rhour04b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELP01"
   ),
     rhour05 = c(
     `-4` = "na, refused",
@@ -20172,16 +16335,12 @@ value_labels_list <- list(
     rhour06a = .replace_labels(
     standardized_value_labels$rhour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELP01"
   ),
     rhour06b = .replace_labels(
     standardized_value_labels$rhour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELP01"
   ),
     rhour07 = c(
     `-4` = "na, refused",
@@ -20234,60 +16393,18 @@ value_labels_list <- list(
     rhourtot = .replace_labels(
     standardized_value_labels$rhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rsick01 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick02 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    rsick03a = .replace_labels(
-    standardized_value_labels$rsick03a,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
-    rsick03b = .replace_labels(
-    standardized_value_labels$rsick03b,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
     rsick04 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    rsick05a = .replace_labels(
-    standardized_value_labels$rsick05a,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
-    rsick05b = .replace_labels(
-    standardized_value_labels$rsick05b,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
     rsick06 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    rsick07a = .replace_labels(
-    standardized_value_labels$rsick07a,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
-    rsick07b = .replace_labels(
-    standardized_value_labels$rsick07b,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
     rsick08 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick09 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick10 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick11 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick12 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick13 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    rsick14a = .replace_labels(
-    standardized_value_labels$rsick14a,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
-    rsick14b = .replace_labels(
-    standardized_value_labels$rsick14b,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
     rsick15 = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see J/KDHELPYN",
@@ -20297,105 +16414,71 @@ value_labels_list <- list(
   ),
     rsick16 = .replace_labels(
     standardized_value_labels$rsick16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick17a = .replace_labels(
     standardized_value_labels$rsick17a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick17b = .replace_labels(
     standardized_value_labels$rsick17b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick18 = .replace_labels(
     standardized_value_labels$rsick18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick19a = .replace_labels(
     standardized_value_labels$rsick19a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick19b = .replace_labels(
     standardized_value_labels$rsick19b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick20 = .replace_labels(
     standardized_value_labels$rsick20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick21a = .replace_labels(
     standardized_value_labels$rsick21a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick21b = .replace_labels(
     standardized_value_labels$rsick21b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick22 = .replace_labels(
     standardized_value_labels$rsick22,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick23 = .replace_labels(
     standardized_value_labels$rsick23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick24 = .replace_labels(
     standardized_value_labels$rsick24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick25 = .replace_labels(
     standardized_value_labels$rsick25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick26 = .replace_labels(
     standardized_value_labels$rsick26,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick27 = .replace_labels(
     standardized_value_labels$rsick27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick28a = .replace_labels(
     standardized_value_labels$rsick28a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick28b = .replace_labels(
     standardized_value_labels$rsick28b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     suffic = c(
     `-3` = "na, wrong skip",
@@ -20409,554 +16492,225 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "ahelp01",
-    "ahelp02a",
-    "ahelp02b",
-    "ahelp03",
-    "ahelp04a",
-    "ahelp04b",
-    "ahelp05",
-    "ahelp06a",
-    "ahelp06b",
-    "ahelp07",
-    "ahelp08",
-    "ahelp09",
-    "ahelp10",
-    "ahelp11",
-    "ahelp12",
-    "ahelpyn",
-    "ahour01",
-    "ahour02a",
-    "ahour02b",
-    "ahour03",
-    "ahour04a",
-    "ahour04b",
-    "ahour05",
-    "ahour06a",
-    "ahour06b",
-    "ahour07",
-    "ahour08",
-    "ahour09",
-    "ahour10",
-    "ahour11",
-    "ahour12",
-    "ahourtot",
-    "dhelp01",
-    "dhelp02a",
-    "dhelp02b",
-    "dhelp03",
-    "dhelp04a",
-    "dhelp04b",
-    "dhelp05",
-    "dhelp06a",
-    "dhelp06b",
-    "dhelp07",
-    "dhelp08",
-    "dhelp09",
-    "dhelp10",
-    "dhelp11",
-    "dhelp12",
-    "dhelpyn",
-    "dhour01",
-    "dhour02a",
-    "dhour02b",
-    "dhour03",
-    "dhour04a",
-    "dhour04b",
-    "dhour05",
-    "dhour06a",
-    "dhour06b",
-    "dhour07",
-    "dhour08",
-    "dhour09",
-    "dhour10",
-    "dhour11",
-    "dhour12",
-    "dhourtot",
-    "ghelp01",
-    "ghelp02a",
-    "ghelp02b",
-    "ghelp03",
-    "ghelp04a",
-    "ghelp04b",
-    "ghelp05",
-    "ghelp06a",
-    "ghelp06b",
-    "ghelp07",
-    "ghelp08",
-    "ghelp09",
-    "ghelp10",
-    "ghelp11",
-    "ghelp12",
-    "ghelpyn",
-    "ghour01",
-    "ghour02a",
-    "ghour02b",
-    "ghour03",
-    "ghour04a",
-    "ghour04b",
-    "ghour05",
-    "ghour06a",
-    "ghour06b",
-    "ghour07",
-    "ghour08",
-    "ghour09",
-    "ghour10",
-    "ghour11",
-    "ghour12",
-    "ghourtot",
-    "health1",
-    "health2",
-    "health3",
-    "health4",
-    "helpr",
-    "hhnic",
-    "hhnprof",
-    "hhnvol",
-    "hn1",
-    "hn2",
-    "hn3",
-    "hn4",
-    "hn5",
-    "hn6",
-    "nhelp01",
-    "nhelp02a",
-    "nhelp02b",
-    "nhelp03",
-    "nhelp04a",
-    "nhelp04b",
-    "nhelp05",
-    "nhelp06a",
-    "nhelp06b",
-    "nhelp07",
-    "nhelp08",
-    "nhelp09",
-    "nhelp10",
-    "nhelp11",
-    "nhelp12",
-    "nhelpyn",
-    "nhour01",
-    "nhour02a",
-    "nhour02b",
-    "nhour03",
-    "nhour04a",
-    "nhour04b",
-    "nhour05",
-    "nhour06a",
-    "nhour06b",
-    "nhour07",
-    "nhour08",
-    "nhour09",
-    "nhour10",
-    "nhour11",
-    "nhour12",
-    "nhourtot",
-    "phelp01",
-    "phelp02a",
-    "phelp02b",
-    "phelp03",
-    "phelp04a",
-    "phelp04b",
-    "phelp05",
-    "phelp06a",
-    "phelp06b",
-    "phelp07",
-    "phelp08",
-    "phelp09",
-    "phelp10",
-    "phelp11",
-    "phelp12",
-    "phelpyn",
-    "phlp01b",
-    "phlp01m",
-    "phlp01y",
-    "phour01",
-    "phour02a",
-    "phour02b",
-    "phour03",
-    "phour04a",
-    "phour04b",
-    "phour05",
-    "phour06a",
-    "phour06b",
-    "phour07",
-    "phour08",
-    "phour09",
-    "phour10",
-    "phour11",
-    "phour12",
-    "phourtot",
-    "regie1",
-    "regie2",
-    "regie3",
-    "regie4",
-    "rhelp01",
-    "rhelp02a",
-    "rhelp02b",
-    "rhelp03",
-    "rhelp04a",
-    "rhelp04b",
-    "rhelp05",
-    "rhelp07",
-    "rhelp08",
-    "rhelp09",
-    "rhelp10",
-    "rhelp11",
-    "rhelp12",
-    "rhelp6a",
-    "rhelp6b",
-    "rhelpyn",
-    "rhour01",
-    "rhour02a",
-    "rhour02b",
-    "rhour03",
-    "rhour04a",
-    "rhour04b",
-    "rhour05",
-    "rhour06a",
-    "rhour06b",
-    "rhour07",
-    "rhour08",
-    "rhour09",
-    "rhour10",
-    "rhour11",
-    "rhour12",
-    "rhourtot",
-    "rsick01",
-    "rsick02",
-    "rsick03a",
-    "rsick03b",
-    "rsick04",
-    "rsick05a",
-    "rsick05b",
-    "rsick06",
-    "rsick07a",
-    "rsick07b",
-    "rsick08",
-    "rsick09",
-    "rsick10",
-    "rsick11",
-    "rsick12",
-    "rsick13",
-    "rsick14a",
-    "rsick14b",
-    "rsick15",
-    "rsick16",
-    "rsick17a",
-    "rsick17b",
-    "rsick18",
-    "rsick19a",
-    "rsick19b",
-    "rsick20",
-    "rsick21a",
-    "rsick21b",
-    "rsick22",
-    "rsick23",
-    "rsick24",
-    "rsick25",
-    "rsick26",
-    "rsick27",
-    "rsick28a",
-    "rsick28b",
-    "suffic"
-  )],
+    standardized_value_labels,
     ahelp01 = .replace_labels(
     standardized_value_labels$ahelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp02a = .replace_labels(
     standardized_value_labels$ahelp02a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp02b = .replace_labels(
     standardized_value_labels$ahelp02b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp03 = .replace_labels(
     standardized_value_labels$ahelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp04a = .replace_labels(
     standardized_value_labels$ahelp04a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp04b = .replace_labels(
     standardized_value_labels$ahelp04b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp05 = .replace_labels(
     standardized_value_labels$ahelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp06a = .replace_labels(
     standardized_value_labels$ahelp06a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp06b = .replace_labels(
     standardized_value_labels$ahelp06b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp07 = .replace_labels(
     standardized_value_labels$ahelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp08 = .replace_labels(
     standardized_value_labels$ahelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp09 = .replace_labels(
     standardized_value_labels$ahelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp10 = .replace_labels(
     standardized_value_labels$ahelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp11 = .replace_labels(
     standardized_value_labels$ahelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelp12 = .replace_labels(
     standardized_value_labels$ahelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     ahelpyn = .replace_labels(
     standardized_value_labels$ahelpyn,
-    `-5` = "na, terminated interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated interview"
   ),
     ahour01 = .replace_labels(
     standardized_value_labels$ahour01,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour02a = .replace_labels(
     standardized_value_labels$ahour02a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour02b = .replace_labels(
     standardized_value_labels$ahour02b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour03 = .replace_labels(
     standardized_value_labels$ahour03,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour04a = .replace_labels(
     standardized_value_labels$ahour04a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour04b = .replace_labels(
     standardized_value_labels$ahour04b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour05 = .replace_labels(
     standardized_value_labels$ahour05,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour06a = .replace_labels(
     standardized_value_labels$ahour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour06b = .replace_labels(
     standardized_value_labels$ahour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour07 = .replace_labels(
     standardized_value_labels$ahour07,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour08 = .replace_labels(
     standardized_value_labels$ahour08,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour09 = .replace_labels(
     standardized_value_labels$ahour09,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour10 = .replace_labels(
     standardized_value_labels$ahour10,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour11 = .replace_labels(
     standardized_value_labels$ahour11,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahour12 = .replace_labels(
     standardized_value_labels$ahour12,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELP01"
   ),
     ahourtot = .replace_labels(
     standardized_value_labels$ahourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KAHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KAHELPYN"
   ),
     dhelp01 = .replace_labels(
     standardized_value_labels$dhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp02a = .replace_labels(
     standardized_value_labels$dhelp02a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp02b = .replace_labels(
     standardized_value_labels$dhelp02b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp03 = .replace_labels(
     standardized_value_labels$dhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp04a = .replace_labels(
     standardized_value_labels$dhelp04a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp04b = .replace_labels(
     standardized_value_labels$dhelp04b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp05 = .replace_labels(
     standardized_value_labels$dhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp06a = .replace_labels(
     standardized_value_labels$dhelp06a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp06b = .replace_labels(
     standardized_value_labels$dhelp06b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp07 = .replace_labels(
     standardized_value_labels$dhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp08 = .replace_labels(
     standardized_value_labels$dhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp09 = .replace_labels(
     standardized_value_labels$dhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp10 = .replace_labels(
     standardized_value_labels$dhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp11 = .replace_labels(
     standardized_value_labels$dhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelp12 = .replace_labels(
     standardized_value_labels$dhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     dhelpyn = c(
     `-5` = "na, terminated interview",
@@ -20977,16 +16731,12 @@ value_labels_list <- list(
     dhour02a = .replace_labels(
     standardized_value_labels$dhour02a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELP01"
   ),
     dhour02b = .replace_labels(
     standardized_value_labels$dhour02b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELP01"
   ),
     dhour03 = c(
     `-4` = "na, refused",
@@ -20999,16 +16749,12 @@ value_labels_list <- list(
     dhour04a = .replace_labels(
     standardized_value_labels$dhour04a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELP01"
   ),
     dhour04b = .replace_labels(
     standardized_value_labels$dhour04b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELP01"
   ),
     dhour05 = c(
     `-4` = "na, refused",
@@ -21021,16 +16767,12 @@ value_labels_list <- list(
     dhour06a = .replace_labels(
     standardized_value_labels$dhour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELP01"
   ),
     dhour06b = .replace_labels(
     standardized_value_labels$dhour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELP01"
   ),
     dhour07 = c(
     `-4` = "na, refused",
@@ -21083,216 +16825,166 @@ value_labels_list <- list(
     dhourtot = .replace_labels(
     standardized_value_labels$dhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     ghelp01 = .replace_labels(
     standardized_value_labels$ghelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp02a = .replace_labels(
     standardized_value_labels$ghelp02a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp02b = .replace_labels(
     standardized_value_labels$ghelp02b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp03 = .replace_labels(
     standardized_value_labels$ghelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp04a = .replace_labels(
     standardized_value_labels$ghelp04a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp04b = .replace_labels(
     standardized_value_labels$ghelp04b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp05 = .replace_labels(
     standardized_value_labels$ghelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp06a = .replace_labels(
     standardized_value_labels$ghelp06a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp06b = .replace_labels(
     standardized_value_labels$ghelp06b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp07 = .replace_labels(
     standardized_value_labels$ghelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp08 = .replace_labels(
     standardized_value_labels$ghelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp09 = .replace_labels(
     standardized_value_labels$ghelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp10 = .replace_labels(
     standardized_value_labels$ghelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp11 = .replace_labels(
     standardized_value_labels$ghelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelp12 = .replace_labels(
     standardized_value_labels$ghelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     ghelpyn = .replace_labels(
     standardized_value_labels$ghelpyn,
-    `-5` = "na, terminated interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated interview"
   ),
     ghour01 = .replace_labels(
     standardized_value_labels$ghour01,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour02a = .replace_labels(
     standardized_value_labels$ghour02a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour02b = .replace_labels(
     standardized_value_labels$ghour02b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour03 = .replace_labels(
     standardized_value_labels$ghour03,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour04a = .replace_labels(
     standardized_value_labels$ghour04a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour04b = .replace_labels(
     standardized_value_labels$ghour04b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour05 = .replace_labels(
     standardized_value_labels$ghour05,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour06a = .replace_labels(
     standardized_value_labels$ghour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour06b = .replace_labels(
     standardized_value_labels$ghour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour07 = .replace_labels(
     standardized_value_labels$ghour07,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour08 = .replace_labels(
     standardized_value_labels$ghour08,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour09 = .replace_labels(
     standardized_value_labels$ghour09,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour10 = .replace_labels(
     standardized_value_labels$ghour10,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour11 = .replace_labels(
     standardized_value_labels$ghour11,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghour12 = .replace_labels(
     standardized_value_labels$ghour12,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELP01"
   ),
     ghourtot = .replace_labels(
     standardized_value_labels$ghourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KGHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KGHELPYN"
   ),
     health1 = c(
     `-5` = "na, terminated interview",
@@ -21305,9 +16997,7 @@ value_labels_list <- list(
   ),
     health2 = .replace_labels(
     standardized_value_labels$health2,
-    `-3` = "na, wrong skip",
     `-2` = "na, see J/KHEALTH1",
-    `-1` = "na, asked",
     `4` = "refused to answer"
   ),
     health3 = c(
@@ -21339,356 +17029,260 @@ value_labels_list <- list(
   ),
     hhnic = .replace_labels(
     standardized_value_labels$hhnic,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR"
   ),
     hhnprof = .replace_labels(
     standardized_value_labels$hhnprof,
     `-4` = "na, not living independently",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR"
   ),
     hhnvol = .replace_labels(
     standardized_value_labels$hhnvol,
     `-4` = "na, not living independently",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR"
   ),
     hn1 = .replace_labels(
     standardized_value_labels$hn1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR & J/KSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR & J/KSUFFIC"
   ),
     hn2 = .replace_labels(
     standardized_value_labels$hn2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR & J/KSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR & J/KSUFFIC"
   ),
     hn3 = .replace_labels(
     standardized_value_labels$hn3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR & J/KSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR & J/KSUFFIC"
   ),
     hn4 = .replace_labels(
     standardized_value_labels$hn4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR & J/KSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR & J/KSUFFIC"
   ),
     hn5 = .replace_labels(
     standardized_value_labels$hn5,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR & J/KSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR & J/KSUFFIC"
   ),
     hn6 = .replace_labels(
     standardized_value_labels$hn6,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR & J/KSUFFIC",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR & J/KSUFFIC"
   ),
     nhelp01 = .replace_labels(
     standardized_value_labels$nhelp01,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp02a = .replace_labels(
     standardized_value_labels$nhelp02a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp02b = .replace_labels(
     standardized_value_labels$nhelp02b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp03 = .replace_labels(
     standardized_value_labels$nhelp03,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp04a = .replace_labels(
     standardized_value_labels$nhelp04a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp04b = .replace_labels(
     standardized_value_labels$nhelp04b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp05 = .replace_labels(
     standardized_value_labels$nhelp05,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp06a = .replace_labels(
     standardized_value_labels$nhelp06a,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp06b = .replace_labels(
     standardized_value_labels$nhelp06b,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp07 = .replace_labels(
     standardized_value_labels$nhelp07,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp08 = .replace_labels(
     standardized_value_labels$nhelp08,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp09 = .replace_labels(
     standardized_value_labels$nhelp09,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp10 = .replace_labels(
     standardized_value_labels$nhelp10,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp11 = .replace_labels(
     standardized_value_labels$nhelp11,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelp12 = .replace_labels(
     standardized_value_labels$nhelp12,
     `-3` = "na wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     nhelpyn = .replace_labels(
     standardized_value_labels$nhelpyn,
-    `-5` = "na, terminated interview",
-    `-1` = "na, asked"
+    `-5` = "na, terminated interview"
   ),
     nhour01 = .replace_labels(
     standardized_value_labels$nhour01,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour02a = .replace_labels(
     standardized_value_labels$nhour02a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour02b = .replace_labels(
     standardized_value_labels$nhour02b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour03 = .replace_labels(
     standardized_value_labels$nhour03,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour04a = .replace_labels(
     standardized_value_labels$nhour04a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour04b = .replace_labels(
     standardized_value_labels$nhour04b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour05 = .replace_labels(
     standardized_value_labels$nhour05,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour06a = .replace_labels(
     standardized_value_labels$nhour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour06b = .replace_labels(
     standardized_value_labels$nhour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour07 = .replace_labels(
     standardized_value_labels$nhour07,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour08 = .replace_labels(
     standardized_value_labels$nhour08,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour09 = .replace_labels(
     standardized_value_labels$nhour09,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour10 = .replace_labels(
     standardized_value_labels$nhour10,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour11 = .replace_labels(
     standardized_value_labels$nhour11,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhour12 = .replace_labels(
     standardized_value_labels$nhour12,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELP01"
   ),
     nhourtot = .replace_labels(
     standardized_value_labels$nhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KNHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KNHELPYN"
   ),
     phelp01 = .replace_labels(
     standardized_value_labels$phelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp02a = .replace_labels(
     standardized_value_labels$phelp02a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp02b = .replace_labels(
     standardized_value_labels$phelp02b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp03 = .replace_labels(
     standardized_value_labels$phelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp04a = .replace_labels(
     standardized_value_labels$phelp04a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp04b = .replace_labels(
     standardized_value_labels$phelp04b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp05 = .replace_labels(
     standardized_value_labels$phelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp06a = .replace_labels(
     standardized_value_labels$phelp06a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp06b = .replace_labels(
     standardized_value_labels$phelp06b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp07 = .replace_labels(
     standardized_value_labels$phelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp08 = .replace_labels(
     standardized_value_labels$phelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp09 = .replace_labels(
     standardized_value_labels$phelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp10 = .replace_labels(
     standardized_value_labels$phelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp11 = .replace_labels(
     standardized_value_labels$phelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelp12 = .replace_labels(
     standardized_value_labels$phelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     phelpyn = c(
     `-7` = "na, P outside HH",
@@ -21703,21 +17297,15 @@ value_labels_list <- list(
   ),
     phlp01b = .replace_labels(
     standardized_value_labels$phlp01b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phlp01m = .replace_labels(
     standardized_value_labels$phlp01m,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phlp01y = .replace_labels(
     standardized_value_labels$phlp01y,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phour01 = c(
     `-4` = "na, refused",
@@ -21730,16 +17318,12 @@ value_labels_list <- list(
     phour02a = .replace_labels(
     standardized_value_labels$phour02a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phour02b = .replace_labels(
     standardized_value_labels$phour02b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phour03 = c(
     `-4` = "na, refused",
@@ -21752,16 +17336,12 @@ value_labels_list <- list(
     phour04a = .replace_labels(
     standardized_value_labels$phour04a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phour04b = .replace_labels(
     standardized_value_labels$phour04b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phour05 = c(
     `-4` = "na, refused",
@@ -21774,16 +17354,12 @@ value_labels_list <- list(
     phour06a = .replace_labels(
     standardized_value_labels$phour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phour06b = .replace_labels(
     standardized_value_labels$phour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELP01"
   ),
     phour07 = c(
     `-4` = "na, refused",
@@ -21836,123 +17412,83 @@ value_labels_list <- list(
     phourtot = .replace_labels(
     standardized_value_labels$phourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KPHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KPHELPYN"
   ),
     regie1 = .replace_labels(
     standardized_value_labels$regie1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR"
   ),
     regie2 = .replace_labels(
     standardized_value_labels$regie2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR"
   ),
     regie3 = .replace_labels(
     standardized_value_labels$regie3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR"
   ),
     regie4 = .replace_labels(
     standardized_value_labels$regie4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KHELPR",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KHELPR"
   ),
     rhelp01 = .replace_labels(
     standardized_value_labels$rhelp01,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp02a = .replace_labels(
     standardized_value_labels$rhelp02a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp02b = .replace_labels(
     standardized_value_labels$rhelp02b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp03 = .replace_labels(
     standardized_value_labels$rhelp03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp04a = .replace_labels(
     standardized_value_labels$rhelp04a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp04b = .replace_labels(
     standardized_value_labels$rhelp04b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp05 = .replace_labels(
     standardized_value_labels$rhelp05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp07 = .replace_labels(
     standardized_value_labels$rhelp07,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp08 = .replace_labels(
     standardized_value_labels$rhelp08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp09 = .replace_labels(
     standardized_value_labels$rhelp09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp10 = .replace_labels(
     standardized_value_labels$rhelp10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp11 = .replace_labels(
     standardized_value_labels$rhelp11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp12 = .replace_labels(
     standardized_value_labels$rhelp12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp6a = .replace_labels(
     standardized_value_labels$rhelp6a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelp6b = .replace_labels(
     standardized_value_labels$rhelp6b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rhelpyn = c(
     `-5` = "na, terminated interview",
@@ -21973,16 +17509,12 @@ value_labels_list <- list(
     rhour02a = .replace_labels(
     standardized_value_labels$rhour02a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELP01"
   ),
     rhour02b = .replace_labels(
     standardized_value_labels$rhour02b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELP01"
   ),
     rhour03 = c(
     `-4` = "na, refused",
@@ -21995,16 +17527,12 @@ value_labels_list <- list(
     rhour04a = .replace_labels(
     standardized_value_labels$rhour04a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELP01"
   ),
     rhour04b = .replace_labels(
     standardized_value_labels$rhour04b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELP01"
   ),
     rhour05 = c(
     `-4` = "na, refused",
@@ -22017,16 +17545,12 @@ value_labels_list <- list(
     rhour06a = .replace_labels(
     standardized_value_labels$rhour06a,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELP01"
   ),
     rhour06b = .replace_labels(
     standardized_value_labels$rhour06b,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELP01",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELP01"
   ),
     rhour07 = c(
     `-4` = "na, refused",
@@ -22079,60 +17603,18 @@ value_labels_list <- list(
     rhourtot = .replace_labels(
     standardized_value_labels$rhourtot,
     `-4` = "na, refused",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KRHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KRHELPYN"
   ),
     rsick01 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick02 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    rsick03a = .replace_labels(
-    standardized_value_labels$rsick03a,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
-    rsick03b = .replace_labels(
-    standardized_value_labels$rsick03b,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
     rsick04 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    rsick05a = .replace_labels(
-    standardized_value_labels$rsick05a,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
-    rsick05b = .replace_labels(
-    standardized_value_labels$rsick05b,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
     rsick06 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    rsick07a = .replace_labels(
-    standardized_value_labels$rsick07a,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
-    rsick07b = .replace_labels(
-    standardized_value_labels$rsick07b,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
     rsick08 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick09 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick10 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick11 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick12 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
     rsick13 = c(`-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    rsick14a = .replace_labels(
-    standardized_value_labels$rsick14a,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
-    rsick14b = .replace_labels(
-    standardized_value_labels$rsick14b,
-    `-3` = "na, wrong skip",
-    `-1` = "na, asked"
-  ),
     rsick15 = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see J/KDHELPYN",
@@ -22142,105 +17624,71 @@ value_labels_list <- list(
   ),
     rsick16 = .replace_labels(
     standardized_value_labels$rsick16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick17a = .replace_labels(
     standardized_value_labels$rsick17a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick17b = .replace_labels(
     standardized_value_labels$rsick17b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick18 = .replace_labels(
     standardized_value_labels$rsick18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick19a = .replace_labels(
     standardized_value_labels$rsick19a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick19b = .replace_labels(
     standardized_value_labels$rsick19b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick20 = .replace_labels(
     standardized_value_labels$rsick20,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick21a = .replace_labels(
     standardized_value_labels$rsick21a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick21b = .replace_labels(
     standardized_value_labels$rsick21b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick22 = .replace_labels(
     standardized_value_labels$rsick22,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick23 = .replace_labels(
     standardized_value_labels$rsick23,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick24 = .replace_labels(
     standardized_value_labels$rsick24,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick25 = .replace_labels(
     standardized_value_labels$rsick25,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick26 = .replace_labels(
     standardized_value_labels$rsick26,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick27 = .replace_labels(
     standardized_value_labels$rsick27,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick28a = .replace_labels(
     standardized_value_labels$rsick28a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     rsick28b = .replace_labels(
     standardized_value_labels$rsick28b,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KDHELPYN",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KDHELPYN"
   ),
     suffic = c(
     `-3` = "na, wrong skip",
@@ -23321,9 +18769,409 @@ var_types_vec <- c(
   suffoth = "categorical"
 )
 
-.lasa_fc_033 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "033", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "033", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "033", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "033", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["ahour1001"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour1002"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour1003"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour1004"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour1005"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour1101"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour1102"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour1103"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour1104"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour1105"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour1201"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour1202"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour1203"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour1204"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour1205"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour201"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour202"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour203"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour204"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour205"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour301"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour302"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour303"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour304"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour305"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour401"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour402"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour403"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour404"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour405"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour501"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour502"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour503"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour504"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour505"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour601"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour602"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour603"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour604"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour605"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour701"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour702"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour703"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour704"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour705"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour801"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour802"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour803"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour804"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour805"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour901"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour902"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour903"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour904"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ahour905"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ax02"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ax03"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ax04"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ax05"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ax06"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ax07"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ax08"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ax09"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ax10"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ax11"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ax12"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour1001"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour1002"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour1003"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour1004"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour1005"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour1101"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour1102"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour1103"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour1104"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour1105"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour1201"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour1202"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour1203"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour1204"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour1205"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour201"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour202"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour203"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour204"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour205"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour301"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour302"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour303"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour304"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour305"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour401"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour402"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour403"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour404"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour405"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour501"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour502"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour503"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour504"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour505"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour601"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour602"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour603"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour604"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour605"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour701"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour702"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour703"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour704"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour705"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour801"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour802"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour803"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour804"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour805"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour901"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour902"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour903"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour904"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dhour905"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dx02"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dx03"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dx04"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dx05"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dx06"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dx07"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dx08"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dx09"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dx10"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dx11"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["dx12"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour1001"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour1002"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour1003"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour1004"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour1005"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour1101"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour1102"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour1103"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour1104"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour1105"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour1201"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour1202"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour1203"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour1204"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour1205"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour201"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour202"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour203"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour204"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour205"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour301"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour302"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour303"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour304"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour305"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour401"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour402"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour403"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour404"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour405"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour501"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour502"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour503"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour504"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour505"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour601"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour602"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour603"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour604"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour605"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour701"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour702"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour703"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour704"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour705"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour801"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour802"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour803"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour804"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour805"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour901"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour902"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour903"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour904"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["ghour905"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["gx02"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["gx03"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["gx04"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["gx05"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["gx06"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["gx07"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["gx08"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["gx09"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["gx10"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["gx11"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["gx12"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour1001"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour1002"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour1003"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour1004"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour1005"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour1101"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour1102"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour1103"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour1104"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour1105"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour1201"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour1202"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour1203"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour1204"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour1205"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour201"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour202"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour203"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour204"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour205"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour301"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour302"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour303"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour304"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour305"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour401"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour402"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour403"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour404"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour405"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour501"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour502"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour503"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour504"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour505"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour601"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour602"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour603"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour604"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour605"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour701"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour702"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour703"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour704"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour705"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour801"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour802"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour803"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour804"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour805"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour901"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour902"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour903"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour904"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nhour905"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nx02"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nx03"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nx04"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nx05"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nx06"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nx07"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nx08"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nx09"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nx10"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nx11"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["nx12"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour1001"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour1002"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour1003"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour1004"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour1005"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour1101"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour1102"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour1103"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour1104"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour1105"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour1201"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour1202"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour1203"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour1204"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour1205"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour201"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour202"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour203"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour204"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour205"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour301"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour302"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour303"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour304"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour305"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour401"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour402"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour403"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour404"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour405"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour501"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour502"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour503"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour504"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour505"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour601"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour602"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour603"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour604"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour605"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour701"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour702"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour703"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour704"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour705"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour801"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour802"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour803"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour804"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour805"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour901"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour902"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour903"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour904"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["phour905"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["px02"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["px03"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["px04"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["px05"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["px06"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["px07"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["px08"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["px09"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["px10"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["px11"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["px12"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour1001"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour1002"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour1003"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour1004"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour1005"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour1101"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour1102"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour1103"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour1104"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour1105"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour1201"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour1202"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour1203"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour1204"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour1205"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour201"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour202"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour203"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour204"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour205"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour301"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour302"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour303"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour304"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour305"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour401"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour402"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour403"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour404"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour405"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour501"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour502"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour503"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour504"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour505"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour601"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour602"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour603"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour604"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour605"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour701"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour702"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour703"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour704"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour705"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour801"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour802"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour803"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour804"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour805"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour901"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour902"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour903"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour904"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rhour905"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rx02"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rx03"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rx04"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rx05"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rx06"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rx07"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rx08"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rx09"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rx10"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rx11"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["rx12"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+
+.lasa_fc_033 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

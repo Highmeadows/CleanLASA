@@ -27,10 +27,26 @@ harmonized_labels <- c(
   msrttnc = "categorized speech-reception-threshold"
 )
 
-variable_labels_list <- list(
-  Wave_E_labels = harmonized_labels[c("mhtday", "mhtmont", "mhtyear", "msrttn", "msrttnc")],
-  Wave_F_labels = harmonized_labels[c("mhtday", "mhtmont", "mhtyear", "msrttn", "msrttnc")],
-  Wave_G_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `E` = c(
+    "mhtday",
+    "mhtmont",
+    "mhtyear",
+    "msrttn",
+    "msrttnc"
+  ),
+  `F` = c(
+    "mhtday",
+    "mhtmont",
+    "mhtyear",
+    "msrttn",
+    "msrttnc"
+  ),
+  `G` = c(
     "mhtbid",
     "mhtbtime",
     "mhtdate",
@@ -44,7 +60,13 @@ variable_labels_list <- list(
     "msrtns",
     "msrtnsc",
     "msrtnssd"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_E_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
@@ -111,7 +133,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("mhtday", "mhtmont", "mhtyear", "msrttn", "msrttnc")],
+    standardized_value_labels,
     msrttn = c(
     `-24` = "non-valid, too many incomplete triplets",
     `-23` = "non-valid, aborted measurement",
@@ -122,7 +144,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("mhtday", "mhtmont", "mhtyear", "msrttn", "msrttnc")],
+    standardized_value_labels,
     msrttn = c(
     `-24` = "non-valid, too many incomplete triplets",
     `-23` = "non-valid, aborted measurement",
@@ -133,18 +155,7 @@ value_labels_list <- list(
     `8` = NA_character_
   )
   ),
-  Wave_G_labels = standardized_value_labels[c(
-    "mhtbid",
-    "mhtpc",
-    "mhtsid",
-    "mhtvol",
-    "msrtnb",
-    "msrtnbc",
-    "msrtnbsd",
-    "msrtns",
-    "msrtnsc",
-    "msrtnssd"
-  )],
+  Wave_G_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -169,9 +180,16 @@ var_types_vec <- c(
   msrttnc = "categorical"
 )
 
-.lasa_fc_193 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "193", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "193", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "193", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "193", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["mhtbtime"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mhtdate"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["mhtstime"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+
+.lasa_fc_193 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

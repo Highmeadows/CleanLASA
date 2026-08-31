@@ -20,6 +20,26 @@ harmonized_labels <- c(
   mlftrn = "reason long-function test not done"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `3B` = c(
+    "mcat1",
+    "mcat2",
+    "mcat3",
+    "mcat4",
+    "mcat5",
+    "mcat6",
+    "mcat7",
+    "mcat8",
+    "mcattot",
+    "mlftd",
+    "mlftrn"
+  )
+)
+
 variable_labels_list <- list(
   Wave_3B_labels = .replace_labels(
     harmonized_labels,
@@ -30,14 +50,30 @@ variable_labels_list <- list(
 )
 
 standardized_value_labels <- list(
-  mcat1 = c(`-1` = "na, asked"),
-  mcat2 = c(`-1` = "na, asked"),
-  mcat3 = c(`-1` = "na, asked"),
-  mcat4 = c(`-1` = "na, asked"),
-  mcat5 = c(`-1` = "na, asked"),
-  mcat6 = c(`-1` = "na, asked"),
-  mcat7 = c(`-1` = "na, asked"),
-  mcat8 = c(`-1` = "na, asked"),
+  mcat1 = c(
+    default_missing_labels[c("-1")]
+  ),
+  mcat2 = c(
+    default_missing_labels[c("-1")]
+  ),
+  mcat3 = c(
+    default_missing_labels[c("-1")]
+  ),
+  mcat4 = c(
+    default_missing_labels[c("-1")]
+  ),
+  mcat5 = c(
+    default_missing_labels[c("-1")]
+  ),
+  mcat6 = c(
+    default_missing_labels[c("-1")]
+  ),
+  mcat7 = c(
+    default_missing_labels[c("-1")]
+  ),
+  mcat8 = c(
+    default_missing_labels[c("-1")]
+  ),
   mcattot = c(`-2` = "no valid data"),
   mlftd = c(`-1` = "test not completed / no response", `2` = "yes"),
   mlftrn = c(
@@ -109,9 +145,12 @@ var_types_vec <- c(
   mlftrn = "categorical"
 )
 
-.lasa_fc_168 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "168", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "168", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "168", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "168", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_168 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

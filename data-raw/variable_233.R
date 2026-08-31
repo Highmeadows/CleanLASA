@@ -35,6 +35,41 @@ harmonized_labels <- c(
   totalvol = "Total number of volunteers"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `H` = c(
+    "numberchildnonres",
+    "numberchildres",
+    "numbertasksalpha",
+    "numbertaskschildnonres",
+    "numbertaskschildres",
+    "numbertasksfam",
+    "numbertasksigwoth",
+    "numbertasksneighbours",
+    "numbertasksnurse",
+    "numbertasksoth",
+    "numbertaskspartner",
+    "numbertaskspersonnel",
+    "numbertasksprivate",
+    "numbertasksvol",
+    "totalalpha",
+    "totalchildnonres",
+    "totalchildres",
+    "totalfam",
+    "totaligwoth",
+    "totalneighbours",
+    "totalnurse",
+    "totaloth",
+    "totalpartner",
+    "totalpersonnel",
+    "totalprivate",
+    "totalvol"
+  )
+)
+
 variable_labels_list <- list(
   Wave_H_labels = .replace_labels(
     harmonized_labels,
@@ -98,20 +133,7 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_H_labels = standardized_value_labels[c(
-    "totalalpha",
-    "totalchildnonres",
-    "totalchildres",
-    "totalfam",
-    "totaligwoth",
-    "totalneighbours",
-    "totalnurse",
-    "totaloth",
-    "totalpartner",
-    "totalpersonnel",
-    "totalprivate",
-    "totalvol"
-  )],
+  Wave_H_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -144,7 +166,7 @@ var_types_vec <- c(
   totalvol = "numeric"
 )
 
-.lasa_fc_233 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "233", waves = .lasa_wave_rows()) |>
     .override_label(wave = "H", variable = "numberchildnonres", override_value = "numberchildnonres") |>
     .override_label(wave = "H", variable = "numberchildres", override_value = "numberchildres") |>
@@ -176,3 +198,21 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "233", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "233", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["numberchildnonres"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["numberchildres"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["numbertasksalpha"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["numbertaskschildnonres"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["numbertaskschildres"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["numbertasksfam"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["numbertasksigwoth"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["numbertasksneighbours"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["numbertasksnurse"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["numbertasksoth"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["numbertaskspartner"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["numbertaskspersonnel"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["numbertasksprivate"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["numbertasksvol"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+
+.lasa_fc_233 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -23,13 +23,21 @@ harmonized_labels <- c(
   selfmv = "Number of missing values in self-esteem items"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c("masmv", "master1", "master2", "master3", "master4", "master5", "selfes1")],
-    masmv = "# missing values mastery items"
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "masmv",
+    "master1",
+    "master2",
+    "master3",
+    "master4",
+    "master5",
+    "selfes1"
   ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+  `C` = c(
     "masmv",
     "master1",
     "master2",
@@ -41,7 +49,178 @@ variable_labels_list <- list(
     "selfes3",
     "selfes4",
     "selfmv"
-  )],
+  ),
+  `D` = c(
+    "masmv",
+    "masmv7",
+    "master1",
+    "master2",
+    "master3",
+    "master4",
+    "master5",
+    "master6",
+    "master7",
+    "selfes1",
+    "selfes2",
+    "selfes3",
+    "selfes4",
+    "selfmv"
+  ),
+  `E` = c(
+    "masmv",
+    "masmv7",
+    "master1",
+    "master2",
+    "master3",
+    "master4",
+    "master5",
+    "master6",
+    "master7",
+    "selfes1",
+    "selfes2",
+    "selfes3",
+    "selfes4",
+    "selfmv"
+  ),
+  `2B` = c(
+    "masmv",
+    "master1",
+    "master2",
+    "master3",
+    "master4",
+    "master5",
+    "selfes1",
+    "selfes2",
+    "selfes3",
+    "selfes4",
+    "selfmv"
+  ),
+  `F` = c(
+    "masmv",
+    "masmv7",
+    "master1",
+    "master2",
+    "master3",
+    "master4",
+    "master5",
+    "master6",
+    "master7",
+    "selfes1",
+    "selfes2",
+    "selfes3",
+    "selfes4",
+    "selfmv"
+  ),
+  `G` = c(
+    "masmv",
+    "masmv7",
+    "master1",
+    "master2",
+    "master3",
+    "master4",
+    "master5",
+    "master6",
+    "master7",
+    "selfes1",
+    "selfes2",
+    "selfes3",
+    "selfes4",
+    "selfmv"
+  ),
+  `H` = c(
+    "masmv",
+    "masmv7",
+    "master1",
+    "master2",
+    "master3",
+    "master4",
+    "master5",
+    "master6",
+    "master7",
+    "selfes1",
+    "selfes2",
+    "selfes3",
+    "selfes4",
+    "selfmv"
+  ),
+  `3B` = c(
+    "masmv",
+    "master1",
+    "master2",
+    "master3",
+    "master4",
+    "master5",
+    "selfes1",
+    "selfes2",
+    "selfes3",
+    "selfes4",
+    "selfmv"
+  ),
+  `MB` = c(
+    "masmv",
+    "master1",
+    "master2",
+    "master3",
+    "master4",
+    "master5"
+  ),
+  `I` = c(
+    "masmv",
+    "masmv7",
+    "master1",
+    "master2",
+    "master3",
+    "master4",
+    "master5",
+    "master6",
+    "master7",
+    "selfes1",
+    "selfes2",
+    "selfes3",
+    "selfes4",
+    "selfmv"
+  ),
+  `J` = c(
+    "masmv",
+    "masmv7",
+    "master1",
+    "master2",
+    "master3",
+    "master4",
+    "master5",
+    "master6",
+    "master7",
+    "selfes1",
+    "selfes2",
+    "selfes3",
+    "selfes4",
+    "selfmv"
+  ),
+  `K` = c(
+    "masmv",
+    "masmv7",
+    "master1",
+    "master2",
+    "master3",
+    "master4",
+    "master5",
+    "master6",
+    "master7",
+    "selfes1",
+    "selfes2",
+    "selfes3",
+    "selfes4",
+    "selfmv"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
+    masmv = "# missing values mastery items"
+  ),
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
     masmv = "# missing values mastery items",
     selfmv = "# missing values self-esteem items"
   ),
@@ -58,19 +237,7 @@ variable_labels_list <- list(
     selfmv = "# missing values self-esteem items"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
-    "masmv",
-    "master1",
-    "master2",
-    "master3",
-    "master4",
-    "master5",
-    "selfes1",
-    "selfes2",
-    "selfes3",
-    "selfes4",
-    "selfmv"
-  )],
+    harmonized_labels,
     masmv = "# missing values mastery items",
     selfmv = "# missing values self-esteem items"
   ),
@@ -93,24 +260,12 @@ variable_labels_list <- list(
     selfmv = "# missing values self-esteem items"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
-    "masmv",
-    "master1",
-    "master2",
-    "master3",
-    "master4",
-    "master5",
-    "selfes1",
-    "selfes2",
-    "selfes3",
-    "selfes4",
-    "selfmv"
-  )],
+    harmonized_labels,
     masmv = "# missing values mastery items",
     selfmv = "# missing values self-esteem items"
   ),
   Wave_MB_labels = .replace_labels(
-    harmonized_labels[c("masmv", "master1", "master2", "master3", "master4", "master5")],
+    harmonized_labels,
     masmv = "# missing values mastery items"
   ),
   Wave_I_labels = .replace_labels(
@@ -134,114 +289,81 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "strongly disagree",
+  `2` = "disagree",
+  `3` = "no disagreement/agreement",
+  `4` = "agree",
+  `5` = "strongly agree"
+)
+
 standardized_value_labels <- list(
   masmv = c(`-2` = "no valid data"),
   masmv7 = c(`-2` = "no valid data"),
   master1 = c(
     `-2` = "na, see RMMAS in LASA227",
-    `-1` = "na, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   master2 = c(
     `-2` = "na, see RMMAS in LASA227",
-    `-1` = "na, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   master3 = c(
     `-2` = "na, see RMMAS in LASA227",
-    `-1` = "na, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   master4 = c(
     `-2` = "na, see RMMAS in LASA227",
-    `-1` = "na, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   master5 = c(
     `-2` = "na, see RMMAS in LASA227",
-    `-1` = "na, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   master6 = c(
     `-2` = "na, see RMMAS in LASA227",
-    `-1` = "na, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   master7 = c(
     `-2` = "na, see RMMAS in LASA227",
-    `-1` = "na, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   selfes1 = c(
     `-2` = "na, short/terminated interview / see RMSELF in LASA227",
-    `-1` = "na, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   selfes2 = c(
     `-2` = "na, see RMSELF in LASA227",
-    `-1` = "na, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   selfes3 = c(
     `-2` = "na, see RMSELF in LASA227",
-    `-1` = "na, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   selfes4 = c(
     `-2` = "na, see RMSELF in LASA227",
-    `-1` = "na, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   selfmv = c(`-2` = "no valid data")
 )
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("masmv", "master1", "master2", "master3", "master4", "master5", "selfes1")],
+    standardized_value_labels,
     master1 = .replace_labels(
     standardized_value_labels$master1,
     `-2` = "na, see BRMMAS in LASAB227"
@@ -268,19 +390,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "masmv",
-    "master1",
-    "master2",
-    "master3",
-    "master4",
-    "master5",
-    "selfes1",
-    "selfes2",
-    "selfes3",
-    "selfes4",
-    "selfmv"
-  )],
+    standardized_value_labels,
     master1 = .replace_labels(
     standardized_value_labels$master1,
     `-2` = "na, see CRMMAS in LASAC227"
@@ -413,19 +523,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "masmv",
-    "master1",
-    "master2",
-    "master3",
-    "master4",
-    "master5",
-    "selfes1",
-    "selfes2",
-    "selfes3",
-    "selfes4",
-    "selfmv"
-  )],
+    standardized_value_labels,
     master1 = .replace_labels(
     standardized_value_labels$master1,
     `-2` = "na, see BRMMAS in LAS2B227"
@@ -605,19 +703,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "masmv",
-    "master1",
-    "master2",
-    "master3",
-    "master4",
-    "master5",
-    "selfes1",
-    "selfes2",
-    "selfes3",
-    "selfes4",
-    "selfmv"
-  )],
+    standardized_value_labels,
     master1 = .replace_labels(
     standardized_value_labels$master1,
     `-2` = "na, see BRMMAS in LAS3B227"
@@ -656,7 +742,7 @@ value_labels_list <- list(
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c("masmv", "master1", "master2", "master3", "master4", "master5")],
+    standardized_value_labels,
     master1 = .replace_labels(
     standardized_value_labels$master1,
     `-2` = "na, see BRMMAS in LASMB227"
@@ -839,9 +925,12 @@ var_types_vec <- c(
   selfmv = "numeric"
 )
 
-.lasa_fc_027 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "027", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "027", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "027", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "027", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_027 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

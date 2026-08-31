@@ -15,6 +15,21 @@ harmonized_labels <- c(
   t2mdat_ = "LASA medical interview date (w1)"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `MB` = c(
+    "age",
+    "days",
+    "mage",
+    "mdays",
+    "t2dat_",
+    "t2mdat_"
+  )
+)
+
 variable_labels_list <- list(
   Wave_MB_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
@@ -30,7 +45,7 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_MB_labels = standardized_value_labels[character(0)],
+  Wave_MB_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -43,7 +58,7 @@ var_types_vec <- c(
   t2mdat_ = "date"
 )
 
-.lasa_fc_mb008 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "mb008", waves = .lasa_wave_rows()) |>
     .override_label(wave = "MB", variable = "t2dat_", override_value = "t2dat_") |>
     .override_label(wave = "MB", variable = "t2mdat_", override_value = "t2mdat_"),
@@ -51,3 +66,13 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "mb008", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "mb008", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["age"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["days"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["mage"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["mdays"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["t2dat_"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["t2mdat_"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+
+.lasa_fc_mb008 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

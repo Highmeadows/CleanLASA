@@ -25,6 +25,229 @@ harmonized_labels <- c(
   initmv = "# missing values init-alcos items"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "advemv",
+    "alcmv",
+    "alcos01",
+    "alcos02",
+    "alcos03",
+    "alcos04",
+    "alcos05",
+    "alcos06",
+    "alcos07",
+    "alcos08",
+    "alcos09",
+    "alcos10",
+    "alcos11",
+    "alcos12",
+    "compmv",
+    "initmv"
+  ),
+  `C` = c(
+    "advemv",
+    "alcmv",
+    "alcos01",
+    "alcos02",
+    "alcos03",
+    "alcos04",
+    "alcos05",
+    "alcos06",
+    "alcos07",
+    "alcos08",
+    "alcos09",
+    "alcos10",
+    "alcos11",
+    "alcos12",
+    "compmv",
+    "initmv"
+  ),
+  `D` = c(
+    "advemv",
+    "alcmv",
+    "alcos01",
+    "alcos02",
+    "alcos03",
+    "alcos04",
+    "alcos05",
+    "alcos06",
+    "alcos07",
+    "alcos08",
+    "alcos09",
+    "alcos10",
+    "alcos11",
+    "alcos12",
+    "compmv",
+    "initmv"
+  ),
+  `E` = c(
+    "advemv",
+    "alcmv",
+    "alcos01",
+    "alcos02",
+    "alcos03",
+    "alcos04",
+    "alcos05",
+    "alcos06",
+    "alcos07",
+    "alcos08",
+    "alcos09",
+    "alcos10",
+    "alcos11",
+    "alcos12",
+    "compmv",
+    "initmv"
+  ),
+  `2B` = c(
+    "advemv",
+    "alcmv",
+    "alcos01",
+    "alcos02",
+    "alcos03",
+    "alcos04",
+    "alcos05",
+    "alcos06",
+    "alcos07",
+    "alcos08",
+    "alcos09",
+    "alcos10",
+    "alcos11",
+    "alcos12",
+    "compmv",
+    "initmv"
+  ),
+  `F` = c(
+    "advemv",
+    "alcmv",
+    "alcos01",
+    "alcos02",
+    "alcos03",
+    "alcos04",
+    "alcos05",
+    "alcos06",
+    "alcos07",
+    "alcos08",
+    "alcos09",
+    "alcos10",
+    "alcos11",
+    "alcos12",
+    "compmv",
+    "initmv"
+  ),
+  `G` = c(
+    "advemv",
+    "alcmv",
+    "alcos01",
+    "alcos02",
+    "alcos03",
+    "alcos04",
+    "alcos05",
+    "alcos06",
+    "alcos07",
+    "alcos08",
+    "alcos09",
+    "alcos10",
+    "alcos11",
+    "alcos12",
+    "compmv",
+    "initmv"
+  ),
+  `H` = c(
+    "advemv",
+    "alcmv",
+    "alcos01",
+    "alcos02",
+    "alcos03",
+    "alcos04",
+    "alcos05",
+    "alcos06",
+    "alcos07",
+    "alcos08",
+    "alcos09",
+    "alcos10",
+    "alcos11",
+    "alcos12",
+    "compmv",
+    "initmv"
+  ),
+  `3B` = c(
+    "advemv",
+    "alcmv",
+    "alcos01",
+    "alcos02",
+    "alcos03",
+    "alcos04",
+    "alcos05",
+    "alcos06",
+    "alcos07",
+    "alcos08",
+    "alcos09",
+    "alcos10",
+    "alcos11",
+    "alcos12",
+    "compmv",
+    "initmv"
+  ),
+  `I` = c(
+    "advemv",
+    "alcmv",
+    "alcos01",
+    "alcos02",
+    "alcos03",
+    "alcos04",
+    "alcos05",
+    "alcos06",
+    "alcos07",
+    "alcos08",
+    "alcos09",
+    "alcos10",
+    "alcos11",
+    "alcos12",
+    "compmv",
+    "initmv"
+  ),
+  `J` = c(
+    "advemv",
+    "alcmv",
+    "alcos01",
+    "alcos02",
+    "alcos03",
+    "alcos04",
+    "alcos05",
+    "alcos06",
+    "alcos07",
+    "alcos08",
+    "alcos09",
+    "alcos10",
+    "alcos11",
+    "alcos12",
+    "compmv",
+    "initmv"
+  ),
+  `K` = c(
+    "advemv",
+    "alcmv",
+    "alcos01",
+    "alcos02",
+    "alcos03",
+    "alcos04",
+    "alcos05",
+    "alcos06",
+    "alcos07",
+    "alcos08",
+    "alcos09",
+    "alcos10",
+    "alcos11",
+    "alcos12",
+    "compmv",
+    "initmv"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = harmonized_labels,
   Wave_C_labels = harmonized_labels,
@@ -41,116 +264,67 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "strongly disagree",
+  `2` = "disagree",
+  `3` = "no disagreement/agreement",
+  `4` = "agree",
+  `5` = "strongly agree"
+)
+
 standardized_value_labels <- list(
   advemv = c(`-2` = "not available"),
   alcmv = c(`-2` = "not available"),
   alcos01 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   alcos02 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   alcos03 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   alcos04 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   alcos05 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   alcos06 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   alcos07 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   alcos08 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   alcos09 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   alcos10 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   alcos11 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   alcos12 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no disagreement/agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-2", "-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   compmv = c(`-2` = "not available"),
   initmv = c(`-2` = "not available")
@@ -169,63 +343,51 @@ value_labels_list <- list(
   ),
     alcos01 = .replace_labels(
     standardized_value_labels$alcos01,
-    `-2` = "na, see BRMALC in LASAB228",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMALC in LASAB228"
   ),
     alcos02 = .replace_labels(
     standardized_value_labels$alcos02,
-    `-2` = "na, see BRMALC in LASAB228",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMALC in LASAB228"
   ),
     alcos03 = .replace_labels(
     standardized_value_labels$alcos03,
-    `-2` = "na, see BRMALC in LASAB228",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMALC in LASAB228"
   ),
     alcos04 = .replace_labels(
     standardized_value_labels$alcos04,
-    `-2` = "na, see BRMALC in LASAB228",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMALC in LASAB228"
   ),
     alcos05 = .replace_labels(
     standardized_value_labels$alcos05,
-    `-2` = "na, see BRMALC in LASAB228",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMALC in LASAB228"
   ),
     alcos06 = .replace_labels(
     standardized_value_labels$alcos06,
-    `-2` = "na, see BRMALC in LASAB228",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMALC in LASAB228"
   ),
     alcos07 = .replace_labels(
     standardized_value_labels$alcos07,
-    `-2` = "na, see BRMALC in LASAB228",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMALC in LASAB228"
   ),
     alcos08 = .replace_labels(
     standardized_value_labels$alcos08,
-    `-2` = "na, see BRMALC in LASAB228",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMALC in LASAB228"
   ),
     alcos09 = .replace_labels(
     standardized_value_labels$alcos09,
-    `-2` = "na, see BRMALC in LASAB228",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMALC in LASAB228"
   ),
     alcos10 = .replace_labels(
     standardized_value_labels$alcos10,
-    `-2` = "na, see BRMALC in LASAB228",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMALC in LASAB228"
   ),
     alcos11 = .replace_labels(
     standardized_value_labels$alcos11,
-    `-2` = "na, see BRMALC in LASAB228",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMALC in LASAB228"
   ),
     alcos12 = .replace_labels(
     standardized_value_labels$alcos12,
-    `-2` = "na, see BRMALC in LASAB228",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMALC in LASAB228"
   ),
     compmv = .replace_labels(
     standardized_value_labels$compmv,
@@ -249,73 +411,61 @@ value_labels_list <- list(
     alcos01 = .replace_labels(
     standardized_value_labels$alcos01,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos02 = .replace_labels(
     standardized_value_labels$alcos02,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos03 = .replace_labels(
     standardized_value_labels$alcos03,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos04 = .replace_labels(
     standardized_value_labels$alcos04,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos05 = .replace_labels(
     standardized_value_labels$alcos05,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos06 = .replace_labels(
     standardized_value_labels$alcos06,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos07 = .replace_labels(
     standardized_value_labels$alcos07,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos08 = .replace_labels(
     standardized_value_labels$alcos08,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos09 = .replace_labels(
     standardized_value_labels$alcos09,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos10 = .replace_labels(
     standardized_value_labels$alcos10,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos11 = .replace_labels(
     standardized_value_labels$alcos11,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos12 = .replace_labels(
     standardized_value_labels$alcos12,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     compmv = .replace_labels(
@@ -340,73 +490,61 @@ value_labels_list <- list(
     alcos01 = .replace_labels(
     standardized_value_labels$alcos01,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos02 = .replace_labels(
     standardized_value_labels$alcos02,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos03 = .replace_labels(
     standardized_value_labels$alcos03,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos04 = .replace_labels(
     standardized_value_labels$alcos04,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos05 = .replace_labels(
     standardized_value_labels$alcos05,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos06 = .replace_labels(
     standardized_value_labels$alcos06,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos07 = .replace_labels(
     standardized_value_labels$alcos07,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos08 = .replace_labels(
     standardized_value_labels$alcos08,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos09 = .replace_labels(
     standardized_value_labels$alcos09,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos10 = .replace_labels(
     standardized_value_labels$alcos10,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos11 = .replace_labels(
     standardized_value_labels$alcos11,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos12 = .replace_labels(
     standardized_value_labels$alcos12,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     compmv = .replace_labels(
@@ -431,73 +569,61 @@ value_labels_list <- list(
     alcos01 = .replace_labels(
     standardized_value_labels$alcos01,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos02 = .replace_labels(
     standardized_value_labels$alcos02,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos03 = .replace_labels(
     standardized_value_labels$alcos03,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos04 = .replace_labels(
     standardized_value_labels$alcos04,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos05 = .replace_labels(
     standardized_value_labels$alcos05,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos06 = .replace_labels(
     standardized_value_labels$alcos06,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos07 = .replace_labels(
     standardized_value_labels$alcos07,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos08 = .replace_labels(
     standardized_value_labels$alcos08,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos09 = .replace_labels(
     standardized_value_labels$alcos09,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos10 = .replace_labels(
     standardized_value_labels$alcos10,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos11 = .replace_labels(
     standardized_value_labels$alcos11,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos12 = .replace_labels(
     standardized_value_labels$alcos12,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     compmv = .replace_labels(
@@ -522,73 +648,61 @@ value_labels_list <- list(
     alcos01 = .replace_labels(
     standardized_value_labels$alcos01,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos02 = .replace_labels(
     standardized_value_labels$alcos02,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos03 = .replace_labels(
     standardized_value_labels$alcos03,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos04 = .replace_labels(
     standardized_value_labels$alcos04,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos05 = .replace_labels(
     standardized_value_labels$alcos05,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos06 = .replace_labels(
     standardized_value_labels$alcos06,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos07 = .replace_labels(
     standardized_value_labels$alcos07,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos08 = .replace_labels(
     standardized_value_labels$alcos08,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos09 = .replace_labels(
     standardized_value_labels$alcos09,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos10 = .replace_labels(
     standardized_value_labels$alcos10,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos11 = .replace_labels(
     standardized_value_labels$alcos11,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos12 = .replace_labels(
     standardized_value_labels$alcos12,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     compmv = .replace_labels(
@@ -613,73 +727,61 @@ value_labels_list <- list(
     alcos01 = .replace_labels(
     standardized_value_labels$alcos01,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos02 = .replace_labels(
     standardized_value_labels$alcos02,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos03 = .replace_labels(
     standardized_value_labels$alcos03,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos04 = .replace_labels(
     standardized_value_labels$alcos04,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos05 = .replace_labels(
     standardized_value_labels$alcos05,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos06 = .replace_labels(
     standardized_value_labels$alcos06,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos07 = .replace_labels(
     standardized_value_labels$alcos07,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos08 = .replace_labels(
     standardized_value_labels$alcos08,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos09 = .replace_labels(
     standardized_value_labels$alcos09,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos10 = .replace_labels(
     standardized_value_labels$alcos10,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos11 = .replace_labels(
     standardized_value_labels$alcos11,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos12 = .replace_labels(
     standardized_value_labels$alcos12,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     compmv = .replace_labels(
@@ -704,73 +806,61 @@ value_labels_list <- list(
     alcos01 = .replace_labels(
     standardized_value_labels$alcos01,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos02 = .replace_labels(
     standardized_value_labels$alcos02,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos03 = .replace_labels(
     standardized_value_labels$alcos03,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos04 = .replace_labels(
     standardized_value_labels$alcos04,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos05 = .replace_labels(
     standardized_value_labels$alcos05,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos06 = .replace_labels(
     standardized_value_labels$alcos06,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos07 = .replace_labels(
     standardized_value_labels$alcos07,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos08 = .replace_labels(
     standardized_value_labels$alcos08,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos09 = .replace_labels(
     standardized_value_labels$alcos09,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos10 = .replace_labels(
     standardized_value_labels$alcos10,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos11 = .replace_labels(
     standardized_value_labels$alcos11,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos12 = .replace_labels(
     standardized_value_labels$alcos12,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     compmv = .replace_labels(
@@ -795,73 +885,61 @@ value_labels_list <- list(
     alcos01 = .replace_labels(
     standardized_value_labels$alcos01,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos02 = .replace_labels(
     standardized_value_labels$alcos02,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos03 = .replace_labels(
     standardized_value_labels$alcos03,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos04 = .replace_labels(
     standardized_value_labels$alcos04,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos05 = .replace_labels(
     standardized_value_labels$alcos05,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos06 = .replace_labels(
     standardized_value_labels$alcos06,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos07 = .replace_labels(
     standardized_value_labels$alcos07,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos08 = .replace_labels(
     standardized_value_labels$alcos08,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos09 = .replace_labels(
     standardized_value_labels$alcos09,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos10 = .replace_labels(
     standardized_value_labels$alcos10,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos11 = .replace_labels(
     standardized_value_labels$alcos11,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos12 = .replace_labels(
     standardized_value_labels$alcos12,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     compmv = .replace_labels(
@@ -886,73 +964,61 @@ value_labels_list <- list(
     alcos01 = .replace_labels(
     standardized_value_labels$alcos01,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos02 = .replace_labels(
     standardized_value_labels$alcos02,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos03 = .replace_labels(
     standardized_value_labels$alcos03,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos04 = .replace_labels(
     standardized_value_labels$alcos04,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos05 = .replace_labels(
     standardized_value_labels$alcos05,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos06 = .replace_labels(
     standardized_value_labels$alcos06,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos07 = .replace_labels(
     standardized_value_labels$alcos07,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos08 = .replace_labels(
     standardized_value_labels$alcos08,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos09 = .replace_labels(
     standardized_value_labels$alcos09,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos10 = .replace_labels(
     standardized_value_labels$alcos10,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos11 = .replace_labels(
     standardized_value_labels$alcos11,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos12 = .replace_labels(
     standardized_value_labels$alcos12,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     compmv = .replace_labels(
@@ -977,73 +1043,61 @@ value_labels_list <- list(
     alcos01 = .replace_labels(
     standardized_value_labels$alcos01,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos02 = .replace_labels(
     standardized_value_labels$alcos02,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos03 = .replace_labels(
     standardized_value_labels$alcos03,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos04 = .replace_labels(
     standardized_value_labels$alcos04,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos05 = .replace_labels(
     standardized_value_labels$alcos05,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos06 = .replace_labels(
     standardized_value_labels$alcos06,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos07 = .replace_labels(
     standardized_value_labels$alcos07,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos08 = .replace_labels(
     standardized_value_labels$alcos08,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos09 = .replace_labels(
     standardized_value_labels$alcos09,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos10 = .replace_labels(
     standardized_value_labels$alcos10,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos11 = .replace_labels(
     standardized_value_labels$alcos11,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos12 = .replace_labels(
     standardized_value_labels$alcos12,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     compmv = .replace_labels(
@@ -1068,73 +1122,61 @@ value_labels_list <- list(
     alcos01 = .replace_labels(
     standardized_value_labels$alcos01,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos02 = .replace_labels(
     standardized_value_labels$alcos02,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos03 = .replace_labels(
     standardized_value_labels$alcos03,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos04 = .replace_labels(
     standardized_value_labels$alcos04,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos05 = .replace_labels(
     standardized_value_labels$alcos05,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos06 = .replace_labels(
     standardized_value_labels$alcos06,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos07 = .replace_labels(
     standardized_value_labels$alcos07,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos08 = .replace_labels(
     standardized_value_labels$alcos08,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos09 = .replace_labels(
     standardized_value_labels$alcos09,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos10 = .replace_labels(
     standardized_value_labels$alcos10,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos11 = .replace_labels(
     standardized_value_labels$alcos11,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos12 = .replace_labels(
     standardized_value_labels$alcos12,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     compmv = .replace_labels(
@@ -1159,73 +1201,61 @@ value_labels_list <- list(
     alcos01 = .replace_labels(
     standardized_value_labels$alcos01,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos02 = .replace_labels(
     standardized_value_labels$alcos02,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos03 = .replace_labels(
     standardized_value_labels$alcos03,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos04 = .replace_labels(
     standardized_value_labels$alcos04,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos05 = .replace_labels(
     standardized_value_labels$alcos05,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos06 = .replace_labels(
     standardized_value_labels$alcos06,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos07 = .replace_labels(
     standardized_value_labels$alcos07,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos08 = .replace_labels(
     standardized_value_labels$alcos08,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos09 = .replace_labels(
     standardized_value_labels$alcos09,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos10 = .replace_labels(
     standardized_value_labels$alcos10,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos11 = .replace_labels(
     standardized_value_labels$alcos11,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     alcos12 = .replace_labels(
     standardized_value_labels$alcos12,
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
-    `-1` = "na, asked",
     `3` = "no disagreement/ agreement"
   ),
     compmv = .replace_labels(
@@ -1259,9 +1289,12 @@ var_types_vec <- c(
   initmv = "numeric"
 )
 
-.lasa_fc_028 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "028", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "028", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "028", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "028", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_028 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

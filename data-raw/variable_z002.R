@@ -15,65 +15,134 @@ harmonized_labels <- c(
   selfr = "result of self-administered questionnaire"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "cohort",
+    "mresult",
+    "resint",
+    "result",
+    "selfr"
+  ),
+  `C` = c(
+    "mresult",
+    "resint",
+    "result",
+    "selfr"
+  ),
+  `D` = c(
+    "mresult",
+    "resint",
+    "result",
+    "selfr"
+  ),
+  `E` = c(
+    "mresult",
+    "resint",
+    "result",
+    "selfr"
+  ),
+  `F` = c(
+    "mresult",
+    "resint",
+    "result",
+    "selfr"
+  ),
+  `G` = c(
+    "mresult",
+    "resint",
+    "result",
+    "selfr"
+  ),
+  `H` = c(
+    "mresult",
+    "resint",
+    "result",
+    "selfr"
+  ),
+  `I` = c(
+    "mresult",
+    "resint",
+    "result",
+    "selfr"
+  ),
+  `J` = c(
+    "mresult",
+    "pdd",
+    "resint",
+    "result",
+    "selfr"
+  ),
+  `K` = c(
+    "mresult",
+    "resint",
+    "result",
+    "selfr"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
-    harmonized_labels[c("cohort", "mresult", "resint", "result", "selfr")],
+    harmonized_labels,
     mresult = "result of enlisting attempt medical interview w2/w1",
     resint = "interview type w2/w1",
     result = "result of enlisting attempt w2/w1",
     selfr = "result of selfadministered questionnaire w2/w1"
   ),
   Wave_C_labels = .replace_labels(
-    harmonized_labels[c("mresult", "resint", "result", "selfr")],
+    harmonized_labels,
     mresult = "result of enlisting attempt medical interview w3",
     resint = "interview type w3",
     result = "result of enlisting attempt w3",
     selfr = "result of selfadministered questionnaire w3"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c("mresult", "resint", "result", "selfr")],
+    harmonized_labels,
     mresult = "result of enlisting attempt medical interview w4",
     resint = "interview type w4",
     result = "result of enlisting attempt w4",
     selfr = "result of selfadministered questionnaire w4"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c("mresult", "resint", "result", "selfr")],
+    harmonized_labels,
     mresult = "result of enlisting attempt medical interview w5",
     resint = "interview type w5",
     result = "result of enlisting attempt w5",
     selfr = "result of selfadministered questionnaire w5"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c("mresult", "resint", "result", "selfr")],
+    harmonized_labels,
     mresult = "result of enlisting attempt medical interview w6",
     resint = "interview type w6",
     result = "result of enlisting attempt w6",
     selfr = "result of selfadministered questionnaire w6"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c("mresult", "resint", "result", "selfr")],
+    harmonized_labels,
     mresult = "result of enlisting attempt medical interview w7",
     resint = "interview type w7",
     result = "result of enlisting attempt w7",
     selfr = "result of selfadministered questionnaire w7"
   ),
   Wave_H_labels = .replace_labels(
-    harmonized_labels[c("mresult", "resint", "result", "selfr")],
+    harmonized_labels,
     mresult = "result of enlisting attempt medical interview w8",
     resint = "interview type w8",
     result = "result of enlisting attempt w8",
     selfr = "result of selfadministered questionnaire w8"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c("mresult", "resint", "result", "selfr")],
+    harmonized_labels,
     mresult = "result of enlisting attempt medical interview w9",
     resint = "interview type w9",
     result = "result of enlisting attempt w9",
     selfr = "result of selfadministered questionnaire w9"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c("mresult", "pdd", "resint", "result", "selfr")],
+    harmonized_labels,
     mresult = "result of enlisting attempt medical interview w10",
     pdd = "permission for data distribution wave 10",
     resint = "interview type w10",
@@ -81,7 +150,7 @@ variable_labels_list <- list(
     selfr = "result of selfadministered questionnaire w10"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c("mresult", "resint", "result", "selfr")],
+    harmonized_labels,
     mresult = "result of enlisting attempt medical interview w11",
     resint = "interview type w11",
     result = "result of enlisting attempt w11",
@@ -147,7 +216,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("cohort", "mresult", "resint", "result", "selfr")],
+    standardized_value_labels,
     resint = .replace_labels(
     standardized_value_labels$resint,
     `-1` = "no data current wave"
@@ -159,7 +228,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("mresult", "resint", "result", "selfr")],
+    standardized_value_labels,
     resint = .replace_labels(
     standardized_value_labels$resint,
     `-1` = "no data current wave"
@@ -171,7 +240,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("mresult", "resint", "result", "selfr")],
+    standardized_value_labels,
     resint = .replace_labels(
     standardized_value_labels$resint,
     `-1` = "no data current wave"
@@ -183,7 +252,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("mresult", "resint", "result", "selfr")],
+    standardized_value_labels,
     resint = .replace_labels(
     standardized_value_labels$resint,
     `-1` = "no data current wave"
@@ -195,7 +264,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("mresult", "resint", "result", "selfr")],
+    standardized_value_labels,
     resint = .replace_labels(
     standardized_value_labels$resint,
     `-1` = "no data current wave"
@@ -207,7 +276,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("mresult", "resint", "result", "selfr")],
+    standardized_value_labels,
     resint = .replace_labels(
     standardized_value_labels$resint,
     `-1` = "no data current wave"
@@ -219,7 +288,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("mresult", "resint", "result", "selfr")],
+    standardized_value_labels,
     resint = .replace_labels(
     standardized_value_labels$resint,
     `-1` = "no data current wave"
@@ -231,7 +300,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("mresult", "resint", "result", "selfr")],
+    standardized_value_labels,
     resint = .replace_labels(
     standardized_value_labels$resint,
     `-1` = "no data current wave"
@@ -243,7 +312,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c("mresult", "pdd", "resint", "result", "selfr")],
+    standardized_value_labels,
     pdd = .replace_labels(
     standardized_value_labels$pdd,
     `-1` = "no data wave 10",
@@ -260,7 +329,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c("mresult", "resint", "result", "selfr")],
+    standardized_value_labels,
     resint = .replace_labels(
     standardized_value_labels$resint,
     `-1` = "no data current wave"
@@ -283,10 +352,13 @@ var_types_vec <- c(
   selfr = "categorical"
 )
 
-.lasa_fc_z002 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "z002", waves = .lasa_wave_rows()) |>
     .override_label(wave = "B", variable = "cohort", override_value = "cohort"),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "z002", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "z002", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "z002", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_z002 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

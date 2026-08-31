@@ -26,10 +26,25 @@ harmonized_labels <- c(
   sq = "sequence questions on support"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels[c("eg", "er", "ig", "ir", "meg", "mer", "mig", "mir", "mis247", "nwsize", "sq")],
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "eg",
+    "er",
+    "ig",
+    "ir",
+    "meg",
+    "mer",
+    "mig",
+    "mir",
+    "mis247",
+    "nwsize",
+    "sq"
+  ),
+  `C` = c(
     "confinf",
     "confnum",
     "eg",
@@ -43,159 +58,211 @@ variable_labels_list <- list(
     "mis247",
     "nwsize",
     "sq"
-  )],
+  ),
+  `D` = c(
+    "confinf",
+    "confnum",
+    "eg",
+    "er",
+    "ig",
+    "ir",
+    "meg",
+    "mer",
+    "mig",
+    "mir",
+    "mis247",
+    "nwsize",
+    "sq"
+  ),
+  `E` = c(
+    "confinf",
+    "confnum",
+    "eg",
+    "er",
+    "ig",
+    "ir",
+    "meg",
+    "mer",
+    "mig",
+    "mir",
+    "mis247",
+    "nwsize",
+    "sq"
+  ),
+  `2B` = c(
+    "confinf",
+    "confnum",
+    "eg",
+    "er",
+    "ig",
+    "ir",
+    "meg",
+    "mer",
+    "mig",
+    "mir",
+    "mis247",
+    "nwsize",
+    "sq"
+  ),
+  `F` = c(
+    "confinf",
+    "confnum",
+    "eg",
+    "er",
+    "ig",
+    "ir",
+    "meg",
+    "mer",
+    "mig",
+    "mir",
+    "mis247",
+    "nwsize",
+    "sq"
+  ),
+  `G` = c(
+    "confinf",
+    "confnum",
+    "eg",
+    "er",
+    "ig",
+    "ir",
+    "meg",
+    "mer",
+    "mig",
+    "mir",
+    "mis247",
+    "nwsize",
+    "sq"
+  ),
+  `H` = c(
+    "confinf",
+    "confnum",
+    "eg",
+    "er",
+    "ig",
+    "ir",
+    "meg",
+    "mer",
+    "mig",
+    "mir",
+    "mis247",
+    "nwsize",
+    "sq"
+  ),
+  `3B` = c(
+    "confinf",
+    "confnum",
+    "eg",
+    "er",
+    "ig",
+    "ir",
+    "meg",
+    "mer",
+    "mig",
+    "mir",
+    "mis247",
+    "nwsize",
+    "sq"
+  ),
+  `I` = c(
+    "confinf",
+    "confnum",
+    "eg",
+    "er",
+    "ig",
+    "ir",
+    "meg",
+    "mer",
+    "mig",
+    "mir",
+    "mis247",
+    "nwsize",
+    "sq"
+  ),
+  `J` = c(
+    "confinf",
+    "confnum",
+    "eg",
+    "er",
+    "ig",
+    "ir",
+    "meg",
+    "mer",
+    "mig",
+    "mir",
+    "mis247",
+    "nwconftype",
+    "nwdaily",
+    "nwdiversity",
+    "nwpctnonkin",
+    "nwsize",
+    "sq"
+  ),
+  `K` = c(
+    "confinf",
+    "confnum",
+    "eg",
+    "er",
+    "ig",
+    "ir",
+    "meg",
+    "mer",
+    "mig",
+    "mir",
+    "mis247",
+    "nwconftype",
+    "nwdaily",
+    "nwdiversity",
+    "nwpctnonkin",
+    "nwsize",
+    "sq"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = harmonized_labels,
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
     confinf = "information on identification confidant",
     confnum = "# confidants identified"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
+    harmonized_labels,
     confinf = "information on identification confidant",
     confnum = "# confidants identified"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
+    harmonized_labels,
     confinf = "information on identification confidant",
     confnum = "# confidants identified"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
+    harmonized_labels,
     confinf = "information on identification confidant",
     confnum = "# confidants identified"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
+    harmonized_labels,
     confinf = "information on identification confidant",
     confnum = "# confidants identified"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
+    harmonized_labels,
     confinf = "information on identification confidant",
     confnum = "# confidants identified"
   ),
   Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
+    harmonized_labels,
     confinf = "information on identification confidant",
     confnum = "# confidants identified"
   ),
   Wave_3B_labels = .replace_labels(
-    harmonized_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
+    harmonized_labels,
     confinf = "information on identification confidant",
     confnum = "# confidants identified"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
+    harmonized_labels,
     confinf = "information on identification confidant",
     confnum = "# confidants identified"
   ),
@@ -226,7 +293,7 @@ standardized_value_labels <- list(
     `-4` = "refusal R/skip by Interviewer",
     `-3` = "short version",
     `-2` = "no network members",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "no confidant available",
     `2` = "confidant not necessary",
     `3` = "confidant(s) identified",
@@ -240,7 +307,7 @@ standardized_value_labels <- list(
     `-4` = "refusal R/skip by Interviewer",
     `-3` = "short version",
     `-2` = "no network members",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = NA_character_,
     `1` = NA_character_,
     `2` = NA_character_,
@@ -352,7 +419,7 @@ standardized_value_labels <- list(
     `-4` = "refusal R/skip by Interviewer",
     `-3` = "short version",
     `-2` = "not asked (observation LSNa; LASAb)",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "no network members; no confidant available; confidant not necessary",
     `1` = "partner is #1 among confidants",
     `2` = "partner among confidants",
@@ -420,142 +487,16 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_B_labels = standardized_value_labels[c("eg", "er", "ig", "ir", "meg", "mer", "mig", "mir", "mis247", "nwsize", "sq")],
-  Wave_C_labels = standardized_value_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
-  Wave_D_labels = standardized_value_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
-  Wave_E_labels = standardized_value_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
-  Wave_2B_labels = standardized_value_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
-  Wave_F_labels = standardized_value_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
-  Wave_G_labels = standardized_value_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
-  Wave_H_labels = standardized_value_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
-  Wave_3B_labels = standardized_value_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
-  Wave_I_labels = standardized_value_labels[c(
-    "confinf",
-    "confnum",
-    "eg",
-    "er",
-    "ig",
-    "ir",
-    "meg",
-    "mer",
-    "mig",
-    "mir",
-    "mis247",
-    "nwsize",
-    "sq"
-  )],
+  Wave_B_labels = standardized_value_labels,
+  Wave_C_labels = standardized_value_labels,
+  Wave_D_labels = standardized_value_labels,
+  Wave_E_labels = standardized_value_labels,
+  Wave_2B_labels = standardized_value_labels,
+  Wave_F_labels = standardized_value_labels,
+  Wave_G_labels = standardized_value_labels,
+  Wave_H_labels = standardized_value_labels,
+  Wave_3B_labels = standardized_value_labels,
+  Wave_I_labels = standardized_value_labels,
   Wave_J_labels = standardized_value_labels,
   Wave_K_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
@@ -581,9 +522,12 @@ var_types_vec <- c(
   sq = "categorical"
 )
 
-.lasa_fc_247 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "247", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "247", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "247", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "247", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_247 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

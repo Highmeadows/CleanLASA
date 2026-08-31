@@ -21,6 +21,27 @@ harmonized_labels <- c(
   prefe12 = "When could choose again I would live at"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "prefe01",
+    "prefe02",
+    "prefe03",
+    "prefe04",
+    "prefe05",
+    "prefe06",
+    "prefe07",
+    "prefe08",
+    "prefe09",
+    "prefe10",
+    "prefe11",
+    "prefe12"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
@@ -30,90 +51,64 @@ standardized_value_labels <- list(
   prefe01 = c(
     `-6` = "not available, technical reason",
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "myself",
     `2` = "by the family doctor"
   ),
   prefe02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "family",
     `2` = "residential home"
   ),
   prefe03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "by family doctor",
     `2` = "by children"
   ),
   prefe04 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "residential home",
     `2` = "old peoples home (with service)"
   ),
   prefe05 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "myself",
     `2` = "by children"
   ),
   prefe06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "family",
     `2` = "old peoples home (with service)"
   ),
   prefe07 = c(
     `-6` = "not available, technical reason",
     `-5` = "not available, interview terminated",
-    `-4` = "not available, short interview",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "home",
     `2` = "residential home"
   ),
   prefe08 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "home",
     `2` = "family"
   ),
   prefe09 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "nursing home",
     `2` = "home"
   ),
   prefe10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "family",
     `2` = "nursing home"
   ),
   prefe11 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "residential home",
     `2` = "nursing home"
   ),
   prefe12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "residential home",
     `2` = "family"
   )
@@ -126,79 +121,53 @@ value_labels_list <- list(
     standardized_value_labels$prefe01,
     `-6` = "na, technical reason",
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
-    `-3` = "na, wrong skip",
-    `-2` = "na, BHINDEP<>1",
-    `-1` = "na, asked"
+    `-2` = "na, BHINDEP<>1"
   ),
     prefe02 = .replace_labels(
     standardized_value_labels$prefe02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPREFE01",
-    `-1` = "na, asked"
+    `-2` = "na, see BPREFE01"
   ),
     prefe03 = .replace_labels(
     standardized_value_labels$prefe03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPREFE01",
-    `-1` = "na, asked"
+    `-2` = "na, see BPREFE01"
   ),
     prefe04 = .replace_labels(
     standardized_value_labels$prefe04,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPREFE01",
-    `-1` = "na, asked"
+    `-2` = "na, see BPREFE01"
   ),
     prefe05 = .replace_labels(
     standardized_value_labels$prefe05,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPREFE01",
-    `-1` = "na, asked"
+    `-2` = "na, see BPREFE01"
   ),
     prefe06 = .replace_labels(
     standardized_value_labels$prefe06,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPREFE01",
-    `-1` = "na, asked"
+    `-2` = "na, see BPREFE01"
   ),
     prefe07 = .replace_labels(
     standardized_value_labels$prefe07,
     `-6` = "na, technical reason",
     `-5` = "na, interview terminated",
-    `-4` = "na, short interview",
-    `-3` = "na, wrong skip",
-    `-2` = "na, BHINDEP<>2,3,4",
-    `-1` = "na, asked"
+    `-2` = "na, BHINDEP<>2,3,4"
   ),
     prefe08 = .replace_labels(
     standardized_value_labels$prefe08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPREFE07",
-    `-1` = "na, asked"
+    `-2` = "na, see BPREFE07"
   ),
     prefe09 = .replace_labels(
     standardized_value_labels$prefe09,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPREFE07",
-    `-1` = "na, asked"
+    `-2` = "na, see BPREFE07"
   ),
     prefe10 = .replace_labels(
     standardized_value_labels$prefe10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPREFE07",
-    `-1` = "na, asked"
+    `-2` = "na, see BPREFE07"
   ),
     prefe11 = .replace_labels(
     standardized_value_labels$prefe11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPREFE07",
-    `-1` = "na, asked"
+    `-2` = "na, see BPREFE07"
   ),
     prefe12 = .replace_labels(
     standardized_value_labels$prefe12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BPREFE07",
-    `-1` = "na, asked"
+    `-2` = "na, see BPREFE07"
   )
   ),
   Harmonized_labels = standardized_value_labels
@@ -219,9 +188,12 @@ var_types_vec <- c(
   prefe12 = "categorical"
 )
 
-.lasa_fc_032 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "032", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "032", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "032", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "032", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_032 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -17,24 +17,91 @@ harmonized_labels <- c(
   tpsight = "Change in vision over past 3 years"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
+    "tphear",
+    "tpsight"
+  ),
+  `D` = c(
+    "tphear",
+    "tpsight"
+  ),
+  `E` = c(
+    "tphear",
+    "tpsight"
+  ),
+  `F` = c(
+    "tpsen01",
+    "tpsen03",
+    "tpsen04",
+    "tpsen07",
+    "tpsen09",
+    "tpsen10"
+  ),
+  `G` = c(
+    "tpsen01",
+    "tpsen03",
+    "tpsen04",
+    "tpsen07",
+    "tpsen09",
+    "tpsen10"
+  ),
+  `H` = c(
+    "tpsen01",
+    "tpsen03",
+    "tpsen04",
+    "tpsen07",
+    "tpsen09",
+    "tpsen10"
+  ),
+  `I` = c(
+    "tpsen01",
+    "tpsen03",
+    "tpsen04",
+    "tpsen07",
+    "tpsen09",
+    "tpsen10"
+  ),
+  `J` = c(
+    "tpsen01",
+    "tpsen03",
+    "tpsen04",
+    "tpsen07",
+    "tpsen09",
+    "tpsen10"
+  ),
+  `K` = c(
+    "tpsen01",
+    "tpsen03",
+    "tpsen04",
+    "tpsen07",
+    "tpsen09",
+    "tpsen10"
+  )
+)
+
 variable_labels_list <- list(
   Wave_C_labels = .replace_labels(
-    harmonized_labels[c("tphear", "tpsight")],
+    harmonized_labels,
     tphear = "Senses: change hearing last 3 years",
     tpsight = "Senses: change visus last 3 years"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c("tphear", "tpsight")],
+    harmonized_labels,
     tphear = "Senses: change hearing last 3 years",
     tpsight = "Senses: change visus last 3 years"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c("tphear", "tpsight")],
+    harmonized_labels,
     tphear = "Senses: change hearing last 3 years",
     tpsight = "Senses: change visus last 3 years"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c("tpsen01", "tpsen03", "tpsen04", "tpsen07", "tpsen09", "tpsen10")],
+    harmonized_labels,
     tpsen01 = "R usually wears glasses or contactlenses",
     tpsen03 = "Small print in paper without glasses (or contactlenses)",
     tpsen04 = "Small print in paper with glasses or other aid",
@@ -43,7 +110,7 @@ variable_labels_list <- list(
     tpsen10 = "Follow conversation 3 or 4 persons: with hearing aid"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c("tpsen01", "tpsen03", "tpsen04", "tpsen07", "tpsen09", "tpsen10")],
+    harmonized_labels,
     tpsen01 = "R usually wears glasses or contactlenses",
     tpsen03 = "Small print in paper without glasses (or contactlenses)",
     tpsen04 = "Small print in paper with glasses or other aid",
@@ -52,7 +119,7 @@ variable_labels_list <- list(
     tpsen10 = "Follow conversation 3 or 4 persons: with hearing aid"
   ),
   Wave_H_labels = .replace_labels(
-    harmonized_labels[c("tpsen01", "tpsen03", "tpsen04", "tpsen07", "tpsen09", "tpsen10")],
+    harmonized_labels,
     tpsen01 = "R usually wears glasses or contactlenses",
     tpsen03 = "Small print in paper without glasses (or contactlenses)",
     tpsen04 = "Small print in paper with glasses or other aid",
@@ -61,7 +128,7 @@ variable_labels_list <- list(
     tpsen10 = "Follow conversation 3 or 4 persons: with hearing aid"
   ),
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c("tpsen01", "tpsen03", "tpsen04", "tpsen07", "tpsen09", "tpsen10")],
+    harmonized_labels,
     tpsen01 = "R usually wears glasses or contactlenses",
     tpsen03 = "Small print in paper without glasses (or contactlenses)",
     tpsen04 = "Small print in paper with glasses or other aid",
@@ -70,7 +137,7 @@ variable_labels_list <- list(
     tpsen10 = "Follow conversation 3 or 4 persons: with hearing aid"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c("tpsen01", "tpsen03", "tpsen04", "tpsen07", "tpsen09", "tpsen10")],
+    harmonized_labels,
     tpsen01 = "R usually wears glasses or contactlenses",
     tpsen03 = "Small print in paper without glasses (or contactlenses)",
     tpsen04 = "Small print in paper with glasses or other aid",
@@ -79,7 +146,7 @@ variable_labels_list <- list(
     tpsen10 = "Follow conversation 3 or 4 persons: with hearing aid"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c("tpsen01", "tpsen03", "tpsen04", "tpsen07", "tpsen09", "tpsen10")],
+    harmonized_labels,
     tpsen01 = "R usually wears glasses or contactlenses",
     tpsen03 = "Small print in paper without glasses (or contactlenses)",
     tpsen04 = "Small print in paper with glasses or other aid",
@@ -92,16 +159,20 @@ variable_labels_list <- list(
 
 standardized_value_labels <- list(
   tphear = c(
-    `-1` = "does not know",
+    default_missing_labels[c("-1")],
     `1` = "much better",
     `2` = "better",
     `3` = "the same",
     `4` = "worse",
     `5` = "much worse"
   ),
-  tpsen01 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
+  tpsen01 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   tpsen03 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "yes, without difficulty",
     `2` = "yes, with some difficulty",
     `3` = "yes, with much difficulty",
@@ -109,16 +180,20 @@ standardized_value_labels <- list(
   ),
   tpsen04 = c(
     `-2` = "na, see TPSEN03",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "yes, without difficulty",
     `2` = "yes, with some difficulty",
     `3` = "yes, with much difficulty",
     `4` = "no, R cannot",
     `5` = "R does not use aid"
   ),
-  tpsen07 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
+  tpsen07 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   tpsen09 = c(
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "yes, without difficulty",
     `2` = "yes, with some difficulty",
     `3` = "yes, with much difficulty",
@@ -126,7 +201,7 @@ standardized_value_labels <- list(
   ),
   tpsen10 = c(
     `-2` = "na, see TPSEN09",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "yes, without difficulty",
     `2` = "yes, with some difficulty",
     `3` = "yes, with much difficulty",
@@ -134,7 +209,7 @@ standardized_value_labels <- list(
     `5` = "R does not have a hearing aid"
   ),
   tpsight = c(
-    `-1` = "asked, no answer",
+    default_missing_labels[c("-1")],
     `1` = "much better",
     `2` = "better",
     `3` = "the same",
@@ -144,11 +219,11 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_C_labels = standardized_value_labels[c("tphear", "tpsight")],
-  Wave_D_labels = standardized_value_labels[c("tphear", "tpsight")],
-  Wave_E_labels = standardized_value_labels[c("tphear", "tpsight")],
+  Wave_C_labels = standardized_value_labels,
+  Wave_D_labels = standardized_value_labels,
+  Wave_E_labels = standardized_value_labels,
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("tpsen01", "tpsen03", "tpsen04", "tpsen07", "tpsen09", "tpsen10")],
+    standardized_value_labels,
     tpsen04 = c(
     `-2` = "na, see FTPSEN03",
     `-1` = "na, asked",
@@ -167,7 +242,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("tpsen01", "tpsen03", "tpsen04", "tpsen07", "tpsen09", "tpsen10")],
+    standardized_value_labels,
     tpsen04 = c(
     `-2` = "na, see GTPSEN03",
     `-1` = "na, asked",
@@ -186,7 +261,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("tpsen01", "tpsen03", "tpsen04", "tpsen07", "tpsen09", "tpsen10")],
+    standardized_value_labels,
     tpsen04 = .replace_labels(
     standardized_value_labels$tpsen04,
     `-2` = "na, see HTPSEN03"
@@ -197,7 +272,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("tpsen01", "tpsen03", "tpsen04", "tpsen07", "tpsen09", "tpsen10")],
+    standardized_value_labels,
     tpsen04 = .replace_labels(
     standardized_value_labels$tpsen04,
     `-2` = "na, see ITPSEN03"
@@ -208,7 +283,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c("tpsen01", "tpsen03", "tpsen04", "tpsen07", "tpsen09", "tpsen10")],
+    standardized_value_labels,
     tpsen04 = .replace_labels(
     standardized_value_labels$tpsen04,
     `-2` = "na, see JTPSEN03"
@@ -219,7 +294,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c("tpsen01", "tpsen03", "tpsen04", "tpsen07", "tpsen09", "tpsen10")],
+    standardized_value_labels,
     tpsen04 = .replace_labels(
     standardized_value_labels$tpsen04,
     `-2` = "na, see KTPSEN03"
@@ -243,9 +318,12 @@ var_types_vec <- c(
   tpsight = "categorical"
 )
 
-.lasa_fc_604 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "604", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "604", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "604", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "604", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_604 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

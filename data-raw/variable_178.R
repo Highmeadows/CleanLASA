@@ -93,9 +93,12 @@ harmonized_labels <- c(
   mwmota7 = "type of application: other"
 )
 
-variable_labels_list <- list(
-  Wave_G_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `G` = c(
     "mwmoapp",
     "mwmoctc",
     "mwmonc1",
@@ -112,11 +115,8 @@ variable_labels_list <- list(
     "mwmota5",
     "mwmota6",
     "mwmota7"
-  )],
-    mwmoctc = "contact with municipality about WMO since Jan 1, 2007"
   ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+  `H` = c(
     "mwmoapp",
     "mwmoctc",
     "mwmonc1",
@@ -138,17 +138,8 @@ variable_labels_list <- list(
     "mwmota5",
     "mwmota6",
     "mwmota7"
-  )],
-    mwmoctc = "contact with municipality about WMO since Jan 1, 2007",
-    mwmorc1 = "reason contact information",
-    mwmorc2 = "reason contact application new facility",
-    mwmorc3 = "reason contact re-evaluation dom. care",
-    mwmorc4 = "reason contact extension indication",
-    mwmorc5 = "reason contact complaint",
-    mwmorc6 = "reason contact other"
   ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
+  `I` = c(
     "mcizctc",
     "mciznc1",
     "mciznc2",
@@ -191,7 +182,180 @@ variable_labels_list <- list(
     "mwmorc5",
     "mwmorc6",
     "mwmorc7"
-  )],
+  ),
+  `J` = c(
+    "mcizctc",
+    "mciznc1",
+    "mciznc2",
+    "mciznc3",
+    "mciznc4",
+    "mciznc5",
+    "mciznc6",
+    "mcizpc1",
+    "mcizpc10",
+    "mcizpc11",
+    "mcizpc2",
+    "mcizpc3",
+    "mcizpc4",
+    "mcizpc5",
+    "mcizpc6",
+    "mcizpc7",
+    "mcizpc8",
+    "mcizpc9",
+    "mcizrc1",
+    "mcizrc2",
+    "mcizrc3",
+    "mcizrc4",
+    "mcizrc5",
+    "mcizrc6",
+    "mcizrc7",
+    "mhwwctc",
+    "mhwwnc1",
+    "mhwwnc2",
+    "mhwwnc3",
+    "mhwwnc4",
+    "mhwwnc5",
+    "mhwwnc6",
+    "mhwwpc1",
+    "mhwwpc10",
+    "mhwwpc11",
+    "mhwwpc2",
+    "mhwwpc3",
+    "mhwwpc4",
+    "mhwwpc5",
+    "mhwwpc6",
+    "mhwwpc7",
+    "mhwwpc8",
+    "mhwwpc9",
+    "mhwwrc1",
+    "mhwwrc2",
+    "mhwwrc3",
+    "mhwwrc4",
+    "mhwwrc5",
+    "mhwwrc6",
+    "mhwwrc7",
+    "mwmoctc",
+    "mwmonc1",
+    "mwmonc2",
+    "mwmonc3",
+    "mwmonc4",
+    "mwmonc5",
+    "mwmonc6",
+    "mwmopc1",
+    "mwmopc10",
+    "mwmopc11",
+    "mwmopc2",
+    "mwmopc3",
+    "mwmopc4",
+    "mwmopc5",
+    "mwmopc6",
+    "mwmopc7",
+    "mwmopc8",
+    "mwmopc9",
+    "mwmorc1",
+    "mwmorc2",
+    "mwmorc3",
+    "mwmorc4",
+    "mwmorc5",
+    "mwmorc6",
+    "mwmorc7"
+  ),
+  `K` = c(
+    "mcizctc",
+    "mciznc1",
+    "mciznc2",
+    "mciznc3",
+    "mciznc4",
+    "mciznc5",
+    "mciznc6",
+    "mcizpc1",
+    "mcizpc10",
+    "mcizpc11",
+    "mcizpc2",
+    "mcizpc3",
+    "mcizpc4",
+    "mcizpc5",
+    "mcizpc6",
+    "mcizpc7",
+    "mcizpc8",
+    "mcizpc9",
+    "mcizrc1",
+    "mcizrc2",
+    "mcizrc3",
+    "mcizrc4",
+    "mcizrc5",
+    "mcizrc6",
+    "mcizrc7",
+    "mhwwctc",
+    "mhwwnc1",
+    "mhwwnc2",
+    "mhwwnc3",
+    "mhwwnc4",
+    "mhwwnc5",
+    "mhwwnc6",
+    "mhwwpc1",
+    "mhwwpc10",
+    "mhwwpc11",
+    "mhwwpc2",
+    "mhwwpc3",
+    "mhwwpc4",
+    "mhwwpc5",
+    "mhwwpc6",
+    "mhwwpc7",
+    "mhwwpc8",
+    "mhwwpc9",
+    "mhwwrc1",
+    "mhwwrc2",
+    "mhwwrc3",
+    "mhwwrc4",
+    "mhwwrc5",
+    "mhwwrc6",
+    "mhwwrc7",
+    "mwmoctc",
+    "mwmonc1",
+    "mwmonc2",
+    "mwmonc3",
+    "mwmonc4",
+    "mwmonc5",
+    "mwmonc6",
+    "mwmopc1",
+    "mwmopc10",
+    "mwmopc11",
+    "mwmopc2",
+    "mwmopc3",
+    "mwmopc4",
+    "mwmopc5",
+    "mwmopc6",
+    "mwmopc7",
+    "mwmopc8",
+    "mwmopc9",
+    "mwmorc1",
+    "mwmorc2",
+    "mwmorc3",
+    "mwmorc4",
+    "mwmorc5",
+    "mwmorc6",
+    "mwmorc7"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_G_labels = .replace_labels(
+    harmonized_labels,
+    mwmoctc = "contact with municipality about WMO since Jan 1, 2007"
+  ),
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
+    mwmoctc = "contact with municipality about WMO since Jan 1, 2007",
+    mwmorc1 = "reason contact information",
+    mwmorc2 = "reason contact application new facility",
+    mwmorc3 = "reason contact re-evaluation dom. care",
+    mwmorc4 = "reason contact extension indication",
+    mwmorc5 = "reason contact complaint",
+    mwmorc6 = "reason contact other"
+  ),
+  Wave_I_labels = .replace_labels(
+    harmonized_labels,
     mcizctc = "contact since 2012 with CIZ or social district team about 24 hours care",
     mciznc1 = "reason no contact: no need",
     mciznc2 = "reason no contact: take care of it myself",
@@ -222,83 +386,7 @@ variable_labels_list <- list(
     mwmorc7 = "reason contact: other"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
-    "mcizctc",
-    "mciznc1",
-    "mciznc2",
-    "mciznc3",
-    "mciznc4",
-    "mciznc5",
-    "mciznc6",
-    "mcizpc1",
-    "mcizpc10",
-    "mcizpc11",
-    "mcizpc2",
-    "mcizpc3",
-    "mcizpc4",
-    "mcizpc5",
-    "mcizpc6",
-    "mcizpc7",
-    "mcizpc8",
-    "mcizpc9",
-    "mcizrc1",
-    "mcizrc2",
-    "mcizrc3",
-    "mcizrc4",
-    "mcizrc5",
-    "mcizrc6",
-    "mcizrc7",
-    "mhwwctc",
-    "mhwwnc1",
-    "mhwwnc2",
-    "mhwwnc3",
-    "mhwwnc4",
-    "mhwwnc5",
-    "mhwwnc6",
-    "mhwwpc1",
-    "mhwwpc10",
-    "mhwwpc11",
-    "mhwwpc2",
-    "mhwwpc3",
-    "mhwwpc4",
-    "mhwwpc5",
-    "mhwwpc6",
-    "mhwwpc7",
-    "mhwwpc8",
-    "mhwwpc9",
-    "mhwwrc1",
-    "mhwwrc2",
-    "mhwwrc3",
-    "mhwwrc4",
-    "mhwwrc5",
-    "mhwwrc6",
-    "mhwwrc7",
-    "mwmoctc",
-    "mwmonc1",
-    "mwmonc2",
-    "mwmonc3",
-    "mwmonc4",
-    "mwmonc5",
-    "mwmonc6",
-    "mwmopc1",
-    "mwmopc10",
-    "mwmopc11",
-    "mwmopc2",
-    "mwmopc3",
-    "mwmopc4",
-    "mwmopc5",
-    "mwmopc6",
-    "mwmopc7",
-    "mwmopc8",
-    "mwmopc9",
-    "mwmorc1",
-    "mwmorc2",
-    "mwmorc3",
-    "mwmorc4",
-    "mwmorc5",
-    "mwmorc6",
-    "mwmorc7"
-  )],
+    harmonized_labels,
     mhwwrc1 = "reason contact GP/nurse: information",
     mhwwrc2 = "reason contact GP/nurse: application new facility",
     mhwwrc3 = "reason contact GP/nurse: re-evaluation existing facility",
@@ -315,83 +403,7 @@ variable_labels_list <- list(
     mwmonc6 = "reason no contact WMO: other"
   ),
   Wave_K_labels = .replace_labels(
-    harmonized_labels[c(
-    "mcizctc",
-    "mciznc1",
-    "mciznc2",
-    "mciznc3",
-    "mciznc4",
-    "mciznc5",
-    "mciznc6",
-    "mcizpc1",
-    "mcizpc10",
-    "mcizpc11",
-    "mcizpc2",
-    "mcizpc3",
-    "mcizpc4",
-    "mcizpc5",
-    "mcizpc6",
-    "mcizpc7",
-    "mcizpc8",
-    "mcizpc9",
-    "mcizrc1",
-    "mcizrc2",
-    "mcizrc3",
-    "mcizrc4",
-    "mcizrc5",
-    "mcizrc6",
-    "mcizrc7",
-    "mhwwctc",
-    "mhwwnc1",
-    "mhwwnc2",
-    "mhwwnc3",
-    "mhwwnc4",
-    "mhwwnc5",
-    "mhwwnc6",
-    "mhwwpc1",
-    "mhwwpc10",
-    "mhwwpc11",
-    "mhwwpc2",
-    "mhwwpc3",
-    "mhwwpc4",
-    "mhwwpc5",
-    "mhwwpc6",
-    "mhwwpc7",
-    "mhwwpc8",
-    "mhwwpc9",
-    "mhwwrc1",
-    "mhwwrc2",
-    "mhwwrc3",
-    "mhwwrc4",
-    "mhwwrc5",
-    "mhwwrc6",
-    "mhwwrc7",
-    "mwmoctc",
-    "mwmonc1",
-    "mwmonc2",
-    "mwmonc3",
-    "mwmonc4",
-    "mwmonc5",
-    "mwmonc6",
-    "mwmopc1",
-    "mwmopc10",
-    "mwmopc11",
-    "mwmopc2",
-    "mwmopc3",
-    "mwmopc4",
-    "mwmopc5",
-    "mwmopc6",
-    "mwmopc7",
-    "mwmopc8",
-    "mwmopc9",
-    "mwmorc1",
-    "mwmorc2",
-    "mwmorc3",
-    "mwmorc4",
-    "mwmorc5",
-    "mwmorc6",
-    "mwmorc7"
-  )],
+    harmonized_labels,
     mhwwrc1 = "reason contact GP/nurse: information",
     mhwwrc2 = "reason contact GP/nurse: application new facility",
     mhwwrc3 = "reason contact GP/nurse: re-evaluation existing facility",
@@ -410,326 +422,433 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "mentioned"
+)
+
 standardized_value_labels <- list(
-  mcizctc = c(`-3` = "na, section not done", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  mcizctc = c(
+    `-3` = "na, section not done",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   mciznc1 = c(
     `-2` = "na, see IMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mciznc2 = c(
     `-2` = "na, see IMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mciznc3 = c(
     `-2` = "na, see IMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mciznc4 = c(
     `-2` = "na, see IMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mciznc5 = c(
     `-2` = "na, see IMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mciznc6 = c(
     `-2` = "na, see IMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizpc1 = c(
     `-2` = "na, see J/KMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizpc10 = c(
     `-2` = "na, see J/KMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizpc11 = c(
     `-2` = "na, see J/KMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizpc2 = c(
     `-2` = "na, see J/KMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizpc3 = c(
     `-2` = "na, see J/KMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizpc4 = c(
     `-2` = "na, see J/KMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizpc5 = c(
     `-2` = "na, see J/KMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizpc6 = c(
     `-2` = "na, see J/KMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizpc7 = c(
     `-2` = "na, see J/KMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizpc8 = c(
     `-2` = "na, see J/KMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizpc9 = c(
     `-2` = "na, see J/KMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizrc1 = c(
     `-2` = "na, see IMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizrc2 = c(
     `-2` = "na, see IMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizrc3 = c(
     `-2` = "na, see IMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizrc4 = c(
     `-2` = "na, see IMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizrc5 = c(
     `-2` = "na, see IMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizrc6 = c(
     `-2` = "na, see IMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mcizrc7 = c(
     `-2` = "na, see IMCIZCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
-  mhwwctc = c(`-3` = "na, section not done", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  mhwwctc = c(
+    `-3` = "na, section not done",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   mhwwnc1 = c(
     `-2` = "na, see IMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwnc2 = c(
     `-2` = "na, see IMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwnc3 = c(
     `-2` = "na, see IMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwnc4 = c(
     `-2` = "na, see IMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwnc5 = c(
     `-2` = "na, see IMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwnc6 = c(
     `-2` = "na, see IMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwpc1 = c(
     `-2` = "na, see J/KMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwpc10 = c(
     `-2` = "na, see J/KMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwpc11 = c(
     `-2` = "na, see J/KMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwpc2 = c(
     `-2` = "na, see J/KMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwpc3 = c(
     `-2` = "na, see J/KMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwpc4 = c(
     `-2` = "na, see J/KMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwpc5 = c(
     `-2` = "na, see J/KMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwpc6 = c(
     `-2` = "na, see J/KMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwpc7 = c(
     `-2` = "na, see J/KMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwpc8 = c(
     `-2` = "na, see J/KMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwpc9 = c(
     `-2` = "na, see J/KMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwrc1 = c(
     `-2` = "na, see IMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwrc2 = c(
     `-2` = "na, see IMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwrc3 = c(
     `-2` = "na, see IMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwrc4 = c(
     `-2` = "na, see IMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwrc5 = c(
     `-2` = "na, see IMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwrc6 = c(
     `-2` = "na, see IMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mhwwrc7 = c(
     `-2` = "na, see IMHWWCTC",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   mwmoapp = c(
     `-2` = "na, see G/HMWMOMUN",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "yes, approved",
     `2` = "no, denied: informal network",
     `3` = "no, denied: not severe enough",
     `4` = "no, denied: other"
   ),
-  mwmoctc = c(`-3` = "na, section not done", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  mwmonc1 = c(`-2` = "na, see IMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmonc2 = c(`-2` = "na, see IMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmonc3 = c(`-2` = "na, see IMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmonc4 = c(`-2` = "na, see IMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmonc5 = c(`-2` = "na, see IMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmonc6 = c(`-2` = "na, see IMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmopc1 = c(`-2` = "na, see J/KMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmopc10 = c(`-2` = "na, see J/KMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmopc11 = c(`-2` = "na, see J/KMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmopc2 = c(`-2` = "na, see J/KMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmopc3 = c(`-2` = "na, see J/KMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmopc4 = c(`-2` = "na, see J/KMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmopc5 = c(`-2` = "na, see J/KMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmopc6 = c(`-2` = "na, see J/KMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmopc7 = c(`-2` = "na, see J/KMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmopc8 = c(`-2` = "na, see J/KMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmopc9 = c(`-2` = "na, see J/KMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
+  mwmoctc = c(
+    `-3` = "na, section not done",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  mwmonc1 = c(
+    `-2` = "na, see IMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmonc2 = c(
+    `-2` = "na, see IMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmonc3 = c(
+    `-2` = "na, see IMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmonc4 = c(
+    `-2` = "na, see IMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmonc5 = c(
+    `-2` = "na, see IMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmonc6 = c(
+    `-2` = "na, see IMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmopc1 = c(
+    `-2` = "na, see J/KMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmopc10 = c(
+    `-2` = "na, see J/KMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmopc11 = c(
+    `-2` = "na, see J/KMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmopc2 = c(
+    `-2` = "na, see J/KMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmopc3 = c(
+    `-2` = "na, see J/KMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmopc4 = c(
+    `-2` = "na, see J/KMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmopc5 = c(
+    `-2` = "na, see J/KMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmopc6 = c(
+    `-2` = "na, see J/KMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmopc7 = c(
+    `-2` = "na, see J/KMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmopc8 = c(
+    `-2` = "na, see J/KMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmopc9 = c(
+    `-2` = "na, see J/KMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
   mwmorc = c(
     `-2` = "na, see GMWMOMUN",
-    `-1` = "no answer, asked",
+    default_missing_labels[c("-1")],
     `1` = "obtain information",
     `2` = "application for a new facility",
     `3` = "re-evaluation domestic care",
@@ -737,42 +856,95 @@ standardized_value_labels <- list(
     `5` = "filing a complaint",
     `6` = "other reason"
   ),
-  mwmorc1 = c(`-2` = "na, see HMWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmorc2 = c(`-2` = "na, see HMWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmorc3 = c(`-2` = "na, see HMWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmorc4 = c(`-2` = "na, see HMWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmorc5 = c(`-2` = "na, see HMWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmorc6 = c(`-2` = "na, see HMWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmorc7 = c(`-2` = "na, see IMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmota1 = c(`-2` = "na, see G/HMWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmota2 = c(`-2` = "na, see G/HMWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmota3 = c(`-2` = "na, see G/HMWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmota4 = c(`-2` = "na, see G/HMWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmota5 = c(`-2` = "na, see G/HMWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmota6 = c(`-2` = "na, see G/HMWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-  mwmota7 = c(`-2` = "na, see G/HMWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned")
+  mwmorc1 = c(
+    `-2` = "na, see HMWMOMUN",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmorc2 = c(
+    `-2` = "na, see HMWMOMUN",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmorc3 = c(
+    `-2` = "na, see HMWMOMUN",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmorc4 = c(
+    `-2` = "na, see HMWMOMUN",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmorc5 = c(
+    `-2` = "na, see HMWMOMUN",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmorc6 = c(
+    `-2` = "na, see HMWMOMUN",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmorc7 = c(
+    `-2` = "na, see IMWMOCTC",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmota1 = c(
+    `-2` = "na, see G/HMWMOMUN",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmota2 = c(
+    `-2` = "na, see G/HMWMOMUN",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmota3 = c(
+    `-2` = "na, see G/HMWMOMUN",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmota4 = c(
+    `-2` = "na, see G/HMWMOMUN",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmota5 = c(
+    `-2` = "na, see G/HMWMOMUN",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmota6 = c(
+    `-2` = "na, see G/HMWMOMUN",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  ),
+  mwmota7 = c(
+    `-2` = "na, see G/HMWMOMUN",
+    default_missing_labels[c("-1")],
+    `0` = "not mentioned",
+    default_answer_labels[c("1")]
+  )
 )
 
 value_labels_list <- list(
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mwmoapp",
-    "mwmoctc",
-    "mwmonc1",
-    "mwmonc2",
-    "mwmonc3",
-    "mwmonc4",
-    "mwmonc5",
-    "mwmonc6",
-    "mwmorc",
-    "mwmota1",
-    "mwmota2",
-    "mwmota3",
-    "mwmota4",
-    "mwmota5",
-    "mwmota6",
-    "mwmota7"
-  )],
+    standardized_value_labels,
     mwmoctc = c(`-3` = "na, section not done", `1` = "no", `2` = "yes"),
     mwmonc1 = .replace_labels(
     standardized_value_labels$mwmonc1,
@@ -800,29 +972,7 @@ value_labels_list <- list(
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mwmoapp",
-    "mwmoctc",
-    "mwmonc1",
-    "mwmonc2",
-    "mwmonc3",
-    "mwmonc4",
-    "mwmonc5",
-    "mwmonc6",
-    "mwmorc1",
-    "mwmorc2",
-    "mwmorc3",
-    "mwmorc4",
-    "mwmorc5",
-    "mwmorc6",
-    "mwmota1",
-    "mwmota2",
-    "mwmota3",
-    "mwmota4",
-    "mwmota5",
-    "mwmota6",
-    "mwmota7"
-  )],
+    standardized_value_labels,
     mwmoctc = c(`-3` = "na, section not done", `1` = "no", `2` = "yes"),
     mwmonc1 = .replace_labels(
     standardized_value_labels$mwmonc1,
@@ -874,50 +1024,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mcizctc",
-    "mciznc1",
-    "mciznc2",
-    "mciznc3",
-    "mciznc4",
-    "mciznc5",
-    "mciznc6",
-    "mcizrc1",
-    "mcizrc2",
-    "mcizrc3",
-    "mcizrc4",
-    "mcizrc5",
-    "mcizrc6",
-    "mcizrc7",
-    "mhwwctc",
-    "mhwwnc1",
-    "mhwwnc2",
-    "mhwwnc3",
-    "mhwwnc4",
-    "mhwwnc5",
-    "mhwwnc6",
-    "mhwwrc1",
-    "mhwwrc2",
-    "mhwwrc3",
-    "mhwwrc4",
-    "mhwwrc5",
-    "mhwwrc6",
-    "mhwwrc7",
-    "mwmoctc",
-    "mwmonc1",
-    "mwmonc2",
-    "mwmonc3",
-    "mwmonc4",
-    "mwmonc5",
-    "mwmonc6",
-    "mwmorc1",
-    "mwmorc2",
-    "mwmorc3",
-    "mwmorc4",
-    "mwmorc5",
-    "mwmorc6",
-    "mwmorc7"
-  )],
+    standardized_value_labels,
     mcizctc = c(`-3` = "na, section not done", `1` = "no", `2` = "yes"),
     mhwwctc = c(`-3` = "na, section not done", `1` = "no", `2` = "yes"),
     mwmoctc = c(`-3` = "na, section not done", `1` = "no", `2` = "yes"),
@@ -947,83 +1054,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mcizctc",
-    "mciznc1",
-    "mciznc2",
-    "mciznc3",
-    "mciznc4",
-    "mciznc5",
-    "mciznc6",
-    "mcizpc1",
-    "mcizpc10",
-    "mcizpc11",
-    "mcizpc2",
-    "mcizpc3",
-    "mcizpc4",
-    "mcizpc5",
-    "mcizpc6",
-    "mcizpc7",
-    "mcizpc8",
-    "mcizpc9",
-    "mcizrc1",
-    "mcizrc2",
-    "mcizrc3",
-    "mcizrc4",
-    "mcizrc5",
-    "mcizrc6",
-    "mcizrc7",
-    "mhwwctc",
-    "mhwwnc1",
-    "mhwwnc2",
-    "mhwwnc3",
-    "mhwwnc4",
-    "mhwwnc5",
-    "mhwwnc6",
-    "mhwwpc1",
-    "mhwwpc10",
-    "mhwwpc11",
-    "mhwwpc2",
-    "mhwwpc3",
-    "mhwwpc4",
-    "mhwwpc5",
-    "mhwwpc6",
-    "mhwwpc7",
-    "mhwwpc8",
-    "mhwwpc9",
-    "mhwwrc1",
-    "mhwwrc2",
-    "mhwwrc3",
-    "mhwwrc4",
-    "mhwwrc5",
-    "mhwwrc6",
-    "mhwwrc7",
-    "mwmoctc",
-    "mwmonc1",
-    "mwmonc2",
-    "mwmonc3",
-    "mwmonc4",
-    "mwmonc5",
-    "mwmonc6",
-    "mwmopc1",
-    "mwmopc10",
-    "mwmopc11",
-    "mwmopc2",
-    "mwmopc3",
-    "mwmopc4",
-    "mwmopc5",
-    "mwmopc6",
-    "mwmopc7",
-    "mwmopc8",
-    "mwmopc9",
-    "mwmorc1",
-    "mwmorc2",
-    "mwmorc3",
-    "mwmorc4",
-    "mwmorc5",
-    "mwmorc6",
-    "mwmorc7"
-  )],
+    standardized_value_labels,
     mciznc1 = .replace_labels(
     standardized_value_labels$mciznc1,
     `-2` = "na, see J/KMCIZCTC"
@@ -1182,83 +1213,7 @@ value_labels_list <- list(
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mcizctc",
-    "mciznc1",
-    "mciznc2",
-    "mciznc3",
-    "mciznc4",
-    "mciznc5",
-    "mciznc6",
-    "mcizpc1",
-    "mcizpc10",
-    "mcizpc11",
-    "mcizpc2",
-    "mcizpc3",
-    "mcizpc4",
-    "mcizpc5",
-    "mcizpc6",
-    "mcizpc7",
-    "mcizpc8",
-    "mcizpc9",
-    "mcizrc1",
-    "mcizrc2",
-    "mcizrc3",
-    "mcizrc4",
-    "mcizrc5",
-    "mcizrc6",
-    "mcizrc7",
-    "mhwwctc",
-    "mhwwnc1",
-    "mhwwnc2",
-    "mhwwnc3",
-    "mhwwnc4",
-    "mhwwnc5",
-    "mhwwnc6",
-    "mhwwpc1",
-    "mhwwpc10",
-    "mhwwpc11",
-    "mhwwpc2",
-    "mhwwpc3",
-    "mhwwpc4",
-    "mhwwpc5",
-    "mhwwpc6",
-    "mhwwpc7",
-    "mhwwpc8",
-    "mhwwpc9",
-    "mhwwrc1",
-    "mhwwrc2",
-    "mhwwrc3",
-    "mhwwrc4",
-    "mhwwrc5",
-    "mhwwrc6",
-    "mhwwrc7",
-    "mwmoctc",
-    "mwmonc1",
-    "mwmonc2",
-    "mwmonc3",
-    "mwmonc4",
-    "mwmonc5",
-    "mwmonc6",
-    "mwmopc1",
-    "mwmopc10",
-    "mwmopc11",
-    "mwmopc2",
-    "mwmopc3",
-    "mwmopc4",
-    "mwmopc5",
-    "mwmopc6",
-    "mwmopc7",
-    "mwmopc8",
-    "mwmopc9",
-    "mwmorc1",
-    "mwmorc2",
-    "mwmorc3",
-    "mwmorc4",
-    "mwmorc5",
-    "mwmorc6",
-    "mwmorc7"
-  )],
+    standardized_value_labels,
     mciznc1 = .replace_labels(
     standardized_value_labels$mciznc1,
     `-2` = "na, see J/KMCIZCTC"
@@ -1506,7 +1461,7 @@ var_types_vec <- c(
   mwmota7 = "categorical"
 )
 
-.lasa_fc_178 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "178", waves = .lasa_wave_rows()) |>
     .override_label(wave = "G", variable = "mwmoctc", override_value = "gmwmomun") |>
     .override_label(wave = "H", variable = "mwmoctc", override_value = "hmwmomun"),
@@ -1514,3 +1469,6 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "178", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "178", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_178 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

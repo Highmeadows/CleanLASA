@@ -21,6 +21,139 @@ harmonized_labels <- c(
   sondied = "Son(s) died"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
+    "brodied",
+    "conflic",
+    "crime",
+    "daudied",
+    "fadied",
+    "financ",
+    "gcdied",
+    "illoth",
+    "illpart",
+    "modied",
+    "sisdied",
+    "sondied"
+  ),
+  `D` = c(
+    "brodied",
+    "conflic",
+    "crime",
+    "daudied",
+    "fadied",
+    "financ",
+    "gcdied",
+    "illoth",
+    "illpart",
+    "modied",
+    "sisdied",
+    "sondied"
+  ),
+  `E` = c(
+    "brodied",
+    "conflic",
+    "crime",
+    "daudied",
+    "fadied",
+    "financ",
+    "gcdied",
+    "illoth",
+    "illpart",
+    "modied",
+    "sisdied",
+    "sondied"
+  ),
+  `F` = c(
+    "brodied",
+    "conflic",
+    "crime",
+    "daudied",
+    "fadied",
+    "financ",
+    "gcdied",
+    "illoth",
+    "illpart",
+    "modied",
+    "sisdied",
+    "sondied"
+  ),
+  `G` = c(
+    "brodied",
+    "conflic",
+    "crime",
+    "daudied",
+    "fadied",
+    "financ",
+    "gcdied",
+    "illoth",
+    "illpart",
+    "modied",
+    "sisdied",
+    "sondied"
+  ),
+  `H` = c(
+    "brodied",
+    "conflic",
+    "crime",
+    "daudied",
+    "fadied",
+    "financ",
+    "gcdied",
+    "illoth",
+    "illpart",
+    "modied",
+    "sisdied",
+    "sondied"
+  ),
+  `I` = c(
+    "brodied",
+    "conflic",
+    "crime",
+    "daudied",
+    "fadied",
+    "financ",
+    "gcdied",
+    "illoth",
+    "illpart",
+    "modied",
+    "sisdied",
+    "sondied"
+  ),
+  `J` = c(
+    "brodied",
+    "conflic",
+    "crime",
+    "daudied",
+    "fadied",
+    "financ",
+    "gcdied",
+    "illoth",
+    "illpart",
+    "modied",
+    "sisdied",
+    "sondied"
+  ),
+  `K` = c(
+    "brodied",
+    "conflic",
+    "crime",
+    "daudied",
+    "fadied",
+    "financ",
+    "gcdied",
+    "illoth",
+    "illpart",
+    "modied",
+    "sisdied",
+    "sondied"
+  )
+)
+
 variable_labels_list <- list(
   Wave_C_labels = .replace_labels(
     harmonized_labels,
@@ -171,7 +304,7 @@ standardized_value_labels <- list(
     `-4` = "response unavailable",
     `-3` = "no living relative of this type",
     `-2` = "answer: no relative of this type",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "not died",
     `2` = "died"
   ),
@@ -180,8 +313,7 @@ standardized_value_labels <- list(
     `-7` = "refusal/skip by interviewer",
     `-6` = "interview nonresponse",
     `-5` = "interview nonresponse",
-    `-4` = "short version",
-    `-1` = "no answer",
+    default_missing_labels[c("-4", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
@@ -190,8 +322,7 @@ standardized_value_labels <- list(
     `-7` = "refusal/skip by interviewer",
     `-6` = "interview nonresponse",
     `-5` = "interview nonresponse",
-    `-4` = "short version",
-    `-1` = "no answer",
+    default_missing_labels[c("-4", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
@@ -205,7 +336,7 @@ standardized_value_labels <- list(
     `-4` = "response unavailable",
     `-3` = "no living relative of this type",
     `-2` = "answer: no relative of this type",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "not died",
     `2` = "died"
   ),
@@ -219,7 +350,7 @@ standardized_value_labels <- list(
     `-4` = "response unavailable",
     `-3` = "died earlier",
     `-2` = "prior-death/routing status",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "not died",
     `2` = "died"
   ),
@@ -228,8 +359,7 @@ standardized_value_labels <- list(
     `-7` = "refusal/skip by interviewer",
     `-6` = "interview nonresponse",
     `-5` = "interview nonresponse",
-    `-4` = "short version",
-    `-1` = "no answer",
+    default_missing_labels[c("-4", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
@@ -238,8 +368,7 @@ standardized_value_labels <- list(
     `-7` = "refusal/skip by interviewer",
     `-6` = "interview nonresponse",
     `-5` = "interview nonresponse",
-    `-4` = "short version",
-    `-1` = "no answer",
+    default_missing_labels[c("-4", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
@@ -248,8 +377,7 @@ standardized_value_labels <- list(
     `-7` = "refusal/skip by interviewer",
     `-6` = "interview nonresponse",
     `-5` = "interview nonresponse",
-    `-4` = "short version",
-    `-1` = "no answer",
+    default_missing_labels[c("-4", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
@@ -258,10 +386,9 @@ standardized_value_labels <- list(
     `-7` = "refusal/skip by interviewer",
     `-6` = "interview nonresponse",
     `-5` = "interview nonresponse",
-    `-4` = "short version",
+    default_missing_labels[c("-4", "-1")],
     `-3` = "partner not identified in demographic part",
     `-2` = "not asked / no partner",
-    `-1` = "no answer",
     `1` = "no",
     `2` = "yes"
   ),
@@ -275,7 +402,7 @@ standardized_value_labels <- list(
     `-4` = "response unavailable",
     `-3` = "died earlier",
     `-2` = "prior-death/routing status",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "not died",
     `2` = "died"
   ),
@@ -289,7 +416,7 @@ standardized_value_labels <- list(
     `-4` = "response unavailable",
     `-3` = "no living relative of this type",
     `-2` = "answer: no relative of this type",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "not died",
     `2` = "died"
   ),
@@ -303,7 +430,7 @@ standardized_value_labels <- list(
     `-4` = "response unavailable",
     `-3` = "no living relative of this type",
     `-2` = "answer: no relative of this type",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "not died",
     `2` = "died"
   )
@@ -1389,9 +1516,12 @@ var_types_vec <- c(
   sondied = "categorical"
 )
 
-.lasa_fc_272 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "272", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "272", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "272", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "272", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_272 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

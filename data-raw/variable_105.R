@@ -15,16 +15,33 @@ harmonized_labels <- c(
   rco07 = "Religious coping 07: God abandoned me"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `3B` = c(
+    "qrco03",
+    "qrco05",
+    "qrco07"
+  ),
+  `MB` = c(
+    "rco03",
+    "rco05",
+    "rco07"
+  )
+)
+
 variable_labels_list <- list(
-  Wave_3B_labels = harmonized_labels[c("qrco03", "qrco05", "qrco07")],
-  Wave_MB_labels = harmonized_labels[c("rco03", "rco05", "rco07")],
+  Wave_3B_labels = harmonized_labels,
+  Wave_MB_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
 standardized_value_labels <- list(
   qrco03 = c(
     `-2` = "short interview",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "sometimes",
     `3` = "regularly",
@@ -32,7 +49,7 @@ standardized_value_labels <- list(
   ),
   qrco05 = c(
     `-2` = "short interview",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "sometimes",
     `3` = "regularly",
@@ -40,7 +57,7 @@ standardized_value_labels <- list(
   ),
   qrco07 = c(
     `-2` = "short interview",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "sometimes",
     `3` = "regularly",
@@ -48,7 +65,7 @@ standardized_value_labels <- list(
   ),
   rco03 = c(
     `-2` = "short interview",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "sometimes",
     `3` = "regularly",
@@ -56,7 +73,7 @@ standardized_value_labels <- list(
   ),
   rco05 = c(
     `-2` = "short interview",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "sometimes",
     `3` = "regularly",
@@ -64,7 +81,7 @@ standardized_value_labels <- list(
   ),
   rco07 = c(
     `-2` = "short interview",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "sometimes",
     `3` = "regularly",
@@ -74,39 +91,33 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("qrco03", "qrco05", "qrco07")],
+    standardized_value_labels,
     qrco03 = .replace_labels(
     standardized_value_labels$qrco03,
-    `-2` = "na, short interview",
-    `-1` = "na, asked"
+    `-2` = "na, short interview"
   ),
     qrco05 = .replace_labels(
     standardized_value_labels$qrco05,
-    `-2` = "na, short interview",
-    `-1` = "na, asked"
+    `-2` = "na, short interview"
   ),
     qrco07 = .replace_labels(
     standardized_value_labels$qrco07,
-    `-2` = "na, short interview",
-    `-1` = "na, asked"
+    `-2` = "na, short interview"
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c("rco03", "rco05", "rco07")],
+    standardized_value_labels,
     rco03 = .replace_labels(
     standardized_value_labels$rco03,
-    `-2` = "na, short interview",
-    `-1` = "na, asked"
+    `-2` = "na, short interview"
   ),
     rco05 = .replace_labels(
     standardized_value_labels$rco05,
-    `-2` = "na, short interview",
-    `-1` = "na, asked"
+    `-2` = "na, short interview"
   ),
     rco07 = .replace_labels(
     standardized_value_labels$rco07,
-    `-2` = "na, short interview",
-    `-1` = "na, asked"
+    `-2` = "na, short interview"
   )
   ),
   Harmonized_labels = standardized_value_labels
@@ -121,9 +132,12 @@ var_types_vec <- c(
   rco07 = "categorical"
 )
 
-.lasa_fc_105 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "105", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "105", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "105", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "105", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_105 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

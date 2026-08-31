@@ -15,6 +15,61 @@ harmonized_labels <- c(
   qeqvas = "EQVAS: Self-rated health (scale)"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `E` = c(
+    "qeq5d1",
+    "qeq5d2",
+    "qeq5d3",
+    "qeq5d4",
+    "qeq5d5",
+    "qeqvas"
+  ),
+  `F` = c(
+    "qeq5d1",
+    "qeq5d2",
+    "qeq5d3",
+    "qeq5d4",
+    "qeq5d5",
+    "qeqvas"
+  ),
+  `G` = c(
+    "qeq5d1",
+    "qeq5d2",
+    "qeq5d3",
+    "qeq5d4",
+    "qeq5d5",
+    "qeqvas"
+  ),
+  `H` = c(
+    "qeq5d1",
+    "qeq5d2",
+    "qeq5d3",
+    "qeq5d4",
+    "qeq5d5",
+    "qeqvas"
+  ),
+  `3B` = c(
+    "qeq5d1",
+    "qeq5d2",
+    "qeq5d3",
+    "qeq5d4",
+    "qeq5d5",
+    "qeqvas"
+  ),
+  `I` = c(
+    "qeq5d1",
+    "qeq5d2",
+    "qeq5d3",
+    "qeq5d4",
+    "qeq5d5",
+    "qeqvas"
+  )
+)
+
 variable_labels_list <- list(
   Wave_E_labels = harmonized_labels,
   Wave_F_labels = harmonized_labels,
@@ -234,9 +289,12 @@ var_types_vec <- c(
   qeqvas = "numeric"
 )
 
-.lasa_fc_135 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "135", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "135", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "135", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "135", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_135 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -15,21 +15,53 @@ harmonized_labels <- c(
   mserum = "serum sample available"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "mlab"
+  ),
+  `C` = c(
+    "mdna",
+    "mlab"
+  ),
+  `2B` = c(
+    "mbsstat",
+    "mdna",
+    "mlab"
+  ),
+  `G` = c(
+    "mbsstat",
+    "mdna",
+    "mlab"
+  ),
+  `3B` = c(
+    "mapro",
+    "mbsstat",
+    "mdna",
+    "medta",
+    "mlab",
+    "mserum"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
-    harmonized_labels[c("mlab")],
+    harmonized_labels,
     mlab = "laboratorium analyses"
   ),
   Wave_C_labels = .replace_labels(
-    harmonized_labels[c("mdna", "mlab")],
+    harmonized_labels,
     mlab = "laboratorium analyses"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c("mbsstat", "mdna", "mlab")],
+    harmonized_labels,
     mlab = "(place of) laboratorium analyses"
   ),
   Wave_G_labels = .replace_labels(
-    harmonized_labels[c("mbsstat", "mdna", "mlab")],
+    harmonized_labels,
     mlab = "(place of) laboratorium analyses"
   ),
   Wave_3B_labels = .replace_labels(
@@ -65,7 +97,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("mlab")],
+    standardized_value_labels,
     mlab = c(
     `-2` = "Oss regio, no blood sample",
     `-1` = "no basic determinations: blood sample available",
@@ -74,7 +106,7 @@ value_labels_list <- list(
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("mdna", "mlab")],
+    standardized_value_labels,
     mlab = .replace_labels(
     standardized_value_labels$mlab,
     `-2` = "no measurement possible",
@@ -85,7 +117,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("mbsstat", "mdna", "mlab")],
+    standardized_value_labels,
     mbsstat = c(
     `-2` = "no medical interview",
     `1` = "sampling on location",
@@ -102,7 +134,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("mbsstat", "mdna", "mlab")],
+    standardized_value_labels,
     mbsstat = .replace_labels(
     standardized_value_labels$mbsstat,
     `4` = "soft refusal / no contact"
@@ -135,9 +167,12 @@ var_types_vec <- c(
   mserum = "categorical"
 )
 
-.lasa_fc_850 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "850", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "850", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "850", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "850", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_850 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

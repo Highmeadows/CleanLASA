@@ -18,6 +18,24 @@ harmonized_labels <- c(
   mtes_ng = "total testosterone (ng/dl)"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
+    "mbiotes",
+    "mest",
+    "mfsh",
+    "mftc",
+    "mftcp",
+    "mlh",
+    "mshbg",
+    "mtes",
+    "mtes_ng"
+  )
+)
+
 variable_labels_list <- list(
   Wave_C_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
@@ -66,9 +84,12 @@ var_types_vec <- c(
   mtes_ng = "numeric"
 )
 
-.lasa_fc_863 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "863", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "863", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "863", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "863", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_863 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

@@ -35,12 +35,44 @@ harmonized_labels <- c(
   yneigh = "How many years in neighbourhood"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels[c("howner", "mortga", "movefut", "pleas", "safe", "yneigh")],
-  Wave_C_labels = harmonized_labels[c("howner", "mortga", "movefut", "pleas", "safe", "yneigh")],
-  Wave_D_labels = harmonized_labels[c("howner", "mortga", "movefut", "pleas", "safe", "yneigh")],
-  Wave_E_labels = harmonized_labels[c("howner", "mortga", "movefut", "pleas", "safe", "yneigh")],
-  Wave_2B_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "howner",
+    "mortga",
+    "movefut",
+    "pleas",
+    "safe",
+    "yneigh"
+  ),
+  `C` = c(
+    "howner",
+    "mortga",
+    "movefut",
+    "pleas",
+    "safe",
+    "yneigh"
+  ),
+  `D` = c(
+    "howner",
+    "mortga",
+    "movefut",
+    "pleas",
+    "safe",
+    "yneigh"
+  ),
+  `E` = c(
+    "howner",
+    "mortga",
+    "movefut",
+    "pleas",
+    "safe",
+    "yneigh"
+  ),
+  `2B` = c(
     "howner",
     "mortga",
     "movefut",
@@ -52,9 +84,15 @@ variable_labels_list <- list(
     "pleas",
     "safe",
     "yneigh"
-  )],
-  Wave_F_labels = harmonized_labels[c("howner", "mortga", "pleas", "safe", "yneigh")],
-  Wave_G_labels = harmonized_labels[c(
+  ),
+  `F` = c(
+    "howner",
+    "mortga",
+    "pleas",
+    "safe",
+    "yneigh"
+  ),
+  `G` = c(
     "h21own",
     "h21owns",
     "h22own",
@@ -75,91 +113,162 @@ variable_labels_list <- list(
     "pleas",
     "safe",
     "yneigh"
-  )],
-  Wave_H_labels = harmonized_labels[c("howner", "mortga", "pleas", "safe", "yneigh")],
-  Wave_3B_labels = harmonized_labels[c("howner", "mortga", "pleas", "safe", "yneigh")],
-  Wave_I_labels = harmonized_labels[c("howner", "mortga", "pleas", "safe", "yneigh")],
-  Wave_J_labels = harmonized_labels[c("howner", "mortga", "pleas", "safe", "yneigh")],
-  Wave_K_labels = harmonized_labels[c("howner", "mortga", "pleas", "safe", "yneigh")],
+  ),
+  `H` = c(
+    "howner",
+    "mortga",
+    "pleas",
+    "safe",
+    "yneigh"
+  ),
+  `3B` = c(
+    "howner",
+    "mortga",
+    "pleas",
+    "safe",
+    "yneigh"
+  ),
+  `I` = c(
+    "howner",
+    "mortga",
+    "pleas",
+    "safe",
+    "yneigh"
+  ),
+  `J` = c(
+    "howner",
+    "mortga",
+    "pleas",
+    "safe",
+    "yneigh"
+  ),
+  `K` = c(
+    "howner",
+    "mortga",
+    "pleas",
+    "safe",
+    "yneigh"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = harmonized_labels,
+  Wave_C_labels = harmonized_labels,
+  Wave_D_labels = harmonized_labels,
+  Wave_E_labels = harmonized_labels,
+  Wave_2B_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_3B_labels = harmonized_labels,
+  Wave_I_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
 standardized_value_labels <- list(
   h21own = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "owner without mortgage",
     `2` = "owner, with mortgage",
     `3` = "rented or paid residence",
     `4` = "other"
   ),
-  h21owns = c(`-2` = "not available, routing", `0` = "-to be coded-"),
+  h21owns = c(
+    default_missing_labels[c("-2")],
+    `0` = "-to be coded-"
+  ),
   h22own = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "owner, without mortgage",
     `2` = "owner, with mortgage",
     `3` = "rented or paid residence",
     `4` = "other"
   ),
-  h22owns = c(`-2` = "not available, routing", `0` = "-to be coded-"),
+  h22owns = c(
+    default_missing_labels[c("-2")],
+    `0` = "-to be coded-"
+  ),
   h2dura = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "1 or 2 months",
     `2` = "3 or 4 months",
     `3` = "about half a year",
     `4` = "the larger part of the year"
   ),
   h2loc = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "own region, province",
     `2` = "somewhere else in the netherlands",
     `3` = "in europe",
     `4` = "outside europe"
   ),
-  h2locsp = c(`-2` = "not available, routing", `0` = "-to be coded-"),
-  house2 = c(`-1` = "not available, asked", `1` = "no", `2` = "yes"),
+  h2locsp = c(
+    default_missing_labels[c("-2")],
+    `0` = "-to be coded-"
+  ),
+  house2 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
   howner = c(
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "owner",
     `2` = "tenant",
     `3` = "subtenant",
     `4` = "resident",
     `5` = "free"
   ),
-  hs21 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  hs22 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  hs23 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  hs24 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  hs25 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  hs26 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  hs26s = c(`-2` = "not available, routing", `0` = "-to be coded-"),
+  hs21 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  hs22 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  hs23 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  hs24 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  hs25 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  hs26 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  hs26s = c(
+    default_missing_labels[c("-2")],
+    `0` = "-to be coded-"
+  ),
   mortga = c(
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-4", "-3", "-2", "-1")],
     `1` = "no mortgage",
     `2` = "mortgage"
   ),
   movefut = c(
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "not available",
-    `-1` = "not available, asked",
     `0` = "no",
-    `1` = "binary category 1",
+    `1` = "label varies by wave",
     `2` = "yes"
   ),
   movrea = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "poor health r",
     `2` = "poor health partner",
     `3` = "marriage/cohabitation",
@@ -179,15 +288,11 @@ standardized_value_labels <- list(
     `17` = "other"
   ),
   movreas = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<to be coded>"
   ),
   movtyph = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "co-residence with children",
     `2` = "share home with family",
     `3` = "share home with friends",
@@ -203,9 +308,7 @@ standardized_value_labels <- list(
     `13` = "other"
   ),
   movtypi = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "attached row",
     `2` = "semi-detached",
     `3` = "detached",
@@ -215,50 +318,41 @@ standardized_value_labels <- list(
     `7` = "low-level apt building"
   ),
   movtyps = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "<to be coded>"
   ),
   pleas = c(
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "not available",
-    `-1` = "not available, asked",
     `0` = "no",
-    `1` = "binary category 1",
+    `1` = "label varies by wave",
     `2` = "yes"
   ),
   safe = c(
-    `-4` = "not available, short version",
-    `-3` = "not available, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "not available",
-    `-1` = "not available, asked",
     `0` = "no",
-    `1` = "binary category 1",
+    `1` = "label varies by wave",
     `2` = "yes"
   ),
   yneigh = c(
-    `-4` = "not available, short version",
-    `-2` = "not available, interview terminated",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-4", "-1")],
+    `-2` = "not available, interview terminated"
   )
 )
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c("howner", "mortga", "movefut", "pleas", "safe", "yneigh")],
+    standardized_value_labels,
     howner = .replace_labels(
     standardized_value_labels$howner,
     `-4` = "na, short version",
-    `-3` = "na, wrong skip",
     `-2` = "na, routing",
     `-1` = "no answer, asked"
   ),
     mortga = .replace_labels(
     standardized_value_labels$mortga,
     `-4` = "na, short version",
-    `-3` = "na, wrong skip",
     `-2` = "na, routing",
     `-1` = "no answer, asked"
   ),
@@ -289,7 +383,7 @@ value_labels_list <- list(
     yneigh = c(`-4` = "na, short version")
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("howner", "mortga", "movefut", "pleas", "safe", "yneigh")],
+    standardized_value_labels,
     howner = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/H/I/J/KHINDEP in LASAC/D/E/F/H/I/J/K014",
@@ -313,7 +407,7 @@ value_labels_list <- list(
     yneigh = c(`-1` = "na, asked")
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("howner", "mortga", "movefut", "pleas", "safe", "yneigh")],
+    standardized_value_labels,
     howner = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/H/I/J/KHINDEP in LASAC/D/E/F/H/I/J/K014",
@@ -337,7 +431,7 @@ value_labels_list <- list(
     yneigh = c(`-1` = "na, asked")
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("howner", "mortga", "movefut", "pleas", "safe", "yneigh")],
+    standardized_value_labels,
     howner = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/H/I/J/KHINDEP in LASAC/D/E/F/H/I/J/K014",
@@ -361,19 +455,7 @@ value_labels_list <- list(
     yneigh = c(`-1` = "na, asked")
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "howner",
-    "mortga",
-    "movefut",
-    "movrea",
-    "movreas",
-    "movtyph",
-    "movtypi",
-    "movtyps",
-    "pleas",
-    "safe",
-    "yneigh"
-  )],
+    standardized_value_labels,
     howner = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see BHINDEP in LAS2B014",
@@ -400,34 +482,24 @@ value_labels_list <- list(
   ),
     movrea = .replace_labels(
     standardized_value_labels$movrea,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BMOVTYPH",
-    `-1` = "na, asked",
     `1` = "poor health R"
   ),
     movreas = .replace_labels(
     standardized_value_labels$movreas,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BMOVREA",
-    `-1` = "na, asked"
+    `-2` = "na, see BMOVREA"
   ),
     movtyph = .replace_labels(
     standardized_value_labels$movtyph,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BMOVEFUT",
-    `-1` = "na, asked"
+    `-2` = "na, see BMOVEFUT"
   ),
     movtypi = .replace_labels(
     standardized_value_labels$movtypi,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BMOVTYPH",
-    `-1` = "na, asked"
+    `-2` = "na, see BMOVTYPH"
   ),
     movtyps = .replace_labels(
     standardized_value_labels$movtyps,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BMOVTYPH",
-    `-1` = "na, asked"
+    `-2` = "na, see BMOVTYPH"
   ),
     pleas = c(
     `-3` = "na, wrong skip",
@@ -446,7 +518,7 @@ value_labels_list <- list(
     yneigh = c(`-2` = "na, interview terminated", `-1` = "na, asked")
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("howner", "mortga", "pleas", "safe", "yneigh")],
+    standardized_value_labels,
     howner = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/H/I/J/KHINDEP in LASAC/D/E/F/H/I/J/K014",
@@ -469,32 +541,10 @@ value_labels_list <- list(
     yneigh = c(`-1` = "na, asked")
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "h21own",
-    "h21owns",
-    "h22own",
-    "h22owns",
-    "h2dura",
-    "h2loc",
-    "h2locsp",
-    "house2",
-    "howner",
-    "hs21",
-    "hs22",
-    "hs23",
-    "hs24",
-    "hs25",
-    "hs26",
-    "hs26s",
-    "mortga",
-    "pleas",
-    "safe",
-    "yneigh"
-  )],
+    standardized_value_labels,
     h21own = .replace_labels(
     standardized_value_labels$h21own,
-    `-2` = "na, see GHS21",
-    `-1` = "na, asked"
+    `-2` = "na, see GHS21"
   ),
     h21owns = .replace_labels(
     standardized_value_labels$h21owns,
@@ -502,8 +552,7 @@ value_labels_list <- list(
   ),
     h22own = .replace_labels(
     standardized_value_labels$h22own,
-    `-2` = "na, see GHS22",
-    `-1` = "na, asked"
+    `-2` = "na, see GHS22"
   ),
     h22owns = .replace_labels(
     standardized_value_labels$h22owns,
@@ -511,13 +560,11 @@ value_labels_list <- list(
   ),
     h2dura = .replace_labels(
     standardized_value_labels$h2dura,
-    `-2` = "na, see GHOUSE2",
-    `-1` = "na, asked"
+    `-2` = "na, see GHOUSE2"
   ),
     h2loc = .replace_labels(
     standardized_value_labels$h2loc,
     `-2` = "na, see GHOUSE2",
-    `-1` = "na, asked",
     `2` = "somewhere else in the Netherlands",
     `3` = "in Europe",
     `4` = "outside Europe"
@@ -526,10 +573,6 @@ value_labels_list <- list(
     standardized_value_labels$h2locsp,
     `-2` = "na, see GH2LOC",
     `0` = "- to be coded-"
-  ),
-    house2 = .replace_labels(
-    standardized_value_labels$house2,
-    `-1` = "na, asked"
   ),
     howner = c(
     `-3` = "na, wrong skip",
@@ -581,7 +624,7 @@ value_labels_list <- list(
     yneigh = c(`-1` = "na, asked")
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c("howner", "mortga", "pleas", "safe", "yneigh")],
+    standardized_value_labels,
     howner = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/H/I/J/KHINDEP in LASAC/D/E/F/H/I/J/K014",
@@ -604,7 +647,7 @@ value_labels_list <- list(
     yneigh = c(`-1` = "na, asked")
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("howner", "mortga", "pleas", "safe", "yneigh")],
+    standardized_value_labels,
     howner = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see BHINDEP in LAS3B014",
@@ -627,7 +670,7 @@ value_labels_list <- list(
     yneigh = c(`-1` = "na, asked")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c("howner", "mortga", "pleas", "safe", "yneigh")],
+    standardized_value_labels,
     howner = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/H/I/J/KHINDEP in LASAC/D/E/F/H/I/J/K014",
@@ -650,7 +693,7 @@ value_labels_list <- list(
     yneigh = c(`-1` = "na, asked")
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c("howner", "mortga", "pleas", "safe", "yneigh")],
+    standardized_value_labels,
     howner = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/H/I/J/KHINDEP in LASAC/D/E/F/H/I/J/K014",
@@ -673,7 +716,7 @@ value_labels_list <- list(
     yneigh = c(`-1` = "na, asked")
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c("howner", "mortga", "pleas", "safe", "yneigh")],
+    standardized_value_labels,
     howner = c(
     `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/H/I/J/KHINDEP in LASAC/D/E/F/H/I/J/K014",
@@ -727,9 +770,12 @@ var_types_vec <- c(
   yneigh = "numeric"
 )
 
-.lasa_fc_015 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "015", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "015", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "015", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "015", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_015 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

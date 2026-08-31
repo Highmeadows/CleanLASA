@@ -46,9 +46,12 @@ harmonized_labels <- c(
   qsmus6 = "kind of music: other"
 )
 
-variable_labels_list <- list(
-  Wave_H_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `H` = c(
     "qmus1",
     "qmus2",
     "qmus3",
@@ -61,14 +64,8 @@ variable_labels_list <- list(
     "qsmus4",
     "qsmus5",
     "qsmus6"
-  )],
-    qmus1 = "make music",
-    qmus2 = "type of instrument",
-    qmus4 = "number of times per 2 weeks making music or singing",
-    qmus5 = "minutes per time"
   ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
+  `I` = c(
     "qmus1",
     "qmus2",
     "qmus3",
@@ -81,14 +78,8 @@ variable_labels_list <- list(
     "qsmus4",
     "qsmus5",
     "qsmus6"
-  )],
-    qmus1 = "make music",
-    qmus2 = "type of instrument",
-    qmus4 = "number of times per 2 weeks making music or singing",
-    qmus5 = "minutes per time"
   ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
+  `J` = c(
     "qmus1",
     "qmus2",
     "qmus4",
@@ -118,7 +109,26 @@ variable_labels_list <- list(
     "qmussl_y5",
     "qmussl_y6",
     "qmussln"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_H_labels = .replace_labels(
+    harmonized_labels,
+    qmus1 = "make music",
+    qmus2 = "type of instrument",
+    qmus4 = "number of times per 2 weeks making music or singing",
+    qmus5 = "minutes per time"
+  ),
+  Wave_I_labels = .replace_labels(
+    harmonized_labels,
+    qmus1 = "make music",
+    qmus2 = "type of instrument",
+    qmus4 = "number of times per 2 weeks making music or singing",
+    qmus5 = "minutes per time"
+  ),
+  Wave_J_labels = .replace_labels(
+    harmonized_labels,
     qmus1 = "making music or singing momentarily",
     qmus2 = "making music or singing: instrument",
     qmus4 = "making music or singing: number of times per 2 weeks",
@@ -128,14 +138,27 @@ variable_labels_list <- list(
 )
 
 standardized_value_labels <- list(
-  qmus1 = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  qmus2 = c(`-1` = "no answer"),
-  qmus3 = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  qmus4 = c(`-2` = "not available, routing", `-1` = "no answer"),
-  qmus5 = c(`-2` = "not available, routing", `-1` = "no answer"),
+  qmus1 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  qmus2 = c(
+    default_missing_labels[c("-1")]
+  ),
+  qmus3 = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  qmus4 = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  qmus5 = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
   qmusat = c(
-    `-2` = "not available, routing",
-    `-1` = "no answer",
+    default_missing_labels[c("-2", "-1")],
     `1` = "always alone",
     `2` = "mostly alone",
     `3` = "changes, as often alone as together",
@@ -143,53 +166,105 @@ standardized_value_labels <- list(
     `5` = "always together with others"
   ),
   qmusk6s = stats::setNames(character(0), character(0)),
-  qmusl = c(`-1` = "not available, asked", `1` = "no", `2` = "yes"),
-  qmuslc = c(`-2` = "not available, routing", `-1` = "no answer"),
-  qmuslm = c(`-2` = "not available, routing", `-1` = "no answer"),
-  qmuslnt = c(`-2` = "not available, routing", `-1` = "no answer"),
-  qmussl = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  qmussl_a1 = c(`-2` = "not available, routing", `-1` = "no answer"),
-  qmussl_a2 = c(`-2` = "not available, routing", `-1` = "no answer"),
-  qmussl_a3 = c(`-2` = "not available, routing", `-1` = "no answer"),
-  qmussl_a4 = c(`-2` = "not available, routing", `-1` = "no answer"),
-  qmussl_a5 = c(`-2` = "not available, routing", `-1` = "no answer"),
-  qmussl_a6 = c(`-2` = "not available, routing", `-1` = "no answer"),
+  qmusl = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  qmuslc = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  qmuslm = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  qmuslnt = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  qmussl = c(
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    `2` = "yes"
+  ),
+  qmussl_a1 = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  qmussl_a2 = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  qmussl_a3 = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  qmussl_a4 = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  qmussl_a5 = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  qmussl_a6 = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
   qmussl_i1 = stats::setNames(character(0), character(0)),
   qmussl_i2 = stats::setNames(character(0), character(0)),
   qmussl_i3 = stats::setNames(character(0), character(0)),
   qmussl_i4 = stats::setNames(character(0), character(0)),
   qmussl_i5 = stats::setNames(character(0), character(0)),
   qmussl_i6 = stats::setNames(character(0), character(0)),
-  qmussl_y1 = c(`-2` = "not available, routing", `-1` = "no answer"),
-  qmussl_y2 = c(`-2` = "not available, routing", `-1` = "no answer"),
-  qmussl_y3 = c(`-2` = "not available, routing", `-1` = "no answer"),
-  qmussl_y4 = c(`-2` = "not available, routing", `-1` = "no answer"),
-  qmussl_y5 = c(`-2` = "not available, routing", `-1` = "no answer"),
-  qmussl_y6 = c(`-2` = "not available, routing", `-1` = "no answer"),
-  qmussln = c(`-2` = "not available, routing"),
-  qsmus1 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  qsmus2 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  qsmus3 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  qsmus4 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  qsmus5 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned"),
-  qsmus6 = c(`-2` = "not available, routing", `0` = "not mentioned", `1` = "mentioned")
+  qmussl_y1 = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  qmussl_y2 = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  qmussl_y3 = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  qmussl_y4 = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  qmussl_y5 = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  qmussl_y6 = c(
+    default_missing_labels[c("-2", "-1")]
+  ),
+  qmussln = c(
+    default_missing_labels[c("-2")]
+  ),
+  qsmus1 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  qsmus2 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  qsmus3 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  qsmus4 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  qsmus5 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  ),
+  qsmus6 = c(
+    default_missing_labels[c("-2")],
+    `0` = "not mentioned",
+    `1` = "mentioned"
+  )
 )
 
 value_labels_list <- list(
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qmus1",
-    "qmus2",
-    "qmus3",
-    "qmus4",
-    "qmus5",
-    "qsmus1",
-    "qsmus2",
-    "qsmus3",
-    "qsmus4",
-    "qsmus5",
-    "qsmus6"
-  )],
+    standardized_value_labels,
     qmus4 = .replace_labels(
     standardized_value_labels$qmus4,
     `-2` = "na, see H/IQMUS1 & H/IQMUS3"
@@ -224,19 +299,7 @@ value_labels_list <- list(
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qmus1",
-    "qmus2",
-    "qmus3",
-    "qmus4",
-    "qmus5",
-    "qsmus1",
-    "qsmus2",
-    "qsmus3",
-    "qsmus4",
-    "qsmus5",
-    "qsmus6"
-  )],
+    standardized_value_labels,
     qmus4 = .replace_labels(
     standardized_value_labels$qmus4,
     `-2` = "na, see H/IQMUS1 & H/IQMUS3"
@@ -271,31 +334,7 @@ value_labels_list <- list(
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "qmus1",
-    "qmus2",
-    "qmus4",
-    "qmus5",
-    "qmusat",
-    "qmusl",
-    "qmuslc",
-    "qmuslm",
-    "qmuslnt",
-    "qmussl",
-    "qmussl_a1",
-    "qmussl_a2",
-    "qmussl_a3",
-    "qmussl_a4",
-    "qmussl_a5",
-    "qmussl_a6",
-    "qmussl_y1",
-    "qmussl_y2",
-    "qmussl_y3",
-    "qmussl_y4",
-    "qmussl_y5",
-    "qmussl_y6",
-    "qmussln"
-  )],
+    standardized_value_labels,
     qmus1 = .replace_labels(
     standardized_value_labels$qmus1,
     `-1` = "na asked"
@@ -424,9 +463,21 @@ var_types_vec <- c(
   qsmus6 = "categorical"
 )
 
-.lasa_fc_103 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "103", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "103", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "103", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "103", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["qmusk6s"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["qmusk6s"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["qmussl_i1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["qmussl_i2"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["qmussl_i3"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["qmussl_i4"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["qmussl_i5"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["qmussl_i6"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+
+.lasa_fc_103 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

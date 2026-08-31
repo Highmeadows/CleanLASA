@@ -18,9 +18,46 @@ harmonized_labels <- c(
   qstratt = "Metamemory strategy total score"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "qachcha",
+    "qanxiet",
+    "qlocus",
+    "qstrat1",
+    "qstrat2",
+    "qstratt"
+  ),
+  `C` = c(
+    "qachcha",
+    "qachiev",
+    "qanxadd",
+    "qanxiet",
+    "qlocus",
+    "qlocusa",
+    "qstrat1",
+    "qstrat2",
+    "qstratt"
+  ),
+  `D` = c(
+    "qachcha",
+    "qachiev",
+    "qanxadd",
+    "qanxiet",
+    "qlocus",
+    "qlocusa",
+    "qstrat1",
+    "qstrat2",
+    "qstratt"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
-    harmonized_labels[c("qachcha", "qanxiet", "qlocus", "qstrat1", "qstrat2", "qstratt")],
+    harmonized_labels,
     qachcha = "Achievement/change metamemory concept low-high",
     qanxiet = "Anxiety in metamemory concept low-high",
     qlocus = "Locus of control in metamemory concept low-high",
@@ -68,7 +105,7 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_B_labels = standardized_value_labels[c("qachcha", "qanxiet", "qlocus", "qstrat1", "qstrat2", "qstratt")],
+  Wave_B_labels = standardized_value_labels,
   Wave_C_labels = standardized_value_labels,
   Wave_D_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
@@ -86,7 +123,7 @@ var_types_vec <- c(
   qstratt = "numeric"
 )
 
-.lasa_fc_324 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "324", waves = .lasa_wave_rows()) |>
     .override_label(wave = "C", variable = "qstrat1", override_value = "cstrat1") |>
     .override_label(wave = "D", variable = "qstrat1", override_value = "dstrat1"),
@@ -94,3 +131,6 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "324", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "324", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_324 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

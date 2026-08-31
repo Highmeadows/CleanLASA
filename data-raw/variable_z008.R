@@ -15,9 +15,101 @@ harmonized_labels <- c(
   tm_dat = "medical interview date"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `A` = c(
+    "age",
+    "days",
+    "t_dat"
+  ),
+  `B` = c(
+    "age",
+    "days",
+    "mage",
+    "mdays",
+    "t_dat",
+    "tm_dat"
+  ),
+  `C` = c(
+    "age",
+    "days",
+    "mage",
+    "mdays",
+    "t_dat",
+    "tm_dat"
+  ),
+  `D` = c(
+    "age",
+    "days",
+    "mage",
+    "mdays",
+    "t_dat",
+    "tm_dat"
+  ),
+  `E` = c(
+    "age",
+    "days",
+    "mage",
+    "mdays",
+    "t_dat",
+    "tm_dat"
+  ),
+  `F` = c(
+    "age",
+    "days",
+    "mage",
+    "mdays",
+    "t_dat",
+    "tm_dat"
+  ),
+  `G` = c(
+    "age",
+    "days",
+    "mage",
+    "mdays",
+    "t_dat",
+    "tm_dat"
+  ),
+  `H` = c(
+    "age",
+    "days",
+    "mage",
+    "mdays",
+    "t_dat",
+    "tm_dat"
+  ),
+  `I` = c(
+    "age",
+    "days",
+    "mage",
+    "mdays",
+    "t_dat",
+    "tm_dat"
+  ),
+  `J` = c(
+    "age",
+    "days",
+    "mage",
+    "mdays",
+    "t_dat",
+    "tm_dat"
+  ),
+  `K` = c(
+    "age",
+    "days",
+    "mage",
+    "mdays",
+    "t_dat",
+    "tm_dat"
+  )
+)
+
 variable_labels_list <- list(
   Wave_A_labels = .replace_labels(
-    harmonized_labels[c("age", "days", "t_dat")],
+    harmonized_labels,
     age = "Age at LSN interview (w1)",
     days = "Age at LSN interview in days (w1)",
     t_dat = "LSN interview date (w1)"
@@ -125,17 +217,17 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_A_labels = standardized_value_labels[c("age", "days")],
-  Wave_B_labels = standardized_value_labels[c("age", "days", "mage", "mdays")],
-  Wave_C_labels = standardized_value_labels[c("age", "days", "mage", "mdays")],
-  Wave_D_labels = standardized_value_labels[c("age", "days", "mage", "mdays")],
-  Wave_E_labels = standardized_value_labels[c("age", "days", "mage", "mdays")],
-  Wave_F_labels = standardized_value_labels[c("age", "days", "mage", "mdays")],
-  Wave_G_labels = standardized_value_labels[c("age", "days", "mage", "mdays")],
-  Wave_H_labels = standardized_value_labels[character(0)],
-  Wave_I_labels = standardized_value_labels[character(0)],
-  Wave_J_labels = standardized_value_labels[character(0)],
-  Wave_K_labels = standardized_value_labels[character(0)],
+  Wave_A_labels = standardized_value_labels,
+  Wave_B_labels = standardized_value_labels,
+  Wave_C_labels = standardized_value_labels,
+  Wave_D_labels = standardized_value_labels,
+  Wave_E_labels = standardized_value_labels,
+  Wave_F_labels = standardized_value_labels,
+  Wave_G_labels = standardized_value_labels,
+  Wave_H_labels = standardized_value_labels,
+  Wave_I_labels = standardized_value_labels,
+  Wave_J_labels = standardized_value_labels,
+  Wave_K_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -148,7 +240,7 @@ var_types_vec <- c(
   tm_dat = "date"
 )
 
-.lasa_fc_z008 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "z008", waves = .lasa_wave_rows(has_wave_a = TRUE)) |>
     .override_label(wave = "A", variable = "t_dat", override_value = "t1_dat") |>
     .override_label(wave = "B", variable = "t_dat", override_value = "t2_dat") |>
@@ -175,3 +267,44 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "z008", waves = .lasa_wave_rows(has_wave_a = TRUE)),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "z008", waves = .lasa_wave_rows(has_wave_a = TRUE))
 )
+
+fc_labels$value_labels[["t_dat"]][fc_labels$value_labels$LASA_Wave == "A"] <- list(NULL)
+fc_labels$value_labels[["t_dat"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["tm_dat"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+fc_labels$value_labels[["t_dat"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["tm_dat"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["t_dat"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["tm_dat"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+fc_labels$value_labels[["t_dat"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["tm_dat"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["t_dat"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["tm_dat"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["t_dat"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["tm_dat"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["age"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["days"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mage"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["mdays"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["t_dat"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["tm_dat"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+fc_labels$value_labels[["age"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["days"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["mage"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["mdays"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["t_dat"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["tm_dat"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+fc_labels$value_labels[["age"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["days"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["mage"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["mdays"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["t_dat"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["tm_dat"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+fc_labels$value_labels[["age"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["days"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["mage"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["mdays"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["t_dat"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+fc_labels$value_labels[["tm_dat"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+
+.lasa_fc_z008 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

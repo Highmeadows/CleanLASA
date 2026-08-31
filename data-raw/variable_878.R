@@ -13,6 +13,19 @@ harmonized_labels <- c(
   selg878 = "Selection g878: APO E4 allele present"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `G` = c(
+    "mse_selectin",
+    "msicam_1",
+    "msvcam_1",
+    "selg878"
+  )
+)
+
 variable_labels_list <- list(
   Wave_G_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
@@ -26,16 +39,23 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_G_labels = standardized_value_labels[c("selg878")],
+  Wave_G_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
 var_types_vec <- c(mse_selectin = "numeric", msicam_1 = "numeric", msvcam_1 = "numeric", selg878 = "categorical")
 
-.lasa_fc_878 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "878", waves = .lasa_wave_rows()) |>
     .override_label(wave = "G", variable = "selg878", override_value = "selg878"),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "878", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "878", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "878", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["mse_selectin"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["msicam_1"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+fc_labels$value_labels[["msvcam_1"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
+
+.lasa_fc_878 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

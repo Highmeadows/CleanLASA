@@ -64,6 +64,70 @@ harmonized_labels <- c(
   rinc14 = "R: income source - War pension (WUV/St 40-45)"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "amount",
+    "pamou01",
+    "pamou02",
+    "pamou03",
+    "pamou04",
+    "pamou05",
+    "pamou06",
+    "pamou07",
+    "pamou08",
+    "pamou09",
+    "pamou10",
+    "pamou11",
+    "pamou12",
+    "pamou14",
+    "pamount",
+    "pinc01",
+    "pinc02",
+    "pinc03",
+    "pinc04",
+    "pinc05",
+    "pinc06",
+    "pinc07",
+    "pinc08",
+    "pinc09",
+    "pinc10",
+    "pinc11",
+    "pinc12",
+    "pinc14",
+    "ramou01",
+    "ramou02",
+    "ramou03",
+    "ramou04",
+    "ramou05",
+    "ramou06",
+    "ramou07",
+    "ramou08",
+    "ramou09",
+    "ramou10",
+    "ramou11",
+    "ramou12",
+    "ramou14",
+    "ramount",
+    "rinc01",
+    "rinc02",
+    "rinc03",
+    "rinc04",
+    "rinc05",
+    "rinc06",
+    "rinc07",
+    "rinc08",
+    "rinc09",
+    "rinc10",
+    "rinc11",
+    "rinc12",
+    "rinc14"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = .replace_labels(
     harmonized_labels,
@@ -124,223 +188,341 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "yes"
+)
+
 standardized_value_labels <- list(
-  amount = c(`-5` = "na, refused", `-2` = "na, routing", `-1` = "na, asked"),
-  pamou01 = c(`-5` = "na, refused", `-2` = "na, see PINC01", `-1` = "na, asked"),
-  pamou02 = c(`-5` = "na, refused", `-2` = "na, see PINC02", `-1` = "na, asked"),
-  pamou03 = c(`-5` = "na, refused", `-2` = "na, see PINC03", `-1` = "na, asked"),
-  pamou04 = c(`-5` = "na, refused", `-2` = "na, see PINC04", `-1` = "na, asked"),
-  pamou05 = c(`-5` = "na, refused", `-2` = "na, see PINC05", `-1` = "na, asked"),
-  pamou06 = c(`-5` = "na, refused", `-2` = "na, see PINC06", `-1` = "na, asked"),
-  pamou07 = c(`-5` = "na, refused", `-2` = "na, see PINC07", `-1` = "na, asked"),
-  pamou08 = c(`-5` = "na, refused", `-2` = "na, see PINC08", `-1` = "na, asked"),
-  pamou09 = c(`-5` = "na, refused", `-2` = "na, see PINC09", `-1` = "na, asked"),
-  pamou10 = c(`-5` = "na, refused", `-2` = "na, see PINC10", `-1` = "na, asked"),
-  pamou11 = c(`-5` = "na, refused", `-2` = "na, see PINC11", `-1` = "na, asked"),
-  pamou12 = c(`-5` = "na, refused", `-2` = "na, see PINC12", `-1` = "na, asked"),
-  pamou14 = c(`-5` = "na, refused", `-2` = "na, see PINC14", `-1` = "na, asked"),
-  pamount = c(`-5` = "na, refused", `-2` = "na, see PARTINC in LASA017", `-1` = "na, asked"),
+  amount = c(
+    `-5` = "na, refused",
+    default_missing_labels[c("-2", "-1")]
+  ),
+  pamou01 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see PINC01",
+    default_missing_labels[c("-1")]
+  ),
+  pamou02 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see PINC02",
+    default_missing_labels[c("-1")]
+  ),
+  pamou03 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see PINC03",
+    default_missing_labels[c("-1")]
+  ),
+  pamou04 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see PINC04",
+    default_missing_labels[c("-1")]
+  ),
+  pamou05 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see PINC05",
+    default_missing_labels[c("-1")]
+  ),
+  pamou06 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see PINC06",
+    default_missing_labels[c("-1")]
+  ),
+  pamou07 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see PINC07",
+    default_missing_labels[c("-1")]
+  ),
+  pamou08 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see PINC08",
+    default_missing_labels[c("-1")]
+  ),
+  pamou09 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see PINC09",
+    default_missing_labels[c("-1")]
+  ),
+  pamou10 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see PINC10",
+    default_missing_labels[c("-1")]
+  ),
+  pamou11 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see PINC11",
+    default_missing_labels[c("-1")]
+  ),
+  pamou12 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see PINC12",
+    default_missing_labels[c("-1")]
+  ),
+  pamou14 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see PINC14",
+    default_missing_labels[c("-1")]
+  ),
+  pamount = c(
+    `-5` = "na, refused",
+    `-2` = "na, see PARTINC in LASA017",
+    default_missing_labels[c("-1")]
+  ),
   pinc01 = c(
     `-5` = "na, refused",
     `-2` = "na, see PARTINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc02 = c(
     `-5` = "na, refused",
     `-2` = "na, see PARTINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc03 = c(
     `-5` = "na, refused",
     `-2` = "na, see PARTINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc04 = c(
     `-5` = "na, refused",
     `-2` = "na, see PARTINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc05 = c(
     `-5` = "na, refused",
     `-2` = "na, see PARTINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc06 = c(
     `-5` = "na, refused",
     `-2` = "na, see PARTINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc07 = c(
     `-5` = "na, refused",
     `-2` = "na, see PARTINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc08 = c(
     `-5` = "na, refused",
     `-2` = "na, see PARTINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc09 = c(
     `-5` = "na, refused",
     `-2` = "na, see PARTINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc10 = c(
     `-5` = "na, refused",
     `-2` = "na, see PARTINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc11 = c(
     `-5` = "na, refused",
     `-2` = "na, see PARTINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc12 = c(
     `-5` = "na, refused",
     `-2` = "na, see PARTINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   pinc14 = c(
     `-5` = "na, refused",
     `-2` = "na, see PARTINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
-  ramou01 = c(`-5` = "na, refused", `-2` = "na, see RINC01", `-1` = "na, asked"),
-  ramou02 = c(`-5` = "na, refused", `-2` = "na, see RINC02", `-1` = "na, asked"),
-  ramou03 = c(`-5` = "na, refused", `-2` = "na, see RINC03", `-1` = "na, asked"),
-  ramou04 = c(`-5` = "na, refused", `-2` = "na, see RINC04", `-1` = "na, asked"),
-  ramou05 = c(`-5` = "na, refused", `-2` = "na, see RINC05", `-1` = "na, asked"),
-  ramou06 = c(`-5` = "na, refused", `-2` = "na, see RINC06", `-1` = "na, asked"),
-  ramou07 = c(`-5` = "na, refused", `-2` = "na, see RINC07", `-1` = "na, asked"),
-  ramou08 = c(`-5` = "na, refused", `-2` = "na, see RINC08", `-1` = "na, asked"),
-  ramou09 = c(`-5` = "na, refused", `-2` = "na, see RINC09", `-1` = "na, asked"),
-  ramou10 = c(`-5` = "na, refused", `-2` = "na, see RINC10", `-1` = "na, asked"),
-  ramou11 = c(`-5` = "na, refused", `-2` = "na, see RINC11", `-1` = "na, asked"),
-  ramou12 = c(`-5` = "na, refused", `-2` = "na, see RINC12", `-1` = "na, asked"),
-  ramou14 = c(`-5` = "na, refused", `-2` = "na, see RINC14", `-1` = "na, asked"),
+  ramou01 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see RINC01",
+    default_missing_labels[c("-1")]
+  ),
+  ramou02 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see RINC02",
+    default_missing_labels[c("-1")]
+  ),
+  ramou03 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see RINC03",
+    default_missing_labels[c("-1")]
+  ),
+  ramou04 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see RINC04",
+    default_missing_labels[c("-1")]
+  ),
+  ramou05 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see RINC05",
+    default_missing_labels[c("-1")]
+  ),
+  ramou06 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see RINC06",
+    default_missing_labels[c("-1")]
+  ),
+  ramou07 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see RINC07",
+    default_missing_labels[c("-1")]
+  ),
+  ramou08 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see RINC08",
+    default_missing_labels[c("-1")]
+  ),
+  ramou09 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see RINC09",
+    default_missing_labels[c("-1")]
+  ),
+  ramou10 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see RINC10",
+    default_missing_labels[c("-1")]
+  ),
+  ramou11 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see RINC11",
+    default_missing_labels[c("-1")]
+  ),
+  ramou12 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see RINC12",
+    default_missing_labels[c("-1")]
+  ),
+  ramou14 = c(
+    `-5` = "na, refused",
+    `-2` = "na, see RINC14",
+    default_missing_labels[c("-1")]
+  ),
   ramount = c(
     `-5` = "na, refused",
     `-2` = "na, see RESPINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc01 = c(
     `-5` = "na, refused",
     `-2` = "na, see RESPINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc02 = c(
     `-5` = "na, refused",
     `-2` = "na, see RESPINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc03 = c(
     `-5` = "na, refused",
     `-2` = "na, see RESPINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc04 = c(
     `-5` = "na, refused",
     `-2` = "na, see RESPINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc05 = c(
     `-5` = "na, refused",
     `-2` = "na, see RESPINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc06 = c(
     `-5` = "na, refused",
     `-2` = "na, see RESPINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc07 = c(
     `-5` = "na, refused",
     `-2` = "na, see RESPINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc08 = c(
     `-5` = "na, refused",
     `-2` = "na, see RESPINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc09 = c(
     `-5` = "na, refused",
     `-2` = "na, see RESPINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc10 = c(
     `-5` = "na, refused",
     `-2` = "na, see RESPINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc11 = c(
     `-5` = "na, refused",
     `-2` = "na, see RESPINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc12 = c(
     `-5` = "na, refused",
     `-2` = "na, see RESPINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   ),
   rinc14 = c(
     `-5` = "na, refused",
     `-2` = "na, see RESPINC in LASA017",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
-    `1` = "yes"
+    default_answer_labels[c("1")]
   )
 )
 
@@ -625,9 +807,12 @@ var_types_vec <- c(
   rinc14 = "categorical"
 )
 
-.lasa_fc_217 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "217", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "217", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "217", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "217", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_217 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

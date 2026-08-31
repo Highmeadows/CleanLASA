@@ -27,9 +27,32 @@ harmonized_labels <- c(
   mpulse2 = NA_character_
 )
 
-variable_labels_list <- list(
-  Wave_C_labels = harmonized_labels,
-  Wave_D_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
+    "mankle1",
+    "mankle2",
+    "mfeetinsp",
+    "mfeetinsp1",
+    "mfeetinsp2",
+    "mfeetinsp3",
+    "mfeetinsp4",
+    "mfeetinsp5",
+    "mfeetinsp6",
+    "mfeetinsp7",
+    "mfeetinsp8",
+    "mfeetinspo",
+    "mfeetpllts",
+    "mfeetsmf",
+    "mknee1",
+    "mknee2",
+    "mpulse1",
+    "mpulse2"
+  ),
+  `D` = c(
     "mfeetinsp",
     "mfeetinsp1",
     "mfeetinsp2",
@@ -42,9 +65,20 @@ variable_labels_list <- list(
     "mfeetinspo",
     "mfeetpllts",
     "mfeetsmf"
-  )],
-  Wave_E_labels = harmonized_labels[c("mfeetpllts")],
-  Wave_F_labels = harmonized_labels[c("mfeetpllts")],
+  ),
+  `E` = c(
+    "mfeetpllts"
+  ),
+  `F` = c(
+    "mfeetpllts"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_C_labels = harmonized_labels,
+  Wave_D_labels = harmonized_labels,
+  Wave_E_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
@@ -101,12 +135,17 @@ standardized_value_labels <- list(
     `1` = "mentioned"
   ),
   mfeetinspo = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3")],
     `-2` = "na, see C/DMFEETINSP8",
     `-1` = "no valid data / na, asked",
     `0` = "to be coded"
   ),
-  mfeetpllts = c(`-5` = "interview terminated", `-1` = "na, asked", `1` = "yes", `2` = "no"),
+  mfeetpllts = c(
+    `-5` = "interview terminated",
+    default_missing_labels[c("-1")],
+    `1` = "yes",
+    `2` = "no"
+  ),
   mfeetsmf = c(`-5` = "interview terminated", `-1` = "no valid data / na, asked", `1` = "yes", `2` = "no"),
   mknee1 = c(`1` = "Knee"),
   mknee2 = c(`2` = "Knee"),
@@ -123,30 +162,17 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mfeetinsp",
-    "mfeetinsp1",
-    "mfeetinsp2",
-    "mfeetinsp3",
-    "mfeetinsp4",
-    "mfeetinsp5",
-    "mfeetinsp6",
-    "mfeetinsp7",
-    "mfeetinsp8",
-    "mfeetinspo",
-    "mfeetpllts",
-    "mfeetsmf"
-  )],
+    standardized_value_labels,
     mfeetinsp = c(`-1` = "no valid data", `1` = "yes", `2` = "no"),
     mfeetpllts = c(`-1` = "no valid data / na, asked", `1` = "yes", `2` = "no"),
     mfeetsmf = c(`-1` = "no valid data / na, asked", `1` = "yes", `2` = "no")
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("mfeetpllts")],
+    standardized_value_labels,
     mfeetpllts = c(`-1` = "na, asked", `1` = "yes", `2` = "no")
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("mfeetpllts")],
+    standardized_value_labels,
     mfeetpllts = c(`-1` = "na, asked", `1` = "yes", `2` = "no")
   ),
   Harmonized_labels = standardized_value_labels
@@ -173,9 +199,12 @@ var_types_vec <- c(
   mpulse2 = "categorical"
 )
 
-.lasa_fc_185 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "185", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "185", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "185", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "185", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_185 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

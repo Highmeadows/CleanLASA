@@ -12,6 +12,33 @@ harmonized_labels <- c(
   sal_int = "Salience Scale Score"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
+    "cort_int",
+    "cos_int",
+    "sal_int"
+  ),
+  `D` = c(
+    "cos_int",
+    "sal_int"
+  ),
+  `E` = c(
+    "cos_int",
+    "sal_int"
+  ),
+  `2B` = c(
+    "cos_int",
+    "sal_int"
+  ),
+  `F` = c(
+    "cos_int"
+  )
+)
+
 variable_labels_list <- list(
   Wave_C_labels = .replace_labels(
     harmonized_labels,
@@ -20,22 +47,22 @@ variable_labels_list <- list(
     sal_int = "SALIENCE SCALE SCORE"
   ),
   Wave_D_labels = .replace_labels(
-    harmonized_labels[c("cos_int", "sal_int")],
+    harmonized_labels,
     cos_int = "COSMIC TRANSCENDENCE SCALE SCORE",
     sal_int = "SALIENCE SCALE SCORE"
   ),
   Wave_E_labels = .replace_labels(
-    harmonized_labels[c("cos_int", "sal_int")],
+    harmonized_labels,
     cos_int = "COSMIC TRANSCENDENCE SCALE SCORE",
     sal_int = "SALIENCE SCALE SCORE"
   ),
   Wave_2B_labels = .replace_labels(
-    harmonized_labels[c("cos_int", "sal_int")],
+    harmonized_labels,
     cos_int = "COSMIC TRANSCENDENCE SCALE SCORE",
     sal_int = "SALIENCE SCALE SCORE"
   ),
   Wave_F_labels = .replace_labels(
-    harmonized_labels[c("cos_int")],
+    harmonized_labels,
     cos_int = "COSMIC TRANSCENDENCE SCALE SCORE"
   ),
   Harmonized_labels = harmonized_labels
@@ -79,7 +106,7 @@ value_labels_list <- list(
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c("cos_int", "sal_int")],
+    standardized_value_labels,
     cos_int = .replace_labels(
     standardized_value_labels$cos_int,
     `-2` = "na, see DRMGL"
@@ -90,7 +117,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c("cos_int", "sal_int")],
+    standardized_value_labels,
     cos_int = .replace_labels(
     standardized_value_labels$cos_int,
     `-2` = "na, see ERMGL"
@@ -101,7 +128,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c("cos_int", "sal_int")],
+    standardized_value_labels,
     cos_int = .replace_labels(
     standardized_value_labels$cos_int,
     `-2` = "na, see BRMGL"
@@ -112,7 +139,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("cos_int")],
+    standardized_value_labels,
     cos_int = .replace_labels(
     standardized_value_labels$cos_int,
     `-2` = "na, see FRMGL"
@@ -123,9 +150,12 @@ value_labels_list <- list(
 
 var_types_vec <- c(cort_int = "numeric", cos_int = "numeric", sal_int = "numeric")
 
-.lasa_fc_238 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "238", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "238", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "238", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "238", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_238 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

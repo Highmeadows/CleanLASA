@@ -20,6 +20,78 @@ harmonized_labels <- c(
   tpwvg11 = "WVG 11: Grocery shopping service"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `G` = c(
+    "tpwvg01",
+    "tpwvg02",
+    "tpwvg03",
+    "tpwvg04",
+    "tpwvg05",
+    "tpwvg06",
+    "tpwvg07",
+    "tpwvg08",
+    "tpwvg09",
+    "tpwvg10",
+    "tpwvg11"
+  ),
+  `H` = c(
+    "tpwvg01",
+    "tpwvg02",
+    "tpwvg03",
+    "tpwvg04",
+    "tpwvg05",
+    "tpwvg06",
+    "tpwvg07",
+    "tpwvg08",
+    "tpwvg09",
+    "tpwvg10",
+    "tpwvg11"
+  ),
+  `I` = c(
+    "tpwvg01",
+    "tpwvg02",
+    "tpwvg03",
+    "tpwvg04",
+    "tpwvg05",
+    "tpwvg06",
+    "tpwvg07",
+    "tpwvg08",
+    "tpwvg09",
+    "tpwvg10",
+    "tpwvg11"
+  ),
+  `J` = c(
+    "tpwvg01",
+    "tpwvg02",
+    "tpwvg03",
+    "tpwvg04",
+    "tpwvg05",
+    "tpwvg06",
+    "tpwvg07",
+    "tpwvg08",
+    "tpwvg09",
+    "tpwvg10",
+    "tpwvg11"
+  ),
+  `K` = c(
+    "tpwvg01",
+    "tpwvg02",
+    "tpwvg03",
+    "tpwvg04",
+    "tpwvg05",
+    "tpwvg06",
+    "tpwvg07",
+    "tpwvg08",
+    "tpwvg09",
+    "tpwvg10",
+    "tpwvg11"
+  )
+)
+
 variable_labels_list <- list(
   Wave_G_labels = harmonized_labels,
   Wave_H_labels = harmonized_labels,
@@ -29,18 +101,59 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "no",
+  `2` = "yes"
+)
+
 standardized_value_labels <- list(
-  tpwvg01 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpwvg02 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpwvg03 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpwvg04 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpwvg05 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpwvg06 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpwvg07 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpwvg08 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpwvg09 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpwvg10 = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpwvg11 = c(`-1` = "na, asked", `1` = "no", `2` = "yes")
+  tpwvg01 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpwvg02 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpwvg03 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpwvg04 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpwvg05 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpwvg06 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpwvg07 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpwvg08 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpwvg09 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpwvg10 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpwvg11 = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  )
 )
 
 value_labels_list <- list(
@@ -66,9 +179,12 @@ var_types_vec <- c(
   tpwvg11 = "categorical"
 )
 
-.lasa_fc_611 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "611", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "611", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "611", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "611", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_611 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

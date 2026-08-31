@@ -16,6 +16,93 @@ harmonized_labels <- c(
   tpcogdc = "Informant questionnaire of cognitive decline"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
+    "tpcogd1",
+    "tpcogd2",
+    "tpcogd3",
+    "tpcogd4",
+    "tpcogd5",
+    "tpcogd6",
+    "tpcogdc"
+  ),
+  `D` = c(
+    "tpcogd1",
+    "tpcogd2",
+    "tpcogd3",
+    "tpcogd4",
+    "tpcogd5",
+    "tpcogd6",
+    "tpcogdc"
+  ),
+  `E` = c(
+    "tpcogd1",
+    "tpcogd2",
+    "tpcogd3",
+    "tpcogd4",
+    "tpcogd5",
+    "tpcogd6",
+    "tpcogdc"
+  ),
+  `F` = c(
+    "tpcogd1",
+    "tpcogd2",
+    "tpcogd3",
+    "tpcogd4",
+    "tpcogd5",
+    "tpcogd6",
+    "tpcogdc"
+  ),
+  `G` = c(
+    "tpcogd1",
+    "tpcogd2",
+    "tpcogd3",
+    "tpcogd4",
+    "tpcogd5",
+    "tpcogd6",
+    "tpcogdc"
+  ),
+  `H` = c(
+    "tpcogd1",
+    "tpcogd2",
+    "tpcogd3",
+    "tpcogd4",
+    "tpcogd5",
+    "tpcogd6",
+    "tpcogdc"
+  ),
+  `I` = c(
+    "tpcogd1",
+    "tpcogd2",
+    "tpcogd3",
+    "tpcogd4",
+    "tpcogd5",
+    "tpcogd6",
+    "tpcogdc"
+  ),
+  `J` = c(
+    "tpcogd1",
+    "tpcogd2",
+    "tpcogd3",
+    "tpcogd4",
+    "tpcogd5",
+    "tpcogd6",
+    "tpcogdc"
+  ),
+  `K` = c(
+    "tpcogd1",
+    "tpcogd2",
+    "tpcogd3",
+    "tpcogd4",
+    "tpcogd5",
+    "tpcogd6"
+  )
+)
+
 variable_labels_list <- list(
   Wave_C_labels = harmonized_labels,
   Wave_D_labels = harmonized_labels,
@@ -25,13 +112,13 @@ variable_labels_list <- list(
   Wave_H_labels = harmonized_labels,
   Wave_I_labels = harmonized_labels,
   Wave_J_labels = harmonized_labels,
-  Wave_K_labels = harmonized_labels[c("tpcogd1", "tpcogd2", "tpcogd3", "tpcogd4", "tpcogd5", "tpcogd6")],
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
 standardized_value_labels <- list(
   tpcogd1 = c(
-    `-1` = "does not know",
+    default_missing_labels[c("-1")],
     `1` = "much better",
     `2` = "a bit better",
     `3` = "not changed",
@@ -39,7 +126,7 @@ standardized_value_labels <- list(
     `5` = "much worse"
   ),
   tpcogd2 = c(
-    `-1` = "does not know",
+    default_missing_labels[c("-1")],
     `1` = "much better",
     `2` = "a bit better",
     `3` = "not changed",
@@ -47,7 +134,7 @@ standardized_value_labels <- list(
     `5` = "much worse"
   ),
   tpcogd3 = c(
-    `-1` = "does not know",
+    default_missing_labels[c("-1")],
     `1` = "much better",
     `2` = "a bit better",
     `3` = "not changed",
@@ -55,7 +142,7 @@ standardized_value_labels <- list(
     `5` = "much worse"
   ),
   tpcogd4 = c(
-    `-1` = "does not know",
+    default_missing_labels[c("-1")],
     `1` = "much better",
     `2` = "a bit better",
     `3` = "not changed",
@@ -63,7 +150,7 @@ standardized_value_labels <- list(
     `5` = "much worse"
   ),
   tpcogd5 = c(
-    `-1` = "does not know",
+    default_missing_labels[c("-1")],
     `1` = "much better",
     `2` = "a bit better",
     `3` = "not changed",
@@ -71,7 +158,7 @@ standardized_value_labels <- list(
     `5` = "much worse"
   ),
   tpcogd6 = c(
-    `-1` = "does not know",
+    default_missing_labels[c("-1")],
     `1` = "much better",
     `2` = "a bit better",
     `3` = "not changed",
@@ -90,7 +177,7 @@ value_labels_list <- list(
   Wave_H_labels = standardized_value_labels,
   Wave_I_labels = standardized_value_labels,
   Wave_J_labels = standardized_value_labels,
-  Wave_K_labels = standardized_value_labels[c("tpcogd1", "tpcogd2", "tpcogd3", "tpcogd4", "tpcogd5", "tpcogd6")],
+  Wave_K_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -104,9 +191,12 @@ var_types_vec <- c(
   tpcogdc = "numeric"
 )
 
-.lasa_fc_607 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "607", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "607", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "607", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "607", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_607 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

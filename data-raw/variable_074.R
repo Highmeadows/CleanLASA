@@ -61,250 +61,12 @@ harmonized_labels <- c(
   vigseq4 = "4th vignette on M-S-E-J"
 )
 
-variable_labels_list <- list(
-  Wave_D_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
-)
-
-standardized_value_labels <- list(
-  vige1 = c(
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vige1b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vige2 = c(
-    `-5` = "not available,e1 corrected2yes",
-    `-4` = "not available,equal to oth ch'n",
-    `-3` = "not available,no@dvige1",
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vige2b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vige3 = c(
-    `-5` = "not available,e1 corrected2yes",
-    `-4` = "not available,equal to oth ch'n",
-    `-3` = "not available,no@dvige1",
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vige3b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vige4 = c(
-    `-4` = "not available,equal to oth ch'n",
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vige4b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vige5 = c(
-    `-4` = "not available,equal to oth ch'n",
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vige5b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vigeqc = c(
-    `0` = "none equal",
-    `2` = "2 children equal",
-    `2.8` = "estimate (2 pairs equal)",
-    `3` = "3 children equal",
-    `3.3` = "estimate (4 pairs equal)",
-    `4` = "all children equal"
-  ),
-  vigeqej = c(`0` = "not equal", `1` = "equal"),
-  vigeqme = c(`0` = "not equal", `1` = "equal"),
-  vigeqmj = c(`0` = "not equal", `1` = "equal"),
-  vigeqms = c(`0` = "not equal", `1` = "equal"),
-  vigeqp = c(
-    `0` = "none equal",
-    `1` = "1pair=2child equal",
-    `3` = "3pairs=3child equal",
-    `6` = "all equal"
-  ),
-  vigeqr = stats::setNames(character(0), character(0)),
-  vigeqse = c(`0` = "not equal", `1` = "equal"),
-  vigeqsj = c(`0` = "not equal", `1` = "equal"),
-  vigj1 = c(
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vigj1b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vigj2 = c(
-    `-5` = "not available,j1 corrected2yes",
-    `-4` = "not available,equal to oth ch'n",
-    `-3` = "not available,no@dvigj1",
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vigj2b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vigj3 = c(
-    `-5` = "not available,j1 corrected2yes",
-    `-4` = "not available,equal to oth ch'n",
-    `-3` = "not available,no@dvigj1",
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vigj3b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vigj4 = c(
-    `-4` = "not available,equal to oth ch'n",
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vigj4b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vigj5 = c(
-    `-4` = "not available,equal to oth ch'n",
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vigj5b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vigm1 = c(
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vigm1b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vigm2 = c(
-    `-5` = "not available,m1 corrected2yes",
-    `-4` = "not available,equal to oth ch'n",
-    `-3` = "not available,no@dvigm1",
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vigm2b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vigm3 = c(
-    `-5` = "not available,m1 corrected2yes",
-    `-4` = "not available,equal to oth ch'n",
-    `-3` = "not available,no@dvigm1",
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vigm3b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vigm4 = c(
-    `-4` = "not available,equal to oth ch'n",
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vigm4b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vigm5 = c(
-    `-4` = "not available,equal to oth ch'n",
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vigm5b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vigs1 = c(
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vigs1b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vigs2 = c(
-    `-5` = "not available,s1 corrected2yes",
-    `-4` = "not available,equal to oth ch'n",
-    `-3` = "not available,no@dvigs1",
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vigs2b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vigs4 = c(
-    `-4` = "not available,equal to oth ch'n",
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vigs4b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vigs5 = c(
-    `-4` = "not available,equal to oth ch'n",
-    `-2` = "don't know",
-    `-1` = "no answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "equal to oth children"
-  ),
-  vigs5b = c(`-1` = "no answer", `1` = "no", `2` = "yes"),
-  vigseq = c(
-    `0` = "msej (not random)",
-    `1234` = "msej (random)",
-    `1243` = "msje",
-    `1324` = "mesj",
-    `1342` = "mejs",
-    `1423` = "mjse",
-    `1432` = "mjes",
-    `2134` = "smej",
-    `2143` = "smje",
-    `2314` = "semj",
-    `2341` = "sejm",
-    `2413` = "sjme",
-    `2431` = "sjem",
-    `3124` = "emsj",
-    `3142` = "emjs",
-    `3214` = "esmj",
-    `3241` = "esjm",
-    `3412` = "ejms",
-    `3421` = "ejsm",
-    `4123` = "jmse",
-    `4132` = "jmes",
-    `4213` = "jsme",
-    `4231` = "jsem",
-    `4312` = "jems",
-    `4321` = "jesm"
-  ),
-  vigseq1 = c(`1` = "mary", `2` = "sophia", `3` = "emily", `4` = "john"),
-  vigseq2 = c(`1` = "mary", `2` = "sophia", `3` = "emily", `4` = "john"),
-  vigseq3 = c(`1` = "mary", `2` = "sophia", `3` = "emily", `4` = "john"),
-  vigseq4 = c(`1` = "mary", `2` = "sophia", `3` = "emily", `4` = "john")
-)
-
-value_labels_list <- list(
-  Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `D` = c(
     "vige1",
     "vige1b",
     "vige2",
@@ -321,6 +83,7 @@ value_labels_list <- list(
     "vigeqmj",
     "vigeqms",
     "vigeqp",
+    "vigeqr",
     "vigeqse",
     "vigeqsj",
     "vigj1",
@@ -356,7 +119,281 @@ value_labels_list <- list(
     "vigseq2",
     "vigseq3",
     "vigseq4"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_D_labels = harmonized_labels,
+  Harmonized_labels = harmonized_labels
+)
+
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "no",
+  `2` = "yes",
+  `3` = "equal to oth children"
+)
+
+standardized_value_labels <- list(
+  vige1 = c(
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vige1b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vige2 = c(
+    `-5` = "not available,e1 corrected2yes",
+    `-4` = "not available,equal to oth ch'n",
+    `-3` = "not available,no@dvige1",
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vige2b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vige3 = c(
+    `-5` = "not available,e1 corrected2yes",
+    `-4` = "not available,equal to oth ch'n",
+    `-3` = "not available,no@dvige1",
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vige3b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vige4 = c(
+    `-4` = "not available,equal to oth ch'n",
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vige4b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vige5 = c(
+    `-4` = "not available,equal to oth ch'n",
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vige5b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vigeqc = c(
+    `0` = "none equal",
+    `2` = "2 children equal",
+    `2.8` = "estimate (2 pairs equal)",
+    `3` = "3 children equal",
+    `3.3` = "estimate (4 pairs equal)",
+    `4` = "all children equal"
+  ),
+  vigeqej = c(`0` = "not equal", `1` = "equal"),
+  vigeqme = c(`0` = "not equal", `1` = "equal"),
+  vigeqmj = c(`0` = "not equal", `1` = "equal"),
+  vigeqms = c(`0` = "not equal", `1` = "equal"),
+  vigeqp = c(
+    `0` = "none equal",
+    `1` = "1pair=2child equal",
+    `3` = "3pairs=3child equal",
+    `6` = "all equal"
+  ),
+  vigeqr = stats::setNames(character(0), character(0)),
+  vigeqse = c(`0` = "not equal", `1` = "equal"),
+  vigeqsj = c(`0` = "not equal", `1` = "equal"),
+  vigj1 = c(
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vigj1b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vigj2 = c(
+    `-5` = "not available,j1 corrected2yes",
+    `-4` = "not available,equal to oth ch'n",
+    `-3` = "not available,no@dvigj1",
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vigj2b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vigj3 = c(
+    `-5` = "not available,j1 corrected2yes",
+    `-4` = "not available,equal to oth ch'n",
+    `-3` = "not available,no@dvigj1",
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vigj3b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vigj4 = c(
+    `-4` = "not available,equal to oth ch'n",
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vigj4b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vigj5 = c(
+    `-4` = "not available,equal to oth ch'n",
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vigj5b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vigm1 = c(
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vigm1b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vigm2 = c(
+    `-5` = "not available,m1 corrected2yes",
+    `-4` = "not available,equal to oth ch'n",
+    `-3` = "not available,no@dvigm1",
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vigm2b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vigm3 = c(
+    `-5` = "not available,m1 corrected2yes",
+    `-4` = "not available,equal to oth ch'n",
+    `-3` = "not available,no@dvigm1",
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vigm3b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vigm4 = c(
+    `-4` = "not available,equal to oth ch'n",
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vigm4b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vigm5 = c(
+    `-4` = "not available,equal to oth ch'n",
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vigm5b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vigs1 = c(
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vigs1b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vigs2 = c(
+    `-5` = "not available,s1 corrected2yes",
+    `-4` = "not available,equal to oth ch'n",
+    `-3` = "not available,no@dvigs1",
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vigs2b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vigs4 = c(
+    `-4` = "not available,equal to oth ch'n",
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vigs4b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vigs5 = c(
+    `-4` = "not available,equal to oth ch'n",
+    `-2` = "don't know",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  vigs5b = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  vigseq = c(
+    `0` = "msej (not random)",
+    `1234` = "msej (random)",
+    `1243` = "msje",
+    `1324` = "mesj",
+    `1342` = "mejs",
+    `1423` = "mjse",
+    `1432` = "mjes",
+    `2134` = "smej",
+    `2143` = "smje",
+    `2314` = "semj",
+    `2341` = "sejm",
+    `2413` = "sjme",
+    `2431` = "sjem",
+    `3124` = "emsj",
+    `3142` = "emjs",
+    `3214` = "esmj",
+    `3241` = "esjm",
+    `3412` = "ejms",
+    `3421` = "ejsm",
+    `4123` = "jmse",
+    `4132` = "jmes",
+    `4213` = "jsme",
+    `4231` = "jsem",
+    `4312` = "jems",
+    `4321` = "jesm"
+  ),
+  vigseq1 = c(`1` = "mary", `2` = "sophia", `3` = "emily", `4` = "john"),
+  vigseq2 = c(`1` = "mary", `2` = "sophia", `3` = "emily", `4` = "john"),
+  vigseq3 = c(`1` = "mary", `2` = "sophia", `3` = "emily", `4` = "john"),
+  vigseq4 = c(`1` = "mary", `2` = "sophia", `3` = "emily", `4` = "john")
+)
+
+value_labels_list <- list(
+  Wave_D_labels = .replace_in_list(
+    standardized_value_labels,
     vige1 = .replace_labels(
     standardized_value_labels$vige1,
     `-2` = "do not know"
@@ -577,9 +614,14 @@ var_types_vec <- c(
   vigseq4 = "categorical"
 )
 
-.lasa_fc_074 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "074", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "074", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "074", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "074", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["vigeqr"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
+
+.lasa_fc_074 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

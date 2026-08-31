@@ -14,11 +14,35 @@ harmonized_labels <- c(
   qshap40 = "Body shape at 40"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `F` = c(
+    "qcshape",
+    "qishape"
+  ),
+  `G` = c(
+    "qcshape",
+    "qishape"
+  ),
+  `3B` = c(
+    "qcshape",
+    "qishape",
+    "qshap40"
+  ),
+  `MB` = c(
+    "mcshape",
+    "mshap40"
+  )
+)
+
 variable_labels_list <- list(
-  Wave_F_labels = harmonized_labels[c("qcshape", "qishape")],
-  Wave_G_labels = harmonized_labels[c("qcshape", "qishape")],
-  Wave_3B_labels = harmonized_labels[c("qcshape", "qishape", "qshap40")],
-  Wave_MB_labels = harmonized_labels[c("mcshape", "mshap40")],
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_3B_labels = harmonized_labels,
+  Wave_MB_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
@@ -87,7 +111,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c("qcshape", "qishape")],
+    standardized_value_labels,
     qcshape = .replace_labels(
     standardized_value_labels$qcshape,
     `-1` = "no valid data"
@@ -98,7 +122,7 @@ value_labels_list <- list(
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c("qcshape", "qishape")],
+    standardized_value_labels,
     qcshape = .replace_labels(
     standardized_value_labels$qcshape,
     `-1` = "no valid data"
@@ -109,7 +133,7 @@ value_labels_list <- list(
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c("qcshape", "qishape", "qshap40")],
+    standardized_value_labels,
     qcshape = .replace_labels(
     standardized_value_labels$qcshape,
     `-1` = "no valid data"
@@ -124,7 +148,7 @@ value_labels_list <- list(
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c("mcshape", "mshap40")],
+    standardized_value_labels,
     mcshape = .replace_labels(
     standardized_value_labels$mcshape,
     `-1` = "no valid data"
@@ -145,9 +169,12 @@ var_types_vec <- c(
   qshap40 = "categorical"
 )
 
-.lasa_fc_145 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "145", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "145", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "145", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "145", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_145 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

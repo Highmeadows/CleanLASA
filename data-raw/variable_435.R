@@ -182,9 +182,12 @@ harmonized_labels <- c(
   xrmch = "Reason missing: chronic diseases"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "xartve8a",
     "xartve8b",
     "xartve8c",
@@ -333,108 +336,8 @@ variable_labels_list <- list(
     "xrheum9h",
     "xrheum9i",
     "xrmch"
-  )],
-    xartve8a = "Arteries: surgery bifurcation",
-    xartve8b = "Arteries: surgery femoral legs",
-    xartve8c = "Arteries: surgery femoral groin",
-    xartve8d = "Arteries: surgery dotter",
-    xartve8e = "Arteries: surgery other",
-    xartvei3 = "Arteries: take medicine",
-    xartvei8 = "Arteries: surgery",
-    xartvei9 = "Arteries: going outdoors less because of these diseases or abnormalities of the arte or blood vessels",
-    xcance5a = "Cancer: lungs",
-    xcance5b = "Cancer: breast",
-    xcance5c = "Cancer: uterus",
-    xcance5d = "Cancer: cervix",
-    xcance5e = "Cancer: intestines",
-    xcance5f = "Cancer: prostate",
-    xcance5g = "Cancer: larynx",
-    xcance5h = "Cancer: esophagus",
-    xcance5i = "Cancer: stomach",
-    xcance5j = "Cancer: blood",
-    xcance5k = "Cancer: skin",
-    xcance5l = "Cancer: other",
-    xcance6a = "Cancer: metastases bone/skeleton",
-    xcance6b = "Cancer: metastases liver",
-    xcance6c = "Cancer: metastases brain",
-    xcance6d = "Cancer: metastases lungs",
-    xcance6e = "Cancer: metastases other",
-    xcance7a = "Cancer: treatment surgery",
-    xcance7b = "Cancer: treatment chemotherapy",
-    xcance7c = "Cancer: treatment radiotherapy",
-    xcance7d = "Cancer: treatment alternative (Moerman etc)",
-    xcancer1 = "Cancer: yes/no",
-    xcancer3 = "Cancer: take medicine",
-    xcancer6 = "Cancer: metastases yes/no",
-    xcancer8 = "Cancer: going outdoors less because of cancer",
-    xcara03 = "CNSLD: take medicine",
-    xcara11 = "CNSLD: disturbed night-rest or sleeping",
-    xcara12 = "CNSLD: going outdoors less because of CNSLD",
-    xcva01 = "CVA: yes/no",
-    xcva06 = "CVA: take medicine",
-    xcva12 = "CVA: going outdoors less because of CVA",
-    xdiabe01 = "Diabetes: yes/no",
-    xdiabe03 = "Diabetes: take medicine",
-    xdiabe08 = "Diabetes: pain when walking: no of meter",
-    xdiabe13 = "Diabetes: going outdoors less because of diabetes",
-    xhart03 = "Heart: take medicine",
-    xhart05 = "Heart: myocardial infarction",
-    xhart06 = "Heart: myocardial inf no of times",
-    xhart15 = "Heart: cardiac surgery",
-    xhart15a = "Heart: surgery valves",
-    xhart15b = "Heart: surgery bypass",
-    xhart15c = "Heart: surgery dotter",
-    xhart15d = "Heart: surgery pacemaker",
-    xhart15e = "Heart: surgery other",
-    xhart16 = "Heart: going outdoors less because of heart disease",
-    xincon1 = "Incontinence: yes/no",
-    xincon3 = "Incontinence: take medicine",
-    xincon7 = "Incontinence: surgery yes/no",
-    xincon8 = "Incontinence: going outdoors less because of loss of urine",
-    xothsi01 = "Other: other diseases yes/no (first)",
-    xothsi02 = "Other: first disease",
-    xothsi04 = "Other: from which age (first)",
-    xothsi05 = "Other: take medicine (first)",
-    xothsi06 = "Other: treatment doctor (first)",
-    xothsi07 = "Other: other diseases yes/no (second)",
-    xothsi08 = "Other: second disease",
-    xothsi10 = "Other: from which age (second)",
-    xothsi11 = "Other: take medicine (second)",
-    xothsi12 = "Other: treatment doctor (second)",
-    xrheum01 = "Rheum/arthrosis: osteoarthritis",
-    xrheum02 = "Rheum/arthrosis: rheumatoid arthritis",
-    xrheum03 = "Rheum/arthrosis: from which age",
-    xrheum04 = "Rheum/arthrosis: take medicine",
-    xrheum05 = "Rheum/arthrosis: treatment doctor",
-    xrheum06 = "Rheum/arthrosis: pain in joints past 3 months",
-    xrheum07 = "Rheum/arthrosis: stiffness joints past 3 month",
-    xrheum08 = "Rheum/arthrosis: swelling joints past month",
-    xrheum09 = "Rheum/arthrosis: surgery yes/no",
-    xrheum10 = "Rheum/arthrosis: joint prostheses",
-    xrheum11 = "Rheum/arthrosis: going outdoors less because of complaints of joints",
-    xrheum12 = "Rheum/arthrosis: observation hands",
-    xrheum8a = "Rheum/arthrosis: complaints fingers",
-    xrheum8b = "Rheum/arthrosis: complaints hand/wrist",
-    xrheum8c = "Rheum/arthrosis: complaints elbows",
-    xrheum8d = "Rheum/arthrosis: complaints shoulders",
-    xrheum8e = "Rheum/arthrosis: complaints toes",
-    xrheum8f = "Rheum/arthrosis: complaints feet/ankles",
-    xrheum8g = "Rheum/arthrosis: complaints knees",
-    xrheum8h = "Rheum/arthrosis: complaints hip",
-    xrheum8i = "Rheum/arthrosis: complaints neck",
-    xrheum9a = "Rheum/arthrosis: surgery fingers",
-    xrheum9b = "Rheum/arthrosis: surgery hand/wrist",
-    xrheum9c = "Rheum/arthrosis: surgery elbows",
-    xrheum9d = "Rheum/arthrosis: surgery shoulders",
-    xrheum9e = "Rheum/arthrosis: surgery toes",
-    xrheum9f = "Rheum/arthrosis: surgery feet/ankles",
-    xrheum9g = "Rheum/arthrosis: surgery knees",
-    xrheum9h = "Rheum/arthrosis: surgery hip",
-    xrheum9i = "Rheum/arthrosis: surgery neck",
-    xrmch = "Reason missing chronic diseases"
   ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c(
+  `C` = c(
     "xartve8a",
     "xartve8b",
     "xartve8c",
@@ -600,7 +503,113 @@ variable_labels_list <- list(
     "xrheum9h",
     "xrheum9i",
     "xrmch"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
+    xartve8a = "Arteries: surgery bifurcation",
+    xartve8b = "Arteries: surgery femoral legs",
+    xartve8c = "Arteries: surgery femoral groin",
+    xartve8d = "Arteries: surgery dotter",
+    xartve8e = "Arteries: surgery other",
+    xartvei3 = "Arteries: take medicine",
+    xartvei8 = "Arteries: surgery",
+    xartvei9 = "Arteries: going outdoors less because of these diseases or abnormalities of the arte or blood vessels",
+    xcance5a = "Cancer: lungs",
+    xcance5b = "Cancer: breast",
+    xcance5c = "Cancer: uterus",
+    xcance5d = "Cancer: cervix",
+    xcance5e = "Cancer: intestines",
+    xcance5f = "Cancer: prostate",
+    xcance5g = "Cancer: larynx",
+    xcance5h = "Cancer: esophagus",
+    xcance5i = "Cancer: stomach",
+    xcance5j = "Cancer: blood",
+    xcance5k = "Cancer: skin",
+    xcance5l = "Cancer: other",
+    xcance6a = "Cancer: metastases bone/skeleton",
+    xcance6b = "Cancer: metastases liver",
+    xcance6c = "Cancer: metastases brain",
+    xcance6d = "Cancer: metastases lungs",
+    xcance6e = "Cancer: metastases other",
+    xcance7a = "Cancer: treatment surgery",
+    xcance7b = "Cancer: treatment chemotherapy",
+    xcance7c = "Cancer: treatment radiotherapy",
+    xcance7d = "Cancer: treatment alternative (Moerman etc)",
+    xcancer1 = "Cancer: yes/no",
+    xcancer3 = "Cancer: take medicine",
+    xcancer6 = "Cancer: metastases yes/no",
+    xcancer8 = "Cancer: going outdoors less because of cancer",
+    xcara03 = "CNSLD: take medicine",
+    xcara11 = "CNSLD: disturbed night-rest or sleeping",
+    xcara12 = "CNSLD: going outdoors less because of CNSLD",
+    xcva01 = "CVA: yes/no",
+    xcva06 = "CVA: take medicine",
+    xcva12 = "CVA: going outdoors less because of CVA",
+    xdiabe01 = "Diabetes: yes/no",
+    xdiabe03 = "Diabetes: take medicine",
+    xdiabe08 = "Diabetes: pain when walking: no of meter",
+    xdiabe13 = "Diabetes: going outdoors less because of diabetes",
+    xhart03 = "Heart: take medicine",
+    xhart05 = "Heart: myocardial infarction",
+    xhart06 = "Heart: myocardial inf no of times",
+    xhart15 = "Heart: cardiac surgery",
+    xhart15a = "Heart: surgery valves",
+    xhart15b = "Heart: surgery bypass",
+    xhart15c = "Heart: surgery dotter",
+    xhart15d = "Heart: surgery pacemaker",
+    xhart15e = "Heart: surgery other",
+    xhart16 = "Heart: going outdoors less because of heart disease",
+    xincon1 = "Incontinence: yes/no",
+    xincon3 = "Incontinence: take medicine",
+    xincon7 = "Incontinence: surgery yes/no",
+    xincon8 = "Incontinence: going outdoors less because of loss of urine",
+    xothsi01 = "Other: other diseases yes/no (first)",
+    xothsi02 = "Other: first disease",
+    xothsi04 = "Other: from which age (first)",
+    xothsi05 = "Other: take medicine (first)",
+    xothsi06 = "Other: treatment doctor (first)",
+    xothsi07 = "Other: other diseases yes/no (second)",
+    xothsi08 = "Other: second disease",
+    xothsi10 = "Other: from which age (second)",
+    xothsi11 = "Other: take medicine (second)",
+    xothsi12 = "Other: treatment doctor (second)",
+    xrheum01 = "Rheum/arthrosis: osteoarthritis",
+    xrheum02 = "Rheum/arthrosis: rheumatoid arthritis",
+    xrheum03 = "Rheum/arthrosis: from which age",
+    xrheum04 = "Rheum/arthrosis: take medicine",
+    xrheum05 = "Rheum/arthrosis: treatment doctor",
+    xrheum06 = "Rheum/arthrosis: pain in joints past 3 months",
+    xrheum07 = "Rheum/arthrosis: stiffness joints past 3 month",
+    xrheum08 = "Rheum/arthrosis: swelling joints past month",
+    xrheum09 = "Rheum/arthrosis: surgery yes/no",
+    xrheum10 = "Rheum/arthrosis: joint prostheses",
+    xrheum11 = "Rheum/arthrosis: going outdoors less because of complaints of joints",
+    xrheum12 = "Rheum/arthrosis: observation hands",
+    xrheum8a = "Rheum/arthrosis: complaints fingers",
+    xrheum8b = "Rheum/arthrosis: complaints hand/wrist",
+    xrheum8c = "Rheum/arthrosis: complaints elbows",
+    xrheum8d = "Rheum/arthrosis: complaints shoulders",
+    xrheum8e = "Rheum/arthrosis: complaints toes",
+    xrheum8f = "Rheum/arthrosis: complaints feet/ankles",
+    xrheum8g = "Rheum/arthrosis: complaints knees",
+    xrheum8h = "Rheum/arthrosis: complaints hip",
+    xrheum8i = "Rheum/arthrosis: complaints neck",
+    xrheum9a = "Rheum/arthrosis: surgery fingers",
+    xrheum9b = "Rheum/arthrosis: surgery hand/wrist",
+    xrheum9c = "Rheum/arthrosis: surgery elbows",
+    xrheum9d = "Rheum/arthrosis: surgery shoulders",
+    xrheum9e = "Rheum/arthrosis: surgery toes",
+    xrheum9f = "Rheum/arthrosis: surgery feet/ankles",
+    xrheum9g = "Rheum/arthrosis: surgery knees",
+    xrheum9h = "Rheum/arthrosis: surgery hip",
+    xrheum9i = "Rheum/arthrosis: surgery neck",
+    xrmch = "Reason missing chronic diseases"
+  ),
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
     xcva02b = "CVA: no of strokes",
     xdiabe08 = "Diabetes: pain when walking: no of meter",
     xhart05 = "Heart: myocardial infarction since last",
@@ -645,99 +654,100 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "mentioned",
+  `2` = "yes",
+  `3` = "yes, specialist"
+)
+
 standardized_value_labels <- list(
   xartve8a = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XARTVEI8",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   xartve8b = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XARTVEI8",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   xartve8c = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XARTVEI8",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   xartve8d = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XARTVEI8",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   xartve8e = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XARTVEI8",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   xartvei1 = c(
     `-5` = "Arteries: disease or abnormalities status",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
     `1` = "Arteries: disease or abnormalities status",
     `2` = "yes, BARTVEI1 no",
     `3` = "yes, BARTVEI1 yes"
   ),
-  xartvei2 = c(`-3` = "na, wrong skip", `-2` = "na, see XARTVEI1", `-1` = "na, asked"),
+  xartvei2 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XARTVEI1"
+  ),
   xartvei3 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XARTVE1",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Arteries: taking medication status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xartvei4 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XARTVEI1",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Arteries: treatment doctor status",
-    `2` = "yes",
-    `3` = "yes, specialist"
+    default_answer_labels[c("2", "3")]
   ),
   xartvei5 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XARTVEI1",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Arteries: pain when walking status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
-  xartvei6 = c(`-3` = "na, wrong skip", `-2` = "na, see XARTVEI5", `-1` = "na, asked"),
+  xartvei6 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XARTVEI5"
+  ),
   xartvei7 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XARTVEI5",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Arteries: pain disappears standing still status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xartvei8 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XARTVEI1",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Arteries: surgery since last interview status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xartvei9 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "Arteries: outdoors less often status",
-    `-1` = "na, asked",
     `1` = "not at all",
     `2` = "sometimes",
     `3` = "often",
@@ -745,20 +755,16 @@ standardized_value_labels <- list(
   ),
   xcance5a = c(
     `-6` = "na, see XCANCER5",
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: tumor, lungs status",
     `2` = "mentioned"
   ),
   xcance5b = c(
     `-6` = "na, see XCANCER5",
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: tumor, breast status",
     `2` = "mentioned"
@@ -766,10 +772,8 @@ standardized_value_labels <- list(
   xcance5c = c(
     `-7` = "not asked, male",
     `-6` = "na, see XCANCER5",
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: tumor, uterus status",
     `2` = "mentioned"
@@ -777,20 +781,16 @@ standardized_value_labels <- list(
   xcance5d = c(
     `-7` = "not asked, male",
     `-6` = "na, see XCANCER5",
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: tumor, cervix status",
     `2` = "mentioned"
   ),
   xcance5e = c(
     `-6` = "na, see XCANCER5",
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: tumor, intestines status",
     `2` = "mentioned"
@@ -798,205 +798,181 @@ standardized_value_labels <- list(
   xcance5f = c(
     `-7` = "not asked, female",
     `-6` = "na, see XCANCER5",
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: tumor, prostate status",
     `2` = "mentioned"
   ),
   xcance5g = c(
     `-6` = "na, see XCANCER5",
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: tumor, larynx status",
     `2` = "mentioned"
   ),
   xcance5h = c(
     `-6` = "na, see XCANCER5",
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: tumor, esophagus status",
     `2` = "mentioned"
   ),
   xcance5i = c(
     `-6` = "na, see XCANCER5",
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: tumor, stomach status",
     `2` = "mentioned"
   ),
   xcance5j = c(
     `-6` = "na, see XCANCER5",
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: tumor, blood status",
     `2` = "mentioned"
   ),
   xcance5k = c(
     `-6` = "na, see XCANCER5",
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: tumor, skin status",
     `2` = "mentioned"
   ),
   xcance5l = c(
     `-6` = "na, see XCANCER5",
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: tumor, other status",
     `2` = "mentioned"
   ),
-  xcance5m = c(`-3` = "na, wrong skip", `-2` = "na, see XCANCE5L", `-1` = "na, asked", `0` = "to be coded"),
+  xcance5m = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XCANCE5L",
+    `0` = "to be coded"
+  ),
   xcance6a = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCANCER6",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: metastases, bone/skeleton status",
     `2` = "mentioned"
   ),
   xcance6b = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCANCER6",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: metastases, liver status",
     `2` = "mentioned"
   ),
   xcance6c = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCANCER6",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: metastases, brain status",
     `2` = "mentioned"
   ),
   xcance6d = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCANCER6",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: metastases, lungs status",
     `2` = "mentioned"
   ),
   xcance6e = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCANCER6",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: metastases, lymph nodes status",
     `2` = "mentioned"
   ),
   xcance6f = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCANCER6",
-    `-1` = "na, asked",
     `1` = "not mentioned",
     `2` = "mentioned"
   ),
-  xcance6g = c(`-3` = "na, wrong skip", `-2` = "na, see XCANCE6F", `-1` = "na, asked", `0` = "to be coded"),
+  xcance6g = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XCANCE6F",
+    `0` = "to be coded"
+  ),
   xcance7a = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: surgery, since last interview status",
     `2` = "mentioned"
   ),
   xcance7b = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "Cancer: chemotherapy, since last interview status",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: chemotherapy, since last interview status",
     `2` = "mentioned"
   ),
   xcance7c = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "Cancer: radiotherapy, since last interview status",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: radiotherapy, since last interview status",
     `2` = "mentioned"
   ),
   xcance7d = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "Cancer: alternative treatment, since last interview status",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: alternative treatment, since last interview status",
     `2` = "mentioned"
   ),
   xcancer1 = c(
     `-5` = "Cancer status",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "Cancer status",
     `1` = "Cancer status",
     `2` = "yes, BCANCER1 no",
     `3` = "yes, BCANCER1 yes"
   ),
-  xcancer2 = c(`-3` = "na, wrong skip", `-2` = "na, see XCANCER1", `-1` = "na, asked"),
+  xcancer2 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XCANCER1"
+  ),
   xcancer3 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Cancer: taking medication status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xcancer4 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Cancer: treatment doctor status",
-    `2` = "yes",
-    `3` = "yes, specialist"
+    default_answer_labels[c("2", "3")]
   ),
   xcancer5 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xcancer6 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Cancer: metastases since last interview status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xcancer8 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCANCER1",
-    `-1` = "na, asked",
     `1` = "not at all",
     `2` = "sometimes",
     `3` = "often",
@@ -1004,100 +980,85 @@ standardized_value_labels <- list(
   ),
   xcara01 = c(
     `-5` = "CNSLD: asthma, chr bronch, emphysema status",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
     `1` = "CNSLD: asthma, chr bronch, emphysema status",
     `2` = "yes, BCARA01 no",
     `3` = "yes, BCARA01 yes"
   ),
-  xcara02 = c(`-3` = "na, wrong skip", `-2` = "na, see XCARA01", `-1` = "na, asked"),
+  xcara02 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XCARA01"
+  ),
   xcara03 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCARA01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "CNSLD: taking medication status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xcara04 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCARA01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "CNSLD: treatment doctor status",
-    `2` = "yes",
-    `3` = "yes, specialist"
+    default_answer_labels[c("2", "3")]
   ),
   xcara05 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCARA01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "CNSLD: cough almost daily status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xcara06 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCARA01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "CNSLD: phlegm almost daily status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xcara07 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCARA01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "CNSLD: period increased phlegm past year status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xcara08 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCARA01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "CNSLD: shortness of breath sometimes status",
-    `2` = "yes",
+    default_answer_labels[c("2")],
     `3` = "yes",
     `4` = "yes, at rest"
   ),
   xcara09 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCARA01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "CNSLD: wheezing breath ever status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xcara10 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCARA01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "CNSLD: wheezing breath during rest status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xcara11 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCARA01",
-    `-1` = "na, asked",
     `1` = "not at all",
     `2` = "sometimes",
     `3` = "often",
     `4` = "always"
   ),
   xcara12 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCARA01",
-    `-1` = "na, asked",
     `1` = "not at all",
     `2` = "sometimes",
     `3` = "often",
@@ -1105,93 +1066,111 @@ standardized_value_labels <- list(
   ),
   xcva01 = c(
     `-5` = "CVA status",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "CVA status",
     `1` = "CVA status",
     `2` = "yes, BCVA01 no",
     `3` = "yes, BCVA01 yes"
   ),
   xcva02 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCVA01",
-    `-1` = "na, asked",
     `1` = "once",
     `2` = "two times or more"
   ),
-  xcva02a = c(`-3` = "na, wrong skip", `-2` = "na, see XCVA01", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  xcva02a = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XCVA01",
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
   xcva02b = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCVA02A",
-    `-1` = "na, asked",
     `1` = "once",
     `2` = "two times or more"
   ),
-  xcva03 = c(`-3` = "na, wrong skip", `-2` = "na, see XCVA02", `-1` = "na, asked"),
-  xcva03j = c(`-3` = "na, wrong skip", `-2` = "na, see XCVA02B", `-1` = "na, asked"),
-  xcva03m = c(`-3` = "na, wrong skip", `-2` = "na, see XCVA02B", `-1` = "na, asked"),
-  xcva04 = c(`-3` = "na, wrong skip", `-2` = "na, see XCVA02", `-1` = "na, asked"),
-  xcva04j = c(`-3` = "na, wrong skip", `-2` = "na, see XCVA02B", `-1` = "na, asked"),
-  xcva04m = c(`-3` = "na, wrong skip", `-2` = "na, see XCVA02B", `-1` = "na, asked"),
-  xcva05 = c(`-3` = "na, wrong skip", `-2` = "na, see XCVA02", `-1` = "na, asked"),
-  xcva05j = c(`-3` = "na, wrong skip", `-2` = "na, see XCVA02B", `-1` = "na, asked"),
-  xcva05m = c(`-3` = "na, wrong skip", `-2` = "na, see XCVA02B", `-1` = "na, asked"),
+  xcva03 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XCVA02"
+  ),
+  xcva03j = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XCVA02B"
+  ),
+  xcva03m = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XCVA02B"
+  ),
+  xcva04 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XCVA02"
+  ),
+  xcva04j = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XCVA02B"
+  ),
+  xcva04m = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XCVA02B"
+  ),
+  xcva05 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XCVA02"
+  ),
+  xcva05j = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XCVA02B"
+  ),
+  xcva05m = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XCVA02B"
+  ),
   xcva06 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCVA01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "CVA: taking medication status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xcva07 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCVA01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "CVA: treatment doctor status",
-    `2` = "yes",
-    `3` = "yes, specialist"
+    default_answer_labels[c("2", "3")]
   ),
   xcva08 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCVA01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "CVA: still problems with arms and legs status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xcva09 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCVA01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "CVA: still problems with vision status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xcva10 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCVA01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "CVA: still problems speech status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xcva11 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XCVA01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "CVA: still problems understanding written text status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xcva12 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XCVA01",
-    `-1` = "na, asked",
     `1` = "not at all",
     `2` = "sometimes",
     `3` = "often",
@@ -1199,44 +1178,41 @@ standardized_value_labels <- list(
   ),
   xdiabe01 = c(
     `-5` = "Diabetes status",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
     `1` = "Diabetes status",
     `2` = "yes, BDIABE01 no",
     `3` = "yes, BDIABE01 yes"
   ),
-  xdiabe02 = c(`-3` = "na, wrong skip", `-2` = "na, see XDIABE01", `-1` = "na, asked"),
+  xdiabe02 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XDIABE01"
+  ),
   xdiabe03 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XDIABE01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Diabetes: taking medication status",
-    `2` = "yes",
+    default_answer_labels[c("2")],
     `3` = "yes, tablets only"
   ),
   xdiabe04 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XDIABE01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Diabetes: treatment doctor status",
-    `2` = "yes",
-    `3` = "yes, specialist"
+    default_answer_labels[c("2", "3")]
   ),
   xdiabe05 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XDIABE01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Diabetes: treatment related eye problems status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xdiabe06 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XDIABE05",
-    `-1` = "na, asked",
     `1` = "laser coagulation treatment",
     `2` = "cataract surgery",
     `3` = "both",
@@ -1244,38 +1220,34 @@ standardized_value_labels <- list(
   ),
   xdiabe07 = c(
     `-6` = "Diabetes: pain when walking status",
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XDIABE01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Diabetes: pain when walking status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
-  xdiabe08 = c(`-3` = "na, wrong skip", `-2` = "na, see XDIABE07", `-1` = "na, asked"),
+  xdiabe08 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XDIABE07"
+  ),
   xdiabe09 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XDIABE07",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Diabetes: pain disappears standing still status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xdiabe10 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XDIABE01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Diabetes: pain in legs during rest status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xdiabe11 = c(
     `-6` = "Diabetes: chest pain during exertion status",
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XDIABE01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Diabetes: chest pain during exertion status",
     `2` = "Diabetes: chest pain during exertion status",
@@ -1286,99 +1258,116 @@ standardized_value_labels <- list(
     `7` = "no exertion: other reason"
   ),
   xdiabe12 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XDIABE11",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Diabetes: exertion pain disappears in 10 minutes status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xdiabe13 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XDIABE01",
-    `-1` = "na, asked",
     `1` = "not at all",
     `2` = "sometimes",
     `3` = "often",
     `4` = "always"
   ),
   xdiabe6a = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XDIABE05",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   xdiabe6b = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XDIABE05",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   xdiabe6c = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XDIABE05",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   xhart01 = c(
     `-5` = "Heart: heart disease status",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
     `1` = "Heart: heart disease status",
     `2` = "yes, BHART01 no",
     `3` = "yes, BHART01 yes"
   ),
-  xhart02 = c(`-3` = "na, wrong skip", `-2` = "na, see XHART01", `-1` = "na, asked"),
+  xhart02 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XHART01"
+  ),
   xhart03 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XHART01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Heart: taking medication status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xhart04 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XHART01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Heart: treatment doctor status",
-    `2` = "yes",
-    `3` = "yes, specialist"
+    default_answer_labels[c("2", "3")]
   ),
   xhart05 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XHART01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Heart: myocardial infarction since last interview status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xhart06 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XHART05",
-    `-1` = "na, asked",
     `1` = "once",
     `2` = "two times or more"
   ),
-  xhart07 = c(`-3` = "na, wrong skip", `-2` = "na, see XHART06", `-1` = "na, asked"),
-  xhart07j = c(`-3` = "na, wrong skip", `-2` = "na, see XHART06", `-1` = "na, asked"),
-  xhart07m = c(`-3` = "na, wrong skip", `-2` = "na, see XHART06", `-1` = "na, asked"),
-  xhart08 = c(`-3` = "na, wrong skip", `-2` = "na, see XHART06", `-1` = "na, asked"),
-  xhart08j = c(`-3` = "na, wrong skip", `-2` = "na, see XHART06", `-1` = "na, asked"),
-  xhart08m = c(`-3` = "na, wrong skip", `-2` = "na, see XHART06", `-1` = "na, asked"),
-  xhart09 = c(`-3` = "na, wrong skip", `-2` = "na, see XHART06", `-1` = "na, asked"),
-  xhart09j = c(`-3` = "na, wrong skip", `-2` = "na, see XHART06", `-1` = "na, asked"),
-  xhart09m = c(`-3` = "na, wrong skip", `-2` = "na, see XHART06", `-1` = "na, asked"),
+  xhart07 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XHART06"
+  ),
+  xhart07j = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XHART06"
+  ),
+  xhart07m = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XHART06"
+  ),
+  xhart08 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XHART06"
+  ),
+  xhart08j = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XHART06"
+  ),
+  xhart08m = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XHART06"
+  ),
+  xhart09 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XHART06"
+  ),
+  xhart09j = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XHART06"
+  ),
+  xhart09m = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XHART06"
+  ),
   xhart10 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XHART01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Heart: chest pain during exertion status",
     `2` = "Heart: chest pain during exertion status",
@@ -1389,157 +1378,150 @@ standardized_value_labels <- list(
     `7` = "no exertion: other reason"
   ),
   xhart11 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XHART10",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Heart: exertion pain disappears in 10 minutes status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xhart12 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XHART01",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Heart: >1 pillow for shortness of breath status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xhart13 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "Heart: edema morning; legs, feet, ankles status",
-    `-1` = "na, asked",
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xhart14 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "Heart: edema evening; legs, feet, ankles status",
-    `-1` = "na, asked",
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xhart15 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "Heart: cardiac surgery since last interview status",
-    `-1` = "na, asked",
     `1` = "no",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xhart15a = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XHART15",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   xhart15b = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XHART15",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   xhart15c = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XHART15",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   xhart15d = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XHART15",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   xhart15e = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XHART15",
-    `-1` = "na, asked",
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   xhart16 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XHART01",
-    `-1` = "na, asked",
     `1` = "not at all",
     `2` = "sometimes",
     `3` = "often",
     `4` = "always"
   ),
-  xhbd1 = c(`-5` = "na, see XRMCH", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  xhbd2 = c(`-3` = "na, wrong skip", `-2` = "na, see XHBD1", `-1` = "na, asked"),
-  xhbd2a = c(`-3` = "na, wrong skip", `-2` = "na, see XHBD1", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  xhbd3 = c(
-    `-3` = "na, wrong skip",
+  xhbd1 = c(
+    `-5` = "na, see XRMCH",
+    default_missing_labels[c("-1")],
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  xhbd2 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XHBD1"
+  ),
+  xhbd2a = c(
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XHBD1",
-    `-1` = "na, asked",
+    `1` = "no",
+    default_answer_labels[c("2")]
+  ),
+  xhbd3 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XHBD1",
     `1` = "no",
     `2` = "yes, family physician",
-    `3` = "yes, specialist"
+    default_answer_labels[c("3")]
   ),
   xincon1 = c(
     `-5` = "Incontinence status",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "Incontinence status",
     `1` = "Incontinence status",
     `2` = "yes, BINCON1 no",
     `3` = "yes, BINCON1 yes"
   ),
-  xincon2 = c(`-3` = "na, wrong skip", `-2` = "na, see XINCON1", `-1` = "na, asked"),
+  xincon2 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XINCON1"
+  ),
   xincon3 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XINCON1",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Incontinence: taking medication status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xincon4 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XINCON1",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Incontinence: treatment doctor status",
-    `2` = "yes",
-    `3` = "yes, specialist"
+    default_answer_labels[c("2", "3")]
   ),
   xincon5 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XINCON1",
-    `-1` = "na, asked",
     `1` = "2 times a month or less",
     `2` = "3-4 times a month",
     `3` = "a few times a week",
     `4` = "daily"
   ),
   xincon6 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XINCON1",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Incontinence: use special material status",
     `2` = "Incontinence: use special material status",
     `3` = "yes, most of the time"
   ),
   xincon7 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XINCON1",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Incontinence: surgery since last interview status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xincon8 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XINCON1",
-    `-1` = "na, asked",
     `1` = "not at all",
     `2` = "sometimes",
     `3` = "often",
@@ -1547,15 +1529,14 @@ standardized_value_labels <- list(
   ),
   xothsi01 = c(
     `-5` = "Other1: other chronic diseases status",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "no",
     `1` = "Other1: other chronic diseases status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xothsi02 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "Other1: disease status",
-    `-1` = "na, asked",
     `1` = "hypertension",
     `2` = "ulcer stomach or duodenum",
     `3` = "serious intestinal disease",
@@ -1607,37 +1588,34 @@ standardized_value_labels <- list(
     `49` = "other chronic disease",
     `50` = "other non-chronic disease"
   ),
-  xothsi04 = c(`-3` = "na, wrong skip", `-2` = "Other1: from which age status", `-1` = "na, asked"),
+  xothsi04 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "Other1: from which age status"
+  ),
   xothsi05 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "Other1: taking medication status",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Other1: taking medication status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xothsi06 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "Other1: treatment doctor status",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Other1: treatment doctor status",
-    `2` = "yes",
-    `3` = "yes, specialist"
+    default_answer_labels[c("2", "3")]
   ),
   xothsi07 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "Other2: other chronic diseases status",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Other2: other chronic diseases status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xothsi08 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "Other2: disease status",
-    `-1` = "na, asked",
     `1` = "hypertension",
     `2` = "ulcer stomach or duodenum",
     `3` = "serious intestinal disease",
@@ -1689,27 +1667,27 @@ standardized_value_labels <- list(
     `49` = "other chronic disease",
     `50` = "other non-chronic disease"
   ),
-  xothsi10 = c(`-3` = "na, wrong skip", `-2` = "Other2: from which age status", `-1` = "na, asked"),
+  xothsi10 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "Other2: from which age status"
+  ),
   xothsi11 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "Other2: taking medication status",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Other2: taking medication status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xothsi12 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "Other2: treatment doctor status",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Other2: treatment doctor status",
-    `2` = "yes",
-    `3` = "yes, specialist"
+    default_answer_labels[c("2", "3")]
   ),
   xrheum01 = c(
     `-5` = "Osteoarthritis/rheumatoid arthritis: osteoarthritis status",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "Osteoarthritis/rheumatoid arthritis: osteoarthritis status",
     `1` = "Osteoarthritis/rheumatoid arthritis: osteoarthritis status",
     `2` = "yes, BRHEUM01 no",
@@ -1717,240 +1695,202 @@ standardized_value_labels <- list(
   ),
   xrheum02 = c(
     `-5` = "status category",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `0` = "status category",
     `1` = "status category",
     `2` = "yes, BRHEUM02 no",
     `3` = "yes, BRHEUM02 yes"
   ),
-  xrheum03 = c(`-3` = "na, wrong skip", `-2` = "na, see XRHEUM01&02", `-1` = "na, asked"),
+  xrheum03 = c(
+    default_missing_labels[c("-3", "-1")],
+    `-2` = "na, see XRHEUM01&02"
+  ),
   xrheum04 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Osteoarthritis/rheumatoid arthritis: taking medication status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xrheum05 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Osteoarthritis/rheumatoid arthritis: treatment doctor status",
-    `2` = "yes",
-    `3` = "yes, specialist"
+    default_answer_labels[c("2", "3")]
   ),
   xrheum06 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "status category",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xrheum07 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "status category",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xrheum08 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "status category",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xrheum09 = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "status category",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xrheum10 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "Osteoarthritis/rheumatoid arthritis: joint prostheses status",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Osteoarthritis/rheumatoid arthritis: joint prostheses status",
-    `2` = "yes"
+    default_answer_labels[c("2")]
   ),
   xrheum11 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `1` = "not at all",
     `2` = "sometimes",
     `3` = "often",
     `4` = "always"
   ),
   xrheum12 = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `1` = "rheumatic hands",
     `2` = "no rheumatic hands",
     `3` = "observation not possible"
   ),
   xrheum8a = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Osteoarthritis/rheumatoid arthritis: complaints fingers status",
     `2` = "mentioned"
   ),
   xrheum8b = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "status category",
     `2` = "mentioned"
   ),
   xrheum8c = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Osteoarthritis/rheumatoid arthritis: complaints elbows status",
     `2` = "mentioned"
   ),
   xrheum8d = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "status category",
     `2` = "mentioned"
   ),
   xrheum8e = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Osteoarthritis/rheumatoid arthritis: complaints toes status",
     `2` = "mentioned"
   ),
   xrheum8f = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "status category",
     `2` = "mentioned"
   ),
   xrheum8g = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Osteoarthritis/rheumatoid arthritis: complaints knees status",
     `2` = "mentioned"
   ),
   xrheum8h = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Osteoarthritis/rheumatoid arthritis: complaints hip status",
     `2` = "mentioned"
   ),
   xrheum8i = c(
-    `-4` = "na, short version",
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-4", "-3", "-1")],
     `-2` = "na, see XRHEUM01&02",
-    `-1` = "na, asked",
     `0` = "no",
     `1` = "Osteoarthritis/rheumatoid arthritis: complaints neck status",
     `2` = "mentioned"
   ),
   xrheum9a = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XRHEUM09",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Osteoarthritis/rheumatoid arthritis: surgery fingers status",
     `2` = "mentioned"
   ),
   xrheum9b = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XRHEUM09",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Osteoarthritis/rheumatoid arthritis: surgery hand/wrist status",
     `2` = "mentioned"
   ),
   xrheum9c = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XRHEUM09",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Osteoarthritis/rheumatoid arthritis: surgery elbows status",
     `2` = "mentioned"
   ),
   xrheum9d = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XRHEUM09",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Osteoarthritis/rheumatoid arthritis: surgery shoulders status",
     `2` = "mentioned"
   ),
   xrheum9e = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XRHEUM09",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Osteoarthritis/rheumatoid arthritis: surgery toes since status",
     `2` = "mentioned"
   ),
   xrheum9f = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XRHEUM09",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "status category",
     `2` = "mentioned"
   ),
   xrheum9g = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XRHEUM09",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Osteoarthritis/rheumatoid arthritis: surgery knees status",
     `2` = "mentioned"
   ),
   xrheum9h = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XRHEUM09",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Osteoarthritis/rheumatoid arthritis: surgery hip status",
     `2` = "mentioned"
   ),
   xrheum9i = c(
-    `-3` = "na, wrong skip",
+    default_missing_labels[c("-3", "-1")],
     `-2` = "na, see XRHEUM09",
-    `-1` = "na, asked",
     `0` = "not mentioned",
     `1` = "Osteoarthritis/rheumatoid arthritis: surgery neck status",
     `2` = "mentioned"
@@ -1965,156 +1905,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "xartve8a",
-    "xartve8b",
-    "xartve8c",
-    "xartve8d",
-    "xartve8e",
-    "xartvei1",
-    "xartvei2",
-    "xartvei3",
-    "xartvei4",
-    "xartvei5",
-    "xartvei6",
-    "xartvei7",
-    "xartvei8",
-    "xartvei9",
-    "xcance5a",
-    "xcance5b",
-    "xcance5c",
-    "xcance5d",
-    "xcance5e",
-    "xcance5f",
-    "xcance5g",
-    "xcance5h",
-    "xcance5i",
-    "xcance5j",
-    "xcance5k",
-    "xcance5l",
-    "xcance6a",
-    "xcance6b",
-    "xcance6c",
-    "xcance6d",
-    "xcance6e",
-    "xcance7a",
-    "xcance7b",
-    "xcance7c",
-    "xcance7d",
-    "xcancer1",
-    "xcancer2",
-    "xcancer3",
-    "xcancer4",
-    "xcancer6",
-    "xcancer8",
-    "xcara01",
-    "xcara02",
-    "xcara03",
-    "xcara04",
-    "xcara05",
-    "xcara06",
-    "xcara07",
-    "xcara08",
-    "xcara09",
-    "xcara10",
-    "xcara11",
-    "xcara12",
-    "xcva01",
-    "xcva02",
-    "xcva03",
-    "xcva04",
-    "xcva05",
-    "xcva06",
-    "xcva07",
-    "xcva08",
-    "xcva09",
-    "xcva10",
-    "xcva11",
-    "xcva12",
-    "xdiabe01",
-    "xdiabe02",
-    "xdiabe03",
-    "xdiabe04",
-    "xdiabe05",
-    "xdiabe06",
-    "xdiabe07",
-    "xdiabe08",
-    "xdiabe09",
-    "xdiabe10",
-    "xdiabe11",
-    "xdiabe12",
-    "xdiabe13",
-    "xhart01",
-    "xhart02",
-    "xhart03",
-    "xhart04",
-    "xhart05",
-    "xhart06",
-    "xhart07",
-    "xhart08",
-    "xhart09",
-    "xhart10",
-    "xhart11",
-    "xhart12",
-    "xhart13",
-    "xhart14",
-    "xhart15",
-    "xhart15a",
-    "xhart15b",
-    "xhart15c",
-    "xhart15d",
-    "xhart15e",
-    "xhart16",
-    "xincon1",
-    "xincon2",
-    "xincon3",
-    "xincon4",
-    "xincon5",
-    "xincon6",
-    "xincon7",
-    "xincon8",
-    "xothsi01",
-    "xothsi02",
-    "xothsi04",
-    "xothsi05",
-    "xothsi06",
-    "xothsi07",
-    "xothsi08",
-    "xothsi10",
-    "xothsi11",
-    "xothsi12",
-    "xrheum01",
-    "xrheum02",
-    "xrheum03",
-    "xrheum04",
-    "xrheum05",
-    "xrheum06",
-    "xrheum07",
-    "xrheum08",
-    "xrheum09",
-    "xrheum10",
-    "xrheum11",
-    "xrheum12",
-    "xrheum8a",
-    "xrheum8b",
-    "xrheum8c",
-    "xrheum8d",
-    "xrheum8e",
-    "xrheum8f",
-    "xrheum8g",
-    "xrheum8h",
-    "xrheum8i",
-    "xrheum9a",
-    "xrheum9b",
-    "xrheum9c",
-    "xrheum9d",
-    "xrheum9e",
-    "xrheum9f",
-    "xrheum9g",
-    "xrheum9h",
-    "xrheum9i",
-    "xrmch"
-  )],
+    standardized_value_labels,
     xartve8a = .replace_labels(
     standardized_value_labels$xartve8a,
     `-2` = "na, see BARTVEI8"
@@ -3012,173 +2803,7 @@ value_labels_list <- list(
     xrmch = c(`-2` = "valid data", `1` = "terminated interview", `2` = "short interview")
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "xartve8a",
-    "xartve8b",
-    "xartve8c",
-    "xartve8d",
-    "xartve8e",
-    "xartvei1",
-    "xartvei2",
-    "xartvei3",
-    "xartvei4",
-    "xartvei5",
-    "xartvei6",
-    "xartvei7",
-    "xartvei8",
-    "xartvei9",
-    "xcance5a",
-    "xcance5b",
-    "xcance5c",
-    "xcance5d",
-    "xcance5e",
-    "xcance5f",
-    "xcance5g",
-    "xcance5h",
-    "xcance5i",
-    "xcance5j",
-    "xcance5k",
-    "xcance5l",
-    "xcance5m",
-    "xcance6a",
-    "xcance6b",
-    "xcance6c",
-    "xcance6d",
-    "xcance6e",
-    "xcance6f",
-    "xcance6g",
-    "xcance7a",
-    "xcance7b",
-    "xcance7c",
-    "xcance7d",
-    "xcancer1",
-    "xcancer2",
-    "xcancer3",
-    "xcancer4",
-    "xcancer5",
-    "xcancer6",
-    "xcancer8",
-    "xcara01",
-    "xcara02",
-    "xcara03",
-    "xcara04",
-    "xcara05",
-    "xcara06",
-    "xcara07",
-    "xcara08",
-    "xcara09",
-    "xcara10",
-    "xcara11",
-    "xcara12",
-    "xcva01",
-    "xcva02a",
-    "xcva02b",
-    "xcva03j",
-    "xcva03m",
-    "xcva04j",
-    "xcva04m",
-    "xcva05j",
-    "xcva05m",
-    "xcva06",
-    "xcva07",
-    "xcva08",
-    "xcva09",
-    "xcva10",
-    "xcva11",
-    "xcva12",
-    "xdiabe01",
-    "xdiabe02",
-    "xdiabe03",
-    "xdiabe04",
-    "xdiabe05",
-    "xdiabe07",
-    "xdiabe08",
-    "xdiabe09",
-    "xdiabe10",
-    "xdiabe11",
-    "xdiabe12",
-    "xdiabe13",
-    "xdiabe6a",
-    "xdiabe6b",
-    "xdiabe6c",
-    "xhart01",
-    "xhart02",
-    "xhart03",
-    "xhart04",
-    "xhart05",
-    "xhart06",
-    "xhart07j",
-    "xhart07m",
-    "xhart08j",
-    "xhart08m",
-    "xhart09j",
-    "xhart09m",
-    "xhart10",
-    "xhart11",
-    "xhart12",
-    "xhart13",
-    "xhart14",
-    "xhart15",
-    "xhart15a",
-    "xhart15b",
-    "xhart15c",
-    "xhart15d",
-    "xhart15e",
-    "xhart16",
-    "xhbd1",
-    "xhbd2",
-    "xhbd2a",
-    "xhbd3",
-    "xincon1",
-    "xincon2",
-    "xincon3",
-    "xincon4",
-    "xincon5",
-    "xincon6",
-    "xincon7",
-    "xincon8",
-    "xothsi01",
-    "xothsi02",
-    "xothsi04",
-    "xothsi05",
-    "xothsi06",
-    "xothsi07",
-    "xothsi08",
-    "xothsi10",
-    "xothsi11",
-    "xothsi12",
-    "xrheum01",
-    "xrheum02",
-    "xrheum03",
-    "xrheum04",
-    "xrheum05",
-    "xrheum06",
-    "xrheum07",
-    "xrheum08",
-    "xrheum09",
-    "xrheum10",
-    "xrheum11",
-    "xrheum12",
-    "xrheum8a",
-    "xrheum8b",
-    "xrheum8c",
-    "xrheum8d",
-    "xrheum8e",
-    "xrheum8f",
-    "xrheum8g",
-    "xrheum8h",
-    "xrheum8i",
-    "xrheum9a",
-    "xrheum9b",
-    "xrheum9c",
-    "xrheum9d",
-    "xrheum9e",
-    "xrheum9f",
-    "xrheum9g",
-    "xrheum9h",
-    "xrheum9i",
-    "xrmch"
-  )],
+    standardized_value_labels,
     xartve8a = .replace_labels(
     standardized_value_labels$xartve8a,
     `-2` = "na, see CARTVEI8"
@@ -4283,7 +3908,7 @@ var_types_vec <- c(
   xrmch = "categorical"
 )
 
-.lasa_fc_435 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "435", waves = .lasa_wave_rows()) |>
     .override_label(wave = "B", variable = "xartve8a", override_value = "xartve8a") |>
     .override_label(wave = "B", variable = "xartve8b", override_value = "xartve8b") |>
@@ -4602,3 +4227,6 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "435", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "435", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_435 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

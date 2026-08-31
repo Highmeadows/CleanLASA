@@ -35,106 +35,215 @@ harmonized_labels <- c(
   tpurgyn = "Urgent indication"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `E` = c(
+    "tpadapt",
+    "tpappli",
+    "tpdisth",
+    "tpdistr",
+    "tpdomch",
+    "tpdomec",
+    "tpelddn",
+    "tpeldeh",
+    "tpelder",
+    "tphomec",
+    "tpmeal",
+    "tpmealn",
+    "tpnurdn",
+    "tpnursd",
+    "tpnursh",
+    "tpnursi",
+    "tpperch",
+    "tppersc",
+    "tprioot",
+    "tprioyn",
+    "tpurgyn"
+  ),
+  `F` = c(
+    "tpadapt",
+    "tpappli",
+    "tpdisth",
+    "tpdistr",
+    "tpdomch",
+    "tpdomec",
+    "tpelddn",
+    "tpeldeh",
+    "tpelder",
+    "tphomec",
+    "tpmeal",
+    "tpmealn",
+    "tpnurdn",
+    "tpnursd",
+    "tpnursh",
+    "tpnursi",
+    "tpperch",
+    "tppersc",
+    "tprioot",
+    "tprioyn",
+    "tpurgyn"
+  ),
+  `J` = c(
+    "tpuf24c",
+    "tpufdac",
+    "tpufgui",
+    "tpufntc",
+    "tpufssc"
+  ),
+  `K` = c(
+    "tpuf24c",
+    "tpufdac",
+    "tpufgui",
+    "tpufntc",
+    "tpufssc"
+  )
+)
+
 variable_labels_list <- list(
-  Wave_E_labels = harmonized_labels[c(
-    "tpadapt",
-    "tpappli",
-    "tpdisth",
-    "tpdistr",
-    "tpdomch",
-    "tpdomec",
-    "tpelddn",
-    "tpeldeh",
-    "tpelder",
-    "tphomec",
-    "tpmeal",
-    "tpmealn",
-    "tpnurdn",
-    "tpnursd",
-    "tpnursh",
-    "tpnursi",
-    "tpperch",
-    "tppersc",
-    "tprioot",
-    "tprioyn",
-    "tpurgyn"
-  )],
-  Wave_F_labels = harmonized_labels[c(
-    "tpadapt",
-    "tpappli",
-    "tpdisth",
-    "tpdistr",
-    "tpdomch",
-    "tpdomec",
-    "tpelddn",
-    "tpeldeh",
-    "tpelder",
-    "tphomec",
-    "tpmeal",
-    "tpmealn",
-    "tpnurdn",
-    "tpnursd",
-    "tpnursh",
-    "tpnursi",
-    "tpperch",
-    "tppersc",
-    "tprioot",
-    "tprioyn",
-    "tpurgyn"
-  )],
-  Wave_J_labels = harmonized_labels[c("tpuf24c", "tpufdac", "tpufgui", "tpufntc", "tpufssc")],
-  Wave_K_labels = harmonized_labels[c("tpuf24c", "tpufdac", "tpufgui", "tpufntc", "tpufssc")],
+  Wave_E_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_J_labels = harmonized_labels,
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "no",
+  `2` = "yes"
+)
+
 standardized_value_labels <- list(
-  tpadapt = c(`-2` = "na, see TPRIOYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpappli = c(`-2` = "na, see TPRIOYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpdisth = c(`-2` = "na, see TPDISTR", `-1` = "na, asked"),
-  tpdistr = c(`-2` = "na, see TPRIOYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpdomch = c(`-2` = "na, see TPDOMEC", `-1` = "na, asked"),
-  tpdomec = c(`-2` = "na, see TPHOMEC", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  tpadapt = c(
+    `-2` = "na, see TPRIOYN",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpappli = c(
+    `-2` = "na, see TPRIOYN",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpdisth = c(
+    `-2` = "na, see TPDISTR",
+    default_missing_labels[c("-1")]
+  ),
+  tpdistr = c(
+    `-2` = "na, see TPRIOYN",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpdomch = c(
+    `-2` = "na, see TPDOMEC",
+    default_missing_labels[c("-1")]
+  ),
+  tpdomec = c(
+    `-2` = "na, see TPHOMEC",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
   tpelddn = c(
     `-2` = "na, see TPELDER",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "day treatment",
     `2` = "night treatment",
     `3` = "both: day and night treatment"
   ),
-  tpeldeh = c(`-2` = "na, see TPELDER", `-1` = "na, asked"),
-  tpelder = c(`-2` = "na, see TPRIOYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tphomec = c(`-2` = "na, see TPRIOYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpmeal = c(`-2` = "na, see TPRIOYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpmealn = c(`-2` = "na, see TPMEAL", `-1` = "na, asked"),
+  tpeldeh = c(
+    `-2` = "na, see TPELDER",
+    default_missing_labels[c("-1")]
+  ),
+  tpelder = c(
+    `-2` = "na, see TPRIOYN",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tphomec = c(
+    `-2` = "na, see TPRIOYN",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpmeal = c(
+    `-2` = "na, see TPRIOYN",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpmealn = c(
+    `-2` = "na, see TPMEAL",
+    default_missing_labels[c("-1")]
+  ),
   tpnurdn = c(
     `-2` = "na, see TPNURSI",
-    `-1` = "na, asked",
+    default_missing_labels[c("-1")],
     `1` = "day treatment",
     `2` = "night treatment",
     `3` = "both: day and night treatment"
   ),
-  tpnursd = c(`-2` = "na, see TPNURSI", `-1` = "na, asked", `1` = "somatic", `2` = "psychogeriatric"),
-  tpnursh = c(`-2` = "na, see TPNURSI", `-1` = "na, asked"),
-  tpnursi = c(`-2` = "na, see TPRIOYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpperch = c(`-2` = "na, see TPPERSC", `-1` = "na, asked"),
-  tppersc = c(`-2` = "na, see TPHOMEC", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tprioot = c(`-2` = "na, see TPRIOYN", `-1` = "na, asked", `1` = "no", `2` = "yes"),
+  tpnursd = c(
+    `-2` = "na, see TPNURSI",
+    default_missing_labels[c("-1")],
+    `1` = "somatic",
+    `2` = "psychogeriatric"
+  ),
+  tpnursh = c(
+    `-2` = "na, see TPNURSI",
+    default_missing_labels[c("-1")]
+  ),
+  tpnursi = c(
+    `-2` = "na, see TPRIOYN",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpperch = c(
+    `-2` = "na, see TPPERSC",
+    default_missing_labels[c("-1")]
+  ),
+  tppersc = c(
+    `-2` = "na, see TPHOMEC",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tprioot = c(
+    `-2` = "na, see TPRIOYN",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
   tprioyn = c(
-    `-1` = "na, asked",
-    `1` = "no",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1")],
     `2` = "no, but expect one soon",
     `3` = "yes",
     `4` = "answer 2 + 3"
   ),
-  tpuf24c = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpufdac = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpufgui = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpufntc = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-  tpufssc = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
+  tpuf24c = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpufdac = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpufgui = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpufntc = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
+  tpufssc = c(
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2")]
+  ),
   tpurgyn = c(
     `-2` = "na, see TPRIOYN",
-    `-1` = "na, asked",
-    `1` = "no",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1")],
     `2` = "yes, urgent",
     `3` = "yes, very urgent"
   )
@@ -142,29 +251,7 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tpadapt",
-    "tpappli",
-    "tpdisth",
-    "tpdistr",
-    "tpdomch",
-    "tpdomec",
-    "tpelddn",
-    "tpeldeh",
-    "tpelder",
-    "tphomec",
-    "tpmeal",
-    "tpmealn",
-    "tpnurdn",
-    "tpnursd",
-    "tpnursh",
-    "tpnursi",
-    "tpperch",
-    "tppersc",
-    "tprioot",
-    "tprioyn",
-    "tpurgyn"
-  )],
+    standardized_value_labels,
     tpadapt = .replace_labels(
     standardized_value_labels$tpadapt,
     `-2` = "na, see ETPRIOYN"
@@ -247,29 +334,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "tpadapt",
-    "tpappli",
-    "tpdisth",
-    "tpdistr",
-    "tpdomch",
-    "tpdomec",
-    "tpelddn",
-    "tpeldeh",
-    "tpelder",
-    "tphomec",
-    "tpmeal",
-    "tpmealn",
-    "tpnurdn",
-    "tpnursd",
-    "tpnursh",
-    "tpnursi",
-    "tpperch",
-    "tppersc",
-    "tprioot",
-    "tprioyn",
-    "tpurgyn"
-  )],
+    standardized_value_labels,
     tpadapt = .replace_labels(
     standardized_value_labels$tpadapt,
     `-2` = "na, see FTPRIOYN"
@@ -351,8 +416,8 @@ value_labels_list <- list(
     `-2` = "na, see FTPRIOYN"
   )
   ),
-  Wave_J_labels = standardized_value_labels[c("tpuf24c", "tpufdac", "tpufgui", "tpufntc", "tpufssc")],
-  Wave_K_labels = standardized_value_labels[c("tpuf24c", "tpufdac", "tpufgui", "tpufntc", "tpufssc")],
+  Wave_J_labels = standardized_value_labels,
+  Wave_K_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -385,9 +450,12 @@ var_types_vec <- c(
   tpurgyn = "categorical"
 )
 
-.lasa_fc_610 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "610", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "610", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "610", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "610", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_610 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

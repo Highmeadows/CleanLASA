@@ -29,8 +29,12 @@ harmonized_labels <- c(
   mwalkrill = "Walkingroute: illumination"
 )
 
-variable_labels_list <- list(
-  Wave_C_labels = harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
     "mbathhand",
     "mbathshand",
     "mbathslp",
@@ -50,9 +54,27 @@ variable_labels_list <- list(
     "mstairturn",
     "mwalkfootb",
     "mwalklightsw"
-  )],
-  Wave_D_labels = harmonized_labels[c("mbathshand", "mkitcup", "mwalkrill")],
+  ),
+  `D` = c(
+    "mbathshand",
+    "mkitcup",
+    "mwalkrill"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_C_labels = harmonized_labels,
+  Wave_D_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
+)
+
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "no",
+  `2` = "yes",
+  `3` = "not applicable"
 )
 
 standardized_value_labels <- list(
@@ -60,187 +82,127 @@ standardized_value_labels <- list(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mbathshand = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
   ),
   mbathslp = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mbedswtch = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mkitcup = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
   ),
   mkitstpl = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mkitstplbr = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mkitucup = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mkituwin = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mkitwin = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mlivcarp = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mlivwksp = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mstairhand = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mstairlmat = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mstairrgh = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mstairslmat = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mstairturn = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mwalkfootb = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mwalklightsw = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
     `-1` = "no valid answer",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_answer_labels[c("1", "2", "3")]
   ),
   mwalkrill = c(
     `-5` = "interview terminated",
     `-2` = "not asked, routing",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes",
-    `3` = "not applicable"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3")]
   )
 )
 
 value_labels_list <- list(
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "mbathhand",
-    "mbathshand",
-    "mbathslp",
-    "mbedswtch",
-    "mkitcup",
-    "mkitstpl",
-    "mkitstplbr",
-    "mkitucup",
-    "mkituwin",
-    "mkitwin",
-    "mlivcarp",
-    "mlivwksp",
-    "mstairhand",
-    "mstairlmat",
-    "mstairrgh",
-    "mstairslmat",
-    "mstairturn",
-    "mwalkfootb",
-    "mwalklightsw"
-  )],
+    standardized_value_labels,
     mbathshand = .replace_labels(
     standardized_value_labels$mbathshand,
     `-1` = "no valid answer"
@@ -250,7 +212,7 @@ value_labels_list <- list(
     `-1` = "no valid answer"
   )
   ),
-  Wave_D_labels = standardized_value_labels[c("mbathshand", "mkitcup", "mwalkrill")],
+  Wave_D_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -277,9 +239,12 @@ var_types_vec <- c(
   mwalkrill = "categorical"
 )
 
-.lasa_fc_180 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "180", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "180", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "180", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "180", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_180 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

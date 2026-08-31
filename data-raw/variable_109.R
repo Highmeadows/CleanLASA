@@ -22,6 +22,58 @@ harmonized_labels <- c(
   qpchc18 = "Perceived control in health care: I am able to carry out the recommendations I am prescribed by my healthcare professional(s)"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `I` = c(
+    "qpchc05",
+    "qpchc06",
+    "qpchc07",
+    "qpchc08",
+    "qpchc09",
+    "qpchc10",
+    "qpchc11",
+    "qpchc12",
+    "qpchc13",
+    "qpchc14",
+    "qpchc15",
+    "qpchc17",
+    "qpchc18"
+  ),
+  `J` = c(
+    "qpchc05",
+    "qpchc06",
+    "qpchc07",
+    "qpchc08",
+    "qpchc09",
+    "qpchc10",
+    "qpchc11",
+    "qpchc12",
+    "qpchc13",
+    "qpchc14",
+    "qpchc15",
+    "qpchc17",
+    "qpchc18"
+  ),
+  `K` = c(
+    "qpchc05",
+    "qpchc06",
+    "qpchc07",
+    "qpchc08",
+    "qpchc09",
+    "qpchc10",
+    "qpchc11",
+    "qpchc12",
+    "qpchc13",
+    "qpchc14",
+    "qpchc15",
+    "qpchc17",
+    "qpchc18"
+  )
+)
+
 variable_labels_list <- list(
   Wave_I_labels = harmonized_labels,
   Wave_J_labels = harmonized_labels,
@@ -29,111 +81,70 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "strongly disagree",
+  `2` = "disagree",
+  `3` = "no (dis)agreement",
+  `4` = "agree",
+  `5` = "strongly agree"
+)
+
 standardized_value_labels <- list(
   qpchc05 = c(
-    `-1` = "no answer",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no (dis)agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qpchc06 = c(
-    `-1` = "no answer",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no (dis)agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qpchc07 = c(
-    `-1` = "no answer",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no (dis)agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qpchc08 = c(
-    `-1` = "no answer",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no (dis)agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qpchc09 = c(
-    `-1` = "no answer",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no (dis)agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qpchc10 = c(
-    `-1` = "no answer",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no (dis)agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qpchc11 = c(
-    `-1` = "no answer",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no (dis)agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qpchc12 = c(
-    `-1` = "no answer",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no (dis)agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qpchc13 = c(
-    `-1` = "no answer",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no (dis)agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qpchc14 = c(
-    `-1` = "no answer",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no (dis)agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qpchc15 = c(
-    `-1` = "no answer",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no (dis)agreement",
-    `4` = "agree",
-    `5` = "strongly agree"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")]
   ),
   qpchc17 = c(
-    `-1` = "no answer",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no (dis)agreement",
-    `4` = "agree",
-    `5` = "strongly agree",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")],
     `6` = "not applicable"
   ),
   qpchc18 = c(
-    `-1` = "no answer",
-    `1` = "strongly disagree",
-    `2` = "disagree",
-    `3` = "no (dis)agreement",
-    `4` = "agree",
-    `5` = "strongly agree",
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4", "5")],
     `6` = "not applicable"
   )
 )
@@ -161,9 +172,12 @@ var_types_vec <- c(
   qpchc18 = "categorical"
 )
 
-.lasa_fc_109 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "109", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "109", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "109", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "109", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_109 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

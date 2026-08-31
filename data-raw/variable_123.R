@@ -34,6 +34,175 @@ harmonized_labels <- c(
   qdpq25 = "DPQ 25: inconvenience"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
+    "qdpq01",
+    "qdpq02",
+    "qdpq03",
+    "qdpq04",
+    "qdpq05",
+    "qdpq06",
+    "qdpq07",
+    "qdpq08",
+    "qdpq09",
+    "qdpq10",
+    "qdpq11",
+    "qdpq12",
+    "qdpq13",
+    "qdpq14",
+    "qdpq15",
+    "qdpq16",
+    "qdpq17",
+    "qdpq18",
+    "qdpq19",
+    "qdpq20",
+    "qdpq21",
+    "qdpq22",
+    "qdpq23",
+    "qdpq24",
+    "qdpq25"
+  ),
+  `C` = c(
+    "qdpq01",
+    "qdpq02",
+    "qdpq03",
+    "qdpq04",
+    "qdpq05",
+    "qdpq06",
+    "qdpq07",
+    "qdpq08",
+    "qdpq09",
+    "qdpq10",
+    "qdpq11",
+    "qdpq12",
+    "qdpq13",
+    "qdpq14",
+    "qdpq15",
+    "qdpq16",
+    "qdpq17",
+    "qdpq18",
+    "qdpq19",
+    "qdpq20",
+    "qdpq21",
+    "qdpq22",
+    "qdpq23",
+    "qdpq24",
+    "qdpq25"
+  ),
+  `D` = c(
+    "qdpq01",
+    "qdpq02",
+    "qdpq03",
+    "qdpq04",
+    "qdpq05",
+    "qdpq06",
+    "qdpq07",
+    "qdpq08",
+    "qdpq09",
+    "qdpq10",
+    "qdpq11",
+    "qdpq12",
+    "qdpq13",
+    "qdpq14",
+    "qdpq15",
+    "qdpq16",
+    "qdpq17",
+    "qdpq18",
+    "qdpq19",
+    "qdpq20",
+    "qdpq21",
+    "qdpq22",
+    "qdpq23",
+    "qdpq24",
+    "qdpq25"
+  ),
+  `E` = c(
+    "qdpq01",
+    "qdpq02",
+    "qdpq03",
+    "qdpq04",
+    "qdpq05",
+    "qdpq06",
+    "qdpq07",
+    "qdpq08",
+    "qdpq09",
+    "qdpq10",
+    "qdpq11",
+    "qdpq12",
+    "qdpq13",
+    "qdpq14",
+    "qdpq15",
+    "qdpq16",
+    "qdpq17",
+    "qdpq18",
+    "qdpq19",
+    "qdpq20",
+    "qdpq21",
+    "qdpq22",
+    "qdpq23",
+    "qdpq24",
+    "qdpq25"
+  ),
+  `2B` = c(
+    "qdpq01",
+    "qdpq02",
+    "qdpq03",
+    "qdpq04",
+    "qdpq05",
+    "qdpq06",
+    "qdpq07",
+    "qdpq08",
+    "qdpq09",
+    "qdpq10",
+    "qdpq11",
+    "qdpq12",
+    "qdpq13",
+    "qdpq14",
+    "qdpq15",
+    "qdpq16",
+    "qdpq17",
+    "qdpq18",
+    "qdpq19",
+    "qdpq20",
+    "qdpq21",
+    "qdpq22",
+    "qdpq23",
+    "qdpq24",
+    "qdpq25"
+  ),
+  `3B` = c(
+    "qdpq01",
+    "qdpq02",
+    "qdpq03",
+    "qdpq04",
+    "qdpq05",
+    "qdpq06",
+    "qdpq07",
+    "qdpq08",
+    "qdpq09",
+    "qdpq10",
+    "qdpq11",
+    "qdpq12",
+    "qdpq13",
+    "qdpq14",
+    "qdpq15",
+    "qdpq16",
+    "qdpq17",
+    "qdpq18",
+    "qdpq19",
+    "qdpq20",
+    "qdpq21",
+    "qdpq22",
+    "qdpq23",
+    "qdpq24",
+    "qdpq25"
+  )
+)
+
 variable_labels_list <- list(
   Wave_B_labels = harmonized_labels,
   Wave_C_labels = harmonized_labels,
@@ -44,32 +213,116 @@ variable_labels_list <- list(
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "applicable",
+  `2` = "?",
+  `3` = "not applicable"
+)
+
 standardized_value_labels <- list(
-  qdpq01 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq02 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq03 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq04 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq05 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq06 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq07 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq08 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq09 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq10 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq11 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq12 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq13 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq14 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq15 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq16 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq17 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq18 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq19 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq20 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq21 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq22 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq23 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq24 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable"),
-  qdpq25 = c(`-1` = "not available", `1` = "applicable", `2` = "?", `3` = "not applicable")
+  qdpq01 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq02 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq03 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq04 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq05 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq06 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq07 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq08 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq09 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq10 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq11 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq12 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq13 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq14 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq15 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq16 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq17 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq18 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq19 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq20 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq21 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq22 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq23 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq24 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  ),
+  qdpq25 = c(
+    `-1` = "not available",
+    default_answer_labels[c("1", "2", "3")]
+  )
 )
 
 value_labels_list <- list(
@@ -722,9 +975,12 @@ var_types_vec <- c(
   qdpq25 = "categorical"
 )
 
-.lasa_fc_123 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "123", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "123", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "123", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "123", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_123 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

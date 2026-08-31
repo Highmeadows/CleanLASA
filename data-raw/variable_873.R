@@ -37,6 +37,43 @@ harmonized_labels <- c(
   u_haplo = "Haplotype of block 5 (recoded)"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
+    "b_hap",
+    "b_hap1",
+    "b_hap2",
+    "b_hap3",
+    "b_hap4",
+    "b_hap5",
+    "bat_hap",
+    "bat_hap1",
+    "bat_hap2",
+    "bat_hap3",
+    "bat_hap4",
+    "ea1_hap",
+    "ea2_hap",
+    "ea3_hap",
+    "ea_hap",
+    "grhap1",
+    "grhap2",
+    "grhap3",
+    "grhap4",
+    "grhap5",
+    "grhap6",
+    "grhap_a",
+    "grhap_b",
+    "u1_hap",
+    "u2_hap",
+    "u3_hap",
+    "u4_hap",
+    "u_haplo"
+  )
+)
+
 variable_labels_list <- list(
   Wave_C_labels = .replace_labels(
     harmonized_labels,
@@ -104,7 +141,7 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_C_labels = standardized_value_labels[character(0)],
+  Wave_C_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -139,7 +176,7 @@ var_types_vec <- c(
   u_haplo = "categorical"
 )
 
-.lasa_fc_873 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "873", waves = .lasa_wave_rows()) |>
     .override_label(wave = "C", variable = "b_hap", override_value = "b_hap") |>
     .override_label(wave = "C", variable = "b_hap1", override_value = "b_hap1") |>
@@ -173,3 +210,35 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "873", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "873", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["b_hap"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["b_hap1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["b_hap2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["b_hap3"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["b_hap4"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["b_hap5"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["bat_hap"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["bat_hap1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["bat_hap2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["bat_hap3"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["bat_hap4"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["ea1_hap"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["ea2_hap"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["ea3_hap"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["ea_hap"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["grhap1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["grhap2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["grhap3"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["grhap4"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["grhap5"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["grhap6"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["grhap_a"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["grhap_b"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["u1_hap"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["u2_hap"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["u3_hap"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["u4_hap"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["u_haplo"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+
+.lasa_fc_873 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

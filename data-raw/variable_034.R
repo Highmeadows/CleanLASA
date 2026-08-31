@@ -57,9 +57,12 @@ harmonized_labels <- c(
   walk19 = "Test terminated: reason"
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels[c(
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `B` = c(
     "button1",
     "button2",
     "button3",
@@ -98,7 +101,489 @@ variable_labels_list <- list(
     "walk17",
     "walk18",
     "walk19"
-  )],
+  ),
+  `C` = c(
+    "cardig1",
+    "cardig2",
+    "cardig3",
+    "cardig4",
+    "cardig5",
+    "cardig6",
+    "cardig7",
+    "cardig8",
+    "cardig9",
+    "chair1",
+    "chair2",
+    "chair3",
+    "chair4",
+    "chair5",
+    "chair6",
+    "chair7",
+    "chair8",
+    "chair9",
+    "rmpf",
+    "tandem1",
+    "tandem2",
+    "walk01",
+    "walk02",
+    "walk03",
+    "walk04",
+    "walk05",
+    "walk06",
+    "walk07",
+    "walk08",
+    "walk09",
+    "walk10",
+    "walk11",
+    "walk12",
+    "walk13",
+    "walk14",
+    "walk15",
+    "walk16",
+    "walk17",
+    "walk18",
+    "walk19"
+  ),
+  `D` = c(
+    "cardig1",
+    "cardig2",
+    "cardig3",
+    "cardig4",
+    "cardig5",
+    "cardig6",
+    "cardig7",
+    "cardig8",
+    "cardig9",
+    "chair1",
+    "chair2",
+    "chair3",
+    "chair4",
+    "chair5",
+    "chair6",
+    "chair7",
+    "chair8",
+    "chair9",
+    "rmpf",
+    "tandem1",
+    "tandem2",
+    "walk01",
+    "walk02",
+    "walk03",
+    "walk04",
+    "walk05",
+    "walk06",
+    "walk07",
+    "walk08",
+    "walk09",
+    "walk10",
+    "walk11",
+    "walk12",
+    "walk13",
+    "walk14",
+    "walk15",
+    "walk16",
+    "walk17",
+    "walk18",
+    "walk19"
+  ),
+  `E` = c(
+    "cardig1",
+    "cardig2",
+    "cardig3",
+    "cardig4",
+    "cardig5",
+    "cardig6",
+    "cardig7",
+    "cardig8",
+    "cardig9",
+    "chair1",
+    "chair2",
+    "chair3",
+    "chair4",
+    "chair5",
+    "chair6",
+    "chair7",
+    "chair8",
+    "chair9",
+    "rmpf",
+    "tandem1",
+    "tandem2",
+    "walk01",
+    "walk02",
+    "walk03",
+    "walk04",
+    "walk05",
+    "walk06",
+    "walk07",
+    "walk08",
+    "walk09",
+    "walk10",
+    "walk11",
+    "walk12",
+    "walk13",
+    "walk14",
+    "walk15",
+    "walk16",
+    "walk17",
+    "walk18",
+    "walk19"
+  ),
+  `2B` = c(
+    "cardig1",
+    "cardig2",
+    "cardig3",
+    "cardig4",
+    "cardig5",
+    "cardig6",
+    "cardig7",
+    "cardig8",
+    "cardig9",
+    "chair1",
+    "chair2",
+    "chair3",
+    "chair4",
+    "chair5",
+    "chair6",
+    "chair7",
+    "chair8",
+    "chair9",
+    "rmpf",
+    "walk01",
+    "walk02",
+    "walk03",
+    "walk04",
+    "walk05",
+    "walk06",
+    "walk07",
+    "walk08",
+    "walk09",
+    "walk10",
+    "walk11",
+    "walk12",
+    "walk13",
+    "walk14",
+    "walk15",
+    "walk16",
+    "walk17",
+    "walk18",
+    "walk19"
+  ),
+  `F` = c(
+    "cardig1",
+    "cardig2",
+    "cardig3",
+    "cardig4",
+    "cardig5",
+    "cardig6",
+    "cardig7",
+    "cardig8",
+    "cardig9",
+    "chair1",
+    "chair2",
+    "chair3",
+    "chair4",
+    "chair5",
+    "chair6",
+    "chair7",
+    "chair8",
+    "chair9",
+    "rmpf",
+    "tandem1",
+    "tandem2",
+    "walk01",
+    "walk02",
+    "walk03",
+    "walk04",
+    "walk05",
+    "walk06",
+    "walk07",
+    "walk08",
+    "walk09",
+    "walk10",
+    "walk11",
+    "walk12",
+    "walk13",
+    "walk14",
+    "walk15",
+    "walk16",
+    "walk17",
+    "walk18",
+    "walk19"
+  ),
+  `G` = c(
+    "cardig1",
+    "cardig2",
+    "cardig3",
+    "cardig4",
+    "cardig5",
+    "cardig6",
+    "cardig7",
+    "cardig8",
+    "cardig9",
+    "chair1",
+    "chair2",
+    "chair3",
+    "chair4",
+    "chair5",
+    "chair6",
+    "chair7",
+    "chair8",
+    "chair9",
+    "rmpf",
+    "tandem1",
+    "tandem2",
+    "walk01",
+    "walk02",
+    "walk03",
+    "walk04",
+    "walk05",
+    "walk06",
+    "walk07",
+    "walk08",
+    "walk09",
+    "walk10",
+    "walk11",
+    "walk12",
+    "walk13",
+    "walk14",
+    "walk15",
+    "walk16",
+    "walk17",
+    "walk18",
+    "walk19"
+  ),
+  `H` = c(
+    "cardig1",
+    "cardig2",
+    "cardig3",
+    "cardig4",
+    "cardig5",
+    "cardig6",
+    "cardig7",
+    "cardig8",
+    "cardig9",
+    "chair1",
+    "chair2",
+    "chair3",
+    "chair4",
+    "chair5",
+    "chair6",
+    "chair7",
+    "chair8",
+    "chair9",
+    "rmpf",
+    "tandem1",
+    "tandem2",
+    "walk01",
+    "walk02",
+    "walk03",
+    "walk04",
+    "walk04a",
+    "walk06",
+    "walk07",
+    "walk08",
+    "walk09",
+    "walk10",
+    "walk11",
+    "walk12",
+    "walk13",
+    "walk14",
+    "walk15",
+    "walk16",
+    "walk17",
+    "walk17a",
+    "walk18",
+    "walk19"
+  ),
+  `3B` = c(
+    "cardig1",
+    "cardig2",
+    "cardig3",
+    "cardig4",
+    "cardig5",
+    "cardig6",
+    "cardig7",
+    "cardig8",
+    "cardig9",
+    "chair1",
+    "chair10",
+    "chair2",
+    "chair3",
+    "chair4",
+    "chair5",
+    "chair6",
+    "chair7",
+    "rmpf",
+    "tandem1",
+    "tandem2",
+    "walk01",
+    "walk02",
+    "walk03",
+    "walk04",
+    "walk04a",
+    "walk06",
+    "walk07",
+    "walk09",
+    "walk10",
+    "walk11",
+    "walk12",
+    "walk13",
+    "walk14",
+    "walk15",
+    "walk16",
+    "walk17",
+    "walk17a",
+    "walk18",
+    "walk19"
+  ),
+  `MB` = c(
+    "chair1",
+    "chair10",
+    "chair2",
+    "chair3",
+    "chair4",
+    "chair5",
+    "chair6",
+    "chair7",
+    "rmpf",
+    "tandem1",
+    "tandem2",
+    "walk01",
+    "walk02",
+    "walk03",
+    "walk04",
+    "walk04a",
+    "walk06",
+    "walk07",
+    "walk09",
+    "walk10",
+    "walk11",
+    "walk12",
+    "walk13",
+    "walk14",
+    "walk15",
+    "walk16",
+    "walk17",
+    "walk17a",
+    "walk18",
+    "walk19"
+  ),
+  `I` = c(
+    "cardig1",
+    "cardig4",
+    "cardig5",
+    "cardig8",
+    "cardig9",
+    "chair1",
+    "chair2",
+    "chair3",
+    "chair4",
+    "chair5",
+    "chair6",
+    "chair7",
+    "rmpf",
+    "tandem1",
+    "tandem2",
+    "walk01",
+    "walk02",
+    "walk03",
+    "walk04",
+    "walk04a",
+    "walk06",
+    "walk07",
+    "walk09",
+    "walk10",
+    "walk11",
+    "walk12",
+    "walk13",
+    "walk14",
+    "walk15",
+    "walk16",
+    "walk17",
+    "walk17a",
+    "walk18",
+    "walk19"
+  ),
+  `J` = c(
+    "cardig1",
+    "cardig4",
+    "cardig5",
+    "cardig8",
+    "cardig9",
+    "chair1",
+    "chair2",
+    "chair3",
+    "chair4",
+    "chair5",
+    "chair6",
+    "chair7",
+    "rmpf",
+    "tandem1",
+    "tandem2",
+    "tandem3",
+    "tandem4",
+    "walk01",
+    "walk02",
+    "walk03",
+    "walk04",
+    "walk04a",
+    "walk06",
+    "walk07",
+    "walk09",
+    "walk10",
+    "walk11",
+    "walk12",
+    "walk13",
+    "walk14",
+    "walk15",
+    "walk16",
+    "walk17",
+    "walk17a",
+    "walk18",
+    "walk19"
+  ),
+  `K` = c(
+    "cardig1",
+    "cardig4",
+    "cardig5",
+    "cardig8",
+    "cardig9",
+    "chair1",
+    "chair2",
+    "chair3",
+    "chair4",
+    "chair5",
+    "chair6",
+    "chair7",
+    "rmpf",
+    "tandem1",
+    "tandem2",
+    "tandem3",
+    "tandem4",
+    "walk01",
+    "walk02",
+    "walk03",
+    "walk04",
+    "walk06",
+    "walk07",
+    "walk09",
+    "walk10",
+    "walk11",
+    "walk12",
+    "walk13",
+    "walk14",
+    "walk15",
+    "walk16",
+    "walk17",
+    "walk17a",
+    "walk18",
+    "walk19"
+  )
+)
+
+variable_labels_list <- list(
+  Wave_B_labels = .replace_labels(
+    harmonized_labels,
     cardig1 = "Cardigan: phase 1 elbow",
     cardig2 = "Cardigan: phase 2 shoulder",
     cardig3 = "Cardigan: phase 3 other arm",
@@ -115,507 +600,46 @@ variable_labels_list <- list(
     walk17 = "Observation: walk irregular",
     walk18 = "Observation: other"
   ),
-  Wave_C_labels = harmonized_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "chair8",
-    "chair9",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk05",
-    "walk06",
-    "walk07",
-    "walk08",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk18",
-    "walk19"
-  )],
-  Wave_D_labels = harmonized_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "chair8",
-    "chair9",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk05",
-    "walk06",
-    "walk07",
-    "walk08",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk18",
-    "walk19"
-  )],
-  Wave_E_labels = harmonized_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "chair8",
-    "chair9",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk05",
-    "walk06",
-    "walk07",
-    "walk08",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk18",
-    "walk19"
-  )],
-  Wave_2B_labels = harmonized_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "chair8",
-    "chair9",
-    "rmpf",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk05",
-    "walk06",
-    "walk07",
-    "walk08",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk18",
-    "walk19"
-  )],
-  Wave_F_labels = harmonized_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "chair8",
-    "chair9",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk05",
-    "walk06",
-    "walk07",
-    "walk08",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk18",
-    "walk19"
-  )],
-  Wave_G_labels = harmonized_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "chair8",
-    "chair9",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk05",
-    "walk06",
-    "walk07",
-    "walk08",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk18",
-    "walk19"
-  )],
-  Wave_H_labels = harmonized_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "chair8",
-    "chair9",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk04a",
-    "walk06",
-    "walk07",
-    "walk08",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk17a",
-    "walk18",
-    "walk19"
-  )],
-  Wave_3B_labels = harmonized_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair10",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk04a",
-    "walk06",
-    "walk07",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk17a",
-    "walk18",
-    "walk19"
-  )],
-  Wave_MB_labels = harmonized_labels[c(
-    "chair1",
-    "chair10",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk04a",
-    "walk06",
-    "walk07",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk17a",
-    "walk18",
-    "walk19"
-  )],
+  Wave_C_labels = harmonized_labels,
+  Wave_D_labels = harmonized_labels,
+  Wave_E_labels = harmonized_labels,
+  Wave_2B_labels = harmonized_labels,
+  Wave_F_labels = harmonized_labels,
+  Wave_G_labels = harmonized_labels,
+  Wave_H_labels = harmonized_labels,
+  Wave_3B_labels = harmonized_labels,
+  Wave_MB_labels = harmonized_labels,
   Wave_I_labels = .replace_labels(
-    harmonized_labels[c(
-    "cardig1",
-    "cardig4",
-    "cardig5",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk04a",
-    "walk06",
-    "walk07",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk17a",
-    "walk18",
-    "walk19"
-  )],
+    harmonized_labels,
     cardig1 = "put on cardigan",
     cardig5 = "take off cardigan"
   ),
   Wave_J_labels = .replace_labels(
-    harmonized_labels[c(
-    "cardig1",
-    "cardig4",
-    "cardig5",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "tandem3",
-    "tandem4",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk04a",
-    "walk06",
-    "walk07",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk17a",
-    "walk18",
-    "walk19"
-  )],
+    harmonized_labels,
     cardig1 = "put on cardigan",
     cardig5 = "take off cardigan"
   ),
-  Wave_K_labels = harmonized_labels[c(
-    "cardig1",
-    "cardig4",
-    "cardig5",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "tandem3",
-    "tandem4",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk06",
-    "walk07",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk17a",
-    "walk18",
-    "walk19"
-  )],
+  Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
+)
+
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "mentioned"
 )
 
 standardized_value_labels <- list(
   button1 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "completed without help",
     `2` = "completed with help",
     `3` = "terminated",
     `4` = "not done"
   ),
   button2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "completed without help",
     `2` = "completed with help",
     `3` = "terminated",
@@ -624,34 +648,26 @@ standardized_value_labels <- list(
   ),
   button3 = c(
     `-6` = "not available, no measurement",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   cardig1 = c(
     `-7` = "not available, technical reason",
     `-6` = "not available, test not done",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "completed without help",
     `2` = "completed with help",
     `3` = "terminated",
     `4` = "not done"
   ),
   cardig2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "completed without help",
     `2` = "completed with help",
     `3` = "terminated",
     `4` = "not done"
   ),
   cardig3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "completed without help",
     `2` = "completed with help",
     `3` = "terminated",
@@ -659,30 +675,25 @@ standardized_value_labels <- list(
   ),
   cardig4 = c(
     `-6` = "not available, no measurement",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available"
   ),
   cardig5 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "completed without help",
     `2` = "completed with help",
     `3` = "terminated",
     `4` = "not done"
   ),
   cardig6 = c(
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `1` = "completed without help",
     `2` = "completed with help",
     `3` = "terminated",
     `4` = "not done"
   ),
   cardig7 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "completed without help",
     `2` = "completed with help",
     `3` = "terminated",
@@ -690,31 +701,25 @@ standardized_value_labels <- list(
   ),
   cardig8 = c(
     `-6` = "not available, no measurement",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available"
   ),
   cardig9 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "standing",
     `2` = "sitting",
-    `3` = "coding category 3",
+    `3` = "label varies by wave",
     `4` = "other way"
   ),
   chair1 = c(
     `-6` = "not available, test not done",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   chair10 = c(
     `-6` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-2", "-1")],
     `0` = "no hurt",
     `2` = "hurts a little bit",
     `4` = "hurts a little more",
@@ -723,25 +728,19 @@ standardized_value_labels <- list(
     `10` = "hurts worst"
   ),
   chair2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
   chair3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "slides forward without using arms",
     `2` = "slides forward using arms",
     `3` = "cannot slide forward",
     `4` = "not done/terminated"
   ),
   chair4 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "succeeded without using arms",
     `2` = "succeeded using arms",
     `3` = "cannot",
@@ -749,35 +748,25 @@ standardized_value_labels <- list(
   ),
   chair5 = c(
     `-6` = "not available, test not done",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no: five times completed",
     `2` = "no: less than five times",
     `3` = "yes: less than five times"
   ),
   chair6 = c(
     `-6` = "not available, no measurement",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   chair7 = c(
     `-6` = "not available, no measurement",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   chair8 = c(
     `-6` = "not available, no measurement",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   chair9 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes"
   ),
@@ -789,25 +778,19 @@ standardized_value_labels <- list(
   ),
   tandem1 = c(
     `-6` = "not available, test not done",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "normal test",
     `2` = "not capable",
-    `3` = "coding category 3",
+    `3` = "label varies by wave",
     `4` = "stops within 3 sec.",
     `5` = "refusal",
     `6` = "physical impossible"
   ),
   tandem2 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   tandem3 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "normal test",
     `2` = "not capable",
     `3` = "immediately steps out of position (in less than 1 second)",
@@ -815,15 +798,11 @@ standardized_value_labels <- list(
     `6` = "physical impossible"
   ),
   tandem4 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked"
+    default_missing_labels[c("-3", "-2", "-1")]
   ),
   walk01 = c(
     `-6` = "not available, test not done",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no restrictions",
     `2` = "in wheelchair",
     `3` = "recent surgery",
@@ -831,155 +810,119 @@ standardized_value_labels <- list(
     `5` = "other"
   ),
   walk02 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "respondent already walked",
     `2` = "can walk (with aid)",
     `3` = "can walk with aid not available",
     `4` = "cannot walk"
   ),
   walk03 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "no",
     `2` = "yes",
     `3` = "terminated"
   ),
   walk04 = c(
     `-6` = "not available, no measurement",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available"
   ),
   walk04a = c(
     `-6` = "not available, no measurement",
     `-3` = "not available, born after 1940",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-2")],
     `-1` = "not available, no valid answer"
   ),
   walk05 = c(
     `-6` = "not available, no measurement",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
+    default_missing_labels[c("-3", "-2")],
     `-1` = "not available"
   ),
   walk06 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "walkingbar",
     `2` = "stick",
-    `3` = "coding category 3",
-    `4` = "coding category 4",
-    `5` = "coding category 5",
+    `3` = "label varies by wave",
+    `4` = "label varies by wave",
+    `5` = "label varies by wave",
     `6` = "none"
   ),
   walk07 = c(
     `-6` = "not available, wrong skip",
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "no hurt",
     `1` = "no",
-    `2` = "performance category 2",
+    `2` = "label varies by wave",
     `4` = "hurts a little more",
     `6` = "hurts even more",
     `8` = "hurts a whole lot",
     `10` = "hurts worst"
   ),
   walk08 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "parquet/tiles",
     `2` = "low carpet",
     `3` = "high carpet",
     `4` = "not done/terminated"
   ),
   walk09 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "no",
-    `1` = "coding category 1",
+    `1` = "label varies by wave",
     `2` = "yes"
   ),
   walk10 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   walk11 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   walk12 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   walk13 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   walk14 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   walk15 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   walk16 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   walk17 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   walk17a = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   walk18 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `0` = "not mentioned",
-    `1` = "mentioned"
+    default_answer_labels[c("1")]
   ),
   walk19 = c(
-    `-3` = "not available, wrong skip",
-    `-2` = "not available, routing",
-    `-1` = "not available, asked",
+    default_missing_labels[c("-3", "-2", "-1")],
     `1` = "not enough room/time",
     `2` = "respondent refused",
     `3` = "exercise not safe",
@@ -991,63 +934,19 @@ standardized_value_labels <- list(
 
 value_labels_list <- list(
   Wave_B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "button1",
-    "button2",
-    "button3",
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig7",
-    "cardig8",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "chair8",
-    "chair9",
-    "rmpf",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk05",
-    "walk06",
-    "walk07",
-    "walk08",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk18",
-    "walk19"
-  )],
+    standardized_value_labels,
     button1 = .replace_labels(
     standardized_value_labels$button1,
-    `-2` = "na, see BRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see BRMPF"
   ),
     button2 = .replace_labels(
     standardized_value_labels$button2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BBUTTON1",
-    `-1` = "na, asked"
+    `-2` = "na, see BBUTTON1"
   ),
     button3 = .replace_labels(
     standardized_value_labels$button3,
     `-6` = "na, no measuring",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BBUTTON2",
-    `-1` = "na, asked"
+    `-2` = "na, see BBUTTON2"
   ),
     cardig1 = c(
     `-6` = "na, test not done",
@@ -1060,42 +959,31 @@ value_labels_list <- list(
   ),
     cardig2 = .replace_labels(
     standardized_value_labels$cardig2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see BCARDIG1"
   ),
     cardig3 = .replace_labels(
     standardized_value_labels$cardig3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BCARDIG2",
-    `-1` = "na, asked"
+    `-2` = "na, see BCARDIG2"
   ),
     cardig4 = .replace_labels(
     standardized_value_labels$cardig4,
     `-6` = "na, no measuring",
-    `-3` = "na, wrong skip",
     `-2` = "na, see BCARDIG3",
     `-1` = "na, asked"
   ),
     cardig7 = .replace_labels(
     standardized_value_labels$cardig7,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see BCARDIG1"
   ),
     cardig8 = c(`-3` = "na, wrong skip", `-2` = "na, see BCARDIG7", `-1` = "na, asked"),
     chair1 = c(`-2` = "na, see BRMPF", `-1` = "na, asked", `1` = "no", `2` = "yes"),
     chair2 = .replace_labels(
     standardized_value_labels$chair2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BCHAIR1",
-    `-1` = "na, asked"
+    `-2` = "na, see BCHAIR1"
   ),
     chair3 = .replace_labels(
     standardized_value_labels$chair3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BCHAIR2",
-    `-1` = "na, asked"
+    `-2` = "na, see BCHAIR2"
   ),
     chair4 = c(
     `-3` = "na, wrong skip",
@@ -1116,23 +1004,17 @@ value_labels_list <- list(
     chair6 = .replace_labels(
     standardized_value_labels$chair6,
     `-6` = "na, no measuring",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BCHAIR4",
-    `-1` = "na, asked"
+    `-2` = "na, see BCHAIR4"
   ),
     chair7 = .replace_labels(
     standardized_value_labels$chair7,
     `-6` = "na, no measuring",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BCHAIR4",
-    `-1` = "na, asked"
+    `-2` = "na, see BCHAIR4"
   ),
     chair8 = c(`-3` = "na, wrong skip", `-2` = "na, see BCHAIR4", `-1` = "na, asked"),
     chair9 = .replace_labels(
     standardized_value_labels$chair9,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BCHAIR4",
-    `-1` = "na, asked"
+    `-2` = "na, see BCHAIR4"
   ),
     rmpf = c(`-2` = "valid score", `1` = "short version", `2` = "interview terminated"),
     walk01 = c(
@@ -1146,27 +1028,21 @@ value_labels_list <- list(
   ),
     walk02 = .replace_labels(
     standardized_value_labels$walk02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BWALK01",
-    `-1` = "na, asked"
+    `-2` = "na, see BWALK01"
   ),
     walk03 = .replace_labels(
     standardized_value_labels$walk03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BWALK01 & 02",
-    `-1` = "na, asked"
+    `-2` = "na, see BWALK01 & 02"
   ),
     walk04 = .replace_labels(
     standardized_value_labels$walk04,
     `-6` = "na, no measuring",
-    `-3` = "na, wrong skip",
     `-2` = "na, see BWALK03",
     `-1` = "na, asked"
   ),
     walk05 = .replace_labels(
     standardized_value_labels$walk05,
     `-6` = "na, no measuring",
-    `-3` = "na, wrong skip",
     `-2` = "na, see BWALK03",
     `-1` = "na, asked"
   ),
@@ -1188,9 +1064,7 @@ value_labels_list <- list(
   ),
     walk08 = .replace_labels(
     standardized_value_labels$walk08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BWALK02",
-    `-1` = "na, asked"
+    `-2` = "na, see BWALK02"
   ),
     walk09 = c(
     `-3` = "na, wrong skip",
@@ -1201,146 +1075,76 @@ value_labels_list <- list(
   ),
     walk10 = .replace_labels(
     standardized_value_labels$walk10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see BWALK09"
   ),
     walk11 = .replace_labels(
     standardized_value_labels$walk11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see BWALK09"
   ),
     walk12 = .replace_labels(
     standardized_value_labels$walk12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see BWALK09"
   ),
     walk13 = .replace_labels(
     standardized_value_labels$walk13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see BWALK09"
   ),
     walk14 = .replace_labels(
     standardized_value_labels$walk14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see BWALK09"
   ),
     walk15 = .replace_labels(
     standardized_value_labels$walk15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see BWALK09"
   ),
     walk16 = .replace_labels(
     standardized_value_labels$walk16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see BWALK09"
   ),
     walk17 = .replace_labels(
     standardized_value_labels$walk17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see BWALK09"
   ),
     walk18 = .replace_labels(
     standardized_value_labels$walk18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see BWALK09"
   ),
     walk19 = .replace_labels(
     standardized_value_labels$walk19,
-    `-3` = "na, wrong skip",
     `-2` = "na, see BWALK03",
-    `-1` = "na, asked",
     `2` = "R refused",
     `5` = "R did not understand"
   )
   ),
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "chair8",
-    "chair9",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk05",
-    "walk06",
-    "walk07",
-    "walk08",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk18",
-    "walk19"
-  )],
+    standardized_value_labels,
     cardig1 = .replace_labels(
     standardized_value_labels$cardig1,
     `-7` = "na, technical missing",
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF"
   ),
     cardig2 = .replace_labels(
     standardized_value_labels$cardig2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1"
   ),
     cardig3 = .replace_labels(
     standardized_value_labels$cardig3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2"
   ),
     cardig4 = .replace_labels(
     standardized_value_labels$cardig4,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
     `-1` = "no (valid) answer"
   ),
     cardig5 = .replace_labels(
     standardized_value_labels$cardig5,
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1"
   ),
     cardig6 = .replace_labels(
     standardized_value_labels$cardig6,
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5"
   ),
     cardig7 = c(
     `-2` = "na, see C/D/E/B/F/G/H/BCARDIG6",
@@ -1353,7 +1157,6 @@ value_labels_list <- list(
     cardig8 = .replace_labels(
     standardized_value_labels$cardig8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG5",
     `-1` = "no (valid) answer"
   ),
@@ -1367,21 +1170,15 @@ value_labels_list <- list(
     chair1 = .replace_labels(
     standardized_value_labels$chair1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     chair2 = .replace_labels(
     standardized_value_labels$chair2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1"
   ),
     chair3 = .replace_labels(
     standardized_value_labels$chair3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair4 = c(
     `-3` = "na, wrong skip",
@@ -1394,70 +1191,50 @@ value_labels_list <- list(
     chair5 = .replace_labels(
     standardized_value_labels$chair5,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4"
   ),
     chair6 = .replace_labels(
     standardized_value_labels$chair6,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair7 = .replace_labels(
     standardized_value_labels$chair7,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair8 = .replace_labels(
     standardized_value_labels$chair8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HCHAIR5"
   ),
     chair9 = .replace_labels(
     standardized_value_labels$chair9,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HCHAIR5"
   ),
     rmpf = c(`-2` = "valid score", `1` = "short version", `2` = "interview terminated"),
     tandem1 = .replace_labels(
     standardized_value_labels$tandem1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked",
     `3` = "falls almost direct"
   ),
     tandem2 = .replace_labels(
     standardized_value_labels$tandem2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1"
   ),
     walk01 = .replace_labels(
     standardized_value_labels$walk01,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     walk02 = .replace_labels(
     standardized_value_labels$walk02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01"
   ),
     walk03 = .replace_labels(
     standardized_value_labels$walk03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02"
   ),
     walk04 = c(
     `-6` = "na, no measurement",
@@ -1482,9 +1259,7 @@ value_labels_list <- list(
   ),
     walk08 = .replace_labels(
     standardized_value_labels$walk08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HWALK03",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HWALK03"
   ),
     walk09 = c(
     `-3` = "na, wrong skip",
@@ -1495,146 +1270,76 @@ value_labels_list <- list(
   ),
     walk10 = .replace_labels(
     standardized_value_labels$walk10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk11 = .replace_labels(
     standardized_value_labels$walk11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk12 = .replace_labels(
     standardized_value_labels$walk12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk13 = .replace_labels(
     standardized_value_labels$walk13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk14 = .replace_labels(
     standardized_value_labels$walk14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk15 = .replace_labels(
     standardized_value_labels$walk15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk16 = .replace_labels(
     standardized_value_labels$walk16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17 = .replace_labels(
     standardized_value_labels$walk17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk18 = .replace_labels(
     standardized_value_labels$walk18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk19 = .replace_labels(
     standardized_value_labels$walk19,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK03",
-    `-1` = "na, asked",
     `2` = "R refused",
     `5` = "R did not understand"
   )
   ),
   Wave_D_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "chair8",
-    "chair9",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk05",
-    "walk06",
-    "walk07",
-    "walk08",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk18",
-    "walk19"
-  )],
+    standardized_value_labels,
     cardig1 = .replace_labels(
     standardized_value_labels$cardig1,
     `-7` = "na, technical missing",
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF"
   ),
     cardig2 = .replace_labels(
     standardized_value_labels$cardig2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1"
   ),
     cardig3 = .replace_labels(
     standardized_value_labels$cardig3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2"
   ),
     cardig4 = .replace_labels(
     standardized_value_labels$cardig4,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
     `-1` = "no (valid) answer"
   ),
     cardig5 = .replace_labels(
     standardized_value_labels$cardig5,
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1"
   ),
     cardig6 = .replace_labels(
     standardized_value_labels$cardig6,
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5"
   ),
     cardig7 = c(
     `-2` = "na, see C/D/E/B/F/G/H/BCARDIG6",
@@ -1647,7 +1352,6 @@ value_labels_list <- list(
     cardig8 = .replace_labels(
     standardized_value_labels$cardig8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG5",
     `-1` = "no (valid) answer"
   ),
@@ -1662,21 +1366,15 @@ value_labels_list <- list(
     chair1 = .replace_labels(
     standardized_value_labels$chair1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     chair2 = .replace_labels(
     standardized_value_labels$chair2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1"
   ),
     chair3 = .replace_labels(
     standardized_value_labels$chair3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair4 = c(
     `-3` = "na, wrong skip",
@@ -1689,70 +1387,50 @@ value_labels_list <- list(
     chair5 = .replace_labels(
     standardized_value_labels$chair5,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4"
   ),
     chair6 = .replace_labels(
     standardized_value_labels$chair6,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair7 = .replace_labels(
     standardized_value_labels$chair7,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair8 = .replace_labels(
     standardized_value_labels$chair8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HCHAIR5"
   ),
     chair9 = .replace_labels(
     standardized_value_labels$chair9,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HCHAIR5"
   ),
     rmpf = c(`-2` = "valid data", `1` = "short interview", `2` = "interview terminated"),
     tandem1 = .replace_labels(
     standardized_value_labels$tandem1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked",
     `3` = "falls almost direct"
   ),
     tandem2 = .replace_labels(
     standardized_value_labels$tandem2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1"
   ),
     walk01 = .replace_labels(
     standardized_value_labels$walk01,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     walk02 = .replace_labels(
     standardized_value_labels$walk02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01"
   ),
     walk03 = .replace_labels(
     standardized_value_labels$walk03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02"
   ),
     walk04 = c(
     `-6` = "na, no measurement",
@@ -1778,9 +1456,7 @@ value_labels_list <- list(
   ),
     walk08 = .replace_labels(
     standardized_value_labels$walk08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HWALK03",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HWALK03"
   ),
     walk09 = c(
     `-3` = "na, wrong skip",
@@ -1791,146 +1467,76 @@ value_labels_list <- list(
   ),
     walk10 = .replace_labels(
     standardized_value_labels$walk10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk11 = .replace_labels(
     standardized_value_labels$walk11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk12 = .replace_labels(
     standardized_value_labels$walk12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk13 = .replace_labels(
     standardized_value_labels$walk13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk14 = .replace_labels(
     standardized_value_labels$walk14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk15 = .replace_labels(
     standardized_value_labels$walk15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk16 = .replace_labels(
     standardized_value_labels$walk16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17 = .replace_labels(
     standardized_value_labels$walk17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk18 = .replace_labels(
     standardized_value_labels$walk18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk19 = .replace_labels(
     standardized_value_labels$walk19,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK03",
-    `-1` = "na, asked",
     `2` = "R refused",
     `5` = "R did not understand"
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "chair8",
-    "chair9",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk05",
-    "walk06",
-    "walk07",
-    "walk08",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk18",
-    "walk19"
-  )],
+    standardized_value_labels,
     cardig1 = .replace_labels(
     standardized_value_labels$cardig1,
     `-7` = "na, technical missing",
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF"
   ),
     cardig2 = .replace_labels(
     standardized_value_labels$cardig2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1"
   ),
     cardig3 = .replace_labels(
     standardized_value_labels$cardig3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2"
   ),
     cardig4 = .replace_labels(
     standardized_value_labels$cardig4,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
     `-1` = "no (valid) answer"
   ),
     cardig5 = .replace_labels(
     standardized_value_labels$cardig5,
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1"
   ),
     cardig6 = .replace_labels(
     standardized_value_labels$cardig6,
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5"
   ),
     cardig7 = c(
     `-2` = "na, see C/D/E/B/F/G/H/BCARDIG6",
@@ -1943,7 +1549,6 @@ value_labels_list <- list(
     cardig8 = .replace_labels(
     standardized_value_labels$cardig8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG5",
     `-1` = "no (valid) answer"
   ),
@@ -1958,21 +1563,15 @@ value_labels_list <- list(
     chair1 = .replace_labels(
     standardized_value_labels$chair1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     chair2 = .replace_labels(
     standardized_value_labels$chair2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1"
   ),
     chair3 = .replace_labels(
     standardized_value_labels$chair3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair4 = c(
     `-3` = "na, wrong skip",
@@ -1985,70 +1584,50 @@ value_labels_list <- list(
     chair5 = .replace_labels(
     standardized_value_labels$chair5,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4"
   ),
     chair6 = .replace_labels(
     standardized_value_labels$chair6,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair7 = .replace_labels(
     standardized_value_labels$chair7,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair8 = .replace_labels(
     standardized_value_labels$chair8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HCHAIR5"
   ),
     chair9 = .replace_labels(
     standardized_value_labels$chair9,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HCHAIR5"
   ),
     rmpf = c(`-2` = "valid data", `1` = "short interview", `2` = "interview terminated"),
     tandem1 = .replace_labels(
     standardized_value_labels$tandem1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked",
     `3` = "falls almost direct"
   ),
     tandem2 = .replace_labels(
     standardized_value_labels$tandem2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1"
   ),
     walk01 = .replace_labels(
     standardized_value_labels$walk01,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     walk02 = .replace_labels(
     standardized_value_labels$walk02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01"
   ),
     walk03 = .replace_labels(
     standardized_value_labels$walk03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02"
   ),
     walk04 = c(
     `-6` = "na, no measurement",
@@ -2075,9 +1654,7 @@ value_labels_list <- list(
   ),
     walk08 = .replace_labels(
     standardized_value_labels$walk08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HWALK03",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HWALK03"
   ),
     walk09 = c(
     `-3` = "na, wrong skip",
@@ -2088,144 +1665,76 @@ value_labels_list <- list(
   ),
     walk10 = .replace_labels(
     standardized_value_labels$walk10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk11 = .replace_labels(
     standardized_value_labels$walk11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk12 = .replace_labels(
     standardized_value_labels$walk12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk13 = .replace_labels(
     standardized_value_labels$walk13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk14 = .replace_labels(
     standardized_value_labels$walk14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk15 = .replace_labels(
     standardized_value_labels$walk15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk16 = .replace_labels(
     standardized_value_labels$walk16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17 = .replace_labels(
     standardized_value_labels$walk17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk18 = .replace_labels(
     standardized_value_labels$walk18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk19 = .replace_labels(
     standardized_value_labels$walk19,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK03",
-    `-1` = "na, asked",
     `2` = "R refused",
     `5` = "R did not understand"
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "chair8",
-    "chair9",
-    "rmpf",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk05",
-    "walk06",
-    "walk07",
-    "walk08",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk18",
-    "walk19"
-  )],
+    standardized_value_labels,
     cardig1 = .replace_labels(
     standardized_value_labels$cardig1,
     `-7` = "na, technical missing",
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF"
   ),
     cardig2 = .replace_labels(
     standardized_value_labels$cardig2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1"
   ),
     cardig3 = .replace_labels(
     standardized_value_labels$cardig3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2"
   ),
     cardig4 = .replace_labels(
     standardized_value_labels$cardig4,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
     `-1` = "no (valid) answer"
   ),
     cardig5 = .replace_labels(
     standardized_value_labels$cardig5,
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1"
   ),
     cardig6 = .replace_labels(
     standardized_value_labels$cardig6,
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5"
   ),
     cardig7 = c(
     `-2` = "na, see C/D/E/B/F/G/H/BCARDIG6",
@@ -2238,7 +1747,6 @@ value_labels_list <- list(
     cardig8 = .replace_labels(
     standardized_value_labels$cardig8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG5",
     `-1` = "no (valid) answer"
   ),
@@ -2253,21 +1761,15 @@ value_labels_list <- list(
     chair1 = .replace_labels(
     standardized_value_labels$chair1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     chair2 = .replace_labels(
     standardized_value_labels$chair2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1"
   ),
     chair3 = .replace_labels(
     standardized_value_labels$chair3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair4 = c(
     `-3` = "na, wrong skip",
@@ -2280,56 +1782,40 @@ value_labels_list <- list(
     chair5 = .replace_labels(
     standardized_value_labels$chair5,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4"
   ),
     chair6 = .replace_labels(
     standardized_value_labels$chair6,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair7 = .replace_labels(
     standardized_value_labels$chair7,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair8 = .replace_labels(
     standardized_value_labels$chair8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HCHAIR5"
   ),
     chair9 = .replace_labels(
     standardized_value_labels$chair9,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HCHAIR5"
   ),
     rmpf = c(`-2` = "valid data", `1` = "short interview", `2` = "interview terminated"),
     walk01 = .replace_labels(
     standardized_value_labels$walk01,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     walk02 = .replace_labels(
     standardized_value_labels$walk02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01"
   ),
     walk03 = .replace_labels(
     standardized_value_labels$walk03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02"
   ),
     walk04 = c(
     `-6` = "na, no measurement",
@@ -2356,9 +1842,7 @@ value_labels_list <- list(
   ),
     walk08 = .replace_labels(
     standardized_value_labels$walk08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HWALK03",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HWALK03"
   ),
     walk09 = c(
     `-3` = "na, wrong skip",
@@ -2369,146 +1853,76 @@ value_labels_list <- list(
   ),
     walk10 = .replace_labels(
     standardized_value_labels$walk10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk11 = .replace_labels(
     standardized_value_labels$walk11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk12 = .replace_labels(
     standardized_value_labels$walk12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk13 = .replace_labels(
     standardized_value_labels$walk13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk14 = .replace_labels(
     standardized_value_labels$walk14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk15 = .replace_labels(
     standardized_value_labels$walk15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk16 = .replace_labels(
     standardized_value_labels$walk16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17 = .replace_labels(
     standardized_value_labels$walk17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk18 = .replace_labels(
     standardized_value_labels$walk18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk19 = .replace_labels(
     standardized_value_labels$walk19,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK03",
-    `-1` = "na, asked",
     `2` = "R refused",
     `5` = "R did not understand"
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "chair8",
-    "chair9",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk05",
-    "walk06",
-    "walk07",
-    "walk08",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk18",
-    "walk19"
-  )],
+    standardized_value_labels,
     cardig1 = .replace_labels(
     standardized_value_labels$cardig1,
     `-7` = "na, technical missing",
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF"
   ),
     cardig2 = .replace_labels(
     standardized_value_labels$cardig2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1"
   ),
     cardig3 = .replace_labels(
     standardized_value_labels$cardig3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2"
   ),
     cardig4 = .replace_labels(
     standardized_value_labels$cardig4,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
     `-1` = "no (valid) answer"
   ),
     cardig5 = .replace_labels(
     standardized_value_labels$cardig5,
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1"
   ),
     cardig6 = .replace_labels(
     standardized_value_labels$cardig6,
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5"
   ),
     cardig7 = c(
     `-2` = "na, see C/D/E/B/F/G/H/BCARDIG6",
@@ -2521,109 +1935,78 @@ value_labels_list <- list(
     cardig8 = .replace_labels(
     standardized_value_labels$cardig8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG5",
     `-1` = "no (valid) answer"
   ),
     cardig9 = .replace_labels(
     standardized_value_labels$cardig9,
-    `-3` = "na, wrong skip",
     `-2` = "na, see F/G/H/3B/I/J/KCARDIG1",
-    `-1` = "na, asked",
     `3` = "test not done"
   ),
     chair1 = .replace_labels(
     standardized_value_labels$chair1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     chair2 = .replace_labels(
     standardized_value_labels$chair2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1"
   ),
     chair3 = .replace_labels(
     standardized_value_labels$chair3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair4 = .replace_labels(
     standardized_value_labels$chair4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair5 = .replace_labels(
     standardized_value_labels$chair5,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4"
   ),
     chair6 = .replace_labels(
     standardized_value_labels$chair6,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair7 = .replace_labels(
     standardized_value_labels$chair7,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair8 = .replace_labels(
     standardized_value_labels$chair8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HCHAIR5"
   ),
     chair9 = .replace_labels(
     standardized_value_labels$chair9,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HCHAIR5"
   ),
     rmpf = c(`-2` = "valid data", `1` = "short interview", `2` = "interview terminated"),
     tandem1 = .replace_labels(
     standardized_value_labels$tandem1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked",
     `3` = "falls almost direct"
   ),
     tandem2 = .replace_labels(
     standardized_value_labels$tandem2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1"
   ),
     walk01 = .replace_labels(
     standardized_value_labels$walk01,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     walk02 = .replace_labels(
     standardized_value_labels$walk02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01"
   ),
     walk03 = .replace_labels(
     standardized_value_labels$walk03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02"
   ),
     walk04 = c(
     `-6` = "na, no measurement",
@@ -2650,9 +2033,7 @@ value_labels_list <- list(
   ),
     walk08 = .replace_labels(
     standardized_value_labels$walk08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HWALK03",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HWALK03"
   ),
     walk09 = c(
     `-3` = "na, wrong skip",
@@ -2663,146 +2044,76 @@ value_labels_list <- list(
   ),
     walk10 = .replace_labels(
     standardized_value_labels$walk10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk11 = .replace_labels(
     standardized_value_labels$walk11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk12 = .replace_labels(
     standardized_value_labels$walk12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk13 = .replace_labels(
     standardized_value_labels$walk13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk14 = .replace_labels(
     standardized_value_labels$walk14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk15 = .replace_labels(
     standardized_value_labels$walk15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk16 = .replace_labels(
     standardized_value_labels$walk16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17 = .replace_labels(
     standardized_value_labels$walk17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk18 = .replace_labels(
     standardized_value_labels$walk18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk19 = .replace_labels(
     standardized_value_labels$walk19,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK03",
-    `-1` = "na, asked",
     `2` = "R refused",
     `5` = "R did not understand"
   )
   ),
   Wave_G_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "chair8",
-    "chair9",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk05",
-    "walk06",
-    "walk07",
-    "walk08",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk18",
-    "walk19"
-  )],
+    standardized_value_labels,
     cardig1 = .replace_labels(
     standardized_value_labels$cardig1,
     `-7` = "na, technical missing",
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF"
   ),
     cardig2 = .replace_labels(
     standardized_value_labels$cardig2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1"
   ),
     cardig3 = .replace_labels(
     standardized_value_labels$cardig3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2"
   ),
     cardig4 = .replace_labels(
     standardized_value_labels$cardig4,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
     `-1` = "no (valid) answer"
   ),
     cardig5 = .replace_labels(
     standardized_value_labels$cardig5,
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1"
   ),
     cardig6 = .replace_labels(
     standardized_value_labels$cardig6,
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5"
   ),
     cardig7 = c(
     `-2` = "na, see C/D/E/B/F/G/H/BCARDIG6",
@@ -2815,109 +2126,78 @@ value_labels_list <- list(
     cardig8 = .replace_labels(
     standardized_value_labels$cardig8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG5",
     `-1` = "no (valid) answer"
   ),
     cardig9 = .replace_labels(
     standardized_value_labels$cardig9,
-    `-3` = "na, wrong skip",
     `-2` = "na, see F/G/H/3B/I/J/KCARDIG1",
-    `-1` = "na, asked",
     `3` = "test not done"
   ),
     chair1 = .replace_labels(
     standardized_value_labels$chair1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     chair2 = .replace_labels(
     standardized_value_labels$chair2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1"
   ),
     chair3 = .replace_labels(
     standardized_value_labels$chair3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair4 = .replace_labels(
     standardized_value_labels$chair4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair5 = .replace_labels(
     standardized_value_labels$chair5,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4"
   ),
     chair6 = .replace_labels(
     standardized_value_labels$chair6,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair7 = .replace_labels(
     standardized_value_labels$chair7,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair8 = .replace_labels(
     standardized_value_labels$chair8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HCHAIR5"
   ),
     chair9 = .replace_labels(
     standardized_value_labels$chair9,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HCHAIR5"
   ),
     rmpf = c(`-2` = "valid data", `1` = "short interview", `2` = "interview terminated"),
     tandem1 = .replace_labels(
     standardized_value_labels$tandem1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked",
     `3` = "falls almost direct"
   ),
     tandem2 = .replace_labels(
     standardized_value_labels$tandem2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1"
   ),
     walk01 = .replace_labels(
     standardized_value_labels$walk01,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     walk02 = .replace_labels(
     standardized_value_labels$walk02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01"
   ),
     walk03 = .replace_labels(
     standardized_value_labels$walk03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02"
   ),
     walk04 = c(
     `-6` = "na, no measurement",
@@ -2944,9 +2224,7 @@ value_labels_list <- list(
   ),
     walk08 = .replace_labels(
     standardized_value_labels$walk08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HWALK03",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HWALK03"
   ),
     walk09 = c(
     `-3` = "na, wrong skip",
@@ -2957,146 +2235,76 @@ value_labels_list <- list(
   ),
     walk10 = .replace_labels(
     standardized_value_labels$walk10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk11 = .replace_labels(
     standardized_value_labels$walk11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk12 = .replace_labels(
     standardized_value_labels$walk12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk13 = .replace_labels(
     standardized_value_labels$walk13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk14 = .replace_labels(
     standardized_value_labels$walk14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk15 = .replace_labels(
     standardized_value_labels$walk15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk16 = .replace_labels(
     standardized_value_labels$walk16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17 = .replace_labels(
     standardized_value_labels$walk17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk18 = .replace_labels(
     standardized_value_labels$walk18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk19 = .replace_labels(
     standardized_value_labels$walk19,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK03",
-    `-1` = "na, asked",
     `2` = "R refused",
     `5` = "R did not understand"
   )
   ),
   Wave_H_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "chair8",
-    "chair9",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk04a",
-    "walk06",
-    "walk07",
-    "walk08",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk17a",
-    "walk18",
-    "walk19"
-  )],
+    standardized_value_labels,
     cardig1 = .replace_labels(
     standardized_value_labels$cardig1,
     `-7` = "na, technical missing",
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF"
   ),
     cardig2 = .replace_labels(
     standardized_value_labels$cardig2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1"
   ),
     cardig3 = .replace_labels(
     standardized_value_labels$cardig3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2"
   ),
     cardig4 = .replace_labels(
     standardized_value_labels$cardig4,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
     `-1` = "no (valid) answer"
   ),
     cardig5 = .replace_labels(
     standardized_value_labels$cardig5,
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1"
   ),
     cardig6 = .replace_labels(
     standardized_value_labels$cardig6,
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5"
   ),
     cardig7 = c(
     `-2` = "na, see C/D/E/B/F/G/H/BCARDIG6",
@@ -3109,109 +2317,78 @@ value_labels_list <- list(
     cardig8 = .replace_labels(
     standardized_value_labels$cardig8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG5",
     `-1` = "no (valid) answer"
   ),
     cardig9 = .replace_labels(
     standardized_value_labels$cardig9,
-    `-3` = "na, wrong skip",
     `-2` = "na, see F/G/H/3B/I/J/KCARDIG1",
-    `-1` = "na, asked",
     `3` = "test not done"
   ),
     chair1 = .replace_labels(
     standardized_value_labels$chair1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     chair2 = .replace_labels(
     standardized_value_labels$chair2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1"
   ),
     chair3 = .replace_labels(
     standardized_value_labels$chair3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair4 = .replace_labels(
     standardized_value_labels$chair4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair5 = .replace_labels(
     standardized_value_labels$chair5,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4"
   ),
     chair6 = .replace_labels(
     standardized_value_labels$chair6,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair7 = .replace_labels(
     standardized_value_labels$chair7,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair8 = .replace_labels(
     standardized_value_labels$chair8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HCHAIR5"
   ),
     chair9 = .replace_labels(
     standardized_value_labels$chair9,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HCHAIR5"
   ),
     rmpf = c(`-2` = "valid data", `1` = "short interview", `2` = "interview terminated"),
     tandem1 = .replace_labels(
     standardized_value_labels$tandem1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked",
     `3` = "falls almost direct"
   ),
     tandem2 = .replace_labels(
     standardized_value_labels$tandem2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1"
   ),
     walk01 = .replace_labels(
     standardized_value_labels$walk01,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     walk02 = .replace_labels(
     standardized_value_labels$walk02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01"
   ),
     walk03 = .replace_labels(
     standardized_value_labels$walk03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02"
   ),
     walk04 = c(
     `-6` = "na, no measurement",
@@ -3238,157 +2415,84 @@ value_labels_list <- list(
   ),
     walk08 = .replace_labels(
     standardized_value_labels$walk08,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/HWALK03",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/HWALK03"
   ),
     walk10 = .replace_labels(
     standardized_value_labels$walk10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk11 = .replace_labels(
     standardized_value_labels$walk11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk12 = .replace_labels(
     standardized_value_labels$walk12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk13 = .replace_labels(
     standardized_value_labels$walk13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk14 = .replace_labels(
     standardized_value_labels$walk14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk15 = .replace_labels(
     standardized_value_labels$walk15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk16 = .replace_labels(
     standardized_value_labels$walk16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17 = .replace_labels(
     standardized_value_labels$walk17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17a = .replace_labels(
     standardized_value_labels$walk17a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/B/I/J/KWALK09"
   ),
     walk18 = .replace_labels(
     standardized_value_labels$walk18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk19 = .replace_labels(
     standardized_value_labels$walk19,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK03",
-    `-1` = "na, asked",
     `2` = "R refused",
     `5` = "R did not understand"
   )
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cardig1",
-    "cardig2",
-    "cardig3",
-    "cardig4",
-    "cardig5",
-    "cardig6",
-    "cardig7",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair10",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk04a",
-    "walk06",
-    "walk07",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk17a",
-    "walk18",
-    "walk19"
-  )],
+    standardized_value_labels,
     cardig1 = .replace_labels(
     standardized_value_labels$cardig1,
     `-7` = "na, technical missing",
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF"
   ),
     cardig2 = .replace_labels(
     standardized_value_labels$cardig2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1"
   ),
     cardig3 = .replace_labels(
     standardized_value_labels$cardig3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2"
   ),
     cardig4 = .replace_labels(
     standardized_value_labels$cardig4,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
     `-1` = "no (valid) answer"
   ),
     cardig5 = .replace_labels(
     standardized_value_labels$cardig5,
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1"
   ),
     cardig6 = .replace_labels(
     standardized_value_labels$cardig6,
-    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5"
   ),
     cardig7 = c(
     `-2` = "na, see C/D/E/B/F/G/H/BCARDIG6",
@@ -3401,102 +2505,74 @@ value_labels_list <- list(
     cardig8 = .replace_labels(
     standardized_value_labels$cardig8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG5",
     `-1` = "no (valid) answer"
   ),
     cardig9 = .replace_labels(
     standardized_value_labels$cardig9,
-    `-3` = "na, wrong skip",
     `-2` = "na, see F/G/H/3B/I/J/KCARDIG1",
-    `-1` = "na, asked",
     `3` = "test not done"
   ),
     chair1 = .replace_labels(
     standardized_value_labels$chair1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     chair10 = .replace_labels(
     standardized_value_labels$chair10,
     `-6` = "na, wrong skip",
-    `-2` = "na, see B/BCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see B/BCHAIR5"
   ),
     chair2 = .replace_labels(
     standardized_value_labels$chair2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1"
   ),
     chair3 = .replace_labels(
     standardized_value_labels$chair3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair4 = .replace_labels(
     standardized_value_labels$chair4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair5 = .replace_labels(
     standardized_value_labels$chair5,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4"
   ),
     chair6 = .replace_labels(
     standardized_value_labels$chair6,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair7 = .replace_labels(
     standardized_value_labels$chair7,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     rmpf = c(`-2` = "valid data", `1` = "short interview", `2` = "interview terminated"),
     tandem1 = .replace_labels(
     standardized_value_labels$tandem1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked",
     `3` = "falls almost direct"
   ),
     tandem2 = .replace_labels(
     standardized_value_labels$tandem2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1"
   ),
     walk01 = .replace_labels(
     standardized_value_labels$walk01,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     walk02 = .replace_labels(
     standardized_value_labels$walk02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01"
   ),
     walk03 = .replace_labels(
     standardized_value_labels$walk03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02"
   ),
     walk04 = c(
     `-6` = "na, no measurement",
@@ -3534,191 +2610,113 @@ value_labels_list <- list(
   ),
     walk10 = .replace_labels(
     standardized_value_labels$walk10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk11 = .replace_labels(
     standardized_value_labels$walk11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk12 = .replace_labels(
     standardized_value_labels$walk12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk13 = .replace_labels(
     standardized_value_labels$walk13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk14 = .replace_labels(
     standardized_value_labels$walk14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk15 = .replace_labels(
     standardized_value_labels$walk15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk16 = .replace_labels(
     standardized_value_labels$walk16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17 = .replace_labels(
     standardized_value_labels$walk17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17a = .replace_labels(
     standardized_value_labels$walk17a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/B/I/J/KWALK09"
   ),
     walk18 = .replace_labels(
     standardized_value_labels$walk18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk19 = .replace_labels(
     standardized_value_labels$walk19,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK03",
-    `-1` = "na, asked",
     `2` = "R refused",
     `5` = "R did not understand"
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "chair1",
-    "chair10",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk04a",
-    "walk06",
-    "walk07",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk17a",
-    "walk18",
-    "walk19"
-  )],
+    standardized_value_labels,
     chair1 = .replace_labels(
     standardized_value_labels$chair1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     chair10 = .replace_labels(
     standardized_value_labels$chair10,
     `-6` = "na, wrong skip",
-    `-2` = "na, see B/BCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see B/BCHAIR5"
   ),
     chair2 = .replace_labels(
     standardized_value_labels$chair2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1"
   ),
     chair3 = .replace_labels(
     standardized_value_labels$chair3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair4 = .replace_labels(
     standardized_value_labels$chair4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair5 = .replace_labels(
     standardized_value_labels$chair5,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4"
   ),
     chair6 = .replace_labels(
     standardized_value_labels$chair6,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair7 = .replace_labels(
     standardized_value_labels$chair7,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     rmpf = c(`-2` = "valid data", `1` = "short interview", `2` = "interview terminated"),
     tandem1 = .replace_labels(
     standardized_value_labels$tandem1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked",
     `3` = "falls almost direct"
   ),
     tandem2 = .replace_labels(
     standardized_value_labels$tandem2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1"
   ),
     walk01 = .replace_labels(
     standardized_value_labels$walk01,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     walk02 = .replace_labels(
     standardized_value_labels$walk02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01"
   ),
     walk03 = .replace_labels(
     standardized_value_labels$walk03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02"
   ),
     walk04 = c(
     `-6` = "na, no measurement",
@@ -3756,222 +2754,134 @@ value_labels_list <- list(
   ),
     walk10 = .replace_labels(
     standardized_value_labels$walk10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk11 = .replace_labels(
     standardized_value_labels$walk11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk12 = .replace_labels(
     standardized_value_labels$walk12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk13 = .replace_labels(
     standardized_value_labels$walk13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk14 = .replace_labels(
     standardized_value_labels$walk14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk15 = .replace_labels(
     standardized_value_labels$walk15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk16 = .replace_labels(
     standardized_value_labels$walk16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17 = .replace_labels(
     standardized_value_labels$walk17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17a = .replace_labels(
     standardized_value_labels$walk17a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/B/I/J/KWALK09"
   ),
     walk18 = .replace_labels(
     standardized_value_labels$walk18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk19 = .replace_labels(
     standardized_value_labels$walk19,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK03",
-    `-1` = "na, asked",
     `2` = "R refused",
     `5` = "R did not understand"
   )
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cardig1",
-    "cardig4",
-    "cardig5",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk04a",
-    "walk06",
-    "walk07",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk17a",
-    "walk18",
-    "walk19"
-  )],
+    standardized_value_labels,
     cardig1 = .replace_labels(
     standardized_value_labels$cardig1,
     `-7` = "na, technical missing",
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF"
   ),
     cardig4 = .replace_labels(
     standardized_value_labels$cardig4,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
     `-1` = "no (valid) answer"
   ),
     cardig5 = .replace_labels(
     standardized_value_labels$cardig5,
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1"
   ),
     cardig8 = .replace_labels(
     standardized_value_labels$cardig8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG5",
     `-1` = "no (valid) answer"
   ),
     cardig9 = .replace_labels(
     standardized_value_labels$cardig9,
-    `-3` = "na, wrong skip",
     `-2` = "na, see F/G/H/3B/I/J/KCARDIG1",
-    `-1` = "na, asked",
     `3` = "test not done"
   ),
     chair1 = .replace_labels(
     standardized_value_labels$chair1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     chair2 = .replace_labels(
     standardized_value_labels$chair2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1"
   ),
     chair3 = .replace_labels(
     standardized_value_labels$chair3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair4 = .replace_labels(
     standardized_value_labels$chair4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair5 = .replace_labels(
     standardized_value_labels$chair5,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4"
   ),
     chair6 = .replace_labels(
     standardized_value_labels$chair6,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair7 = .replace_labels(
     standardized_value_labels$chair7,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     tandem1 = .replace_labels(
     standardized_value_labels$tandem1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked",
     `3` = "falls almost direct"
   ),
     tandem2 = .replace_labels(
     standardized_value_labels$tandem2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1"
   ),
     walk01 = .replace_labels(
     standardized_value_labels$walk01,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     walk02 = .replace_labels(
     standardized_value_labels$walk02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01"
   ),
     walk03 = .replace_labels(
     standardized_value_labels$walk03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02"
   ),
     walk04 = c(
     `-6` = "na, no measurement",
@@ -3981,9 +2891,7 @@ value_labels_list <- list(
     walk04a = c(`-6` = "na, no measurement", `-2` = "na, see H/B/B/I/JWALK03", `-1` = "no (valid) answer"),
     walk06 = .replace_labels(
     standardized_value_labels$walk06,
-    `-3` = "na, wrong skip",
     `-2` = "na, see E/B/F/G/H/B/B/I/JWALK03",
-    `-1` = "na, asked",
     `3` = "rollator",
     `4` = "leaning on objects/interviewer",
     `5` = "other"
@@ -3998,191 +2906,111 @@ value_labels_list <- list(
   ),
     walk10 = .replace_labels(
     standardized_value_labels$walk10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk11 = .replace_labels(
     standardized_value_labels$walk11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk12 = .replace_labels(
     standardized_value_labels$walk12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk13 = .replace_labels(
     standardized_value_labels$walk13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk14 = .replace_labels(
     standardized_value_labels$walk14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk15 = .replace_labels(
     standardized_value_labels$walk15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk16 = .replace_labels(
     standardized_value_labels$walk16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17 = .replace_labels(
     standardized_value_labels$walk17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17a = .replace_labels(
     standardized_value_labels$walk17a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/B/I/J/KWALK09"
   ),
     walk18 = .replace_labels(
     standardized_value_labels$walk18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk19 = .replace_labels(
     standardized_value_labels$walk19,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK03",
-    `-1` = "na, asked",
     `2` = "R refused",
     `5` = "R did not understand"
   )
   ),
   Wave_J_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cardig1",
-    "cardig4",
-    "cardig5",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "tandem3",
-    "tandem4",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk04a",
-    "walk06",
-    "walk07",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk17a",
-    "walk18",
-    "walk19"
-  )],
+    standardized_value_labels,
     cardig1 = .replace_labels(
     standardized_value_labels$cardig1,
     `-7` = "na, technical missing",
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF"
   ),
     cardig4 = .replace_labels(
     standardized_value_labels$cardig4,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
     `-1` = "no (valid) answer"
   ),
     cardig5 = .replace_labels(
     standardized_value_labels$cardig5,
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1"
   ),
     cardig8 = .replace_labels(
     standardized_value_labels$cardig8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG5",
     `-1` = "no (valid) answer"
   ),
     cardig9 = .replace_labels(
     standardized_value_labels$cardig9,
-    `-3` = "na, wrong skip",
     `-2` = "na, see F/G/H/3B/I/J/KCARDIG1",
-    `-1` = "na, asked",
     `3` = "test not done"
   ),
     chair1 = .replace_labels(
     standardized_value_labels$chair1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     chair2 = .replace_labels(
     standardized_value_labels$chair2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1"
   ),
     chair3 = .replace_labels(
     standardized_value_labels$chair3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair4 = .replace_labels(
     standardized_value_labels$chair4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair5 = .replace_labels(
     standardized_value_labels$chair5,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4"
   ),
     chair6 = .replace_labels(
     standardized_value_labels$chair6,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair7 = .replace_labels(
     standardized_value_labels$chair7,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     tandem1 = c(
     `-6` = "na, test not done",
@@ -4195,40 +3023,28 @@ value_labels_list <- list(
   ),
     tandem2 = .replace_labels(
     standardized_value_labels$tandem2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1"
   ),
     tandem3 = .replace_labels(
     standardized_value_labels$tandem3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KTANDEM1",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KTANDEM1"
   ),
     tandem4 = .replace_labels(
     standardized_value_labels$tandem4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KTANDEM3",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KTANDEM3"
   ),
     walk01 = .replace_labels(
     standardized_value_labels$walk01,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     walk02 = .replace_labels(
     standardized_value_labels$walk02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01"
   ),
     walk03 = .replace_labels(
     standardized_value_labels$walk03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02"
   ),
     walk04 = c(
     `-6` = "na, no measurement",
@@ -4244,9 +3060,7 @@ value_labels_list <- list(
   ),
     walk06 = .replace_labels(
     standardized_value_labels$walk06,
-    `-3` = "na, wrong skip",
     `-2` = "na, see E/B/F/G/H/B/B/I/JWALK03",
-    `-1` = "na, asked",
     `3` = "rollator",
     `4` = "leaning on objects/interviewer",
     `5` = "other"
@@ -4261,190 +3075,111 @@ value_labels_list <- list(
   ),
     walk10 = .replace_labels(
     standardized_value_labels$walk10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk11 = .replace_labels(
     standardized_value_labels$walk11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk12 = .replace_labels(
     standardized_value_labels$walk12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk13 = .replace_labels(
     standardized_value_labels$walk13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk14 = .replace_labels(
     standardized_value_labels$walk14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk15 = .replace_labels(
     standardized_value_labels$walk15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk16 = .replace_labels(
     standardized_value_labels$walk16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17 = .replace_labels(
     standardized_value_labels$walk17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17a = .replace_labels(
     standardized_value_labels$walk17a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/B/I/J/KWALK09"
   ),
     walk18 = .replace_labels(
     standardized_value_labels$walk18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk19 = .replace_labels(
     standardized_value_labels$walk19,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK03",
-    `-1` = "na, asked",
     `2` = "R refused",
     `5` = "R did not understand"
   )
   ),
   Wave_K_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "cardig1",
-    "cardig4",
-    "cardig5",
-    "cardig8",
-    "cardig9",
-    "chair1",
-    "chair2",
-    "chair3",
-    "chair4",
-    "chair5",
-    "chair6",
-    "chair7",
-    "rmpf",
-    "tandem1",
-    "tandem2",
-    "tandem3",
-    "tandem4",
-    "walk01",
-    "walk02",
-    "walk03",
-    "walk04",
-    "walk06",
-    "walk07",
-    "walk09",
-    "walk10",
-    "walk11",
-    "walk12",
-    "walk13",
-    "walk14",
-    "walk15",
-    "walk16",
-    "walk17",
-    "walk17a",
-    "walk18",
-    "walk19"
-  )],
+    standardized_value_labels,
     cardig1 = .replace_labels(
     standardized_value_labels$cardig1,
     `-7` = "na, technical missing",
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF"
   ),
     cardig4 = .replace_labels(
     standardized_value_labels$cardig4,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
     `-1` = "no (valid) answer"
   ),
     cardig5 = .replace_labels(
     standardized_value_labels$cardig5,
-    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1"
   ),
     cardig8 = .replace_labels(
     standardized_value_labels$cardig8,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG5",
     `-1` = "no (valid) answer"
   ),
     cardig9 = .replace_labels(
     standardized_value_labels$cardig9,
-    `-3` = "na, wrong skip",
     `-2` = "na, see F/G/H/3B/I/J/KCARDIG1",
-    `-1` = "na, asked",
     `3` = "test not done"
   ),
     chair1 = .replace_labels(
     standardized_value_labels$chair1,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     chair2 = .replace_labels(
     standardized_value_labels$chair2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1"
   ),
     chair3 = .replace_labels(
     standardized_value_labels$chair3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair4 = .replace_labels(
     standardized_value_labels$chair4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2"
   ),
     chair5 = .replace_labels(
     standardized_value_labels$chair5,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4"
   ),
     chair6 = .replace_labels(
     standardized_value_labels$chair6,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     chair7 = .replace_labels(
     standardized_value_labels$chair7,
     `-6` = "na, no measurement",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5"
   ),
     tandem1 = c(
     `-6` = "na, test not done",
@@ -4457,40 +3192,28 @@ value_labels_list <- list(
   ),
     tandem2 = .replace_labels(
     standardized_value_labels$tandem2,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1"
   ),
     tandem3 = .replace_labels(
     standardized_value_labels$tandem3,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KTANDEM1",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KTANDEM1"
   ),
     tandem4 = .replace_labels(
     standardized_value_labels$tandem4,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see J/KTANDEM3",
-    `-1` = "na, asked"
+    `-2` = "na, see J/KTANDEM3"
   ),
     walk01 = .replace_labels(
     standardized_value_labels$walk01,
     `-6` = "na, test not done",
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF"
   ),
     walk02 = .replace_labels(
     standardized_value_labels$walk02,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01"
   ),
     walk03 = .replace_labels(
     standardized_value_labels$walk03,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02"
   ),
     walk04 = c(
     `-6` = "na, no measurement",
@@ -4499,9 +3222,7 @@ value_labels_list <- list(
   ),
     walk06 = .replace_labels(
     standardized_value_labels$walk06,
-    `-3` = "na, wrong skip",
     `-2` = "na, see E/B/F/G/H/B/B/I/JWALK03",
-    `-1` = "na, asked",
     `3` = "rollator",
     `4` = "leaning on objects/interviewer",
     `5` = "other"
@@ -4516,69 +3237,47 @@ value_labels_list <- list(
   ),
     walk10 = .replace_labels(
     standardized_value_labels$walk10,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk11 = .replace_labels(
     standardized_value_labels$walk11,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk12 = .replace_labels(
     standardized_value_labels$walk12,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk13 = .replace_labels(
     standardized_value_labels$walk13,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk14 = .replace_labels(
     standardized_value_labels$walk14,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk15 = .replace_labels(
     standardized_value_labels$walk15,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk16 = .replace_labels(
     standardized_value_labels$walk16,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17 = .replace_labels(
     standardized_value_labels$walk17,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk17a = .replace_labels(
     standardized_value_labels$walk17a,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see H/B/B/I/J/KWALK09"
   ),
     walk18 = .replace_labels(
     standardized_value_labels$walk18,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
-    `-1` = "na, asked"
+    `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09"
   ),
     walk19 = .replace_labels(
     standardized_value_labels$walk19,
-    `-3` = "na, wrong skip",
     `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK03",
-    `-1` = "na, asked",
     `2` = "R refused",
     `5` = "R did not understand"
   )
@@ -4637,9 +3336,14 @@ var_types_vec <- c(
   walk19 = "categorical"
 )
 
-.lasa_fc_034 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "034", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "034", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "034", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "034", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["walk09"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
+
+.lasa_fc_034 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

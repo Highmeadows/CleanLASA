@@ -33,13 +33,18 @@ harmonized_labels <- c(
   random = "random number, used in ranking ties"
 )
 
-variable_labels_list <- list(
-  Wave_C_labels = .replace_labels(
-    harmonized_labels[c("domain", "freqran", "nwmem", "random")],
-    nwmem = "network member id T3"
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `C` = c(
+    "domain",
+    "freqran",
+    "nwmem",
+    "random"
   ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels[c(
+  `E` = c(
     "chage",
     "chages",
     "chbrok",
@@ -54,13 +59,8 @@ variable_labels_list <- list(
     "chtrav",
     "chtype",
     "gcage"
-  )],
-    chage = "age child (@ time: see ECHAGES)",
-    chempl = "no/part/fulltime work child",
-    chstat = "status child identification"
   ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels[c(
+  `2B` = c(
     "chage",
     "chbrok",
     "chempl",
@@ -75,11 +75,8 @@ variable_labels_list <- list(
     "datasrc",
     "gcage",
     "nwmem"
-  )],
-    chbrok = "contact broken"
   ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels[c(
+  `F` = c(
     "chage",
     "chages",
     "chbrok",
@@ -97,12 +94,8 @@ variable_labels_list <- list(
     "chtype",
     "gc",
     "nwmem"
-  )],
-    chage = "age child @ wave A | wave F (see fchages)",
-    chempl = "no/part/fulltime work child",
-    chstat = "status child identification"
   ),
-  Wave_3B_labels = harmonized_labels[c(
+  `3B` = c(
     "chage",
     "chempl",
     "chfreq",
@@ -115,12 +108,16 @@ variable_labels_list <- list(
     "chtype",
     "gcage",
     "nwmem"
-  )],
-  Wave_MB_labels = .replace_labels(
-    harmonized_labels[c("afstand", "chage", "chfreq", "chid", "chsex", "partner")],
-    chage = "age"
   ),
-  Wave_I_labels = harmonized_labels[c(
+  `MB` = c(
+    "afstand",
+    "chage",
+    "chfreq",
+    "chid",
+    "chsex",
+    "partner"
+  ),
+  `I` = c(
     "chage",
     "chbrok",
     "chdead",
@@ -135,12 +132,43 @@ variable_labels_list <- list(
     "chtype",
     "gcage",
     "nwmem"
-  )],
+  )
+)
+
+variable_labels_list <- list(
+  Wave_C_labels = .replace_labels(
+    harmonized_labels,
+    nwmem = "network member id T3"
+  ),
+  Wave_E_labels = .replace_labels(
+    harmonized_labels,
+    chage = "age child (@ time: see ECHAGES)",
+    chempl = "no/part/fulltime work child",
+    chstat = "status child identification"
+  ),
+  Wave_2B_labels = .replace_labels(
+    harmonized_labels,
+    chbrok = "contact broken"
+  ),
+  Wave_F_labels = .replace_labels(
+    harmonized_labels,
+    chage = "age child @ wave A | wave F (see fchages)",
+    chempl = "no/part/fulltime work child",
+    chstat = "status child identification"
+  ),
+  Wave_3B_labels = harmonized_labels,
+  Wave_MB_labels = .replace_labels(
+    harmonized_labels,
+    chage = "age"
+  ),
+  Wave_I_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
 standardized_value_labels <- list(
-  afstand = c(`-1` = "no answer"),
+  afstand = c(
+    default_missing_labels[c("-1")]
+  ),
   chage = c(
     `-12` = "deceased",
     `-11` = "not asked: added from previous observation",
@@ -149,26 +177,26 @@ standardized_value_labels <- list(
     `-8` = "not asked: skip by interviewer",
     `-7` = "child added in or after interview",
     `-6` = "rcf addition",
-    `-5` = "coding category -5",
-    `-4` = "coding category -4",
+    `-5` = "label varies by wave",
+    `-4` = "label varies by wave",
     `-3` = "contact broken",
-    `-1` = "no answer"
+    default_missing_labels[c("-1")]
   ),
   chages = c(
     `-6` = "rcf addition",
     `-4` = "deceased",
     `-2` = "not asked(error)",
     `1` = "asked lasadc",
-    `2` = "coding category 2",
+    `2` = "label varies by wave",
     `3` = "lsna 1992"
   ),
   chbrok = c(
-    `-5` = "coding category -5",
+    `-5` = "label varies by wave",
     `-4` = "deceased",
     `-3` = "not broken & no contact",
-    `-2` = "coding category -2",
-    `-1` = "coding category -1",
-    `1` = "coding category 1",
+    `-2` = "label varies by wave",
+    `-1` = "label varies by wave",
+    `1` = "label varies by wave",
     `2` = "broken",
     `3` = "other"
   ),
@@ -176,8 +204,8 @@ standardized_value_labels <- list(
     `-9` = "deceased dbf:died",
     `-5` = "deceased not asked/unknown",
     `-3` = "alive",
-    `-2` = "coding category -2",
-    `-1` = "coding category -1",
+    `-2` = "label varies by wave",
+    `-1` = "label varies by wave",
     `0` = "not deceased",
     `1` = "before wave a",
     `3` = "before wave c",
@@ -189,7 +217,7 @@ standardized_value_labels <- list(
     `-4` = "died",
     `-3` = "never married",
     `-2` = "age<18yrs",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "no previous marriage",
     `2` = "ended by divorce",
     `3` = "ended by widowhood",
@@ -204,11 +232,11 @@ standardized_value_labels <- list(
     `-8` = "not asked: skip by interviewer",
     `-7` = "child added in or after interview",
     `-6` = "rcf addition",
-    `-5` = "coding category -5",
-    `-4` = "coding category -4",
+    `-5` = "label varies by wave",
+    `-4` = "label varies by wave",
     `-3` = "contact broken",
-    `-2` = "coding category -2",
-    `-1` = "no answer",
+    `-2` = "label varies by wave",
+    default_missing_labels[c("-1")],
     `1` = "not employed",
     `2` = "<=27 hours/week",
     `3` = ">= 28 hours a week"
@@ -221,11 +249,11 @@ standardized_value_labels <- list(
     `-8` = "not asked: skip by interviewer",
     `-7` = "child added in or after interview",
     `-6` = "rcf addition",
-    `-5` = "coding category -5",
-    `-4` = "coding category -4",
+    `-5` = "label varies by wave",
+    `-4` = "label varies by wave",
     `-3` = "contact broken",
     `-2` = "child added after network; not identified in kk",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "yearly or less often",
     `3` = "few times year",
@@ -243,11 +271,11 @@ standardized_value_labels <- list(
     `-9` = "in network, not in kk",
     `-8` = "not asked: skip by interviewer",
     `-7` = "child added in or after interview",
-    `-5` = "coding category -5",
-    `-4` = "coding category -4",
+    `-5` = "label varies by wave",
+    `-4` = "label varies by wave",
     `-3` = "contact broken",
     `-2` = "not (not asked)",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "not sharing household",
     `1` = "sharing household"
   ),
@@ -255,7 +283,7 @@ standardized_value_labels <- list(
     `-6` = "rcf addition",
     `-4` = "died",
     `-2` = "age<18yrs",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never married",
     `2` = "married",
     `3` = "registered partnership",
@@ -270,11 +298,11 @@ standardized_value_labels <- list(
     `-8` = "not asked: skip by interviewer",
     `-7` = "child added in or after interview",
     `-6` = "rcf addition",
-    `-5` = "coding category -5",
-    `-4` = "coding category -4",
+    `-5` = "label varies by wave",
+    `-4` = "label varies by wave",
     `-3` = "contact broken",
-    `-2` = "coding category -2",
-    `-1` = "no answer",
+    `-2` = "label varies by wave",
+    default_missing_labels[c("-1")],
     `0` = "no partner",
     `1` = "partner in hh child",
     `2` = "partner outs hh child"
@@ -288,29 +316,29 @@ standardized_value_labels <- list(
     `-7` = "child added in or after interview",
     `-5` = "rcf/sys addition",
     `-4` = "not asked: never contact or died",
-    `-1` = "coding category -1",
+    `-1` = "label varies by wave",
     `1` = "son",
     `2` = "daughter"
   ),
   chstat = c(
     `-1` = "refusal @ a",
     `0` = "identified, new",
-    `1` = "coding category 1",
-    `2` = "coding category 2",
-    `3` = "coding category 3",
-    `4` = "coding category 4",
-    `5` = "coding category 5",
-    `6` = "coding category 6",
-    `7` = "coding category 7",
-    `8` = "coding category 8",
-    `9` = "coding category 9",
-    `10` = "coding category 10",
-    `11` = "coding category 11",
-    `12` = "coding category 12",
-    `13` = "coding category 13",
-    `14` = "coding category 14",
-    `15` = "coding category 15",
-    `16` = "coding category 16",
+    `1` = "label varies by wave",
+    `2` = "label varies by wave",
+    `3` = "label varies by wave",
+    `4` = "label varies by wave",
+    `5` = "label varies by wave",
+    `6` = "label varies by wave",
+    `7` = "label varies by wave",
+    `8` = "label varies by wave",
+    `9` = "label varies by wave",
+    `10` = "label varies by wave",
+    `11` = "label varies by wave",
+    `12` = "label varies by wave",
+    `13` = "label varies by wave",
+    `14` = "label varies by wave",
+    `15` = "label varies by wave",
+    `16` = "label varies by wave",
     `17` = "from network, in household, added in kk interview",
     `18` = "from network, not in household, added in kk interview",
     `19` = "added in kk interview",
@@ -323,20 +351,20 @@ standardized_value_labels <- list(
     `-10` = "added manually",
     `-9` = "in network, not in kk",
     `-8` = "not asked: skip by interviewer",
-    `-7` = "coding category -7",
+    `-7` = "label varies by wave",
     `-6` = "rcf addition",
-    `-5` = "coding category -5",
-    `-4` = "coding category -4",
+    `-5` = "label varies by wave",
+    `-4` = "label varies by wave",
     `-3` = "contact broken",
     `-2` = "not asked (child in network)",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "no time",
     `30` = "30 minutes",
     `60` = "1 hour",
     `1440` = ">24 hours"
   ),
   chtype = c(
-    `-5` = "coding category -5",
+    `-5` = "label varies by wave",
     `-3` = "contact broken",
     `-1` = "unknown",
     `1` = "own/biological child",
@@ -390,7 +418,7 @@ standardized_value_labels <- list(
     `-6` = "rcf addition",
     `-4` = "deceased",
     `-2` = "age<16",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `0` = "f048:yes f049:no",
     `1` = "f048:no",
     `2` = "yes(asked)",
@@ -408,26 +436,28 @@ standardized_value_labels <- list(
     `-9` = "in network, not in kk",
     `-8` = "not asked: skip by interviewer",
     `-7` = "child added in or after interview",
-    `-5` = "coding category -5",
-    `-4` = "coding category -4",
-    `-3` = "coding category -3",
-    `-2` = "coding category -2",
-    `-1` = "coding category -1"
+    `-5` = "label varies by wave",
+    `-4` = "label varies by wave",
+    `-3` = "label varies by wave",
+    `-2` = "label varies by wave",
+    `-1` = "label varies by wave"
   ),
   nwmem = c(
     `-5` = "missing network",
     `-4` = "identified;age 0-17",
     `-3` = "not identified;age 0-17",
-    `-2` = "coding category -2",
-    `-1` = "coding category -1"
+    `-2` = "label varies by wave",
+    `-1` = "label varies by wave"
   ),
-  partner = c(`-1` = "no answer"),
+  partner = c(
+    default_missing_labels[c("-1")]
+  ),
   random = c(`-3` = "sys/rcf addition", `0` = NA_character_, `99` = NA_character_)
 )
 
 value_labels_list <- list(
   Wave_C_labels = .replace_in_list(
-    standardized_value_labels[c("domain", "freqran", "random")],
+    standardized_value_labels,
     domain = .replace_labels(
     standardized_value_labels$domain,
     `9` = "SYSTEM addition",
@@ -443,21 +473,7 @@ value_labels_list <- list(
   )
   ),
   Wave_E_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "chage",
-    "chages",
-    "chbrok",
-    "chdead",
-    "chempl",
-    "chfreq",
-    "chinhh",
-    "chpart",
-    "chsex",
-    "chstat",
-    "chtrav",
-    "chtype",
-    "gcage"
-  )],
+    standardized_value_labels,
     chage = c(`-5` = "see Echstat", `-4` = "deceased", `-3` = "contact broken", `-1` = "no answer"),
     chages = c(
     `-4` = "deceased",
@@ -569,21 +585,7 @@ value_labels_list <- list(
   )
   ),
   Wave_2B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "chage",
-    "chbrok",
-    "chempl",
-    "chfreq",
-    "chinhh",
-    "chpart",
-    "chsex",
-    "chstat",
-    "chtrav",
-    "chtype",
-    "datasrc",
-    "gcage",
-    "nwmem"
-  )],
+    standardized_value_labels,
     chage = c(`-5` = "RCF/SYS addition", `-4` = "deceased", `-3` = "contact broken", `-1` = "no answer"),
     chbrok = c(
     `-5` = "RCF/SYS addition",
@@ -676,24 +678,7 @@ value_labels_list <- list(
   )
   ),
   Wave_F_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "chage",
-    "chages",
-    "chbrok",
-    "chdead",
-    "chdiv",
-    "chempl",
-    "chfreq",
-    "chinhh",
-    "chmar",
-    "chpart",
-    "chsex",
-    "chstat",
-    "chtrav",
-    "chtype",
-    "gc",
-    "nwmem"
-  )],
+    standardized_value_labels,
     chage = c(
     `-6` = "RCF addition",
     `-5` = "see Fchstat",
@@ -812,19 +797,7 @@ value_labels_list <- list(
     nwmem = c(`-1` = "not identified in network")
   ),
   Wave_3B_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "chage",
-    "chempl",
-    "chfreq",
-    "chinhh",
-    "chpart",
-    "chsex",
-    "chstat",
-    "chtrav",
-    "chtype",
-    "gcage",
-    "nwmem"
-  )],
+    standardized_value_labels,
     chage = c(`-5` = "RCF/SYS addition", `-3` = "contact broken", `-1` = "no answer"),
     chempl = c(
     `-5` = "RCF/SYS addition",
@@ -897,26 +870,12 @@ value_labels_list <- list(
   )
   ),
   Wave_MB_labels = .replace_in_list(
-    standardized_value_labels[c("afstand", "chfreq", "chsex", "partner")],
+    standardized_value_labels,
     chfreq = c(`-1` = "no answer"),
     chsex = c(`-1` = "no answer")
   ),
   Wave_I_labels = .replace_in_list(
-    standardized_value_labels[c(
-    "chage",
-    "chbrok",
-    "chdead",
-    "chempl",
-    "chfreq",
-    "chinhh",
-    "chpart",
-    "chsex",
-    "chstat",
-    "chtrav",
-    "chtype",
-    "gcage",
-    "nwmem"
-  )],
+    standardized_value_labels,
     chage = c(
     `-12` = "deceased",
     `-11` = "not asked: added from previous observation",
@@ -1093,7 +1052,7 @@ var_types_vec <- c(
   random = "numeric"
 )
 
-.lasa_fc_048 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "048", waves = .lasa_wave_rows()) |>
     .override_label(wave = "E", variable = "chtype", override_value = "echstep") |>
     .override_label(wave = "MB", variable = "afstand", override_value = "afstand") |>
@@ -1106,3 +1065,15 @@ var_types_vec <- c(
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "048", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "048", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["nwmem"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
+fc_labels$value_labels[["chid"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
+fc_labels$value_labels[["chid"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
+fc_labels$value_labels[["chid"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["chid"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+fc_labels$value_labels[["chage"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["chid"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+fc_labels$value_labels[["chid"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
+
+.lasa_fc_048 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

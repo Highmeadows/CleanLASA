@@ -21,6 +21,27 @@ harmonized_labels <- c(
   nwmem = "network ID grandchild (f047)"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `F` = c(
+    "chid",
+    "gcadvic",
+    "gcage",
+    "gcbaby",
+    "gcfreq",
+    "gcfreqp",
+    "gcfun",
+    "gcid",
+    "gcsex",
+    "gcstay",
+    "gcstep",
+    "nwmem"
+  )
+)
+
 variable_labels_list <- list(
   Wave_F_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
@@ -31,7 +52,7 @@ standardized_value_labels <- list(
   gcadvic = c(
     `-4` = "not asked(age<17)",
     `-3` = "not asked(age?)",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "seldom",
     `3` = "sometimes",
@@ -41,7 +62,7 @@ standardized_value_labels <- list(
   gcbaby = c(
     `-4` = "not asked(age>16)",
     `-3` = "not asked(age?)",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "seldom",
     `3` = "sometimes",
@@ -49,7 +70,7 @@ standardized_value_labels <- list(
   ),
   gcfreq = c(
     `-2` = "no contact(broken)",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "once a year/less",
     `3` = "few times a year",
@@ -61,7 +82,7 @@ standardized_value_labels <- list(
   ),
   gcfreqp = c(
     `-2` = "no contact(broken)",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "once a year/less",
     `3` = "few times a year",
@@ -74,7 +95,7 @@ standardized_value_labels <- list(
   gcfun = c(
     `-4` = "not asked(age<17)",
     `-3` = "not asked(age?)",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "seldom",
     `3` = "sometimes",
@@ -85,7 +106,7 @@ standardized_value_labels <- list(
   gcstay = c(
     `-4` = "not asked(age>16)",
     `-3` = "not asked(age?)",
-    `-1` = "no answer",
+    default_missing_labels[c("-1")],
     `1` = "never",
     `2` = "seldom",
     `3` = "sometimes",
@@ -96,18 +117,7 @@ standardized_value_labels <- list(
 )
 
 value_labels_list <- list(
-  Wave_F_labels = standardized_value_labels[c(
-    "gcadvic",
-    "gcage",
-    "gcbaby",
-    "gcfreq",
-    "gcfreqp",
-    "gcfun",
-    "gcsex",
-    "gcstay",
-    "gcstep",
-    "nwmem"
-  )],
+  Wave_F_labels = standardized_value_labels,
   Harmonized_labels = standardized_value_labels
 )
 
@@ -126,9 +136,15 @@ var_types_vec <- c(
   nwmem = "text"
 )
 
-.lasa_fc_049 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "049", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "049", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "049", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "049", waves = .lasa_wave_rows())
 )
+
+fc_labels$value_labels[["chid"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+fc_labels$value_labels[["gcid"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
+
+.lasa_fc_049 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+

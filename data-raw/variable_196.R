@@ -25,123 +25,110 @@ harmonized_labels <- c(
   mhlq9 = "HLQ: understand warnings about unhealthy behaviours (smoking, low physical activity and drinking too much)"
 )
 
+## Which canonical variables each wave actually documents -- see
+## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
+## used: the tables below are built unsubsetted, then pruned back
+## down to exactly this per wave.
+wave_coverage <- list(
+  `K` = c(
+    "mhlq1",
+    "mhlq10",
+    "mhlq11",
+    "mhlq12",
+    "mhlq13",
+    "mhlq14",
+    "mhlq15",
+    "mhlq16",
+    "mhlq2",
+    "mhlq3",
+    "mhlq4",
+    "mhlq5",
+    "mhlq6",
+    "mhlq7",
+    "mhlq8",
+    "mhlq9"
+  )
+)
+
 variable_labels_list <- list(
   Wave_K_labels = harmonized_labels,
   Harmonized_labels = harmonized_labels
 )
 
+## This file's own very common answer categories (>= 10 occurrences
+## across its variables) -- same idea as default_missing_labels, just
+## scoped to this filecode instead of shared globally.
+default_answer_labels <- c(
+  `1` = "very easy",
+  `2` = "fairly easy",
+  `3` = "fairly difficult",
+  `4` = "very difficult"
+)
+
 standardized_value_labels <- list(
   mhlq1 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   mhlq10 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   mhlq11 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   mhlq12 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   mhlq13 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   mhlq14 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   mhlq15 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   mhlq16 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   mhlq2 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   mhlq3 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   mhlq4 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   mhlq5 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   mhlq6 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   mhlq7 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   mhlq8 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   ),
   mhlq9 = c(
-    `-1` = "na, asked",
-    `1` = "very easy",
-    `2` = "fairly easy",
-    `3` = "fairly difficult",
-    `4` = "very difficult"
+    default_missing_labels[c("-1")],
+    default_answer_labels[c("1", "2", "3", "4")]
   )
 )
 
@@ -169,9 +156,12 @@ var_types_vec <- c(
   mhlq9 = "categorical"
 )
 
-.lasa_fc_196 <- list(
+fc_labels <- list(
   variables = .lasa_build_name_table(variable_labels_list, filecode = "196", waves = .lasa_wave_rows()),
   variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "196", waves = .lasa_wave_rows()),
   value_labels = .lasa_build_value_table(value_labels_list, filecode = "196", waves = .lasa_wave_rows()),
   variable_types = .lasa_build_type_table(var_types_vec, filecode = "196", waves = .lasa_wave_rows())
 )
+
+.lasa_fc_196 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+
