@@ -126,7 +126,7 @@ subset(db$variables, filecode == "046" & wave == "B")
 #> 9058                     not normal: other reason
 #> 9059              not normal: other reasons coded
 #>                              harmonized_var_label    var_type
-#> 9014   Physical condition respondent: observation        text
+#> 9014   Physical condition respondent: observation categorical
 #> 9015                        Wheelchair go outside categorical
 #> 9016        Wheelchair go outside: last two weeks categorical
 #> 9017 Wheelchair go outside: #times last two weeks     numeric
