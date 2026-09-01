@@ -57,165 +57,45 @@
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>The goal of CleanLASA is to make it easy to import and clean LASA (Longitudinal Aging Study Amsterdam) SPSS data files in R. It applies the correct variable and value labels from the LASA documentation, handles differences between waves, flags any variables that could not be matched to the documentation so they can be checked manually, and helps you find and open the right LASA documentation for a topic or file code.</p>
-<p>Variable and value-label metadata lives in a single normalized database (<code><a href="reference/lasa_label_db.html">lasa_label_db()</a></code>), bundled with the package and transcribed from LASA’s own variable-information documentation. Coverage grows and gets corrected with package updates; local, one-off corrections are also possible with <code><a href="reference/manual_update_lasa_labels.html">manual_update_lasa_labels()</a></code>.</p>
+<p>CleanLASA helps you work with LASA (Longitudinal Aging Study Amsterdam) data in R. LASA data comes as SPSS (<code>.sav</code>) files, and each file uses its own short-hand variable names and numeric codes, which change slightly from one measurement wave to the next. Reading such a file with a generic tool like <code><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">haven::read_sav()</a></code> gives you a data frame of bare numbers with no explanation of what they mean.</p>
+<p>CleanLASA fixes that. Point it at a LASA <code>.sav</code> file and it:</p>
+<ul>
+<li>figures out which LASA file and measurement wave you’re looking at, from the file name;</li>
+<li>attaches the correct variable and value labels for that specific file/wave, so <code>4</code> reads as <code>"married"</code> instead of just <code>4</code>;</li>
+<li>lines up the same variable across waves, even when its name or its numeric codes changed between waves;</li>
+<li>tells you plainly which variables it could <em>not</em> figure out, so you can check them by hand instead of silently getting it wrong; and</li>
+<li>helps you find the right LASA topic, file code, and official documentation in the first place.</li>
+</ul>
+<p>All of this metadata lives in one bundled database (<code><a href="reference/lasa_label_db.html">lasa_label_db()</a></code>), hand-transcribed from LASA’s own documentation and shipped with the package. It gets more complete and more accurate with every package update, and you can also patch your own local copy with <code><a href="reference/manual_update_lasa_labels.html">manual_update_lasa_labels()</a></code> if something needs a quick, local fix.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>WARNING! The project is stil heavily work-in-progress, so installing is currently not recommended.</p>
+<p>WARNING! This project is still heavily work-in-progress, so installing it for real analysis work is currently not recommended.</p>
 <p>You can install the development version of CleanLASA from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Highmeadows/CleanLASA"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+<h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
-<p>The main entry point is <code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code>, which detects which LASA datafile you’re working with (from its file name) and labels it using the package’s label database automatically:</p>
+<p>The main function is <code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code>. Give it the path to a LASA <code>.sav</code> file and it works out the rest from the file name – reading the file, matching its columns to LASA’s documentation, attaching labels, turning categorical variables into R factors, and renaming columns to a name that’s the same across every wave:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://highmeadows.github.io/CleanLASA/">CleanLASA</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Import and label a LASA .sav file</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span> <span class="co"># LASA wave B, file code 046</span></span>
 <span></span>
-<span><span class="co"># importing the data should generally be in this format:</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"path/to/LASA[wave][file_code].sav"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Specific examples:</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span> <span class="co"># LASA wave B file 046</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASA_data/LASAZ004.sav"</span><span class="op">)</span> <span class="co"># LASA wave Z file 004</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"Documents/Research/data/LAS2B011.sav"</span><span class="op">)</span> <span class="co"># LASA wave 2B file 011</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"lasazoa1.sav"</span><span class="op">)</span> <span class="co"># LASA wave Z file oa1</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="shared-arguments">Shared arguments<a class="anchor" aria-label="anchor" href="#shared-arguments"></a>
-</h3>
-<p><code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code> is a thin wrapper: identification (file code/wave) and reading the <code>.sav</code> file happens there, but all matching, transforming, and standardizing is done by <code><a href="reference/apply_lasa_labels.html">apply_lasa_labels()</a></code>, which both functions share.</p>
-<ul>
-<li>
-<code>filecode</code>/<code>wave</code> – manual override for the LASA file code/wave, for a file name that doesn’t follow the documented convention (<code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code> only).</li>
-<li>
-<code>name_corrections</code> – manually point a canonical suffix (e.g. <code>lphya08</code>) at a differently-named source column, for a known typo/renaming in the data.</li>
-<li>
-<code>fuzzy_matching</code> (default <code>TRUE</code>) – when exact/canonical matching fails, fall back to an edit-distance match against the data’s own column names, absorbing most typos without needing <code>name_corrections</code>.</li>
-<li>
-<code>to_factor</code>/<code>to_numeric</code> (default <code>TRUE</code>) – convert categorical variables to factors using their SPSS value labels as levels, and restore count/continuous variables to plain numeric, converting negative (missing-reason) codes to <code>NA</code>. A variable whose value coding is inconsistent across waves (e.g. a binary code’s polarity flipped, or an income variable’s brackets were redefined) is instead recoded to its wave-specific label text (character), never a factor – see “The label database” below.</li>
-<li>
-<code>standardize</code> (default <code>TRUE</code>) – overarching switch for the three switches below; each can also be set independently.
-<ul>
-<li>
-<code>.standardize_names</code> – rename every matched column to its canonical lowercase LASA name with the wave code removed (e.g. <code>lphya01</code>), and standardize <code>"respnr"</code> (in any capitalization) to <code>"respnr"</code>. Implies <code>add_wavecode = TRUE</code>.</li>
-<li>
-<code>.standardize_var_labels</code> – use the cross-wave-consistent (“harmonized”) variable label as the active <code>"label"</code>, instead of the wave-specific one.</li>
-<li>
-<code>.standardize_val_labels</code> – use the harmonized value labels as the active <code>"labels"</code> (and for <code>to_factor</code> level text), where documented.</li>
-</ul>
-</li>
-<li>
-<code>add_wavecode</code> (default <code>FALSE</code>) – insert a <code>"Wave"</code> column, filled with the file’s already-identified wave code (e.g. <code>"B"</code>, <code>"2B"</code>, <code>"3B"</code>), right after <code>"respnr"</code>.</li>
-</ul>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Rename columns to their canonical names, harmonize labels, and insert a</span></span>
-<span><span class="co"># "Wave" column, all in one call -- this is also the default:</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span>, standardize<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] "respnr"  "Wave"    "lphya01"</span></span>
-<span></span>
-<span><span class="co"># add_wavecode also works on its own, without fully standardizing names:</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span>, .standardize_names <span class="op">=</span> <span class="cn">FALSE</span>, add_wavecode <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] "respnr"  "Wave"    "blphya01"</span></span></code></pre></div>
-<p>Regardless of these arguments, every matched column also keeps its wave-specific label/value labels available as reference attributes – <code>attr(x, "wave_label")</code> and <code>attr(x, "labels_wave")</code> – so R output can always be cross-checked against another program’s (e.g. SPSS) coding, even after <code>to_numeric</code>/<code>to_factor</code> reshaping or harmonized-label standardization.</p>
-<p>After importing, you can check the variable-name matching audit – in both directions: documented variables not found in the data, and data columns not documented in the label database – using <code><a href="reference/lasa_label_report.html">lasa_label_report()</a></code>:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/lasa_label_report.html">lasa_label_report</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="co"># Check whether anything didn't match:</span></span>
 <span><span class="fu"><a href="reference/lasa_label_report.html">lasa_label_report</a></span><span class="op">(</span><span class="va">data</span>, problems_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>Neither direction ever breaks <code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code>/<code><a href="reference/apply_lasa_labels.html">apply_lasa_labels()</a></code>; an unmatched variable is simply left alone and reported here, often fixable with <code>name_corrections</code>.</p>
-</div>
-<div class="section level3">
-<h3 id="relabelling-a-data-frame-directly">Relabelling a data frame directly<a class="anchor" aria-label="anchor" href="#relabelling-a-data-frame-directly"></a>
-</h3>
-<p><code><a href="reference/apply_lasa_labels.html">apply_lasa_labels()</a></code> applies the same labelling engine to any data frame, not only the output of <code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code>. This is useful after a transformation (e.g. <code>dplyr::mutate()</code>) has stripped attributes, or when a file was imported some other way:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">mutate</span><span class="op">(</span><span class="va">data</span>, respnr <span class="op">=</span> <span class="va">respnr</span><span class="op">)</span> <span class="co"># attributes stripped</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/apply_lasa_labels.html">apply_lasa_labels</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="co"># re-labels via stored provenance</span></span>
-<span></span>
-<span><span class="co"># Or supply identity explicitly:</span></span>
-<span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">read_sav</a></span><span class="op">(</span><span class="st">"LASAC046.sav"</span>, user_na <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/apply_lasa_labels.html">apply_lasa_labels</a></span><span class="op">(</span><span class="va">raw</span>, filecode <span class="op">=</span> <span class="st">"046"</span>, wave <span class="op">=</span> <span class="st">"C"</span><span class="op">)</span></span></code></pre></div>
-</div>
+<p>Not sure which file code you need? <code><a href="reference/lasa_topics.html">lasa_topics()</a></code> searches LASA’s topics and themes for you, and <code><a href="reference/lasa_var_info.html">lasa_var_info()</a></code> opens LASA’s own documentation for a topic or file code:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"physical activity"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="the-label-database">The label database<a class="anchor" aria-label="anchor" href="#the-label-database"></a>
+<h2 id="learn-more">Learn more<a class="anchor" aria-label="anchor" href="#learn-more"></a>
 </h2>
-<p><code><a href="reference/lasa_label_db.html">lasa_label_db()</a></code> returns the package’s normalized variable/value-label metadata: which file codes and waves are covered, and each variable’s documented name, wave-specific label, cross-wave-consistent (“harmonized”) label, and value-label codebook. Unlike earlier releases, this metadata is not parsed from PDFs at build or run time – it is hardcoded, hand-maintained R (<code>data-raw/</code>), transcribed from LASA’s own variable-information documentation and shipped with the package. A new package release is how coverage grows or gets corrected.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lasa_label_db.html">lasa_label_db</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">db</span><span class="op">$</span><span class="va">variables</span>, <span class="va">filecode</span> <span class="op">==</span> <span class="st">"046"</span> <span class="op">&amp;</span> <span class="va">wave</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">)</span></span></code></pre></div>
-<p>The database has three parts:</p>
-<ul>
-<li><p><code>variables</code> (one row per file code/wave/variable),</p></li>
-<li><p><code>value_labels</code> (that variable’s value labels as documented for that specific wave)</p></li>
-<li><p><code>value_labels_harmonized</code> (the same variable’s value labels standardized across every wave that documents it, independent of wave – useful when combining waves that coded the same concept slightly differently).</p></li>
-</ul>
-<p><code><a href="reference/apply_lasa_labels.html">apply_lasa_labels()</a></code> and <code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code> attach all of this to each labelled column as attributes: <code>"label"</code>/<code>"labels"</code> (the <em>active</em> <strong>variable label/value labels</strong>: wave-specific unless <code>.standardize_var_labels</code>/ <code>.standardize_val_labels</code> is on), <code>"wave_label"</code>/<code>"labels_wave"</code> (always the wave-specific versions), <code>"canonical_name"</code>, <code>"harmonized_label"</code>, and (where documented) <code>"labels_harmonized"</code>.</p>
-<p>Some variables’ coding genuinely differs by wave – a binary code’s polarity flipped, or an income variable’s brackets were redefined – so no single cross-wave value label could be written for them. <code>variables</code> marks these <code>var_type == "text"</code> and documents no harmonized value labels at all for them; <code>to_factor</code> recodes such a variable to its wave-specific label text (character) instead of a factor, so waves whose numeric codes disagree but whose label text agrees (<code>0 = "no", 1 = "yes"</code> vs. <code>1 = "no", 2 = "yes"</code>) still merge correctly.</p>
-<div class="section level3">
-<h3 id="manual-corrections">Manual corrections<a class="anchor" aria-label="anchor" href="#manual-corrections"></a>
-</h3>
-<p>When the bundled database is itself wrong or incomplete about a variable, or you want a custom label, <code><a href="reference/manual_update_lasa_labels.html">manual_update_lasa_labels()</a></code> patches your local copy of the database directly. A later package update will not silently discard the correction – it only replaces the bundled base layer the correction is composed on top of.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/manual_update_lasa_labels.html">manual_update_lasa_labels</a></span><span class="op">(</span></span>
-<span>  filecode <span class="op">=</span> <span class="st">"046"</span>, wave <span class="op">=</span> <span class="st">"B"</span>, variable <span class="op">=</span> <span class="st">"lphya01"</span>,</span>
-<span>  val_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>`-5` <span class="op">=</span> <span class="st">"NA, wrong, skip"</span><span class="op">)</span>  <span class="co"># merged into the existing set</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="reference/manual_update_lasa_labels.html">manual_update_lasa_labels</a></span><span class="op">(</span></span>
-<span>  filecode <span class="op">=</span> <span class="st">"046"</span>, wave <span class="op">=</span> <span class="st">"all"</span>, variable <span class="op">=</span> <span class="st">"lphya01"</span>,</span>
-<span>  val_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>`-5` <span class="op">=</span> <span class="st">"NA, wrong, skip"</span><span class="op">)</span>,</span>
-<span>  replace_val_labels <span class="op">=</span> <span class="cn">TRUE</span>  <span class="co"># replaces the value-label set entirely</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p><code><a href="reference/manual_update_lasa_labels.html">manual_update_lasa_labels()</a></code> writes to a <em>full</em> local snapshot of the database the first time it’s called, not just the correction – so once that snapshot exists, it takes precedence over the bundled database on every subsequent load, for every file code, until it’s refreshed. <code><a href="reference/restore_lasa_labels.html">restore_lasa_labels()</a></code> is the inverse: it undoes a correction (entirely, or scoped to a <code>filecode</code>/<code>wave</code>/<code>variable</code>) and/or rebuilds that local snapshot from whatever the currently-installed package’s bundled database contains, so a package update’s new/corrected coverage actually takes effect.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Undo one correction:</span></span>
-<span><span class="fu"><a href="reference/restore_lasa_labels.html">restore_lasa_labels</a></span><span class="op">(</span>filecode <span class="op">=</span> <span class="st">"046"</span>, variable <span class="op">=</span> <span class="st">"lphya01"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Undo every correction ever recorded locally, and pick up whatever the</span></span>
-<span><span class="co"># installed package version's bundled database currently contains:</span></span>
-<span><span class="fu"><a href="reference/restore_lasa_labels.html">restore_lasa_labels</a></span><span class="op">(</span>rebuild <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-</div>
-</div>
-<div class="section level2">
-<h2 id="finding-topics-and-documentation">Finding topics and documentation<a class="anchor" aria-label="anchor" href="#finding-topics-and-documentation"></a>
-</h2>
-<p><code><a href="reference/lasa_topics.html">lasa_topics()</a></code> searches the package’s bundled LASA topic database for topics, themes, and file codes:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Browse everything</span></span>
-<span><span class="fu"><a href="reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Search by topic name (fuzzy matching handles typos and partial names)</span></span>
-<span><span class="fu"><a href="reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"physical act"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Search by theme or subtheme</span></span>
-<span><span class="fu"><a href="reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="st">"cognitive"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="st">"memory"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Search by file code -- also matches processed/scaled variants sharing</span></span>
-<span><span class="co"># the same final two digits (e.g. "045" also returns the "245" row)</span></span>
-<span><span class="fu"><a href="reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span><span class="st">"011"</span><span class="op">)</span></span></code></pre></div>
-<p>This table is hand-maintained (see <code>data-raw/lasa_topic_database.R</code> in the package source), not scraped, so it updates only when the package itself does — but that also makes it directly editable: adding a new file code or updating which waves an existing one is available in (e.g. a newly released wave) is a one-line change to that file.</p>
-<p>Once you’ve found a topic or file code, <code><a href="reference/lasa_var_info.html">lasa_var_info()</a></code> resolves and opens its variable-information PDF or its LASA topic webpage, scraped live from the LASA website (no PDFs are bundled with the package):</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span><span class="op">)</span>               <span class="co"># by file code</span></span>
-<span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"LASA046"</span><span class="op">)</span>           <span class="co"># file code variations are recognized</span></span>
-<span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"Physical activity"</span><span class="op">)</span> <span class="co"># or by topic name</span></span>
-<span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"physical act"</span><span class="op">)</span>      <span class="co"># fuzzy matching handles typos too</span></span>
-<span></span>
-<span><span class="co"># Open the LASA topic webpage instead of the PDF</span></span>
-<span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span>, target <span class="op">=</span> <span class="st">"web"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Get the URL without opening it</span></span>
-<span><span class="va">url</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p>The document is always opened in the system’s default web browser (the RStudio Viewer does not render hosted PDFs reliably). When a file code has no linked PDF, <code><a href="reference/lasa_var_info.html">lasa_var_info()</a></code> automatically detours to its LASA webpage instead, printing a message explaining why. The live lookup itself is cached, both for the rest of the session and on disk, so it doesn’t have to be rebuilt every session; use <code>refresh = TRUE</code> to check the live site for a changed link.</p>
+<p>This README is just a summary. The <a href="https://highmeadows.github.io/CleanLASA/articles/intro.html">package vignette</a> is a full, step-by-step tutorial that walks through every function with worked examples – how the file-name-based matching works, every option <code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code> offers (fuzzy matching, name corrections, converting to factors/numeric, standardizing names and labels across waves), what’s inside the label database, how to record your own corrections, and how to search LASA’s topic index and documentation. Start there if you’re new to the package.</p>
 </div>
 <div class="section level2">
 <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
