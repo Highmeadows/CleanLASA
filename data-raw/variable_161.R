@@ -1,3132 +1,15 @@
 ## LASA filecode 161 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  marm1 = "Measured arm (1)",
-  marm2 = "Measured arm (2)",
-  marmp = "Arm: particularities",
-  marmp1 = "Arm: no bare arm",
-  marmp2 = "Arm: much space between tape and arm",
-  marmp3 = "Arm: R sitting down",
-  marmp4 = "Arm: on right arm",
-  marmp5 = "Arm: refused",
-  mbicep1 = "Biceps (1): millimeters",
-  mbicep2 = "Biceps (2): millimeters",
-  mbicep3 = "Biceps (3): millimeters",
-  mbicepp = "Biceps particularities",
-  mbicepp1 = "Biceps: no bare arm",
-  mbicepp2 = "Biceps: edema",
-  mbicepp3 = "Biceps: > 40mm",
-  mbicepp4 = "Biceps: tight skin",
-  mbicepp5 = "Biceps: refused",
-  mcalf01 = "Measured calf in cm",
-  mcalf02 = NA_character_,
-  mcalf03 = "Calf: refused",
-  mcalf04 = "Calf: R sitting down",
-  mcalf06 = "Calf: on right leg",
-  mcalf12 = NA_character_,
-  mcalf13 = "Calf: much space between tape and leg",
-  mgripl1 = "Hand strength (1) left: kgf",
-  mgripl2 = "Hand strength (2) left: kgf",
-  mgriplp = "Hand strength left: particularities",
-  mgriplp1 = "Hand strength: left particularities",
-  mgriplp2 = "Hand strength: left handicapped",
-  mgriplp3 = "Hand strength: left refuses",
-  mgriplp4 = "Hand strength: left other remarks",
-  mgripmeasp = "Measuring instruments: particularities",
-  mgripp = "Hand strength particularities",
-  mgripr1 = "Hand strength (1) right: kgf",
-  mgripr2 = "Hand strength (2) right: kgf",
-  mgriprp = "Hand strength right: particularities",
-  mgriprp1 = "Hand strength: right particularities",
-  mgriprp2 = "Hand strength: right handicapped",
-  mgriprp3 = "Hand strength: right refuses",
-  mgriprp4 = "Hand strength: right other remarks",
-  mheight = "Measured height in centimeters",
-  mheightp = "Height particularities",
-  mheightp1 = "Height: cannot stand",
-  mheightp2 = "Height: kyphosis",
-  mheightp3 = "Height: scoliosis",
-  mheightp4 = "Height: head not parallel",
-  mheightp5 = "Height: shoes",
-  mheightp6 = "Height: too much hair",
-  mheightp7 = "Height: refused",
-  mheightself = "Height: self-report",
-  mhip = "Measured hip in centimeters",
-  mhip1 = "Measured hip (1) in cm",
-  mhip2 = "Measured hip (2) in cm",
-  mhipp = "Hip particularities",
-  mhipp1 = "Hip: lying down",
-  mhipp2 = "Hip: many skinfolds",
-  mhipp3 = "Hip: refused",
-  mhipp4 = "Hip: other remark (3B) / Hip: other reason",
-  mkneeh = "Knee height: millimeters",
-  mkneep = "Knee: particularities",
-  mlength = "Measured length in centimeters",
-  mmiwp = "Measurements instruments were working properly",
-  msubscap1 = "Subscapular (1): millimeters",
-  msubscap2 = "Subscapular (2): millimeters",
-  msubscap3 = "Subscapular (3): millimeters",
-  msubscapp = "Subscapular particularities",
-  msubscapp1 = "Subscapular: no bare arm",
-  msubscapp2 = "Subscapular: edema",
-  msubscapp3 = "Subscapular: > 40mm",
-  msubscapp4 = "Subscapular: tight skin",
-  msubscapp5 = "Subscapular: refused",
-  msuprail1 = "Suprailiac (1): millimeters",
-  msuprail2 = "Suprailiac (2): millimeters",
-  msuprail3 = "Suprailiac (3): millimeters",
-  msuprailp = "Suprailiac particularities",
-  msuprailp1 = "Suprailiac: no bare arm",
-  msuprailp2 = "Suprailiac: edema",
-  msuprailp3 = "Suprailiac: > 40mm",
-  msuprailp4 = "Suprailiac: tight skin",
-  msuprailp5 = "Suprailiac: refused",
-  mtricep1 = "Triceps (1): millimeters",
-  mtricep2 = "Triceps (2): millimeters",
-  mtricep3 = "Triceps (3): millimeters",
-  mtricepp = "Triceps particularities",
-  mtricepp1 = "Triceps: no bare arm",
-  mtricepp2 = "Triceps: edema",
-  mtricepp3 = "Triceps: > 40mm",
-  mtricepp4 = "Triceps: tight skin",
-  mtricepp5 = "Triceps: refused",
-  mwaist = "Measured waist in centimeters",
-  mwaist1 = "Measured waist (1)",
-  mwaist2 = "Measured waist (2)",
-  mwaistp = "Waist particularities",
-  mwaistp1 = "Waist: lying down",
-  mwaistp2 = "Waist: hard to find right spot",
-  mwaistp3 = "Waist: many skinfolds",
-  mwaistp4 = "Waist: refused",
-  mwaistp5 = "Waist: other remark (3B) Waist: other reason",
-  mweight = "Measured weight in kilograms",
-  mweightp = "Weight particularities",
-  mweightp1 = "Weight: cannot stand",
-  mweightp2 = "Weight: clothes",
-  mweightp3 = "Weight: corset",
-  mweightp4 = "Weight: amputated",
-  mweightp5 = "Weight: brace",
-  mweightp6 = "Weight: prosthesis",
-  mweightp7 = "Weight: > 150 kg",
-  mweightp8 = "Weight: refused",
-  mweightp9 = "Weight: shoes",
-  mweightself = "Weight: self-report",
-  rm161 = "Reason missing: LASAH/B/I/J161"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `B` = c(
-    "marm1",
-    "marm2",
-    "marmp",
-    "mheightp",
-    "mheightself",
-    "mhip",
-    "mhipp",
-    "mkneeh",
-    "mkneep",
-    "mlength",
-    "mtricep1",
-    "mtricep2",
-    "mtricep3",
-    "mtricepp",
-    "mwaist",
-    "mwaistp",
-    "mweight",
-    "mweightp",
-    "mweightself"
-  ),
-  `C` = c(
-    "marm1",
-    "marm2",
-    "marmp",
-    "marmp1",
-    "marmp2",
-    "marmp3",
-    "marmp4",
-    "marmp5",
-    "mbicep1",
-    "mbicep2",
-    "mbicep3",
-    "mbicepp",
-    "mbicepp1",
-    "mbicepp2",
-    "mbicepp3",
-    "mbicepp4",
-    "mbicepp5",
-    "mgripl1",
-    "mgripl2",
-    "mgripp",
-    "mgripr1",
-    "mgripr2",
-    "mheight",
-    "mheightp",
-    "mheightp1",
-    "mheightp2",
-    "mheightp3",
-    "mheightp4",
-    "mheightp5",
-    "mheightp6",
-    "mheightp7",
-    "mheightself",
-    "mhip1",
-    "mhip2",
-    "mhipp",
-    "mhipp1",
-    "mhipp2",
-    "mhipp3",
-    "msubscap1",
-    "msubscap2",
-    "msubscap3",
-    "msubscapp",
-    "msubscapp1",
-    "msubscapp2",
-    "msubscapp3",
-    "msubscapp4",
-    "msubscapp5",
-    "msuprail1",
-    "msuprail2",
-    "msuprail3",
-    "msuprailp",
-    "msuprailp1",
-    "msuprailp2",
-    "msuprailp3",
-    "msuprailp4",
-    "msuprailp5",
-    "mtricep1",
-    "mtricep2",
-    "mtricep3",
-    "mtricepp",
-    "mtricepp1",
-    "mtricepp2",
-    "mtricepp3",
-    "mtricepp4",
-    "mtricepp5",
-    "mwaist1",
-    "mwaist2",
-    "mwaistp",
-    "mwaistp1",
-    "mwaistp2",
-    "mwaistp3",
-    "mwaistp4",
-    "mweight",
-    "mweightp",
-    "mweightp1",
-    "mweightp2",
-    "mweightp3",
-    "mweightp4",
-    "mweightp5",
-    "mweightp6",
-    "mweightp7",
-    "mweightp8",
-    "mweightself",
-    "rm161"
-  ),
-  `D` = c(
-    "marm1",
-    "marm2",
-    "marmp",
-    "marmp1",
-    "marmp2",
-    "marmp3",
-    "marmp4",
-    "marmp5",
-    "mbicep1",
-    "mbicep2",
-    "mbicep3",
-    "mbicepp",
-    "mbicepp1",
-    "mbicepp3",
-    "mbicepp4",
-    "mbicepp5",
-    "mgripl1",
-    "mgripl2",
-    "mgriplp1",
-    "mgriplp2",
-    "mgriplp3",
-    "mgripr1",
-    "mgripr2",
-    "mgriprp1",
-    "mgriprp2",
-    "mgriprp3",
-    "mheight",
-    "mheightp",
-    "mheightp2",
-    "mheightp3",
-    "mheightp4",
-    "mheightp6",
-    "mheightp7",
-    "mheightself",
-    "mhip1",
-    "mhipp",
-    "mhipp1",
-    "mhipp2",
-    "mhipp3",
-    "mhipp4",
-    "mtricep1",
-    "mtricep2",
-    "mtricep3",
-    "mtricepp",
-    "mtricepp1",
-    "mtricepp3",
-    "mtricepp4",
-    "mtricepp5",
-    "mwaist1",
-    "mwaistp",
-    "mwaistp1",
-    "mwaistp2",
-    "mwaistp3",
-    "mwaistp4",
-    "mweight",
-    "mweightp",
-    "mweightp2",
-    "mweightp3",
-    "mweightp4",
-    "mweightp5",
-    "mweightp6",
-    "mweightp7",
-    "mweightp8",
-    "mweightp9",
-    "mweightself",
-    "rm161"
-  ),
-  `E` = c(
-    "mgripl1",
-    "mgripl2",
-    "mgriplp1",
-    "mgriplp2",
-    "mgriplp3",
-    "mgriplp4",
-    "mgripr1",
-    "mgripr2",
-    "mgriprp1",
-    "mgriprp2",
-    "mgriprp3",
-    "mgriprp4",
-    "mheight",
-    "mheightp",
-    "mheightp2",
-    "mheightp3",
-    "mheightp4",
-    "mheightp6",
-    "mheightp7",
-    "mheightself",
-    "mhip1",
-    "mhip2",
-    "mhipp",
-    "mhipp1",
-    "mhipp2",
-    "mhipp3",
-    "mhipp4",
-    "mwaist1",
-    "mwaist2",
-    "mwaistp",
-    "mwaistp1",
-    "mwaistp2",
-    "mwaistp3",
-    "mwaistp4",
-    "mweight",
-    "mweightp",
-    "mweightp2",
-    "mweightp3",
-    "mweightp4",
-    "mweightp5",
-    "mweightp6",
-    "mweightp7",
-    "mweightp8",
-    "mweightp9",
-    "mweightself",
-    "rm161"
-  ),
-  `2B` = c(
-    "mgripl1",
-    "mgripl2",
-    "mgriplp",
-    "mgriplp2",
-    "mgriplp3",
-    "mgriplp4",
-    "mgripmeasp",
-    "mgripr1",
-    "mgripr2",
-    "mgriprp",
-    "mgriprp2",
-    "mgriprp3",
-    "mgriprp4",
-    "mheight",
-    "mheightp",
-    "mheightp1",
-    "mheightp2",
-    "mheightp3",
-    "mheightp4",
-    "mheightp6",
-    "mheightp7",
-    "mheightself",
-    "mhip1",
-    "mhip2",
-    "mhipp",
-    "mhipp1",
-    "mhipp2",
-    "mhipp3",
-    "mwaist1",
-    "mwaist2",
-    "mwaistp",
-    "mwaistp1",
-    "mwaistp2",
-    "mwaistp3",
-    "mwaistp4",
-    "mweight",
-    "mweightp",
-    "mweightp1",
-    "mweightp2",
-    "mweightp3",
-    "mweightp4",
-    "mweightp5",
-    "mweightp6",
-    "mweightp7",
-    "mweightp8",
-    "mweightself"
-  ),
-  `F` = c(
-    "mgripl1",
-    "mgripl2",
-    "mgriplp",
-    "mgripr1",
-    "mgripr2",
-    "mgriprp",
-    "mheight",
-    "mheightp",
-    "mheightself",
-    "mhip1",
-    "mhip2",
-    "mhipp",
-    "mwaist1",
-    "mwaist2",
-    "mwaistp",
-    "mweight",
-    "mweightp",
-    "mweightself",
-    "rm161"
-  ),
-  `G` = c(
-    "mgripl1",
-    "mgripl2",
-    "mgriplp1",
-    "mgriplp2",
-    "mgriplp3",
-    "mgriplp4",
-    "mgripr1",
-    "mgripr2",
-    "mgriprp1",
-    "mgriprp2",
-    "mgriprp3",
-    "mgriprp4",
-    "mheight",
-    "mheightp",
-    "mheightp1",
-    "mheightp2",
-    "mheightp3",
-    "mheightp4",
-    "mheightp5",
-    "mheightp6",
-    "mheightp7",
-    "mheightself",
-    "mhip1",
-    "mhip2",
-    "mhipp",
-    "mhipp1",
-    "mhipp2",
-    "mhipp3",
-    "mwaist1",
-    "mwaist2",
-    "mwaistp",
-    "mwaistp1",
-    "mwaistp2",
-    "mwaistp3",
-    "mwaistp4",
-    "mweight",
-    "mweightp",
-    "mweightp1",
-    "mweightp2",
-    "mweightp3",
-    "mweightp4",
-    "mweightp5",
-    "mweightp6",
-    "mweightp7",
-    "mweightp8",
-    "mweightp9",
-    "mweightself",
-    "rm161"
-  ),
-  `H` = c(
-    "marm1",
-    "marmp",
-    "marmp1",
-    "marmp2",
-    "marmp3",
-    "marmp4",
-    "marmp5",
-    "mgripl1",
-    "mgripl2",
-    "mgriplp1",
-    "mgriplp2",
-    "mgriplp3",
-    "mgriplp4",
-    "mgripr1",
-    "mgripr2",
-    "mgriprp1",
-    "mgriprp2",
-    "mgriprp3",
-    "mgriprp4",
-    "mheight",
-    "mheightp",
-    "mheightp1",
-    "mheightp2",
-    "mheightp3",
-    "mheightp4",
-    "mheightp5",
-    "mheightp6",
-    "mheightp7",
-    "mheightself",
-    "mhip1",
-    "mhip2",
-    "mhipp",
-    "mhipp1",
-    "mhipp2",
-    "mhipp3",
-    "mwaist1",
-    "mwaist2",
-    "mwaistp",
-    "mwaistp1",
-    "mwaistp2",
-    "mwaistp3",
-    "mwaistp4",
-    "mweight",
-    "mweightp",
-    "mweightp1",
-    "mweightp2",
-    "mweightp3",
-    "mweightp4",
-    "mweightp5",
-    "mweightp6",
-    "mweightp7",
-    "mweightp8",
-    "mweightp9",
-    "mweightself",
-    "rm161"
-  ),
-  `3B` = c(
-    "marm1",
-    "marmp",
-    "marmp1",
-    "marmp2",
-    "marmp3",
-    "marmp4",
-    "marmp5",
-    "mgripl1",
-    "mgripl2",
-    "mgriplp1",
-    "mgriplp2",
-    "mgriplp3",
-    "mgriplp4",
-    "mgripr1",
-    "mgripr2",
-    "mgriprp1",
-    "mgriprp2",
-    "mgriprp3",
-    "mgriprp4",
-    "mheight",
-    "mheightp",
-    "mheightp1",
-    "mheightp2",
-    "mheightp3",
-    "mheightp4",
-    "mheightp5",
-    "mheightp6",
-    "mheightp7",
-    "mheightself",
-    "mhip1",
-    "mhip2",
-    "mhipp",
-    "mhipp1",
-    "mhipp2",
-    "mhipp3",
-    "mhipp4",
-    "mmiwp",
-    "mwaist1",
-    "mwaist2",
-    "mwaistp",
-    "mwaistp1",
-    "mwaistp2",
-    "mwaistp3",
-    "mwaistp4",
-    "mwaistp5",
-    "mweight",
-    "mweightp",
-    "mweightp1",
-    "mweightp2",
-    "mweightp3",
-    "mweightp4",
-    "mweightp5",
-    "mweightp6",
-    "mweightp7",
-    "mweightp8",
-    "mweightp9",
-    "mweightself",
-    "rm161"
-  ),
-  `I` = c(
-    "marm1",
-    "marmp",
-    "marmp1",
-    "marmp2",
-    "marmp3",
-    "marmp4",
-    "marmp5",
-    "mcalf01",
-    "mcalf02",
-    "mcalf03",
-    "mcalf04",
-    "mcalf06",
-    "mcalf12",
-    "mcalf13",
-    "mgripl1",
-    "mgripl2",
-    "mgriplp1",
-    "mgriplp2",
-    "mgriplp3",
-    "mgriplp4",
-    "mgripr1",
-    "mgripr2",
-    "mgriprp1",
-    "mgriprp2",
-    "mgriprp3",
-    "mgriprp4",
-    "mheight",
-    "mheightp",
-    "mheightp1",
-    "mheightp2",
-    "mheightp3",
-    "mheightp4",
-    "mheightp5",
-    "mheightp6",
-    "mheightp7",
-    "mheightself",
-    "mhip1",
-    "mhip2",
-    "mhipp",
-    "mhipp1",
-    "mhipp2",
-    "mhipp3",
-    "mhipp4",
-    "mmiwp",
-    "mwaist1",
-    "mwaist2",
-    "mwaistp",
-    "mwaistp1",
-    "mwaistp2",
-    "mwaistp3",
-    "mwaistp4",
-    "mwaistp5",
-    "mweight",
-    "mweightp",
-    "mweightp1",
-    "mweightp2",
-    "mweightp3",
-    "mweightp4",
-    "mweightp5",
-    "mweightp6",
-    "mweightp7",
-    "mweightp8",
-    "mweightp9",
-    "mweightself",
-    "rm161"
-  ),
-  `J` = c(
-    "marm1",
-    "marmp",
-    "marmp1",
-    "marmp2",
-    "marmp3",
-    "marmp4",
-    "marmp5",
-    "mcalf01",
-    "mcalf02",
-    "mcalf03",
-    "mcalf04",
-    "mcalf06",
-    "mcalf12",
-    "mcalf13",
-    "mgripl1",
-    "mgripl2",
-    "mgriplp1",
-    "mgriplp2",
-    "mgriplp3",
-    "mgriplp4",
-    "mgripr1",
-    "mgripr2",
-    "mgriprp1",
-    "mgriprp2",
-    "mgriprp3",
-    "mgriprp4",
-    "mheight",
-    "mheightp",
-    "mheightp1",
-    "mheightp2",
-    "mheightp3",
-    "mheightp4",
-    "mheightp5",
-    "mheightp6",
-    "mheightp7",
-    "mheightself",
-    "mhip1",
-    "mhip2",
-    "mhipp",
-    "mhipp1",
-    "mhipp2",
-    "mhipp3",
-    "mhipp4",
-    "mmiwp",
-    "mwaist1",
-    "mwaist2",
-    "mwaistp",
-    "mwaistp1",
-    "mwaistp2",
-    "mwaistp3",
-    "mwaistp4",
-    "mwaistp5",
-    "mweight",
-    "mweightp",
-    "mweightp1",
-    "mweightp2",
-    "mweightp3",
-    "mweightp4",
-    "mweightp5",
-    "mweightp6",
-    "mweightp7",
-    "mweightp8",
-    "mweightp9",
-    "mweightself",
-    "rm161"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels,
-    marm1 = "Arm 1: millimeters",
-    marm2 = "Arm 2: millimeters",
-    mheightp = "Length: particularities",
-    mheightself = "Length: self-report",
-    mhipp = "Hip: particularities",
-    mtricep1 = "Triceps 1: millimeters",
-    mtricep2 = "Triceps 2: millimeters",
-    mtricep3 = "Triceps 3: millimeters",
-    mtricepp = "Triceps: particularities",
-    mwaistp = "Waist: particularities",
-    mweightp = "Weight: particularities"
-  ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels,
-    marm1 = "Measured arm (1) in cm",
-    marm2 = "Measured arm (2) in cm",
-    marmp = "Arm particularities",
-    mwaist1 = "Measured waist (1) in mm",
-    mwaist2 = "Measured waist (2) in mm",
-    mweightp7 = "Weight: >150 kg",
-    rm161 = "Reason missing: LASAC161"
-  ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels,
-    marm1 = "Measured arm (1) in cm",
-    marm2 = "Measured arm (2) in cm",
-    marmp = "Arm particularities",
-    mgriplp1 = "Hand strength: left part.",
-    mgriprp1 = "Hand strength: right part.",
-    mhipp4 = "Hip: other remakrs",
-    mwaist1 = "Measured waist (1) in mm",
-    mweightp7 = "Weight: >150 kg",
-    rm161 = "Reason missing: LASAD161"
-  ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels,
-    mgriplp1 = "Hand strength: left part",
-    mgriprp1 = "Hand strength: right part",
-    mhipp4 = "Hip: other remarks",
-    mwaist1 = "Measured waist (1) in cm",
-    mwaist2 = "Measured waist (2) in cm",
-    rm161 = "Reason missing: LASAE161"
-  ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels,
-    mgriplp2 = "Hand strength left: handicap",
-    mgriplp3 = "Hand strength left: refused",
-    mgriplp4 = "Hand strength left: other",
-    mgriprp2 = "Hand strength right: handicap",
-    mgriprp3 = "Hand strength right: refused",
-    mgriprp4 = "Hand strength right: other",
-    mwaist1 = "Measured waist (1) in cm",
-    mwaist2 = "Measured waist (2) in cm",
-    mwaistp3 = "Waist: much skinfolds"
-  ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels,
-    mgriplp = "Hand strength left particularities",
-    mgriprp = "Hand strength right particularities",
-    mwaist1 = "Measured waist (1) in cm",
-    mwaist2 = "Measured waist (2) in cm",
-    rm161 = "Reason missing: LASAF161"
-  ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels,
-    mgriplp1 = "Hand strength: left part.",
-    mgripr2 = "Hand strength (2): right: kgf",
-    mgriprp1 = "Hand strength: right part.",
-    mwaist1 = "Measured waist (1) in cm",
-    mwaist2 = "Measured waist (2) in cm",
-    rm161 = "Reason missing: LASAG161"
-  ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels,
-    marm1 = "Measured arm in cm",
-    mwaist1 = "Measured waist (1) in cm",
-    mwaist2 = "Measured waist (2) in cm",
-    mweightp = "Weight: particularities"
-  ),
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels,
-    marm1 = "Measured arm in cm",
-    mmiwp = "Measurement instruments were working properly",
-    mwaist1 = "Measured waist (1) in cm",
-    mwaist2 = "Measured waist (2) in cm",
-    mweightp = "Weight: particularities"
-  ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels,
-    marm1 = "Measured arm in cm",
-    mwaist1 = "Measured waist (1) in cm",
-    mwaist2 = "Measured waist (2) in cm",
-    mweightp = "Weight: particularities"
-  ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels,
-    marm1 = "Measured arm in cm",
-    mwaist1 = "Measured waist (1) in cm",
-    mwaist2 = "Measured waist (2) in cm",
-    mweightp = "Weight: particularities"
-  ),
-  Harmonized_labels = harmonized_labels
-)
-
-## This file's own very common answer categories (>= 10 occurrences
-## across its variables) -- same idea as default_missing_labels, just
-## scoped to this filecode instead of shared globally.
-default_answer_labels <- c(
-  `1` = "no",
-  `2` = "yes"
-)
-
-standardized_value_labels <- list(
-  marm1 = c(
-    `-3` = "no measurement / na, wrong skip",
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked"
-  ),
-  marm2 = c(`-1` = "no valid data"),
-  marmp = c(
-    `-3` = "no measurement / na, wrong skip",
-    `-2` = "no answer, skipped / na, see C/DRM161",
-    `-1` = "no particularities scored / no valid data / na, asked",
-    `1` = "no bare arm / no",
-    `2` = "much room between / yes",
-    `3` = "R sitting down",
-    `4` = "on right arm",
-    `5` = "refused"
-  ),
-  marmp1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DMARMP",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  marmp2 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    default_answer_labels[c("1", "2")]
-  ),
-  marmp3 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    default_answer_labels[c("1", "2")]
-  ),
-  marmp4 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    default_answer_labels[c("1", "2")]
-  ),
-  marmp5 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    default_answer_labels[c("1", "2")]
-  ),
-  mbicep1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data"
-  ),
-  mbicep2 = stats::setNames(character(0), character(0)),
-  mbicep3 = stats::setNames(character(0), character(0)),
-  mbicepp = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  mbicepp1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DMBICEPP",
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mbicepp2 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  mbicepp3 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  mbicepp4 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  mbicepp5 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  mcalf01 = c(
-    default_missing_labels[c("-3", "-1")],
-    `-2` = "na, see I/JRM161"
-  ),
-  mcalf02 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2")]
-  ),
-  mcalf03 = c(
-    default_missing_labels[c("-1")],
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mcalf04 = c(
-    default_missing_labels[c("-1")],
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mcalf06 = c(
-    default_missing_labels[c("-1")],
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mcalf12 = c(
-    default_missing_labels[c("-1")],
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mcalf13 = c(
-    default_missing_labels[c("-1")],
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mgripl1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see DRM161",
-    `-1` = "no valid data / na, asked"
-  ),
-  mgripl2 = c(
-    default_missing_labels[c("-1")]
-  ),
-  mgriplp = c(
-    `-2` = "na, see BRM161",
-    `-1` = "no valid data / na, asked",
-    `1` = "no / no particularities",
-    `2` = "yes / left hand handicapped",
-    `3` = "R refused",
-    `4` = "other remark"
-  ),
-  mgriplp1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see DRM161",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "no / mentioned",
-    default_answer_labels[c("2")]
-  ),
-  mgriplp2 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see dmgriplp1",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mgriplp3 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see BRM161",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "no / mentioned",
-    default_answer_labels[c("2")]
-  ),
-  mgriplp4 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see BRM161",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "no / mentioned",
-    default_answer_labels[c("2")]
-  ),
-  mgripmeasp = c(
-    `-2` = "na, see BRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  mgripp = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data",
-    `0` = "no particularities",
-    `1` = "R refuses",
-    `2` = "handicapped hand"
-  ),
-  mgripr1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data"
-  ),
-  mgripr2 = c(
-    default_missing_labels[c("-1")]
-  ),
-  mgriprp = c(
-    `-2` = "na, see BRM161",
-    `-1` = "no valid data / na, asked",
-    `1` = "no / no particularities",
-    `2` = "yes / right hand handicapped",
-    `3` = "R refused",
-    `4` = "other remark"
-  ),
-  mgriprp1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see DRM161",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "no / mentioned",
-    default_answer_labels[c("2")]
-  ),
-  mgriprp2 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see DMGRIPRP1",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mgriprp3 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see BRM161",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "no / mentioned",
-    default_answer_labels[c("2")]
-  ),
-  mgriprp4 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see BRM161",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "no / mentioned",
-    default_answer_labels[c("2")]
-  ),
-  mheight = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked"
-  ),
-  mheightp = c(
-    `-3` = "no measurement / na, wrong skip",
-    `-2` = "no answer, skipped / na, see CRM161",
-    `-1` = "no particularities scored / no valid data / na, asked",
-    `1` = "cannot stand / no / yes / no particularities",
-    `2` = "kyphose / yes / no / cannot stand",
-    `3` = "scoliose / kyphosis",
-    `4` = "head not parallel / scoliosis",
-    `5` = "shoes / head not parallel",
-    `6` = "too much hair",
-    `7` = "refused / wears shoes",
-    `8` = "R refused"
-  ),
-  mheightp1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DMHEIGHTP",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mheightp2 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "no / mentioned / yes",
-    `2` = "yes / no"
-  ),
-  mheightp3 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data / na, asked",
-    `1` = "no / yes",
-    `2` = "yes / no"
-  ),
-  mheightp4 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data / na, asked",
-    `1` = "no / yes",
-    `2` = "yes / no"
-  ),
-  mheightp5 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data / na, asked",
-    default_answer_labels[c("1", "2")]
-  ),
-  mheightp6 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data / na, asked",
-    `1` = "no / yes",
-    `2` = "yes / no"
-  ),
-  mheightp7 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data / na, asked",
-    `1` = "no / yes",
-    `2` = "yes / no"
-  ),
-  mheightself = c(
-    `-3` = "no measurement / na, wrong skip",
-    `-2` = "length measured / na, see C/DMHEIGHTP / routing",
-    `-1` = "no valid data / na, asked"
-  ),
-  mhip = stats::setNames(character(0), character(0)),
-  mhip1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na see C/DRM161",
-    `-1` = "no valid data"
-  ),
-  mhip2 = c(`-1` = "no valid data / na, asked"),
-  mhipp = c(
-    `-3` = "no measurement / na, wrong skip",
-    `-2` = "no answer, skipped / na, see C/DRM161",
-    `-1` = "no particularities scored / no valid data / na, asked",
-    `1` = "lying down / no / no particularities",
-    `2` = "much skinfolds / yes / lying down",
-    `3` = "refused / many skinfolds",
-    `4` = "R refused"
-  ),
-  mhipp1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DMHIPP",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mhipp2 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    default_answer_labels[c("1", "2")]
-  ),
-  mhipp3 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    default_answer_labels[c("1", "2")]
-  ),
-  mhipp4 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    default_answer_labels[c("1", "2")]
-  ),
-  mkneeh = c(`-3` = "no measurement", `-1` = "no valid data"),
-  mkneep = c(
-    `-3` = "no measurement",
-    `-2` = "no answer, skipped",
-    `-1` = "no valid data",
-    `0` = "no particularities scored",
-    `1` = "refused",
-    `2` = "trousers",
-    `3` = "right leg"
-  ),
-  mlength = c(`-3` = "no measurement"),
-  mmiwp = c(
-    `-2` = "na, see BRM161",
-    default_missing_labels[c("-1")],
-    `1` = "no / yes",
-    `2` = "yes / no"
-  ),
-  msubscap1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data"
-  ),
-  msubscap2 = stats::setNames(character(0), character(0)),
-  msubscap3 = stats::setNames(character(0), character(0)),
-  msubscapp = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  msubscapp1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CMSUBSCAPP",
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  msubscapp2 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  msubscapp3 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  msubscapp4 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  msubscapp5 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  msuprail1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data"
-  ),
-  msuprail2 = stats::setNames(character(0), character(0)),
-  msuprail3 = stats::setNames(character(0), character(0)),
-  msuprailp = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  msuprailp1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CMSUPRAILP",
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  msuprailp2 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  msuprailp3 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  msuprailp4 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  msuprailp5 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  mtricep1 = c(`-3` = "no measurement / na, wrong skip", `-2` = "na, see C/DRM161", `-1` = "no valid data"),
-  mtricep2 = c(`-1` = "no valid data"),
-  mtricep3 = stats::setNames(character(0), character(0)),
-  mtricepp = c(
-    `-3` = "no measurement / na, wrong skip",
-    `-2` = "no answer, skipped / na, see C/DRM161",
-    `-1` = "no valid data",
-    `0` = "no particularities scored",
-    `1` = "no bare arm / no",
-    `2` = "edema / yes",
-    `3` = "skinfold more than 40mm",
-    `4` = "tight skin",
-    `5` = "refused"
-  ),
-  mtricepp1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DMTRICEPP",
-    `-1` = "no valid data",
-    `1` = "not mentioned",
-    `2` = "mentioned"
-  ),
-  mtricepp2 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  mtricepp3 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  mtricepp4 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  mtricepp5 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    default_answer_labels[c("1", "2")]
-  ),
-  mwaist = stats::setNames(character(0), character(0)),
-  mwaist1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data"
-  ),
-  mwaist2 = c(`-1` = "no valid data / na, asked"),
-  mwaistp = c(
-    `-3` = "no measurement / na, wrong skip",
-    `-2` = "no answer, skipped / na, see C/DRM161",
-    `-1` = "no particularities scored / no valid data / na, asked",
-    `1` = "lying down / no / no particularities",
-    `2` = "hard to find right spot / yes / lying down",
-    `3` = "much skinfolds under / hard to find right spot",
-    `4` = "refused / many skinfolds",
-    `5` = "R refused"
-  ),
-  mwaistp1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DMWAISTP",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mwaistp2 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    default_answer_labels[c("1", "2")]
-  ),
-  mwaistp3 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    default_answer_labels[c("1", "2")]
-  ),
-  mwaistp4 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    default_answer_labels[c("1", "2")]
-  ),
-  mwaistp5 = c(
-    `-2` = "na, see H/B/I/JRM161",
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2")]
-  ),
-  mweight = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    default_answer_labels[c("1", "2")]
-  ),
-  mweightp = c(
-    `-3` = "no measurement / na, wrong skip",
-    `-2` = "no answer, skipped / na, see C/DRM161",
-    `-1` = "no particularities scored / no valid data / na, asked",
-    `1` = "cannot stand / no / yes / no particularities",
-    `2` = "clothes / yes / no / cannot stand",
-    `3` = "corset / wears clothes",
-    `4` = "amputation / wears corset",
-    `5` = "brace / amputated",
-    `6` = "prosthesis / brace",
-    `7` = ">150kg / prosthesis",
-    `8` = "refused / wears shoes",
-    `9` = "weight > 150 kg",
-    `10` = "R refused"
-  ),
-  mweightp1 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DMWEIGHTP",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mweightp2 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "no / mentioned / yes",
-    `2` = "yes / no"
-  ),
-  mweightp3 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    `1` = "no / yes",
-    `2` = "yes / no"
-  ),
-  mweightp4 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    `1` = "no / yes",
-    `2` = "yes / no"
-  ),
-  mweightp5 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    `1` = "no / yes",
-    `2` = "yes / no"
-  ),
-  mweightp6 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    `1` = "no / yes",
-    `2` = "yes / no"
-  ),
-  mweightp7 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    `1` = "no / yes",
-    `2` = "yes / no"
-  ),
-  mweightp8 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    `1` = "no / yes",
-    `2` = "yes / no"
-  ),
-  mweightp9 = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data / na, asked",
-    default_answer_labels[c("1", "2")]
-  ),
-  mweightself = c(
-    `-3` = "no measurement / na, wrong skip",
-    `-2` = "length measured / na, see C/MWEIGHTP1&8",
-    `-1` = "no valid data / na, asked"
-  ),
-  rm161 = c(
-    `-2` = "valid data / interview terminated",
-    `1` = "short version / short interview",
-    `2` = "interview terminated"
-  )
-)
-
-value_labels_list <- list(
-  Wave_B_labels = .replace_in_list(
-    standardized_value_labels,
-    marm1 = c(`-3` = "no measurement"),
-    marmp = .replace_labels(
-    standardized_value_labels$marmp,
-    `-3` = "no measurement",
-    `-2` = "no answer, skipped",
-    `-1` = "no particularities scored",
-    `1` = "no bare arm",
-    `2` = "much room between"
-  ),
-    mheightp = c(
-    `-3` = "no measurement",
-    `-2` = "no answer, skipped",
-    `-1` = "no particularities scored",
-    `1` = "cannot stand",
-    `2` = "kyphose",
-    `3` = "scoliose",
-    `4` = "head not parallel",
-    `5` = "shoes",
-    `6` = "too much hair",
-    `7` = "refused"
-  ),
-    mheightself = .replace_labels(
-    standardized_value_labels$mheightself,
-    `-3` = "no measurement",
-    `-2` = "length measured",
-    `-1` = "no valid data"
-  ),
-    mhipp = c(
-    `-3` = "no measurement",
-    `-2` = "no answer, skipped",
-    `-1` = "no particularities scored",
-    `1` = "lying down",
-    `2` = "much skinfolds",
-    `3` = "refused"
-  ),
-    mtricep1 = c(`-3` = "no measurement"),
-    mtricepp = .replace_labels(
-    standardized_value_labels$mtricepp,
-    `-3` = "no measurement",
-    `-2` = "no answer, skipped",
-    `1` = "no bare arm",
-    `2` = "edema"
-  ),
-    mwaistp = c(
-    `-3` = "no measurement",
-    `-2` = "no answer, skipped",
-    `-1` = "no particularities scored",
-    `1` = "lying down",
-    `2` = "hard to find right spot",
-    `3` = "much skinfolds under",
-    `4` = "refused"
-  ),
-    mweight = c(`-1` = "no valid data"),
-    mweightp = c(
-    `-3` = "no measurement",
-    `-2` = "no answer, skipped",
-    `-1` = "no particularities scored",
-    `1` = "cannot stand",
-    `2` = "clothes",
-    `3` = "corset",
-    `4` = "amputation",
-    `5` = "brace",
-    `6` = "prosthesis",
-    `7` = ">150kg",
-    `8` = "refused"
-  ),
-    mweightself = .replace_labels(
-    standardized_value_labels$mweightself,
-    `-3` = "no measurement",
-    `-2` = "length measured",
-    `-1` = "no valid data"
-  )
-  ),
-  Wave_C_labels = .replace_in_list(
-    standardized_value_labels,
-    marm1 = .replace_labels(
-    standardized_value_labels$marm1,
-    `-3` = "na, wrong skip",
-    `-1` = "no valid data"
-  ),
-    marmp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    marmp1 = .replace_labels(
-    standardized_value_labels$marmp1,
-    `-1` = "no valid data"
-  ),
-    marmp2 = .replace_labels(
-    standardized_value_labels$marmp2,
-    `-1` = "no valid data"
-  ),
-    marmp3 = .replace_labels(
-    standardized_value_labels$marmp3,
-    `-1` = "no valid data"
-  ),
-    marmp4 = .replace_labels(
-    standardized_value_labels$marmp4,
-    `-1` = "no valid data"
-  ),
-    marmp5 = .replace_labels(
-    standardized_value_labels$marmp5,
-    `-1` = "no valid data"
-  ),
-    mheight = .replace_labels(
-    standardized_value_labels$mheight,
-    `-1` = "no valid data"
-  ),
-    mheightp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp1 = .replace_labels(
-    standardized_value_labels$mheightp1,
-    `-1` = "no valid data"
-  ),
-    mheightp2 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp3 = .replace_labels(
-    standardized_value_labels$mheightp3,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp4 = .replace_labels(
-    standardized_value_labels$mheightp4,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp5 = .replace_labels(
-    standardized_value_labels$mheightp5,
-    `-1` = "no valid data"
-  ),
-    mheightp6 = .replace_labels(
-    standardized_value_labels$mheightp6,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp7 = .replace_labels(
-    standardized_value_labels$mheightp7,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightself = .replace_labels(
-    standardized_value_labels$mheightself,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DMHEIGHTP",
-    `-1` = "no valid data"
-  ),
-    mhipp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mhipp1 = .replace_labels(
-    standardized_value_labels$mhipp1,
-    `-1` = "no valid data"
-  ),
-    mhipp2 = .replace_labels(
-    standardized_value_labels$mhipp2,
-    `-1` = "no valid data"
-  ),
-    mhipp3 = .replace_labels(
-    standardized_value_labels$mhipp3,
-    `-1` = "no valid data"
-  ),
-    mtricep1 = .replace_labels(
-    standardized_value_labels$mtricep1,
-    `-3` = "na, wrong skip"
-  ),
-    mtricepp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mwaistp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mwaistp1 = .replace_labels(
-    standardized_value_labels$mwaistp1,
-    `-1` = "no valid data"
-  ),
-    mwaistp2 = .replace_labels(
-    standardized_value_labels$mwaistp2,
-    `-1` = "no valid data"
-  ),
-    mwaistp3 = .replace_labels(
-    standardized_value_labels$mwaistp3,
-    `-1` = "no valid data"
-  ),
-    mwaistp4 = .replace_labels(
-    standardized_value_labels$mwaistp4,
-    `-1` = "no valid data"
-  ),
-    mweight = c(`-3` = "na, wrong skip", `-2` = "na, see C/DRM161", `-1` = "no valid data"),
-    mweightp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp1 = .replace_labels(
-    standardized_value_labels$mweightp1,
-    `-1` = "no valid data"
-  ),
-    mweightp2 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp3 = .replace_labels(
-    standardized_value_labels$mweightp3,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp4 = .replace_labels(
-    standardized_value_labels$mweightp4,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp5 = .replace_labels(
-    standardized_value_labels$mweightp5,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp6 = .replace_labels(
-    standardized_value_labels$mweightp6,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp7 = .replace_labels(
-    standardized_value_labels$mweightp7,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp8 = .replace_labels(
-    standardized_value_labels$mweightp8,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightself = .replace_labels(
-    standardized_value_labels$mweightself,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/MWEIGHTP1&8",
-    `-1` = "no valid data"
-  ),
-    rm161 = c(`-2` = "valid data", `2` = "interview terminated")
-  ),
-  Wave_D_labels = .replace_in_list(
-    standardized_value_labels,
-    marm1 = .replace_labels(
-    standardized_value_labels$marm1,
-    `-3` = "na, wrong skip",
-    `-1` = "no valid data"
-  ),
-    marmp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    marmp1 = .replace_labels(
-    standardized_value_labels$marmp1,
-    `-1` = "no valid data"
-  ),
-    marmp2 = .replace_labels(
-    standardized_value_labels$marmp2,
-    `-1` = "no valid data"
-  ),
-    marmp3 = .replace_labels(
-    standardized_value_labels$marmp3,
-    `-1` = "no valid data"
-  ),
-    marmp4 = .replace_labels(
-    standardized_value_labels$marmp4,
-    `-1` = "no valid data"
-  ),
-    marmp5 = .replace_labels(
-    standardized_value_labels$marmp5,
-    `-1` = "no valid data"
-  ),
-    mgripl1 = .replace_labels(
-    standardized_value_labels$mgripl1,
-    `-1` = "no valid data"
-  ),
-    mgriplp1 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see DRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mgriplp2 = .replace_labels(
-    standardized_value_labels$mgriplp2,
-    `-1` = "no valid data"
-  ),
-    mgripr1 = .replace_labels(
-    standardized_value_labels$mgripr1,
-    `-2` = "na, see DRM161"
-  ),
-    mgriprp1 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see DRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mgriprp2 = .replace_labels(
-    standardized_value_labels$mgriprp2,
-    `-1` = "no valid data"
-  ),
-    mheight = .replace_labels(
-    standardized_value_labels$mheight,
-    `-1` = "no valid data"
-  ),
-    mheightp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp2 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp3 = .replace_labels(
-    standardized_value_labels$mheightp3,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp4 = .replace_labels(
-    standardized_value_labels$mheightp4,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp6 = .replace_labels(
-    standardized_value_labels$mheightp6,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp7 = .replace_labels(
-    standardized_value_labels$mheightp7,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightself = .replace_labels(
-    standardized_value_labels$mheightself,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DMHEIGHTP",
-    `-1` = "no valid data"
-  ),
-    mhipp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mhipp1 = .replace_labels(
-    standardized_value_labels$mhipp1,
-    `-1` = "no valid data"
-  ),
-    mhipp2 = .replace_labels(
-    standardized_value_labels$mhipp2,
-    `-1` = "no valid data"
-  ),
-    mhipp3 = .replace_labels(
-    standardized_value_labels$mhipp3,
-    `-1` = "no valid data"
-  ),
-    mhipp4 = .replace_labels(
-    standardized_value_labels$mhipp4,
-    `-1` = "no valid data"
-  ),
-    mtricep1 = .replace_labels(
-    standardized_value_labels$mtricep1,
-    `-3` = "na, wrong skip"
-  ),
-    mtricepp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mwaistp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mwaistp1 = .replace_labels(
-    standardized_value_labels$mwaistp1,
-    `-1` = "no valid data"
-  ),
-    mwaistp2 = .replace_labels(
-    standardized_value_labels$mwaistp2,
-    `-1` = "no valid data"
-  ),
-    mwaistp3 = .replace_labels(
-    standardized_value_labels$mwaistp3,
-    `-1` = "no valid data"
-  ),
-    mwaistp4 = .replace_labels(
-    standardized_value_labels$mwaistp4,
-    `-1` = "no valid data"
-  ),
-    mweight = c(`-3` = "na, wrong skip", `-2` = "na, see C/DRM161", `-1` = "no valid data"),
-    mweightp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp2 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DRM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp3 = .replace_labels(
-    standardized_value_labels$mweightp3,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp4 = .replace_labels(
-    standardized_value_labels$mweightp4,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp5 = .replace_labels(
-    standardized_value_labels$mweightp5,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp6 = .replace_labels(
-    standardized_value_labels$mweightp6,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp7 = .replace_labels(
-    standardized_value_labels$mweightp7,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp8 = .replace_labels(
-    standardized_value_labels$mweightp8,
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp9 = .replace_labels(
-    standardized_value_labels$mweightp9,
-    `-1` = "no valid data"
-  ),
-    mweightself = .replace_labels(
-    standardized_value_labels$mweightself,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/MWEIGHTP1&8",
-    `-1` = "no valid data"
-  ),
-    rm161 = c(`-2` = "valid data")
-  ),
-  Wave_E_labels = .replace_in_list(
-    standardized_value_labels,
-    mgripl1 = .replace_labels(
-    standardized_value_labels$mgripl1,
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data"
-  ),
-    mgriplp1 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mgriplp2 = .replace_labels(
-    standardized_value_labels$mgriplp2,
-    `-2` = "na, see EMGRIPLP1",
-    `-1` = "no valid data"
-  ),
-    mgripr1 = .replace_labels(
-    standardized_value_labels$mgripr1,
-    `-2` = "na, see ERM161"
-  ),
-    mgriprp1 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mgriprp2 = .replace_labels(
-    standardized_value_labels$mgriprp2,
-    `-2` = "na, see EMGRIPRP1",
-    `-1` = "no valid data"
-  ),
-    mheight = .replace_labels(
-    standardized_value_labels$mheight,
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data"
-  ),
-    mheightp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp2 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EMHEIGHTP",
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mheightp3 = .replace_labels(
-    standardized_value_labels$mheightp3,
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp4 = .replace_labels(
-    standardized_value_labels$mheightp4,
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp6 = .replace_labels(
-    standardized_value_labels$mheightp6,
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp7 = .replace_labels(
-    standardized_value_labels$mheightp7,
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightself = .replace_labels(
-    standardized_value_labels$mheightself,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EMHEIGHTP7",
-    `-1` = "no valid data"
-  ),
-    mhip1 = .replace_labels(
-    standardized_value_labels$mhip1,
-    `-2` = "na, see ERM161"
-  ),
-    mhipp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mhipp1 = .replace_labels(
-    standardized_value_labels$mhipp1,
-    `-2` = "na, see EMHIPP",
-    `-1` = "no valid data"
-  ),
-    mhipp2 = .replace_labels(
-    standardized_value_labels$mhipp2,
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data"
-  ),
-    mhipp3 = .replace_labels(
-    standardized_value_labels$mhipp3,
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data"
-  ),
-    mhipp4 = .replace_labels(
-    standardized_value_labels$mhipp4,
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data"
-  ),
-    mwaist1 = .replace_labels(
-    standardized_value_labels$mwaist1,
-    `-2` = "na, see ERM161"
-  ),
-    mwaistp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mwaistp1 = .replace_labels(
-    standardized_value_labels$mwaistp1,
-    `-2` = "na, see EMWAISTP",
-    `-1` = "no valid data"
-  ),
-    mwaistp2 = .replace_labels(
-    standardized_value_labels$mwaistp2,
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data"
-  ),
-    mwaistp3 = .replace_labels(
-    standardized_value_labels$mwaistp3,
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data"
-  ),
-    mwaistp4 = .replace_labels(
-    standardized_value_labels$mwaistp4,
-    `-2` = "na, see ERM161",
-    `-1` = "no valid data"
-  ),
-    mweight = c(`-3` = "na, wrong skip", `-2` = "na, see ERM161", `-1` = "no valid data"),
-    mweightp2 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EMWEIGHTP",
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mweightself = .replace_labels(
-    standardized_value_labels$mweightself,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see EMWEIGHT8",
-    `-1` = "no valid data"
-  ),
-    rm161 = c(`-2` = "valid data", `2` = "interview terminated")
-  ),
-  Wave_2B_labels = .replace_in_list(
-    standardized_value_labels,
-    mgriplp = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "no", `2` = "yes"),
-    mgriplp2 = c(`-2` = "na, see BMGRIPLP", `0` = "not mentioned", `1` = "mentioned"),
-    mgriplp3 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "no", `2` = "yes"),
-    mgriplp4 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "no", `2` = "yes"),
-    mgriprp = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "no", `2` = "yes"),
-    mgriprp2 = c(`-2` = "na, see BMGRIPRP", `0` = "not mentioned", `1` = "mentioned"),
-    mgriprp3 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "no", `2` = "yes"),
-    mgriprp4 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "no", `2` = "yes"),
-    mheight = c(`-2` = "na, see BRM161", `-1` = "no valid data"),
-    mheightp = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "yes", `2` = "no"),
-    mheightp1 = c(`-2` = "na, see BMHEIGHTP", `0` = "not mentioned", `1` = "mentioned"),
-    mheightp2 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "yes", `2` = "no"),
-    mheightp3 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "yes", `2` = "no"),
-    mheightp4 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "yes", `2` = "no"),
-    mheightp6 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "yes", `2` = "no"),
-    mheightp7 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "yes", `2` = "no"),
-    mheightself = .replace_labels(
-    standardized_value_labels$mheightself,
-    `-3` = "na wrong skip",
-    `-2` = "na, see BMHEIHGTP1 & 7",
-    `-1` = "no valid data"
-  ),
-    mhip1 = c(`-2` = "na, see BRM161"),
-    mhip2 = .replace_labels(
-    standardized_value_labels$mhip2,
-    `-1` = "no valid data"
-  ),
-    mhipp = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "no", `2` = "yes"),
-    mhipp1 = c(`-2` = "na, see BMHIPP", `0` = "not mentioned", `1` = "mentioned"),
-    mhipp2 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "no", `2` = "yes"),
-    mhipp3 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "no", `2` = "yes"),
-    mwaist1 = c(`-2` = "na, see BRM161"),
-    mwaist2 = .replace_labels(
-    standardized_value_labels$mwaist2,
-    `-1` = "no valid data"
-  ),
-    mwaistp = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "no", `2` = "yes"),
-    mwaistp1 = c(`-2` = "na, see BMWAISTP", `0` = "not mentioned", `1` = "mentioned"),
-    mwaistp2 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "no", `2` = "yes"),
-    mwaistp3 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "no", `2` = "yes"),
-    mwaistp4 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "no", `2` = "yes"),
-    mweight = c(`-2` = "na, see BRM161", `-1` = "no valid data"),
-    mweightp = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "yes", `2` = "no"),
-    mweightp1 = c(`-2` = "na, see BMWEIGHTP", `0` = "not mentioned", `1` = "mentioned"),
-    mweightp2 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "yes", `2` = "no"),
-    mweightp3 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "yes", `2` = "no"),
-    mweightp4 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "yes", `2` = "no"),
-    mweightp5 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "yes", `2` = "no"),
-    mweightp6 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "yes", `2` = "no"),
-    mweightp7 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "yes", `2` = "no"),
-    mweightp8 = c(`-2` = "na, see BRM161", `-1` = "no valid data", `1` = "yes", `2` = "no"),
-    mweightself = .replace_labels(
-    standardized_value_labels$mweightself,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see BMWEIGHT1 & 8",
-    `-1` = "no valid data"
-  )
-  ),
-  Wave_F_labels = .replace_in_list(
-    standardized_value_labels,
-    mgripl1 = c(`-2` = "na, see FRM161"),
-    mgriplp = .replace_labels(
-    standardized_value_labels$mgriplp,
-    `-2` = "na, see FRM161",
-    `-1` = "na, asked",
-    `1` = "no particularities",
-    `2` = "left hand handicapped"
-  ),
-    mgripr1 = c(`-2` = "na, see FRM161"),
-    mgriprp = .replace_labels(
-    standardized_value_labels$mgriprp,
-    `-2` = "na, see FRM161",
-    `-1` = "na, asked",
-    `1` = "no particularities",
-    `2` = "right hand handicapped"
-  ),
-    mheight = c(`-2` = "na, see FRM161", `-1` = "na, asked"),
-    mheightp = c(
-    `-2` = "na, see FRM161",
-    `-1` = "na, asked",
-    `1` = "no particularities",
-    `2` = "cannot stand",
-    `3` = "kyphosis",
-    `4` = "scoliosis",
-    `5` = "head not parallel",
-    `6` = "too much hair",
-    `7` = "wears shoes",
-    `8` = "R refused"
-  ),
-    mheightself = c(`-2` = "na, see FRM161", `-1` = "na, asked"),
-    mhip1 = c(`-2` = "na, see FRM161"),
-    mhip2 = .replace_labels(
-    standardized_value_labels$mhip2,
-    `-1` = "na, asked"
-  ),
-    mhipp = c(
-    `-2` = "na, see FRM161",
-    `-1` = "na, asked",
-    `1` = "no particularities",
-    `2` = "lying down",
-    `3` = "many skinfolds",
-    `4` = "R refused"
-  ),
-    mwaistp = c(
-    `-2` = "na, see FRM161",
-    `-1` = "na, asked",
-    `1` = "no particularities",
-    `2` = "lying down",
-    `3` = "hard to find right spot",
-    `4` = "many skinfolds",
-    `5` = "R refused"
-  ),
-    mweightp = c(
-    `-2` = "na, see FRM161",
-    `-1` = "na, asked",
-    `1` = "no particularities",
-    `2` = "cannot stand",
-    `3` = "wears clothes",
-    `4` = "wears corset",
-    `5` = "amputated",
-    `6` = "brace",
-    `7` = "prosthesis",
-    `8` = "wears shoes",
-    `9` = "weight > 150 kg",
-    `10` = "R refused"
-  ),
-    mweightself = c(`-2` = "na, see FRM161", `-1` = "na, asked"),
-    rm161 = .replace_labels(
-    standardized_value_labels$rm161,
-    `-2` = "valid data",
-    `1` = "short version"
-  )
-  ),
-  Wave_G_labels = .replace_in_list(
-    standardized_value_labels,
-    mgripl1 = c(`-2` = "na, see GRM161"),
-    mgriplp1 = c(`-3` = "na, wrong skip", `-2` = "na, see GRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mgriplp2 = c(`-3` = "na, wrong skip", `-2` = "na, see GMGRIPLP1", `0` = "not mentioned", `1` = "mentioned"),
-    mgripr1 = c(`-2` = "na, see GRM161"),
-    mgriprp1 = c(`-3` = "na, wrong skip", `-2` = "na, see GRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mgriprp2 = c(`-3` = "na, wrong skip", `-2` = "na, see GMGRIPRP1", `0` = "not mentioned", `1` = "mentioned"),
-    mheight = c(`-2` = "na, see GRM161", `-1` = "na, asked"),
-    mheightp = c(`-3` = "na, wrong skip", `-2` = "na, see GRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mheightp1 = .replace_labels(
-    standardized_value_labels$mheightp1,
-    `-2` = "na, see GMHEIGHTP",
-    `-1` = "na, asked"
-  ),
-    mheightp2 = c(`-3` = "na, wrong skip", `-2` = "na, see GRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mheightp3 = .replace_labels(
-    standardized_value_labels$mheightp3,
-    `-2` = "na, see GRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp4 = .replace_labels(
-    standardized_value_labels$mheightp4,
-    `-2` = "na, see GRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp5 = .replace_labels(
-    standardized_value_labels$mheightp5,
-    `-2` = "na, see GRM161",
-    `-1` = "na, asked"
-  ),
-    mheightp6 = .replace_labels(
-    standardized_value_labels$mheightp6,
-    `-2` = "na, see GRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp7 = .replace_labels(
-    standardized_value_labels$mheightp7,
-    `-2` = "na, see GRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightself = c(`-2` = "na, see GMHEIGHT", `-1` = "na, asked"),
-    mhip1 = c(`-2` = "na, see GRM161"),
-    mhip2 = .replace_labels(
-    standardized_value_labels$mhip2,
-    `-1` = "na, asked"
-  ),
-    mhipp = c(`-3` = "na, wrong skip", `-2` = "na, see GRM161", `1` = "no", `2` = "yes"),
-    mhipp1 = .replace_labels(
-    standardized_value_labels$mhipp1,
-    `-2` = "na, see GMHIPP",
-    `-1` = "na, asked"
-  ),
-    mhipp2 = c(`-3` = "na, wrong skip", `-2` = "na, see GRM161", `1` = "no", `2` = "yes"),
-    mhipp3 = c(`-3` = "na, wrong skip", `-2` = "na, see GRM161", `1` = "no", `2` = "yes"),
-    mwaist1 = c(`-2` = "na, see GRM161"),
-    mwaist2 = .replace_labels(
-    standardized_value_labels$mwaist2,
-    `-1` = "na, asked"
-  ),
-    mwaistp = c(`-3` = "na, wrong skip", `-2` = "na, see GRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mwaistp1 = .replace_labels(
-    standardized_value_labels$mwaistp1,
-    `-2` = "na, see GMWAISTP",
-    `-1` = "na, asked"
-  ),
-    mwaistp2 = .replace_labels(
-    standardized_value_labels$mwaistp2,
-    `-2` = "na, see GRM161",
-    `-1` = "na, asked"
-  ),
-    mwaistp3 = .replace_labels(
-    standardized_value_labels$mwaistp3,
-    `-2` = "na, see GRM161",
-    `-1` = "na, asked"
-  ),
-    mwaistp4 = .replace_labels(
-    standardized_value_labels$mwaistp4,
-    `-2` = "na, see GRM161",
-    `-1` = "na, asked"
-  ),
-    mweight = c(`-2` = "na, see GRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp = c(`-3` = "na, wrong skip", `-2` = "na, see GRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp1 = .replace_labels(
-    standardized_value_labels$mweightp1,
-    `-2` = "na, see GMWEIGHTP",
-    `-1` = "na, asked"
-  ),
-    mweightp2 = c(`-3` = "na, wrong skip", `-2` = "na, see GRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp3 = .replace_labels(
-    standardized_value_labels$mweightp3,
-    `-2` = "na, see GRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp4 = .replace_labels(
-    standardized_value_labels$mweightp4,
-    `-2` = "na, see GRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp5 = .replace_labels(
-    standardized_value_labels$mweightp5,
-    `-2` = "na, see GRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp6 = .replace_labels(
-    standardized_value_labels$mweightp6,
-    `-2` = "na, see GRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp7 = .replace_labels(
-    standardized_value_labels$mweightp7,
-    `-2` = "na, see GRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp8 = .replace_labels(
-    standardized_value_labels$mweightp8,
-    `-2` = "na, see GRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mweightp9 = .replace_labels(
-    standardized_value_labels$mweightp9,
-    `-2` = "na, see GRM161",
-    `-1` = "na, asked"
-  ),
-    mweightself = c(`-2` = "na, see GMWEIGHT", `-1` = "na, asked"),
-    rm161 = .replace_labels(
-    standardized_value_labels$rm161,
-    `-2` = "valid data",
-    `1` = "short version"
-  )
-  ),
-  Wave_H_labels = .replace_in_list(
-    standardized_value_labels,
-    marm1 = .replace_labels(
-    standardized_value_labels$marm1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked"
-  ),
-    marmp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp1 = c(`-2` = "na, see H/B/I/JMARMP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    marmp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp4 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp5 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mgripl1 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked"),
-    mgriplp1 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriplp2 = .replace_labels(
-    standardized_value_labels$mgriplp2,
-    `-2` = "na, see H/B/I/JMGRIPLP1",
-    `-1` = "na, asked"
-  ),
-    mgriplp3 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriplp4 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgripr1 = c(`-2` = "na, see H/B/I/JRM161"),
-    mgriprp1 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriprp2 = .replace_labels(
-    standardized_value_labels$mgriprp2,
-    `-2` = "na, see H/B/I/JMGRIPRP1",
-    `-1` = "na, asked"
-  ),
-    mgriprp3 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriprp4 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mheight = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked"),
-    mheightp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp1 = c(
-    `-2` = "na, see H/B/I/JMHEIGHTP",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mheightp2 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp3 = .replace_labels(
-    standardized_value_labels$mheightp3,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp4 = .replace_labels(
-    standardized_value_labels$mheightp4,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp5 = .replace_labels(
-    standardized_value_labels$mheightp5,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked"
-  ),
-    mheightp6 = .replace_labels(
-    standardized_value_labels$mheightp6,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp7 = .replace_labels(
-    standardized_value_labels$mheightp7,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightself = c(`-2` = "na, see H/B/IMHEIGHT", `-1` = "na, asked"),
-    mhip1 = c(`-2` = "na, see H/B/I/JRM161"),
-    mhip2 = .replace_labels(
-    standardized_value_labels$mhip2,
-    `-1` = "na, asked"
-  ),
-    mhipp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mhipp1 = c(`-2` = "na, see H/B/I/JMHIPP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    mhipp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mhipp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mwaist1 = c(`-2` = "na, see H/B/I/JRM161"),
-    mwaist2 = .replace_labels(
-    standardized_value_labels$mwaist2,
-    `-1` = "na, asked"
-  ),
-    mwaistp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mwaistp1 = c(`-2` = "na, see H/B/I/JMWAISTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    mwaistp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mwaistp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mwaistp4 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweight = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked"),
-    mweightp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp1 = c(
-    `-2` = "na, see H/B/I/JMWEIHGTP",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mweightp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp4 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp5 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp6 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp7 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp8 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp9 = c(`-1` = "na, asked"),
-    mweightself = c(`-2` = "na, see H/B/IMWEIGHT/ routing", `-1` = "na, asked"),
-    rm161 = .replace_labels(
-    standardized_value_labels$rm161,
-    `-2` = "valid data",
-    `1` = "short interview"
-  )
-  ),
-  Wave_3B_labels = .replace_in_list(
-    standardized_value_labels,
-    marm1 = .replace_labels(
-    standardized_value_labels$marm1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked"
-  ),
-    marmp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp1 = c(`-2` = "na, see H/B/I/JMARMP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    marmp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp4 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp5 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mgripl1 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked"),
-    mgriplp1 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriplp2 = .replace_labels(
-    standardized_value_labels$mgriplp2,
-    `-2` = "na, see H/B/I/JMGRIPLP1",
-    `-1` = "na, asked"
-  ),
-    mgriplp3 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriplp4 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgripr1 = c(`-2` = "na, see H/B/I/JRM161"),
-    mgriprp1 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriprp2 = .replace_labels(
-    standardized_value_labels$mgriprp2,
-    `-2` = "na, see H/B/I/JMGRIPRP1",
-    `-1` = "na, asked"
-  ),
-    mgriprp3 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriprp4 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mheight = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked"),
-    mheightp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp1 = c(
-    `-2` = "na, see H/B/I/JMHEIGHTP",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mheightp2 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp3 = .replace_labels(
-    standardized_value_labels$mheightp3,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp4 = .replace_labels(
-    standardized_value_labels$mheightp4,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp5 = .replace_labels(
-    standardized_value_labels$mheightp5,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked"
-  ),
-    mheightp6 = .replace_labels(
-    standardized_value_labels$mheightp6,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp7 = .replace_labels(
-    standardized_value_labels$mheightp7,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightself = c(`-2` = "na, see H/B/IMHEIGHT", `-1` = "na, asked"),
-    mhip1 = c(`-2` = "na, see H/B/I/JRM161"),
-    mhip2 = .replace_labels(
-    standardized_value_labels$mhip2,
-    `-1` = "na, asked"
-  ),
-    mhipp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mhipp1 = c(`-2` = "na, see H/B/I/JMHIPP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    mhipp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mhipp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mhipp4 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mmiwp = .replace_labels(
-    standardized_value_labels$mmiwp,
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mwaist1 = c(`-2` = "na, see H/B/I/JRM161"),
-    mwaist2 = .replace_labels(
-    standardized_value_labels$mwaist2,
-    `-1` = "na, asked"
-  ),
-    mwaistp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mwaistp1 = c(`-2` = "na, see H/B/I/JMWAISTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    mwaistp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mwaistp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mwaistp4 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweight = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked"),
-    mweightp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp1 = c(
-    `-2` = "na, see H/B/I/JMWEIHGTP",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mweightp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp4 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp5 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp6 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp7 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp8 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp9 = c(`-1` = "na, asked"),
-    mweightself = c(`-2` = "na, see H/B/IMWEIGHT/ routing", `-1` = "na, asked"),
-    rm161 = .replace_labels(
-    standardized_value_labels$rm161,
-    `-2` = "valid data",
-    `1` = "short interview"
-  )
-  ),
-  Wave_I_labels = .replace_in_list(
-    standardized_value_labels,
-    marm1 = .replace_labels(
-    standardized_value_labels$marm1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked"
-  ),
-    marmp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp1 = c(`-2` = "na, see H/B/I/JMARMP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    marmp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp4 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp5 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mgripl1 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked"),
-    mgriplp1 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriplp2 = .replace_labels(
-    standardized_value_labels$mgriplp2,
-    `-2` = "na, see H/B/I/JMGRIPLP1",
-    `-1` = "na, asked"
-  ),
-    mgriplp3 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriplp4 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgripr1 = c(`-2` = "na, see H/B/I/JRM161"),
-    mgriprp1 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriprp2 = .replace_labels(
-    standardized_value_labels$mgriprp2,
-    `-2` = "na, see H/B/I/JMGRIPRP1",
-    `-1` = "na, asked"
-  ),
-    mgriprp3 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriprp4 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mheight = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked"),
-    mheightp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp1 = c(
-    `-2` = "na, see H/B/I/JMHEIGHTP",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mheightp2 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp3 = .replace_labels(
-    standardized_value_labels$mheightp3,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp4 = .replace_labels(
-    standardized_value_labels$mheightp4,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp5 = .replace_labels(
-    standardized_value_labels$mheightp5,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked"
-  ),
-    mheightp6 = .replace_labels(
-    standardized_value_labels$mheightp6,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp7 = .replace_labels(
-    standardized_value_labels$mheightp7,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightself = c(`-2` = "na, see H/B/IMHEIGHT", `-1` = "na, asked"),
-    mhip1 = c(`-2` = "na, see H/B/I/JRM161"),
-    mhip2 = .replace_labels(
-    standardized_value_labels$mhip2,
-    `-1` = "na, asked"
-  ),
-    mhipp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mhipp1 = c(`-2` = "na, see H/B/I/JMHIPP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    mhipp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mhipp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mhipp4 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mmiwp = .replace_labels(
-    standardized_value_labels$mmiwp,
-    `-2` = "na, see I/JRM161",
-    `1` = "yes",
-    `2` = "no"
-  ),
-    mwaist1 = c(`-2` = "na, see H/B/I/JRM161"),
-    mwaist2 = .replace_labels(
-    standardized_value_labels$mwaist2,
-    `-1` = "na, asked"
-  ),
-    mwaistp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mwaistp1 = c(`-2` = "na, see H/B/I/JMWAISTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    mwaistp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mwaistp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mwaistp4 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweight = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked"),
-    mweightp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp1 = c(
-    `-2` = "na, see H/B/I/JMWEIHGTP",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mweightp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp4 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp5 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp6 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp7 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp8 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp9 = c(`-1` = "na, asked"),
-    mweightself = c(`-2` = "na, see H/B/IMWEIGHT/ routing", `-1` = "na, asked"),
-    rm161 = .replace_labels(
-    standardized_value_labels$rm161,
-    `-2` = "valid data",
-    `1` = "short interview"
-  )
-  ),
-  Wave_J_labels = .replace_in_list(
-    standardized_value_labels,
-    marm1 = .replace_labels(
-    standardized_value_labels$marm1,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked"
-  ),
-    marmp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp1 = c(`-2` = "na, see H/B/I/JMARMP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    marmp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp4 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    marmp5 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mgripl1 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked"),
-    mgriplp1 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriplp2 = .replace_labels(
-    standardized_value_labels$mgriplp2,
-    `-2` = "na, see H/B/I/JMGRIPLP1",
-    `-1` = "na, asked"
-  ),
-    mgriplp3 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriplp4 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgripr1 = c(`-2` = "na, see H/B/I/JRM161"),
-    mgriprp1 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriprp2 = .replace_labels(
-    standardized_value_labels$mgriprp2,
-    `-2` = "na, see H/B/I/JMGRIPRP1",
-    `-1` = "na, asked"
-  ),
-    mgriprp3 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mgriprp4 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mheight = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked"),
-    mheightp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp1 = c(
-    `-2` = "na, see H/B/I/JMHEIGHTP",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mheightp2 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp3 = .replace_labels(
-    standardized_value_labels$mheightp3,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp4 = .replace_labels(
-    standardized_value_labels$mheightp4,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp5 = .replace_labels(
-    standardized_value_labels$mheightp5,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked"
-  ),
-    mheightp6 = .replace_labels(
-    standardized_value_labels$mheightp6,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightp7 = .replace_labels(
-    standardized_value_labels$mheightp7,
-    `-2` = "na, see H/B/I/JRM161",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes"
-  ),
-    mheightself = c(`-2` = "routing", `-1` = "na, asked"),
-    mhip1 = c(`-2` = "na, see H/B/I/JRM161"),
-    mhip2 = .replace_labels(
-    standardized_value_labels$mhip2,
-    `-1` = "na, asked"
-  ),
-    mhipp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mhipp1 = c(`-2` = "na, see H/B/I/JMHIPP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    mhipp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mhipp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mhipp4 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mmiwp = .replace_labels(
-    standardized_value_labels$mmiwp,
-    `-2` = "na, see I/JRM161",
-    `1` = "yes",
-    `2` = "no"
-  ),
-    mwaist1 = c(`-2` = "na, see H/B/I/JRM161"),
-    mwaist2 = .replace_labels(
-    standardized_value_labels$mwaist2,
-    `-1` = "na, asked"
-  ),
-    mwaistp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mwaistp1 = c(`-2` = "na, see H/B/I/JMWAISTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned"),
-    mwaistp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mwaistp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mwaistp4 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweight = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked"),
-    mweightp = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp1 = c(
-    `-2` = "na, see H/B/I/JMWEIHGTP",
-    `-1` = "na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-    mweightp2 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp3 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp4 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp5 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp6 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp7 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp8 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightp9 = c(`-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mweightself = .replace_labels(
-    standardized_value_labels$mweightself,
-    `-3` = "na, wrong skip",
-    `-2` = "na, see JMWEIGHT",
-    `-1` = "na, asked"
-  ),
-    rm161 = .replace_labels(
-    standardized_value_labels$rm161,
-    `-2` = "valid data",
-    `1` = "short interview"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   marm1 = "numeric",
   marm2 = "numeric",
@@ -3241,75 +124,1255 @@ var_types_vec <- c(
   rm161 = "numeric"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "161", waves = .lasa_wave_rows()) |>
-    .override_label(wave = "G", variable = "mweightself", override_value = "gmweighself") |>
-    .override_label(wave = "H", variable = "mweightself", override_value = "hweightself") |>
-    .override_label(wave = "3B", variable = "mweightself", override_value = "bweightself") |>
-    .override_label(wave = "I", variable = "mweightself", override_value = "iweightself") |>
-    .override_label(wave = "J", variable = "mweightself", override_value = "jweightself"),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "161", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "161", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "161", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  marm1 = "Measured arm (1)",
+  marm2 = "Measured arm (2)",
+  marmp = "Arm: particularities",
+  marmp1 = "Arm: no bare arm",
+  marmp2 = "Arm: much space between tape and arm",
+  marmp3 = "Arm: R sitting down",
+  marmp4 = "Arm: on right arm",
+  marmp5 = "Arm: refused",
+  mbicep1 = "Biceps (1): millimeters",
+  mbicep2 = "Biceps (2): millimeters",
+  mbicep3 = "Biceps (3): millimeters",
+  mbicepp = "Biceps particularities",
+  mbicepp1 = "Biceps: no bare arm",
+  mbicepp2 = "Biceps: edema",
+  mbicepp3 = "Biceps: > 40mm",
+  mbicepp4 = "Biceps: tight skin",
+  mbicepp5 = "Biceps: refused",
+  mcalf01 = "Measured calf in cm",
+  mcalf03 = "Calf: refused",
+  mcalf04 = "Calf: R sitting down",
+  mcalf06 = "Calf: on right leg",
+  mcalf13 = "Calf: much space between tape and leg",
+  mgripl1 = "Hand strength (1) left: kgf",
+  mgripl2 = "Hand strength (2) left: kgf",
+  mgriplp = "Hand strength left: particularities",
+  mgriplp1 = "Hand strength: left particularities",
+  mgriplp2 = "Hand strength: left handicapped",
+  mgriplp3 = "Hand strength: left refuses",
+  mgriplp4 = "Hand strength: left other remarks",
+  mgripmeasp = "Measuring instruments: particularities",
+  mgripp = "Hand strength particularities",
+  mgripr1 = "Hand strength (1) right: kgf",
+  mgripr2 = "Hand strength (2) right: kgf",
+  mgriprp = "Hand strength right: particularities",
+  mgriprp1 = "Hand strength: right particularities",
+  mgriprp2 = "Hand strength: right handicapped",
+  mgriprp3 = "Hand strength: right refuses",
+  mgriprp4 = "Hand strength: right other remarks",
+  mheight = "Measured height in centimeters",
+  mheightp = "Height particularities",
+  mheightp1 = "Height: cannot stand",
+  mheightp2 = "Height: kyphosis",
+  mheightp3 = "Height: scoliosis",
+  mheightp4 = "Height: head not parallel",
+  mheightp5 = "Height: shoes",
+  mheightp6 = "Height: too much hair",
+  mheightp7 = "Height: refused",
+  mheightself = "Height: self-report",
+  mhip = "Measured hip in centimeters",
+  mhip1 = "Measured hip (1) in cm",
+  mhip2 = "Measured hip (2) in cm",
+  mhipp = "Hip particularities",
+  mhipp1 = "Hip: lying down",
+  mhipp2 = "Hip: many skinfolds",
+  mhipp3 = "Hip: refused",
+  mhipp4 = "Hip: other remark (3B) / Hip: other reason",
+  mkneeh = "Knee height: millimeters",
+  mkneep = "Knee: particularities",
+  mlength = "Measured length in centimeters",
+  mmiwp = "Measurements instruments were working properly",
+  msubscap1 = "Subscapular (1): millimeters",
+  msubscap2 = "Subscapular (2): millimeters",
+  msubscap3 = "Subscapular (3): millimeters",
+  msubscapp = "Subscapular particularities",
+  msubscapp1 = "Subscapular: no bare arm",
+  msubscapp2 = "Subscapular: edema",
+  msubscapp3 = "Subscapular: > 40mm",
+  msubscapp4 = "Subscapular: tight skin",
+  msubscapp5 = "Subscapular: refused",
+  msuprail1 = "Suprailiac (1): millimeters",
+  msuprail2 = "Suprailiac (2): millimeters",
+  msuprail3 = "Suprailiac (3): millimeters",
+  msuprailp = "Suprailiac particularities",
+  msuprailp1 = "Suprailiac: no bare arm",
+  msuprailp2 = "Suprailiac: edema",
+  msuprailp3 = "Suprailiac: > 40mm",
+  msuprailp4 = "Suprailiac: tight skin",
+  msuprailp5 = "Suprailiac: refused",
+  mtricep1 = "Triceps (1): millimeters",
+  mtricep2 = "Triceps (2): millimeters",
+  mtricep3 = "Triceps (3): millimeters",
+  mtricepp = "Triceps particularities",
+  mtricepp1 = "Triceps: no bare arm",
+  mtricepp2 = "Triceps: edema",
+  mtricepp3 = "Triceps: > 40mm",
+  mtricepp4 = "Triceps: tight skin",
+  mtricepp5 = "Triceps: refused",
+  mwaist = "Measured waist in centimeters",
+  mwaist1 = "Measured waist (1)",
+  mwaist2 = "Measured waist (2)",
+  mwaistp = "Waist particularities",
+  mwaistp1 = "Waist: lying down",
+  mwaistp2 = "Waist: hard to find right spot",
+  mwaistp3 = "Waist: many skinfolds",
+  mwaistp4 = "Waist: refused",
+  mwaistp5 = "Waist: other remark (3B) Waist: other reason",
+  mweight = "Measured weight in kilograms",
+  mweightp = "Weight particularities",
+  mweightp1 = "Weight: cannot stand",
+  mweightp2 = "Weight: clothes",
+  mweightp3 = "Weight: corset",
+  mweightp4 = "Weight: amputated",
+  mweightp5 = "Weight: brace",
+  mweightp6 = "Weight: prosthesis",
+  mweightp7 = "Weight: > 150 kg",
+  mweightp8 = "Weight: refused",
+  mweightp9 = "Weight: shoes",
+  mweightself = "Weight: self-report",
+  rm161 = "Reason missing: LASAH/B/I/J161",
+  .applies_to_waves = c("Z")
 )
 
-fc_labels$value_labels[["mhip"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["mtricep3"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["mwaist"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["marm2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["mbicep2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["mbicep3"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["mgripl1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["mgripl2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["mgripr2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["mhip2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["msubscap2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["msubscap3"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["msuprail2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["msuprail3"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["mtricep2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["mtricep3"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["mwaist2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["marm2"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["mbicep2"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["mbicep3"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["mgripl2"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["mgriplp3"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["mgripr2"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["mgriprp3"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["mtricep2"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["mtricep3"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["mgripl2"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mgriplp3"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mgriplp4"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mgripr2"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mgriprp3"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mgriprp4"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mhip2"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mwaist2"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mweightp"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mweightp3"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mweightp4"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mweightp5"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mweightp6"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mweightp7"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mweightp8"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mweightp9"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mgripl1"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["mgripl2"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["mgripr1"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["mgripr2"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["mwaist1"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["mwaist2"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["mweight"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["mgriplp3"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["mgriplp4"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["mgriprp3"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["mgriprp4"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["mgripl2"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
-fc_labels$value_labels[["mgripl2"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["mgripl2"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
-fc_labels$value_labels[["mgripl2"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
+variable_labels(
+  "marmp",
+  .applies_to_waves = c("B", "H", "3B", "I", "J")
+)
 
-.lasa_fc_161 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "mhip", "mkneeh", "mkneep", "mlength", "mwaist",
+  .applies_to_waves = c("B")
+)
+
+variable_labels(
+  "mweight", "mweightself",
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+)
+
+variable_labels(
+  "marmp1", "marmp2", "marmp3", "marmp4", "marmp5",
+  .applies_to_waves = c("C", "D", "H", "3B", "I", "J")
+)
+
+variable_labels(
+  "mbicep1", "mbicep2", "mbicep3", "mbicepp", "mbicepp1", "mbicepp3", "mbicepp4", "mbicepp5", "mtricep1", "mtricep2", "mtricep3", "mtricepp", "mtricepp1", "mtricepp3", "mtricepp4", "mtricepp5",
+  .applies_to_waves = c("C", "D")
+)
+
+variable_labels(
+  "mbicepp2", "mgripp", "msubscap1", "msubscap2", "msubscap3", "msubscapp", "msubscapp1", "msubscapp2", "msubscapp3", "msubscapp4", "msubscapp5", "msuprail1", "msuprail2", "msuprail3", "msuprailp", "msuprailp1", "msuprailp2", "msuprailp3", "msuprailp4", "msuprailp5", "mtricepp2",
+  .applies_to_waves = c("C")
+)
+
+variable_labels(
+  "mgripl1", "mgripl2", "mgripr1", "mheight", "mheightp", "mheightself", "mhip1", "mhipp", "mwaistp",
+  .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+)
+
+variable_labels(
+  "mgripr2",
+  .applies_to_waves = c("C", "D", "E", "2B", "F", "H", "3B", "I", "J")
+)
+
+variable_labels(
+  "mheightp1", "mweightp1",
+  .applies_to_waves = c("C", "2B", "G", "H", "3B", "I", "J")
+)
+
+variable_labels(
+  "mheightp2", "mheightp3", "mheightp4", "mheightp6", "mheightp7", "mhipp1", "mhipp2", "mhipp3", "mwaistp1", "mwaistp2", "mwaistp4", "mweightp2", "mweightp3", "mweightp4", "mweightp5", "mweightp6", "mweightp8",
+  .applies_to_waves = c("C", "D", "E", "2B", "G", "H", "3B", "I", "J")
+)
+
+variable_labels(
+  "mheightp5",
+  .applies_to_waves = c("C", "G", "H", "3B", "I", "J")
+)
+
+variable_labels(
+  "mhip2",
+  .applies_to_waves = c("C", "E", "2B", "F", "G", "H", "3B", "I", "J")
+)
+
+variable_labels(
+  "mwaistp3",
+  .applies_to_waves = c("C", "D", "E", "G", "H", "3B", "I", "J")
+)
+
+variable_labels(
+  "mweightp",
+  .applies_to_waves = c("C", "D", "E", "2B", "F", "G")
+)
+
+variable_labels(
+  "mgriplp2", "mgriplp3", "mgriprp2", "mgriprp3", "mweightp9",
+  .applies_to_waves = c("D", "E", "G", "H", "3B", "I", "J")
+)
+
+variable_labels(
+  "mgriplp4", "mgriprp4",
+  .applies_to_waves = c("E", "G", "H", "3B", "I", "J")
+)
+
+variable_labels(
+  "mweightp7",
+  .applies_to_waves = c("E", "2B", "G", "H", "3B", "I", "J")
+)
+
+variable_labels(
+  "mgriplp", "mgripmeasp", "mgriprp",
+  .applies_to_waves = c("2B")
+)
+
+variable_labels(
+  "mgriplp1", "mgriprp1", "rm161",
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+variable_labels(
+  "mhipp4", "mwaistp5",
+  .applies_to_waves = c("3B", "I", "J")
+)
+
+variable_labels(
+  "mcalf01", "mcalf03", "mcalf04", "mcalf06", "mcalf13", "mmiwp",
+  .applies_to_waves = c("I", "J")
+)
+
+variable_labels(
+  marm1 = "Arm 1: millimeters",
+  marm2 = "Arm 2: millimeters",
+  mheightp = "Length: particularities",
+  mheightself = "Length: self-report",
+  mhipp = "Hip: particularities",
+  mtricep1 = "Triceps 1: millimeters",
+  mtricep2 = "Triceps 2: millimeters",
+  mtricep3 = "Triceps 3: millimeters",
+  mtricepp = "Triceps: particularities",
+  mwaistp = "Waist: particularities",
+  .applies_to_waves = c("B")
+)
+
+variable_labels(
+  mweightp = "Weight: particularities",
+  .applies_to_waves = c("B", "H", "3B", "I", "J")
+)
+
+variable_labels(
+  marm1 = "Measured arm (1) in cm",
+  marm2 = "Measured arm (2) in cm",
+  marmp = "Arm particularities",
+  mwaist1 = "Measured waist (1) in mm",
+  mweightp7 = "Weight: >150 kg",
+  .applies_to_waves = c("C", "D")
+)
+
+variable_labels(
+  mwaist2 = "Measured waist (2) in mm",
+  rm161 = "Reason missing: LASAC161",
+  .applies_to_waves = c("C")
+)
+
+variable_labels(
+  mgriplp1 = "Hand strength: left part.",
+  mgriprp1 = "Hand strength: right part.",
+  .applies_to_waves = c("D", "G")
+)
+
+variable_labels(
+  mhipp4 = "Hip: other remakrs",
+  rm161 = "Reason missing: LASAD161",
+  .applies_to_waves = c("D")
+)
+
+variable_labels(
+  mgriplp1 = "Hand strength: left part",
+  mgriprp1 = "Hand strength: right part",
+  mhipp4 = "Hip: other remarks",
+  rm161 = "Reason missing: LASAE161",
+  .applies_to_waves = c("E")
+)
+
+variable_labels(
+  mwaist1 = "Measured waist (1) in cm",
+  mwaist2 = "Measured waist (2) in cm",
+  .applies_to_waves = c("E", "2B", "F", "G", "H", "3B", "I", "J")
+)
+
+variable_labels(
+  mgriplp2 = "Hand strength left: handicap",
+  mgriplp3 = "Hand strength left: refused",
+  mgriplp4 = "Hand strength left: other",
+  mgriprp2 = "Hand strength right: handicap",
+  mgriprp3 = "Hand strength right: refused",
+  mgriprp4 = "Hand strength right: other",
+  mwaistp3 = "Waist: much skinfolds",
+  .applies_to_waves = c("2B")
+)
+
+variable_labels(
+  mgriplp = "Hand strength left particularities",
+  mgriprp = "Hand strength right particularities",
+  rm161 = "Reason missing: LASAF161",
+  .applies_to_waves = c("F")
+)
+
+variable_labels(
+  mgripr2 = "Hand strength (2): right: kgf",
+  rm161 = "Reason missing: LASAG161",
+  .applies_to_waves = c("G")
+)
+
+variable_labels(
+  marm1 = "Measured arm in cm",
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+variable_labels(
+  mmiwp = "Measurement instruments were working properly",
+  .applies_to_waves = c("3B")
+)
+
+variable_labels(
+  mcalf02 = NA_character_,
+  mcalf12 = NA_character_,
+  .applies_to_waves = c("I", "J")
+)
+
+# define value labels ----
+value_labels(
+  `-1` = "no valid data / na, asked",
+  .applies_to_vars = c("marm1", "marmp1", "marmp2", "marmp3", "marmp4", "marmp5", "mgripl1", "mgriplp", "mgriplp1", "mgriplp2", "mgriplp3", "mgriplp4", "mgriprp", "mgriprp1", "mgriprp2", "mgriprp3", "mgriprp4", "mheight", "mheightp1", "mheightp2", "mheightp3", "mheightp4", "mheightp5", "mheightp6", "mheightp7", "mheightself", "mhip2", "mhipp1", "mhipp2", "mhipp3", "mhipp4", "mwaist2", "mwaistp1", "mwaistp2", "mwaistp3", "mwaistp4", "mweight", "mweightp1", "mweightp2", "mweightp3", "mweightp4", "mweightp5", "mweightp6", "mweightp7", "mweightp8", "mweightp9", "mweightself"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "no measurement / na, wrong skip",
+  .applies_to_vars = c("marm1", "marmp", "mheightp", "mheightself", "mhipp", "mtricep1", "mtricepp", "mwaistp", "mweightp", "mweightself"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "na, see C/DRM161",
+  .applies_to_vars = c("marm1"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-1` = "no valid data",
+  .applies_to_vars = c("marm2", "mtricep2"),
+  .applies_to_waves = c("Z", "B")
+)
+
+value_labels(
+  `-2` = "no answer, skipped / na, see C/DRM161", `-1` = "no particularities scored / no valid data / na, asked", `1` = "no bare arm / no", `2` = "much room between / yes", `3` = "R sitting down", `4` = "on right arm", `5` = "refused",
+  .applies_to_vars = c("marmp"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DMARMP", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("marmp1"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DRM161", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("marmp2", "marmp3", "marmp4", "marmp5", "mhipp2", "mhipp3", "mhipp4", "mwaistp2", "mwaistp3", "mwaistp4", "mweight", "mweightp9"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DRM161", `-1` = "no valid data",
+  .applies_to_vars = c("mbicep1", "mwaist1"),
+  .applies_to_waves = c("Z", "C", "D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DRM161", `-1` = "no valid data", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mbicepp", "mbicepp3", "mbicepp4", "mbicepp5", "mtricepp3", "mtricepp4", "mtricepp5"),
+  .applies_to_waves = c("Z", "C", "D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DMBICEPP", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mbicepp1"),
+  .applies_to_waves = c("Z", "C", "D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DRM161", `-1` = "no valid data", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mbicepp2", "mtricepp2"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see I/JRM161", `-1` = "na, asked",
+  .applies_to_vars = c("mcalf01"),
+  .applies_to_waves = c("Z", "I", "J")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mcalf02"),
+  .applies_to_waves = c("Z", "I", "J")
+)
+
+value_labels(
+  `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mcalf03", "mcalf04", "mcalf06", "mcalf12", "mcalf13"),
+  .applies_to_waves = c("Z", "I", "J")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see DRM161",
+  .applies_to_vars = c("mgripl1"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-1` = "na, asked",
+  .applies_to_vars = c("mgripl2"),
+  .applies_to_waves = c("Z", "F", "G")
+)
+
+value_labels(
+  `-2` = "na, see BRM161", `1` = "no / no particularities", `2` = "yes / left hand handicapped", `3` = "R refused", `4` = "other remark",
+  .applies_to_vars = c("mgriplp"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see DRM161", `0` = "not mentioned", `1` = "no / mentioned", `2` = "yes",
+  .applies_to_vars = c("mgriplp1", "mgriprp1"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see dmgriplp1", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriplp2"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see BRM161", `0` = "not mentioned", `1` = "no / mentioned", `2` = "yes",
+  .applies_to_vars = c("mgriplp3", "mgriplp4", "mgriprp3", "mgriprp4"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "na, see BRM161", `-1` = "no valid data", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mgripmeasp"),
+  .applies_to_waves = c("Z", "2B")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see CRM161", `-1` = "no valid data", `0` = "no particularities", `1` = "R refuses", `2` = "handicapped hand",
+  .applies_to_vars = c("mgripp"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see CRM161", `-1` = "no valid data",
+  .applies_to_vars = c("mgripr1", "msuprail1"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-1` = "na, asked",
+  .applies_to_vars = c("mgripr2"),
+  .applies_to_waves = c("Z", "F", "G", "H", "3B", "I", "J")
+)
+
+value_labels(
+  `-2` = "na, see BRM161", `1` = "no / no particularities", `2` = "yes / right hand handicapped", `3` = "R refused", `4` = "other remark",
+  .applies_to_vars = c("mgriprp"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see DMGRIPRP1", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriprp2"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DRM161",
+  .applies_to_vars = c("mheight"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "no answer, skipped / na, see CRM161", `-1` = "no particularities scored / no valid data / na, asked", `1` = "cannot stand / no / yes / no particularities", `2` = "kyphose / yes / no / cannot stand", `3` = "scoliose / kyphosis", `4` = "head not parallel / scoliosis", `5` = "shoes / head not parallel", `6` = "too much hair", `7` = "refused / wears shoes", `8` = "R refused",
+  .applies_to_vars = c("mheightp"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DMHEIGHTP", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mheightp1"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see CRM161", `0` = "not mentioned", `1` = "no / mentioned / yes", `2` = "yes / no",
+  .applies_to_vars = c("mheightp2"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see CRM161", `1` = "no / yes", `2` = "yes / no",
+  .applies_to_vars = c("mheightp3", "mheightp4", "mheightp6", "mheightp7"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see CRM161", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mheightp5"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "length measured / na, see C/DMHEIGHTP / routing",
+  .applies_to_vars = c("mheightself"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na see C/DRM161", `-1` = "no valid data",
+  .applies_to_vars = c("mhip1"),
+  .applies_to_waves = c("Z", "C", "D")
+)
+
+value_labels(
+  `-2` = "no answer, skipped / na, see C/DRM161", `-1` = "no particularities scored / no valid data / na, asked", `1` = "lying down / no / no particularities", `2` = "much skinfolds / yes / lying down", `3` = "refused / many skinfolds", `4` = "R refused",
+  .applies_to_vars = c("mhipp"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DMHIPP", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mhipp1"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "no measurement", `-1` = "no valid data",
+  .applies_to_vars = c("mkneeh"),
+  .applies_to_waves = c("Z", "B")
+)
+
+value_labels(
+  `-3` = "no measurement", `-2` = "no answer, skipped", `-1` = "no valid data", `0` = "no particularities scored", `1` = "refused", `2` = "trousers", `3` = "right leg",
+  .applies_to_vars = c("mkneep"),
+  .applies_to_waves = c("Z", "B")
+)
+
+value_labels(
+  `-3` = "no measurement",
+  .applies_to_vars = c("mlength"),
+  .applies_to_waves = c("Z", "B")
+)
+
+value_labels(
+  `-2` = "na, see BRM161", `-1` = "na, asked", `1` = "no / yes", `2` = "yes / no",
+  .applies_to_vars = c("mmiwp"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DRM161", `-1` = "no valid data",
+  .applies_to_vars = c("msubscap1"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see CRM161", `-1` = "no valid data", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("msubscapp", "msubscapp2", "msubscapp3", "msubscapp4", "msubscapp5", "msuprailp", "msuprailp2", "msuprailp3", "msuprailp4", "msuprailp5"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see CMSUBSCAPP", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("msubscapp1"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see CMSUPRAILP", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("msuprailp1"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-2` = "na, see C/DRM161", `-1` = "no valid data",
+  .applies_to_vars = c("mtricep1"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "no answer, skipped / na, see C/DRM161", `-1` = "no valid data", `0` = "no particularities scored", `1` = "no bare arm / no", `2` = "edema / yes", `3` = "skinfold more than 40mm", `4` = "tight skin", `5` = "refused",
+  .applies_to_vars = c("mtricepp"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DMTRICEPP", `-1` = "no valid data", `1` = "not mentioned", `2` = "mentioned",
+  .applies_to_vars = c("mtricepp1"),
+  .applies_to_waves = c("Z", "C", "D")
+)
+
+value_labels(
+  `-2` = "no answer, skipped / na, see C/DRM161", `-1` = "no particularities scored / no valid data / na, asked", `1` = "lying down / no / no particularities", `2` = "hard to find right spot / yes / lying down", `3` = "much skinfolds under / hard to find right spot", `4` = "refused / many skinfolds", `5` = "R refused",
+  .applies_to_vars = c("mwaistp"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DMWAISTP", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mwaistp1"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mwaistp5"),
+  .applies_to_waves = c("Z", "3B", "I", "J")
+)
+
+value_labels(
+  `-2` = "no answer, skipped / na, see C/DRM161", `-1` = "no particularities scored / no valid data / na, asked", `1` = "cannot stand / no / yes / no particularities", `2` = "clothes / yes / no / cannot stand", `3` = "corset / wears clothes", `4` = "amputation / wears corset", `5` = "brace / amputated", `6` = "prosthesis / brace", `7` = ">150kg / prosthesis", `8` = "refused / wears shoes", `9` = "weight > 150 kg", `10` = "R refused",
+  .applies_to_vars = c("mweightp"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DMWEIGHTP", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mweightp1"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DRM161", `0` = "not mentioned", `1` = "no / mentioned / yes", `2` = "yes / no",
+  .applies_to_vars = c("mweightp2"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DRM161", `1` = "no / yes", `2` = "yes / no",
+  .applies_to_vars = c("mweightp3", "mweightp4", "mweightp5", "mweightp6", "mweightp7", "mweightp8"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "length measured / na, see C/MWEIGHTP1&8",
+  .applies_to_vars = c("mweightself"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "valid data / interview terminated", `1` = "short version / short interview", `2` = "interview terminated",
+  .applies_to_vars = c("rm161"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "no measurement",
+  .applies_to_vars = c("marm1", "mtricep1"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-3` = "no measurement", `-2` = "no answer, skipped", `-1` = "no particularities scored", `1` = "no bare arm", `2` = "much room between", `3` = "R sitting down", `4` = "on right arm", `5` = "refused",
+  .applies_to_vars = c("marmp"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-3` = "no measurement", `-2` = "no answer, skipped", `-1` = "no particularities scored", `1` = "cannot stand", `2` = "kyphose", `3` = "scoliose", `4` = "head not parallel", `5` = "shoes", `6` = "too much hair", `7` = "refused",
+  .applies_to_vars = c("mheightp"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-3` = "no measurement", `-2` = "length measured", `-1` = "no valid data",
+  .applies_to_vars = c("mheightself", "mweightself"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-3` = "no measurement", `-2` = "no answer, skipped", `-1` = "no particularities scored", `1` = "lying down", `2` = "much skinfolds", `3` = "refused",
+  .applies_to_vars = c("mhipp"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-3` = "no measurement", `-2` = "no answer, skipped", `-1` = "no valid data", `0` = "no particularities scored", `1` = "no bare arm", `2` = "edema", `3` = "skinfold more than 40mm", `4` = "tight skin", `5` = "refused",
+  .applies_to_vars = c("mtricepp"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-3` = "no measurement", `-2` = "no answer, skipped", `-1` = "no particularities scored", `1` = "lying down", `2` = "hard to find right spot", `3` = "much skinfolds under", `4` = "refused",
+  .applies_to_vars = c("mwaistp"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-1` = "no valid data",
+  .applies_to_vars = c("mweight"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-3` = "no measurement", `-2` = "no answer, skipped", `-1` = "no particularities scored", `1` = "cannot stand", `2` = "clothes", `3` = "corset", `4` = "amputation", `5` = "brace", `6` = "prosthesis", `7` = ">150kg", `8` = "refused",
+  .applies_to_vars = c("mweightp"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DRM161", `-1` = "no valid data",
+  .applies_to_vars = c("marm1", "mheight", "mtricep1", "mweight"),
+  .applies_to_waves = c("C", "D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DRM161", `-1` = "no valid data", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("marmp", "marmp2", "marmp3", "marmp4", "marmp5", "mhipp", "mhipp2", "mhipp3", "mtricepp", "mwaistp", "mwaistp2", "mwaistp3", "mwaistp4", "mweightp", "mweightp2", "mweightp3", "mweightp4", "mweightp5", "mweightp6", "mweightp7", "mweightp8"),
+  .applies_to_waves = c("C", "D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DMARMP", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("marmp1"),
+  .applies_to_waves = c("C", "D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see CRM161", `-1` = "no valid data", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mheightp", "mheightp2", "mheightp3", "mheightp4", "mheightp6", "mheightp7"),
+  .applies_to_waves = c("C", "D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DMHEIGHTP", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mheightp1"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see CRM161", `-1` = "no valid data", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mheightp5"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DMHEIGHTP", `-1` = "no valid data",
+  .applies_to_vars = c("mheightself"),
+  .applies_to_waves = c("C", "D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DMHIPP", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mhipp1"),
+  .applies_to_waves = c("C", "D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DMWAISTP", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mwaistp1"),
+  .applies_to_waves = c("C", "D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DMWEIGHTP", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mweightp1"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/MWEIGHTP1&8", `-1` = "no valid data",
+  .applies_to_vars = c("mweightself"),
+  .applies_to_waves = c("C", "D")
+)
+
+value_labels(
+  `-2` = "valid data", `2` = "interview terminated",
+  .applies_to_vars = c("rm161"),
+  .applies_to_waves = c("C", "E")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see DRM161", `-1` = "no valid data",
+  .applies_to_vars = c("mgripl1", "mgripr1"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see DRM161", `-1` = "no valid data", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mgriplp1", "mgriprp1"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see dmgriplp1", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriplp2"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see DMGRIPRP1", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriprp2"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DRM161", `-1` = "no valid data", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mhipp4", "mweightp9"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `-2` = "valid data",
+  .applies_to_vars = c("rm161"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `-2` = "na, see ERM161",
+  .applies_to_vars = c("mgripl1", "mgriplp1", "mgripr1", "mgriprp1", "mheight", "mheightp", "mheightp3", "mheightp4", "mheightp6", "mheightp7", "mhip1", "mhipp", "mhipp2", "mhipp3", "mhipp4", "mwaist1", "mwaistp", "mwaistp2", "mwaistp3", "mwaistp4", "mweight"),
+  .applies_to_waves = c("E")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-1` = "no valid data",
+  .applies_to_vars = c("mgripl1", "mgripr1", "mheight", "mhip1", "mwaist1", "mweight"),
+  .applies_to_waves = c("E")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-1` = "no valid data", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mgriplp1", "mgriprp1", "mheightp", "mheightp3", "mheightp4", "mheightp6", "mheightp7", "mhipp", "mhipp2", "mhipp3", "mhipp4", "mwaistp", "mwaistp2", "mwaistp3", "mwaistp4"),
+  .applies_to_waves = c("E")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see EMGRIPLP1", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriplp2"),
+  .applies_to_waves = c("E")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see EMGRIPRP1", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriprp2"),
+  .applies_to_waves = c("E")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see EMHEIGHTP", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mheightp2"),
+  .applies_to_waves = c("E")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see EMHEIGHTP7", `-1` = "no valid data",
+  .applies_to_vars = c("mheightself"),
+  .applies_to_waves = c("E")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see EMHIPP", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mhipp1"),
+  .applies_to_waves = c("E")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see EMWAISTP", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mwaistp1"),
+  .applies_to_waves = c("E")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see EMWEIGHTP", `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mweightp2"),
+  .applies_to_waves = c("E")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see EMWEIGHT8", `-1` = "no valid data",
+  .applies_to_vars = c("mweightself"),
+  .applies_to_waves = c("E")
+)
+
+value_labels(
+  `-2` = "na, see BRM161", `-1` = "no valid data", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mgriplp", "mgriplp3", "mgriplp4", "mgriprp", "mgriprp3", "mgriprp4", "mhipp", "mhipp2", "mhipp3", "mwaistp", "mwaistp2", "mwaistp3", "mwaistp4"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-2` = "na, see BMGRIPLP", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriplp2"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-2` = "na, see BMGRIPRP", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriprp2"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-2` = "na, see BRM161", `-1` = "no valid data",
+  .applies_to_vars = c("mheight", "mweight"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-2` = "na, see BRM161", `-1` = "no valid data", `1` = "yes", `2` = "no",
+  .applies_to_vars = c("mheightp", "mheightp2", "mheightp3", "mheightp4", "mheightp6", "mheightp7", "mweightp", "mweightp2", "mweightp3", "mweightp4", "mweightp5", "mweightp6", "mweightp7", "mweightp8"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-2` = "na, see BMHEIGHTP", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mheightp1"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-3` = "na wrong skip", `-2` = "na, see BMHEIHGTP1 & 7", `-1` = "no valid data",
+  .applies_to_vars = c("mheightself"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-2` = "na, see BRM161",
+  .applies_to_vars = c("mhip1", "mwaist1"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-1` = "no valid data",
+  .applies_to_vars = c("mhip2", "mwaist2"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-2` = "na, see BMHIPP", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mhipp1"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-2` = "na, see BMWAISTP", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mwaistp1"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-2` = "na, see BMWEIGHTP", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mweightp1"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see BMWEIGHT1 & 8", `-1` = "no valid data",
+  .applies_to_vars = c("mweightself"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-2` = "na, see FRM161",
+  .applies_to_vars = c("mgripl1", "mgriplp", "mgripr1", "mgriprp", "mheight", "mheightp", "mheightself", "mhip1", "mhipp", "mwaistp", "mweightp", "mweightself"),
+  .applies_to_waves = c("F")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no particularities", `2` = "left hand handicapped", `3` = "R refused", `4` = "other remark",
+  .applies_to_vars = c("mgriplp"),
+  .applies_to_waves = c("F")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no particularities", `2` = "right hand handicapped", `3` = "R refused", `4` = "other remark",
+  .applies_to_vars = c("mgriprp"),
+  .applies_to_waves = c("F")
+)
+
+value_labels(
+  `-1` = "na, asked",
+  .applies_to_vars = c("mheight"),
+  .applies_to_waves = c("F", "G")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no particularities", `2` = "cannot stand", `3` = "kyphosis", `4` = "scoliosis", `5` = "head not parallel", `6` = "too much hair", `7` = "wears shoes", `8` = "R refused",
+  .applies_to_vars = c("mheightp"),
+  .applies_to_waves = c("F")
+)
+
+value_labels(
+  `-1` = "na, asked",
+  .applies_to_vars = c("mheightself", "mweightself"),
+  .applies_to_waves = c("F")
+)
+
+value_labels(
+  `-1` = "na, asked",
+  .applies_to_vars = c("mhip2"),
+  .applies_to_waves = c("F", "G", "H", "3B", "I", "J")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no particularities", `2` = "lying down", `3` = "many skinfolds", `4` = "R refused",
+  .applies_to_vars = c("mhipp"),
+  .applies_to_waves = c("F")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no particularities", `2` = "lying down", `3` = "hard to find right spot", `4` = "many skinfolds", `5` = "R refused",
+  .applies_to_vars = c("mwaistp"),
+  .applies_to_waves = c("F")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no particularities", `2` = "cannot stand", `3` = "wears clothes", `4` = "wears corset", `5` = "amputated", `6` = "brace", `7` = "prosthesis", `8` = "wears shoes", `9` = "weight > 150 kg", `10` = "R refused",
+  .applies_to_vars = c("mweightp"),
+  .applies_to_waves = c("F")
+)
+
+value_labels(
+  `-2` = "valid data", `1` = "short version", `2` = "interview terminated",
+  .applies_to_vars = c("rm161"),
+  .applies_to_waves = c("F", "G")
+)
+
+value_labels(
+  `-2` = "na, see GRM161",
+  .applies_to_vars = c("mgripl1", "mgriplp1", "mgripr1", "mgriprp1", "mheight", "mheightp", "mheightp2", "mheightp3", "mheightp4", "mheightp5", "mheightp6", "mheightp7", "mhip1", "mhipp", "mhipp2", "mhipp3", "mwaist1", "mwaistp", "mwaistp2", "mwaistp3", "mwaistp4", "mweight", "mweightp", "mweightp2", "mweightp3", "mweightp4", "mweightp5", "mweightp6", "mweightp7", "mweightp8", "mweightp9"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mgriplp1", "mgriprp1", "mheightp", "mheightp2", "mheightp3", "mheightp4", "mheightp5", "mheightp6", "mheightp7", "mwaistp", "mwaistp2", "mwaistp3", "mwaistp4", "mweightp", "mweightp2", "mweightp3", "mweightp4", "mweightp5", "mweightp6", "mweightp7", "mweightp8", "mweightp9"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see GMGRIPLP1", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriplp2"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see GMGRIPRP1", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriprp2"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see GMHEIGHTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mheightp1"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-2` = "na, see GMHEIGHT", `-1` = "na, asked",
+  .applies_to_vars = c("mheightself"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mhipp", "mhipp2", "mhipp3"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see GMHIPP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mhipp1"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-1` = "na, asked",
+  .applies_to_vars = c("mwaist2"),
+  .applies_to_waves = c("G", "H", "3B", "I", "J")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see GMWAISTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mwaistp1"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mweight"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see GMWEIGHTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mweightp1"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-2` = "na, see GMWEIGHT", `-1` = "na, asked",
+  .applies_to_vars = c("mweightself"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked",
+  .applies_to_vars = c("marm1"),
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+value_labels(
+  `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("marmp", "marmp2", "marmp3", "marmp4", "marmp5", "mhipp", "mhipp2", "mhipp3", "mwaistp", "mwaistp2", "mwaistp3", "mwaistp4", "mweightp", "mweightp2", "mweightp3", "mweightp4", "mweightp5", "mweightp6", "mweightp7", "mweightp8"),
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+value_labels(
+  `-2` = "na, see H/B/I/JMARMP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("marmp1"),
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+value_labels(
+  `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked",
+  .applies_to_vars = c("mgripl1", "mheight", "mweight"),
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriplp1", "mgriplp3", "mgriplp4", "mgriprp1", "mgriprp3", "mgriprp4"),
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/JMGRIPLP1", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriplp2"),
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+value_labels(
+  `-2` = "na, see H/B/I/JRM161",
+  .applies_to_vars = c("mgripr1", "mhip1", "mwaist1"),
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/JMGRIPRP1", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriprp2"),
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mheightp", "mheightp2", "mheightp3", "mheightp4", "mheightp5", "mheightp6", "mheightp7"),
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+value_labels(
+  `-2` = "na, see H/B/I/JMHEIGHTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mheightp1"),
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+value_labels(
+  `-2` = "na, see H/B/IMHEIGHT", `-1` = "na, asked",
+  .applies_to_vars = c("mheightself"),
+  .applies_to_waves = c("H", "3B", "I")
+)
+
+value_labels(
+  `-2` = "na, see H/B/I/JMHIPP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mhipp1"),
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+value_labels(
+  `-2` = "na, see H/B/I/JMWAISTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mwaistp1"),
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+value_labels(
+  `-2` = "na, see H/B/I/JMWEIHGTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mweightp1"),
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+value_labels(
+  `-1` = "na, asked",
+  .applies_to_vars = c("mweightp9"),
+  .applies_to_waves = c("H", "3B", "I")
+)
+
+value_labels(
+  `-2` = "na, see H/B/IMWEIGHT/ routing", `-1` = "na, asked",
+  .applies_to_vars = c("mweightself"),
+  .applies_to_waves = c("H", "3B", "I")
+)
+
+value_labels(
+  `-2` = "valid data", `1` = "short interview", `2` = "interview terminated",
+  .applies_to_vars = c("rm161"),
+  .applies_to_waves = c("H", "3B", "I", "J")
+)
+
+value_labels(
+  `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mhipp4"),
+  .applies_to_waves = c("3B", "I", "J")
+)
+
+value_labels(
+  `-2` = "na, see BRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mmiwp"),
+  .applies_to_waves = c("3B")
+)
+
+value_labels(
+  `-2` = "na, see I/JRM161", `-1` = "na, asked", `1` = "yes", `2` = "no",
+  .applies_to_vars = c("mmiwp"),
+  .applies_to_waves = c("I", "J")
+)
+
+value_labels(
+  `-2` = "routing", `-1` = "na, asked",
+  .applies_to_vars = c("mheightself"),
+  .applies_to_waves = c("J")
+)
+
+value_labels(
+  `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mweightp9"),
+  .applies_to_waves = c("J")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see JMWEIGHT", `-1` = "na, asked",
+  .applies_to_vars = c("mweightself"),
+  .applies_to_waves = c("J")
+)
+
+.lasa_fc_161 <- .lasa_finalize_fc("161")
+.lasa_fc_161$variables <- .lasa_fc_161$variables |>
+  .override_label(wave = "G", variable = "mweightself", override_value = "gmweighself") |>
+  .override_label(wave = "H", variable = "mweightself", override_value = "hweightself") |>
+  .override_label(wave = "3B", variable = "mweightself", override_value = "bweightself") |>
+  .override_label(wave = "I", variable = "mweightself", override_value = "iweightself") |>
+  .override_label(wave = "J", variable = "mweightself", override_value = "jweightself")
 

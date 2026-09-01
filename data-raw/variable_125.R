@@ -1,832 +1,15 @@
 ## LASA filecode 125 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  qsocp04 = "possession senior card (65+/60+)",
-  qsocp05 = "usage senior card",
-  qsocp06 = "listening to the radio: hours a day",
-  qsocp07 = "radio: news",
-  qsocp08 = "radio: commentaries",
-  qsocp09 = "radio: religious services",
-  qsocp10 = "radio: music",
-  qsocp11 = "radio: sport",
-  qsocp12 = "radio: quiz/games",
-  qsocp13 = "watching television: hours a day",
-  qsocp14 = "tv: news",
-  qsocp15 = "tv: commentaries",
-  qsocp16 = "tv: religious services",
-  qsocp17 = "tv: music",
-  qsocp18 = "tv: sport",
-  qsocp19 = "tv: quiz/games",
-  qsocp20 = "tv: films/soaps",
-  qsocp20b = "tv: reality programmes",
-  qsocp21 = "reading newspapers",
-  qsocp22 = "involved: world",
-  qsocp23 = "involved: europe",
-  qsocp24 = "involved: dutch society",
-  qsocp25 = "involved: province",
-  qsocp26 = "involved: municipality",
-  qsocp27 = "involved: neighborhood"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `B` = c(
-    "qsocp04",
-    "qsocp05",
-    "qsocp06",
-    "qsocp07",
-    "qsocp08",
-    "qsocp09",
-    "qsocp10",
-    "qsocp11",
-    "qsocp12",
-    "qsocp13",
-    "qsocp14",
-    "qsocp15",
-    "qsocp16",
-    "qsocp17",
-    "qsocp18",
-    "qsocp19",
-    "qsocp20",
-    "qsocp21",
-    "qsocp22",
-    "qsocp23",
-    "qsocp24",
-    "qsocp25",
-    "qsocp26",
-    "qsocp27"
-  ),
-  `C` = c(
-    "qsocp07",
-    "qsocp08",
-    "qsocp09",
-    "qsocp10",
-    "qsocp11",
-    "qsocp12",
-    "qsocp14",
-    "qsocp15",
-    "qsocp16",
-    "qsocp17",
-    "qsocp18",
-    "qsocp19",
-    "qsocp21"
-  ),
-  `D` = c(
-    "qsocp07",
-    "qsocp08",
-    "qsocp09",
-    "qsocp10",
-    "qsocp11",
-    "qsocp12",
-    "qsocp14",
-    "qsocp15",
-    "qsocp16",
-    "qsocp17",
-    "qsocp18",
-    "qsocp19",
-    "qsocp20",
-    "qsocp21"
-  ),
-  `E` = c(
-    "qsocp07",
-    "qsocp08",
-    "qsocp09",
-    "qsocp10",
-    "qsocp11",
-    "qsocp12",
-    "qsocp14",
-    "qsocp15",
-    "qsocp16",
-    "qsocp17",
-    "qsocp18",
-    "qsocp19",
-    "qsocp20",
-    "qsocp21"
-  ),
-  `2B` = c(
-    "qsocp04",
-    "qsocp05",
-    "qsocp06",
-    "qsocp07",
-    "qsocp08",
-    "qsocp09",
-    "qsocp10",
-    "qsocp11",
-    "qsocp12",
-    "qsocp13",
-    "qsocp14",
-    "qsocp15",
-    "qsocp16",
-    "qsocp17",
-    "qsocp18",
-    "qsocp19",
-    "qsocp20",
-    "qsocp21"
-  ),
-  `F` = c(
-    "qsocp07",
-    "qsocp08",
-    "qsocp09",
-    "qsocp10",
-    "qsocp11",
-    "qsocp12",
-    "qsocp14",
-    "qsocp15",
-    "qsocp16",
-    "qsocp17",
-    "qsocp18",
-    "qsocp19",
-    "qsocp20",
-    "qsocp21"
-  ),
-  `G` = c(
-    "qsocp07",
-    "qsocp08",
-    "qsocp09",
-    "qsocp10",
-    "qsocp11",
-    "qsocp12",
-    "qsocp14",
-    "qsocp15",
-    "qsocp16",
-    "qsocp17",
-    "qsocp18",
-    "qsocp19",
-    "qsocp20",
-    "qsocp20b",
-    "qsocp21"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels,
-  Wave_C_labels = harmonized_labels,
-  Wave_D_labels = harmonized_labels,
-  Wave_E_labels = harmonized_labels,
-  Wave_2B_labels = harmonized_labels,
-  Wave_F_labels = .replace_labels(
-    harmonized_labels,
-    qsocp20 = "tv: films/tv series"
-  ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels,
-    qsocp20 = "tv: films/tv series"
-  ),
-  Harmonized_labels = harmonized_labels
-)
-
-## This file's own very common answer categories (>= 10 occurrences
-## across its variables) -- same idea as default_missing_labels, just
-## scoped to this filecode instead of shared globally.
-default_answer_labels <- c(
-  `1` = "very often",
-  `2` = "often",
-  `3` = "some of the time",
-  `4` = "never"
-)
-
-standardized_value_labels <- list(
-  qsocp04 = c(
-    default_missing_labels[c("-2")],
-    `-1` = "not available",
-    `1` = "yes",
-    `2` = "no",
-    `3` = "R thinks not yet applicable"
-  ),
-  qsocp05 = c(
-    default_missing_labels[c("-2")],
-    `-1` = "not available",
-    `1` = "almost never",
-    `2` = "a few times a year",
-    `3` = "once a month",
-    `4` = "a few times a month",
-    `5` = "once a week",
-    `6` = "a few times a week",
-    `7` = "every day"
-  ),
-  qsocp06 = c(`-1` = "not available"),
-  qsocp07 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qsocp08 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qsocp09 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qsocp10 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qsocp11 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qsocp12 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qsocp13 = c(`-1` = "not available"),
-  qsocp14 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qsocp15 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qsocp16 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qsocp17 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qsocp18 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qsocp19 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qsocp20 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qsocp20b = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qsocp21 = c(
-    `-1` = "not available",
-    `1` = "label varies by wave",
-    `2` = "label varies by wave",
-    `3` = "label varies by wave",
-    `4` = "label varies by wave",
-    `5` = "never"
-  ),
-  qsocp22 = c(
-    `-1` = "not available",
-    `1` = "not at all involved",
-    `2` = "not involved",
-    `3` = "involved",
-    `4` = "greatly involved"
-  ),
-  qsocp23 = c(
-    `-1` = "not available",
-    `1` = "not at all involved",
-    `2` = "not involved",
-    `3` = "involved",
-    `4` = "greatly involved"
-  ),
-  qsocp24 = c(
-    `-1` = "not available",
-    `1` = "not at all involved",
-    `2` = "not involved",
-    `3` = "involved",
-    `4` = "greatly involved"
-  ),
-  qsocp25 = c(
-    `-1` = "not available",
-    `1` = "not at all involved",
-    `2` = "not involved",
-    `3` = "involved",
-    `4` = "greatly involved"
-  ),
-  qsocp26 = c(
-    `-1` = "not available",
-    `1` = "not at all involved",
-    `2` = "not involved",
-    `3` = "involved",
-    `4` = "greatly involved"
-  ),
-  qsocp27 = c(
-    `-1` = "not available",
-    `1` = "not at all involved",
-    `2` = "not involved",
-    `3` = "involved",
-    `4` = "greatly involved"
-  )
-)
-
-value_labels_list <- list(
-  Wave_B_labels = .replace_in_list(
-    standardized_value_labels,
-    qsocp04 = .replace_labels(
-    standardized_value_labels$qsocp04,
-    `-2` = "no data, age",
-    `-1` = "no answer"
-  ),
-    qsocp05 = .replace_labels(
-    standardized_value_labels$qsocp05,
-    `-2` = "no answer, routing",
-    `-1` = "no answer"
-  ),
-    qsocp06 = .replace_labels(
-    standardized_value_labels$qsocp06,
-    `-1` = "no answer"
-  ),
-    qsocp07 = .replace_labels(
-    standardized_value_labels$qsocp07,
-    `-1` = "no answer"
-  ),
-    qsocp08 = .replace_labels(
-    standardized_value_labels$qsocp08,
-    `-1` = "no answer"
-  ),
-    qsocp09 = .replace_labels(
-    standardized_value_labels$qsocp09,
-    `-1` = "no answer"
-  ),
-    qsocp10 = .replace_labels(
-    standardized_value_labels$qsocp10,
-    `-1` = "no answer"
-  ),
-    qsocp11 = .replace_labels(
-    standardized_value_labels$qsocp11,
-    `-1` = "no answer"
-  ),
-    qsocp12 = .replace_labels(
-    standardized_value_labels$qsocp12,
-    `-1` = "no answer"
-  ),
-    qsocp13 = .replace_labels(
-    standardized_value_labels$qsocp13,
-    `-1` = "no answer"
-  ),
-    qsocp14 = .replace_labels(
-    standardized_value_labels$qsocp14,
-    `-1` = "no answer"
-  ),
-    qsocp15 = .replace_labels(
-    standardized_value_labels$qsocp15,
-    `-1` = "no answer"
-  ),
-    qsocp16 = .replace_labels(
-    standardized_value_labels$qsocp16,
-    `-1` = "no answer"
-  ),
-    qsocp17 = .replace_labels(
-    standardized_value_labels$qsocp17,
-    `-1` = "no answer"
-  ),
-    qsocp18 = .replace_labels(
-    standardized_value_labels$qsocp18,
-    `-1` = "no answer"
-  ),
-    qsocp19 = .replace_labels(
-    standardized_value_labels$qsocp19,
-    `-1` = "no answer"
-  ),
-    qsocp20 = .replace_labels(
-    standardized_value_labels$qsocp20,
-    `-1` = "no answer"
-  ),
-    qsocp21 = .replace_labels(
-    standardized_value_labels$qsocp21,
-    `-1` = "no answer",
-    `1` = "every day",
-    `2` = "4-5 times a week",
-    `3` = "2-3 times a week",
-    `4` = "<2 times a week"
-  ),
-    qsocp22 = .replace_labels(
-    standardized_value_labels$qsocp22,
-    `-1` = "no answer"
-  ),
-    qsocp23 = .replace_labels(
-    standardized_value_labels$qsocp23,
-    `-1` = "no answer"
-  ),
-    qsocp24 = .replace_labels(
-    standardized_value_labels$qsocp24,
-    `-1` = "no answer"
-  ),
-    qsocp25 = .replace_labels(
-    standardized_value_labels$qsocp25,
-    `-1` = "no answer"
-  ),
-    qsocp26 = .replace_labels(
-    standardized_value_labels$qsocp26,
-    `-1` = "no answer"
-  ),
-    qsocp27 = .replace_labels(
-    standardized_value_labels$qsocp27,
-    `-1` = "no answer"
-  )
-  ),
-  Wave_C_labels = .replace_in_list(
-    standardized_value_labels,
-    qsocp07 = .replace_labels(
-    standardized_value_labels$qsocp07,
-    `-1` = "no answer"
-  ),
-    qsocp08 = .replace_labels(
-    standardized_value_labels$qsocp08,
-    `-1` = "no answer"
-  ),
-    qsocp09 = .replace_labels(
-    standardized_value_labels$qsocp09,
-    `-1` = "no answer"
-  ),
-    qsocp10 = .replace_labels(
-    standardized_value_labels$qsocp10,
-    `-1` = "no answer"
-  ),
-    qsocp11 = .replace_labels(
-    standardized_value_labels$qsocp11,
-    `-1` = "no answer"
-  ),
-    qsocp12 = .replace_labels(
-    standardized_value_labels$qsocp12,
-    `-1` = "no answer"
-  ),
-    qsocp14 = .replace_labels(
-    standardized_value_labels$qsocp14,
-    `-1` = "no answer"
-  ),
-    qsocp15 = .replace_labels(
-    standardized_value_labels$qsocp15,
-    `-1` = "no answer"
-  ),
-    qsocp16 = .replace_labels(
-    standardized_value_labels$qsocp16,
-    `-1` = "no answer"
-  ),
-    qsocp17 = .replace_labels(
-    standardized_value_labels$qsocp17,
-    `-1` = "no answer"
-  ),
-    qsocp18 = .replace_labels(
-    standardized_value_labels$qsocp18,
-    `-1` = "no answer"
-  ),
-    qsocp19 = .replace_labels(
-    standardized_value_labels$qsocp19,
-    `-1` = "no answer"
-  ),
-    qsocp21 = .replace_labels(
-    standardized_value_labels$qsocp21,
-    `-1` = "no answer",
-    `1` = "every day",
-    `2` = "4-5 times a week",
-    `3` = "2-3 times a week",
-    `4` = "<2 times a week"
-  )
-  ),
-  Wave_D_labels = .replace_in_list(
-    standardized_value_labels,
-    qsocp07 = .replace_labels(
-    standardized_value_labels$qsocp07,
-    `-1` = "no answer"
-  ),
-    qsocp08 = .replace_labels(
-    standardized_value_labels$qsocp08,
-    `-1` = "no answer"
-  ),
-    qsocp09 = .replace_labels(
-    standardized_value_labels$qsocp09,
-    `-1` = "no answer"
-  ),
-    qsocp10 = .replace_labels(
-    standardized_value_labels$qsocp10,
-    `-1` = "no answer"
-  ),
-    qsocp11 = .replace_labels(
-    standardized_value_labels$qsocp11,
-    `-1` = "no answer"
-  ),
-    qsocp12 = .replace_labels(
-    standardized_value_labels$qsocp12,
-    `-1` = "no answer"
-  ),
-    qsocp14 = .replace_labels(
-    standardized_value_labels$qsocp14,
-    `-1` = "no answer"
-  ),
-    qsocp15 = .replace_labels(
-    standardized_value_labels$qsocp15,
-    `-1` = "no answer"
-  ),
-    qsocp16 = .replace_labels(
-    standardized_value_labels$qsocp16,
-    `-1` = "no answer"
-  ),
-    qsocp17 = .replace_labels(
-    standardized_value_labels$qsocp17,
-    `-1` = "no answer"
-  ),
-    qsocp18 = .replace_labels(
-    standardized_value_labels$qsocp18,
-    `-1` = "no answer"
-  ),
-    qsocp19 = .replace_labels(
-    standardized_value_labels$qsocp19,
-    `-1` = "no answer"
-  ),
-    qsocp20 = .replace_labels(
-    standardized_value_labels$qsocp20,
-    `-1` = "no answer"
-  ),
-    qsocp21 = .replace_labels(
-    standardized_value_labels$qsocp21,
-    `-1` = "no answer",
-    `1` = "every day",
-    `2` = "4-5 times a week",
-    `3` = "2-3 times a week",
-    `4` = "<2 times a week"
-  )
-  ),
-  Wave_E_labels = .replace_in_list(
-    standardized_value_labels,
-    qsocp07 = .replace_labels(
-    standardized_value_labels$qsocp07,
-    `-1` = "no answer"
-  ),
-    qsocp08 = .replace_labels(
-    standardized_value_labels$qsocp08,
-    `-1` = "no answer"
-  ),
-    qsocp09 = .replace_labels(
-    standardized_value_labels$qsocp09,
-    `-1` = "no answer"
-  ),
-    qsocp10 = .replace_labels(
-    standardized_value_labels$qsocp10,
-    `-1` = "no answer"
-  ),
-    qsocp11 = .replace_labels(
-    standardized_value_labels$qsocp11,
-    `-1` = "no answer"
-  ),
-    qsocp12 = .replace_labels(
-    standardized_value_labels$qsocp12,
-    `-1` = "no answer"
-  ),
-    qsocp14 = .replace_labels(
-    standardized_value_labels$qsocp14,
-    `-1` = "no answer"
-  ),
-    qsocp15 = .replace_labels(
-    standardized_value_labels$qsocp15,
-    `-1` = "no answer"
-  ),
-    qsocp16 = .replace_labels(
-    standardized_value_labels$qsocp16,
-    `-1` = "no answer"
-  ),
-    qsocp17 = .replace_labels(
-    standardized_value_labels$qsocp17,
-    `-1` = "no answer"
-  ),
-    qsocp18 = .replace_labels(
-    standardized_value_labels$qsocp18,
-    `-1` = "no answer"
-  ),
-    qsocp19 = .replace_labels(
-    standardized_value_labels$qsocp19,
-    `-1` = "no answer"
-  ),
-    qsocp20 = .replace_labels(
-    standardized_value_labels$qsocp20,
-    `-1` = "no answer"
-  ),
-    qsocp21 = .replace_labels(
-    standardized_value_labels$qsocp21,
-    `-1` = "no answer",
-    `1` = "every day",
-    `2` = "4-5 times a week",
-    `3` = "2-3 times a week",
-    `4` = "<2 times a week"
-  )
-  ),
-  Wave_2B_labels = .replace_in_list(
-    standardized_value_labels,
-    qsocp04 = .replace_labels(
-    standardized_value_labels$qsocp04,
-    `-2` = "no data, age",
-    `-1` = "no answer"
-  ),
-    qsocp05 = .replace_labels(
-    standardized_value_labels$qsocp05,
-    `-2` = "no answer, routing",
-    `-1` = "no answer"
-  ),
-    qsocp06 = .replace_labels(
-    standardized_value_labels$qsocp06,
-    `-1` = "no answer"
-  ),
-    qsocp07 = .replace_labels(
-    standardized_value_labels$qsocp07,
-    `-1` = "no answer"
-  ),
-    qsocp08 = .replace_labels(
-    standardized_value_labels$qsocp08,
-    `-1` = "no answer"
-  ),
-    qsocp09 = .replace_labels(
-    standardized_value_labels$qsocp09,
-    `-1` = "no answer"
-  ),
-    qsocp10 = .replace_labels(
-    standardized_value_labels$qsocp10,
-    `-1` = "no answer"
-  ),
-    qsocp11 = .replace_labels(
-    standardized_value_labels$qsocp11,
-    `-1` = "no answer"
-  ),
-    qsocp12 = .replace_labels(
-    standardized_value_labels$qsocp12,
-    `-1` = "no answer"
-  ),
-    qsocp13 = .replace_labels(
-    standardized_value_labels$qsocp13,
-    `-1` = "no answer"
-  ),
-    qsocp14 = .replace_labels(
-    standardized_value_labels$qsocp14,
-    `-1` = "no answer"
-  ),
-    qsocp15 = .replace_labels(
-    standardized_value_labels$qsocp15,
-    `-1` = "no answer"
-  ),
-    qsocp16 = .replace_labels(
-    standardized_value_labels$qsocp16,
-    `-1` = "no answer"
-  ),
-    qsocp17 = .replace_labels(
-    standardized_value_labels$qsocp17,
-    `-1` = "no answer"
-  ),
-    qsocp18 = .replace_labels(
-    standardized_value_labels$qsocp18,
-    `-1` = "no answer"
-  ),
-    qsocp19 = .replace_labels(
-    standardized_value_labels$qsocp19,
-    `-1` = "no answer"
-  ),
-    qsocp20 = .replace_labels(
-    standardized_value_labels$qsocp20,
-    `-1` = "no answer"
-  ),
-    qsocp21 = c(
-    `-1` = "no answer",
-    `1` = "very often",
-    `2` = "often",
-    `3` = "some of the time",
-    `4` = "never"
-  )
-  ),
-  Wave_F_labels = .replace_in_list(
-    standardized_value_labels,
-    qsocp07 = .replace_labels(
-    standardized_value_labels$qsocp07,
-    `-1` = "no answer"
-  ),
-    qsocp08 = .replace_labels(
-    standardized_value_labels$qsocp08,
-    `-1` = "no answer"
-  ),
-    qsocp09 = .replace_labels(
-    standardized_value_labels$qsocp09,
-    `-1` = "no answer"
-  ),
-    qsocp10 = .replace_labels(
-    standardized_value_labels$qsocp10,
-    `-1` = "no answer"
-  ),
-    qsocp11 = .replace_labels(
-    standardized_value_labels$qsocp11,
-    `-1` = "no answer"
-  ),
-    qsocp12 = .replace_labels(
-    standardized_value_labels$qsocp12,
-    `-1` = "no answer"
-  ),
-    qsocp14 = .replace_labels(
-    standardized_value_labels$qsocp14,
-    `-1` = "no answer"
-  ),
-    qsocp15 = .replace_labels(
-    standardized_value_labels$qsocp15,
-    `-1` = "no answer"
-  ),
-    qsocp16 = .replace_labels(
-    standardized_value_labels$qsocp16,
-    `-1` = "no answer"
-  ),
-    qsocp17 = .replace_labels(
-    standardized_value_labels$qsocp17,
-    `-1` = "no answer"
-  ),
-    qsocp18 = .replace_labels(
-    standardized_value_labels$qsocp18,
-    `-1` = "no answer"
-  ),
-    qsocp19 = .replace_labels(
-    standardized_value_labels$qsocp19,
-    `-1` = "no answer"
-  ),
-    qsocp20 = .replace_labels(
-    standardized_value_labels$qsocp20,
-    `-1` = "no answer"
-  ),
-    qsocp21 = .replace_labels(
-    standardized_value_labels$qsocp21,
-    `-1` = "no answer",
-    `1` = "every day",
-    `2` = "4-5 times a week",
-    `3` = "2-3 times a week",
-    `4` = "<2 times a week"
-  )
-  ),
-  Wave_G_labels = .replace_in_list(
-    standardized_value_labels,
-    qsocp07 = .replace_labels(
-    standardized_value_labels$qsocp07,
-    `-1` = "no answer"
-  ),
-    qsocp08 = .replace_labels(
-    standardized_value_labels$qsocp08,
-    `-1` = "no answer"
-  ),
-    qsocp09 = .replace_labels(
-    standardized_value_labels$qsocp09,
-    `-1` = "no answer"
-  ),
-    qsocp10 = .replace_labels(
-    standardized_value_labels$qsocp10,
-    `-1` = "no answer"
-  ),
-    qsocp11 = .replace_labels(
-    standardized_value_labels$qsocp11,
-    `-1` = "no answer"
-  ),
-    qsocp12 = .replace_labels(
-    standardized_value_labels$qsocp12,
-    `-1` = "no answer"
-  ),
-    qsocp14 = .replace_labels(
-    standardized_value_labels$qsocp14,
-    `-1` = "no answer"
-  ),
-    qsocp15 = .replace_labels(
-    standardized_value_labels$qsocp15,
-    `-1` = "no answer"
-  ),
-    qsocp16 = .replace_labels(
-    standardized_value_labels$qsocp16,
-    `-1` = "no answer"
-  ),
-    qsocp17 = .replace_labels(
-    standardized_value_labels$qsocp17,
-    `-1` = "no answer"
-  ),
-    qsocp18 = .replace_labels(
-    standardized_value_labels$qsocp18,
-    `-1` = "no answer"
-  ),
-    qsocp19 = .replace_labels(
-    standardized_value_labels$qsocp19,
-    `-1` = "no answer"
-  ),
-    qsocp20 = .replace_labels(
-    standardized_value_labels$qsocp20,
-    `-1` = "no answer"
-  ),
-    qsocp20b = .replace_labels(
-    standardized_value_labels$qsocp20b,
-    `-1` = "no answer"
-  ),
-    qsocp21 = .replace_labels(
-    standardized_value_labels$qsocp21,
-    `-1` = "no answer",
-    `1` = "every day",
-    `2` = "4-5 times a week",
-    `3` = "2-3 times a week",
-    `4` = "<2 times a week"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   qsocp04 = "categorical",
   qsocp05 = "categorical",
@@ -855,12 +38,156 @@ var_types_vec <- c(
   qsocp27 = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "125", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "125", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "125", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "125", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  qsocp04 = "possession senior card (65+/60+)",
+  qsocp05 = "usage senior card",
+  qsocp06 = "listening to the radio: hours a day",
+  qsocp07 = "radio: news",
+  qsocp08 = "radio: commentaries",
+  qsocp09 = "radio: religious services",
+  qsocp10 = "radio: music",
+  qsocp11 = "radio: sport",
+  qsocp12 = "radio: quiz/games",
+  qsocp13 = "watching television: hours a day",
+  qsocp14 = "tv: news",
+  qsocp15 = "tv: commentaries",
+  qsocp16 = "tv: religious services",
+  qsocp17 = "tv: music",
+  qsocp18 = "tv: sport",
+  qsocp19 = "tv: quiz/games",
+  qsocp20 = "tv: films/soaps",
+  qsocp20b = "tv: reality programmes",
+  qsocp21 = "reading newspapers",
+  qsocp22 = "involved: world",
+  qsocp23 = "involved: europe",
+  qsocp24 = "involved: dutch society",
+  qsocp25 = "involved: province",
+  qsocp26 = "involved: municipality",
+  qsocp27 = "involved: neighborhood",
+  .applies_to_waves = c("Z")
 )
 
-.lasa_fc_125 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "qsocp04", "qsocp05", "qsocp06", "qsocp13",
+  .applies_to_waves = c("B", "2B")
+)
+
+variable_labels(
+  "qsocp07", "qsocp08", "qsocp09", "qsocp10", "qsocp11", "qsocp12", "qsocp14", "qsocp15", "qsocp16", "qsocp17", "qsocp18", "qsocp19", "qsocp21",
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G")
+)
+
+variable_labels(
+  "qsocp20",
+  .applies_to_waves = c("B", "D", "E", "2B")
+)
+
+variable_labels(
+  "qsocp22", "qsocp23", "qsocp24", "qsocp25", "qsocp26", "qsocp27",
+  .applies_to_waves = c("B")
+)
+
+variable_labels(
+  "qsocp20b",
+  .applies_to_waves = c("G")
+)
+
+variable_labels(
+  qsocp20 = "tv: films/tv series",
+  .applies_to_waves = c("F", "G")
+)
+
+# define value labels ----
+value_labels(
+  `-1` = "not available",
+  .applies_to_vars = c("qsocp04", "qsocp05", "qsocp06", "qsocp07", "qsocp08", "qsocp09", "qsocp10", "qsocp11", "qsocp12", "qsocp13", "qsocp14", "qsocp15", "qsocp16", "qsocp17", "qsocp18", "qsocp19", "qsocp20", "qsocp20b", "qsocp21", "qsocp22", "qsocp23", "qsocp24", "qsocp25", "qsocp26", "qsocp27"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "not available, routing", `1` = "yes", `2` = "no", `3` = "R thinks not yet applicable",
+  .applies_to_vars = c("qsocp04"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "not available, routing", `1` = "almost never", `2` = "a few times a year", `3` = "once a month", `4` = "a few times a month", `5` = "once a week", `6` = "a few times a week", `7` = "every day",
+  .applies_to_vars = c("qsocp05"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "very often", `2` = "often", `3` = "some of the time", `4` = "never",
+  .applies_to_vars = c("qsocp07", "qsocp08", "qsocp09", "qsocp10", "qsocp11", "qsocp12", "qsocp14", "qsocp15", "qsocp16", "qsocp17", "qsocp18", "qsocp19", "qsocp20", "qsocp20b"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "label varies by wave", `2` = "label varies by wave", `3` = "label varies by wave", `4` = "label varies by wave", `5` = "never",
+  .applies_to_vars = c("qsocp21"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "not at all involved", `2` = "not involved", `3` = "involved", `4` = "greatly involved",
+  .applies_to_vars = c("qsocp22", "qsocp23", "qsocp24", "qsocp25", "qsocp26", "qsocp27"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "no data, age", `-1` = "no answer", `1` = "yes", `2` = "no", `3` = "R thinks not yet applicable",
+  .applies_to_vars = c("qsocp04"),
+  .applies_to_waves = c("B", "2B")
+)
+
+value_labels(
+  `-2` = "no answer, routing", `-1` = "no answer", `1` = "almost never", `2` = "a few times a year", `3` = "once a month", `4` = "a few times a month", `5` = "once a week", `6` = "a few times a week", `7` = "every day",
+  .applies_to_vars = c("qsocp05"),
+  .applies_to_waves = c("B", "2B")
+)
+
+value_labels(
+  `-1` = "no answer",
+  .applies_to_vars = c("qsocp06", "qsocp13"),
+  .applies_to_waves = c("B", "2B")
+)
+
+value_labels(
+  `-1` = "no answer", `1` = "very often", `2` = "often", `3` = "some of the time", `4` = "never",
+  .applies_to_vars = c("qsocp07", "qsocp08", "qsocp09", "qsocp10", "qsocp11", "qsocp12", "qsocp14", "qsocp15", "qsocp16", "qsocp17", "qsocp18", "qsocp19"),
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G")
+)
+
+value_labels(
+  `-1` = "no answer", `1` = "very often", `2` = "often", `3` = "some of the time", `4` = "never",
+  .applies_to_vars = c("qsocp20"),
+  .applies_to_waves = c("B", "D", "E", "2B", "F", "G")
+)
+
+value_labels(
+  `-1` = "no answer", `1` = "every day", `2` = "4-5 times a week", `3` = "2-3 times a week", `4` = "<2 times a week", `5` = "never",
+  .applies_to_vars = c("qsocp21"),
+  .applies_to_waves = c("B", "C", "D", "E", "F", "G")
+)
+
+value_labels(
+  `-1` = "no answer", `1` = "not at all involved", `2` = "not involved", `3` = "involved", `4` = "greatly involved",
+  .applies_to_vars = c("qsocp22", "qsocp23", "qsocp24", "qsocp25", "qsocp26", "qsocp27"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-1` = "no answer", `1` = "very often", `2` = "often", `3` = "some of the time", `4` = "never",
+  .applies_to_vars = c("qsocp21"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-1` = "no answer", `1` = "very often", `2` = "often", `3` = "some of the time", `4` = "never",
+  .applies_to_vars = c("qsocp20b"),
+  .applies_to_waves = c("G")
+)
+
+.lasa_fc_125 <- .lasa_finalize_fc("125")
 

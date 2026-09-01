@@ -1,367 +1,15 @@
 ## LASA filecode 706 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  trcedep = "Telephone interview: depressive affect",
-  trces01 = "1. Last week: bothered",
-  trces02 = "2. Last week: appetite",
-  trces03 = "3. Last week: blues",
-  trces04 = "4. Last week: good: positive",
-  trces05 = "5. Last week: mind",
-  trces06 = "6. Last week: depressed",
-  trces07 = "7. Last week: effort",
-  trces08 = "8. Last week: hopeful: positive",
-  trces09 = "9. Last week: failure",
-  trces10 = "10. Last week: fearful",
-  trces11 = "11. Last week: sleep",
-  trces12 = "12. Last week: happy: positive",
-  trces13 = "13. Last week: talk",
-  trces14 = "14. Last week: lonely",
-  trces15 = "15. Last week: unfriendly",
-  trces16 = "16. Last week: enjoy: positive",
-  trces17 = "17. Last week: cry",
-  trces18 = "18. Last week: sad",
-  trces19 = "19. Last week: dislike",
-  trces20 = "20. Last week: get going"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `C` = c(
-    "trcedep",
-    "trces01",
-    "trces06",
-    "trces10",
-    "trces14"
-  ),
-  `D` = c(
-    "trces01",
-    "trces02",
-    "trces03",
-    "trces04",
-    "trces05",
-    "trces06",
-    "trces07",
-    "trces08",
-    "trces09",
-    "trces10",
-    "trces11",
-    "trces12",
-    "trces13",
-    "trces14",
-    "trces15",
-    "trces16",
-    "trces17",
-    "trces18",
-    "trces19",
-    "trces20"
-  ),
-  `E` = c(
-    "trces01",
-    "trces02",
-    "trces03",
-    "trces04",
-    "trces05",
-    "trces06",
-    "trces07",
-    "trces08",
-    "trces09",
-    "trces10",
-    "trces11",
-    "trces12",
-    "trces13",
-    "trces14",
-    "trces15",
-    "trces16",
-    "trces17",
-    "trces18",
-    "trces19",
-    "trces20"
-  ),
-  `F` = c(
-    "trces01",
-    "trces02",
-    "trces03",
-    "trces04",
-    "trces05",
-    "trces06",
-    "trces07",
-    "trces08",
-    "trces09",
-    "trces10",
-    "trces11",
-    "trces12",
-    "trces13",
-    "trces14",
-    "trces15",
-    "trces16",
-    "trces17",
-    "trces18",
-    "trces19",
-    "trces20"
-  ),
-  `G` = c(
-    "trces01",
-    "trces02",
-    "trces03",
-    "trces04",
-    "trces05",
-    "trces06",
-    "trces07",
-    "trces08",
-    "trces09",
-    "trces10",
-    "trces11",
-    "trces12",
-    "trces13",
-    "trces14",
-    "trces15",
-    "trces16",
-    "trces17",
-    "trces18",
-    "trces19",
-    "trces20"
-  ),
-  `H` = c(
-    "trces01",
-    "trces02",
-    "trces03",
-    "trces04",
-    "trces05",
-    "trces06",
-    "trces07",
-    "trces08",
-    "trces09",
-    "trces10",
-    "trces11",
-    "trces12",
-    "trces13",
-    "trces14",
-    "trces15",
-    "trces16",
-    "trces17",
-    "trces18",
-    "trces19",
-    "trces20"
-  ),
-  `I` = c(
-    "trces01",
-    "trces02",
-    "trces03",
-    "trces04",
-    "trces05",
-    "trces06",
-    "trces07",
-    "trces08",
-    "trces09",
-    "trces10",
-    "trces11",
-    "trces12",
-    "trces13",
-    "trces14",
-    "trces15",
-    "trces16",
-    "trces17",
-    "trces18",
-    "trces19",
-    "trces20"
-  ),
-  `J` = c(
-    "trces01",
-    "trces02",
-    "trces03",
-    "trces04",
-    "trces05",
-    "trces06",
-    "trces07",
-    "trces08",
-    "trces09",
-    "trces10",
-    "trces11",
-    "trces12",
-    "trces13",
-    "trces14",
-    "trces15",
-    "trces16",
-    "trces17",
-    "trces18",
-    "trces19",
-    "trces20"
-  ),
-  `K` = c(
-    "trces01",
-    "trces02",
-    "trces03",
-    "trces04",
-    "trces05",
-    "trces06",
-    "trces07",
-    "trces08",
-    "trces09",
-    "trces10",
-    "trces11",
-    "trces12",
-    "trces13",
-    "trces14",
-    "trces15",
-    "trces16",
-    "trces17",
-    "trces18",
-    "trces19",
-    "trces20"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_C_labels = .replace_labels(
-    harmonized_labels,
-    trcedep = "Telephone interview: depressive affect low-high"
-  ),
-  Wave_D_labels = harmonized_labels,
-  Wave_E_labels = harmonized_labels,
-  Wave_F_labels = harmonized_labels,
-  Wave_G_labels = harmonized_labels,
-  Wave_H_labels = harmonized_labels,
-  Wave_I_labels = harmonized_labels,
-  Wave_J_labels = harmonized_labels,
-  Wave_K_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
-)
-
-## This file's own very common answer categories (>= 10 occurrences
-## across its variables) -- same idea as default_missing_labels, just
-## scoped to this filecode instead of shared globally.
-default_answer_labels <- c(
-  `1` = "some of the time",
-  `2` = "occasionally",
-  `3` = "mostly or always"
-)
-
-standardized_value_labels <- list(
-  trcedep = c(`-1` = "missing values"),
-  trces01 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces02 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces03 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces04 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces05 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces06 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces07 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces08 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces09 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces10 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces11 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces12 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces13 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces14 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces15 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces16 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces17 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces18 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces19 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  ),
-  trces20 = c(
-    default_missing_labels[c("-1")],
-    `0` = "rarely or never",
-    default_answer_labels[c("1", "2", "3")]
-  )
-)
-
-value_labels_list <- list(
-  Wave_C_labels = standardized_value_labels,
-  Wave_D_labels = standardized_value_labels,
-  Wave_E_labels = standardized_value_labels,
-  Wave_F_labels = standardized_value_labels,
-  Wave_G_labels = standardized_value_labels,
-  Wave_H_labels = standardized_value_labels,
-  Wave_I_labels = standardized_value_labels,
-  Wave_J_labels = standardized_value_labels,
-  Wave_K_labels = standardized_value_labels,
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   trcedep = "numeric",
   trces01 = "categorical",
@@ -386,12 +34,65 @@ var_types_vec <- c(
   trces20 = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "706", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "706", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "706", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "706", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  trcedep = "Telephone interview: depressive affect",
+  trces01 = "1. Last week: bothered",
+  trces02 = "2. Last week: appetite",
+  trces03 = "3. Last week: blues",
+  trces04 = "4. Last week: good: positive",
+  trces05 = "5. Last week: mind",
+  trces06 = "6. Last week: depressed",
+  trces07 = "7. Last week: effort",
+  trces08 = "8. Last week: hopeful: positive",
+  trces09 = "9. Last week: failure",
+  trces10 = "10. Last week: fearful",
+  trces11 = "11. Last week: sleep",
+  trces12 = "12. Last week: happy: positive",
+  trces13 = "13. Last week: talk",
+  trces14 = "14. Last week: lonely",
+  trces15 = "15. Last week: unfriendly",
+  trces16 = "16. Last week: enjoy: positive",
+  trces17 = "17. Last week: cry",
+  trces18 = "18. Last week: sad",
+  trces19 = "19. Last week: dislike",
+  trces20 = "20. Last week: get going",
+  .applies_to_waves = c("Z")
 )
 
-.lasa_fc_706 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "trces01", "trces06", "trces10", "trces14",
+  .applies_to_waves = c("C", "D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+variable_labels(
+  "trces02", "trces03", "trces04", "trces05", "trces07", "trces08", "trces09", "trces11", "trces12", "trces13", "trces15", "trces16", "trces17", "trces18", "trces19", "trces20",
+  .applies_to_waves = c("D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+variable_labels(
+  trcedep = "Telephone interview: depressive affect low-high",
+  .applies_to_waves = c("C")
+)
+
+# define value labels ----
+value_labels(
+  `-1` = "missing values",
+  .applies_to_vars = c("trcedep"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-1` = "na, asked", `0` = "rarely or never", `1` = "some of the time", `2` = "occasionally", `3` = "mostly or always",
+  .applies_to_vars = c("trces01", "trces06", "trces10", "trces14"),
+  .applies_to_waves = c("Z", "C", "D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-1` = "na, asked", `0` = "rarely or never", `1` = "some of the time", `2` = "occasionally", `3` = "mostly or always",
+  .applies_to_vars = c("trces02", "trces03", "trces04", "trces05", "trces07", "trces08", "trces09", "trces11", "trces12", "trces13", "trces15", "trces16", "trces17", "trces18", "trces19", "trces20"),
+  .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+.lasa_fc_706 <- .lasa_finalize_fc("706")
 

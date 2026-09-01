@@ -1,376 +1,15 @@
 ## LASA filecode 707 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  tpcogd2 = "Cognition: remembering addresses",
-  trcogd1 = "Cognition: talks",
-  trcogd3 = "Cognition: familiar machines",
-  trcogd4 = "Cognition: decisions",
-  trcogd5 = "Cognition: handling money",
-  trcogd6 = "Cognition: financial affairs",
-  trcogdc = "Informant questionnaire of cognitive decline",
-  trmemo1 = "Memory1: problems with memory",
-  trmemo2 = "Memory2: consulted doctor for memory problems",
-  trmms10 = "MMSE item10: address",
-  trmms11 = "MMSE item11: three objects",
-  trmms12 = "MMSE item12: subtraction of 7",
-  trmms13 = "MMSE item13: spelling backwards",
-  trmms14 = "MMSE item14: remembering three objects",
-  trmmsc = "(partial) MMSE-score based on maximum spelling/subtraction",
-  trmmsc1 = "(partial) MMSE-score based on subtraction",
-  trmmsc2 = "(partial) MMSE-score based on spelling",
-  trmmse1 = "MMSE item01: year",
-  trmmse4 = "MMSE item04: day",
-  trmmse5 = "MMSE item05: month",
-  trmmse8 = "MMSE item08: two main streets"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `C` = c(
-    "tpcogd2",
-    "trcogd1",
-    "trcogd3",
-    "trcogd4",
-    "trcogd5",
-    "trcogd6",
-    "trcogdc"
-  ),
-  `D` = c(
-    "trmemo1",
-    "trmemo2",
-    "trmms10",
-    "trmms11",
-    "trmms12",
-    "trmms13",
-    "trmms14",
-    "trmmsc",
-    "trmmsc1",
-    "trmmsc2",
-    "trmmse1",
-    "trmmse4",
-    "trmmse5",
-    "trmmse8"
-  ),
-  `E` = c(
-    "trmemo1",
-    "trmemo2",
-    "trmms10",
-    "trmms11",
-    "trmms12",
-    "trmms13",
-    "trmms14",
-    "trmmsc",
-    "trmmsc1",
-    "trmmsc2",
-    "trmmse1",
-    "trmmse4",
-    "trmmse5",
-    "trmmse8"
-  ),
-  `F` = c(
-    "trmemo1",
-    "trmemo2",
-    "trmms10",
-    "trmms11",
-    "trmms12",
-    "trmms13",
-    "trmms14",
-    "trmmsc",
-    "trmmsc1",
-    "trmmsc2",
-    "trmmse1",
-    "trmmse4",
-    "trmmse5",
-    "trmmse8"
-  ),
-  `G` = c(
-    "trmemo1",
-    "trmemo2",
-    "trmms10",
-    "trmms11",
-    "trmms12",
-    "trmms13",
-    "trmms14",
-    "trmmsc",
-    "trmmsc1",
-    "trmmsc2",
-    "trmmse1",
-    "trmmse4",
-    "trmmse5",
-    "trmmse8"
-  ),
-  `H` = c(
-    "trmemo1",
-    "trmemo2",
-    "trmms10",
-    "trmms11",
-    "trmms12",
-    "trmms13",
-    "trmms14",
-    "trmmsc",
-    "trmmsc1",
-    "trmmsc2",
-    "trmmse1",
-    "trmmse4",
-    "trmmse5",
-    "trmmse8"
-  ),
-  `I` = c(
-    "trmemo1",
-    "trmemo2",
-    "trmms10",
-    "trmms11",
-    "trmms12",
-    "trmms13",
-    "trmms14",
-    "trmmsc",
-    "trmmsc1",
-    "trmmsc2",
-    "trmmse1",
-    "trmmse4",
-    "trmmse5",
-    "trmmse8"
-  ),
-  `J` = c(
-    "trmemo1",
-    "trmemo2",
-    "trmms10",
-    "trmms11",
-    "trmms12",
-    "trmms13",
-    "trmms14",
-    "trmmsc",
-    "trmmsc1",
-    "trmmsc2",
-    "trmmse1",
-    "trmmse4",
-    "trmmse5",
-    "trmmse8"
-  ),
-  `K` = c(
-    "trmemo1",
-    "trmemo2",
-    "trmms10",
-    "trmms11",
-    "trmms12",
-    "trmms13",
-    "trmms14",
-    "trmmsc",
-    "trmmsc1",
-    "trmmsc2",
-    "trmmse1",
-    "trmmse4",
-    "trmmse5",
-    "trmmse8"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_C_labels = harmonized_labels,
-  Wave_D_labels = harmonized_labels,
-  Wave_E_labels = harmonized_labels,
-  Wave_F_labels = harmonized_labels,
-  Wave_G_labels = harmonized_labels,
-  Wave_H_labels = harmonized_labels,
-  Wave_I_labels = harmonized_labels,
-  Wave_J_labels = harmonized_labels,
-  Wave_K_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
-)
-
-standardized_value_labels <- list(
-  tpcogd2 = c(
-    default_missing_labels[c("-1")],
-    `1` = "much better",
-    `2` = "a bit better",
-    `3` = "not changed",
-    `4` = "a bit worse",
-    `5` = "much worse"
-  ),
-  trcogd1 = c(
-    default_missing_labels[c("-1")],
-    `1` = "much better",
-    `2` = "a bit better",
-    `3` = "not changed",
-    `4` = "a bit worse",
-    `5` = "much worse"
-  ),
-  trcogd3 = c(
-    default_missing_labels[c("-1")],
-    `1` = "much better",
-    `2` = "a bit better",
-    `3` = "not changed",
-    `4` = "a bit worse",
-    `5` = "much worse"
-  ),
-  trcogd4 = c(
-    default_missing_labels[c("-1")],
-    `1` = "much better",
-    `2` = "a bit better",
-    `3` = "not changed",
-    `4` = "a bit worse",
-    `5` = "much worse"
-  ),
-  trcogd5 = c(
-    default_missing_labels[c("-1")],
-    `1` = "much better",
-    `2` = "a bit better",
-    `3` = "not changed",
-    `4` = "a bit worse",
-    `5` = "much worse"
-  ),
-  trcogd6 = c(
-    default_missing_labels[c("-1")],
-    `1` = "much better",
-    `2` = "a bit better",
-    `3` = "not changed",
-    `4` = "a bit worse",
-    `5` = "much worse"
-  ),
-  trcogdc = c(`-1` = "missing values", `6` = NA_character_, `30` = NA_character_),
-  trmemo1 = c(
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    `2` = "yes"
-  ),
-  trmemo2 = c(
-    `-2` = "no problems, see TRMEMO1",
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    `2` = "yes"
-  ),
-  trmms10 = c(
-    default_missing_labels[c("-1")],
-    `1` = "wrong",
-    `2` = "correct"
-  ),
-  trmms11 = c(
-    default_missing_labels[c("-1")],
-    `0` = "0 right",
-    `1` = "1 right",
-    `2` = "2 right",
-    `3` = "3 right"
-  ),
-  trmms12 = c(
-    default_missing_labels[c("-1")],
-    `0` = "0 right",
-    `1` = "1 right",
-    `2` = "2 right",
-    `3` = "3 right",
-    `4` = "4 right",
-    `5` = "5 right"
-  ),
-  trmms13 = c(
-    default_missing_labels[c("-1")],
-    `0` = "0 right",
-    `1` = "1 right",
-    `2` = "2 right",
-    `3` = "3 right",
-    `4` = "4 right",
-    `5` = "5 right"
-  ),
-  trmms14 = c(
-    default_missing_labels[c("-1")],
-    `0` = "0 right",
-    `1` = "1 right",
-    `2` = "2 right",
-    `3` = "3 right"
-  ),
-  trmmsc = c(`-2` = "no scale (too many missing)", `1` = NA_character_, `16` = NA_character_),
-  trmmsc1 = c(`-2` = "no scale (too many missing)", `1` = NA_character_, `16` = NA_character_),
-  trmmsc2 = c(`-2` = "no scale (too many missing)", `1` = NA_character_, `16` = NA_character_),
-  trmmse1 = c(
-    default_missing_labels[c("-1")],
-    `1` = "wrong",
-    `2` = "correct"
-  ),
-  trmmse4 = c(
-    default_missing_labels[c("-1")],
-    `1` = "wrong",
-    `2` = "correct"
-  ),
-  trmmse5 = c(
-    default_missing_labels[c("-1")],
-    `1` = "wrong",
-    `2` = "correct"
-  ),
-  trmmse8 = c(
-    default_missing_labels[c("-1")],
-    `1` = "wrong",
-    `2` = "correct"
-  )
-)
-
-value_labels_list <- list(
-  Wave_C_labels = standardized_value_labels,
-  Wave_D_labels = .replace_in_list(
-    standardized_value_labels,
-    trmemo2 = .replace_labels(
-    standardized_value_labels$trmemo2,
-    `-2` = "no problems, see DTRMEMO1"
-  )
-  ),
-  Wave_E_labels = .replace_in_list(
-    standardized_value_labels,
-    trmemo2 = .replace_labels(
-    standardized_value_labels$trmemo2,
-    `-2` = "no problems, see ETRMEMO1"
-  )
-  ),
-  Wave_F_labels = .replace_in_list(
-    standardized_value_labels,
-    trmemo2 = .replace_labels(
-    standardized_value_labels$trmemo2,
-    `-2` = "no problems, see FTRMEMO1"
-  )
-  ),
-  Wave_G_labels = .replace_in_list(
-    standardized_value_labels,
-    trmemo2 = .replace_labels(
-    standardized_value_labels$trmemo2,
-    `-2` = "no problems, see GTRMEMO1"
-  )
-  ),
-  Wave_H_labels = .replace_in_list(
-    standardized_value_labels,
-    trmemo2 = .replace_labels(
-    standardized_value_labels$trmemo2,
-    `-2` = "no problems, see HTRMEMO1"
-  )
-  ),
-  Wave_I_labels = .replace_in_list(
-    standardized_value_labels,
-    trmemo2 = .replace_labels(
-    standardized_value_labels$trmemo2,
-    `-2` = "no problems, see ITRMEMO1"
-  )
-  ),
-  Wave_J_labels = .replace_in_list(
-    standardized_value_labels,
-    trmemo2 = .replace_labels(
-    standardized_value_labels$trmemo2,
-    `-2` = "no problems, see JTRMEMO1"
-  )
-  ),
-  Wave_K_labels = .replace_in_list(
-    standardized_value_labels,
-    trmemo2 = .replace_labels(
-    standardized_value_labels$trmemo2,
-    `-2` = "no problems, see KTRMEMO1"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   tpcogd2 = "categorical",
   trcogd1 = "categorical",
@@ -395,12 +34,144 @@ var_types_vec <- c(
   trmmse8 = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "707", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "707", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "707", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "707", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  tpcogd2 = "Cognition: remembering addresses",
+  trcogd1 = "Cognition: talks",
+  trcogd3 = "Cognition: familiar machines",
+  trcogd4 = "Cognition: decisions",
+  trcogd5 = "Cognition: handling money",
+  trcogd6 = "Cognition: financial affairs",
+  trcogdc = "Informant questionnaire of cognitive decline",
+  trmemo1 = "Memory1: problems with memory",
+  trmemo2 = "Memory2: consulted doctor for memory problems",
+  trmms10 = "MMSE item10: address",
+  trmms11 = "MMSE item11: three objects",
+  trmms12 = "MMSE item12: subtraction of 7",
+  trmms13 = "MMSE item13: spelling backwards",
+  trmms14 = "MMSE item14: remembering three objects",
+  trmmsc = "(partial) MMSE-score based on maximum spelling/subtraction",
+  trmmsc1 = "(partial) MMSE-score based on subtraction",
+  trmmsc2 = "(partial) MMSE-score based on spelling",
+  trmmse1 = "MMSE item01: year",
+  trmmse4 = "MMSE item04: day",
+  trmmse5 = "MMSE item05: month",
+  trmmse8 = "MMSE item08: two main streets",
+  .applies_to_waves = c("Z")
 )
 
-.lasa_fc_707 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "tpcogd2", "trcogd1", "trcogd3", "trcogd4", "trcogd5", "trcogd6", "trcogdc",
+  .applies_to_waves = c("C")
+)
+
+variable_labels(
+  "trmemo1", "trmemo2", "trmms10", "trmms11", "trmms12", "trmms13", "trmms14", "trmmsc", "trmmsc1", "trmmsc2", "trmmse1", "trmmse4", "trmmse5", "trmmse8",
+  .applies_to_waves = c("D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+# define value labels ----
+value_labels(
+  `-2` = "no scale (too many missing)",
+  .applies_to_vars = c("trmmsc", "trmmsc1", "trmmsc2"),
+  .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "much better", `2` = "a bit better", `3` = "not changed", `4` = "a bit worse", `5` = "much worse",
+  .applies_to_vars = c("tpcogd2", "trcogd1", "trcogd3", "trcogd4", "trcogd5", "trcogd6"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-1` = "missing values", `6` = NA_character_, `30` = NA_character_,
+  .applies_to_vars = c("trcogdc"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("trmemo1"),
+  .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "no problems, see TRMEMO1", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("trmemo2"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "wrong", `2` = "correct",
+  .applies_to_vars = c("trmms10", "trmmse1", "trmmse4", "trmmse5", "trmmse8"),
+  .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-1` = "na, asked", `0` = "0 right", `1` = "1 right", `2` = "2 right", `3` = "3 right",
+  .applies_to_vars = c("trmms11", "trmms14"),
+  .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-1` = "na, asked", `0` = "0 right", `1` = "1 right", `2` = "2 right", `3` = "3 right", `4` = "4 right", `5` = "5 right",
+  .applies_to_vars = c("trmms12", "trmms13"),
+  .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `1` = NA_character_, `16` = NA_character_,
+  .applies_to_vars = c("trmmsc", "trmmsc1", "trmmsc2"),
+  .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "no problems, see DTRMEMO1", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("trmemo2"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `-2` = "no problems, see ETRMEMO1", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("trmemo2"),
+  .applies_to_waves = c("E")
+)
+
+value_labels(
+  `-2` = "no problems, see FTRMEMO1", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("trmemo2"),
+  .applies_to_waves = c("F")
+)
+
+value_labels(
+  `-2` = "no problems, see GTRMEMO1", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("trmemo2"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-2` = "no problems, see HTRMEMO1", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("trmemo2"),
+  .applies_to_waves = c("H")
+)
+
+value_labels(
+  `-2` = "no problems, see ITRMEMO1", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("trmemo2"),
+  .applies_to_waves = c("I")
+)
+
+value_labels(
+  `-2` = "no problems, see JTRMEMO1", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("trmemo2"),
+  .applies_to_waves = c("J")
+)
+
+value_labels(
+  `-2` = "no problems, see KTRMEMO1", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("trmemo2"),
+  .applies_to_waves = c("K")
+)
+
+.lasa_fc_707 <- .lasa_finalize_fc("707")
 

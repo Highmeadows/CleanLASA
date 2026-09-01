@@ -1,305 +1,15 @@
 ## LASA filecode 036 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  subhea1 = "Self-perceived health",
-  subhea2 = "Self-perceived health compared to age peers",
-  subhea3 = "Self-perceived health compared to 10 years ago",
-  subhea4 = "Self-perceived health 3 (or 4) years ago"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `B` = c(
-    "subhea1",
-    "subhea2"
-  ),
-  `C` = c(
-    "subhea1",
-    "subhea2"
-  ),
-  `D` = c(
-    "subhea1",
-    "subhea2"
-  ),
-  `E` = c(
-    "subhea1",
-    "subhea2"
-  ),
-  `2B` = c(
-    "subhea1",
-    "subhea2",
-    "subhea3"
-  ),
-  `F` = c(
-    "subhea1",
-    "subhea2",
-    "subhea4"
-  ),
-  `G` = c(
-    "subhea1",
-    "subhea2",
-    "subhea4"
-  ),
-  `H` = c(
-    "subhea1",
-    "subhea2",
-    "subhea4"
-  ),
-  `3B` = c(
-    "subhea1",
-    "subhea2"
-  ),
-  `I` = c(
-    "subhea1",
-    "subhea2",
-    "subhea4"
-  ),
-  `J` = c(
-    "subhea1",
-    "subhea2",
-    "subhea4"
-  ),
-  `K` = c(
-    "subhea1",
-    "subhea2",
-    "subhea4"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels,
-  Wave_C_labels = harmonized_labels,
-  Wave_D_labels = harmonized_labels,
-  Wave_E_labels = harmonized_labels,
-  Wave_2B_labels = harmonized_labels,
-  Wave_F_labels = harmonized_labels,
-  Wave_G_labels = harmonized_labels,
-  Wave_H_labels = harmonized_labels,
-  Wave_3B_labels = harmonized_labels,
-  Wave_I_labels = harmonized_labels,
-  Wave_J_labels = harmonized_labels,
-  Wave_K_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
-)
-
-standardized_value_labels <- list(
-  subhea1 = c(
-    `-5` = "not available, interview terminated",
-    default_missing_labels[c("-1")],
-    `1` = "excellent",
-    `2` = "good",
-    `3` = "fair",
-    `4` = "sometimes good/bad",
-    `5` = "poor"
-  ),
-  subhea2 = c(
-    `-5` = "not available, interview terminated",
-    default_missing_labels[c("-1")],
-    `1` = "much better",
-    `2` = "a little better",
-    `3` = "do not know/just as good",
-    `4` = "a little worse",
-    `5` = "much worse"
-  ),
-  subhea3 = c(
-    `-5` = "not available, interview terminated",
-    default_missing_labels[c("-1")],
-    `1` = "much better",
-    `2` = "a little better",
-    `3` = "do not know/just as good",
-    `4` = "a little worse",
-    `5` = "much worse"
-  ),
-  subhea4 = c(
-    `-5` = "not available, interview terminated",
-    default_missing_labels[c("-1")],
-    `1` = "excellent",
-    `2` = "good",
-    `3` = "fair",
-    `4` = "sometimes good/bad",
-    `5` = "poor"
-  )
-)
-
-value_labels_list <- list(
-  Wave_B_labels = .replace_in_list(
-    standardized_value_labels,
-    subhea1 = .replace_labels(
-    standardized_value_labels$subhea1,
-    `-5` = "na, interview terminated"
-  ),
-    subhea2 = .replace_labels(
-    standardized_value_labels$subhea2,
-    `-5` = "na, interview terminated"
-  )
-  ),
-  Wave_C_labels = .replace_in_list(
-    standardized_value_labels,
-    subhea1 = .replace_labels(
-    standardized_value_labels$subhea1,
-    `-5` = "na, interview terminated"
-  ),
-    subhea2 = .replace_labels(
-    standardized_value_labels$subhea2,
-    `-5` = "na, interview terminated"
-  )
-  ),
-  Wave_D_labels = .replace_in_list(
-    standardized_value_labels,
-    subhea1 = .replace_labels(
-    standardized_value_labels$subhea1,
-    `-5` = "na, interview terminated"
-  ),
-    subhea2 = .replace_labels(
-    standardized_value_labels$subhea2,
-    `-5` = "na, interview terminated"
-  )
-  ),
-  Wave_E_labels = .replace_in_list(
-    standardized_value_labels,
-    subhea1 = .replace_labels(
-    standardized_value_labels$subhea1,
-    `-5` = "na, interview terminated"
-  ),
-    subhea2 = .replace_labels(
-    standardized_value_labels$subhea2,
-    `-5` = "na, interview terminated"
-  )
-  ),
-  Wave_2B_labels = .replace_in_list(
-    standardized_value_labels,
-    subhea1 = .replace_labels(
-    standardized_value_labels$subhea1,
-    `-5` = "na, interview terminated"
-  ),
-    subhea2 = .replace_labels(
-    standardized_value_labels$subhea2,
-    `-5` = "na, interview terminated"
-  ),
-    subhea3 = .replace_labels(
-    standardized_value_labels$subhea3,
-    `-5` = "na, interview terminated"
-  )
-  ),
-  Wave_F_labels = .replace_in_list(
-    standardized_value_labels,
-    subhea1 = .replace_labels(
-    standardized_value_labels$subhea1,
-    `-5` = "na, interview terminated"
-  ),
-    subhea2 = .replace_labels(
-    standardized_value_labels$subhea2,
-    `-5` = "na, interview terminated",
-    `3` = "do not know/just as good as other"
-  ),
-    subhea4 = .replace_labels(
-    standardized_value_labels$subhea4,
-    `-5` = "na, interview terminated"
-  )
-  ),
-  Wave_G_labels = .replace_in_list(
-    standardized_value_labels,
-    subhea1 = .replace_labels(
-    standardized_value_labels$subhea1,
-    `-5` = "na, interview terminated"
-  ),
-    subhea2 = .replace_labels(
-    standardized_value_labels$subhea2,
-    `-5` = "na, interview terminated",
-    `3` = "do not know/just as good as other"
-  ),
-    subhea4 = .replace_labels(
-    standardized_value_labels$subhea4,
-    `-5` = "na, interview terminated"
-  )
-  ),
-  Wave_H_labels = .replace_in_list(
-    standardized_value_labels,
-    subhea1 = .replace_labels(
-    standardized_value_labels$subhea1,
-    `-5` = "na, interview terminated"
-  ),
-    subhea2 = .replace_labels(
-    standardized_value_labels$subhea2,
-    `-5` = "na, interview terminated",
-    `3` = "do not know/just as good as other"
-  ),
-    subhea4 = .replace_labels(
-    standardized_value_labels$subhea4,
-    `-5` = "na, interview terminated"
-  )
-  ),
-  Wave_3B_labels = .replace_in_list(
-    standardized_value_labels,
-    subhea1 = .replace_labels(
-    standardized_value_labels$subhea1,
-    `-5` = "na, interview terminated"
-  ),
-    subhea2 = .replace_labels(
-    standardized_value_labels$subhea2,
-    `-5` = "na, interview terminated"
-  )
-  ),
-  Wave_I_labels = .replace_in_list(
-    standardized_value_labels,
-    subhea1 = .replace_labels(
-    standardized_value_labels$subhea1,
-    `-5` = "na, interview terminated"
-  ),
-    subhea2 = .replace_labels(
-    standardized_value_labels$subhea2,
-    `-5` = "na, interview terminated",
-    `3` = "do not know/just as good as other"
-  ),
-    subhea4 = .replace_labels(
-    standardized_value_labels$subhea4,
-    `-5` = "na, interview terminated"
-  )
-  ),
-  Wave_J_labels = .replace_in_list(
-    standardized_value_labels,
-    subhea1 = .replace_labels(
-    standardized_value_labels$subhea1,
-    `-5` = "na, interview terminated"
-  ),
-    subhea2 = .replace_labels(
-    standardized_value_labels$subhea2,
-    `-5` = "na, interview terminated",
-    `3` = "do not know/just as good as other"
-  ),
-    subhea4 = .replace_labels(
-    standardized_value_labels$subhea4,
-    `-5` = "na, interview terminated"
-  )
-  ),
-  Wave_K_labels = .replace_in_list(
-    standardized_value_labels,
-    subhea1 = .replace_labels(
-    standardized_value_labels$subhea1,
-    `-5` = "na, interview terminated"
-  ),
-    subhea2 = .replace_labels(
-    standardized_value_labels$subhea2,
-    `-5` = "na, interview terminated",
-    `3` = "do not know/just as good as other"
-  ),
-    subhea4 = .replace_labels(
-    standardized_value_labels$subhea4,
-    `-5` = "na, interview terminated"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   subhea1 = "categorical",
   subhea2 = "categorical",
@@ -307,12 +17,72 @@ var_types_vec <- c(
   subhea4 = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "036", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "036", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "036", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "036", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  subhea1 = "Self-perceived health",
+  subhea2 = "Self-perceived health compared to age peers",
+  subhea3 = "Self-perceived health compared to 10 years ago",
+  subhea4 = "Self-perceived health 3 (or 4) years ago",
+  .applies_to_waves = c("Z")
 )
 
-.lasa_fc_036 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "subhea1", "subhea2",
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
+)
+
+variable_labels(
+  "subhea3",
+  .applies_to_waves = c("2B")
+)
+
+variable_labels(
+  "subhea4",
+  .applies_to_waves = c("F", "G", "H", "I", "J", "K")
+)
+
+# define value labels ----
+value_labels(
+  `-5` = "not available, interview terminated", `-1` = "na, asked", `1` = "excellent", `2` = "good", `3` = "fair", `4` = "sometimes good/bad", `5` = "poor",
+  .applies_to_vars = c("subhea1", "subhea4"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-5` = "not available, interview terminated", `-1` = "na, asked", `1` = "much better", `2` = "a little better", `3` = "do not know/just as good", `4` = "a little worse", `5` = "much worse",
+  .applies_to_vars = c("subhea2", "subhea3"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-5` = "na, interview terminated", `-1` = "na, asked", `1` = "excellent", `2` = "good", `3` = "fair", `4` = "sometimes good/bad", `5` = "poor",
+  .applies_to_vars = c("subhea1"),
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-5` = "na, interview terminated", `-1` = "na, asked", `1` = "much better", `2` = "a little better", `3` = "do not know/just as good", `4` = "a little worse", `5` = "much worse",
+  .applies_to_vars = c("subhea2"),
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "3B")
+)
+
+value_labels(
+  `-5` = "na, interview terminated", `-1` = "na, asked", `1` = "much better", `2` = "a little better", `3` = "do not know/just as good", `4` = "a little worse", `5` = "much worse",
+  .applies_to_vars = c("subhea3"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-5` = "na, interview terminated", `-1` = "na, asked", `1` = "much better", `2` = "a little better", `3` = "do not know/just as good as other", `4` = "a little worse", `5` = "much worse",
+  .applies_to_vars = c("subhea2"),
+  .applies_to_waves = c("F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-5` = "na, interview terminated", `-1` = "na, asked", `1` = "excellent", `2` = "good", `3` = "fair", `4` = "sometimes good/bad", `5` = "poor",
+  .applies_to_vars = c("subhea4"),
+  .applies_to_waves = c("F", "G", "H", "I", "J", "K")
+)
+
+.lasa_fc_036 <- .lasa_finalize_fc("036")
 

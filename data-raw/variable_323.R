@@ -1,164 +1,63 @@
 ## LASA filecode 323 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
+var_types_vec <- c(
+  qneurot = "numeric",
+  qsocina = "numeric"
+)
+
+# define variable labels ----
+variable_labels(
   qneurot = "Dutch Personality Questionnaire neuroticism score",
-  qsocina = "Dutch Personality Questionnaire social inadequacy score"
+  qsocina = "Dutch Personality Questionnaire social inadequacy score",
+  .applies_to_waves = c("Z")
 )
 
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `B` = c(
-    "qneurot",
-    "qsocina"
-  ),
-  `C` = c(
-    "qneurot",
-    "qsocina"
-  ),
-  `D` = c(
-    "qneurot",
-    "qsocina"
-  ),
-  `E` = c(
-    "qneurot",
-    "qsocina"
-  ),
-  `2B` = c(
-    "qneurot",
-    "qsocina"
-  ),
-  `3B` = c(
-    "qneurot",
-    "qsocina"
-  )
+variable_labels(
+  qneurot = "Dutch Personality Questionnaire: Neuroticism",
+  qsocina = "Dutch Personality Questionnaire: Social inadequacy",
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "3B")
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels,
-    qneurot = "Dutch Personality Questionnaire: Neuroticism",
-    qsocina = "Dutch Personality Questionnaire: Social inadequacy"
-  ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels,
-    qneurot = "Dutch Personality Questionnaire: Neuroticism",
-    qsocina = "Dutch Personality Questionnaire: Social inadequacy"
-  ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels,
-    qneurot = "Dutch Personality Questionnaire: Neuroticism",
-    qsocina = "Dutch Personality Questionnaire: Social inadequacy"
-  ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels,
-    qneurot = "Dutch Personality Questionnaire: Neuroticism",
-    qsocina = "Dutch Personality Questionnaire: Social inadequacy"
-  ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels,
-    qneurot = "Dutch Personality Questionnaire: Neuroticism",
-    qsocina = "Dutch Personality Questionnaire: Social inadequacy"
-  ),
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels,
-    qneurot = "Dutch Personality Questionnaire: Neuroticism",
-    qsocina = "Dutch Personality Questionnaire: Social inadequacy"
-  ),
-  Harmonized_labels = harmonized_labels
+# define value labels ----
+value_labels(
+  `-1` = "no scale, missing values", `0` = NA_character_, `30` = NA_character_,
+  .applies_to_vars = c("qneurot"),
+  .applies_to_waves = c("Z")
 )
 
-standardized_value_labels <- list(
-  qneurot = c(`-1` = "no scale, missing values", `0` = NA_character_, `30` = NA_character_),
-  qsocina = c(`-1` = "no scale, missing values", `0` = NA_character_, `20` = NA_character_)
+value_labels(
+  `-1` = "no scale, missing values", `0` = NA_character_, `20` = NA_character_,
+  .applies_to_vars = c("qsocina"),
+  .applies_to_waves = c("Z")
 )
 
-value_labels_list <- list(
-  Wave_B_labels = .replace_in_list(
-    standardized_value_labels,
-    qneurot = .replace_labels(
-    standardized_value_labels$qneurot,
-    `-1` = "no scale, mv"
-  ),
-    qsocina = .replace_labels(
-    standardized_value_labels$qsocina,
-    `-1` = "no scale, mv"
-  )
-  ),
-  Wave_C_labels = .replace_in_list(
-    standardized_value_labels,
-    qneurot = .replace_labels(
-    standardized_value_labels$qneurot,
-    `-1` = "no scale, mv"
-  ),
-    qsocina = .replace_labels(
-    standardized_value_labels$qsocina,
-    `-1` = "no scale, mv"
-  )
-  ),
-  Wave_D_labels = .replace_in_list(
-    standardized_value_labels,
-    qneurot = .replace_labels(
-    standardized_value_labels$qneurot,
-    `-1` = "no scale, mv"
-  ),
-    qsocina = .replace_labels(
-    standardized_value_labels$qsocina,
-    `-1` = "no scale, mv"
-  )
-  ),
-  Wave_E_labels = .replace_in_list(
-    standardized_value_labels,
-    qneurot = .replace_labels(
-    standardized_value_labels$qneurot,
-    `-1` = "no scale, mv"
-  ),
-    qsocina = .replace_labels(
-    standardized_value_labels$qsocina,
-    `-1` = "no scale, mv"
-  )
-  ),
-  Wave_2B_labels = .replace_in_list(
-    standardized_value_labels,
-    qneurot = .replace_labels(
-    standardized_value_labels$qneurot,
-    `-1` = "no scale, mv"
-  ),
-    qsocina = .replace_labels(
-    standardized_value_labels$qsocina,
-    `-1` = "no scale, mv"
-  )
-  ),
-  Wave_3B_labels = .replace_in_list(
-    standardized_value_labels,
-    qneurot = .replace_labels(
-    standardized_value_labels$qneurot,
-    `-1` = "no scale, mv"
-  ),
-    qsocina = .replace_labels(
-    standardized_value_labels$qsocina,
-    `-1` = "no scale, mv"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
+value_labels(
+  `-1` = "no scale, mv",
+  .applies_to_vars = c("qneurot", "qsocina"),
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "3B")
 )
 
-var_types_vec <- c(qneurot = "numeric", qsocina = "numeric")
-
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "323", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "323", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "323", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "323", waves = .lasa_wave_rows())
+value_labels(
+  `0` = NA_character_, `30` = NA_character_,
+  .applies_to_vars = c("qneurot"),
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "3B")
 )
 
-.lasa_fc_323 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+value_labels(
+  `0` = NA_character_, `20` = NA_character_,
+  .applies_to_vars = c("qsocina"),
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "3B")
+)
+
+.lasa_fc_323 <- .lasa_finalize_fc("323")
 

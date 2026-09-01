@@ -1,142 +1,15 @@
 ## LASA filecode 196 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  mhlq1 = "HLQ: find information about the treatment of illnesses that concern you",
-  mhlq10 = "HLQ: understand why you need health screenings",
-  mhlq11 = "HLQ: judge if information on health risks in media is reliable",
-  mhlq12 = "HLQ: decide how to protect yourself from illness based on information in the media",
-  mhlq13 = "HLQ: find information about activities that are good for your mental well-being",
-  mhlq14 = "HLQ: understand advice on health from family or friends",
-  mhlq15 = "HLQ: understand information in media on how to get healthier",
-  mhlq16 = "HLQ: judge which everyday behaviour is related to your health",
-  mhlq2 = "HLQ: find out where to go for professional help when sick",
-  mhlq3 = "HLQ: understand what your doctor says to you",
-  mhlq4 = "HLQ: understand doctor or pharmacist instruction on how to take a prescribed medicine",
-  mhlq5 = "HLQ: judge when you may need a second opinion from another doctor",
-  mhlq6 = "HLQ: make a decision about illness with information from doctor",
-  mhlq7 = "HLQ: follow instructions from your doctor or pharmacist",
-  mhlq8 = "HLQ: find information on how to manage mental health problems (stress or depression)",
-  mhlq9 = "HLQ: understand warnings about unhealthy behaviours (smoking, low physical activity and drinking too much)"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `K` = c(
-    "mhlq1",
-    "mhlq10",
-    "mhlq11",
-    "mhlq12",
-    "mhlq13",
-    "mhlq14",
-    "mhlq15",
-    "mhlq16",
-    "mhlq2",
-    "mhlq3",
-    "mhlq4",
-    "mhlq5",
-    "mhlq6",
-    "mhlq7",
-    "mhlq8",
-    "mhlq9"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_K_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
-)
-
-## This file's own very common answer categories (>= 10 occurrences
-## across its variables) -- same idea as default_missing_labels, just
-## scoped to this filecode instead of shared globally.
-default_answer_labels <- c(
-  `1` = "very easy",
-  `2` = "fairly easy",
-  `3` = "fairly difficult",
-  `4` = "very difficult"
-)
-
-standardized_value_labels <- list(
-  mhlq1 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  mhlq10 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  mhlq11 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  mhlq12 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  mhlq13 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  mhlq14 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  mhlq15 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  mhlq16 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  mhlq2 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  mhlq3 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  mhlq4 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  mhlq5 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  mhlq6 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  mhlq7 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  mhlq8 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  mhlq9 = c(
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1", "2", "3", "4")]
-  )
-)
-
-value_labels_list <- list(
-  Wave_K_labels = standardized_value_labels,
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   mhlq1 = "categorical",
   mhlq10 = "categorical",
@@ -156,12 +29,44 @@ var_types_vec <- c(
   mhlq9 = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "196", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "196", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "196", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "196", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  mhlq1 = "HLQ: find information about the treatment of illnesses that concern you",
+  mhlq10 = "HLQ: understand why you need health screenings",
+  mhlq11 = "HLQ: judge if information on health risks in media is reliable",
+  mhlq12 = "HLQ: decide how to protect yourself from illness based on information in the media",
+  mhlq13 = "HLQ: find information about activities that are good for your mental well-being",
+  mhlq14 = "HLQ: understand advice on health from family or friends",
+  mhlq15 = "HLQ: understand information in media on how to get healthier",
+  mhlq16 = "HLQ: judge which everyday behaviour is related to your health",
+  mhlq2 = "HLQ: find out where to go for professional help when sick",
+  mhlq3 = "HLQ: understand what your doctor says to you",
+  mhlq4 = "HLQ: understand doctor or pharmacist instruction on how to take a prescribed medicine",
+  mhlq5 = "HLQ: judge when you may need a second opinion from another doctor",
+  mhlq6 = "HLQ: make a decision about illness with information from doctor",
+  mhlq7 = "HLQ: follow instructions from your doctor or pharmacist",
+  mhlq8 = "HLQ: find information on how to manage mental health problems (stress or depression)",
+  mhlq9 = "HLQ: understand warnings about unhealthy behaviours (smoking, low physical activity and drinking too much)",
+  .applies_to_waves = c("Z")
 )
 
-.lasa_fc_196 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "mhlq1", "mhlq10", "mhlq11", "mhlq12", "mhlq13", "mhlq14", "mhlq15", "mhlq16", "mhlq2", "mhlq3", "mhlq4", "mhlq5", "mhlq6", "mhlq7", "mhlq8", "mhlq9",
+  .applies_to_waves = c("K")
+)
+
+# define value labels ----
+value_labels(
+  `-1` = "na, asked",
+  .applies_to_vars = c("mhlq1", "mhlq10", "mhlq11", "mhlq12", "mhlq13", "mhlq14", "mhlq15", "mhlq16", "mhlq2", "mhlq3", "mhlq4", "mhlq5", "mhlq6", "mhlq7", "mhlq8", "mhlq9"),
+  .applies_to_waves = c("Z", "K")
+)
+
+value_labels(
+  `1` = "very easy", `2` = "fairly easy", `3` = "fairly difficult", `4` = "very difficult",
+  .applies_to_vars = c("mhlq1", "mhlq10", "mhlq11", "mhlq12", "mhlq13", "mhlq14", "mhlq15", "mhlq16", "mhlq2", "mhlq3", "mhlq4", "mhlq5", "mhlq6", "mhlq7", "mhlq8", "mhlq9"),
+  .applies_to_waves = c("Z", "K")
+)
+
+.lasa_fc_196 <- .lasa_finalize_fc("196")
 

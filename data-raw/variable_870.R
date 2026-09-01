@@ -1,120 +1,15 @@
 ## LASA filecode 870 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  mapo = "apoe phenotype",
-  mapoe1 = "apoe allele 1",
-  mapoe2 = "apoe allele 2",
-  mbluse = "usage blood LASA-B-sample",
-  me4 = "any e4 allele"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `B` = c(
-    "mapo",
-    "mapoe1",
-    "mapoe2",
-    "mbluse",
-    "me4"
-  ),
-  `2B` = c(
-    "mapo",
-    "mapoe1",
-    "mapoe2"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels,
-  Wave_2B_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
-)
-
-standardized_value_labels <- list(
-  mapo = c(
-    `-2` = "sample concentration too low",
-    `-1` = "not determined / no valid determination",
-    `22` = "e2/2",
-    `23` = "e2/3",
-    `33` = "e3/3",
-    `42` = "e2/4",
-    `43` = "e3/4",
-    `44` = "e4/4"
-  ),
-  mapoe1 = c(
-    `-2` = "sample concentration too low",
-    `-1` = "not determined / no valid determination",
-    `2` = "isoform 2",
-    `3` = "isoform 3",
-    `4` = "isoform 4",
-    `9` = "missing"
-  ),
-  mapoe2 = c(
-    `-2` = "sample concentration too low",
-    `-1` = "not determined / no valid determination",
-    `2` = "isoform 2",
-    `3` = "isoform 3",
-    `4` = "isoform 4",
-    `9` = "missing"
-  ),
-  mbluse = c(`-1` = "not determined", `0` = "usage blood LASA-B-sample", `1` = "LASA-B-sample blood used"),
-  me4 = c(`-1` = "not determined", `0` = "no e4 allele", `1` = "any e4 allele")
-)
-
-value_labels_list <- list(
-  Wave_B_labels = .replace_in_list(
-    standardized_value_labels,
-    mapo = c(
-    `-1` = "not determined",
-    `22` = "e2/2",
-    `23` = "e2/3",
-    `33` = "e3/3",
-    `42` = "e2/4",
-    `43` = "e3/4",
-    `44` = "e4/4"
-  ),
-    mapoe1 = c(
-    `-1` = "not determined",
-    `2` = "isoform 2",
-    `3` = "isoform 3",
-    `4` = "isoform 4",
-    `9` = "missing"
-  ),
-    mapoe2 = c(
-    `-1` = "not determined",
-    `2` = "isoform 2",
-    `3` = "isoform 3",
-    `4` = "isoform 4",
-    `9` = "missing"
-  )
-  ),
-  Wave_2B_labels = .replace_in_list(
-    standardized_value_labels,
-    mapo = .replace_labels(
-    standardized_value_labels$mapo,
-    `-1` = "no valid determination"
-  ),
-    mapoe1 = .replace_labels(
-    standardized_value_labels$mapoe1,
-    `-1` = "no valid determination"
-  ),
-    mapoe2 = .replace_labels(
-    standardized_value_labels$mapoe2,
-    `-1` = "no valid determination"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   mapo = "categorical",
   mapoe1 = "categorical",
@@ -123,12 +18,74 @@ var_types_vec <- c(
   me4 = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "870", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "870", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "870", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "870", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  mapo = "apoe phenotype",
+  mapoe1 = "apoe allele 1",
+  mapoe2 = "apoe allele 2",
+  mbluse = "usage blood LASA-B-sample",
+  me4 = "any e4 allele",
+  .applies_to_waves = c("Z")
 )
 
-.lasa_fc_870 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "mapo", "mapoe1", "mapoe2",
+  .applies_to_waves = c("B", "2B")
+)
+
+variable_labels(
+  "mbluse", "me4",
+  .applies_to_waves = c("B")
+)
+
+# define value labels ----
+value_labels(
+  `-2` = "sample concentration too low", `-1` = "not determined / no valid determination", `22` = "e2/2", `23` = "e2/3", `33` = "e3/3", `42` = "e2/4", `43` = "e3/4", `44` = "e4/4",
+  .applies_to_vars = c("mapo"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "sample concentration too low", `-1` = "not determined / no valid determination", `2` = "isoform 2", `3` = "isoform 3", `4` = "isoform 4", `9` = "missing",
+  .applies_to_vars = c("mapoe1", "mapoe2"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-1` = "not determined", `0` = "usage blood LASA-B-sample", `1` = "LASA-B-sample blood used",
+  .applies_to_vars = c("mbluse"),
+  .applies_to_waves = c("Z", "B")
+)
+
+value_labels(
+  `-1` = "not determined", `0` = "no e4 allele", `1` = "any e4 allele",
+  .applies_to_vars = c("me4"),
+  .applies_to_waves = c("Z", "B")
+)
+
+value_labels(
+  `-1` = "not determined", `22` = "e2/2", `23` = "e2/3", `33` = "e3/3", `42` = "e2/4", `43` = "e3/4", `44` = "e4/4",
+  .applies_to_vars = c("mapo"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-1` = "not determined", `2` = "isoform 2", `3` = "isoform 3", `4` = "isoform 4", `9` = "missing",
+  .applies_to_vars = c("mapoe1", "mapoe2"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-2` = "sample concentration too low", `-1` = "no valid determination", `22` = "e2/2", `23` = "e2/3", `33` = "e3/3", `42` = "e2/4", `43` = "e3/4", `44` = "e4/4",
+  .applies_to_vars = c("mapo"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-2` = "sample concentration too low", `-1` = "no valid determination", `2` = "isoform 2", `3` = "isoform 3", `4` = "isoform 4", `9` = "missing",
+  .applies_to_vars = c("mapoe1", "mapoe2"),
+  .applies_to_waves = c("2B")
+)
+
+.lasa_fc_870 <- .lasa_finalize_fc("870")
 

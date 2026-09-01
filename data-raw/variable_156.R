@@ -1,1584 +1,15 @@
 ## LASA filecode 156 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  m15wdrm = "reason no recall test",
-  m15wrp0 = "recall particul: no particularities",
-  m15wrp1 = "recall particul: others present",
-  m15wrp2 = "recall particul: auditory handicap",
-  m15wrp3 = "recall particul: radio or tv noise",
-  m15wrp4 = "recall particul: interrupted",
-  m15wrp5 = "recall particul: other reason",
-  m15wrpx = "recall particul: other: specification",
-  m15wrt = "Time: by interviewer (before recall)",
-  m15wrth = "recall time: hours by interviewer",
-  m15wrtm = "recall time: minutes by interviewer",
-  m15wt = "15 words test done",
-  m15wt101 = "15 words (1): word 1",
-  m15wt102 = "15 words (1): word 2",
-  m15wt103 = "15 words (1): word 3",
-  m15wt104 = "15 words (1): word 4",
-  m15wt105 = "15 words (1): word 5",
-  m15wt106 = "15 words (1): word 6",
-  m15wt107 = "15 words (1): word 7",
-  m15wt108 = "15 words (1): word 8",
-  m15wt109 = "15 words (1): word 9",
-  m15wt110 = "15 words (1): word 10",
-  m15wt111 = "15 words (1): word 11",
-  m15wt112 = "15 words (1): word 12",
-  m15wt113 = "15 words (1): word 13",
-  m15wt114 = "15 words (1): word 14",
-  m15wt115 = "15 words (1): word 15",
-  m15wt1nd = "15 words (1): number of doubles",
-  m15wt1no = "15 words (1): number of others",
-  m15wt201 = "15 words (2): word 1",
-  m15wt202 = "15 words (2): word 2",
-  m15wt203 = "15 words (2): word 3",
-  m15wt204 = "15 words (2): word 4",
-  m15wt205 = "15 words (2): word 5",
-  m15wt206 = "15 words (2): word 6",
-  m15wt207 = "15 words (2): word 7",
-  m15wt208 = "15 words (2): word 8",
-  m15wt209 = "15 words (2): word 9",
-  m15wt210 = "15 words (2): word 10",
-  m15wt211 = "15 words (2): word 11",
-  m15wt212 = "15 words (2): word 12",
-  m15wt213 = "15 words (2): word 13",
-  m15wt214 = "15 words (2): word 14",
-  m15wt215 = "15 words (2): word 15",
-  m15wt2nd = "15 words (2): number of doubles",
-  m15wt2no = "15 words (2): number of others",
-  m15wt301 = "15 words (3): word 1",
-  m15wt302 = "15 words (3): word 2",
-  m15wt303 = "15 words (3): word 3",
-  m15wt304 = "15 words (3): word 4",
-  m15wt305 = "15 words (3): word 5",
-  m15wt306 = "15 words (3): word 6",
-  m15wt307 = "15 words (3): word 7",
-  m15wt308 = "15 words (3): word 8",
-  m15wt309 = "15 words (3): word 9",
-  m15wt310 = "15 words (3): word 10",
-  m15wt311 = "15 words (3): word 11",
-  m15wt312 = "15 words (3): word 12",
-  m15wt313 = "15 words (3): word 13",
-  m15wt314 = "15 words (3): word 14",
-  m15wt315 = "15 words (3): word 15",
-  m15wt3nd = "15 words (3): number of doubles",
-  m15wt3no = "15 words (3): number of others",
-  m15wtdr = "number of words correct: recall",
-  m15wth = "Time: hours by interviewer",
-  m15wtm = "Time: minutes by interviewer",
-  m15wtp0 = "particularities: no particularities",
-  m15wtp1 = "particularities: others present",
-  m15wtp2 = "particularities: auditory handicap",
-  m15wtp3 = "particularities: radio or tv noise",
-  m15wtp4 = "particularities: interrupted",
-  m15wtp5 = "particularities: other reason",
-  m15wtpx = "particularities other: specification",
-  m15wtr = "15wt recall done",
-  m15wtr01 = "15 words (recall): word 1",
-  m15wtr02 = "15 words (recall): word 2",
-  m15wtr03 = "15 words (recall): word 3",
-  m15wtr04 = "15 words (recall): word 4",
-  m15wtr05 = "15 words (recall): word 5",
-  m15wtr06 = "15 words (recall): word 6",
-  m15wtr07 = "15 words (recall): word 7",
-  m15wtr08 = "15 words (recall): word 8",
-  m15wtr09 = "15 words (recall): word 9",
-  m15wtr10 = "15 words (recall): word 10",
-  m15wtr11 = "15 words (recall): word 11",
-  m15wtr12 = "15 words (recall): word 12",
-  m15wtr13 = "15 words (recall): word 13",
-  m15wtr14 = "15 words (recall): word 14",
-  m15wtr15 = "15 words (recall): word 15",
-  m15wtrm = "15 wt: reason no test(s)",
-  m15wtrnd = "15 words (recall): number of doubles",
-  m15wtrno = "15 words (recall): number of others",
-  mrecal = "15 word test time interval in minutes",
-  mrecalc = "15 wt: interval in min. by computer",
-  mrecali = "15 wt: interval in min. by interviewer",
-  mrm15wt = "Reason missing (part of) 15 words test",
-  mwtdr = "number of words correct: recall",
-  mwtt1 = "numbers of words correct: trial 1",
-  mwtt2 = "Number of words correct: trial 2",
-  mwtt3 = "Number of words correct: trial 3"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `B` = c(
-    "m15wrth",
-    "m15wt101",
-    "m15wt102",
-    "m15wt103",
-    "m15wt104",
-    "m15wt105",
-    "m15wt106",
-    "m15wt107",
-    "m15wt108",
-    "m15wt109",
-    "m15wt110",
-    "m15wt111",
-    "m15wt112",
-    "m15wt113",
-    "m15wt114",
-    "m15wt115",
-    "m15wt1nd",
-    "m15wt1no",
-    "m15wt201",
-    "m15wt202",
-    "m15wt203",
-    "m15wt204",
-    "m15wt205",
-    "m15wt206",
-    "m15wt207",
-    "m15wt208",
-    "m15wt209",
-    "m15wt210",
-    "m15wt211",
-    "m15wt212",
-    "m15wt213",
-    "m15wt214",
-    "m15wt215",
-    "m15wt2nd",
-    "m15wt2no",
-    "m15wt301",
-    "m15wt302",
-    "m15wt303",
-    "m15wt304",
-    "m15wt305",
-    "m15wt306",
-    "m15wt307",
-    "m15wt308",
-    "m15wt309",
-    "m15wt310",
-    "m15wt311",
-    "m15wt312",
-    "m15wt313",
-    "m15wt314",
-    "m15wt315",
-    "m15wt3nd",
-    "m15wt3no",
-    "m15wth",
-    "m15wtm",
-    "m15wtr01",
-    "m15wtr02",
-    "m15wtr03",
-    "m15wtr04",
-    "m15wtr05",
-    "m15wtr06",
-    "m15wtr07",
-    "m15wtr08",
-    "m15wtr09",
-    "m15wtr10",
-    "m15wtr11",
-    "m15wtr12",
-    "m15wtr13",
-    "m15wtr14",
-    "m15wtr15",
-    "m15wtrm",
-    "m15wtrnd",
-    "m15wtrno",
-    "mrecal"
-  ),
-  `C` = c(
-    "m15wdrm",
-    "m15wrp0",
-    "m15wrp1",
-    "m15wrp2",
-    "m15wrp3",
-    "m15wrp4",
-    "m15wrp5",
-    "m15wrpx",
-    "m15wrth",
-    "m15wrtm",
-    "m15wt",
-    "m15wt1nd",
-    "m15wt1no",
-    "m15wt2nd",
-    "m15wt2no",
-    "m15wt3nd",
-    "m15wt3no",
-    "m15wth",
-    "m15wtm",
-    "m15wtp0",
-    "m15wtp1",
-    "m15wtp2",
-    "m15wtp3",
-    "m15wtp4",
-    "m15wtp5",
-    "m15wtpx",
-    "m15wtr",
-    "m15wtrm",
-    "m15wtrnd",
-    "m15wtrno",
-    "mrecalc",
-    "mrecali",
-    "mwtdr"
-  ),
-  `D` = c(
-    "m15wrp0",
-    "m15wrp1",
-    "m15wrp2",
-    "m15wrp3",
-    "m15wrp4",
-    "m15wrp5",
-    "m15wrpx",
-    "m15wrth",
-    "m15wrtm",
-    "m15wt",
-    "m15wt1nd",
-    "m15wt1no",
-    "m15wt2nd",
-    "m15wt2no",
-    "m15wt3nd",
-    "m15wt3no",
-    "m15wtdr",
-    "m15wth",
-    "m15wtm",
-    "m15wtp0",
-    "m15wtp1",
-    "m15wtp2",
-    "m15wtp3",
-    "m15wtp4",
-    "m15wtp5",
-    "m15wtpx",
-    "m15wtr",
-    "m15wtrnd",
-    "m15wtrno",
-    "mrecali",
-    "mwtt1",
-    "mwtt2",
-    "mwtt3"
-  ),
-  `E` = c(
-    "m15wrp0",
-    "m15wrp1",
-    "m15wrp2",
-    "m15wrp3",
-    "m15wrp4",
-    "m15wrp5",
-    "m15wrpx",
-    "m15wrth",
-    "m15wrtm",
-    "m15wt",
-    "m15wt1nd",
-    "m15wt1no",
-    "m15wt2nd",
-    "m15wt2no",
-    "m15wt3nd",
-    "m15wt3no",
-    "m15wtdr",
-    "m15wth",
-    "m15wtm",
-    "m15wtp0",
-    "m15wtp1",
-    "m15wtp2",
-    "m15wtp3",
-    "m15wtp4",
-    "m15wtp5",
-    "m15wtpx",
-    "m15wtr",
-    "m15wtrnd",
-    "m15wtrno",
-    "mrecali",
-    "mwtt1",
-    "mwtt2",
-    "mwtt3"
-  ),
-  `2B` = c(
-    "m15wrp0",
-    "m15wrp1",
-    "m15wrp2",
-    "m15wrp3",
-    "m15wrp4",
-    "m15wrp5",
-    "m15wrpx",
-    "m15wrth",
-    "m15wrtm",
-    "m15wt",
-    "m15wt1nd",
-    "m15wt1no",
-    "m15wt2nd",
-    "m15wt2no",
-    "m15wt3nd",
-    "m15wt3no",
-    "m15wtdr",
-    "m15wth",
-    "m15wtm",
-    "m15wtp0",
-    "m15wtp1",
-    "m15wtp2",
-    "m15wtp3",
-    "m15wtp4",
-    "m15wtp5",
-    "m15wtpx",
-    "m15wtr",
-    "m15wtrnd",
-    "m15wtrno",
-    "mrecali",
-    "mwtt1",
-    "mwtt2",
-    "mwtt3"
-  ),
-  `F` = c(
-    "m15wrp0",
-    "m15wrp1",
-    "m15wrp2",
-    "m15wrp3",
-    "m15wrp4",
-    "m15wrp5",
-    "m15wrpx",
-    "m15wrth",
-    "m15wrtm",
-    "m15wt",
-    "m15wt1nd",
-    "m15wt1no",
-    "m15wt2nd",
-    "m15wt2no",
-    "m15wt3nd",
-    "m15wt3no",
-    "m15wtdr",
-    "m15wth",
-    "m15wtm",
-    "m15wtp0",
-    "m15wtp1",
-    "m15wtp2",
-    "m15wtp3",
-    "m15wtp4",
-    "m15wtp5",
-    "m15wtpx",
-    "m15wtr",
-    "m15wtrnd",
-    "m15wtrno",
-    "mrecali",
-    "mrm15wt",
-    "mwtt1",
-    "mwtt2",
-    "mwtt3"
-  ),
-  `G` = c(
-    "m15wrp0",
-    "m15wrp1",
-    "m15wrp2",
-    "m15wrp3",
-    "m15wrp4",
-    "m15wrp5",
-    "m15wrpx",
-    "m15wrth",
-    "m15wrtm",
-    "m15wt",
-    "m15wt1nd",
-    "m15wt1no",
-    "m15wt2nd",
-    "m15wt2no",
-    "m15wt3nd",
-    "m15wt3no",
-    "m15wtdr",
-    "m15wth",
-    "m15wtm",
-    "m15wtp0",
-    "m15wtp1",
-    "m15wtp2",
-    "m15wtp3",
-    "m15wtp4",
-    "m15wtp5",
-    "m15wtpx",
-    "m15wtr",
-    "m15wtrnd",
-    "m15wtrno",
-    "mrecali",
-    "mrm15wt",
-    "mwtt1",
-    "mwtt2",
-    "mwtt3"
-  ),
-  `H` = c(
-    "m15wrp0",
-    "m15wrp1",
-    "m15wrp2",
-    "m15wrp3",
-    "m15wrp4",
-    "m15wrp5",
-    "m15wrpx",
-    "m15wrt",
-    "m15wrtm",
-    "m15wt",
-    "m15wt1nd",
-    "m15wt1no",
-    "m15wt2nd",
-    "m15wt2no",
-    "m15wt3nd",
-    "m15wt3no",
-    "m15wth",
-    "m15wtp0",
-    "m15wtp1",
-    "m15wtp2",
-    "m15wtp3",
-    "m15wtp4",
-    "m15wtp5",
-    "m15wtpx",
-    "m15wtr",
-    "m15wtrnd",
-    "m15wtrno",
-    "mrecali",
-    "mwtdr",
-    "mwtt1",
-    "mwtt2",
-    "mwtt3"
-  ),
-  `3B` = c(
-    "m15wrp0",
-    "m15wrp1",
-    "m15wrp2",
-    "m15wrp3",
-    "m15wrp4",
-    "m15wrp5",
-    "m15wrpx",
-    "m15wrt",
-    "m15wrtm",
-    "m15wt",
-    "m15wt1nd",
-    "m15wt1no",
-    "m15wt2nd",
-    "m15wt2no",
-    "m15wt3nd",
-    "m15wt3no",
-    "m15wth",
-    "m15wtp0",
-    "m15wtp1",
-    "m15wtp2",
-    "m15wtp3",
-    "m15wtp4",
-    "m15wtp5",
-    "m15wtpx",
-    "m15wtr",
-    "m15wtrnd",
-    "m15wtrno",
-    "mrecali",
-    "mwtdr",
-    "mwtt1",
-    "mwtt2",
-    "mwtt3"
-  ),
-  `I` = c(
-    "m15wrp0",
-    "m15wrp1",
-    "m15wrp2",
-    "m15wrp3",
-    "m15wrp4",
-    "m15wrp5",
-    "m15wrpx",
-    "m15wrt",
-    "m15wrtm",
-    "m15wt",
-    "m15wt1nd",
-    "m15wt1no",
-    "m15wt2nd",
-    "m15wt2no",
-    "m15wt3nd",
-    "m15wt3no",
-    "m15wth",
-    "m15wtp0",
-    "m15wtp1",
-    "m15wtp2",
-    "m15wtp3",
-    "m15wtp4",
-    "m15wtp5",
-    "m15wtpx",
-    "m15wtr",
-    "m15wtrnd",
-    "m15wtrno",
-    "mrecali",
-    "mwtdr",
-    "mwtt1",
-    "mwtt2",
-    "mwtt3"
-  ),
-  `J` = c(
-    "m15wrp0",
-    "m15wrp1",
-    "m15wrp2",
-    "m15wrp3",
-    "m15wrp4",
-    "m15wrp5",
-    "m15wrpx",
-    "m15wrt",
-    "m15wrtm",
-    "m15wt",
-    "m15wt1nd",
-    "m15wt1no",
-    "m15wt2nd",
-    "m15wt2no",
-    "m15wt3nd",
-    "m15wt3no",
-    "m15wth",
-    "m15wtp0",
-    "m15wtp1",
-    "m15wtp2",
-    "m15wtp3",
-    "m15wtp4",
-    "m15wtp5",
-    "m15wtpx",
-    "m15wtr",
-    "m15wtrnd",
-    "m15wtrno",
-    "mrecali",
-    "mwtdr",
-    "mwtt1",
-    "mwtt2",
-    "mwtt3"
-  ),
-  `K` = c(
-    "m15wrp0",
-    "m15wrp1",
-    "m15wrp2",
-    "m15wrp3",
-    "m15wrp4",
-    "m15wrp5",
-    "m15wrpx",
-    "m15wrt",
-    "m15wrtm",
-    "m15wt",
-    "m15wt1nd",
-    "m15wt1no",
-    "m15wt2nd",
-    "m15wt2no",
-    "m15wt3nd",
-    "m15wt3no",
-    "m15wth",
-    "m15wtp0",
-    "m15wtp1",
-    "m15wtp2",
-    "m15wtp3",
-    "m15wtp4",
-    "m15wtp5",
-    "m15wtpx",
-    "m15wtr",
-    "m15wtrnd",
-    "m15wtrno",
-    "mrecali",
-    "mwtdr",
-    "mwtt1",
-    "mwtt2",
-    "mwtt3"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels,
-    m15wrth = "Time: hours",
-    m15wth = "Time interview: hours",
-    m15wtm = "Time interview: minutes",
-    m15wtrm = "Time: minutes"
-  ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels,
-    m15wrp1 = "recall particul: other present",
-    m15wrpx = "recall particul other: specification",
-    m15wrth = "Recall time: hours by interviewer",
-    m15wrtm = "Recall time: minutes by interviewer",
-    m15wt = "15 word test done?",
-    m15wtr = "15wt Recall done",
-    mwtdr = "Number of words correct: recall"
-  ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels,
-    m15wrpx = "recall particul: other specification",
-    mrecali = "15 words recall: interval in minutes",
-    mwtt1 = "Number of words correct: trial 1"
-  ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels,
-    m15wrpx = "recall particul: other specification",
-    mrecali = "15 words recall: interval in minutes",
-    mwtt1 = "Number of words correct: trial 1"
-  ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels,
-    m15wrpx = "recall particul: other specification",
-    mrecali = "15 words recall: interval in minutes",
-    mwtt1 = "Number of words correct: trial 1"
-  ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels,
-    m15wrpx = "recall particul: other specification",
-    mrecali = "15 words recall: interval in minutes",
-    mwtt1 = "Number of words correct: trial 1"
-  ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels,
-    m15wrpx = "recall particul: other specification",
-    mrecali = "15 words recall: interval in minutes",
-    mwtt1 = "Number of words correct: trial 1"
-  ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels,
-    m15wrp2 = "recall particul: visually handicapped",
-    m15wth = "Time by interviewer (after 3 trials)",
-    m15wtp2 = "particularities: visually handicapped",
-    mwtt2 = "number of words correct: trial 2",
-    mwtt3 = "number of words correct: trial 3"
-  ),
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels,
-    m15wrp2 = "recall particul: visually handicapped",
-    m15wth = "Time by interviewer (after 3 trials)",
-    m15wtp2 = "particularities: visually handicapped",
-    mwtt2 = "number of words correct: trial 2",
-    mwtt3 = "number of words correct: trial 3"
-  ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels,
-    m15wrp2 = "recall particul: visually handicapped",
-    m15wth = "Time by interviewer (after 3 trials)",
-    m15wtp2 = "particularities: visually handicapped",
-    mwtt2 = "number of words correct: trial 2",
-    mwtt3 = "number of words correct: trial 3"
-  ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels,
-    m15wrp2 = "recall particul: visually handicapped",
-    m15wth = "Time by interviewer (after 3 trials)",
-    m15wtp2 = "particularities: visually handicapped",
-    mwtt2 = "number of words correct: trial 2",
-    mwtt3 = "number of words correct: trial 3"
-  ),
-  Wave_K_labels = .replace_labels(
-    harmonized_labels,
-    m15wrp2 = "recall particul: visually handicapped",
-    m15wth = "Time by interviewer (after 3 trials)",
-    m15wtp2 = "particularities: visually handicapped",
-    mwtt2 = "number of words correct: trial 2",
-    mwtt3 = "number of words correct: trial 3"
-  ),
-  Harmonized_labels = harmonized_labels
-)
-
-## This file's own very common answer categories (>= 10 occurrences
-## across its variables) -- same idea as default_missing_labels, just
-## scoped to this filecode instead of shared globally.
-default_answer_labels <- c(
-  `1` = "mentioned"
-)
-
-standardized_value_labels <- list(
-  m15wdrm = c(`-4` = "interview terminated", `0` = "recall done", `1` = "see cm15wtrm", `2` = "refused"),
-  m15wrp0 = c(
-    `-4` = "interview terminated",
-    `-3` = "no recall test",
-    `-2` = "no particularities / no recall test",
-    `-1` = "no other reason",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wrp1 = c(
-    `-4` = "interview terminated",
-    `-3` = "no recall test",
-    `-2` = "no particularities / na, see d/e/b/f/gm15wrp0",
-    `-1` = "no other reason",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wrp2 = c(
-    `-4` = "interview terminated",
-    `-3` = "no recall test",
-    `-2` = "no particularities / no recall test",
-    `-1` = "no other reason",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wrp3 = c(
-    `-4` = "interview terminated",
-    `-3` = "no recall test",
-    `-2` = "no particularities / no recall test",
-    `-1` = "no other reason",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wrp4 = c(
-    `-4` = "interview terminated",
-    `-3` = "no recall test",
-    `-2` = "no particularities / no recall test",
-    `-1` = "no other reason",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wrp5 = c(
-    `-4` = "interview terminated",
-    `-3` = "no recall test",
-    `-2` = "no particularities / no recall test",
-    `-1` = "no other reason",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wrpx = c(
-    `-4` = "interview terminated",
-    `-3` = "no test",
-    `-2` = "no particularities / na, see d/e/b/f/gm15wrp0",
-    `-1` = "no other reason",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-  m15wrt = c(`-2` = "no test", `-1` = "no valid time data"),
-  m15wrth = c(`-2` = "no test", `-1` = "no valid time data"),
-  m15wrtm = c(
-    `-2` = "no recall test",
-    default_missing_labels[c("-1")]
-  ),
-  m15wt = c(`-4` = "interview terminated", `1` = "15 wt not done", `2` = "15 wt done"),
-  m15wt101 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt102 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt103 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt104 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt105 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt106 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt107 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt108 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt109 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt110 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt111 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt112 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt113 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt114 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt115 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt1nd = c(`-1` = "no test"),
-  m15wt1no = c(
-    `-4` = "interview terminated",
-    default_missing_labels[c("-1")]
-  ),
-  m15wt201 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt202 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt203 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt204 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt205 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt206 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt207 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt208 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt209 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt210 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt211 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt212 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt213 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt214 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt215 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt2nd = stats::setNames(character(0), character(0)),
-  m15wt2no = stats::setNames(character(0), character(0)),
-  m15wt301 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt302 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt303 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt304 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt305 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt306 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt307 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt308 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt309 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt310 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt311 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt312 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt313 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt314 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt315 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wt3nd = stats::setNames(character(0), character(0)),
-  m15wt3no = stats::setNames(character(0), character(0)),
-  m15wtdr = c(
-    default_missing_labels[c("-1")]
-  ),
-  m15wth = c(`-2` = "no test", `-1` = "no valid data / no valid time data"),
-  m15wtm = c(
-    default_missing_labels[c("-1")]
-  ),
-  m15wtp0 = c(
-    `-4` = "interview terminated",
-    `-3` = "no test",
-    `-2` = "no particularities / no test",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtp1 = c(
-    `-2` = "na, see d/e/b/f/gm15wtp0",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtp2 = c(
-    `-2` = "no test",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtp3 = c(
-    `-2` = "no test",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtp4 = c(
-    `-2` = "no test",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtp5 = c(
-    `-2` = "no test",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtpx = c(
-    `-4` = "interview terminated",
-    `-3` = "no test",
-    `-2` = "no particularities / na, see d/e/b/f/gm15wtp5",
-    `-1` = "no other reason",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-  m15wtr = c(
-    `-4` = "interview terminated",
-    `1` = "yes / recall test not done",
-    `2` = "no / recall test done"
-  ),
-  m15wtr01 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtr02 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtr03 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtr04 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtr05 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtr06 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtr07 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtr08 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtr09 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtr10 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtr11 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtr12 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtr13 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtr14 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtr15 = c(
-    `-1` = "no valid data",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  m15wtrm = c(
-    `-4` = "interview terminated",
-    `0` = "test [partially] done",
-    `1` = "skipped",
-    `2` = "refused",
-    `3` = "cognitive",
-    `4` = "physical",
-    `5` = "technical",
-    `6` = "unknown"
-  ),
-  m15wtrnd = stats::setNames(character(0), character(0)),
-  m15wtrno = c(
-    `-2` = "no recall test h/b/ -1: no answer, asked i/j/km15wtrnd 15 words (recall): number of doubles",
-    `-1` = "no valid data / no recall test"
-  ),
-  mrecal = c(`-1` = "no valid time data"),
-  mrecalc = c(`-1` = "no valid time data"),
-  mrecali = c(`-2` = "recall test not done", `-1` = "no valid time data"),
-  mrm15wt = c(
-    `-2` = "valid score",
-    `0` = "to be coded",
-    `1` = "short version",
-    `2` = "interview terminated",
-    `3` = "too many missings",
-    `4` = "refused test",
-    `5` = "not able to (cognitive)",
-    `6` = "not able to (physical)",
-    `7` = "technical problems",
-    `8` = "unknown"
-  ),
-  mwtdr = c(`-4` = "interview terminated", `-2` = "no recall test"),
-  mwtt1 = c(`-2` = "no test"),
-  mwtt2 = c(`-2` = "no test"),
-  mwtt3 = c(`-2` = "no test")
-)
-
-value_labels_list <- list(
-  Wave_B_labels = .replace_in_list(
-    standardized_value_labels,
-    m15wth = c(`-1` = "no valid data"),
-    m15wtrno = c(`-1` = "no valid data")
-  ),
-  Wave_C_labels = .replace_in_list(
-    standardized_value_labels,
-    m15wrp0 = .replace_labels(
-    standardized_value_labels$m15wrp0,
-    `-2` = "no particularities"
-  ),
-    m15wrp1 = .replace_labels(
-    standardized_value_labels$m15wrp1,
-    `-2` = "no particularities"
-  ),
-    m15wrp2 = .replace_labels(
-    standardized_value_labels$m15wrp2,
-    `-2` = "no particularities"
-  ),
-    m15wrp3 = .replace_labels(
-    standardized_value_labels$m15wrp3,
-    `-2` = "no particularities"
-  ),
-    m15wrp4 = .replace_labels(
-    standardized_value_labels$m15wrp4,
-    `-2` = "no particularities"
-  ),
-    m15wrp5 = .replace_labels(
-    standardized_value_labels$m15wrp5,
-    `-2` = "no particularities"
-  ),
-    m15wrpx = c(
-    `-4` = "interview terminated",
-    `-3` = "no test",
-    `-2` = "no particularities",
-    `-1` = "no other reason",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit"
-  ),
-    m15wt1no = c(`-4` = "interview terminated"),
-    m15wtp0 = .replace_labels(
-    standardized_value_labels$m15wtp0,
-    `-2` = "no particularities"
-  ),
-    m15wtpx = .replace_labels(
-    standardized_value_labels$m15wtpx,
-    `-2` = "no particularities"
-  ),
-    m15wtr = .replace_labels(
-    standardized_value_labels$m15wtr,
-    `1` = "yes",
-    `2` = "no"
-  ),
-    m15wtrno = c(`-1` = "no recall test"),
-    mrecali = c(`-1` = "no valid time data"),
-    mwtdr = c(`-4` = "interview terminated")
-  ),
-  Wave_D_labels = .replace_in_list(
-    standardized_value_labels,
-    m15wrp0 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp1 = c(`-2` = "na, see d/e/b/f/gm15wrp0", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp2 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp3 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp4 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp5 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrpx = c(
-    `-2` = "na, see d/e/b/f/gm15wrp0",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit"
-  ),
-    m15wrtm = c(`-2` = "no recall test"),
-    m15wt = c(`1` = "15 wt not done", `2` = "15 wt done"),
-    m15wth = c(`-2` = "no test"),
-    m15wtp0 = c(`-2` = "no test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wtpx = c(
-    `-2` = "na, see d/e/b/f/gm15wtp5",
-    `-1` = "no other reason",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-    m15wtr = c(`1` = "recall test not done", `2` = "recall test done")
-  ),
-  Wave_E_labels = .replace_in_list(
-    standardized_value_labels,
-    m15wrp0 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp1 = c(`-2` = "na, see d/e/b/f/gm15wrp0", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp2 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp3 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp4 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp5 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrpx = c(
-    `-2` = "na, see d/e/b/f/gm15wrp0",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit"
-  ),
-    m15wrtm = c(`-2` = "no recall test"),
-    m15wt = c(`1` = "15 wt not done", `2` = "15 wt done"),
-    m15wth = c(`-2` = "no test"),
-    m15wtp0 = c(`-2` = "no test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wtpx = c(
-    `-2` = "na, see d/e/b/f/gm15wtp5",
-    `-1` = "no other reason",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-    m15wtr = c(`1` = "recall test not done", `2` = "recall test done")
-  ),
-  Wave_2B_labels = .replace_in_list(
-    standardized_value_labels,
-    m15wrp0 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp1 = c(`-2` = "na, see d/e/b/f/gm15wrp0", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp2 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp3 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp4 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp5 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrpx = c(
-    `-2` = "na, see d/e/b/f/gm15wrp0",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit"
-  ),
-    m15wrtm = c(`-2` = "no recall test"),
-    m15wt = c(`1` = "15 wt not done", `2` = "15 wt done"),
-    m15wth = c(`-2` = "no test"),
-    m15wtp0 = c(`-2` = "no test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wtpx = c(
-    `-2` = "na, see d/e/b/f/gm15wtp5",
-    `-1` = "no other reason",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-    m15wtr = c(`1` = "recall test not done", `2` = "recall test done")
-  ),
-  Wave_F_labels = .replace_in_list(
-    standardized_value_labels,
-    m15wrp0 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp1 = c(`-2` = "na, see d/e/b/f/gm15wrp0", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp2 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp3 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp4 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp5 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrpx = c(
-    `-2` = "na, see d/e/b/f/gm15wrp0",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit"
-  ),
-    m15wrtm = c(`-2` = "no recall test"),
-    m15wt = c(`1` = "15 wt not done", `2` = "15 wt done"),
-    m15wth = c(`-2` = "no test"),
-    m15wtp0 = c(`-2` = "no test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wtpx = c(
-    `-2` = "na, see d/e/b/f/gm15wtp5",
-    `-1` = "no other reason",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-    m15wtr = c(`1` = "recall test not done", `2` = "recall test done")
-  ),
-  Wave_G_labels = .replace_in_list(
-    standardized_value_labels,
-    m15wrp0 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp1 = c(`-2` = "na, see d/e/b/f/gm15wrp0", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp2 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp3 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp4 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp5 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrpx = c(
-    `-2` = "na, see d/e/b/f/gm15wrp0",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit"
-  ),
-    m15wrtm = c(`-2` = "no recall test"),
-    m15wt = c(`1` = "15 wt not done", `2` = "15 wt done"),
-    m15wth = c(`-2` = "no test"),
-    m15wtp0 = c(`-2` = "no test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wtpx = c(
-    `-2` = "na, see d/e/b/f/gm15wtp5",
-    `-1` = "no other reason",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-    m15wtr = c(`1` = "recall test not done", `2` = "recall test done")
-  ),
-  Wave_H_labels = .replace_in_list(
-    standardized_value_labels,
-    m15wrp0 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp1 = c(`-2` = "na, see h/b/i/j/km15wrp0", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp2 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp3 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp4 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp5 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrpx = c(
-    `-2` = "na, see h/b/i/j/km15wrp5",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-    m15wt = c(`1` = "15 wt not done", `2` = "15 wt done"),
-    m15wt1no = c(`-1` = "no answer, asked"),
-    m15wth = .replace_labels(
-    standardized_value_labels$m15wth,
-    `-1` = "no valid time data"
-  ),
-    m15wtp0 = c(`-2` = "no test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wtp1 = .replace_labels(
-    standardized_value_labels$m15wtp1,
-    `-2` = "na, see H/B/I/J/KM15WTP0"
-  ),
-    m15wtpx = c(
-    `-2` = "na, see h/b/i/j/km15wtp5",
-    `-1` = "no other reason",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-    m15wtr = c(`1` = "recall test not done", `2` = "recall test done"),
-    m15wtrno = c(
-    `-2` = "no recall test h/b/ -1: no answer, asked i/j/km15wtrnd 15 words (recall): number of doubles"
-  ),
-    mwtdr = c(`-2` = "no recall test")
-  ),
-  Wave_3B_labels = .replace_in_list(
-    standardized_value_labels,
-    m15wrp0 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp1 = c(`-2` = "na, see h/b/i/j/km15wrp0", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp2 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp3 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp4 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp5 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrpx = c(
-    `-2` = "na, see h/b/i/j/km15wrp5",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-    m15wt = c(`1` = "15 wt not done", `2` = "15 wt done"),
-    m15wt1no = c(`-1` = "no answer, asked"),
-    m15wth = .replace_labels(
-    standardized_value_labels$m15wth,
-    `-1` = "no valid time data"
-  ),
-    m15wtp0 = c(`-2` = "no test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wtp1 = .replace_labels(
-    standardized_value_labels$m15wtp1,
-    `-2` = "na, see H/B/I/J/KM15WTP0"
-  ),
-    m15wtpx = c(
-    `-2` = "na, see h/b/i/j/km15wtp5",
-    `-1` = "no other reason",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-    m15wtr = c(`1` = "recall test not done", `2` = "recall test done"),
-    m15wtrno = c(
-    `-2` = "no recall test h/b/ -1: no answer, asked i/j/km15wtrnd 15 words (recall): number of doubles"
-  ),
-    mwtdr = c(`-2` = "no recall test")
-  ),
-  Wave_I_labels = .replace_in_list(
-    standardized_value_labels,
-    m15wrp0 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp1 = c(`-2` = "na, see h/b/i/j/km15wrp0", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp2 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp3 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp4 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp5 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrpx = c(
-    `-2` = "na, see h/b/i/j/km15wrp5",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-    m15wt = c(`1` = "15 wt not done", `2` = "15 wt done"),
-    m15wt1no = c(`-1` = "no answer, asked"),
-    m15wth = .replace_labels(
-    standardized_value_labels$m15wth,
-    `-1` = "no valid time data"
-  ),
-    m15wtp0 = c(`-2` = "no test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wtp1 = .replace_labels(
-    standardized_value_labels$m15wtp1,
-    `-2` = "na, see H/B/I/J/KM15WTP0"
-  ),
-    m15wtpx = c(
-    `-2` = "na, see h/b/i/j/km15wtp5",
-    `-1` = "no other reason",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-    m15wtr = c(`1` = "recall test not done", `2` = "recall test done"),
-    m15wtrno = c(
-    `-2` = "no recall test h/b/ -1: no answer, asked i/j/km15wtrnd 15 words (recall): number of doubles"
-  ),
-    mwtdr = c(`-2` = "no recall test")
-  ),
-  Wave_J_labels = .replace_in_list(
-    standardized_value_labels,
-    m15wrp0 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp1 = c(`-2` = "na, see h/b/i/j/km15wrp0", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp2 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp3 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp4 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp5 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrpx = c(
-    `-2` = "na, see h/b/i/j/km15wrp5",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-    m15wt = c(`1` = "15 wt not done", `2` = "15 wt done"),
-    m15wt1no = c(`-1` = "no answer, asked"),
-    m15wth = .replace_labels(
-    standardized_value_labels$m15wth,
-    `-1` = "no valid time data"
-  ),
-    m15wtp0 = c(`-2` = "no test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wtp1 = .replace_labels(
-    standardized_value_labels$m15wtp1,
-    `-2` = "na, see H/B/I/J/KM15WTP0"
-  ),
-    m15wtpx = c(
-    `-2` = "na, see h/b/i/j/km15wtp5",
-    `-1` = "no other reason",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-    m15wtr = c(`1` = "recall test not done", `2` = "recall test done"),
-    m15wtrno = c(
-    `-2` = "no recall test h/b/ -1: no answer, asked i/j/km15wtrnd 15 words (recall): number of doubles"
-  ),
-    mwtdr = c(`-2` = "no recall test")
-  ),
-  Wave_K_labels = .replace_in_list(
-    standardized_value_labels,
-    m15wrp0 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp1 = c(`-2` = "na, see h/b/i/j/km15wrp0", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp2 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp3 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp4 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrp5 = c(`-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wrpx = c(
-    `-2` = "na, see h/b/i/j/km15wrp5",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-    m15wt = c(`1` = "15 wt not done", `2` = "15 wt done"),
-    m15wt1no = c(`-1` = "no answer, asked"),
-    m15wth = .replace_labels(
-    standardized_value_labels$m15wth,
-    `-1` = "no valid time data"
-  ),
-    m15wtp0 = c(`-2` = "no test", `0` = "not mentioned", `1` = "mentioned"),
-    m15wtp1 = .replace_labels(
-    standardized_value_labels$m15wtp1,
-    `-2` = "na, see H/B/I/J/KM15WTP0"
-  ),
-    m15wtpx = c(
-    `-2` = "na, see h/b/i/j/km15wtp5",
-    `-1` = "no other reason",
-    `0` = "to be coded",
-    `1` = "extra instructions",
-    `2` = "other disturbing factors",
-    `3` = "R confused/not fit",
-    `4` = "stopped/technical",
-    `5` = "not specified"
-  ),
-    m15wtr = c(`1` = "recall test not done", `2` = "recall test done"),
-    m15wtrno = c(
-    `-2` = "no recall test h/b/ -1: no answer, asked i/j/km15wtrnd 15 words (recall): number of doubles"
-  ),
-    mwtdr = c(`-2` = "no recall test")
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   m15wdrm = "categorical",
   m15wrp0 = "categorical",
@@ -1682,130 +113,517 @@ var_types_vec <- c(
   mwtt3 = "numeric"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "156", waves = .lasa_wave_rows()) |>
-    .override_label(wave = "B", variable = "m15wrth", override_value = "bm15twtrh") |>
-    .override_label(wave = "C", variable = "m15wrth", override_value = "c15wtrth") |>
-    .override_label(wave = "C", variable = "m15wrtm", override_value = "c15wtrtm") |>
-    .override_label(wave = "C", variable = "m15wtp1", override_value = "cm15wpt1") |>
-    .override_label(wave = "C", variable = "m15wtp2", override_value = "cm15wpt2") |>
-    .override_label(wave = "C", variable = "m15wtp3", override_value = "cm15wpt3") |>
-    .override_label(wave = "C", variable = "m15wtp4", override_value = "cm15wpt4") |>
-    .override_label(wave = "C", variable = "m15wtp5", override_value = "cm15wpt5"),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "156", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "156", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "156", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  m15wdrm = "reason no recall test",
+  m15wrp0 = "recall particul: no particularities",
+  m15wrp1 = "recall particul: others present",
+  m15wrp2 = "recall particul: auditory handicap",
+  m15wrp3 = "recall particul: radio or tv noise",
+  m15wrp4 = "recall particul: interrupted",
+  m15wrp5 = "recall particul: other reason",
+  m15wrpx = "recall particul: other: specification",
+  m15wrt = "Time: by interviewer (before recall)",
+  m15wrth = "recall time: hours by interviewer",
+  m15wrtm = "recall time: minutes by interviewer",
+  m15wt = "15 words test done",
+  m15wt101 = "15 words (1): word 1",
+  m15wt102 = "15 words (1): word 2",
+  m15wt103 = "15 words (1): word 3",
+  m15wt104 = "15 words (1): word 4",
+  m15wt105 = "15 words (1): word 5",
+  m15wt106 = "15 words (1): word 6",
+  m15wt107 = "15 words (1): word 7",
+  m15wt108 = "15 words (1): word 8",
+  m15wt109 = "15 words (1): word 9",
+  m15wt110 = "15 words (1): word 10",
+  m15wt111 = "15 words (1): word 11",
+  m15wt112 = "15 words (1): word 12",
+  m15wt113 = "15 words (1): word 13",
+  m15wt114 = "15 words (1): word 14",
+  m15wt115 = "15 words (1): word 15",
+  m15wt1nd = "15 words (1): number of doubles",
+  m15wt1no = "15 words (1): number of others",
+  m15wt201 = "15 words (2): word 1",
+  m15wt202 = "15 words (2): word 2",
+  m15wt203 = "15 words (2): word 3",
+  m15wt204 = "15 words (2): word 4",
+  m15wt205 = "15 words (2): word 5",
+  m15wt206 = "15 words (2): word 6",
+  m15wt207 = "15 words (2): word 7",
+  m15wt208 = "15 words (2): word 8",
+  m15wt209 = "15 words (2): word 9",
+  m15wt210 = "15 words (2): word 10",
+  m15wt211 = "15 words (2): word 11",
+  m15wt212 = "15 words (2): word 12",
+  m15wt213 = "15 words (2): word 13",
+  m15wt214 = "15 words (2): word 14",
+  m15wt215 = "15 words (2): word 15",
+  m15wt2nd = "15 words (2): number of doubles",
+  m15wt2no = "15 words (2): number of others",
+  m15wt301 = "15 words (3): word 1",
+  m15wt302 = "15 words (3): word 2",
+  m15wt303 = "15 words (3): word 3",
+  m15wt304 = "15 words (3): word 4",
+  m15wt305 = "15 words (3): word 5",
+  m15wt306 = "15 words (3): word 6",
+  m15wt307 = "15 words (3): word 7",
+  m15wt308 = "15 words (3): word 8",
+  m15wt309 = "15 words (3): word 9",
+  m15wt310 = "15 words (3): word 10",
+  m15wt311 = "15 words (3): word 11",
+  m15wt312 = "15 words (3): word 12",
+  m15wt313 = "15 words (3): word 13",
+  m15wt314 = "15 words (3): word 14",
+  m15wt315 = "15 words (3): word 15",
+  m15wt3nd = "15 words (3): number of doubles",
+  m15wt3no = "15 words (3): number of others",
+  m15wtdr = "number of words correct: recall",
+  m15wth = "Time: hours by interviewer",
+  m15wtm = "Time: minutes by interviewer",
+  m15wtp0 = "particularities: no particularities",
+  m15wtp1 = "particularities: others present",
+  m15wtp2 = "particularities: auditory handicap",
+  m15wtp3 = "particularities: radio or tv noise",
+  m15wtp4 = "particularities: interrupted",
+  m15wtp5 = "particularities: other reason",
+  m15wtpx = "particularities other: specification",
+  m15wtr = "15wt recall done",
+  m15wtr01 = "15 words (recall): word 1",
+  m15wtr02 = "15 words (recall): word 2",
+  m15wtr03 = "15 words (recall): word 3",
+  m15wtr04 = "15 words (recall): word 4",
+  m15wtr05 = "15 words (recall): word 5",
+  m15wtr06 = "15 words (recall): word 6",
+  m15wtr07 = "15 words (recall): word 7",
+  m15wtr08 = "15 words (recall): word 8",
+  m15wtr09 = "15 words (recall): word 9",
+  m15wtr10 = "15 words (recall): word 10",
+  m15wtr11 = "15 words (recall): word 11",
+  m15wtr12 = "15 words (recall): word 12",
+  m15wtr13 = "15 words (recall): word 13",
+  m15wtr14 = "15 words (recall): word 14",
+  m15wtr15 = "15 words (recall): word 15",
+  m15wtrm = "15 wt: reason no test(s)",
+  m15wtrnd = "15 words (recall): number of doubles",
+  m15wtrno = "15 words (recall): number of others",
+  mrecal = "15 word test time interval in minutes",
+  mrecalc = "15 wt: interval in min. by computer",
+  mrecali = "15 wt: interval in min. by interviewer",
+  mrm15wt = "Reason missing (part of) 15 words test",
+  mwtdr = "number of words correct: recall",
+  mwtt1 = "numbers of words correct: trial 1",
+  mwtt2 = "Number of words correct: trial 2",
+  mwtt3 = "Number of words correct: trial 3",
+  .applies_to_waves = c("Z")
 )
 
-fc_labels$value_labels[["m15wrth"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["m15wt1nd"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["m15wt1no"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["m15wt2nd"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["m15wt2no"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["m15wt3nd"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["m15wt3no"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["m15wtm"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["m15wtrm"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["m15wtrnd"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["m15wrth"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["m15wrtm"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["m15wt2nd"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["m15wt2no"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["m15wt3nd"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["m15wt3no"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["m15wth"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["m15wtm"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["m15wtp1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["m15wtp2"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["m15wtp3"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["m15wtp4"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["m15wtp5"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["m15wtrnd"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["m15wt1nd"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["m15wt1no"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["m15wt2nd"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["m15wt2no"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["m15wt3nd"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["m15wt3no"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["m15wtrnd"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["m15wtrno"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["mwtt1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["mwtt2"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["mwtt3"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["m15wt1nd"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["m15wt1no"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["m15wt2nd"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["m15wt2no"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["m15wt3nd"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["m15wt3no"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["m15wtrnd"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["m15wtrno"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mwtt1"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mwtt2"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["mwtt3"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["m15wt1nd"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["m15wt1no"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["m15wt2nd"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["m15wt2no"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["m15wt3nd"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["m15wt3no"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["m15wtrnd"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["m15wtrno"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["mwtt1"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["mwtt2"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["mwtt3"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["m15wt1nd"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["m15wt1no"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["m15wt2nd"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["m15wt2no"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["m15wt3nd"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["m15wt3no"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["m15wtrnd"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["m15wtrno"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["mwtt1"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["mwtt2"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["mwtt3"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["m15wt1nd"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["m15wt1no"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["m15wt2nd"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["m15wt2no"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["m15wt3nd"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["m15wt3no"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["m15wtrnd"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["m15wtrno"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["mwtt1"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["mwtt2"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["mwtt3"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["m15wt1nd"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
-fc_labels$value_labels[["m15wt2nd"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
-fc_labels$value_labels[["m15wt2no"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
-fc_labels$value_labels[["m15wt3nd"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
-fc_labels$value_labels[["m15wt3no"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
-fc_labels$value_labels[["m15wtrnd"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
-fc_labels$value_labels[["m15wt1nd"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["m15wt2nd"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["m15wt2no"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["m15wt3nd"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["m15wt3no"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["m15wtrnd"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["m15wt1nd"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
-fc_labels$value_labels[["m15wt2nd"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
-fc_labels$value_labels[["m15wt2no"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
-fc_labels$value_labels[["m15wt3nd"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
-fc_labels$value_labels[["m15wt3no"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
-fc_labels$value_labels[["m15wtrnd"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
-fc_labels$value_labels[["m15wt1nd"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
-fc_labels$value_labels[["m15wt2nd"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
-fc_labels$value_labels[["m15wt2no"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
-fc_labels$value_labels[["m15wt3nd"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
-fc_labels$value_labels[["m15wt3no"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
-fc_labels$value_labels[["m15wtrnd"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
-fc_labels$value_labels[["m15wt1nd"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
-fc_labels$value_labels[["m15wt2nd"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
-fc_labels$value_labels[["m15wt2no"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
-fc_labels$value_labels[["m15wt3nd"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
-fc_labels$value_labels[["m15wt3no"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
-fc_labels$value_labels[["m15wtrnd"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+variable_labels(
+  "m15wt101", "m15wt102", "m15wt103", "m15wt104", "m15wt105", "m15wt106", "m15wt107", "m15wt108", "m15wt109", "m15wt110", "m15wt111", "m15wt112", "m15wt113", "m15wt114", "m15wt115", "m15wt201", "m15wt202", "m15wt203", "m15wt204", "m15wt205", "m15wt206", "m15wt207", "m15wt208", "m15wt209", "m15wt210", "m15wt211", "m15wt212", "m15wt213", "m15wt214", "m15wt215", "m15wt301", "m15wt302", "m15wt303", "m15wt304", "m15wt305", "m15wt306", "m15wt307", "m15wt308", "m15wt309", "m15wt310", "m15wt311", "m15wt312", "m15wt313", "m15wt314", "m15wt315", "m15wtr01", "m15wtr02", "m15wtr03", "m15wtr04", "m15wtr05", "m15wtr06", "m15wtr07", "m15wtr08", "m15wtr09", "m15wtr10", "m15wtr11", "m15wtr12", "m15wtr13", "m15wtr14", "m15wtr15", "mrecal",
+  .applies_to_waves = c("B")
+)
 
-.lasa_fc_156 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "m15wt1nd", "m15wt1no", "m15wt2nd", "m15wt2no", "m15wt3nd", "m15wt3no", "m15wtrnd", "m15wtrno",
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
+)
+
+variable_labels(
+  "m15wdrm", "m15wtrm", "mrecalc",
+  .applies_to_waves = c("C")
+)
+
+variable_labels(
+  "m15wrp0", "m15wrp3", "m15wrp4", "m15wrp5", "m15wtp0", "m15wtp1", "m15wtp3", "m15wtp4", "m15wtp5", "m15wtpx",
+  .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
+)
+
+variable_labels(
+  "m15wrp2", "m15wth", "m15wtm", "m15wtp2",
+  .applies_to_waves = c("C", "D", "E", "2B", "F", "G")
+)
+
+variable_labels(
+  "mrecali",
+  .applies_to_waves = c("C", "H", "3B", "I", "J", "K")
+)
+
+variable_labels(
+  "m15wrp1", "m15wrtm", "m15wt", "m15wtr",
+  .applies_to_waves = c("D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
+)
+
+variable_labels(
+  "m15wrth", "m15wtdr", "mwtt2", "mwtt3",
+  .applies_to_waves = c("D", "E", "2B", "F", "G")
+)
+
+variable_labels(
+  "mrm15wt",
+  .applies_to_waves = c("F", "G")
+)
+
+variable_labels(
+  "m15wrpx", "m15wrt", "mwtdr", "mwtt1",
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
+)
+
+variable_labels(
+  m15wrth = "Time: hours",
+  m15wth = "Time interview: hours",
+  m15wtm = "Time interview: minutes",
+  m15wtrm = "Time: minutes",
+  .applies_to_waves = c("B")
+)
+
+variable_labels(
+  m15wrp1 = "recall particul: other present",
+  m15wrpx = "recall particul other: specification",
+  m15wrth = "Recall time: hours by interviewer",
+  m15wrtm = "Recall time: minutes by interviewer",
+  m15wt = "15 word test done?",
+  m15wtr = "15wt Recall done",
+  mwtdr = "Number of words correct: recall",
+  .applies_to_waves = c("C")
+)
+
+variable_labels(
+  m15wrpx = "recall particul: other specification",
+  mrecali = "15 words recall: interval in minutes",
+  mwtt1 = "Number of words correct: trial 1",
+  .applies_to_waves = c("D", "E", "2B", "F", "G")
+)
+
+variable_labels(
+  m15wrp2 = "recall particul: visually handicapped",
+  m15wth = "Time by interviewer (after 3 trials)",
+  m15wtp2 = "particularities: visually handicapped",
+  mwtt2 = "number of words correct: trial 2",
+  mwtt3 = "number of words correct: trial 3",
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
+)
+
+# define value labels ----
+value_labels(
+  `-2` = "recall test not done",
+  .applies_to_vars = c("mrecali"),
+  .applies_to_waves = c("Z", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-3` = "no recall test",
+  .applies_to_vars = c("m15wrp0", "m15wrp1", "m15wrp2", "m15wrp3", "m15wrp4", "m15wrp5"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-4` = "interview terminated",
+  .applies_to_vars = c("m15wdrm", "m15wrp0", "m15wrp1", "m15wrp2", "m15wrp3", "m15wrp4", "m15wrp5", "m15wrpx", "m15wt", "m15wt1no", "m15wtp0", "m15wtpx", "m15wtr", "m15wtrm", "mwtdr"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `0` = "recall done", `1` = "see cm15wtrm", `2` = "refused",
+  .applies_to_vars = c("m15wdrm"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-2` = "no particularities / no recall test", `-1` = "no other reason", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("m15wrp0", "m15wrp2", "m15wrp3", "m15wrp4", "m15wrp5"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "no particularities / na, see d/e/b/f/gm15wrp0", `-1` = "no other reason", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("m15wrp1"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "no test", `-2` = "no particularities / na, see d/e/b/f/gm15wrp0", `-1` = "no other reason", `0` = "to be coded", `1` = "extra instructions", `2` = "other disturbing factors", `3` = "R confused/not fit", `4` = "stopped/technical", `5` = "not specified",
+  .applies_to_vars = c("m15wrpx"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "no test", `-1` = "no valid time data",
+  .applies_to_vars = c("m15wrt"),
+  .applies_to_waves = c("Z", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "no test", `-1` = "no valid time data",
+  .applies_to_vars = c("m15wrth"),
+  .applies_to_waves = c("Z", "D", "E", "2B", "F", "G")
+)
+
+value_labels(
+  `-2` = "no recall test", `-1` = "na, asked",
+  .applies_to_vars = c("m15wrtm"),
+  .applies_to_waves = c("Z", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `1` = "15 wt not done", `2` = "15 wt done",
+  .applies_to_vars = c("m15wt"),
+  .applies_to_waves = c("Z", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-1` = "no valid data", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("m15wt101", "m15wt102", "m15wt103", "m15wt104", "m15wt105", "m15wt106", "m15wt107", "m15wt108", "m15wt109", "m15wt110", "m15wt111", "m15wt112", "m15wt113", "m15wt114", "m15wt115", "m15wt201", "m15wt202", "m15wt203", "m15wt204", "m15wt205", "m15wt206", "m15wt207", "m15wt208", "m15wt209", "m15wt210", "m15wt211", "m15wt212", "m15wt213", "m15wt214", "m15wt215", "m15wt301", "m15wt302", "m15wt303", "m15wt304", "m15wt305", "m15wt306", "m15wt307", "m15wt308", "m15wt309", "m15wt310", "m15wt311", "m15wt312", "m15wt313", "m15wt314", "m15wt315", "m15wtr01", "m15wtr02", "m15wtr03", "m15wtr04", "m15wtr05", "m15wtr06", "m15wtr07", "m15wtr08", "m15wtr09", "m15wtr10", "m15wtr11", "m15wtr12", "m15wtr13", "m15wtr14", "m15wtr15"),
+  .applies_to_waves = c("Z", "B")
+)
+
+value_labels(
+  `-1` = "no test",
+  .applies_to_vars = c("m15wt1nd"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-1` = "na, asked",
+  .applies_to_vars = c("m15wt1no"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-1` = "na, asked",
+  .applies_to_vars = c("m15wtdr", "m15wtm"),
+  .applies_to_waves = c("Z", "D", "E", "2B", "F", "G")
+)
+
+value_labels(
+  `-2` = "no test", `-1` = "no valid data / no valid time data",
+  .applies_to_vars = c("m15wth"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "no test", `-2` = "no particularities / no test", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("m15wtp0"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "na, see d/e/b/f/gm15wtp0", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("m15wtp1"),
+  .applies_to_waves = c("Z", "D", "E", "2B", "F", "G")
+)
+
+value_labels(
+  `-2` = "no test", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("m15wtp2", "m15wtp3", "m15wtp4", "m15wtp5"),
+  .applies_to_waves = c("Z", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-3` = "no test", `-2` = "no particularities / na, see d/e/b/f/gm15wtp5", `-1` = "no other reason", `0` = "to be coded", `1` = "extra instructions", `2` = "other disturbing factors", `3` = "R confused/not fit", `4` = "stopped/technical", `5` = "not specified",
+  .applies_to_vars = c("m15wtpx"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "yes / recall test not done", `2` = "no / recall test done",
+  .applies_to_vars = c("m15wtr"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `0` = "test [partially] done", `1` = "skipped", `2` = "refused", `3` = "cognitive", `4` = "physical", `5` = "technical", `6` = "unknown",
+  .applies_to_vars = c("m15wtrm"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-2` = "no recall test h/b/ -1: no answer, asked i/j/km15wtrnd 15 words (recall): number of doubles", `-1` = "no valid data / no recall test",
+  .applies_to_vars = c("m15wtrno"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-1` = "no valid time data",
+  .applies_to_vars = c("mrecal"),
+  .applies_to_waves = c("Z", "B")
+)
+
+value_labels(
+  `-1` = "no valid time data",
+  .applies_to_vars = c("mrecalc"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-1` = "no valid time data",
+  .applies_to_vars = c("mrecali"),
+  .applies_to_waves = c("Z", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "valid score", `0` = "to be coded", `1` = "short version", `2` = "interview terminated", `3` = "too many missings", `4` = "refused test", `5` = "not able to (cognitive)", `6` = "not able to (physical)", `7` = "technical problems", `8` = "unknown",
+  .applies_to_vars = c("mrm15wt"),
+  .applies_to_waves = c("Z", "F", "G")
+)
+
+value_labels(
+  `-2` = "no recall test",
+  .applies_to_vars = c("mwtdr"),
+  .applies_to_waves = c("Z", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "no test",
+  .applies_to_vars = c("mwtt1", "mwtt2", "mwtt3"),
+  .applies_to_waves = c("Z", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-1` = "no valid data",
+  .applies_to_vars = c("m15wth", "m15wtrno"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-2` = "no particularities", `-1` = "no other reason", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("m15wrp0", "m15wrp1", "m15wrp2", "m15wrp3", "m15wrp4", "m15wrp5"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-3` = "no test", `-2` = "no particularities", `-1` = "no other reason", `0` = "to be coded", `1` = "extra instructions", `2` = "other disturbing factors", `3` = "R confused/not fit",
+  .applies_to_vars = c("m15wrpx"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-3` = "no test", `-2` = "no particularities", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("m15wtp0"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-3` = "no test", `-2` = "no particularities", `-1` = "no other reason", `0` = "to be coded", `1` = "extra instructions", `2` = "other disturbing factors", `3` = "R confused/not fit", `4` = "stopped/technical", `5` = "not specified",
+  .applies_to_vars = c("m15wtpx"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `1` = "yes", `2` = "no",
+  .applies_to_vars = c("m15wtr"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-1` = "no recall test",
+  .applies_to_vars = c("m15wtrno"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-2` = "na, see d/e/b/f/gm15wrp0",
+  .applies_to_vars = c("m15wrp1", "m15wrpx"),
+  .applies_to_waves = c("D", "E", "2B", "F", "G")
+)
+
+value_labels(
+  `-2` = "no recall test", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("m15wrp0", "m15wrp2", "m15wrp3", "m15wrp4", "m15wrp5"),
+  .applies_to_waves = c("D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("m15wrp1"),
+  .applies_to_waves = c("D", "E", "2B", "F", "G")
+)
+
+value_labels(
+  `0` = "to be coded", `1` = "extra instructions", `2` = "other disturbing factors", `3` = "R confused/not fit",
+  .applies_to_vars = c("m15wrpx"),
+  .applies_to_waves = c("D", "E", "2B", "F", "G")
+)
+
+value_labels(
+  `-2` = "no recall test",
+  .applies_to_vars = c("m15wrtm"),
+  .applies_to_waves = c("D", "E", "2B", "F", "G")
+)
+
+value_labels(
+  `-2` = "no test",
+  .applies_to_vars = c("m15wth"),
+  .applies_to_waves = c("D", "E", "2B", "F", "G")
+)
+
+value_labels(
+  `-2` = "no test", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("m15wtp0"),
+  .applies_to_waves = c("D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "na, see d/e/b/f/gm15wtp5", `-1` = "no other reason", `0` = "to be coded", `1` = "extra instructions", `2` = "other disturbing factors", `3` = "R confused/not fit", `4` = "stopped/technical", `5` = "not specified",
+  .applies_to_vars = c("m15wtpx"),
+  .applies_to_waves = c("D", "E", "2B", "F", "G")
+)
+
+value_labels(
+  `1` = "recall test not done", `2` = "recall test done",
+  .applies_to_vars = c("m15wtr"),
+  .applies_to_waves = c("D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "na, see h/b/i/j/km15wrp0", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("m15wrp1"),
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "na, see h/b/i/j/km15wrp5", `0` = "to be coded", `1` = "extra instructions", `2` = "other disturbing factors", `3` = "R confused/not fit", `4` = "stopped/technical", `5` = "not specified",
+  .applies_to_vars = c("m15wrpx"),
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-1` = "no answer, asked",
+  .applies_to_vars = c("m15wt1no"),
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "no test", `-1` = "no valid time data",
+  .applies_to_vars = c("m15wth"),
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "na, see H/B/I/J/KM15WTP0", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("m15wtp1"),
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "na, see h/b/i/j/km15wtp5", `-1` = "no other reason", `0` = "to be coded", `1` = "extra instructions", `2` = "other disturbing factors", `3` = "R confused/not fit", `4` = "stopped/technical", `5` = "not specified",
+  .applies_to_vars = c("m15wtpx"),
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "no recall test h/b/ -1: no answer, asked i/j/km15wtrnd 15 words (recall): number of doubles",
+  .applies_to_vars = c("m15wtrno"),
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
+)
+
+.lasa_fc_156 <- .lasa_finalize_fc("156")
+.lasa_fc_156$variables <- .lasa_fc_156$variables |>
+  .override_label(wave = "B", variable = "m15wrth", override_value = "bm15twtrh") |>
+  .override_label(wave = "C", variable = "m15wrth", override_value = "c15wtrth") |>
+  .override_label(wave = "C", variable = "m15wrtm", override_value = "c15wtrtm") |>
+  .override_label(wave = "C", variable = "m15wtp1", override_value = "cm15wpt1") |>
+  .override_label(wave = "C", variable = "m15wtp2", override_value = "cm15wpt2") |>
+  .override_label(wave = "C", variable = "m15wtp3", override_value = "cm15wpt3") |>
+  .override_label(wave = "C", variable = "m15wtp4", override_value = "cm15wpt4") |>
+  .override_label(wave = "C", variable = "m15wtp5", override_value = "cm15wpt5")
 

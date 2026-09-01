@@ -1,183 +1,15 @@
 ## LASA filecode 148 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  qeoldt1 = "EOL: dec. treatm.: R self",
-  qeoldt2 = "EOL: dec. treatm.: R self after consulting GP",
-  qeoldt3 = "EOL: dec. treatm.: R self and GP",
-  qeoldt4 = "EOL: dec. treatm.: GP after consulting R self",
-  qeoldt5 = "EOL: dec. treatm.: GP",
-  qvgcan1 = "vignet cancer: nasal gastric tube",
-  qvgcan2 = "vignet cancer: antibiotics",
-  qvgcan3 = "vignet cancer: resuscitation",
-  qvgcan4 = "vignet cancer: mechanical respiration",
-  qvgcan5 = "vignet cancer: euthanasia",
-  qvgdem1 = "vignet dementia: nasal gastric tube",
-  qvgdem2 = "vignet dementia: antibiotics",
-  qvgdem3 = "vignet dementia: resuscitation",
-  qvgdem4 = "vignet dementia: mechanical respiration",
-  qvgdem5 = "vignet dementia: euthanasia"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `G` = c(
-    "qeoldt1",
-    "qeoldt2",
-    "qeoldt3",
-    "qeoldt4",
-    "qeoldt5",
-    "qvgcan1",
-    "qvgcan2",
-    "qvgcan3",
-    "qvgcan4",
-    "qvgcan5",
-    "qvgdem1",
-    "qvgdem2",
-    "qvgdem3",
-    "qvgdem4",
-    "qvgdem5"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_G_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
-)
-
-## This file's own very common answer categories (>= 10 occurrences
-## across its variables) -- same idea as default_missing_labels, just
-## scoped to this filecode instead of shared globally.
-default_answer_labels <- c(
-  `1` = "yes",
-  `2` = "probably yes",
-  `3` = "probably not",
-  `4` = "no"
-)
-
-standardized_value_labels <- list(
-  qeoldt1 = c(`-1` = "not available", `0` = "not mentioned"),
-  qeoldt2 = c(`-1` = "not available", `0` = "not mentioned"),
-  qeoldt3 = c(`-1` = "not available", `0` = "not mentioned"),
-  qeoldt4 = c(`-1` = "not available", `0` = "not mentioned"),
-  qeoldt5 = c(`-1` = "not available", `0` = "not mentioned"),
-  qvgcan1 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qvgcan2 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qvgcan3 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qvgcan4 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qvgcan5 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qvgdem1 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qvgdem2 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qvgdem3 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qvgdem4 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  ),
-  qvgdem5 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4")]
-  )
-)
-
-value_labels_list <- list(
-  Wave_G_labels = .replace_in_list(
-    standardized_value_labels,
-    qeoldt1 = .replace_labels(
-    standardized_value_labels$qeoldt1,
-    `-1` = "mentioned"
-  ),
-    qeoldt2 = .replace_labels(
-    standardized_value_labels$qeoldt2,
-    `-1` = "mentioned"
-  ),
-    qeoldt3 = .replace_labels(
-    standardized_value_labels$qeoldt3,
-    `-1` = "mentioned"
-  ),
-    qeoldt4 = .replace_labels(
-    standardized_value_labels$qeoldt4,
-    `-1` = "mentioned"
-  ),
-    qeoldt5 = .replace_labels(
-    standardized_value_labels$qeoldt5,
-    `-1` = "mentioned"
-  ),
-    qvgcan1 = .replace_labels(
-    standardized_value_labels$qvgcan1,
-    `-1` = "no answer, asked"
-  ),
-    qvgcan2 = .replace_labels(
-    standardized_value_labels$qvgcan2,
-    `-1` = "no answer, asked"
-  ),
-    qvgcan3 = .replace_labels(
-    standardized_value_labels$qvgcan3,
-    `-1` = "no answer, asked"
-  ),
-    qvgcan4 = .replace_labels(
-    standardized_value_labels$qvgcan4,
-    `-1` = "no answer, asked"
-  ),
-    qvgcan5 = .replace_labels(
-    standardized_value_labels$qvgcan5,
-    `-1` = "no answer, asked"
-  ),
-    qvgdem1 = .replace_labels(
-    standardized_value_labels$qvgdem1,
-    `-1` = "no answer, asked"
-  ),
-    qvgdem2 = .replace_labels(
-    standardized_value_labels$qvgdem2,
-    `-1` = "no answer, asked"
-  ),
-    qvgdem3 = .replace_labels(
-    standardized_value_labels$qvgdem3,
-    `-1` = "no answer, asked"
-  ),
-    qvgdem4 = .replace_labels(
-    standardized_value_labels$qvgdem4,
-    `-1` = "no answer, asked"
-  ),
-    qvgdem5 = .replace_labels(
-    standardized_value_labels$qvgdem5,
-    `-1` = "no answer, asked"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   qeoldt1 = "categorical",
   qeoldt2 = "categorical",
@@ -196,12 +28,61 @@ var_types_vec <- c(
   qvgdem5 = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "148", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "148", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "148", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "148", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  qeoldt1 = "EOL: dec. treatm.: R self",
+  qeoldt2 = "EOL: dec. treatm.: R self after consulting GP",
+  qeoldt3 = "EOL: dec. treatm.: R self and GP",
+  qeoldt4 = "EOL: dec. treatm.: GP after consulting R self",
+  qeoldt5 = "EOL: dec. treatm.: GP",
+  qvgcan1 = "vignet cancer: nasal gastric tube",
+  qvgcan2 = "vignet cancer: antibiotics",
+  qvgcan3 = "vignet cancer: resuscitation",
+  qvgcan4 = "vignet cancer: mechanical respiration",
+  qvgcan5 = "vignet cancer: euthanasia",
+  qvgdem1 = "vignet dementia: nasal gastric tube",
+  qvgdem2 = "vignet dementia: antibiotics",
+  qvgdem3 = "vignet dementia: resuscitation",
+  qvgdem4 = "vignet dementia: mechanical respiration",
+  qvgdem5 = "vignet dementia: euthanasia",
+  .applies_to_waves = c("Z")
 )
 
-.lasa_fc_148 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "qeoldt1", "qeoldt2", "qeoldt3", "qeoldt4", "qeoldt5", "qvgcan1", "qvgcan2", "qvgcan3", "qvgcan4", "qvgcan5", "qvgdem1", "qvgdem2", "qvgdem3", "qvgdem4", "qvgdem5",
+  .applies_to_waves = c("G")
+)
+
+# define value labels ----
+value_labels(
+  `-1` = "not available",
+  .applies_to_vars = c("qeoldt1", "qeoldt2", "qeoldt3", "qeoldt4", "qeoldt5", "qvgcan1", "qvgcan2", "qvgcan3", "qvgcan4", "qvgcan5", "qvgdem1", "qvgdem2", "qvgdem3", "qvgdem4", "qvgdem5"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `0` = "not mentioned",
+  .applies_to_vars = c("qeoldt1", "qeoldt2", "qeoldt3", "qeoldt4", "qeoldt5"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "yes", `2` = "probably yes", `3` = "probably not", `4` = "no",
+  .applies_to_vars = c("qvgcan1", "qvgcan2", "qvgcan3", "qvgcan4", "qvgcan5", "qvgdem1", "qvgdem2", "qvgdem3", "qvgdem4", "qvgdem5"),
+  .applies_to_waves = c("Z", "G")
+)
+
+value_labels(
+  `-1` = "no answer, asked",
+  .applies_to_vars = c("qvgcan1", "qvgcan2", "qvgcan3", "qvgcan4", "qvgcan5", "qvgdem1", "qvgdem2", "qvgdem3", "qvgdem4", "qvgdem5"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-1` = "mentioned", `0` = "not mentioned",
+  .applies_to_vars = c("qeoldt1", "qeoldt2", "qeoldt3", "qeoldt4", "qeoldt5"),
+  .applies_to_waves = c("G")
+)
+
+.lasa_fc_148 <- .lasa_finalize_fc("148")
 

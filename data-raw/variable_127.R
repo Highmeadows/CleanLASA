@@ -1,150 +1,15 @@
 ## LASA filecode 127 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  qeol07 = "ever death thoughts",
-  qeol08 = "ever death wishes",
-  qeol09 = "feelings towards living past week",
-  qeol10 = "feelings towards dying past week",
-  qeol11 = "feelings towards reasons for living/dying"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `I` = c(
-    "qeol07",
-    "qeol08",
-    "qeol09",
-    "qeol10",
-    "qeol11"
-  ),
-  `J` = c(
-    "qeol07",
-    "qeol08",
-    "qeol09",
-    "qeol10",
-    "qeol11"
-  ),
-  `K` = c(
-    "qeol07",
-    "qeol08",
-    "qeol09",
-    "qeol10",
-    "qeol11"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_I_labels = harmonized_labels,
-  Wave_J_labels = harmonized_labels,
-  Wave_K_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
-)
-
-standardized_value_labels <- list(
-  qeol07 = c(`-1` = "not available", `1` = "yes", `2` = "no", `3` = "R does not know"),
-  qeol08 = c(`-1` = "not available", `1` = "yes", `2` = "no", `3` = "R does not know"),
-  qeol09 = c(
-    `-1` = "not available",
-    `1` = "a moderate to strong wish to live",
-    `2` = "a weak wish to live",
-    `3` = "no wish to live"
-  ),
-  qeol10 = c(
-    `-1` = "not available",
-    `1` = "no wish to die",
-    `2` = "a weak wish to die",
-    `3` = "a moderate to strong wish to die"
-  ),
-  qeol11 = c(
-    `-1` = "not available",
-    `1` = "for living outweigh those for dying",
-    `2` = "about equal",
-    `3` = "for dying outweigh those for living"
-  )
-)
-
-value_labels_list <- list(
-  Wave_I_labels = .replace_in_list(
-    standardized_value_labels,
-    qeol07 = .replace_labels(
-    standardized_value_labels$qeol07,
-    `-1` = "na, asked"
-  ),
-    qeol08 = .replace_labels(
-    standardized_value_labels$qeol08,
-    `-1` = "na, asked"
-  ),
-    qeol09 = .replace_labels(
-    standardized_value_labels$qeol09,
-    `-1` = "na, asked"
-  ),
-    qeol10 = .replace_labels(
-    standardized_value_labels$qeol10,
-    `-1` = "na, asked"
-  ),
-    qeol11 = .replace_labels(
-    standardized_value_labels$qeol11,
-    `-1` = "na, asked"
-  )
-  ),
-  Wave_J_labels = .replace_in_list(
-    standardized_value_labels,
-    qeol07 = .replace_labels(
-    standardized_value_labels$qeol07,
-    `-1` = "na, asked"
-  ),
-    qeol08 = .replace_labels(
-    standardized_value_labels$qeol08,
-    `-1` = "na, asked"
-  ),
-    qeol09 = .replace_labels(
-    standardized_value_labels$qeol09,
-    `-1` = "na, asked"
-  ),
-    qeol10 = .replace_labels(
-    standardized_value_labels$qeol10,
-    `-1` = "na, asked"
-  ),
-    qeol11 = .replace_labels(
-    standardized_value_labels$qeol11,
-    `-1` = "na, asked"
-  )
-  ),
-  Wave_K_labels = .replace_in_list(
-    standardized_value_labels,
-    qeol07 = .replace_labels(
-    standardized_value_labels$qeol07,
-    `-1` = "na, asked"
-  ),
-    qeol08 = .replace_labels(
-    standardized_value_labels$qeol08,
-    `-1` = "na, asked"
-  ),
-    qeol09 = .replace_labels(
-    standardized_value_labels$qeol09,
-    `-1` = "na, asked"
-  ),
-    qeol10 = .replace_labels(
-    standardized_value_labels$qeol10,
-    `-1` = "na, asked"
-  ),
-    qeol11 = .replace_labels(
-    standardized_value_labels$qeol11,
-    `-1` = "na, asked"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   qeol07 = "categorical",
   qeol08 = "categorical",
@@ -153,12 +18,75 @@ var_types_vec <- c(
   qeol11 = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "127", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "127", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "127", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "127", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  qeol07 = "ever death thoughts",
+  qeol08 = "ever death wishes",
+  qeol09 = "feelings towards living past week",
+  qeol10 = "feelings towards dying past week",
+  qeol11 = "feelings towards reasons for living/dying",
+  .applies_to_waves = c("Z")
 )
 
-.lasa_fc_127 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "qeol07", "qeol08", "qeol09", "qeol10", "qeol11",
+  .applies_to_waves = c("I", "J", "K")
+)
+
+# define value labels ----
+value_labels(
+  `-1` = "not available", `1` = "yes", `2` = "no", `3` = "R does not know",
+  .applies_to_vars = c("qeol07", "qeol08"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-1` = "not available", `1` = "a moderate to strong wish to live", `2` = "a weak wish to live", `3` = "no wish to live",
+  .applies_to_vars = c("qeol09"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-1` = "not available", `1` = "no wish to die", `2` = "a weak wish to die", `3` = "a moderate to strong wish to die",
+  .applies_to_vars = c("qeol10"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-1` = "not available", `1` = "for living outweigh those for dying", `2` = "about equal", `3` = "for dying outweigh those for living",
+  .applies_to_vars = c("qeol11"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-1` = "na, asked",
+  .applies_to_vars = c("qeol07", "qeol08", "qeol09", "qeol10", "qeol11"),
+  .applies_to_waves = c("I", "J", "K")
+)
+
+value_labels(
+  `1` = "yes", `2` = "no", `3` = "R does not know",
+  .applies_to_vars = c("qeol07", "qeol08"),
+  .applies_to_waves = c("I", "J", "K")
+)
+
+value_labels(
+  `1` = "a moderate to strong wish to live", `2` = "a weak wish to live", `3` = "no wish to live",
+  .applies_to_vars = c("qeol09"),
+  .applies_to_waves = c("I", "J", "K")
+)
+
+value_labels(
+  `1` = "no wish to die", `2` = "a weak wish to die", `3` = "a moderate to strong wish to die",
+  .applies_to_vars = c("qeol10"),
+  .applies_to_waves = c("I", "J", "K")
+)
+
+value_labels(
+  `1` = "for living outweigh those for dying", `2` = "about equal", `3` = "for dying outweigh those for living",
+  .applies_to_vars = c("qeol11"),
+  .applies_to_waves = c("I", "J", "K")
+)
+
+.lasa_fc_127 <- .lasa_finalize_fc("127")
 

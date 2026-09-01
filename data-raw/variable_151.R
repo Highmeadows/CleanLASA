@@ -1,687 +1,15 @@
 ## LASA filecode 151 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  marmds0 = "Pretest blood pressure 0 sitting (arm) mmHg: diastolic",
-  marmds01 = "Pretest 1: bloodpr sit (arm) mmHg: diastolic",
-  marmds02 = "Pretest 2: bloodpr sit (arm) mmHg: diastolic",
-  marmds1 = "Blood pressure 1 sitting (arm) mmHg: diastolic",
-  marmds2 = "Blood pressure 2 sitting (arm) mmHg: diastolic",
-  marmds3 = "Blood pressure 3 sitting (arm) mmHg: diastolic",
-  marmds4 = "Retest Bloodpr 4 sitting (arm) mmHg: diastolic",
-  marmlds1 = "Bloodpr lying (arm) mmHg: diastolic",
-  marmlps1 = "Pulse rate lying (arm)",
-  marmlss1 = "Bloodpr lying (arm) mmHg: systolic",
-  marmpa0 = "Pretest blood pressure particularities",
-  marmpa1 = "Blood pressure particularities item 1",
-  marmpa2 = "Blood pressure particularities item 2",
-  marmpa3 = "Partic. bloodpressure: cannot lie down",
-  marmpa4 = "Partic. bloodpressure: other",
-  marmpa4o = "Partic other: specification",
-  marmpar = "Particularities bloodpressure",
-  marmps0 = "Pretest pulse rate 0 sitting (arm)",
-  marmps01 = "Pretest 1: pulse rate sit (arm)",
-  marmps02 = "Pretest 2: pulse rate sit (arm)",
-  marmps1 = "Pulse rate 1 sitting (arm)",
-  marmps2 = "Pulse rate 2 sitting (arm)",
-  marmps3 = "Pulse rate 3 sitting (arm)",
-  marmps4 = "Retest Pulse rate 4 sitting (arm)",
-  marmsds1 = "Bloodpr standing (arm) mmHg: diastolic",
-  marmsps1 = "Pulse rate standing (arm)",
-  marmss0 = "Pretest blood pressure 0 sitting (arm) mmHg: systolic",
-  marmss01 = "Pretest 1: bloodpr sit (arm) mmHg: systolic",
-  marmss02 = "Pretest 2: bloodpr sit (arm) mmHg: systolic",
-  marmss1 = "Blood pressure 1 sitting (arm) mmHg: systolic",
-  marmss2 = "Blood pressure 2 sitting (arm) mmHg: systolic",
-  marmss3 = "Blood pressure 3 sitting (arm) mmHg: systolic",
-  marmss4 = "Retest Bloodpr 4 sitting (arm) mmHg: systolic",
-  marmsss1 = "Bloodpr standing (arm) mmHg: systolic",
-  mfinds1 = "Bloodpressure (finger) mmHg: diastolic",
-  mfinpo1 = "Blood pressure (finger): position",
-  mfinpos1 = "Blood pressure (finger): position",
-  mfinps1 = "Pulse rate measurement 1",
-  mfinps2 = "Pulse rate (2)",
-  mfinps3 = "Pulse rate (3)",
-  mfinss1 = "Bloodpressure (finger) mmHg: systolic",
-  rm151 = "Reason missing: LASAC151"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `B` = c(
-    "mfinps1",
-    "mfinps2",
-    "mfinps3"
-  ),
-  `C` = c(
-    "marmds1",
-    "marmlds1",
-    "marmlps1",
-    "marmlss1",
-    "marmpa1",
-    "marmpa2",
-    "marmpa3",
-    "marmpa4",
-    "marmpa4o",
-    "marmpar",
-    "marmps1",
-    "marmsds1",
-    "marmsps1",
-    "marmss1",
-    "marmsss1",
-    "mfinds1",
-    "mfinpos1",
-    "mfinps1",
-    "mfinss1",
-    "rm151"
-  ),
-  `D` = c(
-    "marmds1",
-    "marmlds1",
-    "marmlps1",
-    "marmlss1",
-    "marmpa1",
-    "marmpa2",
-    "marmpa3",
-    "marmpa4",
-    "marmpar",
-    "marmps1",
-    "marmsds1",
-    "marmsps1",
-    "marmss1",
-    "marmsss1",
-    "mfinds1",
-    "mfinpo1",
-    "mfinps1",
-    "mfinss1"
-  ),
-  `E` = c(
-    "marmds1",
-    "marmds2",
-    "marmds3",
-    "marmpar",
-    "marmps1",
-    "marmps2",
-    "marmps3",
-    "marmss1",
-    "marmss2",
-    "marmss3"
-  ),
-  `2B` = c(
-    "marmds1",
-    "marmds2",
-    "marmds3",
-    "marmds4",
-    "marmpa1",
-    "marmpa2",
-    "marmps1",
-    "marmps2",
-    "marmps3",
-    "marmps4",
-    "marmss1",
-    "marmss2",
-    "marmss3",
-    "marmss4"
-  ),
-  `F` = c(
-    "marmds1",
-    "marmds2",
-    "marmds3",
-    "marmpar",
-    "marmps1",
-    "marmps2",
-    "marmps3",
-    "marmss1",
-    "marmss2",
-    "marmss3"
-  ),
-  `G` = c(
-    "marmds0",
-    "marmds1",
-    "marmds2",
-    "marmds3",
-    "marmpa0",
-    "marmpar",
-    "marmps0",
-    "marmps1",
-    "marmps2",
-    "marmps3",
-    "marmss0",
-    "marmss1",
-    "marmss2",
-    "marmss3"
-  ),
-  `H` = c(
-    "marmds0",
-    "marmds1",
-    "marmpa0",
-    "marmpar",
-    "marmps0",
-    "marmps1",
-    "marmss0",
-    "marmss1"
-  ),
-  `3B` = c(
-    "marmds01",
-    "marmds02",
-    "marmds1",
-    "marmds2",
-    "marmpa0",
-    "marmpar",
-    "marmps01",
-    "marmps02",
-    "marmps1",
-    "marmps2",
-    "marmss01",
-    "marmss02",
-    "marmss1",
-    "marmss2"
-  ),
-  `MB` = c(
-    "marmds1",
-    "marmds2",
-    "marmpar",
-    "marmps1",
-    "marmps2",
-    "marmss1",
-    "marmss2"
-  ),
-  `I` = c(
-    "marmds0",
-    "marmds1",
-    "marmpa0",
-    "marmpar",
-    "marmps0",
-    "marmps1",
-    "marmss0",
-    "marmss1"
-  ),
-  `J` = c(
-    "marmds0",
-    "marmds1",
-    "marmpa0",
-    "marmpar",
-    "marmps0",
-    "marmps1",
-    "marmss0",
-    "marmss1"
-  ),
-  `K` = c(
-    "marmds0",
-    "marmds1",
-    "marmpa0",
-    "marmpar",
-    "marmps0",
-    "marmps1",
-    "marmss0",
-    "marmss1"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels,
-    mfinps1 = "Pulse rate (1)"
-  ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels,
-    marmds1 = "Bloodpr sitting (arm) mmHg: diastolic",
-    marmpa1 = "Partic. bloodpressure: cannot stand",
-    marmpa2 = "Partic. bloodpressure: cannot sit",
-    marmps1 = "Pulse rate sitting (arm)",
-    marmss1 = "Bloodpr sitting (arm) mmHg: systolic",
-    mfinps1 = "Pulse rate (finger)"
-  ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels,
-    marmds1 = "Bloodpr sitting (arm) mmHg: diastolic",
-    marmpa1 = "Partic. bloodpressure: cannot stand",
-    marmpa2 = "Partic. bloodpressure: cannot sit",
-    marmps1 = "Pulse rate sitting (arm)",
-    marmss1 = "Bloodpr sitting (arm) mmHg: systolic",
-    mfinps1 = "Pulse rate (finger)"
-  ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels,
-    marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
-    marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
-    marmds3 = "Bloodpr 3 sitting (arm) mmHg: diastolic",
-    marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
-    marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic",
-    marmss3 = "Bloodpr 3 sitting (arm) mmHg: systolic"
-  ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels,
-    marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
-    marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
-    marmds3 = "Retest Bloodpr 3 sitting (arm) mmHg: diastolic",
-    marmpa1 = "Particularities bloodpressure",
-    marmpa2 = "Retest Particularities bloodpressure",
-    marmps1 = "Pulse rate sitting (arm) 1",
-    marmps2 = "Pulse rate sitting (arm) 2",
-    marmps3 = "Retest Pulse rate 3 sitting (arm)",
-    marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
-    marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic",
-    marmss3 = "Retest Bloodpr 3 sitting (arm) mmHg: systolic"
-  ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels,
-    marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
-    marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
-    marmds3 = "Bloodpr 3 sitting (arm) mmHg: diastolic",
-    marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
-    marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic",
-    marmss3 = "Bloodpr 3 sitting (arm) mmHg: systolic"
-  ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels,
-    marmds0 = "Pretest: bloodpr 0 sit (arm) mmHg: diastolic",
-    marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
-    marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
-    marmds3 = "Bloodpr 3 sitting (arm) mmHg: diastolic",
-    marmpa0 = "Particularities bloodpressure Pretest",
-    marmps0 = "Pretest: pulse rate 0 sit (arm)",
-    marmss0 = "Pretest: bloodpr 0 sit (arm) mmHg: systolic",
-    marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
-    marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic",
-    marmss3 = "Bloodpr 3 sitting (arm) mmHg: systolic"
-  ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels,
-    marmds0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: diastolic",
-    marmds1 = "Bloodpressure (1) sitting (arm) mmHg: diastolic",
-    marmpa0 = "Particularities bloodpressure Pretest",
-    marmps0 = "Pretest: pulse rate (0) sitting (arm)",
-    marmps1 = "Pulse rate (1) sitting (arm)",
-    marmss0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: systolic",
-    marmss1 = "Bloodpressure (1) sitting (arm) mmHg: systolic"
-  ),
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels,
-    marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
-    marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
-    marmpa0 = "Particularities bloodpressure Pretest",
-    marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
-    marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic"
-  ),
-  Wave_MB_labels = .replace_labels(
-    harmonized_labels,
-    marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
-    marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
-    marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
-    marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic"
-  ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels,
-    marmds0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: diastolic",
-    marmds1 = "Bloodpressure (1) sitting (arm) mmHg: diastolic",
-    marmpa0 = "Particularities bloodpressure pretest",
-    marmps0 = "Pretest: pulse rate (0) sitting (arm)",
-    marmps1 = "Pulse rate (1) sitting (arm)",
-    marmss0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: systolic",
-    marmss1 = "Bloodpressure (1) sitting (arm) mmHg: systolic"
-  ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels,
-    marmds0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: diastolic",
-    marmds1 = "Bloodpressure (1) sitting (arm) mmHg: diastolic",
-    marmpa0 = "Particularities bloodpressure pretest",
-    marmps0 = "Pretest: pulse rate (0) sitting (arm)",
-    marmps1 = "Pulse rate (1) sitting (arm)",
-    marmss0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: systolic",
-    marmss1 = "Bloodpressure (1) sitting (arm) mmHg: systolic"
-  ),
-  Wave_K_labels = .replace_labels(
-    harmonized_labels,
-    marmds0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: diastolic",
-    marmds1 = "Bloodpressure (1) sitting (arm) mmHg: diastolic",
-    marmpa0 = "Particularities bloodpressure pretest",
-    marmps0 = "Pretest: pulse rate (0) sitting (arm)",
-    marmps1 = "Pulse rate (1) sitting (arm)",
-    marmss0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: systolic",
-    marmss1 = "Bloodpressure (1) sitting (arm) mmHg: systolic"
-  ),
-  Harmonized_labels = harmonized_labels
-)
-
-standardized_value_labels <- list(
-  marmds0 = stats::setNames(character(0), character(0)),
-  marmds01 = stats::setNames(character(0), character(0)),
-  marmds02 = stats::setNames(character(0), character(0)),
-  marmds1 = c(`-1` = "not available"),
-  marmds2 = stats::setNames(character(0), character(0)),
-  marmds3 = c(`-1` = "not available"),
-  marmds4 = stats::setNames(character(0), character(0)),
-  marmlds1 = stats::setNames(character(0), character(0)),
-  marmlps1 = stats::setNames(character(0), character(0)),
-  marmlss1 = stats::setNames(character(0), character(0)),
-  marmpa0 = c(
-    `-3` = "not available",
-    `-2` = "not available",
-    `-1` = "not available",
-    `1` = "R cannot sit",
-    `2` = "measurement error",
-    `3` = "painful arm, no measurement",
-    `4` = "measurement on right arm",
-    `5` = "(part of) test refused",
-    `6` = "part of test wrongfully not done",
-    `8` = "- to be coded -"
-  ),
-  marmpa1 = c(
-    `-2` = "not available",
-    `-1` = "not available",
-    `0` = "not mentioned",
-    `1` = "mentioned",
-    `2` = "other to be coded"
-  ),
-  marmpa2 = c(
-    `-2` = "not available",
-    `-1` = "not available",
-    `0` = "not mentioned",
-    `1` = "mentioned",
-    `2` = "other to be coded"
-  ),
-  marmpa3 = c(`-2` = "not available", `0` = "not mentioned", `1` = "mentioned"),
-  marmpa4 = c(`-2` = "not available", `0` = "not mentioned", `1` = "mentioned --> CMARMPA4O"),
-  marmpa4o = c(
-    `-2` = "not available",
-    `1` = "measurement error",
-    `2` = "refused",
-    `3` = "problem with finger",
-    `4` = "measurement on right arm",
-    `5` = "miscellaneous",
-    `6` = "no normal score",
-    `7` = "no specification"
-  ),
-  marmpar = c(
-    `-3` = "not available",
-    `-2` = "not available",
-    `-1` = "not available",
-    `1` = "R cannot sit",
-    `2` = "measurement error",
-    `3` = "painful arm, no measurement",
-    `4` = "measurement on right arm",
-    `5` = "(part of) test refused",
-    `6` = "part of test wrongfully not done",
-    `8` = "- to be coded -"
-  ),
-  marmps0 = c(`-1` = "not available"),
-  marmps01 = stats::setNames(character(0), character(0)),
-  marmps02 = c(`-1` = "not available"),
-  marmps1 = stats::setNames(character(0), character(0)),
-  marmps2 = c(`-1` = "not available"),
-  marmps3 = stats::setNames(character(0), character(0)),
-  marmps4 = stats::setNames(character(0), character(0)),
-  marmsds1 = stats::setNames(character(0), character(0)),
-  marmsps1 = stats::setNames(character(0), character(0)),
-  marmss0 = c(`-1` = "not available"),
-  marmss01 = c(`-1` = "not available"),
-  marmss02 = stats::setNames(character(0), character(0)),
-  marmss1 = c(`-2` = "not available", `-1` = "not available"),
-  marmss2 = stats::setNames(character(0), character(0)),
-  marmss3 = c(`-2` = "not available", `-1` = "not available"),
-  marmss4 = stats::setNames(character(0), character(0)),
-  marmsss1 = stats::setNames(character(0), character(0)),
-  mfinds1 = c(`-1` = "not available"),
-  mfinpo1 = stats::setNames(character(0), character(0)),
-  mfinpos1 = c(
-    `-2` = "not available",
-    `-1` = "not available",
-    `1` = "standing",
-    `2` = "sitting",
-    `3` = "lying down"
-  ),
-  mfinps1 = c(`-1` = "not available"),
-  mfinps2 = stats::setNames(character(0), character(0)),
-  mfinps3 = stats::setNames(character(0), character(0)),
-  mfinss1 = c(`-2` = "not available", `-1` = "not available"),
-  rm151 = c(`-2` = "not available", `2` = "interview terminated")
-)
-
-value_labels_list <- list(
-  Wave_B_labels = .replace_in_list(
-    standardized_value_labels,
-    mfinps1 = .replace_labels(
-    standardized_value_labels$mfinps1,
-    `-1` = NA_character_
-  )
-  ),
-  Wave_C_labels = .replace_in_list(
-    standardized_value_labels,
-    marmds1 = .replace_labels(
-    standardized_value_labels$marmds1,
-    `-1` = "no valid measurement"
-  ),
-    marmpa1 = c(`-2` = "na, see CMARMPAR", `0` = "not mentioned", `1` = "mentioned"),
-    marmpa2 = c(`-2` = "na, see CMARMPAR", `0` = "not mentioned", `1` = "mentioned"),
-    marmpa3 = .replace_labels(
-    standardized_value_labels$marmpa3,
-    `-2` = "na, see CMARMPAR"
-  ),
-    marmpa4 = .replace_labels(
-    standardized_value_labels$marmpa4,
-    `-2` = "na, see CMARMPAR"
-  ),
-    marmpa4o = .replace_labels(
-    standardized_value_labels$marmpa4o,
-    `-2` = "na, see CMARMPA4"
-  ),
-    marmpar = c(`-2` = "na, see CRM151", `1` = "no", `2` = "yes"),
-    marmss1 = c(`-2` = "na, see CRM151"),
-    mfinds1 = .replace_labels(
-    standardized_value_labels$mfinds1,
-    `-1` = "no valid measurement"
-  ),
-    mfinpos1 = .replace_labels(
-    standardized_value_labels$mfinpos1,
-    `-2` = "na, see CRM151",
-    `-1` = "no valid measurement"
-  ),
-    mfinss1 = c(`-2` = "na, see CRM151"),
-    rm151 = .replace_labels(
-    standardized_value_labels$rm151,
-    `-2` = "valid data"
-  )
-  ),
-  Wave_D_labels = .replace_in_list(
-    standardized_value_labels,
-    marmpa1 = c(`-2` = "na, see DMARMPAR", `0` = "not mentioned", `1` = "mentioned"),
-    marmpa2 = c(`-2` = "na, see DMARMPAR", `0` = "not mentioned", `1` = "mentioned"),
-    marmpa3 = .replace_labels(
-    standardized_value_labels$marmpa3,
-    `-2` = "na, see DMARMPAR"
-  ),
-    marmpa4 = .replace_labels(
-    standardized_value_labels$marmpa4,
-    `-2` = "na, see DMARMPAR",
-    `1` = "mentioned"
-  ),
-    marmpar = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mfinss1 = c(`-1` = "no valid measurement")
-  ),
-  Wave_E_labels = .replace_in_list(
-    standardized_value_labels,
-    marmpar = c(
-    `-3` = "test not done",
-    `-1` = "normal test",
-    `1` = "R cannot sit",
-    `2` = "measurement error",
-    `3` = "painful arm, no measurement",
-    `4` = "measurement on right arm",
-    `5` = "(part of) test refused",
-    `6` = "part of test wrongfully not done"
-  ),
-    marmss1 = c(`-1` = "no valid measurement")
-  ),
-  Wave_2B_labels = .replace_in_list(
-    standardized_value_labels,
-    marmds1 = .replace_labels(
-    standardized_value_labels$marmds1,
-    `-1` = "no valid measurement"
-  ),
-    marmds3 = .replace_labels(
-    standardized_value_labels$marmds3,
-    `-1` = "no valid measurement"
-  ),
-    marmpa1 = c(
-    `-1` = "no valid measurement",
-    `0` = "normal measurement",
-    `1` = "cannot sit",
-    `2` = "other to be coded"
-  ),
-    marmpa2 = c(
-    `-1` = "no valid measurement",
-    `0` = "normal measurement",
-    `1` = "cannot sit",
-    `2` = "other to be coded"
-  ),
-    marmss1 = .replace_labels(
-    standardized_value_labels$marmss1,
-    `-2` = "na, see BMARMPA1",
-    `-1` = "no valid measurement"
-  ),
-    marmss3 = .replace_labels(
-    standardized_value_labels$marmss3,
-    `-2` = "na, see BMARMPA2",
-    `-1` = "no valid measurement"
-  )
-  ),
-  Wave_F_labels = .replace_in_list(
-    standardized_value_labels,
-    marmpar = .replace_labels(
-    standardized_value_labels$marmpar,
-    `-3` = "section not done",
-    `-2` = "normal test",
-    `-1` = "partially no valid measurement"
-  ),
-    marmss1 = c(`-1` = "no valid measurement")
-  ),
-  Wave_G_labels = .replace_in_list(
-    standardized_value_labels,
-    marmpa0 = .replace_labels(
-    standardized_value_labels$marmpa0,
-    `-3` = "section not done",
-    `-2` = "normal test",
-    `-1` = "partially no valid measurement"
-  ),
-    marmpar = .replace_labels(
-    standardized_value_labels$marmpar,
-    `-3` = "section not done",
-    `-2` = "normal test",
-    `-1` = "partially no valid measurement"
-  ),
-    marmps2 = .replace_labels(
-    standardized_value_labels$marmps2,
-    `-1` = "no valid measurement"
-  ),
-    marmss0 = .replace_labels(
-    standardized_value_labels$marmss0,
-    `-1` = "no valid measurement"
-  ),
-    marmss1 = c(`-1` = "no valid measurement")
-  ),
-  Wave_H_labels = .replace_in_list(
-    standardized_value_labels,
-    marmpa0 = .replace_labels(
-    standardized_value_labels$marmpa0,
-    `-3` = "section not done",
-    `-2` = "normal test",
-    `-1` = "partially no valid measurement"
-  ),
-    marmss0 = .replace_labels(
-    standardized_value_labels$marmss0,
-    `-1` = "no valid measurement"
-  )
-  ),
-  Wave_3B_labels = .replace_in_list(
-    standardized_value_labels,
-    marmpa0 = .replace_labels(
-    standardized_value_labels$marmpa0,
-    `-3` = "section not done",
-    `-2` = "normal test",
-    `-1` = "partially no valid measurement"
-  ),
-    marmps02 = .replace_labels(
-    standardized_value_labels$marmps02,
-    `-1` = "no valid measurement"
-  ),
-    marmss01 = .replace_labels(
-    standardized_value_labels$marmss01,
-    `-1` = "no valid measurement"
-  )
-  ),
-  Wave_MB_labels = .replace_in_list(
-    standardized_value_labels,
-    marmpar = .replace_labels(
-    standardized_value_labels$marmpar,
-    `-3` = "section not done",
-    `-2` = "normal test",
-    `-1` = "partially no valid measurement"
-  ),
-    marmss1 = c(`-1` = "no valid measurement")
-  ),
-  Wave_I_labels = .replace_in_list(
-    standardized_value_labels,
-    marmpa0 = .replace_labels(
-    standardized_value_labels$marmpa0,
-    `-3` = "section not done",
-    `-2` = "normal test",
-    `-1` = "partially no valid measurement"
-  ),
-    marmps0 = .replace_labels(
-    standardized_value_labels$marmps0,
-    `-1` = "no valid measurement"
-  ),
-    marmss0 = .replace_labels(
-    standardized_value_labels$marmss0,
-    `-1` = "no valid measurement"
-  )
-  ),
-  Wave_J_labels = .replace_in_list(
-    standardized_value_labels,
-    marmpa0 = .replace_labels(
-    standardized_value_labels$marmpa0,
-    `-3` = "section not done",
-    `-2` = "normal test",
-    `-1` = "partially no valid measurement"
-  ),
-    marmps0 = .replace_labels(
-    standardized_value_labels$marmps0,
-    `-1` = "no valid measurement"
-  ),
-    marmss0 = .replace_labels(
-    standardized_value_labels$marmss0,
-    `-1` = "no valid measurement"
-  )
-  ),
-  Wave_K_labels = .replace_in_list(
-    standardized_value_labels,
-    marmpa0 = .replace_labels(
-    standardized_value_labels$marmpa0,
-    `-3` = "section not done",
-    `-2` = "normal test",
-    `-1` = "partially no valid measurement"
-  ),
-    marmps0 = .replace_labels(
-    standardized_value_labels$marmps0,
-    `-1` = "no valid measurement"
-  ),
-    marmss0 = .replace_labels(
-    standardized_value_labels$marmss0,
-    `-1` = "no valid measurement"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   marmds0 = "numeric",
   marmds01 = "numeric",
@@ -727,105 +55,369 @@ var_types_vec <- c(
   rm151 = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "151", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "151", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "151", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "151", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  marmds0 = "Pretest blood pressure 0 sitting (arm) mmHg: diastolic",
+  marmds01 = "Pretest 1: bloodpr sit (arm) mmHg: diastolic",
+  marmds02 = "Pretest 2: bloodpr sit (arm) mmHg: diastolic",
+  marmds1 = "Blood pressure 1 sitting (arm) mmHg: diastolic",
+  marmds2 = "Blood pressure 2 sitting (arm) mmHg: diastolic",
+  marmds3 = "Blood pressure 3 sitting (arm) mmHg: diastolic",
+  marmds4 = "Retest Bloodpr 4 sitting (arm) mmHg: diastolic",
+  marmlds1 = "Bloodpr lying (arm) mmHg: diastolic",
+  marmlps1 = "Pulse rate lying (arm)",
+  marmlss1 = "Bloodpr lying (arm) mmHg: systolic",
+  marmpa0 = "Pretest blood pressure particularities",
+  marmpa1 = "Blood pressure particularities item 1",
+  marmpa2 = "Blood pressure particularities item 2",
+  marmpa3 = "Partic. bloodpressure: cannot lie down",
+  marmpa4 = "Partic. bloodpressure: other",
+  marmpa4o = "Partic other: specification",
+  marmpar = "Particularities bloodpressure",
+  marmps0 = "Pretest pulse rate 0 sitting (arm)",
+  marmps01 = "Pretest 1: pulse rate sit (arm)",
+  marmps02 = "Pretest 2: pulse rate sit (arm)",
+  marmps1 = "Pulse rate 1 sitting (arm)",
+  marmps2 = "Pulse rate 2 sitting (arm)",
+  marmps3 = "Pulse rate 3 sitting (arm)",
+  marmps4 = "Retest Pulse rate 4 sitting (arm)",
+  marmsds1 = "Bloodpr standing (arm) mmHg: diastolic",
+  marmsps1 = "Pulse rate standing (arm)",
+  marmss0 = "Pretest blood pressure 0 sitting (arm) mmHg: systolic",
+  marmss01 = "Pretest 1: bloodpr sit (arm) mmHg: systolic",
+  marmss02 = "Pretest 2: bloodpr sit (arm) mmHg: systolic",
+  marmss1 = "Blood pressure 1 sitting (arm) mmHg: systolic",
+  marmss2 = "Blood pressure 2 sitting (arm) mmHg: systolic",
+  marmss3 = "Blood pressure 3 sitting (arm) mmHg: systolic",
+  marmss4 = "Retest Bloodpr 4 sitting (arm) mmHg: systolic",
+  marmsss1 = "Bloodpr standing (arm) mmHg: systolic",
+  mfinds1 = "Bloodpressure (finger) mmHg: diastolic",
+  mfinpo1 = "Blood pressure (finger): position",
+  mfinpos1 = "Blood pressure (finger): position",
+  mfinps1 = "Pulse rate measurement 1",
+  mfinps2 = "Pulse rate (2)",
+  mfinps3 = "Pulse rate (3)",
+  mfinss1 = "Bloodpressure (finger) mmHg: systolic",
+  rm151 = "Reason missing: LASAC151",
+  .applies_to_waves = c("Z")
 )
 
-fc_labels$value_labels[["mfinps2"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["mfinps3"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["marmlds1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["marmlps1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["marmlss1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["marmsds1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["marmsps1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["marmsss1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["mfinps1"]][fc_labels$value_labels$LASA_Wave == "C"] <- list(NULL)
-fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["marmlds1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["marmlps1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["marmlss1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["marmsds1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["marmsps1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["marmss1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["marmsss1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["mfinds1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["mfinpo1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["mfinps1"]][fc_labels$value_labels$LASA_Wave == "D"] <- list(NULL)
-fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["marmds2"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["marmds3"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["marmps2"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["marmps3"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["marmss2"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["marmss3"]][fc_labels$value_labels$LASA_Wave == "E"] <- list(NULL)
-fc_labels$value_labels[["marmds2"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["marmds4"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["marmps2"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["marmps3"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["marmps4"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["marmss2"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["marmss4"]][fc_labels$value_labels$LASA_Wave == "2B"] <- list(NULL)
-fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["marmds2"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["marmds3"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["marmps2"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["marmps3"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["marmss2"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["marmss3"]][fc_labels$value_labels$LASA_Wave == "F"] <- list(NULL)
-fc_labels$value_labels[["marmds0"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["marmds2"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["marmds3"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["marmps0"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["marmps3"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["marmss2"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["marmss3"]][fc_labels$value_labels$LASA_Wave == "G"] <- list(NULL)
-fc_labels$value_labels[["marmds0"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
-fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
-fc_labels$value_labels[["marmpar"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
-fc_labels$value_labels[["marmps0"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
-fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
-fc_labels$value_labels[["marmss1"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
-fc_labels$value_labels[["marmds01"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["marmds02"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["marmds2"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["marmpar"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["marmps01"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["marmps2"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["marmss02"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["marmss1"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["marmss2"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
-fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
-fc_labels$value_labels[["marmds2"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
-fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
-fc_labels$value_labels[["marmps2"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
-fc_labels$value_labels[["marmss2"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
-fc_labels$value_labels[["marmds0"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
-fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
-fc_labels$value_labels[["marmpar"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
-fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
-fc_labels$value_labels[["marmss1"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
-fc_labels$value_labels[["marmds0"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
-fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
-fc_labels$value_labels[["marmpar"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
-fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
-fc_labels$value_labels[["marmss1"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
-fc_labels$value_labels[["marmds0"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
-fc_labels$value_labels[["marmds1"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
-fc_labels$value_labels[["marmpar"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
-fc_labels$value_labels[["marmps1"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
-fc_labels$value_labels[["marmss1"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+variable_labels(
+  "mfinps2", "mfinps3",
+  .applies_to_waves = c("B")
+)
 
-.lasa_fc_151 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "marmlds1", "marmlps1", "marmlss1", "marmpa3", "marmpa4", "marmsds1", "marmsps1", "marmsss1", "mfinds1", "mfinss1",
+  .applies_to_waves = c("C", "D")
+)
+
+variable_labels(
+  "marmpa4o", "mfinpos1", "rm151",
+  .applies_to_waves = c("C")
+)
+
+variable_labels(
+  "marmpar",
+  .applies_to_waves = c("C", "D", "E", "F", "G", "H", "3B", "MB", "I", "J", "K")
+)
+
+variable_labels(
+  "mfinpo1",
+  .applies_to_waves = c("D")
+)
+
+variable_labels(
+  "marmps1", "marmps2",
+  .applies_to_waves = c("E", "F", "G", "3B", "MB")
+)
+
+variable_labels(
+  "marmps3",
+  .applies_to_waves = c("E", "F", "G")
+)
+
+variable_labels(
+  "marmds4", "marmps4", "marmss4",
+  .applies_to_waves = c("2B")
+)
+
+variable_labels(
+  "marmds01", "marmds02", "marmps01", "marmps02", "marmss01", "marmss02",
+  .applies_to_waves = c("3B")
+)
+
+variable_labels(
+  mfinps1 = "Pulse rate (1)",
+  .applies_to_waves = c("B")
+)
+
+variable_labels(
+  marmds1 = "Bloodpr sitting (arm) mmHg: diastolic",
+  marmpa1 = "Partic. bloodpressure: cannot stand",
+  marmpa2 = "Partic. bloodpressure: cannot sit",
+  marmps1 = "Pulse rate sitting (arm)",
+  marmss1 = "Bloodpr sitting (arm) mmHg: systolic",
+  mfinps1 = "Pulse rate (finger)",
+  .applies_to_waves = c("C", "D")
+)
+
+variable_labels(
+  marmds1 = "Bloodpr 1 sitting (arm) mmHg: diastolic",
+  marmds2 = "Bloodpr 2 sitting (arm) mmHg: diastolic",
+  marmss1 = "Bloodpr 1 sitting (arm) mmHg: systolic",
+  marmss2 = "Bloodpr 2 sitting (arm) mmHg: systolic",
+  .applies_to_waves = c("E", "2B", "F", "G", "3B", "MB")
+)
+
+variable_labels(
+  marmds3 = "Bloodpr 3 sitting (arm) mmHg: diastolic",
+  marmss3 = "Bloodpr 3 sitting (arm) mmHg: systolic",
+  .applies_to_waves = c("E", "F", "G")
+)
+
+variable_labels(
+  marmds3 = "Retest Bloodpr 3 sitting (arm) mmHg: diastolic",
+  marmpa1 = "Particularities bloodpressure",
+  marmpa2 = "Retest Particularities bloodpressure",
+  marmps1 = "Pulse rate sitting (arm) 1",
+  marmps2 = "Pulse rate sitting (arm) 2",
+  marmps3 = "Retest Pulse rate 3 sitting (arm)",
+  marmss3 = "Retest Bloodpr 3 sitting (arm) mmHg: systolic",
+  .applies_to_waves = c("2B")
+)
+
+variable_labels(
+  marmds0 = "Pretest: bloodpr 0 sit (arm) mmHg: diastolic",
+  marmps0 = "Pretest: pulse rate 0 sit (arm)",
+  marmss0 = "Pretest: bloodpr 0 sit (arm) mmHg: systolic",
+  .applies_to_waves = c("G")
+)
+
+variable_labels(
+  marmpa0 = "Particularities bloodpressure Pretest",
+  .applies_to_waves = c("G", "H", "3B")
+)
+
+variable_labels(
+  marmds0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: diastolic",
+  marmds1 = "Bloodpressure (1) sitting (arm) mmHg: diastolic",
+  marmps0 = "Pretest: pulse rate (0) sitting (arm)",
+  marmps1 = "Pulse rate (1) sitting (arm)",
+  marmss0 = "Pretest: bloodpressure (0) sitting (arm) mmHg: systolic",
+  marmss1 = "Bloodpressure (1) sitting (arm) mmHg: systolic",
+  .applies_to_waves = c("H", "I", "J", "K")
+)
+
+variable_labels(
+  marmpa0 = "Particularities bloodpressure pretest",
+  .applies_to_waves = c("I", "J", "K")
+)
+
+# define value labels ----
+value_labels(
+  `-1` = "not available",
+  .applies_to_vars = c("marmds1", "marmds3", "marmpa0", "marmpa1", "marmpa2", "marmpar", "marmps0", "marmps02", "marmps2", "marmss0", "marmss01", "marmss1", "marmss3", "mfinds1", "mfinpos1", "mfinps1", "mfinss1"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "not available",
+  .applies_to_vars = c("marmpa0", "marmpa1", "marmpa2", "marmpa3", "marmpa4", "marmpa4o", "marmpar", "marmss1", "marmss3", "mfinpos1", "mfinss1", "rm151"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "not available", `1` = "R cannot sit", `2` = "measurement error", `3` = "painful arm, no measurement", `4` = "measurement on right arm", `5` = "(part of) test refused", `6` = "part of test wrongfully not done", `8` = "- to be coded -",
+  .applies_to_vars = c("marmpa0", "marmpar"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `0` = "not mentioned", `1` = "mentioned", `2` = "other to be coded",
+  .applies_to_vars = c("marmpa1", "marmpa2"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("marmpa3"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `0` = "not mentioned", `1` = "mentioned --> CMARMPA4O",
+  .applies_to_vars = c("marmpa4"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "measurement error", `2` = "refused", `3` = "problem with finger", `4` = "measurement on right arm", `5` = "miscellaneous", `6` = "no normal score", `7` = "no specification",
+  .applies_to_vars = c("marmpa4o"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "standing", `2` = "sitting", `3` = "lying down",
+  .applies_to_vars = c("mfinpos1"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `2` = "interview terminated",
+  .applies_to_vars = c("rm151"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-1` = NA_character_,
+  .applies_to_vars = c("mfinps1"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-1` = "no valid measurement",
+  .applies_to_vars = c("marmds1"),
+  .applies_to_waves = c("C", "2B")
+)
+
+value_labels(
+  `-2` = "na, see CMARMPAR", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("marmpa1", "marmpa2", "marmpa3"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-2` = "na, see CMARMPAR", `0` = "not mentioned", `1` = "mentioned --> CMARMPA4O",
+  .applies_to_vars = c("marmpa4"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-2` = "na, see CMARMPA4", `1` = "measurement error", `2` = "refused", `3` = "problem with finger", `4` = "measurement on right arm", `5` = "miscellaneous", `6` = "no normal score", `7` = "no specification",
+  .applies_to_vars = c("marmpa4o"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-2` = "na, see CRM151", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("marmpar"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-2` = "na, see CRM151",
+  .applies_to_vars = c("marmss1", "mfinss1"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-1` = "no valid measurement",
+  .applies_to_vars = c("mfinds1"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-2` = "na, see CRM151", `-1` = "no valid measurement", `1` = "standing", `2` = "sitting", `3` = "lying down",
+  .applies_to_vars = c("mfinpos1"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-2` = "valid data", `2` = "interview terminated",
+  .applies_to_vars = c("rm151"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-2` = "na, see DMARMPAR", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("marmpa1", "marmpa2", "marmpa3", "marmpa4"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("marmpar"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `-1` = "no valid measurement",
+  .applies_to_vars = c("mfinss1"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `-3` = "test not done", `-1` = "normal test", `1` = "R cannot sit", `2` = "measurement error", `3` = "painful arm, no measurement", `4` = "measurement on right arm", `5` = "(part of) test refused", `6` = "part of test wrongfully not done",
+  .applies_to_vars = c("marmpar"),
+  .applies_to_waves = c("E")
+)
+
+value_labels(
+  `-1` = "no valid measurement",
+  .applies_to_vars = c("marmss1"),
+  .applies_to_waves = c("E", "F", "G", "MB")
+)
+
+value_labels(
+  `-1` = "no valid measurement",
+  .applies_to_vars = c("marmds3"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-1` = "no valid measurement", `0` = "normal measurement", `1` = "cannot sit", `2` = "other to be coded",
+  .applies_to_vars = c("marmpa1", "marmpa2"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-2` = "na, see BMARMPA1", `-1` = "no valid measurement",
+  .applies_to_vars = c("marmss1"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-2` = "na, see BMARMPA2", `-1` = "no valid measurement",
+  .applies_to_vars = c("marmss3"),
+  .applies_to_waves = c("2B")
+)
+
+value_labels(
+  `-3` = "section not done", `-2` = "normal test", `-1` = "partially no valid measurement", `1` = "R cannot sit", `2` = "measurement error", `3` = "painful arm, no measurement", `4` = "measurement on right arm", `5` = "(part of) test refused", `6` = "part of test wrongfully not done", `8` = "- to be coded -",
+  .applies_to_vars = c("marmpar"),
+  .applies_to_waves = c("F", "G", "MB")
+)
+
+value_labels(
+  `-3` = "section not done", `-2` = "normal test", `-1` = "partially no valid measurement", `1` = "R cannot sit", `2` = "measurement error", `3` = "painful arm, no measurement", `4` = "measurement on right arm", `5` = "(part of) test refused", `6` = "part of test wrongfully not done", `8` = "- to be coded -",
+  .applies_to_vars = c("marmpa0"),
+  .applies_to_waves = c("G", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-1` = "no valid measurement",
+  .applies_to_vars = c("marmps2"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-1` = "no valid measurement",
+  .applies_to_vars = c("marmss0"),
+  .applies_to_waves = c("G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-1` = "no valid measurement",
+  .applies_to_vars = c("marmps02", "marmss01"),
+  .applies_to_waves = c("3B")
+)
+
+value_labels(
+  `-1` = "no valid measurement",
+  .applies_to_vars = c("marmps0"),
+  .applies_to_waves = c("I", "J", "K")
+)
+
+.lasa_fc_151 <- .lasa_finalize_fc("151")
 

@@ -1,47 +1,38 @@
 ## LASA filecode 871 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(ms01 = "COLIA1 allele frequency", ms012 = "COLIA1 genotype")
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `C` = c(
-    "ms01",
-    "ms012"
-  )
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
+var_types_vec <- c(
+  ms01 = "categorical",
+  ms012 = "categorical"
 )
 
-variable_labels_list <- list(
-  Wave_C_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
+# define variable labels ----
+variable_labels(
+  ms01 = "COLIA1 allele frequency",
+  ms012 = "COLIA1 genotype",
+  .applies_to_waves = c("Z")
 )
 
-standardized_value_labels <- list(
-  ms01 = c(`-1` = "no determination"),
-  ms012 = c(`-1` = "no determination")
+variable_labels(
+  "ms01", "ms012",
+  .applies_to_waves = c("C")
 )
 
-value_labels_list <- list(
-  Wave_C_labels = standardized_value_labels,
-  Harmonized_labels = standardized_value_labels
+# define value labels ----
+value_labels(
+  `-1` = "no determination",
+  .applies_to_vars = c("ms01", "ms012"),
+  .applies_to_waves = c("Z", "C")
 )
 
-var_types_vec <- c(ms01 = "categorical", ms012 = "categorical")
-
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "871", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "871", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "871", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "871", waves = .lasa_wave_rows())
-)
-
-.lasa_fc_871 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+.lasa_fc_871 <- .lasa_finalize_fc("871")
 

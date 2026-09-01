@@ -1,54 +1,15 @@
 ## LASA filecode mb008 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  age = "Age at LASA main interview (w1)",
-  days = "Age at LASA main interview in days (w1)",
-  mage = "Age at LASA medical interview (w1)",
-  mdays = "Age at LASA medical interview in days (w1)",
-  t2dat_ = "LASA main interview date (w1)",
-  t2mdat_ = "LASA medical interview date (w1)"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `MB` = c(
-    "age",
-    "days",
-    "mage",
-    "mdays",
-    "t2dat_",
-    "t2mdat_"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_MB_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
-)
-
-standardized_value_labels <- list(
-  age = stats::setNames(character(0), character(0)),
-  days = stats::setNames(character(0), character(0)),
-  mage = stats::setNames(character(0), character(0)),
-  mdays = stats::setNames(character(0), character(0)),
-  t2dat_ = stats::setNames(character(0), character(0)),
-  t2mdat_ = stats::setNames(character(0), character(0))
-)
-
-value_labels_list <- list(
-  Wave_MB_labels = standardized_value_labels,
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   age = "numeric",
   days = "numeric",
@@ -58,21 +19,25 @@ var_types_vec <- c(
   t2mdat_ = "date"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "mb008", waves = .lasa_wave_rows()) |>
-    .override_label(wave = "MB", variable = "t2dat_", override_value = "t2dat_") |>
-    .override_label(wave = "MB", variable = "t2mdat_", override_value = "t2mdat_"),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "mb008", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "mb008", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "mb008", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  age = "Age at LASA main interview (w1)",
+  days = "Age at LASA main interview in days (w1)",
+  mage = "Age at LASA medical interview (w1)",
+  mdays = "Age at LASA medical interview in days (w1)",
+  t2dat_ = "LASA main interview date (w1)",
+  t2mdat_ = "LASA medical interview date (w1)",
+  .applies_to_waves = c("Z")
 )
 
-fc_labels$value_labels[["age"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
-fc_labels$value_labels[["days"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
-fc_labels$value_labels[["mage"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
-fc_labels$value_labels[["mdays"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
-fc_labels$value_labels[["t2dat_"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
-fc_labels$value_labels[["t2mdat_"]][fc_labels$value_labels$LASA_Wave == "MB"] <- list(NULL)
+variable_labels(
+  "age", "days", "mage", "mdays", "t2dat_", "t2mdat_",
+  .applies_to_waves = c("MB")
+)
 
-.lasa_fc_mb008 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+# define value labels ----
+.lasa_fc_mb008 <- .lasa_finalize_fc("mb008")
+.lasa_fc_mb008$variables <- .lasa_fc_mb008$variables |>
+  .override_label(wave = "MB", variable = "t2dat_", override_value = "t2dat_") |>
+  .override_label(wave = "MB", variable = "t2mdat_", override_value = "t2mdat_")
 

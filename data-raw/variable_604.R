@@ -1,312 +1,15 @@
 ## LASA filecode 604 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  tphear = "Change in hearing over past 3 years",
-  tpsen01 = "Usually wears glasses or contact lenses",
-  tpsen03 = "Read small newspaper print without glasses or contact lenses",
-  tpsen04 = "Read small newspaper print with glasses or other aid",
-  tpsen07 = "Usually wears hearing aid",
-  tpsen09 = "Follow conversation with 3 or 4 persons without hearing aid",
-  tpsen10 = "Follow conversation with 3 or 4 persons with hearing aid",
-  tpsight = "Change in vision over past 3 years"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `C` = c(
-    "tphear",
-    "tpsight"
-  ),
-  `D` = c(
-    "tphear",
-    "tpsight"
-  ),
-  `E` = c(
-    "tphear",
-    "tpsight"
-  ),
-  `F` = c(
-    "tpsen01",
-    "tpsen03",
-    "tpsen04",
-    "tpsen07",
-    "tpsen09",
-    "tpsen10"
-  ),
-  `G` = c(
-    "tpsen01",
-    "tpsen03",
-    "tpsen04",
-    "tpsen07",
-    "tpsen09",
-    "tpsen10"
-  ),
-  `H` = c(
-    "tpsen01",
-    "tpsen03",
-    "tpsen04",
-    "tpsen07",
-    "tpsen09",
-    "tpsen10"
-  ),
-  `I` = c(
-    "tpsen01",
-    "tpsen03",
-    "tpsen04",
-    "tpsen07",
-    "tpsen09",
-    "tpsen10"
-  ),
-  `J` = c(
-    "tpsen01",
-    "tpsen03",
-    "tpsen04",
-    "tpsen07",
-    "tpsen09",
-    "tpsen10"
-  ),
-  `K` = c(
-    "tpsen01",
-    "tpsen03",
-    "tpsen04",
-    "tpsen07",
-    "tpsen09",
-    "tpsen10"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_C_labels = .replace_labels(
-    harmonized_labels,
-    tphear = "Senses: change hearing last 3 years",
-    tpsight = "Senses: change visus last 3 years"
-  ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels,
-    tphear = "Senses: change hearing last 3 years",
-    tpsight = "Senses: change visus last 3 years"
-  ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels,
-    tphear = "Senses: change hearing last 3 years",
-    tpsight = "Senses: change visus last 3 years"
-  ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels,
-    tpsen01 = "R usually wears glasses or contactlenses",
-    tpsen03 = "Small print in paper without glasses (or contactlenses)",
-    tpsen04 = "Small print in paper with glasses or other aid",
-    tpsen07 = "R usually wears hearing aid",
-    tpsen09 = "Follow conversation 3 or 4 persons: without hearing aid",
-    tpsen10 = "Follow conversation 3 or 4 persons: with hearing aid"
-  ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels,
-    tpsen01 = "R usually wears glasses or contactlenses",
-    tpsen03 = "Small print in paper without glasses (or contactlenses)",
-    tpsen04 = "Small print in paper with glasses or other aid",
-    tpsen07 = "R usually wears hearing aid",
-    tpsen09 = "Follow conversation 3 or 4 persons: without hearing aid",
-    tpsen10 = "Follow conversation 3 or 4 persons: with hearing aid"
-  ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels,
-    tpsen01 = "R usually wears glasses or contactlenses",
-    tpsen03 = "Small print in paper without glasses (or contactlenses)",
-    tpsen04 = "Small print in paper with glasses or other aid",
-    tpsen07 = "R usually wears hearing aid",
-    tpsen09 = "Follow conversation 3 or 4 persons: without hearing aid",
-    tpsen10 = "Follow conversation 3 or 4 persons: with hearing aid"
-  ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels,
-    tpsen01 = "R usually wears glasses or contactlenses",
-    tpsen03 = "Small print in paper without glasses (or contactlenses)",
-    tpsen04 = "Small print in paper with glasses or other aid",
-    tpsen07 = "R usually wears hearing aid",
-    tpsen09 = "Follow conversation 3 or 4 persons: without hearing aid",
-    tpsen10 = "Follow conversation 3 or 4 persons: with hearing aid"
-  ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels,
-    tpsen01 = "R usually wears glasses or contactlenses",
-    tpsen03 = "Small print in paper without glasses (or contactlenses)",
-    tpsen04 = "Small print in paper with glasses or other aid",
-    tpsen07 = "R usually wears hearing aid",
-    tpsen09 = "Follow conversation 3 or 4 persons: without hearing aid",
-    tpsen10 = "Follow conversation 3 or 4 persons: with hearing aid"
-  ),
-  Wave_K_labels = .replace_labels(
-    harmonized_labels,
-    tpsen01 = "R usually wears glasses or contactlenses",
-    tpsen03 = "Small print in paper without glasses (or contactlenses)",
-    tpsen04 = "Small print in paper with glasses or other aid",
-    tpsen07 = "R usually wears hearing aid",
-    tpsen09 = "Follow conversation 3 or 4 persons: without hearing aid",
-    tpsen10 = "Follow conversation 3 or 4 persons: with hearing aid"
-  ),
-  Harmonized_labels = harmonized_labels
-)
-
-standardized_value_labels <- list(
-  tphear = c(
-    default_missing_labels[c("-1")],
-    `1` = "much better",
-    `2` = "better",
-    `3` = "the same",
-    `4` = "worse",
-    `5` = "much worse"
-  ),
-  tpsen01 = c(
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    `2` = "yes"
-  ),
-  tpsen03 = c(
-    default_missing_labels[c("-1")],
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, R cannot"
-  ),
-  tpsen04 = c(
-    `-2` = "na, see TPSEN03",
-    default_missing_labels[c("-1")],
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, R cannot",
-    `5` = "R does not use aid"
-  ),
-  tpsen07 = c(
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    `2` = "yes"
-  ),
-  tpsen09 = c(
-    default_missing_labels[c("-1")],
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, R cannot"
-  ),
-  tpsen10 = c(
-    `-2` = "na, see TPSEN09",
-    default_missing_labels[c("-1")],
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, R cannot",
-    `5` = "R does not have a hearing aid"
-  ),
-  tpsight = c(
-    default_missing_labels[c("-1")],
-    `1` = "much better",
-    `2` = "better",
-    `3` = "the same",
-    `4` = "worse",
-    `5` = "much worse"
-  )
-)
-
-value_labels_list <- list(
-  Wave_C_labels = standardized_value_labels,
-  Wave_D_labels = standardized_value_labels,
-  Wave_E_labels = standardized_value_labels,
-  Wave_F_labels = .replace_in_list(
-    standardized_value_labels,
-    tpsen04 = c(
-    `-2` = "na, see FTPSEN03",
-    `-1` = "na, asked",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, R cannot"
-  ),
-    tpsen10 = c(
-    `-2` = "na, see FTPSEN09",
-    `-1` = "na, asked",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, R cannot"
-  )
-  ),
-  Wave_G_labels = .replace_in_list(
-    standardized_value_labels,
-    tpsen04 = c(
-    `-2` = "na, see GTPSEN03",
-    `-1` = "na, asked",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, R cannot"
-  ),
-    tpsen10 = c(
-    `-2` = "na, see GTPSEN09",
-    `-1` = "na, asked",
-    `1` = "yes, without difficulty",
-    `2` = "yes, with some difficulty",
-    `3` = "yes, with much difficulty",
-    `4` = "no, R cannot"
-  )
-  ),
-  Wave_H_labels = .replace_in_list(
-    standardized_value_labels,
-    tpsen04 = .replace_labels(
-    standardized_value_labels$tpsen04,
-    `-2` = "na, see HTPSEN03"
-  ),
-    tpsen10 = .replace_labels(
-    standardized_value_labels$tpsen10,
-    `-2` = "na, see HTPSEN09"
-  )
-  ),
-  Wave_I_labels = .replace_in_list(
-    standardized_value_labels,
-    tpsen04 = .replace_labels(
-    standardized_value_labels$tpsen04,
-    `-2` = "na, see ITPSEN03"
-  ),
-    tpsen10 = .replace_labels(
-    standardized_value_labels$tpsen10,
-    `-2` = "na, see ITPSEN09"
-  )
-  ),
-  Wave_J_labels = .replace_in_list(
-    standardized_value_labels,
-    tpsen04 = .replace_labels(
-    standardized_value_labels$tpsen04,
-    `-2` = "na, see JTPSEN03"
-  ),
-    tpsen10 = .replace_labels(
-    standardized_value_labels$tpsen10,
-    `-2` = "na, see JTPSEN09"
-  )
-  ),
-  Wave_K_labels = .replace_in_list(
-    standardized_value_labels,
-    tpsen04 = .replace_labels(
-    standardized_value_labels$tpsen04,
-    `-2` = "na, see KTPSEN03"
-  ),
-    tpsen10 = .replace_labels(
-    standardized_value_labels$tpsen10,
-    `-2` = "na, see KTPSEN09"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   tphear = "categorical",
   tpsen01 = "categorical",
@@ -318,12 +21,137 @@ var_types_vec <- c(
   tpsight = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "604", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "604", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "604", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "604", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  tphear = "Change in hearing over past 3 years",
+  tpsen01 = "Usually wears glasses or contact lenses",
+  tpsen03 = "Read small newspaper print without glasses or contact lenses",
+  tpsen04 = "Read small newspaper print with glasses or other aid",
+  tpsen07 = "Usually wears hearing aid",
+  tpsen09 = "Follow conversation with 3 or 4 persons without hearing aid",
+  tpsen10 = "Follow conversation with 3 or 4 persons with hearing aid",
+  tpsight = "Change in vision over past 3 years",
+  .applies_to_waves = c("Z")
 )
 
-.lasa_fc_604 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  tphear = "Senses: change hearing last 3 years",
+  tpsight = "Senses: change visus last 3 years",
+  .applies_to_waves = c("C", "D", "E")
+)
+
+variable_labels(
+  tpsen01 = "R usually wears glasses or contactlenses",
+  tpsen03 = "Small print in paper without glasses (or contactlenses)",
+  tpsen04 = "Small print in paper with glasses or other aid",
+  tpsen07 = "R usually wears hearing aid",
+  tpsen09 = "Follow conversation 3 or 4 persons: without hearing aid",
+  tpsen10 = "Follow conversation 3 or 4 persons: with hearing aid",
+  .applies_to_waves = c("F", "G", "H", "I", "J", "K")
+)
+
+# define value labels ----
+value_labels(
+  `-1` = "na, asked", `1` = "much better", `2` = "better", `3` = "the same", `4` = "worse", `5` = "much worse",
+  .applies_to_vars = c("tphear", "tpsight"),
+  .applies_to_waves = c("Z", "C", "D", "E")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("tpsen01", "tpsen07"),
+  .applies_to_waves = c("Z", "F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, R cannot",
+  .applies_to_vars = c("tpsen03", "tpsen09"),
+  .applies_to_waves = c("Z", "F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "na, see TPSEN03", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, R cannot", `5` = "R does not use aid",
+  .applies_to_vars = c("tpsen04"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "na, see TPSEN09", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, R cannot", `5` = "R does not have a hearing aid",
+  .applies_to_vars = c("tpsen10"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "na, see FTPSEN03", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, R cannot",
+  .applies_to_vars = c("tpsen04"),
+  .applies_to_waves = c("F")
+)
+
+value_labels(
+  `-2` = "na, see FTPSEN09", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, R cannot",
+  .applies_to_vars = c("tpsen10"),
+  .applies_to_waves = c("F")
+)
+
+value_labels(
+  `-2` = "na, see GTPSEN03", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, R cannot",
+  .applies_to_vars = c("tpsen04"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-2` = "na, see GTPSEN09", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, R cannot",
+  .applies_to_vars = c("tpsen10"),
+  .applies_to_waves = c("G")
+)
+
+value_labels(
+  `-2` = "na, see HTPSEN03", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, R cannot", `5` = "R does not use aid",
+  .applies_to_vars = c("tpsen04"),
+  .applies_to_waves = c("H")
+)
+
+value_labels(
+  `-2` = "na, see HTPSEN09", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, R cannot", `5` = "R does not have a hearing aid",
+  .applies_to_vars = c("tpsen10"),
+  .applies_to_waves = c("H")
+)
+
+value_labels(
+  `-2` = "na, see ITPSEN03", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, R cannot", `5` = "R does not use aid",
+  .applies_to_vars = c("tpsen04"),
+  .applies_to_waves = c("I")
+)
+
+value_labels(
+  `-2` = "na, see ITPSEN09", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, R cannot", `5` = "R does not have a hearing aid",
+  .applies_to_vars = c("tpsen10"),
+  .applies_to_waves = c("I")
+)
+
+value_labels(
+  `-2` = "na, see JTPSEN03", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, R cannot", `5` = "R does not use aid",
+  .applies_to_vars = c("tpsen04"),
+  .applies_to_waves = c("J")
+)
+
+value_labels(
+  `-2` = "na, see JTPSEN09", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, R cannot", `5` = "R does not have a hearing aid",
+  .applies_to_vars = c("tpsen10"),
+  .applies_to_waves = c("J")
+)
+
+value_labels(
+  `-2` = "na, see KTPSEN03", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, R cannot", `5` = "R does not use aid",
+  .applies_to_vars = c("tpsen04"),
+  .applies_to_waves = c("K")
+)
+
+value_labels(
+  `-2` = "na, see KTPSEN09", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, R cannot", `5` = "R does not have a hearing aid",
+  .applies_to_vars = c("tpsen10"),
+  .applies_to_waves = c("K")
+)
+
+.lasa_fc_604 <- .lasa_finalize_fc("604")
 

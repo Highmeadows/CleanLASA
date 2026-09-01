@@ -1,178 +1,15 @@
 ## LASA filecode 032 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  prefe01 = "When I need help, I want to organize it",
-  prefe02 = "When move because health I want move to",
-  prefe03 = "When I need help, I want to organize it",
-  prefe04 = "When move because health I want move to",
-  prefe05 = "When I need help, I want to organize it",
-  prefe06 = "When move because health I want move to",
-  prefe07 = "When could choose again I would live at",
-  prefe08 = "When could choose again I would live at",
-  prefe09 = "When could choose again I would live at",
-  prefe10 = "When could choose again I would live at",
-  prefe11 = "When could choose again I would live at",
-  prefe12 = "When could choose again I would live at"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `B` = c(
-    "prefe01",
-    "prefe02",
-    "prefe03",
-    "prefe04",
-    "prefe05",
-    "prefe06",
-    "prefe07",
-    "prefe08",
-    "prefe09",
-    "prefe10",
-    "prefe11",
-    "prefe12"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
-)
-
-standardized_value_labels <- list(
-  prefe01 = c(
-    `-6` = "not available, technical reason",
-    `-5` = "not available, interview terminated",
-    default_missing_labels[c("-4", "-3", "-2", "-1")],
-    `1` = "myself",
-    `2` = "by the family doctor"
-  ),
-  prefe02 = c(
-    default_missing_labels[c("-3", "-2", "-1")],
-    `1` = "family",
-    `2` = "residential home"
-  ),
-  prefe03 = c(
-    default_missing_labels[c("-3", "-2", "-1")],
-    `1` = "by family doctor",
-    `2` = "by children"
-  ),
-  prefe04 = c(
-    default_missing_labels[c("-3", "-2", "-1")],
-    `1` = "residential home",
-    `2` = "old peoples home (with service)"
-  ),
-  prefe05 = c(
-    default_missing_labels[c("-3", "-2", "-1")],
-    `1` = "myself",
-    `2` = "by children"
-  ),
-  prefe06 = c(
-    default_missing_labels[c("-3", "-2", "-1")],
-    `1` = "family",
-    `2` = "old peoples home (with service)"
-  ),
-  prefe07 = c(
-    `-6` = "not available, technical reason",
-    `-5` = "not available, interview terminated",
-    default_missing_labels[c("-4", "-3", "-2", "-1")],
-    `1` = "home",
-    `2` = "residential home"
-  ),
-  prefe08 = c(
-    default_missing_labels[c("-3", "-2", "-1")],
-    `1` = "home",
-    `2` = "family"
-  ),
-  prefe09 = c(
-    default_missing_labels[c("-3", "-2", "-1")],
-    `1` = "nursing home",
-    `2` = "home"
-  ),
-  prefe10 = c(
-    default_missing_labels[c("-3", "-2", "-1")],
-    `1` = "family",
-    `2` = "nursing home"
-  ),
-  prefe11 = c(
-    default_missing_labels[c("-3", "-2", "-1")],
-    `1` = "residential home",
-    `2` = "nursing home"
-  ),
-  prefe12 = c(
-    default_missing_labels[c("-3", "-2", "-1")],
-    `1` = "residential home",
-    `2` = "family"
-  )
-)
-
-value_labels_list <- list(
-  Wave_B_labels = .replace_in_list(
-    standardized_value_labels,
-    prefe01 = .replace_labels(
-    standardized_value_labels$prefe01,
-    `-6` = "na, technical reason",
-    `-5` = "na, interview terminated",
-    `-2` = "na, BHINDEP<>1"
-  ),
-    prefe02 = .replace_labels(
-    standardized_value_labels$prefe02,
-    `-2` = "na, see BPREFE01"
-  ),
-    prefe03 = .replace_labels(
-    standardized_value_labels$prefe03,
-    `-2` = "na, see BPREFE01"
-  ),
-    prefe04 = .replace_labels(
-    standardized_value_labels$prefe04,
-    `-2` = "na, see BPREFE01"
-  ),
-    prefe05 = .replace_labels(
-    standardized_value_labels$prefe05,
-    `-2` = "na, see BPREFE01"
-  ),
-    prefe06 = .replace_labels(
-    standardized_value_labels$prefe06,
-    `-2` = "na, see BPREFE01"
-  ),
-    prefe07 = .replace_labels(
-    standardized_value_labels$prefe07,
-    `-6` = "na, technical reason",
-    `-5` = "na, interview terminated",
-    `-2` = "na, BHINDEP<>2,3,4"
-  ),
-    prefe08 = .replace_labels(
-    standardized_value_labels$prefe08,
-    `-2` = "na, see BPREFE07"
-  ),
-    prefe09 = .replace_labels(
-    standardized_value_labels$prefe09,
-    `-2` = "na, see BPREFE07"
-  ),
-    prefe10 = .replace_labels(
-    standardized_value_labels$prefe10,
-    `-2` = "na, see BPREFE07"
-  ),
-    prefe11 = .replace_labels(
-    standardized_value_labels$prefe11,
-    `-2` = "na, see BPREFE07"
-  ),
-    prefe12 = .replace_labels(
-    standardized_value_labels$prefe12,
-    `-2` = "na, see BPREFE07"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   prefe01 = "categorical",
   prefe02 = "categorical",
@@ -188,12 +25,184 @@ var_types_vec <- c(
   prefe12 = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "032", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "032", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "032", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "032", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  prefe01 = "When I need help, I want to organize it",
+  prefe02 = "When move because health I want move to",
+  prefe03 = "When I need help, I want to organize it",
+  prefe04 = "When move because health I want move to",
+  prefe05 = "When I need help, I want to organize it",
+  prefe06 = "When move because health I want move to",
+  prefe07 = "When could choose again I would live at",
+  prefe08 = "When could choose again I would live at",
+  prefe09 = "When could choose again I would live at",
+  prefe10 = "When could choose again I would live at",
+  prefe11 = "When could choose again I would live at",
+  prefe12 = "When could choose again I would live at",
+  .applies_to_waves = c("Z")
 )
 
-.lasa_fc_032 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "prefe01", "prefe02", "prefe03", "prefe04", "prefe05", "prefe06", "prefe07", "prefe08", "prefe09", "prefe10", "prefe11", "prefe12",
+  .applies_to_waves = c("B")
+)
+
+# define value labels ----
+value_labels(
+  `-3` = "na, wrong skip", `-1` = "na, asked",
+  .applies_to_vars = c("prefe01", "prefe02", "prefe03", "prefe04", "prefe05", "prefe06", "prefe07", "prefe08", "prefe09", "prefe10", "prefe11", "prefe12"),
+  .applies_to_waves = c("Z", "B")
+)
+
+value_labels(
+  `-2` = "not available, routing",
+  .applies_to_vars = c("prefe01", "prefe02", "prefe03", "prefe04", "prefe05", "prefe06", "prefe07", "prefe08", "prefe09", "prefe10", "prefe11", "prefe12"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-6` = "not available, technical reason", `-5` = "not available, interview terminated", `-4` = "na, short interview", `1` = "myself", `2` = "by the family doctor",
+  .applies_to_vars = c("prefe01"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "family", `2` = "residential home",
+  .applies_to_vars = c("prefe02"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "by family doctor", `2` = "by children",
+  .applies_to_vars = c("prefe03"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "residential home", `2` = "old peoples home (with service)",
+  .applies_to_vars = c("prefe04"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "myself", `2` = "by children",
+  .applies_to_vars = c("prefe05"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "family", `2` = "old peoples home (with service)",
+  .applies_to_vars = c("prefe06"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-6` = "not available, technical reason", `-5` = "not available, interview terminated", `-4` = "na, short interview", `1` = "home", `2` = "residential home",
+  .applies_to_vars = c("prefe07"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "home", `2` = "family",
+  .applies_to_vars = c("prefe08"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "nursing home", `2` = "home",
+  .applies_to_vars = c("prefe09"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "family", `2` = "nursing home",
+  .applies_to_vars = c("prefe10"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "residential home", `2` = "nursing home",
+  .applies_to_vars = c("prefe11"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "residential home", `2` = "family",
+  .applies_to_vars = c("prefe12"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-6` = "na, technical reason", `-5` = "na, interview terminated", `-4` = "na, short interview", `-2` = "na, BHINDEP<>1", `1` = "myself", `2` = "by the family doctor",
+  .applies_to_vars = c("prefe01"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-2` = "na, see BPREFE01", `1` = "family", `2` = "residential home",
+  .applies_to_vars = c("prefe02"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-2` = "na, see BPREFE01", `1` = "by family doctor", `2` = "by children",
+  .applies_to_vars = c("prefe03"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-2` = "na, see BPREFE01", `1` = "residential home", `2` = "old peoples home (with service)",
+  .applies_to_vars = c("prefe04"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-2` = "na, see BPREFE01", `1` = "myself", `2` = "by children",
+  .applies_to_vars = c("prefe05"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-2` = "na, see BPREFE01", `1` = "family", `2` = "old peoples home (with service)",
+  .applies_to_vars = c("prefe06"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-6` = "na, technical reason", `-5` = "na, interview terminated", `-4` = "na, short interview", `-2` = "na, BHINDEP<>2,3,4", `1` = "home", `2` = "residential home",
+  .applies_to_vars = c("prefe07"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-2` = "na, see BPREFE07", `1` = "home", `2` = "family",
+  .applies_to_vars = c("prefe08"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-2` = "na, see BPREFE07", `1` = "nursing home", `2` = "home",
+  .applies_to_vars = c("prefe09"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-2` = "na, see BPREFE07", `1` = "family", `2` = "nursing home",
+  .applies_to_vars = c("prefe10"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-2` = "na, see BPREFE07", `1` = "residential home", `2` = "nursing home",
+  .applies_to_vars = c("prefe11"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-2` = "na, see BPREFE07", `1` = "residential home", `2` = "family",
+  .applies_to_vars = c("prefe12"),
+  .applies_to_waves = c("B")
+)
+
+.lasa_fc_032 <- .lasa_finalize_fc("032")
 
