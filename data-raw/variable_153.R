@@ -1,774 +1,15 @@
 ## LASA filecode 153 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  malcage = "Age stopped drinking",
-  malcagestop = "Age stopped",
-  malcbeer = "Beer",
-  malcbefore = "Drank before",
-  malcd = "Number of days a week/month usage",
-  malcgin = "Gin",
-  malclig = "Light",
-  malcliq = "Liqueur",
-  malcmix = "Cocktail",
-  malcnr = "Number of glasses at one time",
-  malcnr6 = "Number of time six glasses or more",
-  malctod = "Which time of day",
-  malcupy = "Alcohol use for the past year",
-  malcuse = "Use in past",
-  malcw = "Other people worried about alcohol use",
-  malcwine = "Wine",
-  malcyn = "Do you drink alcohol"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `B` = c(
-    "malcagestop",
-    "malcbeer",
-    "malcbefore",
-    "malcd",
-    "malcgin",
-    "malclig",
-    "malcliq",
-    "malcmix",
-    "malcnr",
-    "malcnr6",
-    "malctod",
-    "malcwine",
-    "malcyn"
-  ),
-  `C` = c(
-    "malcnr",
-    "malcnr6",
-    "malcupy",
-    "malcyn"
-  ),
-  `D` = c(
-    "malcd",
-    "malcnr",
-    "malcnr6",
-    "malcyn"
-  ),
-  `E` = c(
-    "malcd",
-    "malcnr",
-    "malcnr6",
-    "malcyn"
-  ),
-  `2B` = c(
-    "malcage",
-    "malcbeer",
-    "malcd",
-    "malcgin",
-    "malclig",
-    "malcliq",
-    "malcmix",
-    "malcnr",
-    "malcnr6",
-    "malcuse",
-    "malcwine",
-    "malcyn"
-  ),
-  `F` = c(
-    "malcd",
-    "malcnr",
-    "malcnr6",
-    "malcyn"
-  ),
-  `G` = c(
-    "malcd",
-    "malcnr",
-    "malcnr6",
-    "malcyn"
-  ),
-  `H` = c(
-    "malcd",
-    "malcnr",
-    "malcnr6",
-    "malcw",
-    "malcyn"
-  ),
-  `3B` = c(
-    "malcage",
-    "malcbeer",
-    "malcd",
-    "malcgin",
-    "malclig",
-    "malcliq",
-    "malcmix",
-    "malcnr",
-    "malcnr6",
-    "malcuse",
-    "malcw",
-    "malcwine",
-    "malcyn"
-  ),
-  `MB` = c(
-    "malcd",
-    "malcnr",
-    "malcyn"
-  ),
-  `I` = c(
-    "malcd",
-    "malcnr",
-    "malcnr6",
-    "malcw",
-    "malcyn"
-  ),
-  `J` = c(
-    "malcd",
-    "malcnr",
-    "malcnr6",
-    "malcw",
-    "malcyn"
-  ),
-  `K` = c(
-    "malcd",
-    "malcnr",
-    "malcnr6",
-    "malcw",
-    "malcyn"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels,
-    malcd = "Number of days a week",
-    malcnr6 = "Number of times six glasses or more"
-  ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels,
-    malcnr = "number of glasses each time",
-    malcnr6 = "number of times R 6 glasses a day past half year"
-  ),
-  Wave_D_labels = harmonized_labels,
-  Wave_E_labels = harmonized_labels,
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels,
-    malcd = "Days a week usage"
-  ),
-  Wave_F_labels = harmonized_labels,
-  Wave_G_labels = harmonized_labels,
-  Wave_H_labels = harmonized_labels,
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels,
-    malcd = "Days a week usage",
-    malcw = "Alcohol: other people worried about alcohol use"
-  ),
-  Wave_MB_labels = harmonized_labels,
-  Wave_I_labels = harmonized_labels,
-  Wave_J_labels = harmonized_labels,
-  Wave_K_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
-)
-
-## This file's own very common answer categories (>= 10 occurrences
-## across its variables) -- same idea as default_missing_labels, just
-## scoped to this filecode instead of shared globally.
-default_answer_labels <- c(
-  `1` = "no"
-)
-
-standardized_value_labels <- list(
-  malcage = c(
-    `-2` = "na, see BMALCUSE",
-    default_missing_labels[c("-1")]
-  ),
-  malcagestop = c(
-    `-4` = "no valid data",
-    `-3` = "R never drank",
-    `-2` = "R drinks at present",
-    default_missing_labels[c("-1")]
-  ),
-  malcbeer = c(
-    `-4` = "no valid data",
-    `-2` = "R does not drink / na, see BMALCYN",
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1")],
-    `2` = "yes"
-  ),
-  malcbefore = c(
-    `-4` = "no valid data",
-    `-2` = "R never drank",
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1")],
-    `2` = "yes"
-  ),
-  malcd = c(
-    `-4` = "no valid data",
-    `-2` = "R does not drink",
-    default_missing_labels[c("-1")],
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "less than 1 day a month"
-  ),
-  malcgin = c(
-    `-4` = "no valid data",
-    `-2` = "R does not drink",
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1")],
-    `2` = "yes"
-  ),
-  malclig = c(
-    `-4` = "no valid data",
-    `-2` = "R does not drink",
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1")],
-    `2` = "yes"
-  ),
-  malcliq = c(
-    `-4` = "no valid data",
-    `-2` = "R does not drink",
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1")],
-    `2` = "yes"
-  ),
-  malcmix = c(
-    `-4` = "no valid data",
-    `-2` = "R does not drink",
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1")],
-    `2` = "yes"
-  ),
-  malcnr = c(
-    `-4` = "no valid data",
-    `-3` = "R never drank / na, wrong skip",
-    `-2` = "R drinks at present / na, see CMALCYN / R does not drink",
-    default_missing_labels[c("-1")],
-    `1` = "11 glasses or more",
-    `2` = "8-10 glasses",
-    `3` = "6-7 glasses",
-    `4` = "4-5 glasses",
-    `5` = "2-3 glasses",
-    `6` = "1 glass"
-  ),
-  malcnr6 = c(
-    `-5` = "no valid data",
-    `-4` = "R never drank",
-    `-3` = "R drink/drank > 6 glasses / na, wrong skip",
-    `-2` = "R drink/drank < 2 glasses / na, see CMACLNR / R does not drink",
-    default_missing_labels[c("-1")],
-    `1` = "every day / daily",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "less than 1 day a month / < 1 glass a month"
-  ),
-  malctod = c(
-    `-4` = "no valid data",
-    `-2` = "no answer, skipped",
-    default_missing_labels[c("-1")],
-    `1` = "morning 7-12 hour",
-    `2` = "afternoon 12-18 hour",
-    `3` = "evening 18-24 hour",
-    `4` = "night 0-7 hour"
-  ),
-  malcupy = c(
-    default_missing_labels[c("-3", "-1")],
-    `-2` = "na, see CMALCYN",
-    `1` = "daily",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-  malcuse = c(
-    `-2` = "na, see BMALCYN",
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1")],
-    `2` = "yes"
-  ),
-  malcw = c(
-    `-2` = "R does not drink / R does not drink 6 or more glasses at one time",
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1")],
-    `2` = "yes, but not in past year",
-    `3` = "yes, in past year"
-  ),
-  malcwine = c(
-    `-4` = "no valid data",
-    `-2` = "R does not drink",
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1")],
-    `2` = "yes"
-  ),
-  malcyn = c(
-    `-5` = "na, interview terminated",
-    `-4` = "no valid data",
-    `-2` = "no answer, skipped",
-    default_missing_labels[c("-1")],
-    default_answer_labels[c("1")],
-    `2` = "yes"
-  )
-)
-
-value_labels_list <- list(
-  Wave_B_labels = .replace_in_list(
-    standardized_value_labels,
-    malcbeer = .replace_labels(
-    standardized_value_labels$malcbeer,
-    `-2` = "R does not drink"
-  ),
-    malcnr = .replace_labels(
-    standardized_value_labels$malcnr,
-    `-3` = "R never drank",
-    `-2` = "R drinks at present"
-  ),
-    malcnr6 = .replace_labels(
-    standardized_value_labels$malcnr6,
-    `-3` = "R drink/drank > 6 glasses",
-    `-2` = "R drink/drank < 2 glasses",
-    `1` = "every day",
-    `6` = "less than 1 day a month"
-  ),
-    malcyn = c(
-    `-4` = "no valid data",
-    `-2` = "no answer, skipped",
-    `-1` = "no answer, asked",
-    `1` = "no",
-    `2` = "yes"
-  )
-  ),
-  Wave_C_labels = .replace_in_list(
-    standardized_value_labels,
-    malcnr = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CMALCYN",
-    `-1` = "na, asked",
-    `1` = "11 glasses or more",
-    `2` = "8-10 glasses",
-    `3` = "6-7 glasses",
-    `4` = "4-5 glasses",
-    `5` = "2-3 glasses",
-    `6` = "1 glass"
-  ),
-    malcnr6 = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see CMACLNR",
-    `-1` = "na, asked",
-    `1` = "daily",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "< 1 glass a month"
-  ),
-    malcyn = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes")
-  ),
-  Wave_D_labels = .replace_in_list(
-    standardized_value_labels,
-    malcd = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcnr = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "11 glasses or more",
-    `2` = "8-10 glasses",
-    `3` = "6-7 glasses",
-    `4` = "4-5 glasses",
-    `5` = "2-3 glasses",
-    `6` = "1 glass"
-  ),
-    malcnr6 = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcyn = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes")
-  ),
-  Wave_E_labels = .replace_in_list(
-    standardized_value_labels,
-    malcd = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcnr = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "11 glasses or more",
-    `2` = "8-10 glasses",
-    `3` = "6-7 glasses",
-    `4` = "4-5 glasses",
-    `5` = "2-3 glasses",
-    `6` = "1 glass"
-  ),
-    malcnr6 = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcyn = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes")
-  ),
-  Wave_2B_labels = .replace_in_list(
-    standardized_value_labels,
-    malcbeer = c(`-2` = "na, see BMALCYN", `-1` = "no answer, asked", `1` = "no", `2` = "yes"),
-    malcd = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcgin = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes"),
-    malclig = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes"),
-    malcliq = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes"),
-    malcmix = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes"),
-    malcnr = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "11 glasses or more",
-    `2` = "8-10 glasses",
-    `3` = "6-7 glasses",
-    `4` = "4-5 glasses",
-    `5` = "2-3 glasses",
-    `6` = "1 glass"
-  ),
-    malcnr6 = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcwine = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes"),
-    malcyn = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes")
-  ),
-  Wave_F_labels = .replace_in_list(
-    standardized_value_labels,
-    malcd = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcnr = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "11 glasses or more",
-    `2` = "8-10 glasses",
-    `3` = "6-7 glasses",
-    `4` = "4-5 glasses",
-    `5` = "2-3 glasses",
-    `6` = "1 glass"
-  ),
-    malcnr6 = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcyn = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes")
-  ),
-  Wave_G_labels = .replace_in_list(
-    standardized_value_labels,
-    malcd = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcnr = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "11 glasses or more",
-    `2` = "8-10 glasses",
-    `3` = "6-7 glasses",
-    `4` = "4-5 glasses",
-    `5` = "2-3 glasses",
-    `6` = "1 glass"
-  ),
-    malcnr6 = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcyn = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes")
-  ),
-  Wave_H_labels = .replace_in_list(
-    standardized_value_labels,
-    malcd = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcnr = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "11 glasses or more",
-    `2` = "8-10 glasses",
-    `3` = "6-7 glasses",
-    `4` = "4-5 glasses",
-    `5` = "2-3 glasses",
-    `6` = "1 glass"
-  ),
-    malcnr6 = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcw = .replace_labels(
-    standardized_value_labels$malcw,
-    `-2` = "R does not drink"
-  ),
-    malcyn = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes")
-  ),
-  Wave_3B_labels = .replace_in_list(
-    standardized_value_labels,
-    malcbeer = c(`-2` = "na, see BMALCYN", `-1` = "no answer, asked", `1` = "no", `2` = "yes"),
-    malcd = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcgin = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes"),
-    malclig = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes"),
-    malcliq = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes"),
-    malcmix = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes"),
-    malcnr = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "11 glasses or more",
-    `2` = "8-10 glasses",
-    `3` = "6-7 glasses",
-    `4` = "4-5 glasses",
-    `5` = "2-3 glasses",
-    `6` = "1 glass"
-  ),
-    malcnr6 = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcw = .replace_labels(
-    standardized_value_labels$malcw,
-    `-2` = "R does not drink 6 or more glasses at one time"
-  ),
-    malcwine = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes"),
-    malcyn = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes")
-  ),
-  Wave_MB_labels = .replace_in_list(
-    standardized_value_labels,
-    malcd = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcnr = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "11 glasses or more",
-    `2` = "8-10 glasses",
-    `3` = "6-7 glasses",
-    `4` = "4-5 glasses",
-    `5` = "2-3 glasses",
-    `6` = "1 glass"
-  ),
-    malcyn = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes")
-  ),
-  Wave_I_labels = .replace_in_list(
-    standardized_value_labels,
-    malcd = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcnr = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "11 glasses or more",
-    `2` = "8-10 glasses",
-    `3` = "6-7 glasses",
-    `4` = "4-5 glasses",
-    `5` = "2-3 glasses",
-    `6` = "1 glass"
-  ),
-    malcnr6 = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcw = .replace_labels(
-    standardized_value_labels$malcw,
-    `-2` = "R does not drink"
-  ),
-    malcyn = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes")
-  ),
-  Wave_J_labels = .replace_in_list(
-    standardized_value_labels,
-    malcd = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcnr = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "11 glasses or more",
-    `2` = "8-10 glasses",
-    `3` = "6-7 glasses",
-    `4` = "4-5 glasses",
-    `5` = "2-3 glasses",
-    `6` = "1 glass"
-  ),
-    malcnr6 = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcw = .replace_labels(
-    standardized_value_labels$malcw,
-    `-2` = "R does not drink"
-  ),
-    malcyn = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes")
-  ),
-  Wave_K_labels = .replace_in_list(
-    standardized_value_labels,
-    malcd = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcnr = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "11 glasses or more",
-    `2` = "8-10 glasses",
-    `3` = "6-7 glasses",
-    `4` = "4-5 glasses",
-    `5` = "2-3 glasses",
-    `6` = "1 glass"
-  ),
-    malcnr6 = c(
-    `-2` = "R does not drink",
-    `-1` = "no answer, asked",
-    `1` = "every day",
-    `2` = "5-6 days a week",
-    `3` = "3-4 days a week",
-    `4` = "1-2 days a week",
-    `5` = "1-3 days a month",
-    `6` = "<1 day a month"
-  ),
-    malcw = .replace_labels(
-    standardized_value_labels$malcw,
-    `-2` = "R does not drink"
-  ),
-    malcyn = c(`-1` = "no answer, asked", `1` = "no", `2` = "yes")
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   malcage = "numeric",
   malcagestop = "numeric",
@@ -789,12 +30,269 @@ var_types_vec <- c(
   malcyn = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "153", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "153", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "153", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "153", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  malcage = "Age stopped drinking",
+  malcagestop = "Age stopped",
+  malcbeer = "Beer",
+  malcbefore = "Drank before",
+  malcd = "Number of days a week/month usage",
+  malcgin = "Gin",
+  malclig = "Light",
+  malcliq = "Liqueur",
+  malcmix = "Cocktail",
+  malcnr = "Number of glasses at one time",
+  malcnr6 = "Number of time six glasses or more",
+  malctod = "Which time of day",
+  malcupy = "Alcohol use for the past year",
+  malcuse = "Use in past",
+  malcw = "Other people worried about alcohol use",
+  malcwine = "Wine",
+  malcyn = "Do you drink alcohol",
+  .applies_to_waves = c("Z")
 )
 
-.lasa_fc_153 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "malcagestop", "malcbefore", "malctod",
+  .applies_to_waves = c("B")
+)
+
+variable_labels(
+  "malcbeer", "malcgin", "malclig", "malcliq", "malcmix", "malcwine",
+  .applies_to_waves = c("B", "2B", "3B")
+)
+
+variable_labels(
+  "malcnr",
+  .applies_to_waves = c("B", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
+)
+
+variable_labels(
+  "malcyn",
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
+)
+
+variable_labels(
+  "malcupy",
+  .applies_to_waves = c("C")
+)
+
+variable_labels(
+  "malcd",
+  .applies_to_waves = c("D", "E", "F", "G", "H", "MB", "I", "J", "K")
+)
+
+variable_labels(
+  "malcnr6",
+  .applies_to_waves = c("D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
+)
+
+variable_labels(
+  "malcage", "malcuse",
+  .applies_to_waves = c("2B", "3B")
+)
+
+variable_labels(
+  "malcw",
+  .applies_to_waves = c("H", "I", "J", "K")
+)
+
+variable_labels(
+  malcd = "Number of days a week",
+  malcnr6 = "Number of times six glasses or more",
+  .applies_to_waves = c("B")
+)
+
+variable_labels(
+  malcnr = "number of glasses each time",
+  malcnr6 = "number of times R 6 glasses a day past half year",
+  .applies_to_waves = c("C")
+)
+
+variable_labels(
+  malcd = "Days a week usage",
+  .applies_to_waves = c("2B", "3B")
+)
+
+variable_labels(
+  malcw = "Alcohol: other people worried about alcohol use",
+  .applies_to_waves = c("3B")
+)
+
+# define value labels ----
+value_labels(
+  `-4` = "no valid data",
+  .applies_to_vars = c("malcagestop", "malcbeer", "malcbefore", "malcd", "malcgin", "malclig", "malcliq", "malcmix", "malcnr", "malctod", "malcwine", "malcyn"),
+  .applies_to_waves = c("Z", "B")
+)
+
+value_labels(
+  `-2` = "na, see BMALCUSE", `-1` = "na, asked",
+  .applies_to_vars = c("malcage"),
+  .applies_to_waves = c("Z", "2B", "3B")
+)
+
+value_labels(
+  `-3` = "R never drank", `-2` = "R drinks at present", `-1` = "na, asked",
+  .applies_to_vars = c("malcagestop"),
+  .applies_to_waves = c("Z", "B")
+)
+
+value_labels(
+  `-2` = "R does not drink / na, see BMALCYN", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("malcbeer"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "R never drank", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("malcbefore"),
+  .applies_to_waves = c("Z", "B")
+)
+
+value_labels(
+  `-2` = "R does not drink", `-1` = "na, asked", `1` = "every day", `2` = "5-6 days a week", `3` = "3-4 days a week", `4` = "1-2 days a week", `5` = "1-3 days a month", `6` = "less than 1 day a month",
+  .applies_to_vars = c("malcd"),
+  .applies_to_waves = c("Z", "B")
+)
+
+value_labels(
+  `-2` = "R does not drink", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("malcgin", "malclig", "malcliq", "malcmix", "malcwine"),
+  .applies_to_waves = c("Z", "B")
+)
+
+value_labels(
+  `-3` = "R never drank / na, wrong skip", `-2` = "R drinks at present / na, see CMALCYN / R does not drink", `-1` = "na, asked", `1` = "11 glasses or more", `2` = "8-10 glasses", `3` = "6-7 glasses", `4` = "4-5 glasses", `5` = "2-3 glasses", `6` = "1 glass",
+  .applies_to_vars = c("malcnr"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-5` = "no valid data", `-4` = "R never drank", `-3` = "R drink/drank > 6 glasses / na, wrong skip", `-2` = "R drink/drank < 2 glasses / na, see CMACLNR / R does not drink", `-1` = "na, asked", `1` = "every day / daily", `2` = "5-6 days a week", `3` = "3-4 days a week", `4` = "1-2 days a week", `5` = "1-3 days a month", `6` = "less than 1 day a month / < 1 glass a month",
+  .applies_to_vars = c("malcnr6"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "no answer, skipped", `-1` = "na, asked", `1` = "morning 7-12 hour", `2` = "afternoon 12-18 hour", `3` = "evening 18-24 hour", `4` = "night 0-7 hour",
+  .applies_to_vars = c("malctod"),
+  .applies_to_waves = c("Z", "B")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see CMALCYN", `-1` = "na, asked", `1` = "daily", `2` = "5-6 days a week", `3` = "3-4 days a week", `4` = "1-2 days a week", `5` = "1-3 days a month", `6` = "<1 day a month",
+  .applies_to_vars = c("malcupy"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-2` = "na, see BMALCYN", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("malcuse"),
+  .applies_to_waves = c("Z", "2B", "3B")
+)
+
+value_labels(
+  `-2` = "R does not drink / R does not drink 6 or more glasses at one time", `-1` = "na, asked", `1` = "no", `2` = "yes, but not in past year", `3` = "yes, in past year",
+  .applies_to_vars = c("malcw"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-5` = "na, interview terminated", `-2` = "no answer, skipped", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("malcyn"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "R does not drink", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("malcbeer"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-3` = "R never drank", `-2` = "R drinks at present", `-1` = "na, asked", `1` = "11 glasses or more", `2` = "8-10 glasses", `3` = "6-7 glasses", `4` = "4-5 glasses", `5` = "2-3 glasses", `6` = "1 glass",
+  .applies_to_vars = c("malcnr"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-5` = "no valid data", `-4` = "R never drank", `-3` = "R drink/drank > 6 glasses", `-2` = "R drink/drank < 2 glasses", `-1` = "na, asked", `1` = "every day", `2` = "5-6 days a week", `3` = "3-4 days a week", `4` = "1-2 days a week", `5` = "1-3 days a month", `6` = "less than 1 day a month",
+  .applies_to_vars = c("malcnr6"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-2` = "no answer, skipped", `-1` = "no answer, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("malcyn"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see CMALCYN", `-1` = "na, asked", `1` = "11 glasses or more", `2` = "8-10 glasses", `3` = "6-7 glasses", `4` = "4-5 glasses", `5` = "2-3 glasses", `6` = "1 glass",
+  .applies_to_vars = c("malcnr"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see CMACLNR", `-1` = "na, asked", `1` = "daily", `2` = "5-6 days a week", `3` = "3-4 days a week", `4` = "1-2 days a week", `5` = "1-3 days a month", `6` = "< 1 glass a month",
+  .applies_to_vars = c("malcnr6"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("malcyn"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-2` = "R does not drink", `-1` = "no answer, asked", `1` = "every day", `2` = "5-6 days a week", `3` = "3-4 days a week", `4` = "1-2 days a week", `5` = "1-3 days a month", `6` = "<1 day a month",
+  .applies_to_vars = c("malcd"),
+  .applies_to_waves = c("D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "R does not drink", `-1` = "no answer, asked", `1` = "11 glasses or more", `2` = "8-10 glasses", `3` = "6-7 glasses", `4` = "4-5 glasses", `5` = "2-3 glasses", `6` = "1 glass",
+  .applies_to_vars = c("malcnr"),
+  .applies_to_waves = c("D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "R does not drink", `-1` = "no answer, asked", `1` = "every day", `2` = "5-6 days a week", `3` = "3-4 days a week", `4` = "1-2 days a week", `5` = "1-3 days a month", `6` = "<1 day a month",
+  .applies_to_vars = c("malcnr6"),
+  .applies_to_waves = c("D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-1` = "no answer, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("malcyn"),
+  .applies_to_waves = c("D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "na, see BMALCYN", `-1` = "no answer, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("malcbeer"),
+  .applies_to_waves = c("2B", "3B")
+)
+
+value_labels(
+  `-1` = "no answer, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("malcgin", "malclig", "malcliq", "malcmix", "malcwine"),
+  .applies_to_waves = c("2B", "3B")
+)
+
+value_labels(
+  `-2` = "R does not drink", `-1` = "na, asked", `1` = "no", `2` = "yes, but not in past year", `3` = "yes, in past year",
+  .applies_to_vars = c("malcw"),
+  .applies_to_waves = c("H", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "R does not drink 6 or more glasses at one time", `-1` = "na, asked", `1` = "no", `2` = "yes, but not in past year", `3` = "yes, in past year",
+  .applies_to_vars = c("malcw"),
+  .applies_to_waves = c("3B")
+)
+
+.lasa_fc_153 <- .lasa_finalize_fc("153")
 

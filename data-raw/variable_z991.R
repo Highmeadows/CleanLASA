@@ -1,80 +1,15 @@
 ## LASA filecode z991 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  zdeceas17 = "respondent deceased before 2018",
-  zdedate_y = "date of death, year part",
-  zecdl = "external cause of death: location",
-  zecdmi = "external cause of death: main injury",
-  zpcod = "primary cause of death",
-  zscod1 = "first secondary cause of death",
-  zscod2 = "second secondary cause of death",
-  zscod3 = "third secondary cause of death"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `B` = c(
-    "zdeceas17",
-    "zdedate_y",
-    "zecdl",
-    "zecdmi",
-    "zpcod",
-    "zscod1",
-    "zscod2",
-    "zscod3"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_B_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
-)
-
-standardized_value_labels <- list(
-  zdeceas17 = c(`-2` = "no data, see gbadata", `0` = "no", `1` = "yes"),
-  zdedate_y = c(`-2` = "no data, see deceas"),
-  zecdl = stats::setNames(character(0), character(0)),
-  zecdmi = stats::setNames(character(0), character(0)),
-  zpcod = c(
-    `-5` = "not deceased (before 2018)",
-    `-4` = "deceased abroad / no gbadata",
-    `-3` = "cause unknown / no matching (LASA/CBS)",
-    `-2` = "no data CBS asked (no LASA data)",
-    `-1` = "no informed consent for enquiry"
-  ),
-  zscod1 = stats::setNames(character(0), character(0)),
-  zscod2 = stats::setNames(character(0), character(0)),
-  zscod3 = stats::setNames(character(0), character(0))
-)
-
-value_labels_list <- list(
-  Wave_B_labels = .replace_in_list(
-    standardized_value_labels,
-    zdeceas17 = .replace_labels(
-    standardized_value_labels$zdeceas17,
-    `-2` = "no data, see GBADATA"
-  ),
-    zdedate_y = .replace_labels(
-    standardized_value_labels$zdedate_y,
-    `-2` = "no data, see DECEAS"
-  ),
-    zpcod = .replace_labels(
-    standardized_value_labels$zpcod,
-    `-4` = "deceased abroad / no GBADATA"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   zdeceas17 = "categorical",
   zdedate_y = "numeric",
@@ -86,26 +21,69 @@ var_types_vec <- c(
   zscod3 = "text"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "z991", waves = .lasa_wave_rows()) |>
-    .override_label(wave = "B", variable = "zdeceas17", override_value = "zdeceas17") |>
-    .override_label(wave = "B", variable = "zdedate_y", override_value = "zdedate_y") |>
-    .override_label(wave = "B", variable = "zecdl", override_value = "zecdl") |>
-    .override_label(wave = "B", variable = "zecdmi", override_value = "zecdmi") |>
-    .override_label(wave = "B", variable = "zpcod", override_value = "zpcod") |>
-    .override_label(wave = "B", variable = "zscod1", override_value = "zscod1") |>
-    .override_label(wave = "B", variable = "zscod2", override_value = "zscod2") |>
-    .override_label(wave = "B", variable = "zscod3", override_value = "zscod3"),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "z991", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "z991", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "z991", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  zdeceas17 = "respondent deceased before 2018",
+  zdedate_y = "date of death, year part",
+  zecdl = "external cause of death: location",
+  zecdmi = "external cause of death: main injury",
+  zpcod = "primary cause of death",
+  zscod1 = "first secondary cause of death",
+  zscod2 = "second secondary cause of death",
+  zscod3 = "third secondary cause of death",
+  .applies_to_waves = c("Z")
 )
 
-fc_labels$value_labels[["zecdl"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["zecdmi"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["zscod1"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["zscod2"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
-fc_labels$value_labels[["zscod3"]][fc_labels$value_labels$LASA_Wave == "B"] <- list(NULL)
+variable_labels(
+  "zdeceas17", "zdedate_y", "zecdl", "zecdmi", "zpcod", "zscod1", "zscod2", "zscod3",
+  .applies_to_waves = c("B")
+)
 
-.lasa_fc_z991 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+# define value labels ----
+value_labels(
+  `-2` = "no data, see gbadata", `0` = "no", `1` = "yes",
+  .applies_to_vars = c("zdeceas17"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "no data, see deceas",
+  .applies_to_vars = c("zdedate_y"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-5` = "not deceased (before 2018)", `-4` = "deceased abroad / no gbadata", `-3` = "cause unknown / no matching (LASA/CBS)", `-2` = "no data CBS asked (no LASA data)", `-1` = "no informed consent for enquiry",
+  .applies_to_vars = c("zpcod"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "no data, see GBADATA", `0` = "no", `1` = "yes",
+  .applies_to_vars = c("zdeceas17"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-2` = "no data, see DECEAS",
+  .applies_to_vars = c("zdedate_y"),
+  .applies_to_waves = c("B")
+)
+
+value_labels(
+  `-5` = "not deceased (before 2018)", `-4` = "deceased abroad / no GBADATA", `-3` = "cause unknown / no matching (LASA/CBS)", `-2` = "no data CBS asked (no LASA data)", `-1` = "no informed consent for enquiry",
+  .applies_to_vars = c("zpcod"),
+  .applies_to_waves = c("B")
+)
+
+.lasa_fc_z991 <- .lasa_finalize_fc("z991")
+.lasa_fc_z991$variables <- .lasa_fc_z991$variables |>
+  .override_label(wave = "B", variable = "zdeceas17", override_value = "zdeceas17") |>
+  .override_label(wave = "B", variable = "zdedate_y", override_value = "zdedate_y") |>
+  .override_label(wave = "B", variable = "zecdl", override_value = "zecdl") |>
+  .override_label(wave = "B", variable = "zecdmi", override_value = "zecdmi") |>
+  .override_label(wave = "B", variable = "zpcod", override_value = "zpcod") |>
+  .override_label(wave = "B", variable = "zscod1", override_value = "zscod1") |>
+  .override_label(wave = "B", variable = "zscod2", override_value = "zscod2") |>
+  .override_label(wave = "B", variable = "zscod3", override_value = "zscod3")
 

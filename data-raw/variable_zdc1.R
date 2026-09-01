@@ -1,160 +1,102 @@
 ## LASA filecode zdc1 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
+var_types_vec <- c(
+  DM = "categorical",
+  alg_DM_ruw = "categorical"
+)
+
+# define variable labels ----
+variable_labels(
   DM = "diabetes mellitus status",
-  alg_DM_ruw = "diabetes mellitus status unadjusted for previous-wave status"
+  alg_DM_ruw = "diabetes mellitus status unadjusted for previous-wave status",
+  .applies_to_waves = c("Z")
 )
 
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `B` = c(
-    "DM"
-  ),
-  `C` = c(
-    "DM",
-    "alg_DM_ruw"
-  ),
-  `D` = c(
-    "DM",
-    "alg_DM_ruw"
-  ),
-  `E` = c(
-    "DM",
-    "alg_DM_ruw"
-  ),
-  `F` = c(
-    "DM",
-    "alg_DM_ruw"
-  ),
-  `G` = c(
-    "DM",
-    "alg_DM_ruw"
-  ),
-  `H` = c(
-    "DM",
-    "alg_DM_ruw"
-  ),
-  `I` = c(
-    "DM",
-    "alg_DM_ruw"
-  )
+variable_labels(
+  DM = "B wave: diabetes mellitus",
+  .applies_to_waves = c("B")
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels,
-    DM = "B wave: diabetes mellitus"
-  ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels,
-    DM = "diabetes at C wave, dropouts defined",
-    alg_DM_ruw = "DM at C, unadjusted for DM status at previous waves"
-  ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels,
-    DM = "diabetes at D wave, dropouts defined",
-    alg_DM_ruw = "DM at D, unadjusted for DM status at previous waves"
-  ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels,
-    DM = "diabetes at E wave, dropouts defined",
-    alg_DM_ruw = "DM at E, unadjusted for DM status at previous waves"
-  ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels,
-    DM = "diabetes at F wave, dropouts defined",
-    alg_DM_ruw = "DM at F, unadjusted for DM status at previous waves"
-  ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels,
-    DM = "diabetes at G wave, dropouts defined",
-    alg_DM_ruw = "DM at G, unadjusted for DM status at previous waves"
-  ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels,
-    DM = "diabetes at H wave, dropouts defined",
-    alg_DM_ruw = "DM at H, unadjusted for DM status at previous waves"
-  ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels,
-    DM = "diabetes at I wave, dropouts defined",
-    alg_DM_ruw = "DM at I, unadjusted for DM status at previous waves"
-  ),
-  Harmonized_labels = harmonized_labels
+variable_labels(
+  DM = "diabetes at C wave, dropouts defined",
+  alg_DM_ruw = "DM at C, unadjusted for DM status at previous waves",
+  .applies_to_waves = c("C")
 )
 
-standardized_value_labels <- list(
-  DM = c(
-    `-1` = "missing",
-    `0` = "no DM",
-    `1` = "definite DM",
-    `2` = "possible DM",
-    `3` = "contradictory",
-    `5` = "drop-out"
-  ),
-  alg_DM_ruw = c(
-    `-1` = "missing",
-    `0` = "no DM",
-    `1` = "definite DM",
-    `2` = "possible DM",
-    `3` = "contradictory",
-    `5` = "drop-out"
-  )
+variable_labels(
+  DM = "diabetes at D wave, dropouts defined",
+  alg_DM_ruw = "DM at D, unadjusted for DM status at previous waves",
+  .applies_to_waves = c("D")
 )
 
-value_labels_list <- list(
-  Wave_B_labels = .replace_in_list(
-    standardized_value_labels,
-    DM = c(
-    `-1` = "missing",
-    `0` = "no DM",
-    `1` = "definite DM",
-    `2` = "possible DM",
-    `3` = "contradictory"
-  )
-  ),
-  Wave_C_labels = standardized_value_labels,
-  Wave_D_labels = standardized_value_labels,
-  Wave_E_labels = standardized_value_labels,
-  Wave_F_labels = standardized_value_labels,
-  Wave_G_labels = standardized_value_labels,
-  Wave_H_labels = standardized_value_labels,
-  Wave_I_labels = standardized_value_labels,
-  Harmonized_labels = standardized_value_labels
+variable_labels(
+  DM = "diabetes at E wave, dropouts defined",
+  alg_DM_ruw = "DM at E, unadjusted for DM status at previous waves",
+  .applies_to_waves = c("E")
 )
 
-var_types_vec <- c(DM = "categorical", alg_DM_ruw = "categorical")
-
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "zdc1", waves = .lasa_wave_rows()) |>
-    .override_label(wave = "B", variable = "DM", override_value = "b_DM") |>
-    .override_label(wave = "C", variable = "DM", override_value = "c_DM") |>
-    .override_label(wave = "C", variable = "alg_DM_ruw", override_value = "c_alg_DM_ruw") |>
-    .override_label(wave = "D", variable = "DM", override_value = "d_DM") |>
-    .override_label(wave = "D", variable = "alg_DM_ruw", override_value = "d_alg_DM_ruw") |>
-    .override_label(wave = "E", variable = "DM", override_value = "e_DM") |>
-    .override_label(wave = "E", variable = "alg_DM_ruw", override_value = "e_alg_DM_ruw") |>
-    .override_label(wave = "F", variable = "DM", override_value = "f_DM") |>
-    .override_label(wave = "F", variable = "alg_DM_ruw", override_value = "f_alg_DM_ruw") |>
-    .override_label(wave = "G", variable = "DM", override_value = "g_DM") |>
-    .override_label(wave = "G", variable = "alg_DM_ruw", override_value = "g_alg_DM_ruw") |>
-    .override_label(wave = "H", variable = "DM", override_value = "h_DM") |>
-    .override_label(wave = "H", variable = "alg_DM_ruw", override_value = "h_alg_DM_ruw") |>
-    .override_label(wave = "I", variable = "DM", override_value = "i_DM") |>
-    .override_label(wave = "I", variable = "alg_DM_ruw", override_value = "i_alg_DM_ruw"),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "zdc1", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "zdc1", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "zdc1", waves = .lasa_wave_rows())
+variable_labels(
+  DM = "diabetes at F wave, dropouts defined",
+  alg_DM_ruw = "DM at F, unadjusted for DM status at previous waves",
+  .applies_to_waves = c("F")
 )
 
-.lasa_fc_zdc1 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  DM = "diabetes at G wave, dropouts defined",
+  alg_DM_ruw = "DM at G, unadjusted for DM status at previous waves",
+  .applies_to_waves = c("G")
+)
+
+variable_labels(
+  DM = "diabetes at H wave, dropouts defined",
+  alg_DM_ruw = "DM at H, unadjusted for DM status at previous waves",
+  .applies_to_waves = c("H")
+)
+
+variable_labels(
+  DM = "diabetes at I wave, dropouts defined",
+  alg_DM_ruw = "DM at I, unadjusted for DM status at previous waves",
+  .applies_to_waves = c("I")
+)
+
+# define value labels ----
+value_labels(
+  `-1` = "missing", `0` = "no DM", `1` = "definite DM", `2` = "possible DM", `3` = "contradictory", `5` = "drop-out",
+  .applies_to_vars = c("DM", "alg_DM_ruw"),
+  .applies_to_waves = c("Z", "C", "D", "E", "F", "G", "H", "I")
+)
+
+value_labels(
+  `-1` = "missing", `0` = "no DM", `1` = "definite DM", `2` = "possible DM", `3` = "contradictory",
+  .applies_to_vars = c("DM"),
+  .applies_to_waves = c("B")
+)
+
+.lasa_fc_zdc1 <- .lasa_finalize_fc("zdc1")
+.lasa_fc_zdc1$variables <- .lasa_fc_zdc1$variables |>
+  .override_label(wave = "B", variable = "DM", override_value = "b_DM") |>
+  .override_label(wave = "C", variable = "DM", override_value = "c_DM") |>
+  .override_label(wave = "C", variable = "alg_DM_ruw", override_value = "c_alg_DM_ruw") |>
+  .override_label(wave = "D", variable = "DM", override_value = "d_DM") |>
+  .override_label(wave = "D", variable = "alg_DM_ruw", override_value = "d_alg_DM_ruw") |>
+  .override_label(wave = "E", variable = "DM", override_value = "e_DM") |>
+  .override_label(wave = "E", variable = "alg_DM_ruw", override_value = "e_alg_DM_ruw") |>
+  .override_label(wave = "F", variable = "DM", override_value = "f_DM") |>
+  .override_label(wave = "F", variable = "alg_DM_ruw", override_value = "f_alg_DM_ruw") |>
+  .override_label(wave = "G", variable = "DM", override_value = "g_DM") |>
+  .override_label(wave = "G", variable = "alg_DM_ruw", override_value = "g_alg_DM_ruw") |>
+  .override_label(wave = "H", variable = "DM", override_value = "h_DM") |>
+  .override_label(wave = "H", variable = "alg_DM_ruw", override_value = "h_alg_DM_ruw") |>
+  .override_label(wave = "I", variable = "DM", override_value = "i_DM") |>
+  .override_label(wave = "I", variable = "alg_DM_ruw", override_value = "i_alg_DM_ruw")
 

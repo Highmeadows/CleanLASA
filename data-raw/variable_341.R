@@ -1,56 +1,36 @@
 ## LASA filecode 341 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(qan = "Need for affiliation scale (6 items)")
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `2B` = c(
-    "qan"
-  ),
-  `G` = c(
-    "qan"
-  )
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
+var_types_vec <- c(
+  qan = "numeric"
 )
 
-variable_labels_list <- list(
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels,
-    qan = "need for affiliation <6 items>"
-  ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels,
-    qan = "need for affiliation <6 items>"
-  ),
-  Harmonized_labels = harmonized_labels
+# define variable labels ----
+variable_labels(
+  qan = "Need for affiliation scale (6 items)",
+  .applies_to_waves = c("Z")
 )
 
-standardized_value_labels <- list(
-  qan = c(`-1` = "no valid data", `6` = NA_character_, `18` = NA_character_)
+variable_labels(
+  qan = "need for affiliation <6 items>",
+  .applies_to_waves = c("2B", "G")
 )
 
-value_labels_list <- list(
-  Wave_2B_labels = standardized_value_labels,
-  Wave_G_labels = standardized_value_labels,
-  Harmonized_labels = standardized_value_labels
+# define value labels ----
+value_labels(
+  `-1` = "no valid data", `6` = NA_character_, `18` = NA_character_,
+  .applies_to_vars = c("qan"),
+  .applies_to_waves = c("Z", "2B", "G")
 )
 
-var_types_vec <- c(qan = "numeric")
-
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "341", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "341", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "341", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "341", waves = .lasa_wave_rows())
-)
-
-.lasa_fc_341 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+.lasa_fc_341 <- .lasa_finalize_fc("341")
 

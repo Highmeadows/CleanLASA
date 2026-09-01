@@ -1,183 +1,15 @@
 ## LASA filecode 185 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  mankle1 = "Ankle (1): width in mm",
-  mankle2 = "Ankle (2): width in mm",
-  mfeetinsp = "Inspection feet: whole",
-  mfeetinsp1 = "Inspection feet: sores",
-  mfeetinsp2 = "Inspection feet: plaster",
-  mfeetinsp3 = "Inspection feet: corns",
-  mfeetinsp4 = "Inspection feet: skewed toes",
-  mfeetinsp5 = "Inspection feet: amputation toes",
-  mfeetinsp6 = "Inspection feet: amputation part of foot",
-  mfeetinsp7 = "Inspection feet: amputation feet",
-  mfeetinsp8 = "Inspection feet: other",
-  mfeetinspo = "Inspection feet: other specification",
-  mfeetpllts = "Inspection feet: pull up toes",
-  mfeetsmf = "Inspection feet: smack feet",
-  mknee1 = NA_character_,
-  mknee2 = NA_character_,
-  mpulse1 = NA_character_,
-  mpulse2 = NA_character_
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `C` = c(
-    "mankle1",
-    "mankle2",
-    "mfeetinsp",
-    "mfeetinsp1",
-    "mfeetinsp2",
-    "mfeetinsp3",
-    "mfeetinsp4",
-    "mfeetinsp5",
-    "mfeetinsp6",
-    "mfeetinsp7",
-    "mfeetinsp8",
-    "mfeetinspo",
-    "mfeetpllts",
-    "mfeetsmf",
-    "mknee1",
-    "mknee2",
-    "mpulse1",
-    "mpulse2"
-  ),
-  `D` = c(
-    "mfeetinsp",
-    "mfeetinsp1",
-    "mfeetinsp2",
-    "mfeetinsp3",
-    "mfeetinsp4",
-    "mfeetinsp5",
-    "mfeetinsp6",
-    "mfeetinsp7",
-    "mfeetinsp8",
-    "mfeetinspo",
-    "mfeetpllts",
-    "mfeetsmf"
-  ),
-  `E` = c(
-    "mfeetpllts"
-  ),
-  `F` = c(
-    "mfeetpllts"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_C_labels = harmonized_labels,
-  Wave_D_labels = harmonized_labels,
-  Wave_E_labels = harmonized_labels,
-  Wave_F_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
-)
-
-standardized_value_labels <- list(
-  mankle1 = c(`-5` = "na, interview terminated"),
-  mankle2 = c(`-1` = "no valid data"),
-  mfeetinsp = c(`-5` = "interview terminated", `-1` = "no valid data", `1` = "yes", `2` = "no"),
-  mfeetinsp1 = c(
-    `-2` = "na, see C/DMFEETINSP",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mfeetinsp2 = c(
-    `-2` = "na, see C/DMFEETINSP",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mfeetinsp3 = c(
-    `-2` = "na, see C/DMFEETINSP",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mfeetinsp4 = c(
-    `-2` = "na, see C/DMFEETINSP",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mfeetinsp5 = c(
-    `-2` = "na, see C/DMFEETINSP",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mfeetinsp6 = c(
-    `-2` = "na, see C/DMFEETINSP",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mfeetinsp7 = c(
-    `-2` = "na, see C/DMFEETINSP",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mfeetinsp8 = c(
-    `-2` = "na, see C/DMFEETINSP",
-    `-1` = "no valid data / na, asked",
-    `0` = "not mentioned",
-    `1` = "mentioned"
-  ),
-  mfeetinspo = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see C/DMFEETINSP8",
-    `-1` = "no valid data / na, asked",
-    `0` = "to be coded"
-  ),
-  mfeetpllts = c(
-    `-5` = "interview terminated",
-    default_missing_labels[c("-1")],
-    `1` = "yes",
-    `2` = "no"
-  ),
-  mfeetsmf = c(`-5` = "interview terminated", `-1` = "no valid data / na, asked", `1` = "yes", `2` = "no"),
-  mknee1 = c(`1` = "Knee"),
-  mknee2 = c(`2` = "Knee"),
-  mpulse1 = c(`1` = "Pulse"),
-  mpulse2 = c(`2` = "Pulse")
-)
-
-value_labels_list <- list(
-  Wave_C_labels = .replace_in_list(
-    standardized_value_labels,
-    mfeetpllts = .replace_labels(
-    standardized_value_labels$mfeetpllts,
-    `-1` = "no valid data / na, asked"
-  )
-  ),
-  Wave_D_labels = .replace_in_list(
-    standardized_value_labels,
-    mfeetinsp = c(`-1` = "no valid data", `1` = "yes", `2` = "no"),
-    mfeetpllts = c(`-1` = "no valid data / na, asked", `1` = "yes", `2` = "no"),
-    mfeetsmf = c(`-1` = "no valid data / na, asked", `1` = "yes", `2` = "no")
-  ),
-  Wave_E_labels = .replace_in_list(
-    standardized_value_labels,
-    mfeetpllts = c(`-1` = "na, asked", `1` = "yes", `2` = "no")
-  ),
-  Wave_F_labels = .replace_in_list(
-    standardized_value_labels,
-    mfeetpllts = c(`-1` = "na, asked", `1` = "yes", `2` = "no")
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   mankle1 = "numeric",
   mankle2 = "numeric",
@@ -199,12 +31,144 @@ var_types_vec <- c(
   mpulse2 = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "185", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "185", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "185", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "185", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  mankle1 = "Ankle (1): width in mm",
+  mankle2 = "Ankle (2): width in mm",
+  mfeetinsp = "Inspection feet: whole",
+  mfeetinsp1 = "Inspection feet: sores",
+  mfeetinsp2 = "Inspection feet: plaster",
+  mfeetinsp3 = "Inspection feet: corns",
+  mfeetinsp4 = "Inspection feet: skewed toes",
+  mfeetinsp5 = "Inspection feet: amputation toes",
+  mfeetinsp6 = "Inspection feet: amputation part of foot",
+  mfeetinsp7 = "Inspection feet: amputation feet",
+  mfeetinsp8 = "Inspection feet: other",
+  mfeetinspo = "Inspection feet: other specification",
+  mfeetpllts = "Inspection feet: pull up toes",
+  mfeetsmf = "Inspection feet: smack feet",
+  .applies_to_waves = c("Z")
 )
 
-.lasa_fc_185 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "mankle1", "mankle2",
+  .applies_to_waves = c("C")
+)
+
+variable_labels(
+  "mfeetinsp", "mfeetinsp1", "mfeetinsp2", "mfeetinsp3", "mfeetinsp4", "mfeetinsp5", "mfeetinsp6", "mfeetinsp7", "mfeetinsp8", "mfeetinspo", "mfeetsmf",
+  .applies_to_waves = c("C", "D")
+)
+
+variable_labels(
+  "mfeetpllts",
+  .applies_to_waves = c("C", "D", "E", "F")
+)
+
+variable_labels(
+  mknee1 = NA_character_,
+  mknee2 = NA_character_,
+  mpulse1 = NA_character_,
+  mpulse2 = NA_character_,
+  .applies_to_waves = c("C")
+)
+
+# define value labels ----
+value_labels(
+  `-2` = "na, see C/DMFEETINSP",
+  .applies_to_vars = c("mfeetinsp1", "mfeetinsp2", "mfeetinsp3", "mfeetinsp4", "mfeetinsp5", "mfeetinsp6", "mfeetinsp7", "mfeetinsp8"),
+  .applies_to_waves = c("Z", "C", "D")
+)
+
+value_labels(
+  `-5` = "na, interview terminated",
+  .applies_to_vars = c("mankle1"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-1` = "no valid data",
+  .applies_to_vars = c("mankle2"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-5` = "interview terminated", `-1` = "no valid data", `1` = "yes", `2` = "no",
+  .applies_to_vars = c("mfeetinsp"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-1` = "no valid data / na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mfeetinsp1", "mfeetinsp2", "mfeetinsp3", "mfeetinsp4", "mfeetinsp5", "mfeetinsp6", "mfeetinsp7", "mfeetinsp8"),
+  .applies_to_waves = c("Z", "C", "D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see C/DMFEETINSP8", `-1` = "no valid data / na, asked", `0` = "to be coded",
+  .applies_to_vars = c("mfeetinspo"),
+  .applies_to_waves = c("Z", "C", "D")
+)
+
+value_labels(
+  `-5` = "interview terminated", `-1` = "na, asked", `1` = "yes", `2` = "no",
+  .applies_to_vars = c("mfeetpllts"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-5` = "interview terminated", `-1` = "no valid data / na, asked", `1` = "yes", `2` = "no",
+  .applies_to_vars = c("mfeetsmf"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `1` = "Knee",
+  .applies_to_vars = c("mknee1"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `2` = "Knee",
+  .applies_to_vars = c("mknee2"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `1` = "Pulse",
+  .applies_to_vars = c("mpulse1"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `2` = "Pulse",
+  .applies_to_vars = c("mpulse2"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-5` = "interview terminated", `-1` = "no valid data / na, asked", `1` = "yes", `2` = "no",
+  .applies_to_vars = c("mfeetpllts"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-1` = "no valid data", `1` = "yes", `2` = "no",
+  .applies_to_vars = c("mfeetinsp"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `-1` = "no valid data / na, asked", `1` = "yes", `2` = "no",
+  .applies_to_vars = c("mfeetpllts", "mfeetsmf"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "yes", `2` = "no",
+  .applies_to_vars = c("mfeetpllts"),
+  .applies_to_waves = c("E", "F")
+)
+
+.lasa_fc_185 <- .lasa_finalize_fc("185")
 

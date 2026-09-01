@@ -1,134 +1,15 @@
 ## LASA filecode 862 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  mcreat = "creatinine",
-  mdpd = "urine: deoxypyridinoline (DPD)",
-  mdpdcre = "urine: deoxypyridinoline/creatinine ratio",
-  migf1 = "serum: insuline-like growth factor-1 (IGF-1)",
-  most = "serum: osteocalcin (OC)",
-  mpth = "serum: parathyroid hormone (PTH)",
-  mrem862 = "remarks about determination",
-  mvitd25 = "serum: 25-hydroxyvitamin D (25(OH)D), nmol/L",
-  mvitd25st = "serum: 25-hydroxyvitamin D (25(OH)D), nmol/L, ODIN-standardized"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `C` = c(
-    "mcreat",
-    "mdpd",
-    "mdpdcre",
-    "migf1",
-    "most",
-    "mpth",
-    "mvitd25",
-    "mvitd25st"
-  ),
-  `2B` = c(
-    "mpth",
-    "mvitd25",
-    "mvitd25st"
-  ),
-  `G` = c(
-    "mpth",
-    "mvitd25",
-    "mvitd25st"
-  ),
-  `3B` = c(
-    "mcreat",
-    "mrem862",
-    "mvitd25"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_C_labels = .replace_labels(
-    harmonized_labels,
-    mcreat = "urine: creatinine (mmol/l)"
-  ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels,
-    mpth = "serum: parathyroid hormone (PTH), pmol/L"
-  ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels,
-    mpth = "serum: parathyroid hormone (PTH), pmol/L"
-  ),
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels,
-    mcreat = "serum: creatinine (umol/L)",
-    mvitd25 = "serum: 25-hydroxyvitamin D (25(OH)D) (nmol/l)"
-  ),
-  Harmonized_labels = harmonized_labels
-)
-
-standardized_value_labels <- list(
-  mcreat = c(
-    `-3` = "incorrect value",
-    `-2` = "value below determination / no serum, not determined",
-    `-1` = "no determination / no valid data"
-  ),
-  mdpd = c(`-3` = "incorrect value", `-2` = "value below determination", `-1` = "no determination"),
-  mdpdcre = c(`-3` = "incorrect value", `-2` = "value below determination", `-1` = "no determination"),
-  migf1 = c(`-3` = "incorrect value", `-2` = "value below determination", `-1` = "no determination"),
-  most = c(`-3` = "incorrect value", `-2` = "value below determination", `-1` = "no determination"),
-  mpth = c(`-3` = "incorrect value", `-2` = "value below determination", `-1` = "no determination"),
-  mrem862 = stats::setNames(character(0), character(0)),
-  mvitd25 = c(
-    `-3` = "incorrect value",
-    `-2` = "value below determination / no serum, not determined",
-    `-1` = "no determination / no valid data"
-  ),
-  mvitd25st = c(`-1` = "no determination")
-)
-
-value_labels_list <- list(
-  Wave_C_labels = .replace_in_list(
-    standardized_value_labels,
-    mcreat = .replace_labels(
-    standardized_value_labels$mcreat,
-    `-2` = "value below determination",
-    `-1` = "no determination"
-  ),
-    mvitd25 = .replace_labels(
-    standardized_value_labels$mvitd25,
-    `-2` = "value below determination",
-    `-1` = "no determination"
-  )
-  ),
-  Wave_2B_labels = .replace_in_list(
-    standardized_value_labels,
-    mvitd25 = .replace_labels(
-    standardized_value_labels$mvitd25,
-    `-2` = "value below determination",
-    `-1` = "no determination"
-  )
-  ),
-  Wave_G_labels = .replace_in_list(
-    standardized_value_labels,
-    mvitd25 = .replace_labels(
-    standardized_value_labels$mvitd25,
-    `-2` = "value below determination",
-    `-1` = "no determination"
-  )
-  ),
-  Wave_3B_labels = .replace_in_list(
-    standardized_value_labels,
-    mcreat = c(`-2` = "no serum, not determined", `-1` = "no valid data"),
-    mvitd25 = c(`-2` = "no serum, not determined", `-1` = "no valid data")
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   mcreat = "numeric",
   mdpd = "numeric",
@@ -141,14 +22,93 @@ var_types_vec <- c(
   mvitd25st = "numeric"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "862", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "862", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "862", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "862", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  mcreat = "creatinine",
+  mdpd = "urine: deoxypyridinoline (DPD)",
+  mdpdcre = "urine: deoxypyridinoline/creatinine ratio",
+  migf1 = "serum: insuline-like growth factor-1 (IGF-1)",
+  most = "serum: osteocalcin (OC)",
+  mpth = "serum: parathyroid hormone (PTH)",
+  mrem862 = "remarks about determination",
+  mvitd25 = "serum: 25-hydroxyvitamin D (25(OH)D), nmol/L",
+  mvitd25st = "serum: 25-hydroxyvitamin D (25(OH)D), nmol/L, ODIN-standardized",
+  .applies_to_waves = c("Z")
 )
 
-fc_labels$value_labels[["mrem862"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+variable_labels(
+  "mdpd", "mdpdcre", "migf1", "most", "mpth",
+  .applies_to_waves = c("C")
+)
 
-.lasa_fc_862 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "mvitd25", "mvitd25st",
+  .applies_to_waves = c("C", "2B", "G")
+)
+
+variable_labels(
+  "mrem862",
+  .applies_to_waves = c("3B")
+)
+
+variable_labels(
+  mcreat = "urine: creatinine (mmol/l)",
+  .applies_to_waves = c("C")
+)
+
+variable_labels(
+  mpth = "serum: parathyroid hormone (PTH), pmol/L",
+  .applies_to_waves = c("2B", "G")
+)
+
+variable_labels(
+  mcreat = "serum: creatinine (umol/L)",
+  mvitd25 = "serum: 25-hydroxyvitamin D (25(OH)D) (nmol/l)",
+  .applies_to_waves = c("3B")
+)
+
+# define value labels ----
+value_labels(
+  `-3` = "incorrect value", `-2` = "value below determination / no serum, not determined", `-1` = "no determination / no valid data",
+  .applies_to_vars = c("mcreat", "mvitd25"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-3` = "incorrect value", `-2` = "value below determination", `-1` = "no determination",
+  .applies_to_vars = c("mdpd", "mdpdcre", "migf1", "most"),
+  .applies_to_waves = c("Z", "C")
+)
+
+value_labels(
+  `-3` = "incorrect value", `-2` = "value below determination", `-1` = "no determination",
+  .applies_to_vars = c("mpth"),
+  .applies_to_waves = c("Z", "C", "2B", "G")
+)
+
+value_labels(
+  `-1` = "no determination",
+  .applies_to_vars = c("mvitd25st"),
+  .applies_to_waves = c("Z", "C", "2B", "G")
+)
+
+value_labels(
+  `-3` = "incorrect value", `-2` = "value below determination", `-1` = "no determination",
+  .applies_to_vars = c("mcreat"),
+  .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-3` = "incorrect value", `-2` = "value below determination", `-1` = "no determination",
+  .applies_to_vars = c("mvitd25"),
+  .applies_to_waves = c("C", "2B", "G")
+)
+
+value_labels(
+  `-2` = "no serum, not determined", `-1` = "no valid data",
+  .applies_to_vars = c("mcreat", "mvitd25"),
+  .applies_to_waves = c("3B")
+)
+
+.lasa_fc_862 <- .lasa_finalize_fc("862")
 

@@ -3,11 +3,11 @@
 ## Every variable and value label is hardcoded, hand-maintained R. Source
 ## of the labels:
 ##   * data-raw/label_db_helpers.R  shared constants (wave_prefix,
-##                                 identifier column names) and helper
-##                                 functions (.override_label(),
-##                                 .replace_labels(), .replace_in_list(),
-##                                 and the four .lasa_build_*_table()
-##                                 table constructors)
+##                                 identifier column names), the
+##                                 variable_labels()/value_labels()/
+##                                 .lasa_finalize_fc() authoring DSL, and
+##                                 the four .lasa_build_*_table() table
+##                                 constructors it's built on
 ##   * data-raw/variable_<fc>.R     one file per filecode: four "wide"
 ##                                 tables (one row per wave + a synthetic
 ##                                 "all" row for the cross-wave-harmonized
@@ -86,26 +86,18 @@ for (fc in names(fc_objects)) {
 
   # A harmonized value label can be a human-authored placeholder ("label
   # varies by wave") when a code's real-world meaning differs by wave and
-  # no single cross-wave label could be written. Two kinds, resolved per
-  # code, not per variable:
-  #  - a placeholder on one of the four near-universal missing-reason
-  #    codes (-1..-4) is backfilled from default_missing_labels -- these
-  #    almost always share one meaning across waves even when a
-  #    variable's answer categories don't, so there's no reason to drop
-  #    them too.
-  #  - a placeholder on any other code (a genuinely inconsistent answer/
-  #    substantive category, or -5 and beyond) is dropped from that one
-  #    code only; it's never backfilled, since there's no shared meaning
-  #    to fall back to.
-  # Either way, an unresolved (non-backfillable) placeholder means the
-  # variable's numeric codes aren't comparable across waves, so the whole
-  # variable is reclassified var_type "text" below (apply_lasa_labels()
-  # then represents it as wave-specific label text instead of numeric/
-  # factor) -- but its *other*, still-consistent codes (very often
-  # exactly the missing-reason codes) keep their harmonized label rather
-  # than being dropped along with it.
+  # no single cross-wave label could be written -- under the
+  # variable_labels()/value_labels() DSL this simply means the author
+  # never gave that code a "Z"-scoped value_labels() declaration, but the
+  # marker is still recognized here (e.g. a manual override could still
+  # write it) and handled the same way regardless of which numeric code
+  # it's on: dropped from that one code only, and the whole variable is
+  # reclassified var_type "text" below (apply_lasa_labels() then
+  # represents it as wave-specific label text instead of numeric/factor)
+  # -- but its *other*, still-consistent codes keep their harmonized
+  # label rather than being dropped along with it.
   placeholder_cns <- character(0) # canonical names downgraded to var_type "text"
-  harmonized_vec <- list() # cn -> harmonized vector after backfill/pruning, replaces vv[[cn]][[all_row]]
+  harmonized_vec <- list() # cn -> harmonized vector after pruning, replaces vv[[cn]][[all_row]]
   for (cn in canonical_cols) {
     vec <- vv[[cn]][[all_row]]
     if (is.null(vec) || length(vec) == 0L) next
@@ -114,14 +106,8 @@ for (fc in names(fc_objects)) {
       harmonized_vec[[cn]] <- vec
       next
     }
-    backfillable <- is_placeholder & names(vec) %in% names(label_env$default_missing_labels)
-    vec[backfillable] <- label_env$default_missing_labels[names(vec)[backfillable]]
-    unresolved <- is_placeholder & !backfillable
-    # var_type only downgrades to "text" for an *unresolved* placeholder
-    # -- one fully backfilled from default_missing_labels leaves nothing
-    # inconsistent behind, so the variable keeps its authored var_type.
-    if (any(unresolved)) placeholder_cns <- c(placeholder_cns, cn)
-    vec <- vec[!unresolved]
+    placeholder_cns <- c(placeholder_cns, cn)
+    vec <- vec[!is_placeholder]
     if (length(vec) > 0L) harmonized_vec[[cn]] <- vec
   }
   n_placeholder_total <- n_placeholder_total + length(placeholder_cns)

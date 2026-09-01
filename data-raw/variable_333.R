@@ -1,202 +1,96 @@
 ## LASA filecode 333 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
+var_types_vec <- c(
+  qqulims = "numeric",
+  qqulips = "numeric",
+  qqulisf = "numeric"
+)
+
+# define variable labels ----
+variable_labels(
   qqulims = "Mental health (SF-12)",
   qqulips = "Physical health (SF-12)",
-  qqulisf = "Physical and mental health (SF-12)"
+  qqulisf = "Physical and mental health (SF-12)",
+  .applies_to_waves = c("Z")
 )
 
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `D` = c(
-    "qqulims",
-    "qqulips",
-    "qqulisf"
-  ),
-  `E` = c(
-    "qqulims",
-    "qqulips",
-    "qqulisf"
-  ),
-  `F` = c(
-    "qqulims",
-    "qqulips",
-    "qqulisf"
-  ),
-  `G` = c(
-    "qqulims",
-    "qqulips",
-    "qqulisf"
-  ),
-  `H` = c(
-    "qqulims",
-    "qqulips",
-    "qqulisf"
-  ),
-  `3B` = c(
-    "qqulims",
-    "qqulips",
-    "qqulisf"
-  ),
-  `I` = c(
-    "qqulims",
-    "qqulips",
-    "qqulisf"
-  ),
-  `J` = c(
-    "qqulims",
-    "qqulips",
-    "qqulisf"
-  ),
-  `K` = c(
-    "qqulims",
-    "qqulips",
-    "qqulisf"
-  )
+variable_labels(
+  qqulims = "Mental health (SF-12) Low-High",
+  qqulips = "Physical health (SF-12) Low-High",
+  qqulisf = "Physical and mental health (SF-12) Low-High",
+  .applies_to_waves = c("D", "E", "F", "G", "H", "3B", "I", "J", "K")
 )
 
-variable_labels_list <- list(
-  Wave_D_labels = .replace_labels(
-    harmonized_labels,
-    qqulims = "Mental health (SF-12) Low-High",
-    qqulips = "Physical health (SF-12) Low-High",
-    qqulisf = "Physical and mental health (SF-12) Low-High"
-  ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels,
-    qqulims = "Mental health (SF-12) Low-High",
-    qqulips = "Physical health (SF-12) Low-High",
-    qqulisf = "Physical and mental health (SF-12) Low-High"
-  ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels,
-    qqulims = "Mental health (SF-12) Low-High",
-    qqulips = "Physical health (SF-12) Low-High",
-    qqulisf = "Physical and mental health (SF-12) Low-High"
-  ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels,
-    qqulims = "Mental health (SF-12) Low-High",
-    qqulips = "Physical health (SF-12) Low-High",
-    qqulisf = "Physical and mental health (SF-12) Low-High"
-  ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels,
-    qqulims = "Mental health (SF-12) Low-High",
-    qqulips = "Physical health (SF-12) Low-High",
-    qqulisf = "Physical and mental health (SF-12) Low-High"
-  ),
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels,
-    qqulims = "Mental health (SF-12) Low-High",
-    qqulips = "Physical health (SF-12) Low-High",
-    qqulisf = "Physical and mental health (SF-12) Low-High"
-  ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels,
-    qqulims = "Mental health (SF-12) Low-High",
-    qqulips = "Physical health (SF-12) Low-High",
-    qqulisf = "Physical and mental health (SF-12) Low-High"
-  ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels,
-    qqulims = "Mental health (SF-12) Low-High",
-    qqulips = "Physical health (SF-12) Low-High",
-    qqulisf = "Physical and mental health (SF-12) Low-High"
-  ),
-  Wave_K_labels = .replace_labels(
-    harmonized_labels,
-    qqulims = "Mental health (SF-12) Low-High",
-    qqulips = "Physical health (SF-12) Low-High",
-    qqulisf = "Physical and mental health (SF-12) Low-High"
-  ),
-  Harmonized_labels = harmonized_labels
+# define value labels ----
+value_labels(
+  `-1` = "no valid data",
+  .applies_to_vars = c("qqulims", "qqulips", "qqulisf"),
+  .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "3B", "I", "J", "K")
 )
 
-standardized_value_labels <- list(
-  qqulims = c(
-    `-1` = "no valid data",
-    `6` = NA_character_,
-    `7` = NA_character_,
-    `8` = NA_character_,
-    `27` = NA_character_
-  ),
-  qqulips = c(`-1` = "no valid data", `6` = NA_character_, `20` = NA_character_),
-  qqulisf = c(
-    `-1` = "no valid data",
-    `12` = NA_character_,
-    `13` = NA_character_,
-    `14` = NA_character_,
-    `47` = NA_character_
-  )
+value_labels(
+  `6` = NA_character_, `7` = NA_character_, `8` = NA_character_, `27` = NA_character_,
+  .applies_to_vars = c("qqulims"),
+  .applies_to_waves = c("Z")
 )
 
-value_labels_list <- list(
-  Wave_D_labels = .replace_in_list(
-    standardized_value_labels,
-    qqulims = c(`-1` = "no valid data", `6` = NA_character_, `27` = NA_character_),
-    qqulisf = c(`-1` = "no valid data", `12` = NA_character_, `47` = NA_character_)
-  ),
-  Wave_E_labels = .replace_in_list(
-    standardized_value_labels,
-    qqulims = c(`-1` = "no valid data", `8` = NA_character_, `27` = NA_character_),
-    qqulisf = c(`-1` = "no valid data", `14` = NA_character_, `47` = NA_character_)
-  ),
-  Wave_F_labels = .replace_in_list(
-    standardized_value_labels,
-    qqulims = c(`-1` = "no valid data", `8` = NA_character_, `27` = NA_character_),
-    qqulisf = c(`-1` = "no valid data", `14` = NA_character_, `47` = NA_character_)
-  ),
-  Wave_G_labels = .replace_in_list(
-    standardized_value_labels,
-    qqulims = c(`-1` = "no valid data", `6` = NA_character_, `27` = NA_character_),
-    qqulisf = c(`-1` = "no valid data", `13` = NA_character_, `47` = NA_character_)
-  ),
-  Wave_H_labels = .replace_in_list(
-    standardized_value_labels,
-    qqulims = c(`-1` = "no valid data", `7` = NA_character_, `27` = NA_character_),
-    qqulisf = c(`-1` = "no valid data", `13` = NA_character_, `47` = NA_character_)
-  ),
-  Wave_3B_labels = .replace_in_list(
-    standardized_value_labels,
-    qqulims = c(`-1` = "no valid data", `7` = NA_character_, `27` = NA_character_),
-    qqulisf = c(`-1` = "no valid data", `13` = NA_character_, `47` = NA_character_)
-  ),
-  Wave_I_labels = .replace_in_list(
-    standardized_value_labels,
-    qqulims = c(`-1` = "no valid data", `7` = NA_character_, `27` = NA_character_),
-    qqulisf = c(`-1` = "no valid data", `13` = NA_character_, `47` = NA_character_)
-  ),
-  Wave_J_labels = .replace_in_list(
-    standardized_value_labels,
-    qqulims = c(`-1` = "no valid data", `7` = NA_character_, `27` = NA_character_),
-    qqulisf = c(`-1` = "no valid data", `13` = NA_character_, `47` = NA_character_)
-  ),
-  Wave_K_labels = .replace_in_list(
-    standardized_value_labels,
-    qqulims = c(`-1` = "no valid data", `7` = NA_character_, `27` = NA_character_),
-    qqulisf = c(`-1` = "no valid data", `13` = NA_character_, `47` = NA_character_)
-  ),
-  Harmonized_labels = standardized_value_labels
+value_labels(
+  `6` = NA_character_, `20` = NA_character_,
+  .applies_to_vars = c("qqulips"),
+  .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "3B", "I", "J", "K")
 )
 
-var_types_vec <- c(qqulims = "numeric", qqulips = "numeric", qqulisf = "numeric")
-
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "333", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "333", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "333", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "333", waves = .lasa_wave_rows())
+value_labels(
+  `12` = NA_character_, `13` = NA_character_, `14` = NA_character_, `47` = NA_character_,
+  .applies_to_vars = c("qqulisf"),
+  .applies_to_waves = c("Z")
 )
 
-.lasa_fc_333 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+value_labels(
+  `6` = NA_character_, `27` = NA_character_,
+  .applies_to_vars = c("qqulims"),
+  .applies_to_waves = c("D", "G")
+)
+
+value_labels(
+  `12` = NA_character_, `47` = NA_character_,
+  .applies_to_vars = c("qqulisf"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `8` = NA_character_, `27` = NA_character_,
+  .applies_to_vars = c("qqulims"),
+  .applies_to_waves = c("E", "F")
+)
+
+value_labels(
+  `14` = NA_character_, `47` = NA_character_,
+  .applies_to_vars = c("qqulisf"),
+  .applies_to_waves = c("E", "F")
+)
+
+value_labels(
+  `13` = NA_character_, `47` = NA_character_,
+  .applies_to_vars = c("qqulisf"),
+  .applies_to_waves = c("G", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `7` = NA_character_, `27` = NA_character_,
+  .applies_to_vars = c("qqulims"),
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
+)
+
+.lasa_fc_333 <- .lasa_finalize_fc("333")
 

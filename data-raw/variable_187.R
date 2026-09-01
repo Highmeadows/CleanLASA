@@ -1,1531 +1,15 @@
 ## LASA filecode 187 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  mdizzgup = "Dizzy: getting up?",
-  mdizzlup = "Dizzy: Yes, looking up",
-  mdizzoth = "Dizzy: Yes, other",
-  mdizzothsp = "Dizzy: other specification",
-  mdizzr = "Dizzy: regular?",
-  mdizztrnhd = "Dizzy: Yes, turning head",
-  mfalladj = "Adjustments in house because of fall",
-  mfalladj01 = "Adjust: non-skid in bathroom/toilet",
-  mfalladj02 = "Adjust: Handgrips in bathroom/toilet",
-  mfalladj03 = "Adjust: seating equipment in bathroom",
-  mfalladj04 = "Adjust: adjusted or raised toilet",
-  mfalladj05 = "Adjust: steps roughened",
-  mfalladj06 = "Adjust: extra handrails",
-  mfalladj07 = "Adjust: extra illumination",
-  mfalladj08 = "Adjust: handgrip above bed",
-  mfalladj09 = "Adjust: lowered doorstep",
-  mfalladj10 = "Adjust: alarm system",
-  mfalladj11 = "Adjust: other",
-  mfalladj12 = "Adjust: other specification",
-  mfalldo1 = "Fall 1: what did you do",
-  mfalldo2 = "Fall 2: what did you do",
-  mfalldoos1 = "Fall 1: what -> other specification",
-  mfalldoos2 = "Fall 2: what -> other specification",
-  mfallf = "Number/frequency of falls in reference period",
-  mfallfc = "Fall: how often (constructed)",
-  mfallhow1 = "Fall 1: how",
-  mfallhow2 = "Fall 2: how",
-  mfallhowos1 = "Fall 1: how -> other specification",
-  mfallhowos2 = "Fall 2: how -> other specification",
-  mfallly = "Fall occurrence in reference period",
-  mfallmhlp = "Fall 1: medical help last fall",
-  mfallmhlp1 = "Fall 1 help: family doctor",
-  mfallmhlp10 = "Fall 2 help: other specification",
-  mfallmhlp2 = "Fall 1 help: first aid hospital",
-  mfallmhlp21 = "2 falls, fall 1: medical help first fall",
-  mfallmhlp22 = "2 falls, fall 2: medical help second fall",
-  mfallmhlp3 = "Fall 1 help: nursing staff",
-  mfallmhlp31 = "> 2 falls,1st fall with most physical consequences: medical help fall",
-  mfallmhlp32 = "> 2 falls,2nd fall with most physical consequences: medical help fall",
-  mfallmhlp4 = "Fall 1 help: other",
-  mfallmhlp5 = "Fall 1 help: other specification",
-  mfallmhlp6 = "Fall 2 help: family doctor",
-  mfallmhlp7 = "Fall 2 help: first aid hospital",
-  mfallmhlp8 = "Fall 2 help: nursing staff",
-  mfallmhlp9 = "Fall 2 help: other",
-  mfallmhlpyn1 = "Fall 1: medical help",
-  mfallmhlpyn2 = "Fall 2: medical help",
-  mfallphc1 = "Fall 1 cons.: fracture",
-  mfallphc10 = "Fall 2 cons.: open wound",
-  mfallphc11 = "Fall 2 cons.: bruise",
-  mfallphc12 = "Fall 2 cons.: sprain",
-  mfallphc13 = "Fall 2 cons.: dislocation",
-  mfallphc14 = "Fall 2 cons.: injury nervous system",
-  mfallphc15 = "Fall 2 cons.: other",
-  mfallphc16 = "Fall 2 cons.: other specification",
-  mfallphc2 = "Fall 1 cons.: open wound",
-  mfallphc211 = "2 falls, fall 1 consequence: fracture",
-  mfallphc212 = "2 falls, fall 1 consequence: open wound",
-  mfallphc213 = "2 falls, fall 1 consequence: bruise",
-  mfallphc214 = "2 falls, fall 1 consequence: sprain/dislocation",
-  mfallphc216 = "2 falls, fall 1 consequence: concussion",
-  mfallphc217 = "2 falls, fall 1 consequence: other",
-  mfallphc221 = "2 falls, fall 2: consequence: fracture",
-  mfallphc222 = "2 falls, fall 2: consequence: open wound",
-  mfallphc223 = "2 falls, fall 2: consequence: bruise",
-  mfallphc224 = "2 falls, fall 2: consequence: sprain/dislocation",
-  mfallphc226 = "2 falls, fall 2: consequence: concussion",
-  mfallphc227 = "2 falls, fall 2: consequence: other",
-  mfallphc3 = "Fall 1 cons.: bruise",
-  mfallphc311 = "> 2 falls, 1st fall with most physical consequences: consequence: fracture",
-  mfallphc312 = "> 2 falls, 1st fall with most physical consequences: consequence: open wound",
-  mfallphc313 = "> 2 falls, 1st fall with most physical consequences: consequence: bruise",
-  mfallphc314 = "> 2 falls, 1st fall with most physical consequences: consequence: sprain/dislocation",
-  mfallphc316 = "> 2 falls, 1st fall with most physical consequences: consequence: concussion",
-  mfallphc317 = "> 2 falls, 1st fall with most physical consequences: consequence: other",
-  mfallphc321 = "> 2 falls, 2nd fall with most physical consequences: consequence: fracture",
-  mfallphc322 = "> 2 falls, 2nd fall with most physical consequences: consequence: open wound",
-  mfallphc323 = "> 2 falls, 2nd fall with most physical consequences: consequence: bruise",
-  mfallphc324 = "> 2 falls, 2nd fall with most physical consequences: consequence: sprain/dislocation",
-  mfallphc326 = "> 2 falls, 2nd fall with most physical consequences: consequence: concussion",
-  mfallphc327 = "> 2 falls, 2nd fall with most physical consequences: consequence: other",
-  mfallphc4 = "Fall 1 consequence: sprain/dislocation",
-  mfallphc5 = "Fall 1 cons.: dislocation",
-  mfallphc6 = "Fall 1 consequence: concussion",
-  mfallphc7 = "Fall 1 cons.: other",
-  mfallphc8 = "Fall 1 cons.: other specification",
-  mfallphc9 = "Fall 2 cons.: fracture",
-  mfallphcn = "Fall: how often physical consequences",
-  mfallphcnm = "Number falls physical consequencies (>= 3)",
-  mfallphcyn1 = "Fall 1: physical consequences",
-  mfallphcyn2 = "Fall 2: physical consequences",
-  mfallphcyn211 = "2 falls, fall 1: physical consequences last fall",
-  mfallphcyn221 = "2 falls, fall 2: physical consequences last fall",
-  mfallphcyn311 = "> 2 falls,1st fall with most physical consequences: physical consequences last fall",
-  mfallphcyn321 = "> 2 falls,2nd fall with most physical consequences: physical consequences last fall",
-  mfallwh1 = "Fall 1: where",
-  mfallwh2 = "Fall 2: where",
-  mfallwhos1 = "Fall1 : where -> other specification",
-  mfallwhos2 = "Fall 2: where -> other specification",
-  mwalkaid = "Walking aid or wheelchair",
-  mwalkaid1 = "Walking aid: cane",
-  mwalkaid1m = "Month walking aid: cane",
-  mwalkaid1y = "Year walking aid: cane",
-  mwalkaid2 = "Walking aid: walker",
-  mwalkaid2m = "Month walking aid: walker",
-  mwalkaid2y = "Year walking aid: walker",
-  mwalkaid3 = "Walking aid: rollator",
-  mwalkaid3m = "Month walking aid: rollator",
-  mwalkaid3y = "Year walking aid: rollator",
-  mwalkaid4 = "Walking aid: wheelchair",
-  mwalkaid4m = "Month walking aid: wheelchair",
-  mwalkaid4y = "Year walking aid: wheelchair",
-  mwalkaid5 = "Walking aid: other",
-  mwalkaid5m = "Month walking aid: other",
-  mwalkaid5y = "Year walking aid: other",
-  mwalkaid6 = "Walking aid: other specification"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `C` = c(
-    "mdizzgup",
-    "mdizzlup",
-    "mdizzoth",
-    "mdizzothsp",
-    "mdizzr",
-    "mdizztrnhd",
-    "mfallf",
-    "mfallly"
-  ),
-  `D` = c(
-    "mdizzgup",
-    "mdizzlup",
-    "mdizzoth",
-    "mdizzothsp",
-    "mdizzr",
-    "mdizztrnhd",
-    "mfalladj",
-    "mfalladj01",
-    "mfalladj02",
-    "mfalladj03",
-    "mfalladj04",
-    "mfalladj05",
-    "mfalladj06",
-    "mfalladj07",
-    "mfalladj08",
-    "mfalladj09",
-    "mfalladj10",
-    "mfalladj11",
-    "mfalladj12",
-    "mfalldo1",
-    "mfalldo2",
-    "mfalldoos1",
-    "mfalldoos2",
-    "mfallf",
-    "mfallfc",
-    "mfallhow1",
-    "mfallhow2",
-    "mfallhowos1",
-    "mfallhowos2",
-    "mfallly",
-    "mfallmhlp1",
-    "mfallmhlp10",
-    "mfallmhlp2",
-    "mfallmhlp3",
-    "mfallmhlp4",
-    "mfallmhlp5",
-    "mfallmhlp6",
-    "mfallmhlp7",
-    "mfallmhlp8",
-    "mfallmhlp9",
-    "mfallmhlpyn1",
-    "mfallmhlpyn2",
-    "mfallphc1",
-    "mfallphc10",
-    "mfallphc11",
-    "mfallphc12",
-    "mfallphc13",
-    "mfallphc14",
-    "mfallphc15",
-    "mfallphc16",
-    "mfallphc2",
-    "mfallphc3",
-    "mfallphc4",
-    "mfallphc5",
-    "mfallphc6",
-    "mfallphc7",
-    "mfallphc8",
-    "mfallphc9",
-    "mfallphcyn1",
-    "mfallphcyn2",
-    "mfallwh1",
-    "mfallwh2",
-    "mfallwhos1",
-    "mfallwhos2",
-    "mwalkaid",
-    "mwalkaid1",
-    "mwalkaid1m",
-    "mwalkaid1y",
-    "mwalkaid2",
-    "mwalkaid2m",
-    "mwalkaid2y",
-    "mwalkaid3",
-    "mwalkaid3m",
-    "mwalkaid3y",
-    "mwalkaid4",
-    "mwalkaid4m",
-    "mwalkaid4y",
-    "mwalkaid5",
-    "mwalkaid5m",
-    "mwalkaid5y",
-    "mwalkaid6"
-  ),
-  `E` = c(
-    "mwalkaid",
-    "mwalkaid1",
-    "mwalkaid2",
-    "mwalkaid3",
-    "mwalkaid4",
-    "mwalkaid5",
-    "mwalkaid6"
-  ),
-  `2B` = c(
-    "mdizzgup",
-    "mdizzlup",
-    "mdizzoth",
-    "mdizzothsp",
-    "mdizzr",
-    "mdizztrnhd",
-    "mwalkaid",
-    "mwalkaid1",
-    "mwalkaid1m",
-    "mwalkaid1y",
-    "mwalkaid2",
-    "mwalkaid2m",
-    "mwalkaid2y",
-    "mwalkaid3",
-    "mwalkaid3m",
-    "mwalkaid3y",
-    "mwalkaid4",
-    "mwalkaid4m",
-    "mwalkaid4y",
-    "mwalkaid5",
-    "mwalkaid5m",
-    "mwalkaid5y",
-    "mwalkaid6"
-  ),
-  `F` = c(
-    "mdizzgup",
-    "mdizzlup",
-    "mdizzoth",
-    "mdizzothsp",
-    "mdizzr",
-    "mdizztrnhd",
-    "mwalkaid",
-    "mwalkaid1",
-    "mwalkaid2",
-    "mwalkaid3",
-    "mwalkaid4",
-    "mwalkaid5",
-    "mwalkaid6"
-  ),
-  `G` = c(
-    "mdizzgup",
-    "mdizzlup",
-    "mdizzoth",
-    "mdizzothsp",
-    "mdizzr",
-    "mdizztrnhd",
-    "mwalkaid",
-    "mwalkaid1",
-    "mwalkaid2",
-    "mwalkaid3",
-    "mwalkaid4",
-    "mwalkaid5",
-    "mwalkaid6"
-  ),
-  `H` = c(
-    "mdizzr",
-    "mwalkaid",
-    "mwalkaid1",
-    "mwalkaid2",
-    "mwalkaid3",
-    "mwalkaid4",
-    "mwalkaid5"
-  ),
-  `3B` = c(
-    "mdizzgup",
-    "mdizzlup",
-    "mdizzoth",
-    "mdizzothsp",
-    "mdizzr",
-    "mdizztrnhd",
-    "mwalkaid",
-    "mwalkaid1",
-    "mwalkaid1m",
-    "mwalkaid1y",
-    "mwalkaid2",
-    "mwalkaid2m",
-    "mwalkaid2y",
-    "mwalkaid3",
-    "mwalkaid3m",
-    "mwalkaid3y",
-    "mwalkaid4",
-    "mwalkaid4m",
-    "mwalkaid4y",
-    "mwalkaid5",
-    "mwalkaid5m",
-    "mwalkaid5y",
-    "mwalkaid6"
-  ),
-  `MB` = c(
-    "mfallf",
-    "mfallly"
-  ),
-  `I` = c(
-    "mdizzr"
-  ),
-  `J` = c(
-    "mdizzr",
-    "mfallf",
-    "mfallfc",
-    "mfallly",
-    "mfallmhlp",
-    "mfallphc1",
-    "mfallphc2",
-    "mfallphc3",
-    "mfallphc4",
-    "mfallphc6",
-    "mfallphc7",
-    "mfallphcyn1"
-  ),
-  `K` = c(
-    "mdizzr",
-    "mfallf",
-    "mfallfc",
-    "mfallly",
-    "mfallmhlp1",
-    "mfallmhlp21",
-    "mfallmhlp22",
-    "mfallmhlp31",
-    "mfallmhlp32",
-    "mfallphc1",
-    "mfallphc2",
-    "mfallphc211",
-    "mfallphc212",
-    "mfallphc213",
-    "mfallphc214",
-    "mfallphc216",
-    "mfallphc217",
-    "mfallphc221",
-    "mfallphc222",
-    "mfallphc223",
-    "mfallphc224",
-    "mfallphc226",
-    "mfallphc227",
-    "mfallphc3",
-    "mfallphc311",
-    "mfallphc312",
-    "mfallphc313",
-    "mfallphc314",
-    "mfallphc316",
-    "mfallphc317",
-    "mfallphc321",
-    "mfallphc322",
-    "mfallphc323",
-    "mfallphc324",
-    "mfallphc326",
-    "mfallphc327",
-    "mfallphc4",
-    "mfallphc6",
-    "mfallphc7",
-    "mfallphcn",
-    "mfallphcnm",
-    "mfallphcyn1",
-    "mfallphcyn211",
-    "mfallphcyn221",
-    "mfallphcyn311",
-    "mfallphcyn321"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_C_labels = .replace_labels(
-    harmonized_labels,
-    mdizzgup = "Dizzy: Yes, getting up",
-    mfallf = "Fall: how often (past year)",
-    mfallly = "Did you fall last year"
-  ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels,
-    mdizzgup = "Dizzy: Yes, getting up",
-    mfallf = "Fall: how often (past year)",
-    mfallfc = "Fall: (constructed) how often past year",
-    mfallly = "Did you fall last year",
-    mfallphc4 = "Fall 1 cons.: sprain",
-    mfallphc6 = "Fall 1 cons.: injury nervous system"
-  ),
-  Wave_E_labels = harmonized_labels,
-  Wave_2B_labels = harmonized_labels,
-  Wave_F_labels = harmonized_labels,
-  Wave_G_labels = harmonized_labels,
-  Wave_H_labels = harmonized_labels,
-  Wave_3B_labels = harmonized_labels,
-  Wave_MB_labels = .replace_labels(
-    harmonized_labels,
-    mfallf = "Fall: how often in the past year",
-    mfallly = "Did you fall in the past year?"
-  ),
-  Wave_I_labels = harmonized_labels,
-  Wave_J_labels = .replace_labels(
-    harmonized_labels,
-    mfallf = "Fall: how often since last interview",
-    mfallly = "Did you fall since last interview",
-    mfallphc1 = "Fall 1 consequence: fracture",
-    mfallphc2 = "Fall 1 consequence: open wound",
-    mfallphc3 = "Fall 1 consequence: bruise",
-    mfallphc7 = "Fall 1 consequence: other",
-    mfallphcyn1 = "Fall 1: physical consequencies of last fall"
-  ),
-  Wave_K_labels = .replace_labels(
-    harmonized_labels,
-    mfallf = "Fall: how often since last interview",
-    mfallly = "Did you fall since last interview",
-    mfallmhlp1 = "Fall 1: medical help fall",
-    mfallphc1 = "Fall 1 consequence: fracture",
-    mfallphc2 = "Fall 1 consequence: open wound",
-    mfallphc3 = "Fall 1 consequence: bruise",
-    mfallphc7 = "Fall 1 consequence: other",
-    mfallphcyn1 = "Fall 1: physical consequences last fall"
-  ),
-  Harmonized_labels = harmonized_labels
-)
-
-## This file's own very common answer categories (>= 10 occurrences
-## across its variables) -- same idea as default_missing_labels, just
-## scoped to this filecode instead of shared globally.
-default_answer_labels <- c(
-  `1` = "mentioned",
-  `2` = "yes"
-)
-
-standardized_value_labels <- list(
-  mdizzgup = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see BMDIZZR",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mdizzlup = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see BMDIZZR",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mdizzoth = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see BMDIZZR",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mdizzothsp = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see BMDIZZOTH",
-    `0` = "to be coded",
-    `1` = "no specific reason",
-    `2` = "bending down",
-    `3` = "tension/ tiredness",
-    `4` = "sickness, medication"
-  ),
-  mdizzr = c(
-    `-5` = "na, interview terminated",
-    `-2` = "na, interview terminated",
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    default_answer_labels[c("2")]
-  ),
-  mdizztrnhd = c(
-    default_missing_labels[c("-3")],
-    `-2` = "na, see BMDIZZR",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfalladj = c(
-    `-2` = "na, see DMFALLF",
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    default_answer_labels[c("2")]
-  ),
-  mfalladj01 = c(
-    `-2` = "na, see DMFALLADJ",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfalladj02 = c(
-    `-2` = "na, see DMFALLADJ",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfalladj03 = c(
-    `-2` = "na, see DMFALLADJ",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfalladj04 = c(
-    `-2` = "na, see DMFALLADJ",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfalladj05 = c(
-    `-2` = "na, see DMFALLADJ",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfalladj06 = c(
-    `-2` = "na, see DMFALLADJ",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfalladj07 = c(
-    `-2` = "na, see DMFALLADJ",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfalladj08 = c(
-    `-2` = "na, see DMFALLADJ",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfalladj09 = c(
-    `-2` = "na, see DMFALLADJ",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfalladj10 = c(
-    `-2` = "na, see DMFALLADJ",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfalladj11 = c(
-    `-2` = "na, see DMFALLADJ",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfalladj12 = c(`-2` = "na, see DMFALLADJ11", `0` = "to be coded"),
-  mfalldo1 = c(
-    `-2` = "na, see DMFALLLY",
-    default_missing_labels[c("-1")]
-  ),
-  mfalldo2 = c(
-    `-2` = "na, see DMFALLC",
-    default_missing_labels[c("-1")]
-  ),
-  mfalldoos1 = c(
-    `-2` = "na, see DMFALLDO1",
-    default_missing_labels[c("-1")],
-    `0` = "to be coded"
-  ),
-  mfalldoos2 = c(
-    `-2` = "na, see DMFALLDO2",
-    default_missing_labels[c("-1")],
-    `0` = "to be coded"
-  ),
-  mfallf = c(
-    default_missing_labels[c("-3", "-1")],
-    `-2` = "na, see BMFALLLY"
-  ),
-  mfallfc = c(
-    `-2` = "na, see DMFALLLY",
-    default_missing_labels[c("-1")],
-    `1` = "1 fall",
-    `2` = "2 falls or more"
-  ),
-  mfallhow1 = c(
-    `-2` = "na, see DMFALLLY",
-    default_missing_labels[c("-1")]
-  ),
-  mfallhow2 = c(
-    `-2` = "na, see DMFALLC",
-    default_missing_labels[c("-1")]
-  ),
-  mfallhowos1 = c(
-    `-2` = "na, see DMFALLHOW1",
-    default_missing_labels[c("-1")],
-    `0` = "to be coded"
-  ),
-  mfallhowos2 = c(
-    `-2` = "na, see DMFALLHOW2",
-    default_missing_labels[c("-1")],
-    `0` = "to be coded"
-  ),
-  mfallly = c(
-    `-5` = "na, interview terminated",
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    default_answer_labels[c("2")]
-  ),
-  mfallmhlp = c(
-    `-2` = "na, see JMFALLLY",
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    `2` = "yes, family doctor",
-    `3` = "yes, hospital",
-    `4` = "yes, family doctor and hospital"
-  ),
-  mfallmhlp1 = c(
-    `-2` = "na, see KMFALLPHCN",
-    default_missing_labels[c("-1")],
-    `0` = "not mentioned",
-    `1` = "no",
-    `2` = "yes, family doctor",
-    `3` = "yes, hospital",
-    `4` = "yes, family doctor and hospital"
-  ),
-  mfallmhlp10 = c(`-2` = "na, see DMFALLMHLP9", `0` = "to be coded"),
-  mfallmhlp2 = c(
-    `-2` = "na, see DMFALLMHLPYN1",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallmhlp21 = c(
-    `-2` = "na, see KMFALLPHCN",
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    `2` = "yes, family doctor",
-    `3` = "yes, hospital",
-    `4` = "yes, family doctor and hospital"
-  ),
-  mfallmhlp22 = c(
-    `-2` = "na, see KMFALLPHCN",
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    `2` = "yes, family doctor",
-    `3` = "yes, hospital",
-    `4` = "yes, family doctor and hospital"
-  ),
-  mfallmhlp3 = c(
-    `-2` = "na, see DMFALLMHLPYN1",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallmhlp31 = c(
-    `-2` = "na, see KMFALLPHCN",
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    `2` = "yes, family doctor",
-    `3` = "yes, hospital",
-    `4` = "yes, family doctor and hospital"
-  ),
-  mfallmhlp32 = c(
-    `-2` = "na, see KMFALLPHCN",
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    `2` = "yes, family doctor",
-    `3` = "yes, hospital",
-    `4` = "yes, family doctor and hospital"
-  ),
-  mfallmhlp4 = c(
-    `-2` = "na, see DMFALLMHLPYN1",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallmhlp5 = c(`-2` = "na ,see DMFALLMHLP4", `0` = "to be coded"),
-  mfallmhlp6 = c(
-    `-2` = "na, see DMFALLMHLPYN2",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallmhlp7 = c(
-    `-2` = "na, see DMFALLMHLPYN2",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallmhlp8 = c(
-    `-2` = "na, see DMFALLMHLPYN2",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallmhlp9 = c(
-    `-2` = "na, see DMFALLMHLPYN2",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallmhlpyn1 = c(
-    `-2` = "na, see DMFALLLY",
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    default_answer_labels[c("2")]
-  ),
-  mfallmhlpyn2 = c(
-    `-2` = "na, see DMFALLC",
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    default_answer_labels[c("2")]
-  ),
-  mfallphc1 = c(
-    `-2` = "na, see JMFALLLY",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc10 = c(
-    `-2` = "na, see DMFALLPHCYN2",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc11 = c(
-    `-2` = "na, see DMFALLPHCYN2",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc12 = c(
-    `-2` = "na, see DMFALLPHCYN2",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc13 = c(
-    `-2` = "na, see DMFALLPHCYN2",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc14 = c(
-    `-2` = "na, see DMFALLPHCYN2",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc15 = c(
-    `-2` = "na, see DMFALLPHCYN2",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc16 = c(`-2` = "na, see DMFALLPHC15", `0` = "to be coded"),
-  mfallphc2 = c(
-    `-2` = "na, see JMFALLLY",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc211 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc212 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc213 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc214 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc216 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc217 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc221 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc222 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc223 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc224 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc226 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc227 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc3 = c(
-    `-2` = "na, see JMFALLLY",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc311 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc312 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc313 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc314 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc316 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc317 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc321 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc322 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc323 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc324 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc326 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc327 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc4 = c(
-    `-2` = "na, see JMFALLLY",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc5 = c(
-    `-2` = "na, see DMFALLPHCYN1",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc6 = c(
-    `-2` = "na, see JMFALLLY",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc7 = c(
-    `-2` = "na, see JMFALLLY",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphc8 = c(`-2` = "na, see DMFALLPHC7", `0` = "to be coded"),
-  mfallphc9 = c(
-    `-2` = "na, see DMFALLPHCYN2",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mfallphcn = c(
-    `-2` = "na, see KMFALLLY",
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    default_answer_labels[c("2")]
-  ),
-  mfallphcnm = c(`-2` = "na, see KMFALLPHCN"),
-  mfallphcyn1 = c(
-    `-2` = "na, see DMFALLLY",
-    default_missing_labels[c("-1")],
-    `0` = "na, see KMFALLPHCN",
-    `1` = "no",
-    default_answer_labels[c("2")]
-  ),
-  mfallphcyn2 = c(
-    `-2` = "na, see DMFALLC",
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    default_answer_labels[c("2")]
-  ),
-  mfallphcyn211 = c(
-    default_missing_labels[c("-1")],
-    `0` = "na, see KMFALLPHCN",
-    `1` = "no",
-    default_answer_labels[c("2")]
-  ),
-  mfallphcyn221 = c(
-    default_missing_labels[c("-1")],
-    `0` = "na, see KMFALLPHCN",
-    `1` = "no",
-    default_answer_labels[c("2")]
-  ),
-  mfallphcyn311 = c(
-    default_missing_labels[c("-1")],
-    `0` = "na, see KMFALLPHCN",
-    `1` = "no",
-    default_answer_labels[c("2")]
-  ),
-  mfallphcyn321 = c(
-    default_missing_labels[c("-1")],
-    `0` = "na, see KMFALLPHCN",
-    `1` = "no",
-    default_answer_labels[c("2")]
-  ),
-  mfallwh1 = c(
-    `-2` = "na, see DMFALLLY",
-    default_missing_labels[c("-1")]
-  ),
-  mfallwh2 = c(
-    `-2` = "na, see DMFALLC",
-    default_missing_labels[c("-1")]
-  ),
-  mfallwhos1 = c(
-    `-2` = "na, see DMFALLWH1",
-    default_missing_labels[c("-1")],
-    `0` = "to be coded"
-  ),
-  mfallwhos2 = c(
-    `-2` = "na, see DMFALLWH2",
-    default_missing_labels[c("-1")],
-    `0` = "to be coded"
-  ),
-  mwalkaid = c(
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    default_answer_labels[c("2")]
-  ),
-  mwalkaid1 = c(
-    `-2` = "na, see DMWALKAID",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mwalkaid1m = c(
-    `-2` = "na, see DMWALKAID1",
-    default_missing_labels[c("-1")],
-    `1` = "January",
-    `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
-  ),
-  mwalkaid1y = c(
-    `-2` = "na, see DMWALKAID1",
-    default_missing_labels[c("-1")]
-  ),
-  mwalkaid2 = c(
-    `-2` = "na, see DMWALKAID",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mwalkaid2m = c(
-    `-2` = "na, see DMWALKAID2",
-    default_missing_labels[c("-1")],
-    `1` = "January",
-    `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
-  ),
-  mwalkaid2y = c(
-    `-2` = "na, see DMWALKAID2",
-    default_missing_labels[c("-1")]
-  ),
-  mwalkaid3 = c(
-    `-2` = "na, see DMWALKAID",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mwalkaid3m = c(
-    `-2` = "na, see DMWALKAID3",
-    default_missing_labels[c("-1")],
-    `1` = "January",
-    `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
-  ),
-  mwalkaid3y = c(
-    `-2` = "na, see DMWALKAID3",
-    default_missing_labels[c("-1")]
-  ),
-  mwalkaid4 = c(
-    `-2` = "na, see DMWALKAID",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mwalkaid4m = c(
-    `-2` = "na, see DMWALKAID4",
-    default_missing_labels[c("-1")],
-    `1` = "January",
-    `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
-  ),
-  mwalkaid4y = c(
-    `-2` = "na, see DMWALKAID4",
-    default_missing_labels[c("-1")]
-  ),
-  mwalkaid5 = c(
-    `-2` = "na, see DMWALKAID",
-    `0` = "not mentioned",
-    default_answer_labels[c("1")]
-  ),
-  mwalkaid5m = c(
-    `-2` = "na, see DMWALKAID5",
-    default_missing_labels[c("-1")],
-    `1` = "January",
-    `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
-  ),
-  mwalkaid5y = c(
-    `-2` = "na, see DMWALKAID5",
-    default_missing_labels[c("-1")]
-  ),
-  mwalkaid6 = c(`-2` = "na, see DMWALKAID5", `0` = "to be coded")
-)
-
-value_labels_list <- list(
-  Wave_C_labels = .replace_in_list(
-    standardized_value_labels,
-    mdizzgup = .replace_labels(
-    standardized_value_labels$mdizzgup,
-    `-2` = "na, see C/DMDIZZR"
-  ),
-    mdizzlup = .replace_labels(
-    standardized_value_labels$mdizzlup,
-    `-2` = "na, see C/DMDIZZR"
-  ),
-    mdizzoth = .replace_labels(
-    standardized_value_labels$mdizzoth,
-    `-2` = "na, see C/DMDIZZR"
-  ),
-    mdizzothsp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DMDIZZOTH",
-    `1` = "no specific reason",
-    `2` = "bending down",
-    `3` = "tension/ tiredness",
-    `4` = "sickness, medication"
-  ),
-    mdizzr = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mdizztrnhd = .replace_labels(
-    standardized_value_labels$mdizztrnhd,
-    `-2` = "na, see C/DMDIZZR"
-  ),
-    mfallf = c(`-3` = "na, wrong skip", `-2` = "na, see C/DFALLLY")
-  ),
-  Wave_D_labels = .replace_in_list(
-    standardized_value_labels,
-    mdizzgup = .replace_labels(
-    standardized_value_labels$mdizzgup,
-    `-2` = "na, see C/DMDIZZR"
-  ),
-    mdizzlup = .replace_labels(
-    standardized_value_labels$mdizzlup,
-    `-2` = "na, see C/DMDIZZR"
-  ),
-    mdizzoth = .replace_labels(
-    standardized_value_labels$mdizzoth,
-    `-2` = "na, see C/DMDIZZR"
-  ),
-    mdizzothsp = c(
-    `-3` = "na, wrong skip",
-    `-2` = "na, see C/DMDIZZOTH",
-    `1` = "no specific reason",
-    `2` = "bending down",
-    `3` = "tension/ tiredness",
-    `4` = "sickness, medication"
-  ),
-    mdizzr = c(`-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mdizztrnhd = .replace_labels(
-    standardized_value_labels$mdizztrnhd,
-    `-2` = "na, see C/DMDIZZR"
-  ),
-    mfallf = c(`-3` = "na, wrong skip", `-2` = "na, see C/DFALLLY"),
-    mfallmhlp1 = c(`-2` = "na, see DMFALLMHLPYN1", `0` = "not mentioned", `1` = "mentioned"),
-    mfallphc1 = .replace_labels(
-    standardized_value_labels$mfallphc1,
-    `-2` = "na, see DMFALLPHCYN1"
-  ),
-    mfallphc2 = .replace_labels(
-    standardized_value_labels$mfallphc2,
-    `-2` = "na, see DMFALLPHCYN1"
-  ),
-    mfallphc3 = .replace_labels(
-    standardized_value_labels$mfallphc3,
-    `-2` = "na, see DMFALLPHCYN1"
-  ),
-    mfallphc4 = .replace_labels(
-    standardized_value_labels$mfallphc4,
-    `-2` = "na, see DMFALLPHCYN1"
-  ),
-    mfallphc6 = .replace_labels(
-    standardized_value_labels$mfallphc6,
-    `-2` = "na, see DMFALLPHCYN1"
-  ),
-    mfallphc7 = .replace_labels(
-    standardized_value_labels$mfallphc7,
-    `-2` = "na, see DMFALLPHCYN1"
-  ),
-    mfallphcyn1 = c(`-2` = "na, see DMFALLLY", `-1` = "na, asked", `1` = "no", `2` = "yes")
-  ),
-  Wave_E_labels = .replace_in_list(
-    standardized_value_labels,
-    mwalkaid1 = .replace_labels(
-    standardized_value_labels$mwalkaid1,
-    `-2` = "na, see EMWALKAID"
-  ),
-    mwalkaid2 = .replace_labels(
-    standardized_value_labels$mwalkaid2,
-    `-2` = "na, see EMWALKAID"
-  ),
-    mwalkaid3 = .replace_labels(
-    standardized_value_labels$mwalkaid3,
-    `-2` = "na, see EMWALKAID"
-  ),
-    mwalkaid4 = .replace_labels(
-    standardized_value_labels$mwalkaid4,
-    `-2` = "na, see EMWALKAID"
-  ),
-    mwalkaid5 = .replace_labels(
-    standardized_value_labels$mwalkaid5,
-    `-2` = "na, see EMWALKAID"
-  ),
-    mwalkaid6 = .replace_labels(
-    standardized_value_labels$mwalkaid6,
-    `-2` = "na, see EMWALKAID5"
-  )
-  ),
-  Wave_2B_labels = .replace_in_list(
-    standardized_value_labels,
-    mdizzgup = c(`-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mdizzlup = c(`-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mdizzoth = c(`-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mdizzothsp = c(
-    `-2` = "na, see BMDIZZOTH",
-    `0` = "to be coded",
-    `1` = "no specific reason",
-    `2` = "bending down",
-    `3` = "tension/ tiredness",
-    `4` = "sickness, medication"
-  ),
-    mdizzr = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mdizztrnhd = c(`-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mwalkaid1 = .replace_labels(
-    standardized_value_labels$mwalkaid1,
-    `-2` = "na, see BMWALKAID"
-  ),
-    mwalkaid1m = .replace_labels(
-    standardized_value_labels$mwalkaid1m,
-    `-2` = "na, see BMWALKAID1"
-  ),
-    mwalkaid1y = .replace_labels(
-    standardized_value_labels$mwalkaid1y,
-    `-2` = "na, see BMWALKAID1"
-  ),
-    mwalkaid2 = .replace_labels(
-    standardized_value_labels$mwalkaid2,
-    `-2` = "na, see BMWALKAID"
-  ),
-    mwalkaid2m = .replace_labels(
-    standardized_value_labels$mwalkaid2m,
-    `-2` = "na, see BMWALKAID2"
-  ),
-    mwalkaid2y = .replace_labels(
-    standardized_value_labels$mwalkaid2y,
-    `-2` = "na, see BMWALKAID2"
-  ),
-    mwalkaid3 = .replace_labels(
-    standardized_value_labels$mwalkaid3,
-    `-2` = "na, see BMWALKAID"
-  ),
-    mwalkaid3m = .replace_labels(
-    standardized_value_labels$mwalkaid3m,
-    `-2` = "na, see BMWALKAID3"
-  ),
-    mwalkaid3y = .replace_labels(
-    standardized_value_labels$mwalkaid3y,
-    `-2` = "na, see BMWALKAID3"
-  ),
-    mwalkaid4 = .replace_labels(
-    standardized_value_labels$mwalkaid4,
-    `-2` = "na, see BMWALKAID"
-  ),
-    mwalkaid4m = .replace_labels(
-    standardized_value_labels$mwalkaid4m,
-    `-2` = "na, see BMWALKAID4"
-  ),
-    mwalkaid4y = .replace_labels(
-    standardized_value_labels$mwalkaid4y,
-    `-2` = "na, see BMWALKAID4"
-  ),
-    mwalkaid5 = .replace_labels(
-    standardized_value_labels$mwalkaid5,
-    `-2` = "na, see BMWALKAID"
-  ),
-    mwalkaid5m = .replace_labels(
-    standardized_value_labels$mwalkaid5m,
-    `-2` = "na, see BMWALKAID5"
-  ),
-    mwalkaid5y = .replace_labels(
-    standardized_value_labels$mwalkaid5y,
-    `-2` = "na, see BMWALKAID5"
-  ),
-    mwalkaid6 = .replace_labels(
-    standardized_value_labels$mwalkaid6,
-    `-2` = "na, see BMWALKAID5"
-  )
-  ),
-  Wave_F_labels = .replace_in_list(
-    standardized_value_labels,
-    mdizzgup = c(`-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mdizzlup = c(`-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mdizzoth = c(`-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mdizzothsp = c(
-    `-2` = "na, see F/GMDIZZOTH",
-    `0` = "to be coded",
-    `1` = "no specific reason",
-    `2` = "bending down",
-    `3` = "tension/ tiredness",
-    `4` = "sickness, medication"
-  ),
-    mdizzr = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mdizztrnhd = c(`-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mwalkaid1 = .replace_labels(
-    standardized_value_labels$mwalkaid1,
-    `-2` = "na, see F/G/HMWALKAID"
-  ),
-    mwalkaid2 = .replace_labels(
-    standardized_value_labels$mwalkaid2,
-    `-2` = "na, see F/G/HMWALKAID"
-  ),
-    mwalkaid3 = .replace_labels(
-    standardized_value_labels$mwalkaid3,
-    `-2` = "na, see F/G/HMWALKAID"
-  ),
-    mwalkaid4 = .replace_labels(
-    standardized_value_labels$mwalkaid4,
-    `-2` = "na, see F/G/HMWALKAID"
-  ),
-    mwalkaid5 = .replace_labels(
-    standardized_value_labels$mwalkaid5,
-    `-2` = "na, see F/G/HMWALKAID"
-  ),
-    mwalkaid6 = .replace_labels(
-    standardized_value_labels$mwalkaid6,
-    `-2` = "na, see F/GMWALKAID5"
-  )
-  ),
-  Wave_G_labels = .replace_in_list(
-    standardized_value_labels,
-    mdizzgup = c(`-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mdizzlup = c(`-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mdizzoth = c(`-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mdizzothsp = c(
-    `-2` = "na, see F/GMDIZZOTH",
-    `0` = "to be coded",
-    `1` = "no specific reason",
-    `2` = "bending down",
-    `3` = "tension/ tiredness",
-    `4` = "sickness, medication"
-  ),
-    mdizzr = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mdizztrnhd = c(`-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mwalkaid1 = .replace_labels(
-    standardized_value_labels$mwalkaid1,
-    `-2` = "na, see F/G/HMWALKAID"
-  ),
-    mwalkaid2 = .replace_labels(
-    standardized_value_labels$mwalkaid2,
-    `-2` = "na, see F/G/HMWALKAID"
-  ),
-    mwalkaid3 = .replace_labels(
-    standardized_value_labels$mwalkaid3,
-    `-2` = "na, see F/G/HMWALKAID"
-  ),
-    mwalkaid4 = .replace_labels(
-    standardized_value_labels$mwalkaid4,
-    `-2` = "na, see F/G/HMWALKAID"
-  ),
-    mwalkaid5 = .replace_labels(
-    standardized_value_labels$mwalkaid5,
-    `-2` = "na, see F/G/HMWALKAID"
-  ),
-    mwalkaid6 = .replace_labels(
-    standardized_value_labels$mwalkaid6,
-    `-2` = "na, see F/GMWALKAID5"
-  )
-  ),
-  Wave_H_labels = .replace_in_list(
-    standardized_value_labels,
-    mdizzr = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mwalkaid1 = .replace_labels(
-    standardized_value_labels$mwalkaid1,
-    `-2` = "na, see F/G/HMWALKAID"
-  ),
-    mwalkaid2 = .replace_labels(
-    standardized_value_labels$mwalkaid2,
-    `-2` = "na, see F/G/HMWALKAID"
-  ),
-    mwalkaid3 = .replace_labels(
-    standardized_value_labels$mwalkaid3,
-    `-2` = "na, see F/G/HMWALKAID"
-  ),
-    mwalkaid4 = .replace_labels(
-    standardized_value_labels$mwalkaid4,
-    `-2` = "na, see F/G/HMWALKAID"
-  ),
-    mwalkaid5 = .replace_labels(
-    standardized_value_labels$mwalkaid5,
-    `-2` = "na, see F/G/HMWALKAID"
-  )
-  ),
-  Wave_3B_labels = .replace_in_list(
-    standardized_value_labels,
-    mdizzgup = c(`-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mdizzlup = c(`-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mdizzoth = c(`-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mdizzr = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mdizztrnhd = c(`-2` = "na, see BMDIZZR", `0` = "not mentioned", `1` = "mentioned"),
-    mwalkaid1 = .replace_labels(
-    standardized_value_labels$mwalkaid1,
-    `-2` = "na, see BMWALKAID"
-  ),
-    mwalkaid1m = .replace_labels(
-    standardized_value_labels$mwalkaid1m,
-    `-2` = "na, see BMWALKAID1"
-  ),
-    mwalkaid1y = .replace_labels(
-    standardized_value_labels$mwalkaid1y,
-    `-2` = "na, see BMWALKAID1"
-  ),
-    mwalkaid2 = .replace_labels(
-    standardized_value_labels$mwalkaid2,
-    `-2` = "na, see BMWALKAID"
-  ),
-    mwalkaid2m = .replace_labels(
-    standardized_value_labels$mwalkaid2m,
-    `-2` = "na, see BMWALKAID2"
-  ),
-    mwalkaid2y = .replace_labels(
-    standardized_value_labels$mwalkaid2y,
-    `-2` = "na, see BMWALKAID2"
-  ),
-    mwalkaid3 = .replace_labels(
-    standardized_value_labels$mwalkaid3,
-    `-2` = "na, see BMWALKAID"
-  ),
-    mwalkaid3m = .replace_labels(
-    standardized_value_labels$mwalkaid3m,
-    `-2` = "na, see BMWALKAID3"
-  ),
-    mwalkaid3y = .replace_labels(
-    standardized_value_labels$mwalkaid3y,
-    `-2` = "na, see BMWALKAID3"
-  ),
-    mwalkaid4 = .replace_labels(
-    standardized_value_labels$mwalkaid4,
-    `-2` = "na, see BMWALKAID"
-  ),
-    mwalkaid4m = .replace_labels(
-    standardized_value_labels$mwalkaid4m,
-    `-2` = "na, see BMWALKAID4"
-  ),
-    mwalkaid4y = .replace_labels(
-    standardized_value_labels$mwalkaid4y,
-    `-2` = "na, see BMWALKAID4"
-  ),
-    mwalkaid5 = .replace_labels(
-    standardized_value_labels$mwalkaid5,
-    `-2` = "na, see BMWALKAID"
-  ),
-    mwalkaid5m = .replace_labels(
-    standardized_value_labels$mwalkaid5m,
-    `-2` = "na, see BMWALKAID5"
-  ),
-    mwalkaid5y = .replace_labels(
-    standardized_value_labels$mwalkaid5y,
-    `-2` = "na, see BMWALKAID5"
-  ),
-    mwalkaid6 = .replace_labels(
-    standardized_value_labels$mwalkaid6,
-    `-2` = "na, see BMWALKAID5"
-  )
-  ),
-  Wave_MB_labels = .replace_in_list(
-    standardized_value_labels,
-    mfallf = c(`-2` = "na, see BMFALLLY"),
-    mfallly = c(`-1` = "na, asked", `1` = "no", `2` = "yes")
-  ),
-  Wave_I_labels = .replace_in_list(
-    standardized_value_labels,
-    mdizzr = c(`-2` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes")
-  ),
-  Wave_J_labels = .replace_in_list(
-    standardized_value_labels,
-    mdizzr = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mfallf = c(`-2` = "na, see JMFALLLY", `-1` = "na, asked"),
-    mfallfc = .replace_labels(
-    standardized_value_labels$mfallfc,
-    `-2` = "na, see JMFALLLY"
-  ),
-    mfallly = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mfallphcyn1 = c(`-2` = "na, see JMFALLLY", `-1` = "na, asked", `1` = "no", `2` = "yes")
-  ),
-  Wave_K_labels = .replace_in_list(
-    standardized_value_labels,
-    mdizzr = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mfallf = c(`-2` = "na, see KMFALLLY", `-1` = "na, asked"),
-    mfallfc = .replace_labels(
-    standardized_value_labels$mfallfc,
-    `-2` = "na, see KMFALLLY"
-  ),
-    mfallly = c(`-1` = "na, asked", `1` = "no", `2` = "yes"),
-    mfallmhlp1 = c(
-    `-2` = "na, see KMFALLPHCN",
-    `-1` = "na, asked",
-    `1` = "no",
-    `2` = "yes, family doctor",
-    `3` = "yes, hospital",
-    `4` = "yes, family doctor and hospital"
-  ),
-    mfallphc1 = .replace_labels(
-    standardized_value_labels$mfallphc1,
-    `-2` = "na, see KMFALLPHCN"
-  ),
-    mfallphc2 = .replace_labels(
-    standardized_value_labels$mfallphc2,
-    `-2` = "na, see KMFALLPHCN"
-  ),
-    mfallphc3 = .replace_labels(
-    standardized_value_labels$mfallphc3,
-    `-2` = "na, see KMFALLPHCN"
-  ),
-    mfallphc4 = .replace_labels(
-    standardized_value_labels$mfallphc4,
-    `-2` = "na, see KMFALLPHCN"
-  ),
-    mfallphc6 = .replace_labels(
-    standardized_value_labels$mfallphc6,
-    `-2` = "na, see KMFALLPHCN"
-  ),
-    mfallphc7 = .replace_labels(
-    standardized_value_labels$mfallphc7,
-    `-2` = "na, see KMFALLPHCN"
-  ),
-    mfallphcyn1 = c(`-1` = "na, asked", `0` = "na, see KMFALLPHCN", `1` = "no", `2` = "yes")
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   mdizzgup = "categorical",
   mdizzlup = "categorical",
@@ -1645,14 +129,746 @@ var_types_vec <- c(
   mwalkaid6 = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "187", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "187", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "187", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "187", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  mdizzgup = "Dizzy: getting up?",
+  mdizzlup = "Dizzy: Yes, looking up",
+  mdizzoth = "Dizzy: Yes, other",
+  mdizzothsp = "Dizzy: other specification",
+  mdizzr = "Dizzy: regular?",
+  mdizztrnhd = "Dizzy: Yes, turning head",
+  mfalladj = "Adjustments in house because of fall",
+  mfalladj01 = "Adjust: non-skid in bathroom/toilet",
+  mfalladj02 = "Adjust: Handgrips in bathroom/toilet",
+  mfalladj03 = "Adjust: seating equipment in bathroom",
+  mfalladj04 = "Adjust: adjusted or raised toilet",
+  mfalladj05 = "Adjust: steps roughened",
+  mfalladj06 = "Adjust: extra handrails",
+  mfalladj07 = "Adjust: extra illumination",
+  mfalladj08 = "Adjust: handgrip above bed",
+  mfalladj09 = "Adjust: lowered doorstep",
+  mfalladj10 = "Adjust: alarm system",
+  mfalladj11 = "Adjust: other",
+  mfalladj12 = "Adjust: other specification",
+  mfalldo1 = "Fall 1: what did you do",
+  mfalldo2 = "Fall 2: what did you do",
+  mfalldoos1 = "Fall 1: what -> other specification",
+  mfalldoos2 = "Fall 2: what -> other specification",
+  mfallf = "Number/frequency of falls in reference period",
+  mfallfc = "Fall: how often (constructed)",
+  mfallhow1 = "Fall 1: how",
+  mfallhow2 = "Fall 2: how",
+  mfallhowos1 = "Fall 1: how -> other specification",
+  mfallhowos2 = "Fall 2: how -> other specification",
+  mfallly = "Fall occurrence in reference period",
+  mfallmhlp = "Fall 1: medical help last fall",
+  mfallmhlp1 = "Fall 1 help: family doctor",
+  mfallmhlp10 = "Fall 2 help: other specification",
+  mfallmhlp2 = "Fall 1 help: first aid hospital",
+  mfallmhlp21 = "2 falls, fall 1: medical help first fall",
+  mfallmhlp22 = "2 falls, fall 2: medical help second fall",
+  mfallmhlp3 = "Fall 1 help: nursing staff",
+  mfallmhlp31 = "> 2 falls,1st fall with most physical consequences: medical help fall",
+  mfallmhlp32 = "> 2 falls,2nd fall with most physical consequences: medical help fall",
+  mfallmhlp4 = "Fall 1 help: other",
+  mfallmhlp5 = "Fall 1 help: other specification",
+  mfallmhlp6 = "Fall 2 help: family doctor",
+  mfallmhlp7 = "Fall 2 help: first aid hospital",
+  mfallmhlp8 = "Fall 2 help: nursing staff",
+  mfallmhlp9 = "Fall 2 help: other",
+  mfallmhlpyn1 = "Fall 1: medical help",
+  mfallmhlpyn2 = "Fall 2: medical help",
+  mfallphc1 = "Fall 1 cons.: fracture",
+  mfallphc10 = "Fall 2 cons.: open wound",
+  mfallphc11 = "Fall 2 cons.: bruise",
+  mfallphc12 = "Fall 2 cons.: sprain",
+  mfallphc13 = "Fall 2 cons.: dislocation",
+  mfallphc14 = "Fall 2 cons.: injury nervous system",
+  mfallphc15 = "Fall 2 cons.: other",
+  mfallphc16 = "Fall 2 cons.: other specification",
+  mfallphc2 = "Fall 1 cons.: open wound",
+  mfallphc211 = "2 falls, fall 1 consequence: fracture",
+  mfallphc212 = "2 falls, fall 1 consequence: open wound",
+  mfallphc213 = "2 falls, fall 1 consequence: bruise",
+  mfallphc214 = "2 falls, fall 1 consequence: sprain/dislocation",
+  mfallphc216 = "2 falls, fall 1 consequence: concussion",
+  mfallphc217 = "2 falls, fall 1 consequence: other",
+  mfallphc221 = "2 falls, fall 2: consequence: fracture",
+  mfallphc222 = "2 falls, fall 2: consequence: open wound",
+  mfallphc223 = "2 falls, fall 2: consequence: bruise",
+  mfallphc224 = "2 falls, fall 2: consequence: sprain/dislocation",
+  mfallphc226 = "2 falls, fall 2: consequence: concussion",
+  mfallphc227 = "2 falls, fall 2: consequence: other",
+  mfallphc3 = "Fall 1 cons.: bruise",
+  mfallphc311 = "> 2 falls, 1st fall with most physical consequences: consequence: fracture",
+  mfallphc312 = "> 2 falls, 1st fall with most physical consequences: consequence: open wound",
+  mfallphc313 = "> 2 falls, 1st fall with most physical consequences: consequence: bruise",
+  mfallphc314 = "> 2 falls, 1st fall with most physical consequences: consequence: sprain/dislocation",
+  mfallphc316 = "> 2 falls, 1st fall with most physical consequences: consequence: concussion",
+  mfallphc317 = "> 2 falls, 1st fall with most physical consequences: consequence: other",
+  mfallphc321 = "> 2 falls, 2nd fall with most physical consequences: consequence: fracture",
+  mfallphc322 = "> 2 falls, 2nd fall with most physical consequences: consequence: open wound",
+  mfallphc323 = "> 2 falls, 2nd fall with most physical consequences: consequence: bruise",
+  mfallphc324 = "> 2 falls, 2nd fall with most physical consequences: consequence: sprain/dislocation",
+  mfallphc326 = "> 2 falls, 2nd fall with most physical consequences: consequence: concussion",
+  mfallphc327 = "> 2 falls, 2nd fall with most physical consequences: consequence: other",
+  mfallphc4 = "Fall 1 consequence: sprain/dislocation",
+  mfallphc5 = "Fall 1 cons.: dislocation",
+  mfallphc6 = "Fall 1 consequence: concussion",
+  mfallphc7 = "Fall 1 cons.: other",
+  mfallphc8 = "Fall 1 cons.: other specification",
+  mfallphc9 = "Fall 2 cons.: fracture",
+  mfallphcn = "Fall: how often physical consequences",
+  mfallphcnm = "Number falls physical consequencies (>= 3)",
+  mfallphcyn1 = "Fall 1: physical consequences",
+  mfallphcyn2 = "Fall 2: physical consequences",
+  mfallphcyn211 = "2 falls, fall 1: physical consequences last fall",
+  mfallphcyn221 = "2 falls, fall 2: physical consequences last fall",
+  mfallphcyn311 = "> 2 falls,1st fall with most physical consequences: physical consequences last fall",
+  mfallphcyn321 = "> 2 falls,2nd fall with most physical consequences: physical consequences last fall",
+  mfallwh1 = "Fall 1: where",
+  mfallwh2 = "Fall 2: where",
+  mfallwhos1 = "Fall1 : where -> other specification",
+  mfallwhos2 = "Fall 2: where -> other specification",
+  mwalkaid = "Walking aid or wheelchair",
+  mwalkaid1 = "Walking aid: cane",
+  mwalkaid1m = "Month walking aid: cane",
+  mwalkaid1y = "Year walking aid: cane",
+  mwalkaid2 = "Walking aid: walker",
+  mwalkaid2m = "Month walking aid: walker",
+  mwalkaid2y = "Year walking aid: walker",
+  mwalkaid3 = "Walking aid: rollator",
+  mwalkaid3m = "Month walking aid: rollator",
+  mwalkaid3y = "Year walking aid: rollator",
+  mwalkaid4 = "Walking aid: wheelchair",
+  mwalkaid4m = "Month walking aid: wheelchair",
+  mwalkaid4y = "Year walking aid: wheelchair",
+  mwalkaid5 = "Walking aid: other",
+  mwalkaid5m = "Month walking aid: other",
+  mwalkaid5y = "Year walking aid: other",
+  mwalkaid6 = "Walking aid: other specification",
+  .applies_to_waves = c("Z")
 )
 
-fc_labels$value_labels[["mdizzothsp"]][fc_labels$value_labels$LASA_Wave == "3B"] <- list(NULL)
+variable_labels(
+  "mdizzlup", "mdizzoth", "mdizzothsp", "mdizztrnhd",
+  .applies_to_waves = c("C", "D", "2B", "F", "G", "3B")
+)
 
-.lasa_fc_187 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "mdizzr",
+  .applies_to_waves = c("C", "D", "2B", "F", "G", "H", "3B", "I", "J", "K")
+)
+
+variable_labels(
+  "mfalladj", "mfalladj01", "mfalladj02", "mfalladj03", "mfalladj04", "mfalladj05", "mfalladj06", "mfalladj07", "mfalladj08", "mfalladj09", "mfalladj10", "mfalladj11", "mfalladj12", "mfalldo1", "mfalldo2", "mfalldoos1", "mfalldoos2", "mfallhow1", "mfallhow2", "mfallhowos1", "mfallhowos2", "mfallmhlp1", "mfallmhlp10", "mfallmhlp2", "mfallmhlp3", "mfallmhlp4", "mfallmhlp5", "mfallmhlp6", "mfallmhlp7", "mfallmhlp8", "mfallmhlp9", "mfallmhlpyn1", "mfallmhlpyn2", "mfallphc1", "mfallphc10", "mfallphc11", "mfallphc12", "mfallphc13", "mfallphc14", "mfallphc15", "mfallphc16", "mfallphc2", "mfallphc3", "mfallphc5", "mfallphc7", "mfallphc8", "mfallphc9", "mfallphcyn1", "mfallphcyn2", "mfallwh1", "mfallwh2", "mfallwhos1", "mfallwhos2",
+  .applies_to_waves = c("D")
+)
+
+variable_labels(
+  "mwalkaid", "mwalkaid1", "mwalkaid2", "mwalkaid3", "mwalkaid4", "mwalkaid5",
+  .applies_to_waves = c("D", "E", "2B", "F", "G", "H", "3B")
+)
+
+variable_labels(
+  "mwalkaid1m", "mwalkaid1y", "mwalkaid2m", "mwalkaid2y", "mwalkaid3m", "mwalkaid3y", "mwalkaid4m", "mwalkaid4y", "mwalkaid5m", "mwalkaid5y",
+  .applies_to_waves = c("D", "2B", "3B")
+)
+
+variable_labels(
+  "mwalkaid6",
+  .applies_to_waves = c("D", "E", "2B", "F", "G", "3B")
+)
+
+variable_labels(
+  "mdizzgup",
+  .applies_to_waves = c("2B", "F", "G", "3B")
+)
+
+variable_labels(
+  "mfallfc", "mfallphc4", "mfallphc6",
+  .applies_to_waves = c("J", "K")
+)
+
+variable_labels(
+  "mfallmhlp",
+  .applies_to_waves = c("J")
+)
+
+variable_labels(
+  "mfallmhlp21", "mfallmhlp22", "mfallmhlp31", "mfallmhlp32", "mfallphc211", "mfallphc212", "mfallphc213", "mfallphc214", "mfallphc216", "mfallphc217", "mfallphc221", "mfallphc222", "mfallphc223", "mfallphc224", "mfallphc226", "mfallphc227", "mfallphc311", "mfallphc312", "mfallphc313", "mfallphc314", "mfallphc316", "mfallphc317", "mfallphc321", "mfallphc322", "mfallphc323", "mfallphc324", "mfallphc326", "mfallphc327", "mfallphcn", "mfallphcnm", "mfallphcyn211", "mfallphcyn221", "mfallphcyn311", "mfallphcyn321",
+  .applies_to_waves = c("K")
+)
+
+variable_labels(
+  mdizzgup = "Dizzy: Yes, getting up",
+  mfallf = "Fall: how often (past year)",
+  mfallly = "Did you fall last year",
+  .applies_to_waves = c("C", "D")
+)
+
+variable_labels(
+  mfallfc = "Fall: (constructed) how often past year",
+  mfallphc4 = "Fall 1 cons.: sprain",
+  mfallphc6 = "Fall 1 cons.: injury nervous system",
+  .applies_to_waves = c("D")
+)
+
+variable_labels(
+  mfallf = "Fall: how often in the past year",
+  mfallly = "Did you fall in the past year?",
+  .applies_to_waves = c("MB")
+)
+
+variable_labels(
+  mfallf = "Fall: how often since last interview",
+  mfallly = "Did you fall since last interview",
+  mfallphc1 = "Fall 1 consequence: fracture",
+  mfallphc2 = "Fall 1 consequence: open wound",
+  mfallphc3 = "Fall 1 consequence: bruise",
+  mfallphc7 = "Fall 1 consequence: other",
+  .applies_to_waves = c("J", "K")
+)
+
+variable_labels(
+  mfallphcyn1 = "Fall 1: physical consequencies of last fall",
+  .applies_to_waves = c("J")
+)
+
+variable_labels(
+  mfallmhlp1 = "Fall 1: medical help fall",
+  mfallphcyn1 = "Fall 1: physical consequences last fall",
+  .applies_to_waves = c("K")
+)
+
+# define value labels ----
+value_labels(
+  `-2` = "na, see BMDIZZR",
+  .applies_to_vars = c("mdizzgup", "mdizzlup", "mdizzoth", "mdizztrnhd"),
+  .applies_to_waves = c("Z", "2B", "3B")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLADJ",
+  .applies_to_vars = c("mfalladj01", "mfalladj02", "mfalladj03", "mfalladj04", "mfalladj05", "mfalladj06", "mfalladj07", "mfalladj08", "mfalladj09", "mfalladj10", "mfalladj11"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLC",
+  .applies_to_vars = c("mfalldo2", "mfallhow2", "mfallmhlpyn2", "mfallphcyn2", "mfallwh2"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLLY",
+  .applies_to_vars = c("mfalldo1", "mfallfc", "mfallhow1", "mfallmhlpyn1", "mfallphcyn1", "mfallwh1"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLPHCYN2",
+  .applies_to_vars = c("mfallphc10", "mfallphc11", "mfallphc12", "mfallphc13", "mfallphc14", "mfallphc15", "mfallphc9"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMWALKAID",
+  .applies_to_vars = c("mwalkaid1", "mwalkaid2", "mwalkaid3", "mwalkaid4", "mwalkaid5"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-3` = "na, wrong skip",
+  .applies_to_vars = c("mdizzgup", "mdizzlup", "mdizzoth", "mdizzothsp", "mdizztrnhd", "mfallf"),
+  .applies_to_waves = c("Z", "C", "D")
+)
+
+value_labels(
+  `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mdizzgup", "mdizzlup", "mdizzoth", "mdizztrnhd"),
+  .applies_to_waves = c("Z", "2B", "3B")
+)
+
+value_labels(
+  `-2` = "na, see BMDIZZOTH", `0` = "to be coded", `1` = "no specific reason", `2` = "bending down", `3` = "tension/ tiredness", `4` = "sickness, medication",
+  .applies_to_vars = c("mdizzothsp"),
+  .applies_to_waves = c("Z", "2B")
+)
+
+value_labels(
+  `-5` = "na, interview terminated", `-2` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mdizzr"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLF", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mfalladj"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mfalladj01", "mfalladj02", "mfalladj03", "mfalladj04", "mfalladj05", "mfalladj06", "mfalladj07", "mfalladj08", "mfalladj09", "mfalladj10", "mfalladj11", "mfallphc10", "mfallphc11", "mfallphc12", "mfallphc13", "mfallphc14", "mfallphc15", "mfallphc9"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLADJ11", `0` = "to be coded",
+  .applies_to_vars = c("mfalladj12"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-1` = "na, asked",
+  .applies_to_vars = c("mfalldo1", "mfalldo2", "mfallhow1", "mfallhow2", "mfallwh1", "mfallwh2"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLDO1", `-1` = "na, asked", `0` = "to be coded",
+  .applies_to_vars = c("mfalldoos1"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLDO2", `-1` = "na, asked", `0` = "to be coded",
+  .applies_to_vars = c("mfalldoos2"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see BMFALLLY", `-1` = "na, asked",
+  .applies_to_vars = c("mfallf"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "1 fall", `2` = "2 falls or more",
+  .applies_to_vars = c("mfallfc"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLHOW1", `-1` = "na, asked", `0` = "to be coded",
+  .applies_to_vars = c("mfallhowos1"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLHOW2", `-1` = "na, asked", `0` = "to be coded",
+  .applies_to_vars = c("mfallhowos2"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mfallly"),
+  .applies_to_waves = c("Z", "C", "D")
+)
+
+value_labels(
+  `-2` = "na, see JMFALLLY", `-1` = "na, asked", `1` = "no", `2` = "yes, family doctor", `3` = "yes, hospital", `4` = "yes, family doctor and hospital",
+  .applies_to_vars = c("mfallmhlp"),
+  .applies_to_waves = c("Z", "J")
+)
+
+value_labels(
+  `-2` = "na, see KMFALLPHCN", `-1` = "na, asked", `0` = "not mentioned", `1` = "no", `2` = "yes, family doctor", `3` = "yes, hospital", `4` = "yes, family doctor and hospital",
+  .applies_to_vars = c("mfallmhlp1"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLMHLP9", `0` = "to be coded",
+  .applies_to_vars = c("mfallmhlp10"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLMHLPYN1", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mfallmhlp2", "mfallmhlp3", "mfallmhlp4"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see KMFALLPHCN", `-1` = "na, asked", `1` = "no", `2` = "yes, family doctor", `3` = "yes, hospital", `4` = "yes, family doctor and hospital",
+  .applies_to_vars = c("mfallmhlp21", "mfallmhlp22", "mfallmhlp31", "mfallmhlp32"),
+  .applies_to_waves = c("Z", "K")
+)
+
+value_labels(
+  `-2` = "na ,see DMFALLMHLP4", `0` = "to be coded",
+  .applies_to_vars = c("mfallmhlp5"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLMHLPYN2", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mfallmhlp6", "mfallmhlp7", "mfallmhlp8", "mfallmhlp9"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mfallmhlpyn1", "mfallmhlpyn2", "mfallphcyn2"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see JMFALLLY", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mfallphc1", "mfallphc2", "mfallphc3", "mfallphc4", "mfallphc6", "mfallphc7"),
+  .applies_to_waves = c("Z", "J")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLPHC15", `0` = "to be coded",
+  .applies_to_vars = c("mfallphc16"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mfallphc211", "mfallphc212", "mfallphc213", "mfallphc214", "mfallphc216", "mfallphc217", "mfallphc221", "mfallphc222", "mfallphc223", "mfallphc224", "mfallphc226", "mfallphc227", "mfallphc311", "mfallphc312", "mfallphc313", "mfallphc314", "mfallphc316", "mfallphc317", "mfallphc321", "mfallphc322", "mfallphc323", "mfallphc324", "mfallphc326", "mfallphc327"),
+  .applies_to_waves = c("Z", "K")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLPHCYN1", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mfallphc5"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLPHC7", `0` = "to be coded",
+  .applies_to_vars = c("mfallphc8"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see KMFALLLY", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mfallphcn"),
+  .applies_to_waves = c("Z", "K")
+)
+
+value_labels(
+  `-2` = "na, see KMFALLPHCN",
+  .applies_to_vars = c("mfallphcnm"),
+  .applies_to_waves = c("Z", "K")
+)
+
+value_labels(
+  `-1` = "na, asked", `0` = "na, see KMFALLPHCN", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mfallphcyn1", "mfallphcyn211", "mfallphcyn221", "mfallphcyn311", "mfallphcyn321"),
+  .applies_to_waves = c("Z", "K")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLWH1", `-1` = "na, asked", `0` = "to be coded",
+  .applies_to_vars = c("mfallwhos1"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLWH2", `-1` = "na, asked", `0` = "to be coded",
+  .applies_to_vars = c("mfallwhos2"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mwalkaid"),
+  .applies_to_waves = c("Z", "D", "E", "2B", "F", "G", "H", "3B")
+)
+
+value_labels(
+  `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mwalkaid1", "mwalkaid2", "mwalkaid3", "mwalkaid4", "mwalkaid5"),
+  .applies_to_waves = c("Z", "D", "2B", "F", "G", "H", "3B")
+)
+
+value_labels(
+  `-2` = "na, see DMWALKAID1", `-1` = "na, asked", `1` = "January", `2` = "February", `3` = "March", `4` = "April", `5` = "May", `6` = "June", `7` = "July", `8` = "August", `9` = "September", `10` = "October", `11` = "November", `12` = "December",
+  .applies_to_vars = c("mwalkaid1m"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMWALKAID1", `-1` = "na, asked",
+  .applies_to_vars = c("mwalkaid1y"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMWALKAID2", `-1` = "na, asked", `1` = "January", `2` = "February", `3` = "March", `4` = "April", `5` = "May", `6` = "June", `7` = "July", `8` = "August", `9` = "September", `10` = "October", `11` = "November", `12` = "December",
+  .applies_to_vars = c("mwalkaid2m"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMWALKAID2", `-1` = "na, asked",
+  .applies_to_vars = c("mwalkaid2y"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMWALKAID3", `-1` = "na, asked", `1` = "January", `2` = "February", `3` = "March", `4` = "April", `5` = "May", `6` = "June", `7` = "July", `8` = "August", `9` = "September", `10` = "October", `11` = "November", `12` = "December",
+  .applies_to_vars = c("mwalkaid3m"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMWALKAID3", `-1` = "na, asked",
+  .applies_to_vars = c("mwalkaid3y"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMWALKAID4", `-1` = "na, asked", `1` = "January", `2` = "February", `3` = "March", `4` = "April", `5` = "May", `6` = "June", `7` = "July", `8` = "August", `9` = "September", `10` = "October", `11` = "November", `12` = "December",
+  .applies_to_vars = c("mwalkaid4m"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMWALKAID4", `-1` = "na, asked",
+  .applies_to_vars = c("mwalkaid4y"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMWALKAID5", `-1` = "na, asked", `1` = "January", `2` = "February", `3` = "March", `4` = "April", `5` = "May", `6` = "June", `7` = "July", `8` = "August", `9` = "September", `10` = "October", `11` = "November", `12` = "December",
+  .applies_to_vars = c("mwalkaid5m"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMWALKAID5", `-1` = "na, asked",
+  .applies_to_vars = c("mwalkaid5y"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMWALKAID5", `0` = "to be coded",
+  .applies_to_vars = c("mwalkaid6"),
+  .applies_to_waves = c("Z", "D")
+)
+
+value_labels(
+  `-2` = "na, see C/DMDIZZR", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mdizzgup", "mdizzlup", "mdizzoth", "mdizztrnhd"),
+  .applies_to_waves = c("C", "D")
+)
+
+value_labels(
+  `-2` = "na, see C/DMDIZZOTH", `1` = "no specific reason", `2` = "bending down", `3` = "tension/ tiredness", `4` = "sickness, medication",
+  .applies_to_vars = c("mdizzothsp"),
+  .applies_to_waves = c("C", "D")
+)
+
+value_labels(
+  `-5` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mdizzr"),
+  .applies_to_waves = c("C", "D")
+)
+
+value_labels(
+  `-2` = "na, see C/DFALLLY",
+  .applies_to_vars = c("mfallf"),
+  .applies_to_waves = c("C", "D")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLMHLPYN1", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mfallmhlp1"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `-2` = "na, see DMFALLPHCYN1", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mfallphc1", "mfallphc2", "mfallphc3", "mfallphc4", "mfallphc6", "mfallphc7"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mfallphcyn1"),
+  .applies_to_waves = c("D")
+)
+
+value_labels(
+  `-2` = "na, see EMWALKAID", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mwalkaid1", "mwalkaid2", "mwalkaid3", "mwalkaid4", "mwalkaid5"),
+  .applies_to_waves = c("E")
+)
+
+value_labels(
+  `-2` = "na, see EMWALKAID5", `0` = "to be coded",
+  .applies_to_vars = c("mwalkaid6"),
+  .applies_to_waves = c("E")
+)
+
+value_labels(
+  `-2` = "na, see BMWALKAID",
+  .applies_to_vars = c("mwalkaid1", "mwalkaid2", "mwalkaid3", "mwalkaid4", "mwalkaid5"),
+  .applies_to_waves = c("2B", "3B")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mdizzr"),
+  .applies_to_waves = c("2B", "F", "G", "H", "3B", "J", "K")
+)
+
+value_labels(
+  `-2` = "na, see BMWALKAID1", `-1` = "na, asked", `1` = "January", `2` = "February", `3` = "March", `4` = "April", `5` = "May", `6` = "June", `7` = "July", `8` = "August", `9` = "September", `10` = "October", `11` = "November", `12` = "December",
+  .applies_to_vars = c("mwalkaid1m"),
+  .applies_to_waves = c("2B", "3B")
+)
+
+value_labels(
+  `-2` = "na, see BMWALKAID1", `-1` = "na, asked",
+  .applies_to_vars = c("mwalkaid1y"),
+  .applies_to_waves = c("2B", "3B")
+)
+
+value_labels(
+  `-2` = "na, see BMWALKAID2", `-1` = "na, asked", `1` = "January", `2` = "February", `3` = "March", `4` = "April", `5` = "May", `6` = "June", `7` = "July", `8` = "August", `9` = "September", `10` = "October", `11` = "November", `12` = "December",
+  .applies_to_vars = c("mwalkaid2m"),
+  .applies_to_waves = c("2B", "3B")
+)
+
+value_labels(
+  `-2` = "na, see BMWALKAID2", `-1` = "na, asked",
+  .applies_to_vars = c("mwalkaid2y"),
+  .applies_to_waves = c("2B", "3B")
+)
+
+value_labels(
+  `-2` = "na, see BMWALKAID3", `-1` = "na, asked", `1` = "January", `2` = "February", `3` = "March", `4` = "April", `5` = "May", `6` = "June", `7` = "July", `8` = "August", `9` = "September", `10` = "October", `11` = "November", `12` = "December",
+  .applies_to_vars = c("mwalkaid3m"),
+  .applies_to_waves = c("2B", "3B")
+)
+
+value_labels(
+  `-2` = "na, see BMWALKAID3", `-1` = "na, asked",
+  .applies_to_vars = c("mwalkaid3y"),
+  .applies_to_waves = c("2B", "3B")
+)
+
+value_labels(
+  `-2` = "na, see BMWALKAID4", `-1` = "na, asked", `1` = "January", `2` = "February", `3` = "March", `4` = "April", `5` = "May", `6` = "June", `7` = "July", `8` = "August", `9` = "September", `10` = "October", `11` = "November", `12` = "December",
+  .applies_to_vars = c("mwalkaid4m"),
+  .applies_to_waves = c("2B", "3B")
+)
+
+value_labels(
+  `-2` = "na, see BMWALKAID4", `-1` = "na, asked",
+  .applies_to_vars = c("mwalkaid4y"),
+  .applies_to_waves = c("2B", "3B")
+)
+
+value_labels(
+  `-2` = "na, see BMWALKAID5", `-1` = "na, asked", `1` = "January", `2` = "February", `3` = "March", `4` = "April", `5` = "May", `6` = "June", `7` = "July", `8` = "August", `9` = "September", `10` = "October", `11` = "November", `12` = "December",
+  .applies_to_vars = c("mwalkaid5m"),
+  .applies_to_waves = c("2B", "3B")
+)
+
+value_labels(
+  `-2` = "na, see BMWALKAID5", `-1` = "na, asked",
+  .applies_to_vars = c("mwalkaid5y"),
+  .applies_to_waves = c("2B", "3B")
+)
+
+value_labels(
+  `-2` = "na, see BMWALKAID5", `0` = "to be coded",
+  .applies_to_vars = c("mwalkaid6"),
+  .applies_to_waves = c("2B", "3B")
+)
+
+value_labels(
+  `-2` = "na, see F/G/HMWALKAID",
+  .applies_to_vars = c("mwalkaid1", "mwalkaid2", "mwalkaid3", "mwalkaid4", "mwalkaid5"),
+  .applies_to_waves = c("F", "G", "H")
+)
+
+value_labels(
+  `-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mdizzgup", "mdizzlup", "mdizzoth", "mdizztrnhd"),
+  .applies_to_waves = c("F", "G")
+)
+
+value_labels(
+  `-2` = "na, see F/GMDIZZOTH", `0` = "to be coded", `1` = "no specific reason", `2` = "bending down", `3` = "tension/ tiredness", `4` = "sickness, medication",
+  .applies_to_vars = c("mdizzothsp"),
+  .applies_to_waves = c("F", "G")
+)
+
+value_labels(
+  `-2` = "na, see F/GMWALKAID5", `0` = "to be coded",
+  .applies_to_vars = c("mwalkaid6"),
+  .applies_to_waves = c("F", "G")
+)
+
+value_labels(
+  `-2` = "na, see BMFALLLY",
+  .applies_to_vars = c("mfallf"),
+  .applies_to_waves = c("MB")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mfallly"),
+  .applies_to_waves = c("MB", "J", "K")
+)
+
+value_labels(
+  `-2` = "na, interview terminated", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mdizzr"),
+  .applies_to_waves = c("I")
+)
+
+value_labels(
+  `-2` = "na, see JMFALLLY", `-1` = "na, asked",
+  .applies_to_vars = c("mfallf"),
+  .applies_to_waves = c("J")
+)
+
+value_labels(
+  `-2` = "na, see JMFALLLY", `-1` = "na, asked", `1` = "1 fall", `2` = "2 falls or more",
+  .applies_to_vars = c("mfallfc"),
+  .applies_to_waves = c("J")
+)
+
+value_labels(
+  `-2` = "na, see JMFALLLY", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mfallphcyn1"),
+  .applies_to_waves = c("J")
+)
+
+value_labels(
+  `-2` = "na, see KMFALLLY", `-1` = "na, asked",
+  .applies_to_vars = c("mfallf"),
+  .applies_to_waves = c("K")
+)
+
+value_labels(
+  `-2` = "na, see KMFALLLY", `-1` = "na, asked", `1` = "1 fall", `2` = "2 falls or more",
+  .applies_to_vars = c("mfallfc"),
+  .applies_to_waves = c("K")
+)
+
+value_labels(
+  `-2` = "na, see KMFALLPHCN", `-1` = "na, asked", `1` = "no", `2` = "yes, family doctor", `3` = "yes, hospital", `4` = "yes, family doctor and hospital",
+  .applies_to_vars = c("mfallmhlp1"),
+  .applies_to_waves = c("K")
+)
+
+value_labels(
+  `-2` = "na, see KMFALLPHCN", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mfallphc1", "mfallphc2", "mfallphc3", "mfallphc4", "mfallphc6", "mfallphc7"),
+  .applies_to_waves = c("K")
+)
+
+.lasa_fc_187 <- .lasa_finalize_fc("187")
 

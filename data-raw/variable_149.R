@@ -1,266 +1,15 @@
 ## LASA filecode 149 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  qgsr01 = "MK2: exhausting to pursue goal, search a new goal",
-  qgsr02 = "SU3: harder to get same results, keep trying harder",
-  qgsr03 = "MK3: try to pursue several goals",
-  qgsr04 = "SU1: effort to achieve a given goal",
-  qgsr05 = "SU2: set goals clearly, stick to them",
-  qgsr06 = "AP3: for goals detailed plans how to implement them",
-  qgsr07 = "CP1: have a backup plan in case something goes wrong",
-  qgsr08 = "MK1: if difficulty try to achieve goal by other means",
-  qgsr09 = "MK4: goal difficult to reach, find alternative route",
-  qgsr10 = "CP3: plan for things other people consider unlikely",
-  qgsr11 = "AP1: always make detailed plans for my goals",
-  qgsr12 = "SU4: cannot do something the way before look for new goal",
-  qgsr13 = "CP2: plan for difficult situations according my intentions",
-  qgsr14 = "AP2: for my goals make detailed plans when to implement"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `G` = c(
-    "qgsr01",
-    "qgsr02",
-    "qgsr03",
-    "qgsr04",
-    "qgsr05",
-    "qgsr06",
-    "qgsr07",
-    "qgsr08",
-    "qgsr09",
-    "qgsr10",
-    "qgsr11",
-    "qgsr12",
-    "qgsr13",
-    "qgsr14"
-  ),
-  `H` = c(
-    "qgsr01",
-    "qgsr02",
-    "qgsr03",
-    "qgsr04",
-    "qgsr05",
-    "qgsr06",
-    "qgsr07",
-    "qgsr08",
-    "qgsr09",
-    "qgsr10",
-    "qgsr11",
-    "qgsr12",
-    "qgsr13",
-    "qgsr14"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_G_labels = harmonized_labels,
-  Wave_H_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
-)
-
-## This file's own very common answer categories (>= 10 occurrences
-## across its variables) -- same idea as default_missing_labels, just
-## scoped to this filecode instead of shared globally.
-default_answer_labels <- c(
-  `1` = "strongly disagree",
-  `2` = "disagree",
-  `3` = "slightly disagree",
-  `4` = "slightly agree",
-  `5` = "agree",
-  `6` = "strongly agree"
-)
-
-standardized_value_labels <- list(
-  qgsr01 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
-  ),
-  qgsr02 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
-  ),
-  qgsr03 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
-  ),
-  qgsr04 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
-  ),
-  qgsr05 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
-  ),
-  qgsr06 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
-  ),
-  qgsr07 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
-  ),
-  qgsr08 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
-  ),
-  qgsr09 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
-  ),
-  qgsr10 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
-  ),
-  qgsr11 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
-  ),
-  qgsr12 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
-  ),
-  qgsr13 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
-  ),
-  qgsr14 = c(
-    `-1` = "not available",
-    default_answer_labels[c("1", "2", "3", "4", "5", "6")]
-  )
-)
-
-value_labels_list <- list(
-  Wave_G_labels = .replace_in_list(
-    standardized_value_labels,
-    qgsr01 = .replace_labels(
-    standardized_value_labels$qgsr01,
-    `-1` = "no answer"
-  ),
-    qgsr02 = .replace_labels(
-    standardized_value_labels$qgsr02,
-    `-1` = "no answer"
-  ),
-    qgsr03 = .replace_labels(
-    standardized_value_labels$qgsr03,
-    `-1` = "no answer"
-  ),
-    qgsr04 = .replace_labels(
-    standardized_value_labels$qgsr04,
-    `-1` = "no answer"
-  ),
-    qgsr05 = .replace_labels(
-    standardized_value_labels$qgsr05,
-    `-1` = "no answer"
-  ),
-    qgsr06 = .replace_labels(
-    standardized_value_labels$qgsr06,
-    `-1` = "no answer"
-  ),
-    qgsr07 = .replace_labels(
-    standardized_value_labels$qgsr07,
-    `-1` = "no answer"
-  ),
-    qgsr08 = .replace_labels(
-    standardized_value_labels$qgsr08,
-    `-1` = "no answer"
-  ),
-    qgsr09 = .replace_labels(
-    standardized_value_labels$qgsr09,
-    `-1` = "no answer"
-  ),
-    qgsr10 = .replace_labels(
-    standardized_value_labels$qgsr10,
-    `-1` = "no answer"
-  ),
-    qgsr11 = .replace_labels(
-    standardized_value_labels$qgsr11,
-    `-1` = "no answer"
-  ),
-    qgsr12 = .replace_labels(
-    standardized_value_labels$qgsr12,
-    `-1` = "no answer"
-  ),
-    qgsr13 = .replace_labels(
-    standardized_value_labels$qgsr13,
-    `-1` = "no answer"
-  ),
-    qgsr14 = .replace_labels(
-    standardized_value_labels$qgsr14,
-    `-1` = "no answer"
-  )
-  ),
-  Wave_H_labels = .replace_in_list(
-    standardized_value_labels,
-    qgsr01 = .replace_labels(
-    standardized_value_labels$qgsr01,
-    `-1` = "no answer"
-  ),
-    qgsr02 = .replace_labels(
-    standardized_value_labels$qgsr02,
-    `-1` = "no answer"
-  ),
-    qgsr03 = .replace_labels(
-    standardized_value_labels$qgsr03,
-    `-1` = "no answer"
-  ),
-    qgsr04 = .replace_labels(
-    standardized_value_labels$qgsr04,
-    `-1` = "no answer"
-  ),
-    qgsr05 = .replace_labels(
-    standardized_value_labels$qgsr05,
-    `-1` = "no answer"
-  ),
-    qgsr06 = .replace_labels(
-    standardized_value_labels$qgsr06,
-    `-1` = "no answer"
-  ),
-    qgsr07 = .replace_labels(
-    standardized_value_labels$qgsr07,
-    `-1` = "no answer"
-  ),
-    qgsr08 = .replace_labels(
-    standardized_value_labels$qgsr08,
-    `-1` = "no answer"
-  ),
-    qgsr09 = .replace_labels(
-    standardized_value_labels$qgsr09,
-    `-1` = "no answer"
-  ),
-    qgsr10 = .replace_labels(
-    standardized_value_labels$qgsr10,
-    `-1` = "no answer"
-  ),
-    qgsr11 = .replace_labels(
-    standardized_value_labels$qgsr11,
-    `-1` = "no answer"
-  ),
-    qgsr12 = .replace_labels(
-    standardized_value_labels$qgsr12,
-    `-1` = "no answer"
-  ),
-    qgsr13 = .replace_labels(
-    standardized_value_labels$qgsr13,
-    `-1` = "no answer"
-  ),
-    qgsr14 = .replace_labels(
-    standardized_value_labels$qgsr14,
-    `-1` = "no answer"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   qgsr01 = "categorical",
   qgsr02 = "categorical",
@@ -278,12 +27,48 @@ var_types_vec <- c(
   qgsr14 = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "149", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "149", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "149", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "149", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  qgsr01 = "MK2: exhausting to pursue goal, search a new goal",
+  qgsr02 = "SU3: harder to get same results, keep trying harder",
+  qgsr03 = "MK3: try to pursue several goals",
+  qgsr04 = "SU1: effort to achieve a given goal",
+  qgsr05 = "SU2: set goals clearly, stick to them",
+  qgsr06 = "AP3: for goals detailed plans how to implement them",
+  qgsr07 = "CP1: have a backup plan in case something goes wrong",
+  qgsr08 = "MK1: if difficulty try to achieve goal by other means",
+  qgsr09 = "MK4: goal difficult to reach, find alternative route",
+  qgsr10 = "CP3: plan for things other people consider unlikely",
+  qgsr11 = "AP1: always make detailed plans for my goals",
+  qgsr12 = "SU4: cannot do something the way before look for new goal",
+  qgsr13 = "CP2: plan for difficult situations according my intentions",
+  qgsr14 = "AP2: for my goals make detailed plans when to implement",
+  .applies_to_waves = c("Z")
 )
 
-.lasa_fc_149 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "qgsr01", "qgsr02", "qgsr03", "qgsr04", "qgsr05", "qgsr06", "qgsr07", "qgsr08", "qgsr09", "qgsr10", "qgsr11", "qgsr12", "qgsr13", "qgsr14",
+  .applies_to_waves = c("G", "H")
+)
+
+# define value labels ----
+value_labels(
+  `-1` = "not available",
+  .applies_to_vars = c("qgsr01", "qgsr02", "qgsr03", "qgsr04", "qgsr05", "qgsr06", "qgsr07", "qgsr08", "qgsr09", "qgsr10", "qgsr11", "qgsr12", "qgsr13", "qgsr14"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `1` = "strongly disagree", `2` = "disagree", `3` = "slightly disagree", `4` = "slightly agree", `5` = "agree", `6` = "strongly agree",
+  .applies_to_vars = c("qgsr01", "qgsr02", "qgsr03", "qgsr04", "qgsr05", "qgsr06", "qgsr07", "qgsr08", "qgsr09", "qgsr10", "qgsr11", "qgsr12", "qgsr13", "qgsr14"),
+  .applies_to_waves = c("Z", "G", "H")
+)
+
+value_labels(
+  `-1` = "no answer",
+  .applies_to_vars = c("qgsr01", "qgsr02", "qgsr03", "qgsr04", "qgsr05", "qgsr06", "qgsr07", "qgsr08", "qgsr09", "qgsr10", "qgsr11", "qgsr12", "qgsr13", "qgsr14"),
+  .applies_to_waves = c("G", "H")
+)
+
+.lasa_fc_149 <- .lasa_finalize_fc("149")
 

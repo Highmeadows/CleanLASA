@@ -1,63 +1,64 @@
 ## LASA filecode 865 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
+var_types_vec <- c(
+  mft3 = "numeric",
+  mft4 = "numeric",
+  mtsh2 = "numeric"
+)
+
+# define variable labels ----
+variable_labels(
   mft3 = "free T3 (pmol/l)",
   mft4 = "free T4 (pmol/l)",
-  mtsh2 = "thyroid-stimulating hormone (mU/l)"
+  mtsh2 = "thyroid-stimulating hormone (mU/l)",
+  .applies_to_waves = c("Z")
 )
 
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `C` = c(
-    "mft3",
-    "mft4",
-    "mtsh2"
-  )
+variable_labels(
+  "mft3", "mft4", "mtsh2",
+  .applies_to_waves = c("C")
 )
 
-variable_labels_list <- list(
-  Wave_C_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
+# define value labels ----
+value_labels(
+  `-2` = "na, see MTSH2 & MFT4", `-1` = "no determination",
+  .applies_to_vars = c("mft3"),
+  .applies_to_waves = c("Z")
 )
 
-standardized_value_labels <- list(
-  mft3 = c(`-2` = "na, see MTSH2 & MFT4", `-1` = "no determination"),
-  mft4 = c(`-2` = "na, see MTSH2", `-1` = "no determination"),
-  mtsh2 = c(`-1` = "no determination")
+value_labels(
+  `-2` = "na, see MTSH2", `-1` = "no determination",
+  .applies_to_vars = c("mft4"),
+  .applies_to_waves = c("Z")
 )
 
-value_labels_list <- list(
-  Wave_C_labels = .replace_in_list(
-    standardized_value_labels,
-    mft3 = .replace_labels(
-    standardized_value_labels$mft3,
-    `-2` = "na, see CMTSH2 & CMFT4"
-  ),
-    mft4 = .replace_labels(
-    standardized_value_labels$mft4,
-    `-2` = "na, see CMTSH2"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
+value_labels(
+  `-1` = "no determination",
+  .applies_to_vars = c("mtsh2"),
+  .applies_to_waves = c("Z", "C")
 )
 
-var_types_vec <- c(mft3 = "numeric", mft4 = "numeric", mtsh2 = "numeric")
-
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "865", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "865", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "865", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "865", waves = .lasa_wave_rows())
+value_labels(
+  `-2` = "na, see CMTSH2 & CMFT4", `-1` = "no determination",
+  .applies_to_vars = c("mft3"),
+  .applies_to_waves = c("C")
 )
 
-.lasa_fc_865 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+value_labels(
+  `-2` = "na, see CMTSH2", `-1` = "no determination",
+  .applies_to_vars = c("mft4"),
+  .applies_to_waves = c("C")
+)
+
+.lasa_fc_865 <- .lasa_finalize_fc("865")
 

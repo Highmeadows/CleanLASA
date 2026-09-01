@@ -1,217 +1,62 @@
 ## LASA filecode 230 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
+var_types_vec <- c(
+  flwd6 = "categorical",
+  flwd7 = "categorical",
+  flwdiff = "categorical"
+)
+
+# define variable labels ----
+variable_labels(
   flwd6 = "Functional limitations with difficulties, 6-item score",
   flwd7 = "Functional limitations with difficulties, 7-item score",
-  flwdiff = "Functional limitations with difficulties, 3-item score"
+  flwdiff = "Functional limitations with difficulties, 3-item score",
+  .applies_to_waves = c("Z")
 )
 
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `B` = c(
-    "flwdiff"
-  ),
-  `C` = c(
-    "flwd6",
-    "flwdiff"
-  ),
-  `D` = c(
-    "flwd6",
-    "flwdiff"
-  ),
-  `E` = c(
-    "flwd6",
-    "flwdiff"
-  ),
-  `2B` = c(
-    "flwd6",
-    "flwd7",
-    "flwdiff"
-  ),
-  `F` = c(
-    "flwd6",
-    "flwd7",
-    "flwdiff"
-  ),
-  `G` = c(
-    "flwd6",
-    "flwd7",
-    "flwdiff"
-  ),
-  `H` = c(
-    "flwd6",
-    "flwd7",
-    "flwdiff"
-  ),
-  `3B` = c(
-    "flwd6",
-    "flwd7",
-    "flwdiff"
-  ),
-  `MB` = c(
-    "flwd6",
-    "flwd7",
-    "flwdiff"
-  ),
-  `I` = c(
-    "flwd6",
-    "flwd7",
-    "flwdiff"
-  ),
-  `J` = c(
-    "flwd6",
-    "flwd7",
-    "flwdiff"
-  ),
-  `K` = c(
-    "flwd6",
-    "flwd7",
-    "flwdiff"
-  )
+variable_labels(
+  flwdiff = "functional limitations, with difficulties #3",
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
-variable_labels_list <- list(
-  Wave_B_labels = .replace_labels(
-    harmonized_labels,
-    flwdiff = "functional limitations, with difficulties #3"
-  ),
-  Wave_C_labels = .replace_labels(
-    harmonized_labels,
-    flwd6 = "functional limitations, with difficulties #6",
-    flwdiff = "functional limitations, with difficulties #3"
-  ),
-  Wave_D_labels = .replace_labels(
-    harmonized_labels,
-    flwd6 = "functional limitations, with difficulties #6",
-    flwdiff = "functional limitations, with difficulties #3"
-  ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels,
-    flwd6 = "functional limitations, with difficulties #6",
-    flwdiff = "functional limitations, with difficulties #3"
-  ),
-  Wave_2B_labels = .replace_labels(
-    harmonized_labels,
-    flwd6 = "functional limitations, with difficulties #6",
-    flwd7 = "functional limitations, with difficulties #7",
-    flwdiff = "functional limitations, with difficulties #3"
-  ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels,
-    flwd6 = "functional limitations, with difficulties #6",
-    flwd7 = "functional limitations, with difficulties #7",
-    flwdiff = "functional limitations, with difficulties #3"
-  ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels,
-    flwd6 = "functional limitations, with difficulties #6",
-    flwd7 = "functional limitations, with difficulties #7",
-    flwdiff = "functional limitations, with difficulties #3"
-  ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels,
-    flwd6 = "functional limitations, with difficulties #6",
-    flwd7 = "functional limitations, with difficulties #7",
-    flwdiff = "functional limitations, with difficulties #3"
-  ),
-  Wave_3B_labels = .replace_labels(
-    harmonized_labels,
-    flwd6 = "functional limitations, with difficulties #6",
-    flwd7 = "functional limitations, with difficulties #7",
-    flwdiff = "functional limitations, with difficulties #3"
-  ),
-  Wave_MB_labels = .replace_labels(
-    harmonized_labels,
-    flwd6 = "functional limitations, with difficulties #6",
-    flwd7 = "functional limitations, with difficulties #7",
-    flwdiff = "functional limitations, with difficulties #3"
-  ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels,
-    flwd6 = "functional limitations, with difficulties #6",
-    flwd7 = "functional limitations, with difficulties #7",
-    flwdiff = "functional limitations, with difficulties #3"
-  ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels,
-    flwd6 = "functional limitations, with difficulties #6",
-    flwd7 = "functional limitations, with difficulties #7",
-    flwdiff = "functional limitations, with difficulties #3"
-  ),
-  Wave_K_labels = .replace_labels(
-    harmonized_labels,
-    flwd6 = "functional limitations, with difficulties #6",
-    flwd7 = "functional limitations, with difficulties #7",
-    flwdiff = "functional limitations, with difficulties #3"
-  ),
-  Harmonized_labels = harmonized_labels
+variable_labels(
+  flwd6 = "functional limitations, with difficulties #6",
+  .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
-standardized_value_labels <- list(
-  flwd6 = c(
-    `-1` = "no valid data",
-    `0` = "no difficulties",
-    `1` = "5 without difficulty",
-    `2` = "4 without difficulty",
-    `3` = "3 without difficulty",
-    `4` = "2 without difficulty",
-    `5` = "1 without difficulty",
-    `6` = "all with difficulty"
-  ),
-  flwd7 = c(
-    `-1` = "no valid data",
-    `0` = "no difficulties",
-    `1` = "6 without difficulty",
-    `2` = "5 without difficulty",
-    `3` = "4 without difficulty",
-    `4` = "3 without difficulty",
-    `5` = "2 without difficulty",
-    `6` = "1 without difficulty",
-    `7` = "all with difficulty"
-  ),
-  flwdiff = c(
-    `-1` = "no valid data",
-    `0` = "no difficulties",
-    `1` = "2 without difficulty",
-    `2` = "1 without difficulty",
-    `3` = "all with difficulty"
-  )
+variable_labels(
+  flwd7 = "functional limitations, with difficulties #7",
+  .applies_to_waves = c("2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
-value_labels_list <- list(
-  Wave_B_labels = standardized_value_labels,
-  Wave_C_labels = standardized_value_labels,
-  Wave_D_labels = standardized_value_labels,
-  Wave_E_labels = standardized_value_labels,
-  Wave_2B_labels = standardized_value_labels,
-  Wave_F_labels = standardized_value_labels,
-  Wave_G_labels = standardized_value_labels,
-  Wave_H_labels = standardized_value_labels,
-  Wave_3B_labels = standardized_value_labels,
-  Wave_MB_labels = standardized_value_labels,
-  Wave_I_labels = standardized_value_labels,
-  Wave_J_labels = standardized_value_labels,
-  Wave_K_labels = standardized_value_labels,
-  Harmonized_labels = standardized_value_labels
+# define value labels ----
+value_labels(
+  `-1` = "no valid data", `0` = "no difficulties", `1` = "5 without difficulty", `2` = "4 without difficulty", `3` = "3 without difficulty", `4` = "2 without difficulty", `5` = "1 without difficulty", `6` = "all with difficulty",
+  .applies_to_vars = c("flwd6"),
+  .applies_to_waves = c("Z", "C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
-var_types_vec <- c(flwd6 = "categorical", flwd7 = "categorical", flwdiff = "categorical")
-
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "230", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "230", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "230", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "230", waves = .lasa_wave_rows())
+value_labels(
+  `-1` = "no valid data", `0` = "no difficulties", `1` = "6 without difficulty", `2` = "5 without difficulty", `3` = "4 without difficulty", `4` = "3 without difficulty", `5` = "2 without difficulty", `6` = "1 without difficulty", `7` = "all with difficulty",
+  .applies_to_vars = c("flwd7"),
+  .applies_to_waves = c("Z", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
-.lasa_fc_230 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+value_labels(
+  `-1` = "no valid data", `0` = "no difficulties", `1` = "2 without difficulty", `2` = "1 without difficulty", `3` = "all with difficulty",
+  .applies_to_vars = c("flwdiff"),
+  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
+)
+
+.lasa_fc_230 <- .lasa_finalize_fc("230")
 

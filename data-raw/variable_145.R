@@ -1,166 +1,15 @@
 ## LASA filecode 145 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  mcshape = "current body shape",
-  mshap40 = "Body shape at 40",
-  qcshape = "current body shape",
-  qishape = "ideal body shape",
-  qshap40 = "Body shape at 40"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `F` = c(
-    "qcshape",
-    "qishape"
-  ),
-  `G` = c(
-    "qcshape",
-    "qishape"
-  ),
-  `3B` = c(
-    "qcshape",
-    "qishape",
-    "qshap40"
-  ),
-  `MB` = c(
-    "mcshape",
-    "mshap40"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_F_labels = harmonized_labels,
-  Wave_G_labels = harmonized_labels,
-  Wave_3B_labels = harmonized_labels,
-  Wave_MB_labels = harmonized_labels,
-  Harmonized_labels = harmonized_labels
-)
-
-standardized_value_labels <- list(
-  mcshape = c(
-    `-1` = "not available",
-    `1` = "silhouette 1 (extremely thin)",
-    `2` = "silhouette 2",
-    `3` = "silhouette 3",
-    `4` = "silhouette 4",
-    `5` = "silhouette 5",
-    `6` = "silhouette 6",
-    `7` = "silhouette 7",
-    `8` = "silhouette 8",
-    `9` = "silhouette 9 (very large)"
-  ),
-  mshap40 = c(
-    `-1` = "not available",
-    `1` = "silhouette 1 (extremely thin)",
-    `2` = "silhouette 2",
-    `3` = "silhouette 3",
-    `4` = "silhouette 4",
-    `5` = "silhouette 5",
-    `6` = "silhouette 6",
-    `7` = "silhouette 7",
-    `8` = "silhouette 8",
-    `9` = "silhouette 9 (very large)"
-  ),
-  qcshape = c(
-    `-1` = "not available",
-    `1` = "silhouette 1 (extremely thin)",
-    `2` = "silhouette 2",
-    `3` = "silhouette 3",
-    `4` = "silhouette 4",
-    `5` = "silhouette 5",
-    `6` = "silhouette 6",
-    `7` = "silhouette 7",
-    `8` = "silhouette 8",
-    `9` = "silhouette 9 (very large)"
-  ),
-  qishape = c(
-    `-1` = "not available",
-    `1` = "silhouette 1 (extremely thin)",
-    `2` = "silhouette 2",
-    `3` = "silhouette 3",
-    `4` = "silhouette 4",
-    `5` = "silhouette 5",
-    `6` = "silhouette 6",
-    `7` = "silhouette 7",
-    `8` = "silhouette 8",
-    `9` = "silhouette 9 (very large)"
-  ),
-  qshap40 = c(
-    `-1` = "not available",
-    `1` = "silhouette 1 (extremely thin)",
-    `2` = "silhouette 2",
-    `3` = "silhouette 3",
-    `4` = "silhouette 4",
-    `5` = "silhouette 5",
-    `6` = "silhouette 6",
-    `7` = "silhouette 7",
-    `8` = "silhouette 8",
-    `9` = "silhouette 9 (very large)"
-  )
-)
-
-value_labels_list <- list(
-  Wave_F_labels = .replace_in_list(
-    standardized_value_labels,
-    qcshape = .replace_labels(
-    standardized_value_labels$qcshape,
-    `-1` = "no valid data"
-  ),
-    qishape = .replace_labels(
-    standardized_value_labels$qishape,
-    `-1` = "no valid data"
-  )
-  ),
-  Wave_G_labels = .replace_in_list(
-    standardized_value_labels,
-    qcshape = .replace_labels(
-    standardized_value_labels$qcshape,
-    `-1` = "no valid data"
-  ),
-    qishape = .replace_labels(
-    standardized_value_labels$qishape,
-    `-1` = "no valid data"
-  )
-  ),
-  Wave_3B_labels = .replace_in_list(
-    standardized_value_labels,
-    qcshape = .replace_labels(
-    standardized_value_labels$qcshape,
-    `-1` = "no valid data"
-  ),
-    qishape = .replace_labels(
-    standardized_value_labels$qishape,
-    `-1` = "no valid data"
-  ),
-    qshap40 = .replace_labels(
-    standardized_value_labels$qshap40,
-    `-1` = "no valid data"
-  )
-  ),
-  Wave_MB_labels = .replace_in_list(
-    standardized_value_labels,
-    mcshape = .replace_labels(
-    standardized_value_labels$mcshape,
-    `-1` = "no valid data"
-  ),
-    mshap40 = .replace_labels(
-    standardized_value_labels$mshap40,
-    `-1` = "no valid data"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   mcshape = "categorical",
   mshap40 = "categorical",
@@ -169,12 +18,55 @@ var_types_vec <- c(
   qshap40 = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "145", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "145", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "145", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "145", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  mcshape = "current body shape",
+  mshap40 = "Body shape at 40",
+  qcshape = "current body shape",
+  qishape = "ideal body shape",
+  qshap40 = "Body shape at 40",
+  .applies_to_waves = c("Z")
 )
 
-.lasa_fc_145 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "qcshape", "qishape",
+  .applies_to_waves = c("F", "G", "3B")
+)
+
+variable_labels(
+  "qshap40",
+  .applies_to_waves = c("3B")
+)
+
+variable_labels(
+  "mcshape", "mshap40",
+  .applies_to_waves = c("MB")
+)
+
+# define value labels ----
+value_labels(
+  `-1` = "not available", `1` = "silhouette 1 (extremely thin)", `2` = "silhouette 2", `3` = "silhouette 3", `4` = "silhouette 4", `5` = "silhouette 5", `6` = "silhouette 6", `7` = "silhouette 7", `8` = "silhouette 8", `9` = "silhouette 9 (very large)",
+  .applies_to_vars = c("mcshape", "mshap40", "qcshape", "qishape", "qshap40"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-1` = "no valid data", `1` = "silhouette 1 (extremely thin)", `2` = "silhouette 2", `3` = "silhouette 3", `4` = "silhouette 4", `5` = "silhouette 5", `6` = "silhouette 6", `7` = "silhouette 7", `8` = "silhouette 8", `9` = "silhouette 9 (very large)",
+  .applies_to_vars = c("qcshape", "qishape"),
+  .applies_to_waves = c("F", "G", "3B")
+)
+
+value_labels(
+  `-1` = "no valid data", `1` = "silhouette 1 (extremely thin)", `2` = "silhouette 2", `3` = "silhouette 3", `4` = "silhouette 4", `5` = "silhouette 5", `6` = "silhouette 6", `7` = "silhouette 7", `8` = "silhouette 8", `9` = "silhouette 9 (very large)",
+  .applies_to_vars = c("qshap40"),
+  .applies_to_waves = c("3B")
+)
+
+value_labels(
+  `-1` = "no valid data", `1` = "silhouette 1 (extremely thin)", `2` = "silhouette 2", `3` = "silhouette 3", `4` = "silhouette 4", `5` = "silhouette 5", `6` = "silhouette 6", `7` = "silhouette 7", `8` = "silhouette 8", `9` = "silhouette 9 (very large)",
+  .applies_to_vars = c("mcshape", "mshap40"),
+  .applies_to_waves = c("MB")
+)
+
+.lasa_fc_145 <- .lasa_finalize_fc("145")
 

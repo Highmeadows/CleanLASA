@@ -1,1340 +1,15 @@
 ## LASA filecode 702 -- variable names, variable labels, value labels,
 ## and variable types. Sourced after data-raw/label_db_helpers.R.
 ##
-## To add a wave: add its documented variables to variable_labels_list
-## and (if it has value labels) value_labels_list below. To add a new
-## variable: add it to harmonized_labels/standardized_value_labels/
-## var_types_vec and to the wave(s) that document it.
+## To add a wave: give it its own variable_labels()/value_labels() calls
+## (or add it to .applies_to_waves of an existing call sharing its text).
+## To add a new variable: add it to var_types_vec, then declare its
+## text/codes below.
 
-harmonized_labels <- c(
-  trartv1 = "Arteries, disease or abnormalities",
-  trcanc1 = "Cancer",
-  trcanc1a = "Cancer: nature of tumor or swelling",
-  trcara1 = "CNSLD",
-  trchol1 = "Hypercholesterolemia",
-  trchol1a = "Hypercholesterolemia: medication use",
-  trcor1 = "Corona",
-  trcor2 = "Corona second time",
-  trcorm1 = "Corona: month",
-  trcorm2 = "Corona second: month",
-  trcory1 = "Corona: year",
-  trcory2 = "Corona second: year",
-  trcva01 = "CVA",
-  trdiab1 = "Diabetes",
-  trfadem = "Dementia father",
-  trftrea = "Treatment dementia father",
-  trhart1 = "Heart disease",
-  trhbd1 = "Hypertension",
-  trhbd1a = "Hypertension: medication use",
-  trhead = "Head injury",
-  trheam = "Head injury last: month",
-  trheanr = "Head injury: number",
-  trheay = "Head injury last: year",
-  trmodem = "Dementia mother",
-  trmtrea = "Treatment dementia mother",
-  trnochrom = "Number of chronic diseases from 7 majors",
-  trnochrot = "Number of chronic diseases including maximum 2 others",
-  trothnr = "Number of other chronic diseases mentioned",
-  troths1 = "First other chronic disease",
-  troths2 = "Second other chronic disease",
-  troths3 = "Third other chronic disease",
-  troths4 = "Fourth other chronic disease",
-  troths5 = "Fifth other chronic disease",
-  trrheu1 = "Osteoarthritis",
-  trrheu2 = "Rheumatoid arthritis",
-  trsubh1 = "General health"
-)
-
-## Which canonical variables each wave actually documents -- see
-## label_db_helpers.R's .lasa_prune_wave_coverage() for how this is
-## used: the tables below are built unsubsetted, then pruned back
-## down to exactly this per wave.
-wave_coverage <- list(
-  `C` = c(
-    "trartv1",
-    "trcanc1",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trhart1",
-    "trhbd1",
-    "trnochrom",
-    "trnochrot",
-    "trothnr",
-    "troths1",
-    "troths2",
-    "troths3",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  ),
-  `D` = c(
-    "trartv1",
-    "trcanc1",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trfadem",
-    "trftrea",
-    "trhart1",
-    "trhbd1",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trmodem",
-    "trmtrea",
-    "trnochrom",
-    "trnochrot",
-    "trothnr",
-    "troths1",
-    "troths2",
-    "troths3",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  ),
-  `E` = c(
-    "trartv1",
-    "trcanc1",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trhart1",
-    "trhbd1",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trnochrom",
-    "trnochrot",
-    "trothnr",
-    "troths1",
-    "troths2",
-    "troths3",
-    "troths4",
-    "troths5",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  ),
-  `F` = c(
-    "trartv1",
-    "trcanc1",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trhart1",
-    "trhbd1",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trnochrom",
-    "trnochrot",
-    "trothnr",
-    "troths1",
-    "troths2",
-    "troths3",
-    "troths4",
-    "troths5",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  ),
-  `G` = c(
-    "trartv1",
-    "trcanc1",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trfadem",
-    "trftrea",
-    "trhart1",
-    "trhbd1",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trmodem",
-    "trmtrea",
-    "trnochrom",
-    "trnochrot",
-    "trothnr",
-    "troths1",
-    "troths2",
-    "troths3",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  ),
-  `H` = c(
-    "trartv1",
-    "trcanc1",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trhart1",
-    "trhbd1",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trnochrom",
-    "trnochrot",
-    "trothnr",
-    "troths1",
-    "troths2",
-    "troths3",
-    "troths4",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  ),
-  `I` = c(
-    "trartv1",
-    "trcanc1",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trhart1",
-    "trhbd1",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trnochrom",
-    "trnochrot",
-    "trothnr",
-    "troths1",
-    "troths2",
-    "troths3",
-    "troths4",
-    "troths5",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  ),
-  `J` = c(
-    "trartv1",
-    "trcanc1",
-    "trcanc1a",
-    "trcara1",
-    "trcva01",
-    "trdiab1",
-    "trhart1",
-    "trhbd1",
-    "trhbd1a",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trnochrom",
-    "trnochrot",
-    "trothnr",
-    "troths1",
-    "troths2",
-    "troths3",
-    "troths4",
-    "troths5",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  ),
-  `K` = c(
-    "trartv1",
-    "trcanc1",
-    "trcanc1a",
-    "trcara1",
-    "trchol1",
-    "trchol1a",
-    "trcor1",
-    "trcor2",
-    "trcorm1",
-    "trcorm2",
-    "trcory1",
-    "trcory2",
-    "trcva01",
-    "trdiab1",
-    "trhart1",
-    "trhbd1",
-    "trhbd1a",
-    "trhead",
-    "trheam",
-    "trheanr",
-    "trheay",
-    "trnochrom",
-    "trnochrot",
-    "trothnr",
-    "troths1",
-    "troths2",
-    "troths3",
-    "trrheu1",
-    "trrheu2",
-    "trsubh1"
-  )
-)
-
-variable_labels_list <- list(
-  Wave_C_labels = harmonized_labels,
-  Wave_D_labels = .replace_labels(
-    harmonized_labels,
-    trhead = "Head injury: yes/no"
-  ),
-  Wave_E_labels = .replace_labels(
-    harmonized_labels,
-    trhead = "Head injury: yes/no"
-  ),
-  Wave_F_labels = .replace_labels(
-    harmonized_labels,
-    trhead = "Head injury: yes/no"
-  ),
-  Wave_G_labels = .replace_labels(
-    harmonized_labels,
-    trhead = "Head injury: yes/no"
-  ),
-  Wave_H_labels = .replace_labels(
-    harmonized_labels,
-    trhead = "Head injury: yes/no",
-    trnochrom = "Number of chronic diseases from 7 majors (constructed)",
-    trnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
-  ),
-  Wave_I_labels = .replace_labels(
-    harmonized_labels,
-    trhead = "Head injury: yes/no",
-    trnochrom = "Number of chronic diseases from 7 majors (constructed)",
-    trnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
-  ),
-  Wave_J_labels = .replace_labels(
-    harmonized_labels,
-    trhead = "Head injury: yes/no",
-    trnochrom = "Number of chronic diseases from 7 majors (constructed)",
-    trnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
-  ),
-  Wave_K_labels = .replace_labels(
-    harmonized_labels,
-    trhead = "Head injury: yes/no",
-    trnochrom = "Number of chronic diseases from 7 majors (constructed)",
-    trnochrot = "Number of chronic diseases including maximum 2 others (constructed)"
-  ),
-  Harmonized_labels = harmonized_labels
-)
-
-## This file's own very common answer categories (>= 10 occurrences
-## across its variables) -- same idea as default_missing_labels, just
-## scoped to this filecode instead of shared globally.
-default_answer_labels <- c(
-  `1` = "yes"
-)
-
-standardized_value_labels <- list(
-  trartv1 = c(
-    default_missing_labels[c("-1")],
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trcanc1 = c(
-    default_missing_labels[c("-1")],
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trcanc1a = c(
-    `-2` = "no answer, see TRCANC1",
-    default_missing_labels[c("-1")],
-    `1` = "benign",
-    `2` = "malign",
-    `3` = "unknown"
-  ),
-  trcara1 = c(
-    default_missing_labels[c("-1")],
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trchol1 = c(
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    `2` = "yes",
-    `3` = "does not know"
-  ),
-  trchol1a = c(
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    `2` = "yes",
-    `3` = "does not know"
-  ),
-  trcor1 = c(
-    default_missing_labels[c("-1")],
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trcor2 = c(
-    `-2` = "never had corona",
-    default_missing_labels[c("-1")],
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trcorm1 = c(
-    `-2` = "no corona",
-    default_missing_labels[c("-1")],
-    `1` = "January",
-    `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
-  ),
-  trcorm2 = c(
-    `-2` = "no corona",
-    default_missing_labels[c("-1")],
-    `1` = "January",
-    `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
-  ),
-  trcory1 = c(
-    `-2` = "no corona",
-    default_missing_labels[c("-1")]
-  ),
-  trcory2 = c(
-    `-2` = "no corona",
-    default_missing_labels[c("-1")]
-  ),
-  trcva01 = c(
-    default_missing_labels[c("-1")],
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trdiab1 = c(
-    default_missing_labels[c("-1")],
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trfadem = c(
-    `-1` = "asked, no answer / does not know",
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trftrea = c(
-    `-2` = "no dementia",
-    `-1` = "asked, no answer / does not know",
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trhart1 = c(
-    default_missing_labels[c("-1")],
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trhbd1 = c(
-    default_missing_labels[c("-1")],
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trhbd1a = c(
-    default_missing_labels[c("-1")],
-    `1` = "no",
-    `2` = "yes",
-    `3` = "does not know"
-  ),
-  trhead = c(
-    default_missing_labels[c("-1")],
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trheam = c(
-    `-2` = "no head trauma",
-    default_missing_labels[c("-1")],
-    `1` = "January",
-    `2` = "February",
-    `3` = "March",
-    `4` = "April",
-    `5` = "May",
-    `6` = "June",
-    `7` = "July",
-    `8` = "August",
-    `9` = "September",
-    `10` = "October",
-    `11` = "November",
-    `12` = "December"
-  ),
-  trheanr = c(
-    `-2` = "no head trauma",
-    default_missing_labels[c("-1")]
-  ),
-  trheay = c(
-    `-2` = "no head trauma",
-    default_missing_labels[c("-1")]
-  ),
-  trmodem = c(
-    `-1` = "asked, no answer / does not know",
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trmtrea = c(
-    `-2` = "no dementia",
-    `-1` = "asked, no answer / does not know",
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trnochrom = c(`-1` = "no valid data"),
-  trnochrot = c(`-1` = "no valid data"),
-  trothnr = c(
-    default_missing_labels[c("-1")]
-  ),
-  troths1 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Mental problems, incl. depression",
-    `25` = "Eye diseases",
-    `26` = "Ear diseases/hearing problems",
-    `27` = "Venous insufficiency/varicose veins",
-    `28` = "Anaemia",
-    `29` = "Chronic headaches (no migraine)",
-    `30` = "Chronic neck-problems",
-    `31` = "Dizziness without falling",
-    `32` = "Congenital disorders",
-    `33` = "Hypercholesterolaemia",
-    `34` = "Gout",
-    `35` = "Menopausal complaints (females)",
-    `36` = "Osteoporosis",
-    `37` = "Other pulmonary diseases (no CNSLD)",
-    `38` = "Systemic diseases",
-    `39` = "Other hormonal diseases (no diabetes/thyroid)",
-    `40` = "Other urological disease (no incontinence)",
-    `41` = "Other locomotor disease",
-    `42` = "Other vascular disease",
-    `43` = "Other neurological disease",
-    `44` = "TIA",
-    `45` = "Other hematological disease",
-    `46` = "Pancreatitis-chronic",
-    `47` = "no label",
-    `48` = "Addiction",
-    `49` = "Other chronic disease",
-    `50` = "Other non-chronic disease"
-  ),
-  troths2 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Mental problems, incl. depression",
-    `25` = "Eye diseases",
-    `26` = "Ear diseases/hearing problems",
-    `27` = "Venous insufficiency/varicose veins",
-    `28` = "Anaemia",
-    `29` = "Chronic headaches (no migraine)",
-    `30` = "Chronic neck-problems",
-    `31` = "Dizziness without falling",
-    `32` = "Congenital disorders",
-    `33` = "Hypercholesterolaemia",
-    `34` = "Gout",
-    `35` = "Menopausal complaints (females)",
-    `36` = "Osteoporosis",
-    `37` = "Other pulmonary diseases (no CNSLD)",
-    `38` = "Systemic diseases",
-    `39` = "Other hormonal diseases (no diabetes/thyroid)",
-    `40` = "Other urological disease (no incontinence)",
-    `41` = "Other locomotor disease",
-    `42` = "Other vascular disease",
-    `43` = "Other neurological disease",
-    `44` = "TIA",
-    `45` = "Other hematological disease",
-    `46` = "Pancreatitis-chronic",
-    `47` = "no label",
-    `48` = "Addiction",
-    `49` = "Other chronic disease",
-    `50` = "Other non-chronic disease"
-  ),
-  troths3 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Mental problems, incl. depression",
-    `25` = "Eye diseases",
-    `26` = "Ear diseases/hearing problems",
-    `27` = "Venous insufficiency/varicose veins",
-    `28` = "Anaemia",
-    `29` = "Chronic headaches (no migraine)",
-    `30` = "Chronic neck-problems",
-    `31` = "Dizziness without falling",
-    `32` = "Congenital disorders",
-    `33` = "Hypercholesterolaemia",
-    `34` = "Gout",
-    `35` = "Menopausal complaints (females)",
-    `36` = "Osteoporosis",
-    `37` = "Other pulmonary diseases (no CNSLD)",
-    `38` = "Systemic diseases",
-    `39` = "Other hormonal diseases (no diabetes/thyroid)",
-    `40` = "Other urological disease (no incontinence)",
-    `41` = "Other locomotor disease",
-    `42` = "Other vascular disease",
-    `43` = "Other neurological disease",
-    `44` = "TIA",
-    `45` = "Other hematological disease",
-    `46` = "Pancreatitis-chronic",
-    `47` = "no label",
-    `48` = "Addiction",
-    `49` = "Other chronic disease",
-    `50` = "Other non-chronic disease"
-  ),
-  troths4 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Other - to be coded -",
-    `27` = "Venous insufficiency/varicose veins",
-    `28` = "Anaemia",
-    `29` = "Chronic headaches (no migraine)",
-    `30` = "Chronic neck-problems",
-    `31` = "Dizziness without falling",
-    `32` = "Congenital disorders",
-    `33` = "Hypercholesterolaemia",
-    `34` = "Gout",
-    `35` = "Menopausal complaints (females)",
-    `36` = "Osteoporosis",
-    `37` = "Other pulmonary diseases (no CNSLD)",
-    `38` = "Systemic diseases",
-    `39` = "Other hormonal diseases (no diabetes/thyroid)",
-    `40` = "Other urological disease (no incontinence)",
-    `41` = "Other locomotor disease",
-    `42` = "Other vascular disease",
-    `43` = "Other neurological disease",
-    `44` = "TIA",
-    `45` = "Other hematological disease",
-    `46` = "Pancreatitis-chronic",
-    `47` = "no label",
-    `48` = "Addiction",
-    `49` = "Other chronic disease",
-    `50` = "Other non-chronic disease"
-  ),
-  troths5 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Mental problems, incl. depression",
-    `25` = "Eye diseases",
-    `26` = "Ear diseases/hearing problems",
-    `27` = "Venous insufficiency/varicose veins",
-    `28` = "Anaemia",
-    `29` = "Chronic headaches (no migraine)",
-    `30` = "Chronic neck-problems",
-    `31` = "Dizziness without falling",
-    `32` = "Congenital disorders",
-    `33` = "Hypercholesterolaemia",
-    `34` = "Gout",
-    `35` = "Menopausal complaints (females)",
-    `36` = "Osteoporosis",
-    `37` = "Other pulmonary diseases (no CNSLD)",
-    `38` = "Systemic diseases",
-    `39` = "Other hormonal diseases (no diabetes/thyroid)",
-    `40` = "Other urological disease (no incontinence)",
-    `41` = "Other locomotor disease",
-    `42` = "Other vascular disease",
-    `43` = "Other neurological disease",
-    `44` = "TIA",
-    `45` = "Other hematological disease",
-    `46` = "Pancreatitis-chronic",
-    `47` = "no label",
-    `48` = "Addiction",
-    `49` = "Other chronic disease",
-    `50` = "Other non-chronic disease"
-  ),
-  trrheu1 = c(
-    default_missing_labels[c("-1")],
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trrheu2 = c(
-    default_missing_labels[c("-1")],
-    `0` = "no",
-    default_answer_labels[c("1")]
-  ),
-  trsubh1 = c(
-    default_missing_labels[c("-1")],
-    `1` = "excellent",
-    `2` = "good",
-    `3` = "fair",
-    `4` = "sometimes good/bad",
-    `5` = "poor"
-  )
-)
-
-value_labels_list <- list(
-  Wave_C_labels = standardized_value_labels,
-  Wave_D_labels = standardized_value_labels,
-  Wave_E_labels = .replace_in_list(
-    standardized_value_labels,
-    troths4 = .replace_labels(
-    standardized_value_labels$troths4,
-    `24` = "Mental problems, incl. depression",
-    `25` = "Eye diseases",
-    `26` = "Ear diseases/hearing problems"
-  ),
-    trsubh1 = c(`1` = "excellent", `2` = "good", `3` = "fair", `4` = "sometimes good/bad", `5` = "poor")
-  ),
-  Wave_F_labels = .replace_in_list(
-    standardized_value_labels,
-    troths4 = .replace_labels(
-    standardized_value_labels$troths4,
-    `24` = "Mental problems, incl. depression",
-    `25` = "Eye diseases",
-    `26` = "Ear diseases/hearing problems"
-  ),
-    trsubh1 = c(`1` = "excellent", `2` = "good", `3` = "fair", `4` = "sometimes good/bad", `5` = "poor")
-  ),
-  Wave_G_labels = standardized_value_labels,
-  Wave_H_labels = .replace_in_list(
-    standardized_value_labels,
-    troths1 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Other - to be coded -"
-  ),
-    troths2 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Other - to be coded -"
-  ),
-    troths3 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Other - to be coded -"
-  ),
-    troths4 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Other - to be coded -"
-  )
-  ),
-  Wave_I_labels = .replace_in_list(
-    standardized_value_labels,
-    troths1 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Other - to be coded -"
-  ),
-    troths2 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Other - to be coded -"
-  ),
-    troths3 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Other - to be coded -"
-  ),
-    troths4 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Other - to be coded -"
-  ),
-    troths5 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Other - to be coded -"
-  )
-  ),
-  Wave_J_labels = .replace_in_list(
-    standardized_value_labels,
-    trcanc1a = .replace_labels(
-    standardized_value_labels$trcanc1a,
-    `-2` = "no answer, see JTRCANC1"
-  ),
-    troths1 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Other - to be coded -"
-  ),
-    troths2 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Other - to be coded -"
-  ),
-    troths3 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Other - to be coded -"
-  ),
-    troths4 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Other - to be coded -"
-  ),
-    troths5 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Serious consequences accident",
-    `21` = "Other serious consequences/burns",
-    `22` = "Consequences surgery/operations",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Other - to be coded -"
-  )
-  ),
-  Wave_K_labels = .replace_in_list(
-    standardized_value_labels,
-    trcanc1a = .replace_labels(
-    standardized_value_labels$trcanc1a,
-    `-2` = "no answer, see KTRCANC1"
-  ),
-    troths1 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Fractures as a result of accident/fall",
-    `21` = "Other consequences of accident/fall",
-    `22` = "Permanent consequencies surgery",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Hearing impairment",
-    `27` = "Arthritis",
-    `28` = "Eye problems",
-    `29` = "Sleep apnea",
-    `30` = "TIA (Transient ischemic attack)",
-    `31` = "Other - to be coded"
-  ),
-    troths2 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Fractures as a result of accident/fall",
-    `21` = "Other consequences of accident/fall",
-    `22` = "Permanent consequencies surgery",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Hearing impairment",
-    `27` = "Arthritis",
-    `28` = "Eye problems",
-    `29` = "Sleep apnea",
-    `30` = "TIA (Transient ischemic attack)",
-    `31` = "Other - to be coded"
-  ),
-    troths3 = c(
-    `-2` = "no other disease mentioned",
-    `0` = "no more other diseases mentioned",
-    `2` = "Ulcer stomach or duodenum",
-    `3` = "Serious intestinal disease",
-    `4` = "Gall-stones/gall-bladder disease",
-    `5` = "Liver disease or cirrhosis",
-    `6` = "Inguinal hernia",
-    `7` = "Kidney stone",
-    `8` = "Kidney disease-serious",
-    `9` = "Chronic cystitis",
-    `10` = "Prostate complaints (males)",
-    `11` = "Prolapse (females)",
-    `12` = "Thyroid disease",
-    `13` = "Back problems, hernia",
-    `14` = "Epilepsy",
-    `15` = "Dizziness with falling",
-    `16` = "Migraine",
-    `17` = "Serious skin disease",
-    `18` = "Decubitus-ulcer",
-    `19` = "Allergy/hay-fever",
-    `20` = "Fractures as a result of accident/fall",
-    `21` = "Other consequences of accident/fall",
-    `22` = "Permanent consequencies surgery",
-    `23` = "Disease of nervous system",
-    `24` = "Parkinson",
-    `25` = "Mental problems, incl. depression",
-    `26` = "Hearing impairment",
-    `27` = "Arthritis",
-    `28` = "Eye problems",
-    `29` = "Sleep apnea",
-    `30` = "TIA (Transient ischemic attack)",
-    `31` = "Other - to be coded"
-  )
-  ),
-  Harmonized_labels = standardized_value_labels
-)
-
+# define variable types ----
+## Every canonical variable name this filecode declares, and its
+## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
+## matched by name everywhere below, never by position.
 var_types_vec <- c(
   trartv1 = "categorical",
   trcanc1 = "categorical",
@@ -1374,17 +49,266 @@ var_types_vec <- c(
   trsubh1 = "categorical"
 )
 
-fc_labels <- list(
-  variables = .lasa_build_name_table(variable_labels_list, filecode = "702", waves = .lasa_wave_rows()),
-  variable_labels = .lasa_build_label_table(variable_labels_list, filecode = "702", waves = .lasa_wave_rows()),
-  value_labels = .lasa_build_value_table(value_labels_list, filecode = "702", waves = .lasa_wave_rows()),
-  variable_types = .lasa_build_type_table(var_types_vec, filecode = "702", waves = .lasa_wave_rows())
+# define variable labels ----
+variable_labels(
+  trartv1 = "Arteries, disease or abnormalities",
+  trcanc1 = "Cancer",
+  trcanc1a = "Cancer: nature of tumor or swelling",
+  trcara1 = "CNSLD",
+  trchol1 = "Hypercholesterolemia",
+  trchol1a = "Hypercholesterolemia: medication use",
+  trcor1 = "Corona",
+  trcor2 = "Corona second time",
+  trcorm1 = "Corona: month",
+  trcorm2 = "Corona second: month",
+  trcory1 = "Corona: year",
+  trcory2 = "Corona second: year",
+  trcva01 = "CVA",
+  trdiab1 = "Diabetes",
+  trfadem = "Dementia father",
+  trftrea = "Treatment dementia father",
+  trhart1 = "Heart disease",
+  trhbd1 = "Hypertension",
+  trhbd1a = "Hypertension: medication use",
+  trhead = "Head injury",
+  trheam = "Head injury last: month",
+  trheanr = "Head injury: number",
+  trheay = "Head injury last: year",
+  trmodem = "Dementia mother",
+  trmtrea = "Treatment dementia mother",
+  trnochrom = "Number of chronic diseases from 7 majors",
+  trnochrot = "Number of chronic diseases including maximum 2 others",
+  trothnr = "Number of other chronic diseases mentioned",
+  troths1 = "First other chronic disease",
+  troths2 = "Second other chronic disease",
+  troths3 = "Third other chronic disease",
+  troths4 = "Fourth other chronic disease",
+  troths5 = "Fifth other chronic disease",
+  trrheu1 = "Osteoarthritis",
+  trrheu2 = "Rheumatoid arthritis",
+  trsubh1 = "General health",
+  .applies_to_waves = c("Z")
 )
 
-fc_labels$value_labels[["trothnr"]][fc_labels$value_labels$LASA_Wave == "H"] <- list(NULL)
-fc_labels$value_labels[["trothnr"]][fc_labels$value_labels$LASA_Wave == "I"] <- list(NULL)
-fc_labels$value_labels[["trothnr"]][fc_labels$value_labels$LASA_Wave == "J"] <- list(NULL)
-fc_labels$value_labels[["trothnr"]][fc_labels$value_labels$LASA_Wave == "K"] <- list(NULL)
+variable_labels(
+  "trartv1", "trcanc1", "trcara1", "trcva01", "trdiab1", "trhart1", "trhbd1", "trothnr", "troths1", "troths2", "troths3", "trrheu1", "trrheu2", "trsubh1",
+  .applies_to_waves = c("C", "D", "E", "F", "G", "H", "I", "J", "K")
+)
 
-.lasa_fc_702 <- .lasa_prune_wave_coverage(fc_labels, wave_coverage)
+variable_labels(
+  "trnochrom", "trnochrot",
+  .applies_to_waves = c("C", "D", "E", "F", "G")
+)
+
+variable_labels(
+  "trfadem", "trftrea", "trmodem", "trmtrea",
+  .applies_to_waves = c("D", "G")
+)
+
+variable_labels(
+  "trheam", "trheanr", "trheay",
+  .applies_to_waves = c("D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+variable_labels(
+  "troths4",
+  .applies_to_waves = c("E", "F", "H", "I", "J")
+)
+
+variable_labels(
+  "troths5",
+  .applies_to_waves = c("E", "F", "I", "J")
+)
+
+variable_labels(
+  "trcanc1a", "trhbd1a",
+  .applies_to_waves = c("J", "K")
+)
+
+variable_labels(
+  "trchol1", "trchol1a", "trcor1", "trcor2", "trcorm1", "trcorm2", "trcory1", "trcory2",
+  .applies_to_waves = c("K")
+)
+
+variable_labels(
+  trhead = "Head injury: yes/no",
+  .applies_to_waves = c("D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+variable_labels(
+  trnochrom = "Number of chronic diseases from 7 majors (constructed)",
+  trnochrot = "Number of chronic diseases including maximum 2 others (constructed)",
+  .applies_to_waves = c("H", "I", "J", "K")
+)
+
+# define value labels ----
+value_labels(
+  `-1` = "asked, no answer / does not know",
+  .applies_to_vars = c("trfadem", "trftrea", "trmodem", "trmtrea"),
+  .applies_to_waves = c("Z", "D", "G")
+)
+
+value_labels(
+  `-1` = "no valid data",
+  .applies_to_vars = c("trnochrom", "trnochrot"),
+  .applies_to_waves = c("Z", "C", "D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "no head trauma",
+  .applies_to_vars = c("trheam", "trheanr", "trheay"),
+  .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-1` = "na, asked", `0` = "no", `1` = "yes",
+  .applies_to_vars = c("trartv1", "trcanc1", "trcara1", "trcva01", "trdiab1", "trhart1", "trhbd1", "trrheu1", "trrheu2"),
+  .applies_to_waves = c("Z", "C", "D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "no answer, see TRCANC1", `-1` = "na, asked", `1` = "benign", `2` = "malign", `3` = "unknown",
+  .applies_to_vars = c("trcanc1a"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "does not know",
+  .applies_to_vars = c("trchol1", "trchol1a"),
+  .applies_to_waves = c("Z", "K")
+)
+
+value_labels(
+  `-1` = "na, asked", `0` = "no", `1` = "yes",
+  .applies_to_vars = c("trcor1"),
+  .applies_to_waves = c("Z", "K")
+)
+
+value_labels(
+  `-2` = "never had corona", `-1` = "na, asked", `0` = "no", `1` = "yes",
+  .applies_to_vars = c("trcor2"),
+  .applies_to_waves = c("Z", "K")
+)
+
+value_labels(
+  `-2` = "no corona", `-1` = "na, asked", `1` = "January", `2` = "February", `3` = "March", `4` = "April", `5` = "May", `6` = "June", `7` = "July", `8` = "August", `9` = "September", `10` = "October", `11` = "November", `12` = "December",
+  .applies_to_vars = c("trcorm1", "trcorm2"),
+  .applies_to_waves = c("Z", "K")
+)
+
+value_labels(
+  `-2` = "no corona", `-1` = "na, asked",
+  .applies_to_vars = c("trcory1", "trcory2"),
+  .applies_to_waves = c("Z", "K")
+)
+
+value_labels(
+  `0` = "no", `1` = "yes",
+  .applies_to_vars = c("trfadem", "trmodem"),
+  .applies_to_waves = c("Z", "D", "G")
+)
+
+value_labels(
+  `-2` = "no dementia", `0` = "no", `1` = "yes",
+  .applies_to_vars = c("trftrea", "trmtrea"),
+  .applies_to_waves = c("Z", "D", "G")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "does not know",
+  .applies_to_vars = c("trhbd1a"),
+  .applies_to_waves = c("Z", "J", "K")
+)
+
+value_labels(
+  `-1` = "na, asked", `0` = "no", `1` = "yes",
+  .applies_to_vars = c("trhead"),
+  .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "January", `2` = "February", `3` = "March", `4` = "April", `5` = "May", `6` = "June", `7` = "July", `8` = "August", `9` = "September", `10` = "October", `11` = "November", `12` = "December",
+  .applies_to_vars = c("trheam"),
+  .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-1` = "na, asked",
+  .applies_to_vars = c("trheanr", "trheay"),
+  .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-1` = "na, asked",
+  .applies_to_vars = c("trothnr"),
+  .applies_to_waves = c("Z", "C", "D", "E", "F", "G")
+)
+
+value_labels(
+  `-2` = "no other disease mentioned", `0` = "no more other diseases mentioned", `2` = "Ulcer stomach or duodenum", `3` = "Serious intestinal disease", `4` = "Gall-stones/gall-bladder disease", `5` = "Liver disease or cirrhosis", `6` = "Inguinal hernia", `7` = "Kidney stone", `8` = "Kidney disease-serious", `9` = "Chronic cystitis", `10` = "Prostate complaints (males)", `11` = "Prolapse (females)", `12` = "Thyroid disease", `13` = "Back problems, hernia", `14` = "Epilepsy", `15` = "Dizziness with falling", `16` = "Migraine", `17` = "Serious skin disease", `18` = "Decubitus-ulcer", `19` = "Allergy/hay-fever", `20` = "Serious consequences accident", `21` = "Other serious consequences/burns", `22` = "Consequences surgery/operations", `23` = "Disease of nervous system", `24` = "Mental problems, incl. depression", `25` = "Eye diseases", `26` = "Ear diseases/hearing problems", `27` = "Venous insufficiency/varicose veins", `28` = "Anaemia", `29` = "Chronic headaches (no migraine)", `30` = "Chronic neck-problems", `31` = "Dizziness without falling", `32` = "Congenital disorders", `33` = "Hypercholesterolaemia", `34` = "Gout", `35` = "Menopausal complaints (females)", `36` = "Osteoporosis", `37` = "Other pulmonary diseases (no CNSLD)", `38` = "Systemic diseases", `39` = "Other hormonal diseases (no diabetes/thyroid)", `40` = "Other urological disease (no incontinence)", `41` = "Other locomotor disease", `42` = "Other vascular disease", `43` = "Other neurological disease", `44` = "TIA", `45` = "Other hematological disease", `46` = "Pancreatitis-chronic", `47` = "no label", `48` = "Addiction", `49` = "Other chronic disease", `50` = "Other non-chronic disease",
+  .applies_to_vars = c("troths1", "troths2", "troths3"),
+  .applies_to_waves = c("Z", "C", "D", "E", "F", "G")
+)
+
+value_labels(
+  `-2` = "no other disease mentioned", `0` = "no more other diseases mentioned", `2` = "Ulcer stomach or duodenum", `3` = "Serious intestinal disease", `4` = "Gall-stones/gall-bladder disease", `5` = "Liver disease or cirrhosis", `6` = "Inguinal hernia", `7` = "Kidney stone", `8` = "Kidney disease-serious", `9` = "Chronic cystitis", `10` = "Prostate complaints (males)", `11` = "Prolapse (females)", `12` = "Thyroid disease", `13` = "Back problems, hernia", `14` = "Epilepsy", `15` = "Dizziness with falling", `16` = "Migraine", `17` = "Serious skin disease", `18` = "Decubitus-ulcer", `19` = "Allergy/hay-fever", `20` = "Serious consequences accident", `21` = "Other serious consequences/burns", `22` = "Consequences surgery/operations", `23` = "Disease of nervous system", `24` = "Parkinson", `25` = "Mental problems, incl. depression", `26` = "Other - to be coded -", `27` = "Venous insufficiency/varicose veins", `28` = "Anaemia", `29` = "Chronic headaches (no migraine)", `30` = "Chronic neck-problems", `31` = "Dizziness without falling", `32` = "Congenital disorders", `33` = "Hypercholesterolaemia", `34` = "Gout", `35` = "Menopausal complaints (females)", `36` = "Osteoporosis", `37` = "Other pulmonary diseases (no CNSLD)", `38` = "Systemic diseases", `39` = "Other hormonal diseases (no diabetes/thyroid)", `40` = "Other urological disease (no incontinence)", `41` = "Other locomotor disease", `42` = "Other vascular disease", `43` = "Other neurological disease", `44` = "TIA", `45` = "Other hematological disease", `46` = "Pancreatitis-chronic", `47` = "no label", `48` = "Addiction", `49` = "Other chronic disease", `50` = "Other non-chronic disease",
+  .applies_to_vars = c("troths4"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "no other disease mentioned", `0` = "no more other diseases mentioned", `2` = "Ulcer stomach or duodenum", `3` = "Serious intestinal disease", `4` = "Gall-stones/gall-bladder disease", `5` = "Liver disease or cirrhosis", `6` = "Inguinal hernia", `7` = "Kidney stone", `8` = "Kidney disease-serious", `9` = "Chronic cystitis", `10` = "Prostate complaints (males)", `11` = "Prolapse (females)", `12` = "Thyroid disease", `13` = "Back problems, hernia", `14` = "Epilepsy", `15` = "Dizziness with falling", `16` = "Migraine", `17` = "Serious skin disease", `18` = "Decubitus-ulcer", `19` = "Allergy/hay-fever", `20` = "Serious consequences accident", `21` = "Other serious consequences/burns", `22` = "Consequences surgery/operations", `23` = "Disease of nervous system", `24` = "Mental problems, incl. depression", `25` = "Eye diseases", `26` = "Ear diseases/hearing problems", `27` = "Venous insufficiency/varicose veins", `28` = "Anaemia", `29` = "Chronic headaches (no migraine)", `30` = "Chronic neck-problems", `31` = "Dizziness without falling", `32` = "Congenital disorders", `33` = "Hypercholesterolaemia", `34` = "Gout", `35` = "Menopausal complaints (females)", `36` = "Osteoporosis", `37` = "Other pulmonary diseases (no CNSLD)", `38` = "Systemic diseases", `39` = "Other hormonal diseases (no diabetes/thyroid)", `40` = "Other urological disease (no incontinence)", `41` = "Other locomotor disease", `42` = "Other vascular disease", `43` = "Other neurological disease", `44` = "TIA", `45` = "Other hematological disease", `46` = "Pancreatitis-chronic", `47` = "no label", `48` = "Addiction", `49` = "Other chronic disease", `50` = "Other non-chronic disease",
+  .applies_to_vars = c("troths5"),
+  .applies_to_waves = c("Z", "E", "F")
+)
+
+value_labels(
+  `-1` = "na, asked", `1` = "excellent", `2` = "good", `3` = "fair", `4` = "sometimes good/bad", `5` = "poor",
+  .applies_to_vars = c("trsubh1"),
+  .applies_to_waves = c("Z", "C", "D", "G", "H", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "no other disease mentioned", `0` = "no more other diseases mentioned", `2` = "Ulcer stomach or duodenum", `3` = "Serious intestinal disease", `4` = "Gall-stones/gall-bladder disease", `5` = "Liver disease or cirrhosis", `6` = "Inguinal hernia", `7` = "Kidney stone", `8` = "Kidney disease-serious", `9` = "Chronic cystitis", `10` = "Prostate complaints (males)", `11` = "Prolapse (females)", `12` = "Thyroid disease", `13` = "Back problems, hernia", `14` = "Epilepsy", `15` = "Dizziness with falling", `16` = "Migraine", `17` = "Serious skin disease", `18` = "Decubitus-ulcer", `19` = "Allergy/hay-fever", `20` = "Serious consequences accident", `21` = "Other serious consequences/burns", `22` = "Consequences surgery/operations", `23` = "Disease of nervous system", `24` = "Mental problems, incl. depression", `25` = "Eye diseases", `26` = "Ear diseases/hearing problems", `27` = "Venous insufficiency/varicose veins", `28` = "Anaemia", `29` = "Chronic headaches (no migraine)", `30` = "Chronic neck-problems", `31` = "Dizziness without falling", `32` = "Congenital disorders", `33` = "Hypercholesterolaemia", `34` = "Gout", `35` = "Menopausal complaints (females)", `36` = "Osteoporosis", `37` = "Other pulmonary diseases (no CNSLD)", `38` = "Systemic diseases", `39` = "Other hormonal diseases (no diabetes/thyroid)", `40` = "Other urological disease (no incontinence)", `41` = "Other locomotor disease", `42` = "Other vascular disease", `43` = "Other neurological disease", `44` = "TIA", `45` = "Other hematological disease", `46` = "Pancreatitis-chronic", `47` = "no label", `48` = "Addiction", `49` = "Other chronic disease", `50` = "Other non-chronic disease",
+  .applies_to_vars = c("troths4"),
+  .applies_to_waves = c("E", "F")
+)
+
+value_labels(
+  `1` = "excellent", `2` = "good", `3` = "fair", `4` = "sometimes good/bad", `5` = "poor",
+  .applies_to_vars = c("trsubh1"),
+  .applies_to_waves = c("E", "F")
+)
+
+value_labels(
+  `-2` = "no other disease mentioned", `0` = "no more other diseases mentioned", `2` = "Ulcer stomach or duodenum", `3` = "Serious intestinal disease", `4` = "Gall-stones/gall-bladder disease", `5` = "Liver disease or cirrhosis", `6` = "Inguinal hernia", `7` = "Kidney stone", `8` = "Kidney disease-serious", `9` = "Chronic cystitis", `10` = "Prostate complaints (males)", `11` = "Prolapse (females)", `12` = "Thyroid disease", `13` = "Back problems, hernia", `14` = "Epilepsy", `15` = "Dizziness with falling", `16` = "Migraine", `17` = "Serious skin disease", `18` = "Decubitus-ulcer", `19` = "Allergy/hay-fever", `20` = "Serious consequences accident", `21` = "Other serious consequences/burns", `22` = "Consequences surgery/operations", `23` = "Disease of nervous system", `24` = "Parkinson", `25` = "Mental problems, incl. depression", `26` = "Other - to be coded -",
+  .applies_to_vars = c("troths1", "troths2", "troths3", "troths4"),
+  .applies_to_waves = c("H", "I", "J")
+)
+
+value_labels(
+  `-2` = "no other disease mentioned", `0` = "no more other diseases mentioned", `2` = "Ulcer stomach or duodenum", `3` = "Serious intestinal disease", `4` = "Gall-stones/gall-bladder disease", `5` = "Liver disease or cirrhosis", `6` = "Inguinal hernia", `7` = "Kidney stone", `8` = "Kidney disease-serious", `9` = "Chronic cystitis", `10` = "Prostate complaints (males)", `11` = "Prolapse (females)", `12` = "Thyroid disease", `13` = "Back problems, hernia", `14` = "Epilepsy", `15` = "Dizziness with falling", `16` = "Migraine", `17` = "Serious skin disease", `18` = "Decubitus-ulcer", `19` = "Allergy/hay-fever", `20` = "Serious consequences accident", `21` = "Other serious consequences/burns", `22` = "Consequences surgery/operations", `23` = "Disease of nervous system", `24` = "Parkinson", `25` = "Mental problems, incl. depression", `26` = "Other - to be coded -",
+  .applies_to_vars = c("troths5"),
+  .applies_to_waves = c("I", "J")
+)
+
+value_labels(
+  `-2` = "no answer, see JTRCANC1", `-1` = "na, asked", `1` = "benign", `2` = "malign", `3` = "unknown",
+  .applies_to_vars = c("trcanc1a"),
+  .applies_to_waves = c("J")
+)
+
+value_labels(
+  `-2` = "no answer, see KTRCANC1", `-1` = "na, asked", `1` = "benign", `2` = "malign", `3` = "unknown",
+  .applies_to_vars = c("trcanc1a"),
+  .applies_to_waves = c("K")
+)
+
+value_labels(
+  `-2` = "no other disease mentioned", `0` = "no more other diseases mentioned", `2` = "Ulcer stomach or duodenum", `3` = "Serious intestinal disease", `4` = "Gall-stones/gall-bladder disease", `5` = "Liver disease or cirrhosis", `6` = "Inguinal hernia", `7` = "Kidney stone", `8` = "Kidney disease-serious", `9` = "Chronic cystitis", `10` = "Prostate complaints (males)", `11` = "Prolapse (females)", `12` = "Thyroid disease", `13` = "Back problems, hernia", `14` = "Epilepsy", `15` = "Dizziness with falling", `16` = "Migraine", `17` = "Serious skin disease", `18` = "Decubitus-ulcer", `19` = "Allergy/hay-fever", `20` = "Fractures as a result of accident/fall", `21` = "Other consequences of accident/fall", `22` = "Permanent consequencies surgery", `23` = "Disease of nervous system", `24` = "Parkinson", `25` = "Mental problems, incl. depression", `26` = "Hearing impairment", `27` = "Arthritis", `28` = "Eye problems", `29` = "Sleep apnea", `30` = "TIA (Transient ischemic attack)", `31` = "Other - to be coded",
+  .applies_to_vars = c("troths1", "troths2", "troths3"),
+  .applies_to_waves = c("K")
+)
+
+.lasa_fc_702 <- .lasa_finalize_fc("702")
 
