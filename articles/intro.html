@@ -342,10 +342,15 @@ variable whose codebook has no positive/categorical codes, only negative
 already happened above: those variables come back as ordinary numbers,
 with negative missing-reason codes converted to <code>NA</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">lphya01</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.</span></span>
-<span><span class="co">#&gt; -5.000   4.000   4.000   3.476   4.000   4.000</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">read_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">blphya09</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span><span class="co">#&gt;  -3.00   -1.00   20.00   32.58   45.00  480.00</span></span>
+<span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">lphya09</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's </span></span>
+<span><span class="co">#&gt;   1.00   15.00   30.00   44.52   60.00  480.00     799</span></span></code></pre></div>
 <p><code>to_factor</code> and <code>to_numeric</code> work together, not
 against each other: in the same call, categorical variables become
 factors and numeric-classified variables become plain numbers.</p>
@@ -417,7 +422,8 @@ know which documented variable it actually is,
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span></span>
 <span>  <span class="st">"LASAB046.sav"</span>,</span>
-<span>  name_corrections <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>lphya08 <span class="op">=</span> <span class="st">"BLPYA08"</span><span class="op">)</span></span>
+<span>  name_corrections <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>lphya08 <span class="op">=</span> <span class="st">"BLPYA08"</span>, </span>
+<span>                       lphya09 <span class="op">=</span> <span class="st">"BLPYA9"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>This mapping is applied before CleanLASA’s own automatic matching
 (exact, then case-insensitive, then fuzzy), so it always takes
@@ -584,7 +590,8 @@ for that variable, leaving everything else untouched:</p>
 <span>  filecode <span class="op">=</span> <span class="st">"046"</span>,</span>
 <span>  wave <span class="op">=</span> <span class="st">"B"</span>,</span>
 <span>  variable <span class="op">=</span> <span class="st">"lphya01"</span>,</span>
-<span>  val_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>`-5` <span class="op">=</span> <span class="st">"NA, wrong, skip"</span><span class="op">)</span></span>
+<span>  val_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>`-5` <span class="op">=</span> <span class="st">"NA, wrong, skip"</span>,</span>
+<span>                 `-1` <span class="op">=</span> <span class="st">"NA, not done"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Set <code>replace_val_labels = TRUE</code> to replace the
 <em>entire</em> value-label set for that variable instead of merging
@@ -594,7 +601,8 @@ into it:</p>
 <span>  filecode <span class="op">=</span> <span class="st">"046"</span>,</span>
 <span>  wave <span class="op">=</span> <span class="st">"all"</span>,</span>
 <span>  variable <span class="op">=</span> <span class="st">"lphya01"</span>,</span>
-<span>  val_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>`-5` <span class="op">=</span> <span class="st">"NA, wrong, skip"</span><span class="op">)</span>,</span>
+<span>  val_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>`-5` <span class="op">=</span> <span class="st">"NA, wrong, skip"</span>,</span>
+<span>                 `-1` <span class="op">=</span> <span class="st">"NA, not done"</span><span class="op">)</span>,</span>
 <span>  replace_val_labels <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The same function replaces a variable’s <em>label</em> (as opposed to
@@ -616,7 +624,8 @@ once:</p>
 <span>  wave <span class="op">=</span> <span class="st">"all"</span>, <span class="co"># update every wave currently covered (B-K)</span></span>
 <span>  variable <span class="op">=</span> <span class="st">"lphya01"</span>,</span>
 <span>  var_label <span class="op">=</span> <span class="st">"New label"</span>,</span>
-<span>  val_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>`-5` <span class="op">=</span> <span class="st">"NA, wrong, skip"</span><span class="op">)</span></span>
+<span>  val_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>`-5` <span class="op">=</span> <span class="st">"NA, wrong, skip"</span>,</span>
+<span>                 `-1` <span class="op">=</span> <span class="st">"NA, not done"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/manual_update_lasa_labels.html">manual_update_lasa_labels</a></span><span class="op">(</span></span>
@@ -624,7 +633,8 @@ once:</p>
 <span>  wave <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span><span class="op">)</span>, <span class="co"># only update these three waves</span></span>
 <span>  variable <span class="op">=</span> <span class="st">"lphya01"</span>,</span>
 <span>  var_label <span class="op">=</span> <span class="st">"New label"</span>,</span>
-<span>  val_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>`-5` <span class="op">=</span> <span class="st">"NA, wrong, skip"</span><span class="op">)</span></span>
+<span>  val_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>`-5` <span class="op">=</span> <span class="st">"NA, wrong, skip"</span>,</span>
+<span>                 `-1` <span class="op">=</span> <span class="st">"NA, not done"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Once recorded, a correction takes effect immediately: the next time
 you call <code><a href="../reference/read_lasa_sav.html">read_lasa_sav()</a></code> or

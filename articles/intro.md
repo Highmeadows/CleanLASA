@@ -313,10 +313,15 @@ to `NA`.
 
 ``` r
 
+data <- haven::read_sav("LASAB046.sav")
+summary(data$blphya09)
+#>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#>  -3.00   -1.00   20.00   32.58   45.00  480.00
+
 data <- read_lasa_sav("LASAB046.sav")
-summary(data$lphya01)
-#>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
-#> -5.000   4.000   4.000   3.476   4.000   4.000
+summary(data$lphya09)
+#>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+#>   1.00   15.00   30.00   44.52   60.00  480.00     799
 ```
 
 `to_factor` and `to_numeric` work together, not against each other: in
@@ -389,7 +394,8 @@ CleanLASA directly, as `canonical_name = "actual name in the datafile"`:
 
 data <- read_lasa_sav(
   "LASAB046.sav",
-  name_corrections = c(lphya08 = "BLPYA08")
+  name_corrections = c(lphya08 = "BLPYA08", 
+                       lphya09 = "BLPYA9")
 )
 ```
 
@@ -575,7 +581,8 @@ manual_update_lasa_labels(
   filecode = "046",
   wave = "B",
   variable = "lphya01",
-  val_labels = c(`-5` = "NA, wrong, skip")
+  val_labels = c(`-5` = "NA, wrong, skip",
+                 `-1` = "NA, not done")
 )
 ```
 
@@ -588,7 +595,8 @@ manual_update_lasa_labels(
   filecode = "046",
   wave = "all",
   variable = "lphya01",
-  val_labels = c(`-5` = "NA, wrong, skip"),
+  val_labels = c(`-5` = "NA, wrong, skip",
+                 `-1` = "NA, not done"),
   replace_val_labels = TRUE
 )
 ```
@@ -617,7 +625,8 @@ manual_update_lasa_labels(
   wave = "all", # update every wave currently covered (B-K)
   variable = "lphya01",
   var_label = "New label",
-  val_labels = c(`-5` = "NA, wrong, skip")
+  val_labels = c(`-5` = "NA, wrong, skip",
+                 `-1` = "NA, not done")
 )
 
 manual_update_lasa_labels(
@@ -625,7 +634,8 @@ manual_update_lasa_labels(
   wave = c("B", "C", "D"), # only update these three waves
   variable = "lphya01",
   var_label = "New label",
-  val_labels = c(`-5` = "NA, wrong, skip")
+  val_labels = c(`-5` = "NA, wrong, skip",
+                 `-1` = "NA, not done")
 )
 ```
 
