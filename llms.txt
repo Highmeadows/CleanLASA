@@ -1,9 +1,5 @@
 # CleanLASA
 
-------------------------------------------------------------------------
-
-editor_options: markdown: wrap: 72 —
-
 CleanLASA helps you work with LASA (Longitudinal Aging Study Amsterdam)
 data in R. LASA data comes as SPSS (`.sav`) files, and each file uses
 its own short-hand variable names and numeric codes, which change
