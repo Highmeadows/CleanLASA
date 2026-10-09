@@ -1,6 +1,6 @@
 Package: CleanLASA
 Title: Import and Clean LASA SPSS Data
-Version: 0.0.0.9000
+Version: 0.9.0
 Authors@R: 
     person("Bram", "Hoogerheide", , "b.hoogerheide@vu.nl", role = c("aut", "cre"))
 Description: Tools for importing and cleaning data from the Longitudinal
