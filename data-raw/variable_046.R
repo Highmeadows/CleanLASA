@@ -128,12 +128,12 @@ variable_labels(
 
 variable_labels(
   "lphya01", "lphya02", "lphya03", "lphya04", "lphya05", "lphya06", "lphya10", "lphya15", "lphya17", "lphya18", "lphya19", "lphya25", "lphya26", "lphya27", "lphya28", "lphya31", "lphya32", "lphya33", "lphya34", "lphya35", "lphya36", "lphya39", "lphya40", "lphya41", "lphya42", "lphya43", "lphya44",
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
   "lphya07", "lphya08", "lphya09", "lphya11", "lphya12", "lphya13", "lphya21", "lphya22", "lphya23", "lphya24", "lphya37", "lphya38",
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
 variable_labels(
@@ -148,12 +148,12 @@ variable_labels(
 
 variable_labels(
   "lphya45", "lphya46", "lphya47", "lphya48", "lphya49", "lphya50",
-  .applies_to_waves = c("F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("F", "G", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
   "lphyasp",
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 variable_labels(
@@ -192,13 +192,13 @@ value_labels(
 value_labels(
   `-3` = "na, wrong skip", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("lphya02", "lphya03", "lphya06", "lphya10", "lphya17", "lphya25", "lphya31", "lphya35", "lphya39"),
-  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
   `-3` = "na, wrong skip", `-1` = "na, asked",
   .applies_to_vars = c("lphya04", "lphya05", "lphya08", "lphya09", "lphya12", "lphya13", "lphya18", "lphya19", "lphya23", "lphya24", "lphya27", "lphya28", "lphya33", "lphya34", "lphya38"),
-  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
@@ -216,7 +216,7 @@ value_labels(
 value_labels(
   `-3` = "na, wrong skip", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("lphya15"),
-  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "J")
+  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
@@ -240,7 +240,7 @@ value_labels(
 value_labels(
   `-3` = "na, wrong skip", `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "do not know", `4` = "refusal",
   .applies_to_vars = c("lphya32", "lphya36"),
-  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
@@ -252,13 +252,13 @@ value_labels(
 value_labels(
   `-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("lphya40", "lphya41", "lphya42", "lphya43", "lphya44"),
-  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
   `-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("lphya45", "lphya47", "lphya48", "lphya49"),
-  .applies_to_waves = c("Z", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("Z", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
@@ -268,7 +268,7 @@ value_labels(
 )
 
 value_labels(
-  `1` = "visit from friend/family", `2` = "positive activities", `3` = "illness partner", `4` = "good weather", `5` = "death partner", `6` = "business-trip", `7` = "removal/moved", `8` = "spring cleaning", `9` = "rebuilding", `10` = "other",
+  `1` = "visit from friend/family", `2` = "positive activities", `3` = "illness partner", `4` = "good weather", `5` = "death partner", `6` = "business-trip", `7` = "removal/moved", `8` = "spring cleaning", `9` = "rebuilding", `10` = "other", `11` = "COVID19",
   .applies_to_vars = c("lphya50"),
   .applies_to_waves = c("Z")
 )
@@ -280,117 +280,123 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA01",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA01",
   .applies_to_vars = c("lphya02", "lphya06", "lphya10", "lphya31", "lphya35", "lphya39"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA02",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA02",
   .applies_to_vars = c("lphya03"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA03",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA03",
   .applies_to_vars = c("lphya04", "lphya05"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA06",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA06",
   .applies_to_vars = c("lphya07"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA07",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA07",
   .applies_to_vars = c("lphya08", "lphya09"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA10",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA10",
   .applies_to_vars = c("lphya11"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA11",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA11",
   .applies_to_vars = c("lphya12", "lphya13"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA15",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA15",
   .applies_to_vars = c("lphya17"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA17",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA17",
   .applies_to_vars = c("lphya18", "lphya19"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA21",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA21",
   .applies_to_vars = c("lphya23", "lphya25"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA23",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA23",
   .applies_to_vars = c("lphya24"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA25",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA25",
   .applies_to_vars = c("lphya27"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA27",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA27",
   .applies_to_vars = c("lphya28"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA31",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA31",
   .applies_to_vars = c("lphya32"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA32",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA32",
   .applies_to_vars = c("lphya33", "lphya34"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA35",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA35",
   .applies_to_vars = c("lphya36"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA36",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA36",
   .applies_to_vars = c("lphya37", "lphya38"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/JLPHYA39",
+  `-2` = "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA39",
   .applies_to_vars = c("lphya40", "lphya41", "lphya42", "lphya43", "lphya44"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
   `-2` = "na, see B/C/D/E/B/F/G/H/BLPHYA14",
   .applies_to_vars = c("lphya15"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B")
+)
+
+value_labels(
+  `-2` = "na, see I/J/KLPHYA01",
+  .applies_to_vars = c("lphya15"),
+  .applies_to_waves = c("I", "J", "K")
 )
 
 value_labels(
@@ -408,7 +414,7 @@ value_labels(
 value_labels(
   `-3` = "na, wrong skip", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("lphya07", "lphya11"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
@@ -456,7 +462,7 @@ value_labels(
 value_labels(
   `-3` = "na, wrong skip", `-1` = "na, asked",
   .applies_to_vars = c("lphya37"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
@@ -490,51 +496,57 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see F/G/H/B/I/JLPHYA39",
+  `-2` = "na, see F/G/H/B/I/J/KLPHYA39",
   .applies_to_vars = c("lphya45", "lphya46", "lphya47", "lphya48", "lphya49"),
-  .applies_to_waves = c("F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
   `-3` = "na, wrong skip", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("lphya46"),
-  .applies_to_waves = c("F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see F/G/H/B/I/JLPHYA49", `1` = "visit from friend/family", `2` = "positive activities", `3` = "illness partner", `4` = "good weather", `5` = "death partner", `6` = "business-trip", `7` = "removal/moved", `8` = "spring cleaning", `9` = "rebuilding", `10` = "other",
+  `-2` = "na, see F/G/H/B/I/J/KLPHYA49", `1` = "visit from friend/family", `2` = "positive activities", `3` = "illness partner", `4` = "good weather", `5` = "death partner", `6` = "business-trip", `7` = "removal/moved", `8` = "spring cleaning", `9` = "rebuilding", `10` = "other",
   .applies_to_vars = c("lphya50"),
-  .applies_to_waves = c("F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("F", "G", "H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `11` = "COVID19",
+  .applies_to_vars = c("lphya50"),
+  .applies_to_waves = c("K")
 )
 
 value_labels(
   `-5` = "na, interview terminated", `-4` = "na, short interview", `-3` = "not done, wrong skip", `-1` = "na, asked", `1` = "respondent bedridden", `2` = "respondent in elec. wheelchair", `3` = "respondent in mech. wheelchair", `4` = "not 1, 2 or 3",
   .applies_to_vars = c("lphya01"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/JLPHYASP", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/J/KLPHYASP", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("lphya21"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/JLPHYA21", `-1` = "na, asked", `11` = "walking / hiking: long distance hiking", `12` = "walking / hiking: nordic walking", `13` = "walking / hiking: speed walking", `21` = "cycling: long distance cycling", `22` = "cycling: cycle racing / spinning / mountain biking", `23` = "cycling: treadmill at home / cycle ergometer at home", `31` = "gymnastics and fitness: gymnastics / exercising at home", `32` = "gymnastics and fitness: fitness / physiotherapy training / strength training / gyrotonics", `33` = "gymnastics and fitness: yoga / tai chi / qi gong / healing tao", `34` = "gymnastics and fitness: endurance training", `41` = "swimming: swimming", `42` = "swimming: aqua gym / aqua jogging", `51` = "racket sports: tennis", `52` = "racket sports: table tennis", `53` = "racket sports: squash", `54` = "racket sports: badminton", `61` = "running: running / jogging", `71` = "water sports: rowing", `72` = "water sports: sailing", `73` = "water sports: canoeing", `81` = "ball sports: soccer", `82` = "ball sports: futsal", `83` = "ball sports: hockey", `84` = "ball sports: volleyball", `85` = "ball sports: basketball", `86` = "ball sports: baseball / softball", `87` = "ball sports: golf / ball throwing game", `88` = "ball sports: bowling / skittles / lawn bowling / kolf / bowls", `91` = "winter sports: skiing", `92` = "winter sports: cross country skiing", `93` = "winter sports: ice skating", `101` = "animal sports: horse riding", `102` = "animal sports: fishing / pigeon racing", `103` = "animal sports: dog training / horse carriage driving", `111` = "other sports: climbing", `112` = "other sports: billiards / darts", `113` = "other sports: (folk) dancing", `114` = "other sports: other",
+  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/J/KLPHYA21", `-1` = "na, asked", `11` = "walking / hiking: long distance hiking", `12` = "walking / hiking: nordic walking", `13` = "walking / hiking: speed walking", `21` = "cycling: long distance cycling", `22` = "cycling: cycle racing / spinning / mountain biking", `23` = "cycling: treadmill at home / cycle ergometer at home", `31` = "gymnastics and fitness: gymnastics / exercising at home", `32` = "gymnastics and fitness: fitness / physiotherapy training / strength training / gyrotonics", `33` = "gymnastics and fitness: yoga / tai chi / qi gong / healing tao", `34` = "gymnastics and fitness: endurance training", `41` = "swimming: swimming", `42` = "swimming: aqua gym / aqua jogging", `51` = "racket sports: tennis", `52` = "racket sports: table tennis", `53` = "racket sports: squash", `54` = "racket sports: badminton", `61` = "running: running / jogging", `71` = "water sports: rowing", `72` = "water sports: sailing", `73` = "water sports: canoeing", `81` = "ball sports: soccer", `82` = "ball sports: futsal", `83` = "ball sports: hockey", `84` = "ball sports: volleyball", `85` = "ball sports: basketball", `86` = "ball sports: baseball / softball", `87` = "ball sports: golf / ball throwing game", `88` = "ball sports: bowling / skittles / lawn bowling / kolf / bowls", `91` = "winter sports: skiing", `92` = "winter sports: cross country skiing", `93` = "winter sports: ice skating", `101` = "animal sports: horse riding", `102` = "animal sports: fishing / pigeon racing", `103` = "animal sports: dog training / horse carriage driving", `111` = "other sports: climbing", `112` = "other sports: billiards / darts", `113` = "other sports: (folk) dancing", `114` = "other sports: other",
   .applies_to_vars = c("lphya22"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/JLPHYA25", `-1` = "na, asked", `11` = "walking / hiking: long distance hiking", `12` = "walking / hiking: nordic walking", `13` = "walking / hiking: speed walking", `21` = "cycling: long distance cycling", `22` = "cycling: cycle racing / spinning / mountain biking", `23` = "cycling: treadmill at home / cycle ergometer at home", `31` = "gymnastics and fitness: gymnastics / exercising at home", `32` = "gymnastics and fitness: fitness / physiotherapy training / strength training / gyrotonics", `33` = "gymnastics and fitness: yoga / tai chi / qi gong / healing tao", `34` = "gymnastics and fitness: endurance training", `41` = "swimming: swimming", `42` = "swimming: aqua gym / aqua jogging", `51` = "racket sports: tennis", `52` = "racket sports: table tennis", `53` = "racket sports: squash", `54` = "racket sports: badminton", `61` = "running: running / jogging", `71` = "water sports: rowing", `72` = "water sports: sailing", `73` = "water sports: canoeing", `81` = "ball sports: soccer", `82` = "ball sports: futsal", `83` = "ball sports: hockey", `84` = "ball sports: volleyball", `85` = "ball sports: basketball", `86` = "ball sports: baseball / softball", `87` = "ball sports: golf / ball throwing game", `88` = "ball sports: bowling / skittles / lawn bowling / kolf / bowls", `91` = "winter sports: skiing", `92` = "winter sports: cross country skiing", `93` = "winter sports: ice skating", `101` = "animal sports: horse riding", `102` = "animal sports: fishing / pigeon racing", `103` = "animal sports: dog training / horse carriage driving", `111` = "other sports: climbing", `112` = "other sports: billiards / darts", `113` = "other sports: (folk) dancing", `114` = "other sports: other",
+  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/J/KLPHYA25", `-1` = "na, asked", `11` = "walking / hiking: long distance hiking", `12` = "walking / hiking: nordic walking", `13` = "walking / hiking: speed walking", `21` = "cycling: long distance cycling", `22` = "cycling: cycle racing / spinning / mountain biking", `23` = "cycling: treadmill at home / cycle ergometer at home", `31` = "gymnastics and fitness: gymnastics / exercising at home", `32` = "gymnastics and fitness: fitness / physiotherapy training / strength training / gyrotonics", `33` = "gymnastics and fitness: yoga / tai chi / qi gong / healing tao", `34` = "gymnastics and fitness: endurance training", `41` = "swimming: swimming", `42` = "swimming: aqua gym / aqua jogging", `51` = "racket sports: tennis", `52` = "racket sports: table tennis", `53` = "racket sports: squash", `54` = "racket sports: badminton", `61` = "running: running / jogging", `71` = "water sports: rowing", `72` = "water sports: sailing", `73` = "water sports: canoeing", `81` = "ball sports: soccer", `82` = "ball sports: futsal", `83` = "ball sports: hockey", `84` = "ball sports: volleyball", `85` = "ball sports: basketball", `86` = "ball sports: baseball / softball", `87` = "ball sports: golf / ball throwing game", `88` = "ball sports: bowling / skittles / lawn bowling / kolf / bowls", `91` = "winter sports: skiing", `92` = "winter sports: cross country skiing", `93` = "winter sports: ice skating", `101` = "animal sports: horse riding", `102` = "animal sports: fishing / pigeon racing", `103` = "animal sports: dog training / horse carriage driving", `111` = "other sports: climbing", `112` = "other sports: billiards / darts", `113` = "other sports: (folk) dancing", `114` = "other sports: other",
   .applies_to_vars = c("lphya26"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/JLPHYA01", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/J/KLPHYA01", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("lphyasp"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 value_labels(
@@ -601,12 +613,6 @@ value_labels(
   `-3` = "na, wrong skip", `-2` = "na, see BLPHYA36", `-1` = "na, asked",
   .applies_to_vars = c("lphya38"),
   .applies_to_waves = c("MB")
-)
-
-value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see ILPHYA01", `-1` = "na, asked", `1` = "no", `2` = "yes",
-  .applies_to_vars = c("lphya15"),
-  .applies_to_waves = c("I")
 )
 
 .lasa_fc_046 <- .lasa_finalize_fc("046")

@@ -1080,7 +1080,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "not available", `-1` = "na, asked", `1` = "not at all", `2` = "sometimes", `3` = "often", `4` = "always",
+  `-3` = "na, wrong skip", `-2` = "na, not any chronic disease", `-1` = "na, asked", `1` = "not at all", `2` = "sometimes", `3` = "often", `4` = "always",
   .applies_to_vars = c("choutd"),
   .applies_to_waves = c("Z")
 )

@@ -42,6 +42,7 @@ var_types_vec <- c(
   mgriplp2 = "categorical",
   mgriplp3 = "numeric",
   mgriplp4 = "numeric",
+  mgriplpnorm = "categorical",
   mgripmeasp = "categorical",
   mgripp = "categorical",
   mgripr1 = "numeric",
@@ -51,6 +52,7 @@ var_types_vec <- c(
   mgriprp2 = "categorical",
   mgriprp3 = "numeric",
   mgriprp4 = "numeric",
+  mgriprpnorm = "categorical",
   mheight = "numeric",
   mheightp = "categorical",
   mheightp1 = "categorical",
@@ -155,6 +157,7 @@ variable_labels(
   mgriplp2 = "Hand strength: left handicapped",
   mgriplp3 = "Hand strength: left refuses",
   mgriplp4 = "Hand strength: left other remarks",
+  mgriplpnorm = "Hand strength: left normal measurement",
   mgripmeasp = "Measuring instruments: particularities",
   mgripp = "Hand strength particularities",
   mgripr1 = "Hand strength (1) right: kgf",
@@ -164,6 +167,7 @@ variable_labels(
   mgriprp2 = "Hand strength: right handicapped",
   mgriprp3 = "Hand strength: right refuses",
   mgriprp4 = "Hand strength: right other remarks",
+  mgriprpnorm = "Hand strength: right normal measurement",
   mheight = "Measured height in centimeters",
   mheightp = "Height particularities",
   mheightp1 = "Height: cannot stand",
@@ -234,13 +238,13 @@ variable_labels(
   mweightp8 = "Weight: refused",
   mweightp9 = "Weight: shoes",
   mweightself = "Weight: self-report",
-  rm161 = "Reason missing: LASAH/B/I/J161",
+  rm161 = "Reason missing: LASAH/B/I/J/K161",
   .applies_to_waves = c("Z")
 )
 
 variable_labels(
   "marmp",
-  .applies_to_waves = c("B", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
@@ -250,12 +254,12 @@ variable_labels(
 
 variable_labels(
   "mweight", "mweightself",
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
   "marmp1", "marmp2", "marmp3", "marmp4", "marmp5",
-  .applies_to_waves = c("C", "D", "H", "3B", "I", "J")
+  .applies_to_waves = c("C", "D", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
@@ -270,37 +274,37 @@ variable_labels(
 
 variable_labels(
   "mgripl1", "mgripl2", "mgripr1", "mheight", "mheightp", "mheightself", "mhip1", "mhipp", "mwaistp",
-  .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
   "mgripr2",
-  .applies_to_waves = c("C", "D", "E", "2B", "F", "H", "3B", "I", "J")
+  .applies_to_waves = c("C", "D", "E", "2B", "F", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
   "mheightp1", "mweightp1",
-  .applies_to_waves = c("C", "2B", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("C", "2B", "G", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
   "mheightp2", "mheightp3", "mheightp4", "mheightp6", "mheightp7", "mhipp1", "mhipp2", "mhipp3", "mwaistp1", "mwaistp2", "mwaistp4", "mweightp2", "mweightp3", "mweightp4", "mweightp5", "mweightp6", "mweightp8",
-  .applies_to_waves = c("C", "D", "E", "2B", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("C", "D", "E", "2B", "G", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
   "mheightp5",
-  .applies_to_waves = c("C", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("C", "G", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
   "mhip2",
-  .applies_to_waves = c("C", "E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("C", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
   "mwaistp3",
-  .applies_to_waves = c("C", "D", "E", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("C", "D", "E", "G", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
@@ -309,8 +313,13 @@ variable_labels(
 )
 
 variable_labels(
-  "mgriplp2", "mgriplp3", "mgriprp2", "mgriprp3", "mweightp9",
+  "mgriplp2", "mgriplp3", "mgriprp2", "mgriprp3",
   .applies_to_waves = c("D", "E", "G", "H", "3B", "I", "J")
+)
+
+variable_labels(
+  "mweightp9",
+  .applies_to_waves = c("D", "E", "G", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
@@ -318,9 +327,26 @@ variable_labels(
   .applies_to_waves = c("E", "G", "H", "3B", "I", "J")
 )
 
+## Wave K replaced the hand-strength particularities items 2-4: item 2
+## ("handicapped" in D-J) became "normal measurement" (its own canonical
+## name, mgriplpnorm/mgriprpnorm, renamed back to kmgriplp2/kmgriprp2
+## below), and items 3/4 were reworded.
+variable_labels(
+  "mgriplpnorm", "mgriprpnorm",
+  .applies_to_waves = c("K")
+)
+
+variable_labels(
+  mgriplp3 = "Hand strength: left not possible (e.g. because of respondents refusal)",
+  mgriplp4 = "Hand strength: left other remarks (e.g. physical limitations)",
+  mgriprp3 = "Hand strength: right not possible (e.g. because of respondents refusal)",
+  mgriprp4 = "Hand strength: right other remarks (e.g. physical limitations)",
+  .applies_to_waves = c("K")
+)
+
 variable_labels(
   "mweightp7",
-  .applies_to_waves = c("E", "2B", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("E", "2B", "G", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
@@ -330,17 +356,17 @@ variable_labels(
 
 variable_labels(
   "mgriplp1", "mgriprp1", "rm161",
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 variable_labels(
   "mhipp4", "mwaistp5",
-  .applies_to_waves = c("3B", "I", "J")
+  .applies_to_waves = c("3B", "I", "J", "K")
 )
 
 variable_labels(
   "mcalf01", "mcalf03", "mcalf04", "mcalf06", "mcalf13", "mmiwp",
-  .applies_to_waves = c("I", "J")
+  .applies_to_waves = c("I", "J", "K")
 )
 
 variable_labels(
@@ -359,7 +385,7 @@ variable_labels(
 
 variable_labels(
   mweightp = "Weight: particularities",
-  .applies_to_waves = c("B", "H", "3B", "I", "J")
+  .applies_to_waves = c("B", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
@@ -400,7 +426,7 @@ variable_labels(
 variable_labels(
   mwaist1 = "Measured waist (1) in cm",
   mwaist2 = "Measured waist (2) in cm",
-  .applies_to_waves = c("E", "2B", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 variable_labels(
@@ -429,7 +455,7 @@ variable_labels(
 
 variable_labels(
   marm1 = "Measured arm in cm",
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 variable_labels(
@@ -440,7 +466,7 @@ variable_labels(
 variable_labels(
   mcalf02 = NA_character_,
   mcalf12 = NA_character_,
-  .applies_to_waves = c("I", "J")
+  .applies_to_waves = c("I", "J", "K")
 )
 
 # define value labels ----
@@ -511,21 +537,21 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JRM161", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see I/J/KRM161", `-1` = "na, asked",
   .applies_to_vars = c("mcalf01"),
-  .applies_to_waves = c("Z", "I", "J")
+  .applies_to_waves = c("Z", "I", "J", "K")
 )
 
 value_labels(
   `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("mcalf02"),
-  .applies_to_waves = c("Z", "I", "J")
+  .applies_to_waves = c("Z", "I", "J", "K")
 )
 
 value_labels(
   `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mcalf03", "mcalf04", "mcalf06", "mcalf12", "mcalf13"),
-  .applies_to_waves = c("Z", "I", "J")
+  .applies_to_waves = c("Z", "I", "J", "K")
 )
 
 value_labels(
@@ -585,7 +611,7 @@ value_labels(
 value_labels(
   `-1` = "na, asked",
   .applies_to_vars = c("mgripr2"),
-  .applies_to_waves = c("Z", "F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("Z", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
@@ -597,6 +623,18 @@ value_labels(
 value_labels(
   `-3` = "na, wrong skip", `-2` = "na, see DMGRIPRP1", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mgriprp2"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "na, see KMGRIPLP1", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriplpnorm"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
+  `-2` = "na, see KMGRIPRP1", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriprpnorm"),
   .applies_to_waves = c("Z")
 )
 
@@ -739,9 +777,9 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-2` = "na, see H/B/I/J/KRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("mwaistp5"),
-  .applies_to_waves = c("Z", "3B", "I", "J")
+  .applies_to_waves = c("Z", "3B", "I", "J", "K")
 )
 
 value_labels(
@@ -1125,7 +1163,7 @@ value_labels(
 value_labels(
   `-1` = "na, asked",
   .applies_to_vars = c("mhip2"),
-  .applies_to_waves = c("F", "G", "H", "3B", "I", "J")
+  .applies_to_waves = c("F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
@@ -1203,7 +1241,7 @@ value_labels(
 value_labels(
   `-1` = "na, asked",
   .applies_to_vars = c("mwaist2"),
-  .applies_to_waves = c("G", "H", "3B", "I", "J")
+  .applies_to_waves = c("G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
@@ -1212,8 +1250,10 @@ value_labels(
   .applies_to_waves = c("G")
 )
 
+## The codebook also gives gmweight 1 = "no", 2 = "yes" -- a copy error
+## (weight is in kilograms), so those are left out.
 value_labels(
-  `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-1` = "na, asked",
   .applies_to_vars = c("mweight"),
   .applies_to_waves = c("G")
 )
@@ -1231,63 +1271,82 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/J/KRM161", `-1` = "na, asked",
   .applies_to_vars = c("marm1"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-2` = "na, see H/B/I/J/KRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("marmp", "marmp2", "marmp3", "marmp4", "marmp5", "mhipp", "mhipp2", "mhipp3", "mwaistp", "mwaistp2", "mwaistp3", "mwaistp4", "mweightp", "mweightp2", "mweightp3", "mweightp4", "mweightp5", "mweightp6", "mweightp7", "mweightp8"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see H/B/I/JMARMP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see H/B/I/J/KMARMP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("marmp1"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked",
+  `-2` = "na, see H/B/I/J/KRM161", `-1` = "na, asked",
   .applies_to_vars = c("mgripl1", "mheight", "mweight"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/J/KRM161", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mgriplp1", "mgriplp3", "mgriplp4", "mgriprp1", "mgriprp3", "mgriprp4"),
   .applies_to_waves = c("H", "3B", "I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/JMGRIPLP1", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/J/KMGRIPLP1", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mgriplp2"),
   .applies_to_waves = c("H", "3B", "I", "J")
 )
 
 value_labels(
-  `-2` = "na, see H/B/I/JRM161",
+  `-2` = "na, see H/B/I/J/KRM161",
   .applies_to_vars = c("mgripr1", "mhip1", "mwaist1"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/JMGRIPRP1", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/J/KMGRIPRP1", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mgriprp2"),
   .applies_to_waves = c("H", "3B", "I", "J")
 )
 
+## Wave K: no "wrong skip" code for the hand-strength particularities.
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
-  .applies_to_vars = c("mheightp", "mheightp2", "mheightp3", "mheightp4", "mheightp5", "mheightp6", "mheightp7"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  `-2` = "na, see H/B/I/J/KRM161", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriplp1", "mgriprp1"),
+  .applies_to_waves = c("K")
 )
 
 value_labels(
-  `-2` = "na, see H/B/I/JMHEIGHTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see H/B/I/J/KMGRIPLP1", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriplpnorm", "mgriplp3", "mgriplp4"),
+  .applies_to_waves = c("K")
+)
+
+value_labels(
+  `-2` = "na, see H/B/I/J/KMGRIPRP1", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("mgriprpnorm", "mgriprp3", "mgriprp4"),
+  .applies_to_waves = c("K")
+)
+
+value_labels(
+  `-3` = "na, wrong skip", `-2` = "na, see H/B/I/J/KRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  .applies_to_vars = c("mheightp", "mheightp2", "mheightp3", "mheightp4", "mheightp5", "mheightp6", "mheightp7"),
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
+)
+
+value_labels(
+  `-2` = "na, see H/B/I/J/KMHEIGHTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mheightp1"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 value_labels(
@@ -1297,21 +1356,21 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see H/B/I/JMHIPP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see H/B/I/J/KMHIPP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mhipp1"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see H/B/I/JMWAISTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see H/B/I/J/KMWAISTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mwaistp1"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see H/B/I/JMWEIHGTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see H/B/I/J/KMWEIHGTP", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mweightp1"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 value_labels(
@@ -1329,13 +1388,13 @@ value_labels(
 value_labels(
   `-2` = "valid data", `1` = "short interview", `2` = "interview terminated",
   .applies_to_vars = c("rm161"),
-  .applies_to_waves = c("H", "3B", "I", "J")
+  .applies_to_waves = c("H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-2` = "na, see H/B/I/J/KRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("mhipp4"),
-  .applies_to_waves = c("3B", "I", "J")
+  .applies_to_waves = c("3B", "I", "J", "K")
 )
 
 value_labels(
@@ -1345,27 +1404,27 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/JRM161", `-1` = "na, asked", `1` = "yes", `2` = "no",
+  `-2` = "na, see I/J/KRM161", `-1` = "na, asked", `1` = "yes", `2` = "no",
   .applies_to_vars = c("mmiwp"),
-  .applies_to_waves = c("I", "J")
+  .applies_to_waves = c("I", "J", "K")
 )
 
 value_labels(
   `-2` = "routing", `-1` = "na, asked",
   .applies_to_vars = c("mheightself"),
-  .applies_to_waves = c("J")
+  .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see H/B/I/JRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-2` = "na, see H/B/I/J/KRM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("mweightp9"),
-  .applies_to_waves = c("J")
+  .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see JMWEIGHT", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see J/KMWEIGHT", `-1` = "na, asked",
   .applies_to_vars = c("mweightself"),
-  .applies_to_waves = c("J")
+  .applies_to_waves = c("J", "K")
 )
 
 .lasa_fc_161 <- .lasa_finalize_fc("161")
@@ -1374,5 +1433,8 @@ value_labels(
   .override_label(wave = "H", variable = "mweightself", override_value = "hweightself") |>
   .override_label(wave = "3B", variable = "mweightself", override_value = "bweightself") |>
   .override_label(wave = "I", variable = "mweightself", override_value = "iweightself") |>
-  .override_label(wave = "J", variable = "mweightself", override_value = "jweightself")
+  .override_label(wave = "J", variable = "mweightself", override_value = "jweightself") |>
+  .override_label(wave = "K", variable = "mweightself", override_value = "kweightself") |>
+  .override_label(wave = "K", variable = "mgriplpnorm", override_value = "kmgriplp2") |>
+  .override_label(wave = "K", variable = "mgriprpnorm", override_value = "kmgriprp2")
 
