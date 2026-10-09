@@ -192,11 +192,11 @@ doesn't matter): regular single-letter waves are named
 doesn't follow this pattern, pass `filecode`/`wave` yourself (see
 [section 6](#6-apply-lasa-labels-to-an-existing-data-frame)).
 
-By default, `read_lasa_sav()` reads the file with
-`user_na = TRUE`, so SPSS's user-defined missing-value codes stay
-visible instead of silently becoming `NA` before CleanLASA gets a
-chance to label them. You can pass any other `haven::read_sav()`
-argument through `read_sav_args`:
+`read_lasa_sav()` always reads the file with every code intact, so
+CleanLASA -- not whatever the `.sav` file happens to declare -- decides
+which codes are missing values (see [Missing-value
+codes](#missing-value-codes) below). You can pass any other
+`haven::read_sav()` argument through `read_sav_args`:
 
 ```{r import-extra, eval=FALSE}
 data <- read_lasa_sav(
@@ -206,7 +206,7 @@ data <- read_lasa_sav(
 ```
 
 (Don't put `file` or `user_na` inside `read_sav_args` -- those are
-controlled by `path` and `user_na` directly, not by this list.)
+controlled by `path` and `keep_user_na` directly, not by this list.)
 
 Once imported, the result carries a few extra pieces of information
 about where it came from: which wave and file code it is, and the
@@ -260,12 +260,10 @@ become R factor levels.
 ```{r factors}
 data <- read_lasa_sav("LASAB046.sav")
 summary(data$lphya01)
-#> Na, interview terminated      Na, short interview           Na, wrong skip
-#>                       13                      175                        0
-#>                  Na, see                Na, asked     Respondent bedridden
-#>                        0                        4                       20
-#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3
-#>                        5                       20                     2870
+#>     Respondent bedridden Respondent in elec. whee Respondent in mech. whee
+#>                       20                        5                       20
+#>             not 1 2 or 3                     NA's
+#>                     2870                      192
 
 attr(data$lphya01, "labels_wave")
 #> Na, interview terminated      Na, short interview           Na, wrong skip
@@ -276,9 +274,11 @@ attr(data$lphya01, "labels_wave")
 #>                        2                        3                        4
 ```
 
-If a value shows up in the data but LASA's documentation has no label
-for it, that value is kept as its own factor level (shown as the
-number itself) rather than silently turned into `NA` -- so you'll
+The negative "Na, ..." codes are missing values, so by default they
+become `NA` (see [Missing-value codes](#missing-value-codes) below). If
+a non-negative value shows up in the data but LASA's documentation has
+no label for it, that value is kept as its own factor level (shown as
+the number itself) rather than silently turned into `NA` -- so you'll
 notice an undocumented code instead of quietly losing data. Set
 `to_factor = FALSE` to leave the variable as a plain
 numeric/character vector instead.
@@ -322,6 +322,35 @@ summary(data$lphya09)
 `to_factor` and `to_numeric` work together, not against each other:
 in the same call, categorical variables become factors and
 numeric-classified variables become plain numbers.
+
+### Missing-value codes
+
+LASA records *why* an answer is missing with negative codes, such as
+`-1` = "Na, asked" or `-2` = "Na, see BMOVED". `keep_user_na` decides
+what happens to them, and it does the same thing for every variable,
+whatever its type:
+
+* `keep_user_na = FALSE` (the default): every missing code becomes
+  `NA`, in factors, label-text variables and numeric variables alike,
+  and factors get no level for it. This is what you want for most
+  analyses.
+* `keep_user_na = TRUE`: every missing code is kept. Factors and
+  label-text variables show the reason as text (`"Na, see BMOVED"`).
+  A numeric variable can't hold text, so it keeps the raw code (`-2`)
+  as a `haven_labelled_spss` vector, with the reason as its value
+  label and the code declared missing: `is.na()` reports it as
+  missing, and `haven::zap_missing()` turns it into `NA` when you
+  need to compute with it.
+
+```{r missing-codes, eval=FALSE}
+data <- read_lasa_sav("LASAB014.sav", keep_user_na = TRUE)
+```
+
+A code counts as missing when the label database flags it as one
+(every negative documented code), and so does a negative value that
+isn't documented at all. Positive codes, such as "dropout" in the
+osteoarthritis files, are real answers and are never treated as
+missing.
 
 ### Standardize variable names and separate the wave code
 
@@ -655,7 +684,8 @@ lasa_topics(topic = "physical activity")
 lasa_var_info("046")
 
 # 3. Import the LASA file -- to_factor/to_numeric/standardize (names,
-#    variable labels, value labels) all default to TRUE
+#    variable labels, value labels) all default to TRUE, and missing-value
+#    codes become NA (keep_user_na = FALSE)
 data <- read_lasa_sav("LASAB046.sav")
 
 # 4. Check only matching problems before analysis
