@@ -309,6 +309,14 @@
     file_code_lower
   }
 
+  # Z files store information spanning several waves under a "z"-prefixed
+  # file code (e.g. "LASAZ004" -> "z004", "lasazoa1" -> "zoa1"), which is
+  # how lasa_label_db() files them -- the "Z" is both the wave and part of
+  # the file code.
+  if (identical(wave, "Z")) {
+    file_code <- paste0("z", file_code_lower)
+  }
+
   list(
     wave = wave,
     file_code = file_code,
@@ -349,7 +357,11 @@
 #'   `LASAE046.SAV`;
 #' * waves 2B, 3B, 4B, and MB: `LAS[wave][file_code].SAV`, e.g.
 #'   `LAS3B046.SAV`;
-#' * information stored across waves: wave code `Z`, e.g. `LASAZ004.SAV`;
+#' * information stored across waves: wave code `Z`, e.g. `LASAZ004.SAV`
+#'   (file code `"z004"`) or `LASAZOA1.SAV` (file code `"zoa1"`). A Z file
+#'   holds wave-prefixed columns for several waves at once; each is labelled
+#'   from its own wave's metadata and keeps its documented (wave-prefixed)
+#'   name under `standardize`, since the canonical names would collide;
 #' * file codes contain 2 or 3 alphanumeric characters and are interpreted
 #'   case-insensitively.
 #'

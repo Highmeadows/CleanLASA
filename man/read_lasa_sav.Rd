@@ -63,7 +63,11 @@ The file name is parsed against the LASA naming convention:
 \code{LASAE046.SAV};
 \item waves 2B, 3B, 4B, and MB: \verb{LAS[wave][file_code].SAV}, e.g.
 \code{LAS3B046.SAV};
-\item information stored across waves: wave code \code{Z}, e.g. \code{LASAZ004.SAV};
+\item information stored across waves: wave code \code{Z}, e.g. \code{LASAZ004.SAV}
+(file code \code{"z004"}) or \code{LASAZOA1.SAV} (file code \code{"zoa1"}). A Z file
+holds wave-prefixed columns for several waves at once; each is labelled
+from its own wave's metadata and keeps its documented (wave-prefixed)
+name under \code{standardize}, since the canonical names would collide;
 \item file codes contain 2 or 3 alphanumeric characters and are interpreted
 case-insensitively.
 }

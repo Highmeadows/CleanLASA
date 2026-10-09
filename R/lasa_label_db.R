@@ -188,16 +188,20 @@
 .lasa_get_labels <- function(db, filecode, wave) {
   normalized_filecode <- .lasa_normalize_filecode(filecode)
   wave <- toupper(wave)
+  # A "Z" file holds columns for several waves at once, so it draws on
+  # every wave this file code documents (its variable names are
+  # wave-prefixed, hence unique across waves).
+  wave_matches <- function(x) if (identical(wave, "Z")) rep(TRUE, length(x)) else toupper(x) == wave
 
   vars <- db$variables[
     .lasa_normalize_filecode(db$variables$filecode) == normalized_filecode &
-      toupper(db$variables$wave) == wave,
+      wave_matches(db$variables$wave),
     ,
     drop = FALSE
   ]
   vals <- db$value_labels[
     .lasa_normalize_filecode(db$value_labels$filecode) == normalized_filecode &
-      toupper(db$value_labels$wave) == wave,
+      wave_matches(db$value_labels$wave),
     ,
     drop = FALSE
   ]
@@ -213,7 +217,7 @@
   mo_vals <- db$manual_overrides$value_labels
   mo_var_rows <- mo_vars[
     .lasa_normalize_filecode(mo_vars$filecode) == normalized_filecode &
-      toupper(mo_vars$wave) == wave,
+      wave_matches(mo_vars$wave),
     ,
     drop = FALSE
   ]
@@ -250,7 +254,7 @@
     row <- mo_var_rows[i, ]
     patch_rows <- mo_vals[
       .lasa_normalize_filecode(mo_vals$filecode) == normalized_filecode &
-        toupper(mo_vals$wave) == wave &
+        wave_matches(mo_vals$wave) &
         mo_vals$variable_name == row$variable_name,
       ,
       drop = FALSE
