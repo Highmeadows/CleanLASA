@@ -16,7 +16,8 @@ apply_lasa_labels(
   .standardize_val_labels = NULL,
   add_wavecode = FALSE,
   to_factor = TRUE,
-  to_numeric = TRUE
+  to_numeric = TRUE,
+  keep_user_na = FALSE
 )
 }
 \arguments{
@@ -74,8 +75,20 @@ value coding is inconsistent across waves (database \code{var_type == "text"}) i
 (character), never a factor -- see Details.}
 
 \item{to_numeric}{Logical, default \code{TRUE}. Restore count/continuous
-variables (per the database's \code{var_type}) to plain numeric, converting
-negative codes to \code{NA}.}
+variables (per the database's \code{var_type}) to plain numeric. How their
+missing-value codes come out is set by \code{keep_user_na}.}
+
+\item{keep_user_na}{Logical, default \code{FALSE}. How missing-value codes
+(e.g. \code{-2} = "na, see BMOVED") are represented, the same way for every
+variable type. With \code{FALSE}, every missing code becomes \code{NA}, and
+factors get no level for it. With \code{TRUE}, every missing code is kept:
+factors and label-text (character) variables show its label text, and
+any other variable -- including a \code{to_numeric} one, since a numeric
+vector can't hold text -- keeps the raw code as a
+\code{haven_labelled_spss} vector with the value labels attached and the
+missing codes declared user-missing (so \code{\link[haven:zap_missing]{haven::zap_missing()}} or
+\code{is.na()} still recognise them). See Details for which codes count as
+missing.}
 }
 \value{
 \code{data}, labelled (and optionally reshaped/renamed) with
@@ -133,6 +146,15 @@ harmonized value labels for it at all. \code{to_factor} then recodes it to
 its wave-specific label text (character) instead of a factor, so waves
 whose numeric codes disagree but whose label text agrees (e.g.
 \verb{0 = "no", 1 = "yes"} vs. \verb{1 = "no", 2 = "yes"}) still merge correctly.
+
+A code counts as missing when the label database flags its value label
+as missing (every negative documented code, e.g. \code{-1} = "na, asked"),
+and so does any negative value that appears in the data without being
+documented at all -- LASA uses negative codes only for reasons of
+missingness. Positive codes such as "dropout" are real answers, never
+missing. Columns the database doesn't document are left as they are,
+except that \code{keep_user_na = FALSE} applies the file's own SPSS
+user-missing declaration to them (as \code{\link[haven:zap_missing]{haven::zap_missing()}} does).
 }
 \examples{
 \dontrun{

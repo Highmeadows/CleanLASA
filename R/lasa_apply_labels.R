@@ -63,7 +63,8 @@
                                .standardize_val_labels = NULL,
                                add_wavecode = FALSE,
                                to_factor = TRUE,
-                               to_numeric = TRUE) {
+                               to_numeric = TRUE,
+                               keep_user_na = FALSE) {
   .lasa_assert_scalar_logical(fuzzy_matching, "fuzzy_matching")
   .lasa_assert_scalar_logical(standardize, "standardize")
   if (!is.null(.standardize_names)) .lasa_assert_scalar_logical(.standardize_names, ".standardize_names")
@@ -72,6 +73,7 @@
   .lasa_assert_scalar_logical(add_wavecode, "add_wavecode")
   .lasa_assert_scalar_logical(to_factor, "to_factor")
   .lasa_assert_scalar_logical(to_numeric, "to_numeric")
+  .lasa_assert_scalar_logical(keep_user_na, "keep_user_na")
   .lasa_assert_name_corrections(name_corrections)
 
   wave <- toupper(wave)
@@ -152,8 +154,38 @@
 
     numeric_eligible <- identical(row$var_type, "numeric")
     text_eligible <- identical(row$var_type, "text")
-    if (isTRUE(to_numeric) && numeric_eligible) {
-      x <- .lasa_restore_plain_numeric(x)
+    if (isTRUE(to_numeric) && numeric_eligible && (is.character(x) || is.logical(x))) {
+      x <- suppressWarnings(as.numeric(x))
+    }
+
+    # Missing codes are handled the same way whatever the variable type:
+    # keep_user_na = FALSE turns every one into NA; keep_user_na = TRUE
+    # keeps it -- as label text in a factor/character result, or as the
+    # raw code declared SPSS user-missing in a numeric one. respnr is an
+    # identifier, never missing-coded.
+    is_respnr <- identical(vname, "respnr")
+    missing_codes <- if (is_respnr) {
+      numeric(0)
+    } else {
+      .lasa_missing_codes(x, vals, vname, vals_harmonized, cname)
+    }
+
+    if (is_respnr || inherits(x, c("Date", "POSIXt", "difftime", "hms"))) {
+      # An identifier, or a date/time: nothing to convert or blank.
+    } else if (is.factor(x) || (is.character(x) && !inherits(x, "haven_labelled"))) {
+      # Already converted (e.g. re-labelling read_lasa_sav()'s own output):
+      # the numeric codes are gone, so it is never re-coded -- only a
+      # missing code's label text can still be blanked.
+      if (!isTRUE(keep_user_na)) {
+        x <- .lasa_blank_missing_text(x, .lasa_missing_text(list(value_map, harmonized_value_map), missing_codes))
+      }
+      x <- attach_attrs(x)
+    } else if (isTRUE(to_numeric) && numeric_eligible) {
+      x <- if (isTRUE(keep_user_na)) {
+        .lasa_declare_missing(x, missing_codes, active_value_map)
+      } else {
+        .lasa_restore_plain_numeric(x, missing_codes)
+      }
       x <- attach_attrs(x)
     } else if (isTRUE(to_factor) && text_eligible && !is.null(value_map)) {
       # Wave-specific label text, never harmonized: this variable's value
@@ -162,11 +194,20 @@
       # text -- not its numeric codes -- is safe to compare/merge across
       # waves. Deliberately uses value_map, not active_value_map, so this
       # is immune to .standardize_val_labels/standardize.
-      x <- .lasa_convert_to_labelled_text(x, value_map)
+      x <- .lasa_convert_to_labelled_text(x, value_map, missing_codes, keep_user_na)
       x <- attach_attrs(x)
     } else if (isTRUE(to_factor) && !is.null(active_value_map)) {
-      x <- .lasa_convert_to_labelled_factor(x, active_value_map)
+      x <- .lasa_convert_to_labelled_factor(x, active_value_map, missing_codes, keep_user_na)
       x <- attach_attrs(x)
+    } else {
+      # Left in its labelled (numeric-coded) form: to_factor/to_numeric off
+      # for this variable, or no value labels to build a factor from.
+      # A plain unlabelled vector with nothing missing stays as it is.
+      if (!isTRUE(keep_user_na)) {
+        x <- attach_attrs(.lasa_blank_missing(x, missing_codes))
+      } else if (inherits(x, "haven_labelled") || length(missing_codes) > 0L) {
+        x <- attach_attrs(.lasa_declare_missing(x, missing_codes, attr(x, "labels", exact = TRUE)))
+      }
     }
 
     data[[idx]] <<- x
@@ -332,6 +373,13 @@
   unclaimed_names <- setdiff(names(data), names(data)[claimed_idx])
   for (col_name in unclaimed_names) {
     record(NA_character_, NA_character_, col_name, "undocumented column", "data_not_documented")
+    # The database says nothing about an undocumented column's missing
+    # codes, so keep_user_na = FALSE falls back to the file's own SPSS
+    # user-missing declaration (what haven::read_sav(user_na = FALSE)
+    # would have done). Its values are otherwise left untouched.
+    if (!isTRUE(keep_user_na) && inherits(data[[col_name]], "haven_labelled_spss")) {
+      data[[col_name]] <- haven::zap_missing(data[[col_name]])
+    }
   }
 
   label_report <- if (length(report_rows) > 0L) {
@@ -451,8 +499,19 @@
 #'   "text"`) is instead recoded to its wave-specific label text
 #'   (character), never a factor -- see Details.
 #' @param to_numeric Logical, default `TRUE`. Restore count/continuous
-#'   variables (per the database's `var_type`) to plain numeric, converting
-#'   negative codes to `NA`.
+#'   variables (per the database's `var_type`) to plain numeric. How their
+#'   missing-value codes come out is set by `keep_user_na`.
+#' @param keep_user_na Logical, default `FALSE`. How missing-value codes
+#'   (e.g. `-2` = "na, see BMOVED") are represented, the same way for every
+#'   variable type. With `FALSE`, every missing code becomes `NA`, and
+#'   factors get no level for it. With `TRUE`, every missing code is kept:
+#'   factors and label-text (character) variables show its label text, and
+#'   any other variable -- including a `to_numeric` one, since a numeric
+#'   vector can't hold text -- keeps the raw code as a
+#'   `haven_labelled_spss` vector with the value labels attached and the
+#'   missing codes declared user-missing (so [haven::zap_missing()] or
+#'   `is.na()` still recognise them). See Details for which codes count as
+#'   missing.
 #'
 #' @details
 #' Identity (file code and wave) is resolved in priority order: (1) the
@@ -488,6 +547,15 @@
 #' whose numeric codes disagree but whose label text agrees (e.g.
 #' `0 = "no", 1 = "yes"` vs. `1 = "no", 2 = "yes"`) still merge correctly.
 #'
+#' A code counts as missing when the label database flags its value label
+#' as missing (every negative documented code, e.g. `-1` = "na, asked"),
+#' and so does any negative value that appears in the data without being
+#' documented at all -- LASA uses negative codes only for reasons of
+#' missingness. Positive codes such as "dropout" are real answers, never
+#' missing. Columns the database doesn't document are left as they are,
+#' except that `keep_user_na = FALSE` applies the file's own SPSS
+#' user-missing declaration to them (as [haven::zap_missing()] does).
+#'
 #' @return `data`, labelled (and optionally reshaped/renamed) with
 #'   `"label_report"`, `"variable.labels"`, `"LASA_wave"`, and
 #'   `"LASA_file_code"` attributes (re-)attached. Each matched column also
@@ -520,7 +588,8 @@ apply_lasa_labels <- function(data,
                               .standardize_val_labels = NULL,
                               add_wavecode = FALSE,
                               to_factor = TRUE,
-                              to_numeric = TRUE) {
+                              to_numeric = TRUE,
+                              keep_user_na = FALSE) {
   object_name <- tryCatch(deparse(substitute(data)), error = function(e) NULL)
 
   if (is.null(filecode)) filecode <- attr(data, "LASA_file_code", exact = TRUE)
@@ -554,6 +623,7 @@ apply_lasa_labels <- function(data,
     .standardize_names = .standardize_names,
     .standardize_var_labels = .standardize_var_labels,
     .standardize_val_labels = .standardize_val_labels,
-    add_wavecode = add_wavecode, to_factor = to_factor, to_numeric = to_numeric
+    add_wavecode = add_wavecode, to_factor = to_factor, to_numeric = to_numeric,
+    keep_user_na = keep_user_na
   )
 }

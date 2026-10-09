@@ -42,9 +42,16 @@
 #                                never a factor, so it merges correctly
 #                                across waves despite differing codes.
 #   * to_numeric                - restore count/continuous variables to
-#                                plain numeric (dropping their missing-code
-#                                value labels), converting negative codes
-#                                to NA.
+#                                plain numeric.
+#   * keep_user_na              - how missing-value codes (every code the
+#                                database flags `is_missing`, plus any
+#                                undocumented negative value) are
+#                                represented, uniformly for every variable
+#                                type: FALSE (default) turns them into NA;
+#                                TRUE keeps them -- as their label text in
+#                                a factor/character variable, or as the
+#                                raw code declared SPSS user-missing
+#                                (`haven_labelled_spss`) otherwise.
 #
 # Regardless of these arguments, matched variables always keep their
 # original SPSS value coding available as reference attributes
@@ -136,20 +143,156 @@
 
 #' Restore a value-labelled variable to plain numeric
 #'
-#' Shared `to_numeric = TRUE` transformation used by [apply_lasa_labels()]'s
-#' engine. Strips any value-label attributes and coerces `x` to an ordinary
-#' numeric vector, replacing every negative observed value with `NA` --
-#' including a negative code the codebook did not explicitly label.
+#' Shared `to_numeric = TRUE, keep_user_na = FALSE` transformation used by
+#' [apply_lasa_labels()]'s engine. Strips any value-label attributes and
+#' coerces `x` to an ordinary numeric vector, replacing every missing code
+#' with `NA`.
 #'
 #' @param x A (possibly value-labelled) vector.
+#' @param missing_codes Numeric vector of the codes that count as missing
+#'   for this variable (see `.lasa_missing_codes()`).
 #'
-#' @return A plain numeric vector, the same length as `x`, with negative
-#'   values replaced by `NA_real_`.
+#' @return A plain numeric vector, the same length as `x`, with missing
+#'   codes replaced by `NA_real_`.
 #' @keywords internal
-.lasa_restore_plain_numeric <- function(x) {
-  values <- as.numeric(x)
-  values[!is.na(values) & values < 0] <- NA_real_
+.lasa_restore_plain_numeric <- function(x, missing_codes = numeric(0)) {
+  values <- .lasa_numeric_values(x)
+  values[values %in% missing_codes] <- NA_real_
   values
+}
+
+## The underlying numeric codes of `x` with every attribute stripped --
+## including a code haven::read_sav(user_na = TRUE) declared SPSS
+## user-missing, which a haven_labelled_spss vector's is.na() would
+## otherwise report as NA.
+.lasa_numeric_values <- function(x) {
+  as.numeric(as.vector(unclass(x)))
+}
+
+## TRUE when `x` still holds numeric LASA codes: a plain or value-labelled
+## number. Not a factor or character vector (already converted, e.g. by an
+## earlier apply_lasa_labels() call), and not a date/time, whose
+## underlying number is a day or second count rather than a code.
+.lasa_is_coded <- function(x) {
+  !is.factor(x) && is.numeric(unclass(x)) &&
+    !inherits(x, c("Date", "POSIXt", "difftime", "hms"))
+}
+
+## The label text that identifies a missing code in a factor/character
+## column whose numeric codes are already gone: each missing code's label
+## from any of `value_label_maps`, plus the "text [code]" form
+## .lasa_convert_to_labelled_factor() gives colliding labels. A bare label
+## that some map also uses for a real answer is left out -- it can't be
+## told apart from that answer.
+.lasa_missing_text <- function(value_label_maps, missing_codes) {
+  bare <- character(0)
+  tagged <- character(0)
+  real <- character(0)
+  for (map in value_label_maps) {
+    if (is.null(map)) next
+    codes <- as.numeric(unname(map))
+    text <- names(map)
+    hit <- codes %in% missing_codes
+    bare <- c(bare, text[hit])
+    tagged <- c(tagged, paste0(text[hit], " [", codes[hit], "]"))
+    real <- c(real, text[!hit])
+  }
+  unique(c(setdiff(bare, real), tagged))
+}
+
+## Shared `keep_user_na = FALSE` transformation for a factor/character
+## column that was already converted (its numeric codes are gone): blanks
+## every value that is a missing code's label text (`missing_text`, see
+## .lasa_missing_text()) or a bare negative number (an undocumented
+## missing code kept as its own number), and drops those factor levels.
+.lasa_blank_missing_text <- function(x, missing_text) {
+  is_missing_text <- function(text) {
+    as_number <- suppressWarnings(as.numeric(text))
+    !is.na(text) & (text %in% missing_text | (!is.na(as_number) & as_number < 0))
+  }
+  if (is.factor(x)) {
+    # Every level for a missing code goes, observed or not.
+    keep <- levels(x)[!is_missing_text(levels(x))]
+    return(factor(as.character(x), levels = keep))
+  }
+  text <- as.character(x)
+  text[is_missing_text(text)] <- NA_character_
+  text
+}
+
+## Every code that counts as missing for one variable: each code its
+## wave-specific or harmonized value labels flag `is_missing`, plus any
+## observed negative value that no value label documents as a real
+## answer (LASA's convention: negative codes are reasons for missingness,
+## documented or not). Only a numerically-coded `x` contributes observed
+## values -- a factor/character column (e.g. one already converted by an
+## earlier apply_lasa_labels() call) or a date has no codes to inspect.
+.lasa_missing_codes <- function(x, value_labels, variable_name, value_labels_harmonized, canonical_name) {
+  pick <- function(tbl, key_col, key) {
+    rows <- tbl[tbl[[key_col]] == key & !is.na(tbl$value_numeric), , drop = FALSE]
+    data.frame(value_numeric = rows$value_numeric, is_missing = rows$is_missing)
+  }
+  documented <- rbind(
+    pick(value_labels, "variable_name", variable_name),
+    pick(value_labels_harmonized, "canonical_name", canonical_name)
+  )
+  flagged <- documented$value_numeric[documented$is_missing %in% TRUE]
+  real_answers <- documented$value_numeric[documented$is_missing %in% FALSE]
+
+  observed <- if (.lasa_is_coded(x)) {
+    values <- .lasa_numeric_values(x)
+    unique(values[!is.na(values) & values < 0 & !values %in% real_answers])
+  } else {
+    numeric(0)
+  }
+
+  sort(unique(c(flagged, observed)))
+}
+
+## Shared `keep_user_na = FALSE` transformation for a numerically-coded
+## variable left in its labelled form (to_factor/to_numeric off, or no
+## value labels to build a factor from): replaces each missing code with
+## NA, keeping its other attributes (value labels, variable label). A
+## haven_labelled_spss vector is demoted to plain haven_labelled -- its
+## user-missing declaration has nothing left to describe.
+.lasa_blank_missing <- function(x, missing_codes) {
+  if (!.lasa_is_coded(x)) return(x)
+  # Keep the storage type (integer stays integer), so the labels and class
+  # restored below still match it.
+  values <- unclass(x)
+  attributes(values) <- NULL
+  values[values %in% missing_codes] <- NA
+  attrs <- attributes(x)
+  attrs$na_values <- NULL
+  attrs$na_range <- NULL
+  if (!is.null(attrs$class)) {
+    attrs$class <- setdiff(attrs$class, "haven_labelled_spss")
+    if (length(attrs$class) == 0L) attrs$class <- NULL
+  }
+  attributes(values) <- attrs
+  values
+}
+
+## Shared `keep_user_na = TRUE` transformation for a numerically-coded
+## variable that isn't turned into a factor or label text: keeps every
+## code, with `value_label_map` attached as value labels and the missing
+## codes declared SPSS user-missing, so haven::zap_missing() or
+## is.na() still recognise them. Any other attribute of `x` (its SPSS
+## variable label, display format, ...) is carried over.
+.lasa_declare_missing <- function(x, missing_codes, value_label_map) {
+  if (!.lasa_is_coded(x)) return(x)
+  labels <- if (is.null(value_label_map)) NULL else {
+    stats::setNames(as.numeric(unname(value_label_map)), names(value_label_map))
+  }
+  labels <- labels[!duplicated(labels)]
+  out <- haven::labelled_spss(
+    .lasa_numeric_values(x),
+    labels = labels,
+    na_values = if (length(missing_codes) > 0L) as.numeric(missing_codes) else NULL
+  )
+  carried <- setdiff(names(attributes(x)), c("class", "labels", "na_values", "na_range", "names"))
+  for (a in carried) attr(out, a) <- attr(x, a)
+  out
 }
 
 #' Convert a value-labelled variable to a factor
@@ -162,14 +305,22 @@
 #' share a label) is disambiguated by appending the numeric code in
 #' brackets.
 #'
+#' With `keep_user_na = FALSE`, every code in `missing_codes` becomes `NA`
+#' and gets no level of its own; with `keep_user_na = TRUE`, missing codes
+#' are ordinary levels carrying their label text.
+#'
 #' @param x A (possibly value-labelled) vector.
 #' @param value_label_map A named numeric vector of SPSS value labels
 #'   (names = label text, values = numeric codes).
+#' @param missing_codes Numeric vector of the codes that count as missing
+#'   for this variable.
+#' @param keep_user_na Logical: keep missing codes as levels (`TRUE`) or
+#'   turn them into `NA` (`FALSE`).
 #'
 #' @return A factor the same length as `x`.
 #' @keywords internal
-.lasa_convert_to_labelled_factor <- function(x, value_label_map) {
-  values <- as.numeric(x)
+.lasa_convert_to_labelled_factor <- function(x, value_label_map, missing_codes = numeric(0), keep_user_na = TRUE) {
+  values <- .lasa_numeric_values(x)
   label_codes <- as.numeric(unname(value_label_map))
   label_text <- names(value_label_map)
 
@@ -178,6 +329,13 @@
   keep <- !duplicated(label_codes)
   label_codes <- label_codes[keep]
   label_text <- label_text[keep]
+
+  if (!isTRUE(keep_user_na)) {
+    values[values %in% missing_codes] <- NA_real_
+    keep <- !label_codes %in% missing_codes
+    label_codes <- label_codes[keep]
+    label_text <- label_text[keep]
+  }
 
   observed_codes <- unique(values[!is.na(values)])
   level_codes <- sort(unique(c(label_codes, observed_codes)))
@@ -215,11 +373,17 @@
 ## Idempotent: a variable already converted by an earlier apply_lasa_labels()
 ## call (e.g. re-labelling read_lasa_sav()'s own output) is already label
 ## text, not a numeric code -- left untouched rather than coerced to NA.
-.lasa_convert_to_labelled_text <- function(x, value_label_map) {
+## (The engine blanks its missing label text itself when keep_user_na =
+## FALSE, see .lasa_blank_missing_text().)
+##
+## With keep_user_na = FALSE, every code in `missing_codes` becomes NA;
+## with keep_user_na = TRUE, it becomes its label text like any other code.
+.lasa_convert_to_labelled_text <- function(x, value_label_map, missing_codes = numeric(0), keep_user_na = TRUE) {
   if (is.character(x)) return(x)
-  values <- as.numeric(x)
   label_codes <- as.numeric(unname(value_label_map))
   label_text <- names(value_label_map)
+  values <- .lasa_numeric_values(x)
+  if (!isTRUE(keep_user_na)) values[values %in% missing_codes] <- NA_real_
 
   # Same guard as .lasa_convert_to_labelled_factor(): keep only the first
   # definition of a repeated code.
@@ -352,13 +516,20 @@
 #' @param name_corrections,fuzzy_matching,standardize,.standardize_names,.standardize_var_labels,.standardize_val_labels,add_wavecode,to_factor,to_numeric
 #'   The shared reshaping arguments used throughout this package -- see
 #'   [apply_lasa_labels()] for the full description of each.
-#' @param user_na Logical passed to [haven::read_sav()]. The default is `TRUE`
-#'   so SPSS user-defined missing codes remain available to the labelling
-#'   step before any requested conversion to `NA`.
+#' @param keep_user_na Logical, default `FALSE`. With `FALSE`, every
+#'   missing-value code becomes `NA`; with `TRUE`, missing codes are kept
+#'   (as label text in factors and character variables, as the raw code
+#'   declared user-missing otherwise). See [apply_lasa_labels()]. The file
+#'   itself is always read with every code intact
+#'   (`haven::read_sav(user_na = TRUE)`), so this choice is made from the
+#'   LASA documentation rather than from whatever the `.sav` file happens
+#'   to declare.
 #' @param read_sav_args Optional named list of additional arguments passed to
 #'   [haven::read_sav()], for example `list(encoding = "UTF-8")`. Do not
-#'   include `file` or `user_na`; those are controlled by `path` and
-#'   `user_na`.
+#'   include `file` (set by `path`) or `user_na` (always `TRUE`; choose how
+#'   missing codes come out with `keep_user_na`).
+#' @param user_na Deprecated: use `keep_user_na` instead. A supplied value
+#'   is used as `keep_user_na`, with a warning.
 #'
 #' @details
 #' The file name is parsed against the LASA naming convention:
@@ -426,6 +597,10 @@
 #' )
 #'
 #' dat_z004 <- read_lasa_sav("LASAZ004.SAV")
+#'
+#' # Keep missing-value codes (e.g. "na, asked") instead of turning them
+#' # into NA:
+#' dat_b014 <- read_lasa_sav("LASAB014.SAV", keep_user_na = TRUE)
 #' }
 read_lasa_sav <- function(path,
                           filecode = NULL,
@@ -439,8 +614,9 @@ read_lasa_sav <- function(path,
                           add_wavecode = FALSE,
                           to_factor = TRUE,
                           to_numeric = TRUE,
-                          user_na = TRUE,
-                          read_sav_args = list()) {
+                          keep_user_na = FALSE,
+                          read_sav_args = list(),
+                          user_na) {
   if (!requireNamespace("haven", quietly = TRUE)) {
     stop(
       "Package 'haven' is required to read LASA .sav files. ",
@@ -449,7 +625,16 @@ read_lasa_sav <- function(path,
     )
   }
 
-  .lasa_assert_scalar_logical(user_na, "user_na")
+  if (!missing(user_na)) {
+    warning(
+      "'user_na' is deprecated; use 'keep_user_na' instead ",
+      "(TRUE keeps missing-value codes, FALSE turns them into NA).",
+      call. = FALSE
+    )
+    .lasa_assert_scalar_logical(user_na, "user_na")
+    keep_user_na <- user_na
+  }
+  .lasa_assert_scalar_logical(keep_user_na, "keep_user_na")
   .lasa_assert_scalar_logical(fuzzy_matching, "fuzzy_matching")
   .lasa_assert_scalar_logical(standardize, "standardize")
   if (!is.null(.standardize_names)) .lasa_assert_scalar_logical(.standardize_names, ".standardize_names")
@@ -473,8 +658,9 @@ read_lasa_sav <- function(path,
     if (length(reserved_read_args) > 0L) {
       stop(
         "Do not supply ", paste(reserved_read_args, collapse = ", "),
-        " in 'read_sav_args'; use the corresponding read_lasa_sav() ",
-        "argument instead.",
+        " in 'read_sav_args': the file is given by 'path' and is always read ",
+        "with user_na = TRUE; use 'keep_user_na' to choose how missing codes ",
+        "are represented.",
         call. = FALSE
       )
     }
@@ -492,8 +678,11 @@ read_lasa_sav <- function(path,
   resolved_filecode <- if (!is.null(filecode)) filecode else info$file_code
   resolved_wave <- if (!is.null(wave)) wave else info$wave
 
+  # Always read every code intact: whether missing codes end up as NA is
+  # decided by `keep_user_na` from the LASA documentation, not by which
+  # codes the .sav file happens to declare user-missing.
   read_call <- c(
-    list(file = path, user_na = user_na),
+    list(file = path, user_na = TRUE),
     read_sav_args
   )
   data <- do.call(haven::read_sav, read_call)
@@ -511,7 +700,8 @@ read_lasa_sav <- function(path,
     .standardize_val_labels = .standardize_val_labels,
     add_wavecode = add_wavecode,
     to_factor = to_factor,
-    to_numeric = to_numeric
+    to_numeric = to_numeric,
+    keep_user_na = keep_user_na
   )
 
   # .lasa_apply_labels() already sets "LASA_wave" and "LASA_file_code";
