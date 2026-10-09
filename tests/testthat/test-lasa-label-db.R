@@ -147,3 +147,45 @@ test_that(".lasa_bundled_label_db() returns the bundled snapshot", {
   expect_true(.lasa_is_label_db_shaped(db))
   expect_gt(nrow(db$variables), 0L)
 })
+
+test_that("the bundled database documents wave K for filecodes 046 and 161", {
+  db <- .lasa_bundled_label_db()
+  v <- db$variables
+  expect_true("K" %in% v$wave[v$filecode == "046"])
+  expect_true("K" %in% v$wave[v$filecode == "161"])
+  k046 <- v[v$filecode == "046" & v$wave == "K", ]
+  expect_equal(k046$canonical_name[k046$variable_name == "klphya01"], "lphya01")
+
+  vl <- db$value_labels
+  na_see <- vl$value_label[vl$filecode == "046" & vl$wave == "K" &
+    vl$variable_name == "klphya02" & vl$value_numeric == -2]
+  expect_equal(na_see, "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA01")
+  expect_false(any(grepl("I/JLPHYA", vl$value_label[vl$filecode == "046"], fixed = TRUE)))
+
+  # K reworded the hand-strength particularities; item 2 is a new question.
+  k161 <- v[v$filecode == "161" & v$wave == "K", ]
+  expect_equal(k161$canonical_name[k161$variable_name == "kmgriprp2"], "mgriprpnorm")
+  expect_equal(k161$canonical_name[k161$variable_name == "kweightself"], "mweightself")
+})
+
+test_that("codebook typos are corrected in the bundled database", {
+  db <- .lasa_bundled_label_db()
+  v <- db$variables
+  h <- db$value_labels_harmonized
+
+  # 016 wave K "kkob1" is job1 (the codebook's own routing says KJOB1).
+  expect_false("kob1" %in% v$canonical_name[v$filecode == "016"])
+  expect_equal(v$canonical_name[v$filecode == "016" & v$variable_name == "kjob1"], "job1")
+
+  # 035 choutd -2 means "no chronic disease", not generic missingness.
+  expect_equal(
+    h$value_label[h$filecode == "035" & h$canonical_name == "choutd" & h$value_numeric == -2],
+    "na, not any chronic disease"
+  )
+
+  # z004 bycohort code 6 is 1928-32, not a second 1923-27.
+  expect_equal(
+    h$value_label[h$filecode == "z004" & h$canonical_name == "bycohort" & h$value_numeric == 6],
+    "1928-32"
+  )
+})

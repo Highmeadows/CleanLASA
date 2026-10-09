@@ -76,7 +76,6 @@ var_types_vec <- c(
   jobstom = "date",
   jobstoy = "date",
   jobyear = "date",
-  kob1 = "categorical",
   ljclass = "categorical",
   ljlevel = "categorical",
   ljpresi = "numeric",
@@ -289,7 +288,6 @@ variable_labels(
   jobstom = "Stopped working: month",
   jobstoy = "Stopped working: year",
   jobyear = "Stopped working: year",
-  kob1 = "Paid job at present",
   ljclass = "Long. job: occupational class SBC92",
   ljlevel = "Long. job: occupational skill-level SBC92",
   ljpresi = "Long. job: occup prestige (Sixma & Ultee)",
@@ -777,8 +775,12 @@ variable_labels(
   .applies_to_waves = c("J")
 )
 
+## The wave K codebook lists this item as "kkob1", but its own routing
+## labels ("na, see KJOB1") and every other wave say job1 -- a codebook
+## typo, so it's documented as kjob1/job1 here. A file that really has
+## "kkob1" is still found by fuzzy matching (edit distance 1).
 variable_labels(
-  kob1 = "paid job at present",
+  job1 = "paid job at present",
   mability = "present job: ability to meet mental/psychological demands",
   nretr01 = "reason no early (full) retirement: sufficient challenges/fun in work",
   nretr02 = "reason no early (full) retirement: maintain social contacts at work",
@@ -1057,12 +1059,6 @@ value_labels(
 value_labels(
   `-5` = "no answer, info nestor", `-3` = "na, wrong skip", `-1` = "na, asked", `0` = "do not know",
   .applies_to_vars = c("jobyear"),
-  .applies_to_waves = c("Z")
-)
-
-value_labels(
-  `-4` = "na, short interview", `-1` = "na, asked", `1` = "no", `2` = "yes",
-  .applies_to_vars = c("kob1"),
   .applies_to_waves = c("Z")
 )
 
@@ -2940,7 +2936,7 @@ value_labels(
 
 value_labels(
   `-4` = "na, short version", `-1` = "na, asked", `1` = "no", `2` = "yes",
-  .applies_to_vars = c("kob1"),
+  .applies_to_vars = c("job1"),
   .applies_to_waves = c("K")
 )
 
