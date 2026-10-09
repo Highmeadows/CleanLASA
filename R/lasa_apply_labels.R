@@ -152,6 +152,12 @@
     }
     x <- attach_attrs(x)
 
+    numeric_eligible <- identical(row$var_type, "numeric")
+    text_eligible <- identical(row$var_type, "text")
+    if (isTRUE(to_numeric) && numeric_eligible && (is.character(x) || is.logical(x))) {
+      x <- suppressWarnings(as.numeric(x))
+    }
+
     # Missing codes are handled the same way whatever the variable type:
     # keep_user_na = FALSE turns every one into NA; keep_user_na = TRUE
     # keeps it -- as label text in a factor/character result, or as the
@@ -164,9 +170,17 @@
       .lasa_missing_codes(x, vals, vname, vals_harmonized, cname)
     }
 
-    numeric_eligible <- identical(row$var_type, "numeric")
-    text_eligible <- identical(row$var_type, "text")
-    if (isTRUE(to_numeric) && numeric_eligible) {
+    if (is_respnr || inherits(x, c("Date", "POSIXt", "difftime", "hms"))) {
+      # An identifier, or a date/time: nothing to convert or blank.
+    } else if (is.factor(x) || (is.character(x) && !inherits(x, "haven_labelled"))) {
+      # Already converted (e.g. re-labelling read_lasa_sav()'s own output):
+      # the numeric codes are gone, so it is never re-coded -- only a
+      # missing code's label text can still be blanked.
+      if (!isTRUE(keep_user_na)) {
+        x <- .lasa_blank_missing_text(x, .lasa_missing_text(list(value_map, harmonized_value_map), missing_codes))
+      }
+      x <- attach_attrs(x)
+    } else if (isTRUE(to_numeric) && numeric_eligible) {
       x <- if (isTRUE(keep_user_na)) {
         .lasa_declare_missing(x, missing_codes, active_value_map)
       } else {
@@ -185,7 +199,7 @@
     } else if (isTRUE(to_factor) && !is.null(active_value_map)) {
       x <- .lasa_convert_to_labelled_factor(x, active_value_map, missing_codes, keep_user_na)
       x <- attach_attrs(x)
-    } else if (!is_respnr) {
+    } else {
       # Left in its labelled (numeric-coded) form: to_factor/to_numeric off
       # for this variable, or no value labels to build a factor from.
       # A plain unlabelled vector with nothing missing stays as it is.

@@ -47,8 +47,8 @@ to declare.}
 
 \item{read_sav_args}{Optional named list of additional arguments passed to
 \code{\link[haven:read_spss]{haven::read_sav()}}, for example \code{list(encoding = "UTF-8")}. Do not
-include \code{file} or \code{user_na}; those are controlled by \code{path} and
-\code{keep_user_na}.}
+include \code{file} (set by \code{path}) or \code{user_na} (always \code{TRUE}; choose how
+missing codes come out with \code{keep_user_na}).}
 
 \item{user_na}{Deprecated: use \code{keep_user_na} instead. A supplied value
 is used as \code{keep_user_na}, with a warning.}

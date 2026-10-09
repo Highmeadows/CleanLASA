@@ -169,13 +169,64 @@
   as.numeric(as.vector(unclass(x)))
 }
 
+## TRUE when `x` still holds numeric LASA codes: a plain or value-labelled
+## number. Not a factor or character vector (already converted, e.g. by an
+## earlier apply_lasa_labels() call), and not a date/time, whose
+## underlying number is a day or second count rather than a code.
+.lasa_is_coded <- function(x) {
+  !is.factor(x) && is.numeric(unclass(x)) &&
+    !inherits(x, c("Date", "POSIXt", "difftime", "hms"))
+}
+
+## The label text that identifies a missing code in a factor/character
+## column whose numeric codes are already gone: each missing code's label
+## from any of `value_label_maps`, plus the "text [code]" form
+## .lasa_convert_to_labelled_factor() gives colliding labels. A bare label
+## that some map also uses for a real answer is left out -- it can't be
+## told apart from that answer.
+.lasa_missing_text <- function(value_label_maps, missing_codes) {
+  bare <- character(0)
+  tagged <- character(0)
+  real <- character(0)
+  for (map in value_label_maps) {
+    if (is.null(map)) next
+    codes <- as.numeric(unname(map))
+    text <- names(map)
+    hit <- codes %in% missing_codes
+    bare <- c(bare, text[hit])
+    tagged <- c(tagged, paste0(text[hit], " [", codes[hit], "]"))
+    real <- c(real, text[!hit])
+  }
+  unique(c(setdiff(bare, real), tagged))
+}
+
+## Shared `keep_user_na = FALSE` transformation for a factor/character
+## column that was already converted (its numeric codes are gone): blanks
+## every value that is a missing code's label text (`missing_text`, see
+## .lasa_missing_text()) or a bare negative number (an undocumented
+## missing code kept as its own number), and drops those factor levels.
+.lasa_blank_missing_text <- function(x, missing_text) {
+  is_missing_text <- function(text) {
+    as_number <- suppressWarnings(as.numeric(text))
+    !is.na(text) & (text %in% missing_text | (!is.na(as_number) & as_number < 0))
+  }
+  if (is.factor(x)) {
+    # Every level for a missing code goes, observed or not.
+    keep <- levels(x)[!is_missing_text(levels(x))]
+    return(factor(as.character(x), levels = keep))
+  }
+  text <- as.character(x)
+  text[is_missing_text(text)] <- NA_character_
+  text
+}
+
 ## Every code that counts as missing for one variable: each code its
 ## wave-specific or harmonized value labels flag `is_missing`, plus any
 ## observed negative value that no value label documents as a real
 ## answer (LASA's convention: negative codes are reasons for missingness,
 ## documented or not). Only a numerically-coded `x` contributes observed
 ## values -- a factor/character column (e.g. one already converted by an
-## earlier apply_lasa_labels() call) has no codes left to inspect.
+## earlier apply_lasa_labels() call) or a date has no codes to inspect.
 .lasa_missing_codes <- function(x, value_labels, variable_name, value_labels_harmonized, canonical_name) {
   pick <- function(tbl, key_col, key) {
     rows <- tbl[tbl[[key_col]] == key & !is.na(tbl$value_numeric), , drop = FALSE]
@@ -188,7 +239,7 @@
   flagged <- documented$value_numeric[documented$is_missing %in% TRUE]
   real_answers <- documented$value_numeric[documented$is_missing %in% FALSE]
 
-  observed <- if (!is.factor(x) && is.numeric(unclass(x))) {
+  observed <- if (.lasa_is_coded(x)) {
     values <- .lasa_numeric_values(x)
     unique(values[!is.na(values) & values < 0 & !values %in% real_answers])
   } else {
@@ -205,9 +256,12 @@
 ## haven_labelled_spss vector is demoted to plain haven_labelled -- its
 ## user-missing declaration has nothing left to describe.
 .lasa_blank_missing <- function(x, missing_codes) {
-  if (is.factor(x) || !is.numeric(unclass(x))) return(x)
-  values <- .lasa_numeric_values(x)
-  values[values %in% missing_codes] <- NA_real_
+  if (!.lasa_is_coded(x)) return(x)
+  # Keep the storage type (integer stays integer), so the labels and class
+  # restored below still match it.
+  values <- unclass(x)
+  attributes(values) <- NULL
+  values[values %in% missing_codes] <- NA
   attrs <- attributes(x)
   attrs$na_values <- NULL
   attrs$na_range <- NULL
@@ -223,18 +277,22 @@
 ## variable that isn't turned into a factor or label text: keeps every
 ## code, with `value_label_map` attached as value labels and the missing
 ## codes declared SPSS user-missing, so haven::zap_missing() or
-## is.na() still recognise them.
+## is.na() still recognise them. Any other attribute of `x` (its SPSS
+## variable label, display format, ...) is carried over.
 .lasa_declare_missing <- function(x, missing_codes, value_label_map) {
-  if (is.factor(x) || !is.numeric(unclass(x))) return(x)
+  if (!.lasa_is_coded(x)) return(x)
   labels <- if (is.null(value_label_map)) NULL else {
     stats::setNames(as.numeric(unname(value_label_map)), names(value_label_map))
   }
   labels <- labels[!duplicated(labels)]
-  haven::labelled_spss(
+  out <- haven::labelled_spss(
     .lasa_numeric_values(x),
     labels = labels,
     na_values = if (length(missing_codes) > 0L) as.numeric(missing_codes) else NULL
   )
+  carried <- setdiff(names(attributes(x)), c("class", "labels", "na_values", "na_range", "names"))
+  for (a in carried) attr(out, a) <- attr(x, a)
+  out
 }
 
 #' Convert a value-labelled variable to a factor
@@ -314,20 +372,16 @@
 ##
 ## Idempotent: a variable already converted by an earlier apply_lasa_labels()
 ## call (e.g. re-labelling read_lasa_sav()'s own output) is already label
-## text, not a numeric code -- left untouched rather than coerced to NA,
-## except that keep_user_na = FALSE still blanks a missing code's label
-## text.
+## text, not a numeric code -- left untouched rather than coerced to NA.
+## (The engine blanks its missing label text itself when keep_user_na =
+## FALSE, see .lasa_blank_missing_text().)
 ##
 ## With keep_user_na = FALSE, every code in `missing_codes` becomes NA;
 ## with keep_user_na = TRUE, it becomes its label text like any other code.
 .lasa_convert_to_labelled_text <- function(x, value_label_map, missing_codes = numeric(0), keep_user_na = TRUE) {
+  if (is.character(x)) return(x)
   label_codes <- as.numeric(unname(value_label_map))
   label_text <- names(value_label_map)
-
-  if (is.character(x)) {
-    if (!isTRUE(keep_user_na)) x[x %in% label_text[label_codes %in% missing_codes]] <- NA_character_
-    return(x)
-  }
   values <- .lasa_numeric_values(x)
   if (!isTRUE(keep_user_na)) values[values %in% missing_codes] <- NA_real_
 
@@ -472,8 +526,8 @@
 #'   to declare.
 #' @param read_sav_args Optional named list of additional arguments passed to
 #'   [haven::read_sav()], for example `list(encoding = "UTF-8")`. Do not
-#'   include `file` or `user_na`; those are controlled by `path` and
-#'   `keep_user_na`.
+#'   include `file` (set by `path`) or `user_na` (always `TRUE`; choose how
+#'   missing codes come out with `keep_user_na`).
 #' @param user_na Deprecated: use `keep_user_na` instead. A supplied value
 #'   is used as `keep_user_na`, with a warning.
 #'
@@ -604,8 +658,9 @@ read_lasa_sav <- function(path,
     if (length(reserved_read_args) > 0L) {
       stop(
         "Do not supply ", paste(reserved_read_args, collapse = ", "),
-        " in 'read_sav_args'; they are set by read_lasa_sav()'s 'path' and ",
-        "'keep_user_na' arguments.",
+        " in 'read_sav_args': the file is given by 'path' and is always read ",
+        "with user_na = TRUE; use 'keep_user_na' to choose how missing codes ",
+        "are represented.",
         call. = FALSE
       )
     }

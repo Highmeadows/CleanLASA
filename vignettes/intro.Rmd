@@ -260,10 +260,12 @@ become R factor levels.
 ```{r factors}
 data <- read_lasa_sav("LASAB046.sav")
 summary(data$lphya01)
-#>     Respondent bedridden Respondent in elec. whee Respondent in mech. whee
-#>                       20                        5                       20
-#>             not 1 2 or 3                     NA's
-#>                     2870                      192
+#>           respondent bedridden respondent in elec. wheelchair
+#>                             20                              5
+#> respondent in mech. wheelchair                  not 1, 2 or 3
+#>                             20                           2870
+#>                           NA's
+#>                            192
 
 attr(data$lphya01, "labels_wave")
 #> Na, interview terminated      Na, short interview           Na, wrong skip
