@@ -85,15 +85,28 @@
     if (!is.null(db) && .lasa_is_label_db_shaped(db)) return(db)
   }
 
-  ## `lasa_label_db_bundled` (data/lasa_label_db_bundled.rda, LazyData)
-  ## resolves via ordinary lexical scoping -- it is registered in this
-  ## function's own enclosing (package/namespace) environment, the same
-  ## way any other package-internal object is, so a bare reference finds
-  ## it under both devtools::load_all() and a regular install.
-  bundled <- tryCatch(get("lasa_label_db_bundled"), error = function(e) NULL)
+  bundled <- .lasa_bundled_label_db()
   if (!is.null(bundled) && .lasa_is_label_db_shaped(bundled)) return(bundled)
 
   .lasa_empty_label_db()
+}
+
+## The bundled snapshot (data/lasa_label_db_bundled.rda, LazyData). An
+## installed package keeps lazy data in its namespace's `lazydata`
+## environment, which a bare `get()` only reaches when the package is
+## attached via library() -- a `CleanLASA::read_lasa_sav()` call without
+## library(CleanLASA) would otherwise silently get an empty database and
+## label nothing. Look there first; the plain lookup covers
+## devtools::load_all().
+.lasa_bundled_label_db <- function() {
+  lazydata <- tryCatch(
+    asNamespace("CleanLASA")[[".__NAMESPACE__."]][["lazydata"]],
+    error = function(e) NULL
+  )
+  if (is.environment(lazydata) && exists("lasa_label_db_bundled", envir = lazydata, inherits = FALSE)) {
+    return(get("lasa_label_db_bundled", envir = lazydata, inherits = FALSE))
+  }
+  tryCatch(get("lasa_label_db_bundled"), error = function(e) NULL)
 }
 
 .lasa_is_label_db_shaped <- function(db) {
@@ -188,16 +201,20 @@
 .lasa_get_labels <- function(db, filecode, wave) {
   normalized_filecode <- .lasa_normalize_filecode(filecode)
   wave <- toupper(wave)
+  # A "Z" file holds columns for several waves at once, so it draws on
+  # every wave this file code documents (its variable names are
+  # wave-prefixed, hence unique across waves).
+  wave_matches <- function(x) if (identical(wave, "Z")) rep(TRUE, length(x)) else toupper(x) == wave
 
   vars <- db$variables[
     .lasa_normalize_filecode(db$variables$filecode) == normalized_filecode &
-      toupper(db$variables$wave) == wave,
+      wave_matches(db$variables$wave),
     ,
     drop = FALSE
   ]
   vals <- db$value_labels[
     .lasa_normalize_filecode(db$value_labels$filecode) == normalized_filecode &
-      toupper(db$value_labels$wave) == wave,
+      wave_matches(db$value_labels$wave),
     ,
     drop = FALSE
   ]
@@ -213,7 +230,7 @@
   mo_vals <- db$manual_overrides$value_labels
   mo_var_rows <- mo_vars[
     .lasa_normalize_filecode(mo_vars$filecode) == normalized_filecode &
-      toupper(mo_vars$wave) == wave,
+      wave_matches(mo_vars$wave),
     ,
     drop = FALSE
   ]
@@ -250,7 +267,7 @@
     row <- mo_var_rows[i, ]
     patch_rows <- mo_vals[
       .lasa_normalize_filecode(mo_vals$filecode) == normalized_filecode &
-        toupper(mo_vals$wave) == wave &
+        wave_matches(mo_vals$wave) &
         mo_vals$variable_name == row$variable_name,
       ,
       drop = FALSE
@@ -429,7 +446,7 @@ restore_lasa_labels <- function(filecode = NULL, wave = NULL, variable = NULL, r
   n_after <- nrow(mo$variables) + nrow(mo$value_labels)
 
   if (isTRUE(rebuild)) {
-    bundled <- tryCatch(get("lasa_label_db_bundled"), error = function(e) NULL)
+    bundled <- .lasa_bundled_label_db()
     if (!is.null(bundled) && .lasa_is_label_db_shaped(bundled)) {
       db$variables <- bundled$variables
       db$value_labels <- bundled$value_labels

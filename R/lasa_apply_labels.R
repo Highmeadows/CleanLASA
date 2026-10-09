@@ -177,7 +177,10 @@
     record(vname, vname, matched_name, method_recorded, "matched", edit_distance)
 
     if (isTRUE(eff_names)) {
-      rename_plan[[matched_name]] <<- tolower(cname)
+      # A "Z" file carries the same canonical variable for several waves
+      # (e.g. zoa1's boak, coak, ... are all "oak"), so it keeps each
+      # column's documented wave-specific name instead.
+      rename_plan[[matched_name]] <<- tolower(if (identical(wave, "Z")) vname else cname)
     }
   }
 

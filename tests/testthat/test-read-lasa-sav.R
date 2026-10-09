@@ -106,3 +106,57 @@ test_that("fuzzy_matching = FALSE leaves a typo unmatched and reported", {
   row <- report[report$suffix == "blphya07" & !is.na(report$suffix), ]
   expect_equal(row$method, "not found")
 })
+
+## A cross-wave "Z" file (e.g. lasazoa1.SAV) holds wave-prefixed columns
+## for several waves at once, filed in the database under its "z"-prefixed
+## file code ("zoa1") with each column under its own real wave.
+zoa1_fixture <- function() {
+  oa_labels <- c(
+    missing = -9, no = 0, possible = 1, yes = 2,
+    dropout = 8, `dropout at previous waves` = 9
+  )
+  data.frame(
+    RespNr = c(11455, 11459, 11471),
+    BOAK = haven::labelled(c(0, 0, 2), oa_labels),
+    BOAH = haven::labelled(c(0, 1, 0), oa_labels),
+    COAK = haven::labelled(c(8, -9, 0), oa_labels),
+    COAH = haven::labelled(c(8, -9, 1), oa_labels),
+    DOAK = haven::labelled(c(9, 0, -9), oa_labels),
+    DOAH = haven::labelled(c(9, 0, -9), oa_labels)
+  )
+}
+
+test_that("a Z file name resolves to its z-prefixed file code", {
+  expect_equal(.lasa_parse_filename("lasazoa1.SAV")$file_code, "zoa1")
+  expect_equal(.lasa_parse_filename("LASAZ004.SAV")$file_code, "z004")
+  expect_equal(.lasa_parse_filename("LASAZ004.SAV")$wave, "Z")
+})
+
+test_that("a Z file labels every wave's columns and converts them to factors", {
+  skip_if_not_installed("haven")
+  path <- write_lasa_sav(zoa1_fixture(), "lasazoa1.SAV")
+  dat <- read_lasa_sav(path, standardize = TRUE, to_factor = TRUE)
+
+  expect_equal(attr(dat, "LASA_file_code"), "zoa1")
+  expect_true(all(dat$Wave == "Z"))
+  # wave-prefixed names are kept: renaming to the canonical "oak"/"oah"
+  # would collide across waves.
+  expect_true(all(c("boak", "boah", "coak", "coah", "doak", "doah") %in% names(dat)))
+  for (v in c("boak", "boah", "coak", "coah", "doak", "doah")) {
+    expect_true(is.factor(dat[[v]]), info = v)
+  }
+  expect_equal(as.character(dat$coah), c("dropout", "missing", "possible"))
+  expect_equal(as.character(dat$doak), c("dropout at previous waves", "no", "missing"))
+  expect_equal(attr(dat$coah, "label"), "Symptomatic hip osteoarthritis")
+  expect_equal(attr(dat$coah, "wave_label"), "symptomatic hip OA at C")
+
+  report <- lasa_label_report(dat)
+  expect_false(any(report$direction == "data_not_documented"))
+})
+
+test_that("a migrant-cohort baseline file resolves to its mb-prefixed file code", {
+  expect_equal(.lasa_parse_filename("LASMB004.SAV")$file_code, "mb004")
+  expect_equal(.lasa_parse_filename("LASMB004.SAV")$wave, "MB")
+  # MB files sharing a regular file code keep it.
+  expect_equal(.lasa_parse_filename("LASMB046.SAV")$file_code, "046")
+})
