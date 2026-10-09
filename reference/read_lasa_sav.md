@@ -88,7 +88,12 @@ The file name is parsed against the LASA naming convention:
 - waves 2B, 3B, 4B, and MB: `LAS[wave][file_code].SAV`, e.g.
   `LAS3B046.SAV`;
 
-- information stored across waves: wave code `Z`, e.g. `LASAZ004.SAV`;
+- information stored across waves: wave code `Z`, e.g. `LASAZ004.SAV`
+  (file code `"z004"`) or `LASAZOA1.SAV` (file code `"zoa1"`). A Z file
+  holds wave-prefixed columns for several waves at once; each is
+  labelled from its own wave's metadata and keeps its documented
+  (wave-prefixed) name under `standardize`, since the canonical names
+  would collide;
 
 - file codes contain 2 or 3 alphanumeric characters and are interpreted
   case-insensitively.

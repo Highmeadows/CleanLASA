@@ -121,7 +121,11 @@ attached.</p>
 <code>LASAE046.SAV</code>;</p></li>
 <li><p>waves 2B, 3B, 4B, and MB: <code>LAS[wave][file_code].SAV</code>, e.g.
 <code>LAS3B046.SAV</code>;</p></li>
-<li><p>information stored across waves: wave code <code>Z</code>, e.g. <code>LASAZ004.SAV</code>;</p></li>
+<li><p>information stored across waves: wave code <code>Z</code>, e.g. <code>LASAZ004.SAV</code>
+(file code <code>"z004"</code>) or <code>LASAZOA1.SAV</code> (file code <code>"zoa1"</code>). A Z file
+holds wave-prefixed columns for several waves at once; each is labelled
+from its own wave's metadata and keeps its documented (wave-prefixed)
+name under <code>standardize</code>, since the canonical names would collide;</p></li>
 <li><p>file codes contain 2 or 3 alphanumeric characters and are interpreted
 case-insensitively.</p></li>
 </ul><p><code>filecode</code>/<code>wave</code> override the parsed values when supplied – the place
