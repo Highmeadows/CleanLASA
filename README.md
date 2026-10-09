@@ -47,7 +47,7 @@ latest release. Currently only version 0.9 is available, and can
 also be specifically installed from GitHub with:
 
 ``` r
-# install.packages("devtools")
+# install.packages("remotes")
 remotes::install_github("Highmeadows/CleanLASA@v0.9.0")
 ```
 
