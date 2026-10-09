@@ -47,7 +47,7 @@ specifically installed from GitHub with:
 
 ``` r
 
-# install.packages("devtools")
+# install.packages("remotes")
 remotes::install_github("Highmeadows/CleanLASA@v0.9.0")
 ```
 
