@@ -32,9 +32,6 @@ if something needs a quick, local fix.
 
 ## Installation
 
-WARNING! This project is still heavily work-in-progress, so installing
-it for real analysis work is currently not recommended.
-
 You can install the development version of CleanLASA from
 [GitHub](https://github.com/) with:
 
@@ -42,6 +39,16 @@ You can install the development version of CleanLASA from
 
 # install.packages("devtools")
 devtools::install_github("Highmeadows/CleanLASA")
+```
+
+Note the package is still under development, so please install the
+latest release. Currently only version 0.9 is available, and can also be
+specifically installed from GitHub with:
+
+``` r
+
+# install.packages("devtools")
+remotes::install_github("Highmeadows/CleanLASA@v0.9.0")
 ```
 
 ## Quick start
