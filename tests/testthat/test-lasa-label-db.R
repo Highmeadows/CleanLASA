@@ -124,3 +124,26 @@ test_that("filecode/wave normalization is applied when looking up labels", {
   out <- .lasa_get_labels(db, "LASA046", "b")
   expect_equal(nrow(out$variables), 1L)
 })
+
+test_that("the bundled database is found without library(CleanLASA)", {
+  # An installed package keeps lazy data out of reach of a bare get() unless
+  # it is attached, so `CleanLASA::read_lasa_sav()` used to see an empty
+  # database. Only meaningful against the installed copy under test.
+  skip_on_cran()
+  skip_if(
+    exists(".__DEVTOOLS__", envir = asNamespace("CleanLASA"), inherits = FALSE),
+    "needs the installed package under test, not a load_all() copy"
+  )
+  out <- system2(
+    file.path(R.home("bin"), "Rscript"),
+    c("-e", shQuote("cat(nrow(CleanLASA::lasa_label_db()$variables))")),
+    stdout = TRUE
+  )
+  expect_gt(as.numeric(utils::tail(out, 1L)), 0)
+})
+
+test_that(".lasa_bundled_label_db() returns the bundled snapshot", {
+  db <- .lasa_bundled_label_db()
+  expect_true(.lasa_is_label_db_shaped(db))
+  expect_gt(nrow(db$variables), 0L)
+})

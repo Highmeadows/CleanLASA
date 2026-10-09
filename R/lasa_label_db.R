@@ -85,15 +85,28 @@
     if (!is.null(db) && .lasa_is_label_db_shaped(db)) return(db)
   }
 
-  ## `lasa_label_db_bundled` (data/lasa_label_db_bundled.rda, LazyData)
-  ## resolves via ordinary lexical scoping -- it is registered in this
-  ## function's own enclosing (package/namespace) environment, the same
-  ## way any other package-internal object is, so a bare reference finds
-  ## it under both devtools::load_all() and a regular install.
-  bundled <- tryCatch(get("lasa_label_db_bundled"), error = function(e) NULL)
+  bundled <- .lasa_bundled_label_db()
   if (!is.null(bundled) && .lasa_is_label_db_shaped(bundled)) return(bundled)
 
   .lasa_empty_label_db()
+}
+
+## The bundled snapshot (data/lasa_label_db_bundled.rda, LazyData). An
+## installed package keeps lazy data in its namespace's `lazydata`
+## environment, which a bare `get()` only reaches when the package is
+## attached via library() -- a `CleanLASA::read_lasa_sav()` call without
+## library(CleanLASA) would otherwise silently get an empty database and
+## label nothing. Look there first; the plain lookup covers
+## devtools::load_all().
+.lasa_bundled_label_db <- function() {
+  lazydata <- tryCatch(
+    asNamespace("CleanLASA")[[".__NAMESPACE__."]][["lazydata"]],
+    error = function(e) NULL
+  )
+  if (is.environment(lazydata) && exists("lasa_label_db_bundled", envir = lazydata, inherits = FALSE)) {
+    return(get("lasa_label_db_bundled", envir = lazydata, inherits = FALSE))
+  }
+  tryCatch(get("lasa_label_db_bundled"), error = function(e) NULL)
 }
 
 .lasa_is_label_db_shaped <- function(db) {
@@ -433,7 +446,7 @@ restore_lasa_labels <- function(filecode = NULL, wave = NULL, variable = NULL, r
   n_after <- nrow(mo$variables) + nrow(mo$value_labels)
 
   if (isTRUE(rebuild)) {
-    bundled <- tryCatch(get("lasa_label_db_bundled"), error = function(e) NULL)
+    bundled <- .lasa_bundled_label_db()
     if (!is.null(bundled) && .lasa_is_label_db_shaped(bundled)) {
       db$variables <- bundled$variables
       db$value_labels <- bundled$value_labels

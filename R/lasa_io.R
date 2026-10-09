@@ -317,6 +317,16 @@
     file_code <- paste0("z", file_code_lower)
   }
 
+  # Likewise, the migrant cohort's baseline-only files (e.g. "LASMB004")
+  # are filed as "mb004" -- but most MB files use the plain shared file
+  # code (e.g. "LASMB046" -> "046"), so only switch when the database
+  # documents the "mb"-prefixed code and not the plain one.
+  if (identical(wave, "MB")) {
+    known <- .lasa_normalize_filecode(unique(.lasa_load_label_db()$variables$filecode))
+    mb_code <- paste0("mb", file_code_lower)
+    if (!tolower(file_code) %in% known && mb_code %in% known) file_code <- mb_code
+  }
+
   list(
     wave = wave,
     file_code = file_code,

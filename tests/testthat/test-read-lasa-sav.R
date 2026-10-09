@@ -153,3 +153,10 @@ test_that("a Z file labels every wave's columns and converts them to factors", {
   report <- lasa_label_report(dat)
   expect_false(any(report$direction == "data_not_documented"))
 })
+
+test_that("a migrant-cohort baseline file resolves to its mb-prefixed file code", {
+  expect_equal(.lasa_parse_filename("LASMB004.SAV")$file_code, "mb004")
+  expect_equal(.lasa_parse_filename("LASMB004.SAV")$wave, "MB")
+  # MB files sharing a regular file code keep it.
+  expect_equal(.lasa_parse_filename("LASMB046.SAV")$file_code, "046")
+})
