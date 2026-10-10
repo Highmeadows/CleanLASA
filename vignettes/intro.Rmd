@@ -184,6 +184,12 @@ sex <- read_lasa_sav("LASAZ004.sav")
 physical_activity_3b <- read_lasa_sav("LAS3B046.sav")
 ```
 
+A Z file holds several waves side by side (`boak`, `coak`, `doak`, ...
+for the same question at waves B, C, D, ...). Add
+`format_as_long = TRUE` to get it in long format instead -- one row per
+respondent per wave -- as described in
+[section 9](#9-reshape-between-long-and-wide-format).
+
 The file name is what tells `read_lasa_sav()` which wave and file code
 it's looking at, so it needs to follow LASA's naming convention (case
 doesn't matter): regular single-letter waves are named
@@ -641,7 +647,110 @@ restore_lasa_labels()
 restore_lasa_labels(rebuild = TRUE)
 ```
 
-## 9. A complete analysis-oriented workflow
+## 9. Reshape between long and wide format
+
+LASA data comes in two shapes. A regular wave file such as
+`LASAB046.sav` covers one wave, and `read_lasa_sav()` returns it in
+*long* format: one row per respondent, a `"Wave"` column, and column
+names without a wave prefix (`lphya01`). A Z file such as
+`LASAZOA1.sav` covers several waves in *wide* format: one row per
+respondent and a separate column for every wave -- `boak`, `coak`,
+`doak`, ... for knee osteoarthritis at waves B, C, D, ... -- sometimes
+next to *stable* variables that hold for every wave, like sex or year
+of birth in `LASAZ004.sav`.
+
+`transform_lasa_data()` converts between the two. Long format is the
+default:
+
+```{r long, eval=FALSE}
+oa <- read_lasa_sav("LASAZOA1.sav")
+names(oa)
+#> "respnr" "Wave"   "boak"   "boah"   "coak"   "coah"   "doak"   "doah"
+
+oa_long <- transform_lasa_data(oa)
+names(oa_long)
+#> "respnr" "Wave"   "Time"   "oak"    "oah"
+
+head(oa_long, 3)
+#> # A tibble: 3 x 5
+#>   respnr Wave   Time oak                       oah
+#>    <dbl> <chr> <int> <fct>                     <fct>
+#> 1      1 B         1 no                        no
+#> 2      1 C         2 dropout                   dropout
+#> 3      1 D         3 dropout at previous waves dropout at previous waves
+```
+
+`read_lasa_sav()` does both steps at once with `format_as_long = TRUE`;
+the default `FALSE` keeps the file's own layout:
+
+```{r format-as-long, eval=FALSE}
+oa_long <- read_lasa_sav("LASAZOA1.sav", format_as_long = TRUE)
+```
+
+In long format, `"Wave"` holds the LASA wave code and `"Time"` numbers
+the waves in calendar order -- A (LSN) = 0, B = 1, C = 2, D = 3, E = 4,
+2B = 5, F = 6, G = 7, H = 8, 3B = 9, MB = 10, I = 11, J = 12, K = 13 --
+so it works as one time axis across all cohorts. A respondent gets a
+row for each wave at which they have a value; a missing-value code
+such as "dropout" counts as a value. Stable variables are repeated on
+each of the respondent's rows. Each long column keeps the variable and
+value labels its waves share, and each wave's own wording in its
+`"wave_label"` and `"labels_wave"` attributes, one entry per wave:
+
+```{r wave-labels, eval=FALSE}
+attr(oa_long$oak, "wave_label")
+#>                          B                          C                          D
+#> "symptomatic knee OA at B" "symptomatic knee OA at C" "symptomatic knee OA at D"
+```
+
+`format = "wide"` goes back to one row per respondent. `prefix`
+chooses how the wave-specific columns are named: by the wave's letter
+(`"Wave"`, the default) or by its `"Time"` number:
+
+```{r wide, eval=FALSE}
+names(transform_lasa_data(oa_long, format = "wide"))
+#> "respnr" "boak"   "boah"   "coak"   "coah"   "doak"   "doah"
+
+names(transform_lasa_data(oa_long, format = "wide", prefix = "Time"))
+#> "respnr" "t1_oak" "t1_oah" "t2_oak" "t2_oah" "t3_oak" "t3_oah"
+```
+
+Columns that came from a wide LASA file get their original name, type,
+and labels back. LASA's wave files give the baselines of the later
+cohorts (2B, 3B, and MB) the same `b` prefix as wave B, so in wide
+format these waves get the prefixes `b2`, `b3`, and `mb` instead, as
+LASA's own `zoa2`/`zoa3` files do.
+
+`transform_lasa_data()` also works after merging files, in either
+shape -- for example all 046 and 030 files of waves B and C:
+
+```{r merged, eval=FALSE}
+# Wide: wave files read without standardizing, merged by respondent
+wide <- Reduce(
+  function(x, y) merge(x, y, by = "respnr"),
+  list(
+    read_lasa_sav("LASAB046.sav", standardize = FALSE),
+    read_lasa_sav("LASAC046.sav", standardize = FALSE),
+    read_lasa_sav("LASAB030.sav", standardize = FALSE),
+    read_lasa_sav("LASAC030.sav", standardize = FALSE)
+  )
+)
+long <- transform_lasa_data(wide)
+
+# Long: wave files stacked per file code, then merged by respondent and wave
+physical_activity <- rbind(read_lasa_sav("LASAB046.sav"), read_lasa_sav("LASAC046.sav"))
+adl <- rbind(read_lasa_sav("LASAB030.sav"), read_lasa_sav("LASAC030.sav"))
+long <- merge(physical_activity, adl, by = c("respnr", "Wave"))
+wide <- transform_lasa_data(long, format = "wide")
+```
+
+To add a Z file to long data, merge its wide columns by `respnr`
+(without its `"Wave"` placeholder column, or read it with
+`standardize = FALSE`); `transform_lasa_data()` then moves each value
+to the row of its own wave, adding rows for waves the long data didn't
+have yet.
+
+## 10. A complete analysis-oriented workflow
 
 Putting it all together, most analyses only need a handful of calls:
 
@@ -678,6 +787,7 @@ to) the data again.
 | `lasa_var_info()` | Resolve and open the LASA variable-information PDF or webpage for a file code or topic |
 | `read_lasa_sav()` | Read a LASA `.sav` file, identify wave/file code, and apply database-backed labels |
 | `apply_lasa_labels()` | Apply the same LASA labelling engine to an existing data frame |
+| `transform_lasa_data()` | Reshape LASA data between wide format (Z files) and long format with `Wave` and `Time` columns |
 | `lasa_label_report()` | Inspect the full matching audit or only entries requiring attention |
 | `lasa_label_db()` | Inspect the active bundled + user-local label metadata database |
 | `manual_update_lasa_labels()` | Add or correct metadata in a persistent manual override layer |

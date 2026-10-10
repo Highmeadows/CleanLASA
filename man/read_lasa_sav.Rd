@@ -17,6 +17,7 @@ read_lasa_sav(
   add_wavecode = FALSE,
   to_factor = TRUE,
   to_numeric = TRUE,
+  format_as_long = FALSE,
   user_na = TRUE,
   read_sav_args = list()
 )
@@ -35,6 +36,15 @@ for a nonstandard baseline wave). If omitted, derived from \code{path}.}
 \item{name_corrections, fuzzy_matching, standardize, .standardize_names, .standardize_var_labels, .standardize_val_labels, add_wavecode, to_factor, to_numeric}{The shared reshaping arguments used throughout this package -- see
 \code{\link[=apply_lasa_labels]{apply_lasa_labels()}} for the full description of each.}
 
+\item{format_as_long}{Logical, default \code{FALSE}. If \code{TRUE}, the labelled
+data are transformed to long format with
+\code{\link[=transform_lasa_data]{transform_lasa_data()}}: one row per respondent per wave, with \code{"Wave"}
+and \code{"Time"} columns. Meant for Z files, which LASA stores in wide
+format (e.g. \code{boak}, \code{coak}, \code{doak}, ... become one \code{oak} column);
+their stable variables, such as date of birth, are repeated on every
+row of the respondent. The default \code{FALSE} returns the file's own
+(wide) layout, as before.}
+
 \item{user_na}{Logical passed to \code{\link[haven:read_spss]{haven::read_sav()}}. The default is \code{TRUE}
 so SPSS user-defined missing codes remain available to the labelling
 step before any requested conversion to \code{NA}.}
@@ -47,7 +57,7 @@ include \code{file} or \code{user_na}; those are controlled by \code{path} and
 \value{
 \code{data} as imported by \code{\link[haven:read_spss]{haven::read_sav()}}, labelled (and
 optionally reshaped/renamed) with generic LASA provenance attributes
-attached.
+attached -- in long format when \code{format_as_long = TRUE}.
 }
 \description{
 Reads a LASA \code{.sav} file, identifies its wave and file code from the file
@@ -93,6 +103,13 @@ After labelling, provenance attributes are attached: \code{"LASA_wave"},
 supplied again. The variable-name matching audit is attached as the
 generic \code{"label_report"} attribute; retrieve it with
 \code{\link[=lasa_label_report]{lasa_label_report()}}.
+
+With \code{format_as_long = TRUE}, the labelled data are finally passed to
+\code{\link[=transform_lasa_data]{transform_lasa_data()}} (\code{format = "long"}). A regular wave file is
+already long under the default \code{standardize = TRUE} and only gains a
+\code{"Time"} column; a Z file's wave-prefixed columns become one column per
+variable, with the wave of each row in \code{"Wave"}. Long data that span
+several waves no longer carry a single \code{"LASA_wave"} attribute.
 }
 \examples{
 \dontrun{
@@ -116,8 +133,13 @@ dat_b <- read_lasa_sav(
 )
 
 dat_z004 <- read_lasa_sav("LASAZ004.SAV")
+
+# A Z file in long format: one row per respondent per wave, with the
+# wave-prefixed boak, coak, ... combined into one oak column.
+dat_oa_long <- read_lasa_sav("LASAZOA1.SAV", format_as_long = TRUE)
 }
 }
 \seealso{
-\code{\link[=lasa_label_report]{lasa_label_report()}}, \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}, \code{\link[=lasa_label_db]{lasa_label_db()}}
+\code{\link[=lasa_label_report]{lasa_label_report()}}, \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}, \code{\link[=lasa_label_db]{lasa_label_db()}},
+\code{\link[=transform_lasa_data]{transform_lasa_data()}}
 }

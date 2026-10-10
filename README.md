@@ -68,6 +68,18 @@ data <- read_lasa_sav("LASAB046.sav") # LASA wave B, file code 046
 lasa_label_report(data, problems_only = TRUE)
 ```
 
+Z files such as `LASAZOA1.sav` store several waves side by side
+(`boak`, `coak`, `doak`, ...). With `format_as_long = TRUE` you get
+them in long format instead: one row per respondent per wave, with
+`Wave` and `Time` columns and one `oak` column. `transform_lasa_data()`
+converts any LASA data -- including merged files -- between long and
+wide format:
+
+``` r
+oa <- read_lasa_sav("LASAZOA1.sav", format_as_long = TRUE)
+oa_wide <- transform_lasa_data(oa, format = "wide") # boak, coak, ...
+```
+
 Not sure which file code you need? `lasa_topics()` searches LASA's
 topics and themes for you, and `lasa_var_info()` opens LASA's own
 documentation for a topic or file code:
@@ -86,8 +98,9 @@ worked examples -- how the file-name-based matching works, every option
 `read_lasa_sav()` offers (fuzzy matching, name corrections, converting
 to factors/numeric, standardizing names and labels across waves),
 what's inside the label database, how to record your own corrections,
-and how to search LASA's topic index and documentation. Start there if
-you're new to the package.
+how to reshape data between long and wide format, and how to search
+LASA's topic index and documentation. Start there if you're new to the
+package.
 
 ## Functions
 
@@ -95,6 +108,7 @@ you're new to the package.
 |------------------------------------|------------------------------------|
 | `read_lasa_sav()` | Reads a LASA `.sav` file and labels it using `lasa_label_db()`, based on the wave/file code parsed from the file name |
 | `apply_lasa_labels()` | Applies `lasa_label_db()` labels to any data frame, resolving file code/wave explicitly or from stored provenance |
+| `transform_lasa_data()` | Transforms LASA data between wide format (one row per respondent, as in Z files) and long format (one row per respondent per wave, with `Wave` and `Time` columns) |
 | `manual_update_lasa_labels()` | Hand-corrects or adds a variable/value label in your local copy of the database |
 | `restore_lasa_labels()` | Undoes manual corrections (entirely, or scoped) and/or rebuilds the local database cache from the bundled one |
 | `lasa_label_db()` | Returns the label database currently in effect (bundled snapshot + any local updates) |
