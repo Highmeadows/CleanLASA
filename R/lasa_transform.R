@@ -92,10 +92,11 @@
 #' variable becomes one column named after its wave-stripped (canonical)
 #' name, so `boak`, `coak`, ... become `oak`. A respondent gets a row for
 #' each wave at which at least one of the wave-specific columns has a
-#' value for them (a missing-value code such as "dropout" counts as a
-#' value), so respondents of a later cohort get no rows for the waves
-#' before they joined LASA. A respondent without any value at any wave
-#' keeps a row for every wave, so nobody disappears.
+#' value for them -- anything but `NA`, so a missing-value code that is
+#' kept as a value (e.g. "dropout") counts -- and respondents of a later
+#' cohort therefore get no rows for the waves before they joined LASA. A
+#' respondent without any value at any wave keeps a row for every wave,
+#' so nobody disappears.
 #'
 #' **Stable variables** -- columns that hold for every wave, such as sex or
 #' date of birth in `LASAZ004.SAV` -- keep one column and are repeated on
