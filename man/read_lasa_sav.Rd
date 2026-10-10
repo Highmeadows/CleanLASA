@@ -41,9 +41,9 @@ data are transformed to long format with
 \code{\link[=transform_lasa_data]{transform_lasa_data()}}: one row per respondent per wave, with \code{"Wave"}
 and \code{"Time"} columns. Meant for Z files, which LASA stores in wide
 format (e.g. \code{boak}, \code{coak}, \code{doak}, ... become one \code{oak} column);
-their stable variables, such as date of birth, are repeated on every
-row of the respondent. The default \code{FALSE} returns the file's own
-(wide) layout, as before.}
+their stable variables, such as sex or year of birth, are repeated on
+every row of the respondent. The default \code{FALSE} returns the data as
+before, a Z file in its own wide layout.}
 
 \item{user_na}{Logical passed to \code{\link[haven:read_spss]{haven::read_sav()}}. The default is \code{TRUE}
 so SPSS user-defined missing codes remain available to the labelling
@@ -107,9 +107,13 @@ generic \code{"label_report"} attribute; retrieve it with
 With \code{format_as_long = TRUE}, the labelled data are finally passed to
 \code{\link[=transform_lasa_data]{transform_lasa_data()}} (\code{format = "long"}). A regular wave file is
 already long under the default \code{standardize = TRUE} and only gains a
-\code{"Time"} column; a Z file's wave-prefixed columns become one column per
-variable, with the wave of each row in \code{"Wave"}. Long data that span
-several waves no longer carry a single \code{"LASA_wave"} attribute.
+\code{"Time"} column (read with \code{standardize = FALSE}, its wave-prefixed
+names lose their prefix too); a Z file's wave-prefixed columns become
+one column per variable, with the wave of each row in \code{"Wave"}. A Z file
+without wave-specific columns, such as \code{LASAZ004.SAV}, has no wave
+dimension: it keeps one row per respondent, without \code{"Wave"} and
+\code{"Time"} columns, and a message says so. Long data that span several
+waves no longer carry a single \code{"LASA_wave"} attribute.
 }
 \examples{
 \dontrun{

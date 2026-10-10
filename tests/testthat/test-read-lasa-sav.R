@@ -188,6 +188,19 @@ test_that("format_as_long = FALSE (the default) keeps a Z file's wide layout", {
   expect_false("Time" %in% names(dat))
 })
 
+test_that("format_as_long leaves a Z file of only stable variables one row per respondent", {
+  skip_if_not_installed("haven")
+  z004 <- data.frame(
+    RespNr = c(1, 2, 3),
+    SEX = haven::labelled(c(1, 2, 1), c(male = 1, female = 2)),
+    BYEAR = c(1920, 1925, 1930)
+  )
+  path <- write_lasa_sav(z004, "LASAZ004.SAV")
+  expect_message(dat <- read_lasa_sav(path, format_as_long = TRUE), "no wave-specific columns")
+  expect_named(dat, c("respnr", "sex", "byear"))
+  expect_equal(attr(dat, "LASA_wave"), "Z")
+})
+
 test_that("format_as_long gives a wave file a Time column", {
   path <- write_lasa_sav(lasa046_fixture("C"), "LASAC046.SAV")
   dat <- read_lasa_sav(path, format_as_long = TRUE)

@@ -362,9 +362,9 @@
 #'   [transform_lasa_data()]: one row per respondent per wave, with `"Wave"`
 #'   and `"Time"` columns. Meant for Z files, which LASA stores in wide
 #'   format (e.g. `boak`, `coak`, `doak`, ... become one `oak` column);
-#'   their stable variables, such as date of birth, are repeated on every
-#'   row of the respondent. The default `FALSE` returns the file's own
-#'   (wide) layout, as before.
+#'   their stable variables, such as sex or year of birth, are repeated on
+#'   every row of the respondent. The default `FALSE` returns the data as
+#'   before, a Z file in its own wide layout.
 #' @param user_na Logical passed to [haven::read_sav()]. The default is `TRUE`
 #'   so SPSS user-defined missing codes remain available to the labelling
 #'   step before any requested conversion to `NA`.
@@ -413,9 +413,13 @@
 #' With `format_as_long = TRUE`, the labelled data are finally passed to
 #' [transform_lasa_data()] (`format = "long"`). A regular wave file is
 #' already long under the default `standardize = TRUE` and only gains a
-#' `"Time"` column; a Z file's wave-prefixed columns become one column per
-#' variable, with the wave of each row in `"Wave"`. Long data that span
-#' several waves no longer carry a single `"LASA_wave"` attribute.
+#' `"Time"` column (read with `standardize = FALSE`, its wave-prefixed
+#' names lose their prefix too); a Z file's wave-prefixed columns become
+#' one column per variable, with the wave of each row in `"Wave"`. A Z file
+#' without wave-specific columns, such as `LASAZ004.SAV`, has no wave
+#' dimension: it keeps one row per respondent, without `"Wave"` and
+#' `"Time"` columns, and a message says so. Long data that span several
+#' waves no longer carry a single `"LASA_wave"` attribute.
 #'
 #' @return `data` as imported by [haven::read_sav()], labelled (and
 #'   optionally reshaped/renamed) with generic LASA provenance attributes
