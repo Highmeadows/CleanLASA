@@ -160,3 +160,63 @@ test_that("a migrant-cohort baseline file resolves to its mb-prefixed file code"
   # MB files sharing a regular file code keep it.
   expect_equal(.lasa_parse_filename("LASMB046.SAV")$file_code, "046")
 })
+
+test_that("format_as_long = TRUE returns a Z file in long format", {
+  skip_if_not_installed("haven")
+  path <- write_lasa_sav(zoa1_fixture(), "lasazoa1.SAV")
+  wide <- read_lasa_sav(path)
+  long <- read_lasa_sav(path, format_as_long = TRUE)
+
+  # The same as transforming the wide result yourself.
+  expect_identical(long, transform_lasa_data(wide, format = "long"))
+  expect_named(long, c("respnr", "Wave", "Time", "oak", "oah"))
+  expect_equal(nrow(long), 9L)
+  expect_equal(long$Wave, rep(c("B", "C", "D"), 3), ignore_attr = TRUE)
+  expect_identical(as.vector(long$Time), rep(1:3, 3))
+  expect_true(is.factor(long$oah))
+  expect_equal(as.character(long$oah[long$Wave == "C"]), c("dropout", "missing", "possible"))
+  expect_equal(attr(long, "LASA_file_code"), "zoa1")
+  expect_null(attr(long, "LASA_wave"))
+})
+
+test_that("format_as_long = FALSE (the default) keeps a Z file's wide layout", {
+  skip_if_not_installed("haven")
+  path <- write_lasa_sav(zoa1_fixture(), "lasazoa1.SAV")
+  dat <- read_lasa_sav(path, format_as_long = FALSE)
+  expect_identical(dat, read_lasa_sav(path))
+  expect_true(all(c("boak", "coak", "doak") %in% names(dat)))
+  expect_false("Time" %in% names(dat))
+})
+
+test_that("format_as_long leaves a Z file of only stable variables one row per respondent", {
+  skip_if_not_installed("haven")
+  z004 <- data.frame(
+    RespNr = c(1, 2, 3),
+    SEX = haven::labelled(c(1, 2, 1), c(male = 1, female = 2)),
+    BYEAR = c(1920, 1925, 1930)
+  )
+  path <- write_lasa_sav(z004, "LASAZ004.SAV")
+  expect_message(dat <- read_lasa_sav(path, format_as_long = TRUE), "no wave-specific columns")
+  expect_named(dat, c("respnr", "sex", "byear"))
+  expect_equal(attr(dat, "LASA_wave"), "Z")
+})
+
+test_that("format_as_long gives a wave file a Time column", {
+  path <- write_lasa_sav(lasa046_fixture("C"), "LASAC046.SAV")
+  dat <- read_lasa_sav(path, format_as_long = TRUE)
+  expect_equal(names(dat)[1:3], c("respnr", "Wave", "Time"))
+  expect_identical(as.vector(dat$Time), rep(2L, 3))
+  expect_equal(attr(dat, "LASA_wave"), "C")
+
+  # Without standardizing, the wave-prefixed names lose their prefix too.
+  raw <- read_lasa_sav(path, standardize = FALSE, format_as_long = TRUE)
+  expect_equal(names(raw), c("respnr", "Wave", "Time", "lphya01", "lphya07"))
+  expect_true(all(raw$Wave == "C"))
+})
+
+test_that("format_as_long must be TRUE or FALSE", {
+  path <- write_lasa_sav(lasa046_fixture(), "LASAB046.SAV")
+  expect_error(read_lasa_sav(path, format_as_long = "yes"), "'format_as_long' must be TRUE or FALSE")
+  expect_error(read_lasa_sav(path, format_as_long = NA), "'format_as_long' must be TRUE or FALSE")
+  expect_error(read_lasa_sav(path, format_as_long = c(TRUE, FALSE)), "'format_as_long' must be TRUE or FALSE")
+})
