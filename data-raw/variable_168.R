@@ -73,7 +73,8 @@ value_labels(
 value_labels(
   `-2` = "LF test done", `1` = "device not working or parts missing", `2` = "physical reasons", `3` = "R does not want to perform spirometry", `4` = "limited time", `5` = "no medication", `6` = "environment not suitable", `7` = "unknown",
   .applies_to_vars = c("mlftrn"),
-  .applies_to_waves = c("Z", "3B")
+  .applies_to_waves = c("Z", "3B"),
+  .not_missing = -2
 )
 
 value_labels(

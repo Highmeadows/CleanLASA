@@ -15,7 +15,9 @@
 #   variables                 one row per (filecode, wave, variable_name):
 #                              canonical_name, variable_label (wave-specific
 #                              text), harmonized_var_label (cross-wave-
-#                              consistent text), var_type
+#                              consistent text), var_type, can_be_negative
+#                              (genuine values can be negative, so only
+#                              documented negative codes are missing)
 #   value_labels               one row per (filecode, wave, variable_name,
 #                              value_numeric): value_label, is_missing --
 #                              the value labels as documented for that wave
@@ -35,6 +37,7 @@
       filecode = character(0), wave = character(0), variable_name = character(0),
       canonical_name = character(0), variable_label = character(0),
       harmonized_var_label = character(0), var_type = character(0),
+      can_be_negative = logical(0),
       stringsAsFactors = FALSE
     ),
     value_labels = data.frame(

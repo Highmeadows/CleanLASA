@@ -97,7 +97,8 @@ value_labels(
 value_labels(
   `-3` = "no valid data", `-2` = "(partial) valid data", `1` = "short interview", `2` = "insufficient light", `3` = "visually impaired/(partially) blind", `4` = "physically unable", `5` = "aphasia/illiterate", `6` = "equipment failure", `7` = "refused",
   .applies_to_vars = c("mrm191"),
-  .applies_to_waves = c("Z")
+  .applies_to_waves = c("Z"),
+  .not_missing = -2
 )
 
 value_labels(
@@ -127,7 +128,8 @@ value_labels(
 value_labels(
   `-3` = "no data", `-2` = "(partial) valid data", `1` = "short interview", `2` = "insufficient light", `3` = "visually impaired/(partially) blind", `4` = "physically unable", `5` = "aphasia/illiterate", `6` = "equipment failure", `7` = "refused",
   .applies_to_vars = c("mrm191"),
-  .applies_to_waves = c("E", "F", "G")
+  .applies_to_waves = c("E", "F", "G"),
+  .not_missing = -2
 )
 
 value_labels(

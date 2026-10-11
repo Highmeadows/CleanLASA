@@ -744,7 +744,8 @@ value_labels(
 value_labels(
   `-3` = "only once/ short cure / only once / short cure", `-2` = "na, see D/E/B/FMMEDCORT", `-1` = "R does not know period / na, asked / na, asked", `99` = "99 months or longer",
   .applies_to_vars = c("mmedcortnm"),
-  .applies_to_waves = c("Z")
+  .applies_to_waves = c("Z"),
+  .not_missing = -3
 )
 
 value_labels(
@@ -942,7 +943,8 @@ value_labels(
 value_labels(
   `-3` = "only once/ short cure", `-2` = "na, see D/E/B/FMMEDCORT", `-1` = "R does not know period / na, asked",
   .applies_to_vars = c("mmedcortnm"),
-  .applies_to_waves = c("E", "2B", "F")
+  .applies_to_waves = c("E", "2B", "F"),
+  .not_missing = -3
 )
 
 value_labels(
@@ -984,7 +986,8 @@ value_labels(
 value_labels(
   `-3` = "only once / short cure", `-2` = "na, see G/HMMEDCORT", `-1` = "na, asked",
   .applies_to_vars = c("mmedcortnm"),
-  .applies_to_waves = c("G")
+  .applies_to_waves = c("G"),
+  .not_missing = -3
 )
 
 value_labels(

@@ -53,7 +53,8 @@ value_labels(
 value_labels(
   `-2` = "no remarks", `-1` = "na, asked", `1` = "airforce", `2` = "camp", `3` = "care hiders", `4` = "do not know", `5` = "hiding", `6` = "labour camp", `7` = "military", `8` = "more then one residence", `9` = "no answer", `10` = "on ship (rivers only)", `11` = "on ship (sea-going)", `12` = "prison", `13` = "unfindable", `14` = "wandering",
   .applies_to_vars = c("remarks"),
-  .applies_to_waves = c("Z")
+  .applies_to_waves = c("Z"),
+  .not_missing = -2
 )
 
 value_labels(
@@ -77,7 +78,8 @@ value_labels(
 value_labels(
   `-2` = "no remarks", `-1` = "na, asked", `1` = "AIRFORCE", `2` = "CAMP", `3` = "CARE HIDERS", `4` = "DO NOT KNOW", `5` = "HIDING", `6` = "LABOUR CAMP", `7` = "MILITARY", `8` = "MORE THEN ONE RESIDENCE", `9` = "NO ANSWER", `10` = "ON SHIP (RIVERS ONLY)", `11` = "ON SHIP (SEA-GOING)", `12` = "PRISON", `13` = "UNFINDABLE", `14` = "WANDERING",
   .applies_to_vars = c("remarks"),
-  .applies_to_waves = c("B")
+  .applies_to_waves = c("B"),
+  .not_missing = -2
 )
 
 .lasa_fc_013 <- .lasa_finalize_fc("013")

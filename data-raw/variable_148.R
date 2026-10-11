@@ -81,7 +81,8 @@ value_labels(
 value_labels(
   `-1` = "mentioned", `0` = "not mentioned",
   .applies_to_vars = c("qeoldt1", "qeoldt2", "qeoldt3", "qeoldt4", "qeoldt5"),
-  .applies_to_waves = c("G")
+  .applies_to_waves = c("G"),
+  .not_missing = -1
 )
 
 .lasa_fc_148 <- .lasa_finalize_fc("148")

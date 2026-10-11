@@ -1400,7 +1400,8 @@ value_labels(
 value_labels(
   `-2` = "valid data", `1` = "terminated interview", `2` = "label varies by wave", `4` = "refused test",
   .applies_to_vars = c("rmch"),
-  .applies_to_waves = c("Z")
+  .applies_to_waves = c("Z"),
+  .not_missing = -2
 )
 
 value_labels(
@@ -1820,7 +1821,8 @@ value_labels(
 value_labels(
   `-2` = "valid data", `1` = "terminated interview", `2` = "short interview",
   .applies_to_vars = c("rmch"),
-  .applies_to_waves = c("B")
+  .applies_to_waves = c("B"),
+  .not_missing = -2
 )
 
 value_labels(
@@ -2324,7 +2326,8 @@ value_labels(
 value_labels(
   `-2` = "valid data", `2` = "interview terminated", `4` = "refused test",
   .applies_to_vars = c("rmch"),
-  .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
+  .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K"),
+  .not_missing = -2
 )
 
 value_labels(

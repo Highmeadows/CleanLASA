@@ -1003,7 +1003,8 @@ value_labels(
 value_labels(
   `-1` = "never had job, unknown before", `0` = "unknown", `1` = "no job, not changed", `2` = "no job, changed", `3` = "no job, unknown before", `4` = "job, not changed", `5` = "job, changed", `6` = "job, unknown before",
   .applies_to_vars = c("jobc", "pjobc"),
-  .applies_to_waves = c("Z")
+  .applies_to_waves = c("Z"),
+  .not_missing = -1
 )
 
 value_labels(
@@ -1531,7 +1532,8 @@ value_labels(
 value_labels(
   `-1` = "never had job, unknown before", `1` = "no job, not changed", `2` = "no job, changed", `3` = "no job, unknown before", `4` = "job, not changed", `5` = "job, changed", `6` = "job, unknown before",
   .applies_to_vars = c("jobc"),
-  .applies_to_waves = c("C", "D", "E", "F", "G")
+  .applies_to_waves = c("C", "D", "E", "F", "G"),
+  .not_missing = -1
 )
 
 value_labels(
@@ -1987,7 +1989,8 @@ value_labels(
 value_labels(
   `-2` = "na, see HJOB1", `-1` = "never had job, unknown before", `0` = "unknown", `1` = "no job, not changed", `2` = "no job, changed", `3` = "no job, unknown before", `4` = "job, not changed", `5` = "job, changed", `6` = "job, unknown before",
   .applies_to_vars = c("jobc"),
-  .applies_to_waves = c("H")
+  .applies_to_waves = c("H"),
+  .not_missing = -1
 )
 
 value_labels(
@@ -2503,7 +2506,8 @@ value_labels(
 value_labels(
   `-2` = "na, see IJOB1", `-1` = "never had job, unknown before", `0` = "unknown", `1` = "no job, not changed", `2` = "no job, changed", `3` = "no job, unknown before", `4` = "job, not changed", `5` = "job, changed", `6` = "job, unknown before",
   .applies_to_vars = c("jobc"),
-  .applies_to_waves = c("I")
+  .applies_to_waves = c("I"),
+  .not_missing = -1
 )
 
 value_labels(
@@ -2599,7 +2603,8 @@ value_labels(
 value_labels(
   `-2` = "na, see IPJOB1", `-1` = "never had job, unknown before", `0` = "unknown", `1` = "no job, not changed", `2` = "no job, changed", `3` = "no job, unknown before", `4` = "job, not changed", `5` = "job, changed", `6` = "job, unknown before",
   .applies_to_vars = c("pjobc"),
-  .applies_to_waves = c("I")
+  .applies_to_waves = c("I"),
+  .not_missing = -1
 )
 
 value_labels(
@@ -2707,7 +2712,8 @@ value_labels(
 value_labels(
   `-2` = "na, see JJOB1", `-1` = "never had job, unknown before", `0` = "unknown", `1` = "no job, not changed", `2` = "no job, changed", `3` = "no job, unknown before", `4` = "job, not changed", `5` = "job, changed", `6` = "job, unknown before",
   .applies_to_vars = c("jobc"),
-  .applies_to_waves = c("J")
+  .applies_to_waves = c("J"),
+  .not_missing = -1
 )
 
 value_labels(
@@ -2803,7 +2809,8 @@ value_labels(
 value_labels(
   `-2` = "na, see JPJOB1", `-1` = "never had job, unknown before", `0` = "unknown", `1` = "no job, not changed", `2` = "no job, changed", `3` = "no job, unknown before", `4` = "job, not changed", `5` = "job, changed", `6` = "job, unknown before",
   .applies_to_vars = c("pjobc"),
-  .applies_to_waves = c("J")
+  .applies_to_waves = c("J"),
+  .not_missing = -1
 )
 
 value_labels(
@@ -2917,7 +2924,8 @@ value_labels(
 value_labels(
   `-2` = "na, see KJOB1", `-1` = "never had job, unknown before", `0` = "unknown", `1` = "no job, not changed", `2` = "no job, changed", `3` = "no job, unknown before", `4` = "job, not changed", `5` = "job, changed", `6` = "job, unknown before",
   .applies_to_vars = c("jobc"),
-  .applies_to_waves = c("K")
+  .applies_to_waves = c("K"),
+  .not_missing = -1
 )
 
 value_labels(
@@ -2995,7 +3003,8 @@ value_labels(
 value_labels(
   `-2` = "na, see KPJOB1", `-1` = "never had job, unknown before", `0` = "unknown", `1` = "no job, not changed", `2` = "no job, changed", `3` = "no job, unknown before", `4` = "job, not changed", `5` = "job, changed", `6` = "job, unknown before",
   .applies_to_vars = c("pjobc"),
-  .applies_to_waves = c("K")
+  .applies_to_waves = c("K"),
+  .not_missing = -1
 )
 
 value_labels(

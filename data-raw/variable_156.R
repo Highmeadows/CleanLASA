@@ -463,7 +463,8 @@ value_labels(
 value_labels(
   `-2` = "valid score", `0` = "to be coded", `1` = "short version", `2` = "interview terminated", `3` = "too many missings", `4` = "refused test", `5` = "not able to (cognitive)", `6` = "not able to (physical)", `7` = "technical problems", `8` = "unknown",
   .applies_to_vars = c("mrm15wt"),
-  .applies_to_waves = c("Z", "F", "G")
+  .applies_to_waves = c("Z", "F", "G"),
+  .not_missing = -2
 )
 
 value_labels(
@@ -486,8 +487,22 @@ value_labels(
 
 value_labels(
   `-2` = "no particularities", `-1` = "no other reason", `0` = "not mentioned", `1` = "mentioned",
-  .applies_to_vars = c("m15wrp0", "m15wrp1", "m15wrp2", "m15wrp3", "m15wrp4", "m15wrp5"),
+  .applies_to_vars = c("m15wrp1", "m15wrp2", "m15wrp3", "m15wrp4"),
   .applies_to_waves = c("C")
+)
+
+value_labels(
+  `-2` = "no particularities", `-1` = "no other reason", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("m15wrp0"),
+  .applies_to_waves = c("C"),
+  .not_missing = -2
+)
+
+value_labels(
+  `-2` = "no particularities", `-1` = "no other reason", `0` = "not mentioned", `1` = "mentioned",
+  .applies_to_vars = c("m15wrp5"),
+  .applies_to_waves = c("C"),
+  .not_missing = -1
 )
 
 value_labels(
@@ -499,7 +514,8 @@ value_labels(
 value_labels(
   `-3` = "no test", `-2` = "no particularities", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("m15wtp0"),
-  .applies_to_waves = c("C")
+  .applies_to_waves = c("C"),
+  .not_missing = -2
 )
 
 value_labels(

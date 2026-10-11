@@ -219,7 +219,8 @@ value_labels(
 value_labels(
   `-2` = "valid data",
   .applies_to_vars = c("rmpf"),
-  .applies_to_waves = c("Z", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
+  .applies_to_waves = c("Z", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K"),
+  .not_missing = -2
 )
 
 value_labels(
@@ -507,7 +508,8 @@ value_labels(
 value_labels(
   `-2` = "valid score", `1` = "short version", `2` = "interview terminated",
   .applies_to_vars = c("rmpf"),
-  .applies_to_waves = c("B", "C")
+  .applies_to_waves = c("B", "C"),
+  .not_missing = -2
 )
 
 value_labels(

@@ -326,7 +326,8 @@ value_labels(
 value_labels(
   `-2` = "valid data", `2` = "interview terminated",
   .applies_to_vars = c("rm151"),
-  .applies_to_waves = c("C")
+  .applies_to_waves = c("C"),
+  .not_missing = -2
 )
 
 value_labels(
@@ -350,7 +351,8 @@ value_labels(
 value_labels(
   `-3` = "test not done", `-1` = "normal test", `1` = "R cannot sit", `2` = "measurement error", `3` = "painful arm, no measurement", `4` = "measurement on right arm", `5` = "(part of) test refused", `6` = "part of test wrongfully not done",
   .applies_to_vars = c("marmpar"),
-  .applies_to_waves = c("E")
+  .applies_to_waves = c("E"),
+  .not_missing = -1
 )
 
 value_labels(
@@ -386,13 +388,15 @@ value_labels(
 value_labels(
   `-3` = "section not done", `-2` = "normal test", `-1` = "partially no valid measurement", `1` = "R cannot sit", `2` = "measurement error", `3` = "painful arm, no measurement", `4` = "measurement on right arm", `5` = "(part of) test refused", `6` = "part of test wrongfully not done", `8` = "- to be coded -",
   .applies_to_vars = c("marmpar"),
-  .applies_to_waves = c("F", "G", "MB")
+  .applies_to_waves = c("F", "G", "MB"),
+  .not_missing = -2
 )
 
 value_labels(
   `-3` = "section not done", `-2` = "normal test", `-1` = "partially no valid measurement", `1` = "R cannot sit", `2` = "measurement error", `3` = "painful arm, no measurement", `4` = "measurement on right arm", `5` = "(part of) test refused", `6` = "part of test wrongfully not done", `8` = "- to be coded -",
   .applies_to_vars = c("marmpa0"),
-  .applies_to_waves = c("G", "H", "3B", "I", "J", "K")
+  .applies_to_waves = c("G", "H", "3B", "I", "J", "K"),
+  .not_missing = -2
 )
 
 value_labels(

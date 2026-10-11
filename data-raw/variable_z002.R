@@ -120,13 +120,15 @@ variable_labels(
 value_labels(
   `-3` = "no data main interview", `-2` = "not in sample medical interview", `-1` = "medical interview",
   .applies_to_vars = c("mresult"),
-  .applies_to_waves = c("Z", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K")
+  .applies_to_waves = c("Z", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"),
+  .not_missing = -1
 )
 
 value_labels(
   `-1` = "no participation self-administered questionnaire",
   .applies_to_vars = c("selfr"),
-  .applies_to_waves = c("Z", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K")
+  .applies_to_waves = c("Z", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"),
+  .not_missing = -1
 )
 
 value_labels(

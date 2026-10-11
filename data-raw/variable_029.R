@@ -61,7 +61,8 @@ value_labels(
 value_labels(
   `-2` = "not missing", `1` = "short interview", `2` = "interview terminated", `5` = "no valid data",
   .applies_to_vars = c("rmmeemo"),
-  .applies_to_waves = c("Z", "B")
+  .applies_to_waves = c("Z", "B"),
+  .not_missing = -2
 )
 
 value_labels(

@@ -1,7 +1,8 @@
 # Negative codes that LASA's documentation shows are real values, not
 # missing codes: a documented code such as `-2` = "valid score" (database
-# is_missing = FALSE), and a numeric variable whose documented values can
-# be negative, so an undocumented negative number in it is a measurement.
+# is_missing = FALSE), and a variable whose genuine values can be negative
+# (database can_be_negative), so an undocumented negative number in it is
+# a measurement.
 
 local_negative_db <- function(env = parent.frame()) {
   tmp <- tempfile(fileext = ".rds")
@@ -21,6 +22,7 @@ local_negative_db <- function(env = parent.frame()) {
       "Number of words correct"
     ),
     var_type = c("categorical", "numeric", "numeric", "numeric"),
+    can_be_negative = c(FALSE, TRUE, FALSE, FALSE),
     stringsAsFactors = FALSE
   ))
   db$value_labels <- rbind(db$value_labels, data.frame(
@@ -71,7 +73,7 @@ test_that("a documented real negative code stays a value; the other negatives ar
   expect_equal(as.vector(out$bwords), c(-2, NA, 3, 0, 10))
 })
 
-test_that("a numeric variable documented with real negative values keeps undocumented negatives", {
+test_that("a variable whose values can be negative keeps undocumented negatives", {
   local_negative_db()
   out <- relabel(negative_fixture())
 
@@ -130,13 +132,6 @@ test_that("the documented missing/real split comes from the database's is_missin
   )
   expect_equal(documented$missing, -1)
   expect_equal(sort(documented$real), c(-2, 1))
-  # A worded real code (`-2` = "zero on trial") doesn't make the variable's
-  # other negative values real; a value listed without wording does.
-  expect_false(.lasa_can_be_negative(documented, "numeric"))
-  measured <- list(missing = -22, real = c(-9.2, 8), unworded = c(-9.2, 8))
-  expect_true(.lasa_can_be_negative(measured, "numeric"))
-  expect_false(.lasa_can_be_negative(measured, "categorical"))
-  expect_false(.lasa_can_be_negative(list(missing = -1, real = c(0, 1), unworded = 1), "numeric"))
 
   # The wave's own documentation wins over the harmonized labels.
   wave_first <- .lasa_documented_codes(
@@ -155,15 +150,28 @@ test_that("the documented missing/real split comes from the database's is_missin
   )
 })
 
-test_that("value_labels(.not_missing) marks negative codes as real values in the build", {
+test_that("a local database saved without can_be_negative still labels", {
+  local_negative_db()
+  db <- .lasa_load_label_db()
+  db$variables$can_be_negative <- NULL
+  .lasa_save_label_db(db)
+
+  out <- relabel(negative_fixture())
+  expect_equal(as.vector(out$bsrt), c(NA, -9.2, 1.5, NA, NA))
+  expect_equal(as.character(out$brmpf)[1], "valid score")
+})
+
+test_that("value_labels(.not_missing) and negative_values() reach the build", {
   helpers <- testthat::test_path("..", "..", "data-raw", "label_db_helpers.R")
   skip_if_not(file.exists(helpers), "data-raw/ is not shipped with the built package")
   env <- new.env(parent = environment())
   sys.source(helpers, envir = env)
 
   local({
-    var_types_vec <- c(rmpf = "categorical", walk = "numeric")
+    var_types_vec <- c(rmpf = "categorical", walk = "numeric", srt = "numeric")
     variable_labels(rmpf = "Reason missing", walk = "Walking time", .applies_to_waves = c("Z", "B", "C"))
+    variable_labels(srt = "Speech-reception threshold (in dB)", .applies_to_waves = c("Z", "C"))
+    negative_values("srt", .applies_to_waves = "C")
     value_labels(
       `-2` = "valid score", `-1` = "na, asked", `1` = "short version",
       .applies_to_vars = "rmpf", .applies_to_waves = c("Z", "B"), .not_missing = -2
@@ -173,6 +181,12 @@ test_that("value_labels(.not_missing) marks negative codes as real values in the
     expect_equal(fc$not_missing$canonical_name, c("rmpf", "rmpf"))
     expect_setequal(fc$not_missing$LASA_Wave, c("all", "B"))
     expect_equal(fc$not_missing$code, c(-2, -2))
+    expect_equal(fc$negative_values, data.frame(LASA_Wave = "C", canonical_name = "srt", stringsAsFactors = FALSE))
+
+    var_types_vec <- c(srt = "numeric")
+    variable_labels(srt = "Speech-reception threshold (in dB)", .applies_to_waves = c("Z", "C"))
+    negative_values("srt", .applies_to_waves = "B")
+    expect_error(.lasa_finalize_fc("997"), "doesn't cover it there")
   }, envir = env)
 
   expect_error(
@@ -183,4 +197,30 @@ test_that("value_labels(.not_missing) marks negative codes as real values in the
     env$value_labels(`-1` = "na", .applies_to_vars = "x", .applies_to_waves = "B", .not_missing = -3),
     "negative codes the same call declares"
   )
+  expect_error(env$negative_values("x", .applies_to_waves = "Z"), "real waves")
+  env$.lasa_reset_dsl_state()
+})
+
+test_that("the bundled database keeps documented real negative values", {
+  testthat::local_mocked_bindings(.lasa_label_db_path = function() tempfile(fileext = ".rds"))
+
+  path <- write_lasa_sav(
+    data.frame(respnr = 1:4, brmpf = c(-2, 1, -1, 2)),
+    "LASAB034.SAV"
+  )
+  out <- read_lasa_sav(path, standardize = FALSE)
+  expect_s3_class(out$brmpf, "factor")
+  expect_equal(as.character(out$brmpf), c("valid score", "short version", NA, "interview terminated"))
+
+  # A speech-reception threshold in dB: real values are negative, the
+  # documented -22/-23/-24 are missing codes.
+  path <- write_lasa_sav(
+    data.frame(respnr = 1:5, emsrttn = c(-6.4, -9.2, 1.5, -22, -24)),
+    "LASAE193.SAV"
+  )
+  out <- read_lasa_sav(path, standardize = FALSE)
+  expect_equal(as.vector(out$emsrttn), c(-6.4, -9.2, 1.5, NA, NA))
+
+  kept <- read_lasa_sav(path, standardize = FALSE, keep_user_na = TRUE)
+  expect_equal(sort(attr(kept$emsrttn, "na_values")), c(-24, -23, -22))
 })

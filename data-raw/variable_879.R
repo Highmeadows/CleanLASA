@@ -44,7 +44,8 @@ value_labels(
 value_labels(
   `-1` = "data", `1` = "no determination / no blood sample available", `2` = "haemolytic", `3` = "too little material",
   .applies_to_vars = c("mrm879"),
-  .applies_to_waves = c("Z", "G")
+  .applies_to_waves = c("Z", "G"),
+  .not_missing = -1
 )
 
 value_labels(

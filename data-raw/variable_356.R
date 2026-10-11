@@ -168,7 +168,8 @@ value_labels(
 value_labels(
   `-4` = "interview terminated", `-2` = "zero on trial",
   .applies_to_vars = c("mwtt1"),
-  .applies_to_waves = c("Z")
+  .applies_to_waves = c("Z"),
+  .not_missing = -2
 )
 
 value_labels(
@@ -180,7 +181,8 @@ value_labels(
 value_labels(
   `-2` = "zero on trial",
   .applies_to_vars = c("mwtt1"),
-  .applies_to_waves = c("B")
+  .applies_to_waves = c("B"),
+  .not_missing = -2
 )
 
 value_labels(
@@ -188,6 +190,13 @@ value_labels(
   .applies_to_vars = c("mwtt1"),
   .applies_to_waves = c("C")
 )
+
+# define variables whose values can be negative ----
+## Retention as a difference (delayed recall minus trial 3 / best trial) is
+## negative whenever fewer words are recalled after the delay; waves B and
+## C document retention 1 as a ratio instead. Only their documented
+## negative codes are missing.
+negative_values("mret1pc", "mret2pc", .applies_to_waves = c("D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K"))
 
 .lasa_fc_356 <- .lasa_finalize_fc("356")
 

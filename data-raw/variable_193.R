@@ -98,7 +98,8 @@ value_labels(
 value_labels(
   `-24` = "non-valid, too many incomplete triplets", `-23` = "non-valid, aborted measurement", `-22` = "test not done", `-9.8` = NA_character_, `-9.2` = NA_character_, `5.71` = NA_character_, `6.36` = NA_character_, `8` = NA_character_,
   .applies_to_vars = c("msrttn"),
-  .applies_to_waves = c("Z")
+  .applies_to_waves = c("Z"),
+  .not_missing = c(-9.8, -9.2)
 )
 
 value_labels(
@@ -110,14 +111,22 @@ value_labels(
 value_labels(
   `-24` = "non-valid, too many incomplete triplets", `-23` = "non-valid, aborted measurement", `-22` = "test not done", `-9.2` = NA_character_, `5.71` = NA_character_, `6.36` = NA_character_,
   .applies_to_vars = c("msrttn"),
-  .applies_to_waves = c("E")
+  .applies_to_waves = c("E"),
+  .not_missing = -9.2
 )
 
 value_labels(
   `-24` = "non-valid, too many incomplete triplets", `-23` = "non-valid, aborted measurement", `-22` = "test not done", `-9.8` = NA_character_, `-9.2` = NA_character_, `6.36` = NA_character_, `8` = NA_character_,
   .applies_to_vars = c("msrttn"),
-  .applies_to_waves = c("F")
+  .applies_to_waves = c("F"),
+  .not_missing = c(-9.8, -9.2)
 )
+
+# define variables whose values can be negative ----
+## Speech-reception thresholds in dB (signal-to-noise ratio) are negative
+## for good hearing; only their documented negative codes are missing.
+negative_values("msrttn", .applies_to_waves = c("E", "F"))
+negative_values("msrtnb", "msrtns", .applies_to_waves = c("G"))
 
 .lasa_fc_193 <- .lasa_finalize_fc("193")
 

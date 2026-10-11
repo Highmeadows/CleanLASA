@@ -64,7 +64,8 @@ variable_labels(
 value_labels(
   `-2` = "no blood sample", `-1` = "no aprotonine sample", `1` = "aprotonine sample available",
   .applies_to_vars = c("mapro"),
-  .applies_to_waves = c("Z", "3B")
+  .applies_to_waves = c("Z", "3B"),
+  .not_missing = -1
 )
 
 value_labels(
@@ -76,13 +77,15 @@ value_labels(
 value_labels(
   `-2` = "no blood sample", `-1` = "no DNA sample", `1` = "DNA sample available",
   .applies_to_vars = c("mdna"),
-  .applies_to_waves = c("Z", "C", "2B", "G", "3B")
+  .applies_to_waves = c("Z", "C", "2B", "G", "3B"),
+  .not_missing = -1
 )
 
 value_labels(
   `-2` = "no blood sample", `-1` = "no EDTA sample", `1` = "EDTA sample available",
   .applies_to_vars = c("medta"),
-  .applies_to_waves = c("Z", "3B")
+  .applies_to_waves = c("Z", "3B"),
+  .not_missing = -1
 )
 
 value_labels(
@@ -94,7 +97,8 @@ value_labels(
 value_labels(
   `-2` = "no blood sample", `-1` = "no serum sample", `1` = "serum sample available",
   .applies_to_vars = c("mserum"),
-  .applies_to_waves = c("Z", "3B")
+  .applies_to_waves = c("Z", "3B"),
+  .not_missing = -1
 )
 
 value_labels(

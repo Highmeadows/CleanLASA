@@ -16,7 +16,10 @@
 #'     `canonical_name` (the wave-stripped name), `variable_label` (the
 #'     wave-specific text), `harmonized_var_label` (a cross-wave-consistent
 #'     description of the same variable), `var_type`
-#'     (`"numeric"`/`"categorical"`/`"text"`/`"date"`).}
+#'     (`"numeric"`/`"categorical"`/`"text"`/`"date"`), `can_be_negative`
+#'     (`TRUE` when the documentation shows the variable's genuine values
+#'     can be negative, e.g. a hearing threshold in dB, so only its
+#'     documented negative codes are missing-value codes).}
 #'   \item{value_labels}{One row per (`filecode`, `wave`, `variable_name`,
 #'     `value_numeric`): `value_label`, `is_missing` -- the value labels as
 #'     documented for that wave. `is_missing` is `TRUE` for a missing-value

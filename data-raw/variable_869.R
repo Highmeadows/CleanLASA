@@ -39,7 +39,8 @@ value_labels(
 value_labels(
   `-2` = "no remarks", `1` = "whole blood", `2` = "lipaemic", `3` = "light lipaemic", `4` = "hemolytic", `5` = "light hemolytic",
   .applies_to_vars = c("mlabrem"),
-  .applies_to_waves = c("Z", "2B")
+  .applies_to_waves = c("Z", "2B"),
+  .not_missing = -2
 )
 
 .lasa_fc_869 <- .lasa_finalize_fc("869")

@@ -43,7 +43,8 @@ value_labels(
 value_labels(
   `-2` = "valid score", `1` = "short version", `2` = "interview terminated",
   .applies_to_vars = c("rmpar"),
-  .applies_to_waves = c("Z", "D")
+  .applies_to_waves = c("Z", "D"),
+  .not_missing = -2
 )
 
 value_labels(

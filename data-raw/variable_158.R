@@ -129,7 +129,8 @@ value_labels(
 value_labels(
   `-2` = "valid data", `4` = "refused", `5` = "not able (cognitive)", `6` = "not able (physical)", `7` = "technical problem", `8` = "unknown",
   .applies_to_vars = c("mrmpf"),
-  .applies_to_waves = c("Z", "C")
+  .applies_to_waves = c("Z", "C"),
+  .not_missing = -2
 )
 
 value_labels(

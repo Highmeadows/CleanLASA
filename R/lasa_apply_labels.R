@@ -42,7 +42,7 @@
   data.frame(
     variable_name = "respnr", canonical_name = "respnr",
     variable_label = NA_character_, harmonized_var_label = NA_character_,
-    var_type = NA_character_, manual_override = FALSE,
+    var_type = NA_character_, can_be_negative = FALSE, manual_override = FALSE,
     stringsAsFactors = FALSE
   )
 }
@@ -86,9 +86,13 @@
 
   db <- .lasa_load_label_db()
   labels <- .lasa_get_labels(db, filecode, wave)
+  # A local database saved before `can_be_negative` existed lacks it.
+  if (is.null(labels$variables$can_be_negative)) {
+    labels$variables$can_be_negative <- rep(FALSE, nrow(labels$variables))
+  }
   vars <- labels$variables[c(
     "variable_name", "canonical_name", "variable_label",
-    "harmonized_var_label", "var_type", "manual_override"
+    "harmonized_var_label", "var_type", "can_be_negative", "manual_override"
   )]
   vars <- rbind(vars, .lasa_respnr_row())
   vals <- labels$value_labels
@@ -162,11 +166,11 @@
     # keep_user_na = FALSE turns every one into NA; keep_user_na = TRUE
     # keeps it -- as label text in a factor/character result, or as the
     # raw code declared SPSS user-missing in a numeric one. respnr is an
-    # identifier, never missing-coded. A variable that can genuinely be
-    # negative only has its documented missing codes treated as missing.
+    # identifier, never missing-coded. A variable whose genuine values can
+    # be negative only has its documented missing codes treated as missing.
     is_respnr <- identical(vname, "respnr")
     documented <- .lasa_documented_codes(vals, vname, vals_harmonized, cname)
-    infer_negative <- !.lasa_can_be_negative(documented, row$var_type)
+    infer_negative <- !isTRUE(row$can_be_negative)
     missing_codes <- if (is_respnr) {
       numeric(0)
     } else {

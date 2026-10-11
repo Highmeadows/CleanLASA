@@ -203,6 +203,8 @@ resp_identifiers <- c("respnr", "Wave")
 ##     every value_labels() call naming it (see value_labels() below);
 ##     `.not_missing = c(-2)` marks a negative code in the call as a real
 ##     value rather than a missing-value code
+##   negative_values("cn1", ..., .applies_to_waves = c("E", "F"))  # numeric
+##     variables whose genuine values can be negative (see negative_values())
 ##   .lasa_fc_<fc> <- .lasa_finalize_fc("<fc>")  # closes out the file
 ##
 ## "Z" is a synthetic sentinel wave, never a real LASA one, standing in
@@ -220,6 +222,7 @@ resp_identifiers <- c("respnr", "Wave")
 .lasa_reset_dsl_state <- function() {
   .lasa_dsl_state$variable_labels_calls <- list()
   .lasa_dsl_state$value_labels_calls <- list()
+  .lasa_dsl_state$negative_values_calls <- list()
 }
 .lasa_reset_dsl_state()
 
@@ -333,6 +336,26 @@ value_labels <- function(..., .applies_to_vars, .applies_to_waves, .not_missing 
   }
   call <- list(labels = labels, vars = .applies_to_vars, waves = .applies_to_waves, not_missing = not_missing)
   .lasa_dsl_state$value_labels_calls <- c(.lasa_dsl_state$value_labels_calls, list(call))
+  invisible(NULL)
+}
+
+## Declares canonical names whose genuine values can be negative in the
+## given (real) waves -- a measurement the documentation defines as signed,
+## such as a hearing threshold in dB, a signed difference score, or an
+## EQ-5D index. LASA codes missing values as negative numbers, and an
+## undocumented negative number in a variable's data is normally read as
+## a missing code too; for these variables only their documented missing
+## codes are, and every other negative value is kept as a measurement.
+negative_values <- function(..., .applies_to_waves) {
+  vars <- c(...)
+  if (length(vars) == 0L || !is.character(vars) || !is.null(names(vars))) {
+    stop("negative_values() needs one or more bare canonical-name strings.", call. = FALSE)
+  }
+  if (!is.character(.applies_to_waves) || length(.applies_to_waves) == 0L || "Z" %in% .applies_to_waves) {
+    stop("negative_values() needs a non-empty .applies_to_waves of real waves (not \"Z\").", call. = FALSE)
+  }
+  call <- list(vars = vars, waves = .applies_to_waves)
+  .lasa_dsl_state$negative_values_calls <- c(.lasa_dsl_state$negative_values_calls, list(call))
   invisible(NULL)
 }
 
@@ -457,8 +480,9 @@ value_labels <- function(..., .applies_to_vars, .applies_to_waves, .not_missing 
 ## Returns the assembled list (variables/variable_labels/value_labels/
 ## variable_types, plus not_missing: one row per LASA_Wave/canonical_name/
 ## code a value_labels(.not_missing = ...) call marked as a real value,
-## LASA_Wave "all" for a "Z" declaration) -- NOT auto-assigned to
-## .lasa_fc_<fc>, so a file
+## LASA_Wave "all" for a "Z" declaration, and negative_values: one row per
+## LASA_Wave/canonical_name negative_values() declared) -- NOT
+## auto-assigned to .lasa_fc_<fc>, so a file
 ## needing .override_label() can still apply it to the returned
 ## $variables element before assigning, e.g.:
 ##   .lasa_fc_022 <- .lasa_finalize_fc("022")
@@ -470,6 +494,7 @@ value_labels <- function(..., .applies_to_vars, .applies_to_waves, .not_missing 
 
   var_calls <- .lasa_dsl_state$variable_labels_calls
   val_calls <- .lasa_dsl_state$value_labels_calls
+  neg_calls <- .lasa_dsl_state$negative_values_calls
   all_names <- names(var_types_vec)
 
   if (is.null(all_names) || anyDuplicated(all_names) > 0L || any(all_names == "")) {
@@ -503,6 +528,10 @@ value_labels <- function(..., .applies_to_vars, .applies_to_waves, .not_missing 
   for (call in val_calls) {
     check_names(call$vars, "value_labels()")
     check_waves(call$waves, "value_labels()")
+  }
+  for (call in neg_calls) {
+    check_names(call$vars, "negative_values()")
+    check_waves(call$waves, "negative_values()")
   }
 
   declared_waves <- unique(unlist(c(lapply(var_calls, `[[`, "waves"), lapply(val_calls, `[[`, "waves"))))
@@ -538,7 +567,24 @@ value_labels <- function(..., .applies_to_vars, .applies_to_waves, .not_missing 
     if (length(call$not_missing) == 0L) next
     not_missing <- rbind(not_missing, expand.grid(
       LASA_Wave = ifelse(call$waves == "Z", "all", call$waves), canonical_name = call$vars,
-      code = call$not_missing, stringsAsFactors = FALSE
+      code = call$not_missing, stringsAsFactors = FALSE, KEEP.OUT.ATTRS = FALSE
+    ))
+  }
+
+  negative_values <- data.frame(LASA_Wave = character(0), canonical_name = character(0))
+  for (call in neg_calls) {
+    for (w in call$waves) {
+      undocumented <- setdiff(call$vars, names(variable_labels_list[[paste0("Wave_", w, "_labels")]]))
+      if (length(undocumented) > 0L) {
+        stop(
+          filecode, ": negative_values() names ", paste(undocumented, collapse = ", "),
+          " for wave '", w, "' but variable_labels() doesn't cover it there.",
+          call. = FALSE
+        )
+      }
+    }
+    negative_values <- rbind(negative_values, expand.grid(
+      LASA_Wave = call$waves, canonical_name = call$vars, stringsAsFactors = FALSE, KEEP.OUT.ATTRS = FALSE
     ))
   }
 
@@ -548,6 +594,7 @@ value_labels <- function(..., .applies_to_vars, .applies_to_waves, .not_missing 
     variable_labels = .lasa_build_label_table(variable_labels_list, filecode = filecode, waves = waves),
     value_labels = .lasa_build_value_table(value_labels_list, filecode = filecode, waves = waves),
     variable_types = .lasa_build_type_table(var_types_vec, filecode = filecode, waves = waves),
-    not_missing = not_missing
+    not_missing = not_missing,
+    negative_values = negative_values
   )
 }

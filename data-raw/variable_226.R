@@ -38,7 +38,8 @@ value_labels(
 value_labels(
   `-2` = "valid score",
   .applies_to_vars = c("rmanx"),
-  .applies_to_waves = c("Z", "B", "C", "D", "E", "F", "G", "H", "3B", "MB", "I", "J")
+  .applies_to_waves = c("Z", "B", "C", "D", "E", "F", "G", "H", "3B", "MB", "I", "J"),
+  .not_missing = -2
 )
 
 value_labels(

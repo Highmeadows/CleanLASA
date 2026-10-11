@@ -11,7 +11,10 @@ A list with four elements:
 \code{canonical_name} (the wave-stripped name), \code{variable_label} (the
 wave-specific text), \code{harmonized_var_label} (a cross-wave-consistent
 description of the same variable), \code{var_type}
-(\code{"numeric"}/\code{"categorical"}/\code{"text"}/\code{"date"}).}
+(\code{"numeric"}/\code{"categorical"}/\code{"text"}/\code{"date"}), \code{can_be_negative}
+(\code{TRUE} when the documentation shows the variable's genuine values
+can be negative, e.g. a hearing threshold in dB, so only its
+documented negative codes are missing-value codes).}
 \item{value_labels}{One row per (\code{filecode}, \code{wave}, \code{variable_name},
 \code{value_numeric}): \code{value_label}, \code{is_missing} -- the value labels as
 documented for that wave. \code{is_missing} is \code{TRUE} for a missing-value
