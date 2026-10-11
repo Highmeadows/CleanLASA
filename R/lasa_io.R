@@ -359,8 +359,9 @@
 #'   [apply_lasa_labels()] for the full description of each.
 #' @param format_as_long Logical, default `FALSE`. If `TRUE`, the labelled
 #'   data are transformed to long format with
-#'   [transform_lasa_data()]: one row per respondent per wave, with `"Wave"`
-#'   and `"Time"` columns. Meant for Z files, which LASA stores in wide
+#'   [transform_lasa_data()]: one row per respondent per wave, with a
+#'   `"Wave"` column and a `"Time"` column (the number of waves since the
+#'   respondent's baseline). Meant for Z files, which LASA stores in wide
 #'   format (e.g. `boak`, `coak`, `doak`, ... become one `oak` column);
 #'   their stable variables, such as sex or year of birth, are repeated on
 #'   every row of the respondent. The default `FALSE` returns the data as
@@ -420,6 +421,16 @@
 #' dimension: it keeps one row per respondent, without `"Wave"` and
 #' `"Time"` columns, and a message says so. Long data that span several
 #' waves no longer carry a single `"LASA_wave"` attribute.
+#'
+#' `"Time"` counts the waves since each respondent's baseline (Time 0), so
+#' it needs the respondent's cohort: a baseline file's rows are Time 0, a
+#' file of waves C to E, which only the first cohort takes part in, gets
+#' that cohort's Time, and wave A (the LSN pilot study) has no Time. The
+#' waves from F on are shared by several cohorts, so a file of one of those
+#' waves doesn't show who belongs to which: its rows get no Time, with a
+#' message, until it is combined with data that show the cohorts, such as
+#' the baseline files, and transformed again (see [transform_lasa_data()],
+#' which also explains combining files).
 #'
 #' @return `data` as imported by [haven::read_sav()], labelled (and
 #'   optionally reshaped/renamed) with generic LASA provenance attributes

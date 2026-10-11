@@ -38,8 +38,9 @@ for a nonstandard baseline wave). If omitted, derived from \code{path}.}
 
 \item{format_as_long}{Logical, default \code{FALSE}. If \code{TRUE}, the labelled
 data are transformed to long format with
-\code{\link[=transform_lasa_data]{transform_lasa_data()}}: one row per respondent per wave, with \code{"Wave"}
-and \code{"Time"} columns. Meant for Z files, which LASA stores in wide
+\code{\link[=transform_lasa_data]{transform_lasa_data()}}: one row per respondent per wave, with a
+\code{"Wave"} column and a \code{"Time"} column (the number of waves since the
+respondent's baseline). Meant for Z files, which LASA stores in wide
 format (e.g. \code{boak}, \code{coak}, \code{doak}, ... become one \code{oak} column);
 their stable variables, such as sex or year of birth, are repeated on
 every row of the respondent. The default \code{FALSE} returns the data as
@@ -114,6 +115,16 @@ without wave-specific columns, such as \code{LASAZ004.SAV}, has no wave
 dimension: it keeps one row per respondent, without \code{"Wave"} and
 \code{"Time"} columns, and a message says so. Long data that span several
 waves no longer carry a single \code{"LASA_wave"} attribute.
+
+\code{"Time"} counts the waves since each respondent's baseline (Time 0), so
+it needs the respondent's cohort: a baseline file's rows are Time 0, a
+file of waves C to E, which only the first cohort takes part in, gets
+that cohort's Time, and wave A (the LSN pilot study) has no Time. The
+waves from F on are shared by several cohorts, so a file of one of those
+waves doesn't show who belongs to which: its rows get no Time, with a
+message, until it is combined with data that show the cohorts, such as
+the baseline files, and transformed again (see \code{\link[=transform_lasa_data]{transform_lasa_data()}},
+which also explains combining files).
 }
 \examples{
 \dontrun{

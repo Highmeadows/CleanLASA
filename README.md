@@ -70,8 +70,9 @@ lasa_label_report(data, problems_only = TRUE)
 
 Z files such as `LASAZOA1.sav` store several waves side by side
 (`boak`, `coak`, `doak`, ...). With `format_as_long = TRUE` you get
-them in long format instead: one row per respondent per wave, with
-`Wave` and `Time` columns and one `oak` column. `transform_lasa_data()`
+them in long format instead: one row per respondent per wave, with a
+`Wave` column, a `Time` column counting the waves since the
+respondent's baseline, and one `oak` column. `transform_lasa_data()`
 converts any LASA data -- including merged files -- between long and
 wide format:
 

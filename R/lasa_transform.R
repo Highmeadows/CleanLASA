@@ -27,11 +27,15 @@
 # Everything else is "stable" (one value per respondent).
 #
 # A name can be documented for several waves: LASA names the baseline of
-# every cohort (B, 2B, 3B, MB) with the same "b" prefix. Each respondent's
-# value is then placed at the wave the data show for that respondent
-# (`.lasa_resolve_wide_columns()`): the row the value is on, the
-# respondent's other waves, the data's provenance attributes, and only
-# then the earliest wave, with a message.
+# every cohort (B, 2B, 3B, MB, 4B) with the same "b" prefix. Each
+# respondent's value is then placed at the wave the data show for that
+# respondent (`.lasa_resolve_wide_columns()`): the row the value is on, the
+# respondent's cohort, the data's provenance attributes, and only then a
+# guess, with a message.
+#
+# "Time" counts the waves since each respondent's baseline (Time 0), along
+# their cohort's own waves (`.lasa_cohort_times()`), so it needs the
+# respondent's cohort, which the data must show (`.lasa_long_times()`).
 #
 # Round trips: every long column built from wide columns stores, per wave,
 # the original wide column's name and whatever of its attributes the long
@@ -132,34 +136,60 @@
 #' ... become `oak`. A respondent gets a row for each wave at which at least
 #' one of the wave-specific columns has a value for them -- anything but
 #' `NA`, so a missing-value code that is kept as a value (e.g. "dropout")
-#' counts -- and respondents of a later cohort therefore get no rows for the
-#' waves before they joined LASA. A respondent without any value at any
-#' wave keeps a row for every wave, so nobody disappears. Rows are sorted by
-#' respondent (in order of first appearance) and wave, except in long data
-#' without wide columns, which keep their order.
+#' counts. Respondents of a later cohort therefore only get rows for the
+#' waves before they joined LASA where the data hold such a code for them,
+#' as LASA's Z files do ("no observation birth cohorts 1938-1947"). A
+#' respondent without any value at any wave keeps a row for every wave, so
+#' nobody disappears. Rows are sorted by respondent (in order of first
+#' appearance) and wave, except in long data without wide columns, which
+#' keep their order.
 #'
-#' **Time** numbers the waves in calendar order: A (LSN) = 0, B = 1, C = 2,
-#' D = 3, E = 4, 2B = 5, F = 6, G = 7, H = 8, 3B = 9, MB = 10, I = 11,
-#' J = 12, K = 13; waves 4B and L have no Time number yet (`NA`). It orders
-#' the waves; it is not a time scale (waves are one to four years apart,
-#' and each cohort skips the other cohorts' baselines), nor LASA's own wave
-#' numbering, which `LASAZ008.SAV` uses (`t2_dat` is wave B there). For
-#' time itself, use the interview dates or ages in `LASAZ008.SAV`. A
-#' `"Time"` column already in long data is recomputed, so it must match
-#' these numbers.
+#' **Time** counts the waves since the respondent's baseline, the wave at
+#' which their cohort joined LASA, which is Time 0. A cohort takes part in
+#' every later wave except the other cohorts' baselines:
+#' * first cohort: B = 0, C = 1, D = 2, E = 3, F = 4, G = 5, H = 6, I = 7,
+#'   J = 8, K = 9, L = 10;
+#' * second cohort: 2B = 0, F = 1, G = 2, H = 3, I = 4, J = 5, K = 6, L = 7;
+#' * third cohort and migrant cohort: 3B or MB = 0, I = 1, J = 2, K = 3,
+#'   L = 4;
+#' * fourth cohort: 4B = 0, L = 1.
+#'
+#' Wave A, the LSN pilot study a few months before wave B, isn't part of any
+#' cohort's waves: its rows keep `"Wave"` `"A"` and have no Time (`NA`).
+#' Time counts waves, not years, and it isn't LASA's own wave numbering,
+#' which `LASAZ008.SAV` uses (`t2_dat` is wave B there); for time itself,
+#' use the interview dates or ages in `LASAZ008.SAV`.
+#'
+#' A row's Time depends on the respondent's cohort, so the data must show
+#' it: a value (other than `NA` or a missing-value code) at the
+#' respondent's baseline or at a wave only their cohort takes part in (B to
+#' E for the first cohort), a `"Baseline"` column with each respondent's
+#' baseline wave (as Time-prefixed wide data have, see below), or a
+#' `"Time"` column already in long data. The waves from F on, which cohorts
+#' share, don't show it: the rows of a respondent seen only at those waves
+#' get no Time (unless every cohort the data leave open gives their wave
+#' the same Time), with a message. Data showing waves of several cohorts
+#' for one respondent give that respondent no Time, with a warning. So a
+#' single LASA file of wave F or later has no Time until it is combined
+#' with data that show the cohorts, such as the baseline files. A `"Time"`
+#' column already in long data -- also the `Time.x`/`Time.y` columns
+#' [merge()] makes of two -- must give each row a Time that some cohort's
+#' waves give its wave; it is replaced by the recomputed one.
 #'
 #' **Stable variables** -- columns that hold for every wave, such as sex or
 #' year of birth (`byear`) in `LASAZ004.SAV` -- keep one column and are
 #' repeated on each of the respondent's rows.
 #'
 #' **Which columns are wave-specific** is decided per column: a column made
-#' wide by `transform_lasa_data()` itself is recognized from attributes it
-#' carries; any other column is wave-specific when [lasa_label_db()]
+#' wide by `transform_lasa_data()` itself is recognized by its name, or by
+#' attributes it carries where its name doesn't say enough (see **Wide
+#' format**); any other column is wave-specific when [lasa_label_db()]
 #' documents its name as a wave-specific variable -- which covers LASA's
-#' irregular names too, such as `t2_dat` (`t_dat`, wave B), `b_dm` (`dm`)
-#' or `b2oak` (`oak`, wave 2B), and a column [read_lasa_sav()] matched to
-#' such a name by fuzzy matching or `name_corrections` -- or, for data that
-#' aren't long yet (no `"Wave"` column, or only the `"Z"` placeholder
+#' irregular names too, such as `t2_dat` (`t_dat`, wave B), `b_dm` (`dm`),
+#' `b2oak` (`oak`, wave 2B), or `totalalpha`, which LASA's wave H file uses
+#' without a wave prefix, and a column [read_lasa_sav()] matched to such a
+#' name by fuzzy matching or `name_corrections` -- or, for data that aren't
+#' long yet (no `"Wave"` column, or only the `"Z"` placeholder
 #' [read_lasa_sav()] gives a Z file), when its name is a wave prefix
 #' followed by a variable the label database documents for that wave (the
 #' names wide format uses, see below). All other columns are treated as
@@ -168,24 +198,36 @@
 #' a merge suffixed with `.x`/`.y`, and, in wide data, variables read with
 #' their wave stripped from their name.
 #'
-#' **Cohort baselines.** LASA's wave files name the baseline of every cohort
-#' (B, 2B, 3B, MB) with the same `b` prefix, so a name such as `blphya01`
-#' may belong to any of them. Each respondent's value goes to the baseline
-#' the data show for that respondent: in long data, a value already on a
-#' row of one of those waves stays there; otherwise, the respondent's
-#' other waves decide (a row or value at 2B, say, or at LSN or waves B-E,
-#' which only the first cohort has), and then the file the column came
+#' **Names of several waves.** LASA's wave files name the baseline of every
+#' cohort (B, 2B, 3B, MB, and 4B) with the same `b` prefix, so a name such
+#' as `blphya01` may belong to any of them, and a few other names stand for
+#' several waves too (`bqvalu16` for waves 3B and J, `xcancer1` for waves B
+#' and C). Each respondent's value in such a column goes to the wave the
+#' data show for that respondent: in long data, a value already on a row of
+#' one of those waves stays there; otherwise, the respondent's cohort, as
+#' far as the data show it (the first cohort has no wave 3B, so its
+#' respondents' `bqvalu16` is wave J's), and then the file the column came
 #' from (the data's `"LASA_file_code"` and `"LASA_wave"` attributes, as far
-#' as the data's label report lists the column, since a merge keeps at most
-#' the first file's attributes). If nothing says, the value goes to the
-#' earliest of those waves, and a message names the column.
+#' as the data's label report lists the column, since a merge keeps at
+#' most the first file's attributes). If nothing says, the value goes, with
+#' a message naming the column, to the first of these waves the
+#' respondent's cohort may take part in: the wave the column's other
+#' respondents were placed at by their cohort, the wave of the data's
+#' `"LASA_wave"` attribute, and the column's waves in calendar order. Such
+#' a guess doesn't count as showing the respondent's cohort, so it gives
+#' none of their rows a Time. To avoid guesses, transform each LASA file to
+#' long format before combining files (with `format_as_long = TRUE` in
+#' [read_lasa_sav()]).
 #'
 #' **Merged files.** `data` may be several LASA files merged together, in
 #' any of three shapes:
-#' * long (the most reliable), e.g. wave files read with the default
-#'   `standardize = TRUE`, stacked with [rbind()] per file code and merged
-#'   by `respnr` and `"Wave"`; Z files read with `format_as_long = TRUE`
-#'   combine with those the same way;
+#' * long (the most reliable), e.g. files read with `format_as_long = TRUE`
+#'   (or wave files read with the default `standardize = TRUE`), stacked
+#'   per file code with [rbind()] (or `dplyr::bind_rows()`, if the files'
+#'   columns differ) and merged by `respnr` and `"Wave"`; the `Time.x` and
+#'   `Time.y` columns that merge makes become one `"Time"` again, now also
+#'   for the rows of files that didn't show the respondent's cohort on their
+#'   own;
 #' * wide, e.g. `LASAB046.SAV`, `LASAC046.SAV`, `LASAB030.SAV`, ... read
 #'   with `standardize = FALSE` and merged by `respnr`, or a Z file merged
 #'   with `LASAZ004.SAV`. Don't stack wide files of different cohorts that
@@ -204,25 +246,43 @@
 #'
 #' **Wide format** has one row per respondent and drops the `"Wave"` and
 #' `"Time"` columns. Each wave-specific variable gets one column per wave
-#' at which it has any non-missing value, and a long column made from wide
-#' columns gets all of those columns back, also ones without any value.
-#' With `prefix = "Wave"`, a column's name is its wave's lowercase LASA
-#' prefix followed by the variable name: `boak`, `coak`, `doak`, ... Waves
-#' 2B, 3B, 4B, and MB get the prefixes `b2`, `b3`, `b4`, and `mb` (as
-#' LASA's own `zoa2`/`zoa3` files do for 2B and 3B), so they don't collide
-#' with wave B's columns. A column that came from a wide LASA file gets its
-#' original name back (e.g. `t2_dat` rather than `bt_dat`), unless its
-#' values went to several waves. With `prefix = "Time"`, names are `t`, the
-#' wave's `"Time"` number, and an underscore followed by the variable name
-#' (`t1_oak`, `t2_oak`, ...), and original names aren't kept, also not when
-#' such data are made wide again with `prefix = "Wave"`. A column stays
-#' stable in wide format when it has a single value per respondent and
-#' isn't a documented wave-specific variable; a documented stable variable
-#' (such as `sex`) only needs to agree across the rows where it isn't
-#' missing. A wide column whose name alone doesn't say which wave and
-#' variable it holds (a name the label database doesn't document, or a `b`
-#' name it documents for several cohorts) carries the attributes
-#' `"LASA_wave"` and `"LASA_long_name"`, which transforming it back uses.
+#' at which it has any value, and a long column made from wide columns gets
+#' all of those columns back, also ones without any value. With
+#' `prefix = "Wave"`, a column's name is its wave's lowercase LASA prefix
+#' followed by the variable name: `boak`, `coak`, `doak`, ... Waves 2B, 3B,
+#' 4B, and MB get the prefixes `b2`, `b3`, `b4`, and `mb` (as LASA's own
+#' `zoa2`/`zoa3` files do for 2B and 3B), so they don't collide with wave
+#' B's columns. Where LASA's own name for the variable at that wave stands
+#' for nothing else, the column gets that name instead (`m15wrth` is
+#' `bm15twtrh` at wave B and `c15wtrth` at wave C). A column that came from
+#' a wide LASA file gets its original name back (e.g. `t2_dat` rather than
+#' `bt_dat`), unless its values went to several waves or the name doesn't
+#' say its wave by itself: the `b_dm` column of `LASAZDC2.SAV`, which holds
+#' the second cohort's baseline, becomes `b2dm`.
+#'
+#' With `prefix = "Time"`, names are `t`, the `"Time"`, and an underscore
+#' followed by the variable name: `t0_oak` holds each respondent's value at
+#' their own baseline, `t1_oak` at their cohort's next wave (wave C for the
+#' first cohort, F for the second), and so on, so the cohorts share
+#' columns. A `"Baseline"` column after `respnr` gives each respondent's
+#' baseline wave, which transforming the data back to long format uses.
+#' Wave A, which has no Time, keeps its own column (`aoak`). Every other
+#' value needs a Time: values at a wave without one for their respondent
+#' are an error, except missing-value codes, which are left out with a
+#' message. Original names aren't kept with `prefix = "Time"`, also not
+#' when such data are made wide again with `prefix = "Wave"`.
+#'
+#' A column stays stable in wide format when it has a single value per
+#' respondent and isn't a documented wave-specific variable; a documented
+#' stable variable (such as `sex`) only needs to agree across the rows
+#' where it isn't missing. A wide column whose name still doesn't say which
+#' wave and variable it holds (a name the label database doesn't document,
+#' or a wave B name the later cohorts' baselines share, such as
+#' `blphya01`) carries the attributes `"LASA_wave"` and `"LASA_long_name"`,
+#' which transforming it back uses. Base R's [merge()] and row subsetting
+#' drop those attributes from factor and numeric columns (haven's labelled
+#' columns keep them); the column is then placed like a column of LASA's
+#' own files, see **Names of several waves**.
 #'
 #' **Labels** travel with the data. A long column keeps each wave's own
 #' `"wave_label"`/`"labels_wave"` as one entry per wave. Its variable label
@@ -235,10 +295,11 @@
 #' gets none, with a warning. Factor levels are combined across waves;
 #' wave-specific columns whose types don't combine (e.g. a factor at one
 #' wave and numbers at another) become text, without value labels or
-#' user-missing codes, with a warning. Time spans (`difftime`) get the
-#' first wave's unit. Converting back to wide restores each wide column's
-#' original name, type (also from text), and attributes, as long as its
-#' values still fit them.
+#' user-missing codes, with a warning. Time spans (`difftime`) get a unit
+#' every wave's values convert to exactly, the first wave's if possible.
+#' Converting back to wide restores each wide column's original type (also
+#' from text), attributes, and user-missing codes, as long as its values
+#' still fit them.
 #'
 #' @return `data` in the requested format, as a data frame (or a tibble if
 #'   `data` is one), keeping `data`'s provenance attributes. Its
@@ -254,16 +315,22 @@
 #' @export
 #'
 #' @examples
-#' # A Z-file-shaped data frame: knee osteoarthritis (oak) at waves B and C,
-#' # plus a stable variable (sex).
+#' # A Z-file-shaped data frame: knee osteoarthritis (oak) of two
+#' # respondents of the first cohort (waves B, C, and F) and one of the
+#' # second (waves 2B and F), plus a stable variable (sex).
 #' wide <- data.frame(
-#'   respnr = c(101, 102),
-#'   sex = c(1, 2),
-#'   boak = c(0, 2),
-#'   coak = c(1, 8)
+#'   respnr = c(101, 102, 201),
+#'   sex = c(1, 2, 2),
+#'   boak = c(0, 2, NA),
+#'   coak = c(1, 8, NA),
+#'   b2oak = c(NA, NA, 1),
+#'   foak = c(2, NA, 0)
 #' )
 #'
-#' long <- transform_lasa_data(wide) # format = "long" is the default
+#' # format = "long" is the default. Time counts the waves since each
+#' # respondent's own baseline: wave F is Time 4 for the first cohort, but
+#' # Time 1 for the second.
+#' long <- transform_lasa_data(wide)
 #' long
 #'
 #' # And back again, with wave letters or Time numbers as prefixes:
