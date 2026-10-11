@@ -138,8 +138,9 @@
     } else {
       wave_label
     }
+    documented <- .lasa_documented_codes(vals, vname, vals_harmonized, cname)
     active_value_map <- if (isTRUE(eff_val_labels) && !is.null(harmonized_value_map)) {
-      harmonized_value_map
+      .lasa_harmonized_map_for_wave(harmonized_value_map, value_map, documented, vals_harmonized, cname)
     } else {
       value_map
     }
@@ -169,7 +170,6 @@
     # identifier, never missing-coded. A variable whose genuine values can
     # be negative only has its documented missing codes treated as missing.
     is_respnr <- identical(vname, "respnr")
-    documented <- .lasa_documented_codes(vals, vname, vals_harmonized, cname)
     infer_negative <- !isTRUE(row$can_be_negative)
     missing_codes <- if (is_respnr) {
       numeric(0)
@@ -564,8 +564,12 @@
 #' unless the variable is numeric and its documentation shows genuine
 #' negative values (e.g. a speech-reception threshold in dB), in which case
 #' only its documented missing codes count and every other negative value
-#' is kept as a measurement. Positive codes such as "dropout" are real
-#' answers, never missing. Columns the database doesn't document are left
+#' is kept as a measurement. Where a wave's own value labels and the
+#' harmonized ones disagree about a code, the wave's labels decide, and a
+#' code the wave documents as a real value keeps the wave's label text even
+#' when the harmonized value labels are active. Positive codes such as
+#' "dropout" are real answers, never missing. Columns the database doesn't
+#' document are left
 #' as they are, except that `keep_user_na = FALSE` applies the file's own
 #' SPSS user-missing declaration to them (as [haven::zap_missing()] does).
 #'

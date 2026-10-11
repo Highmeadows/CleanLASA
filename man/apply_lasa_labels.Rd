@@ -156,8 +156,12 @@ all, since LASA codes reasons of missingness as negative numbers --
 unless the variable is numeric and its documentation shows genuine
 negative values (e.g. a speech-reception threshold in dB), in which case
 only its documented missing codes count and every other negative value
-is kept as a measurement. Positive codes such as "dropout" are real
-answers, never missing. Columns the database doesn't document are left
+is kept as a measurement. Where a wave's own value labels and the
+harmonized ones disagree about a code, the wave's labels decide, and a
+code the wave documents as a real value keeps the wave's label text even
+when the harmonized value labels are active. Positive codes such as
+"dropout" are real answers, never missing. Columns the database doesn't
+document are left
 as they are, except that \code{keep_user_na = FALSE} applies the file's own
 SPSS user-missing declaration to them (as \code{\link[haven:zap_missing]{haven::zap_missing()}} does).
 }

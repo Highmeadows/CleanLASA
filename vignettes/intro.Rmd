@@ -539,10 +539,12 @@ parts:
 - **`variables`** -- one row per file-code/wave/variable combination:
   the variable's name as it appears in that wave's data, its
   canonical (shared-across-waves) name, its label for that specific
-  wave, its cross-wave-consistent ("harmonized") label, and its type
-  (numeric, categorical, or text).
+  wave, its cross-wave-consistent ("harmonized") label, its type
+  (numeric, categorical, or text), and whether its genuine values can
+  be negative (`can_be_negative`).
 - **`value_labels`** -- the value/code labels (what each numeric code
-  means) exactly as documented for that one wave.
+  means) exactly as documented for that one wave, with `is_missing`
+  marking the missing-value codes.
 - **`value_labels_harmonized`** -- the same variable's value labels,
   standardized across every wave that documents it (there's no `wave`
   column here -- a row applies no matter which wave you're looking
@@ -596,6 +598,22 @@ manual_update_lasa_labels(
   variable = "lphya01",
   val_labels = c(`-5` = "NA, wrong, skip",
                  `-1` = "NA, not done")
+)
+```
+
+Correcting the text of a code the database already documents keeps
+its meaning: a missing-value code stays missing, and a real negative
+value such as `-2` = "valid score" stays a value. A negative code you
+add is a missing-value code, unless you list it in `not_missing`
+because the documentation shows it is a real answer:
+
+```{r manual-update-not-missing, eval=FALSE}
+manual_update_lasa_labels(
+  filecode = "034",
+  wave = "B",
+  variable = "brmpf",
+  val_labels = c(`-2` = "valid score"),
+  not_missing = -2
 )
 ```
 

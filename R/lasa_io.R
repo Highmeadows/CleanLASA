@@ -44,7 +44,9 @@
 #   * to_numeric                - restore count/continuous variables to
 #                                plain numeric.
 #   * keep_user_na              - how missing-value codes (every code the
-#                                database flags `is_missing`, plus any
+#                                database flags `is_missing`, the wave's
+#                                own value labels deciding over the
+#                                harmonized ones, plus any
 #                                undocumented negative value unless the
 #                                variable's documented values can be
 #                                negative) are
@@ -252,6 +254,23 @@
 
 .lasa_no_documented_codes <- function() list(missing = numeric(0), real = numeric(0))
 
+## The harmonized value labels as shown for one wave's variable. A code the
+## wave documents as a real value (`documented$real`, see
+## .lasa_documented_codes()) but the harmonized labels flag as missing
+## takes the wave's own label text, e.g. wave G's `-1` = "mentioned"
+## instead of the harmonized `-1` = "not available", so a real answer is
+## never shown under a missing-value label.
+.lasa_harmonized_map_for_wave <- function(harmonized_value_map, value_map, documented,
+                                          value_labels_harmonized, canonical_name) {
+  if (is.null(harmonized_value_map) || is.null(value_map)) return(harmonized_value_map)
+  harmonized_missing <- value_labels_harmonized$value_numeric[
+    value_labels_harmonized$canonical_name == canonical_name & value_labels_harmonized$is_missing %in% TRUE
+  ]
+  wave_real <- value_map[value_map %in% documented$real & value_map %in% harmonized_missing]
+  if (length(wave_real) == 0L) return(harmonized_value_map)
+  c(harmonized_value_map[!harmonized_value_map %in% wave_real], wave_real)
+}
+
 ## TRUE where a number counts as a missing code: a documented missing
 ## code (`documented$missing`), or -- when `infer_negative` -- any other
 ## negative number not documented as a real value. LASA codes missing
@@ -332,9 +351,10 @@
 #'
 #' Shared `to_factor = TRUE` transformation used by [apply_lasa_labels()]'s
 #' engine. Converts `x` to a factor using `value_label_map`'s names as
-#' level text for coded values; an observed value with no codebook label
-#' keeps its own numeric code (as text) as its level, rather than becoming
-#' `NA`. Colliding level text (e.g. two different codes that happen to
+#' level text for coded values; an observed value with no codebook label,
+#' or a code the codebook lists without wording (an `NA` label), keeps its
+#' own numeric code (as text) as its level, rather than becoming `NA`.
+#' Colliding level text (e.g. two different codes that happen to
 #' share a label) is disambiguated by appending the numeric code in
 #' brackets.
 #'
@@ -377,7 +397,7 @@
     level_codes,
     function(code) {
       i <- match(code, label_codes)
-      if (!is.na(i)) label_text[[i]] else as.character(code)
+      if (!is.na(i) && !is.na(label_text[[i]])) label_text[[i]] else as.character(code)
     },
     character(1)
   )
@@ -429,7 +449,7 @@
     function(v) {
       if (is.na(v)) return(NA_character_)
       i <- match(v, label_codes)
-      if (!is.na(i)) label_text[[i]] else as.character(v)
+      if (!is.na(i) && !is.na(label_text[[i]])) label_text[[i]] else as.character(v)
     },
     character(1)
   )

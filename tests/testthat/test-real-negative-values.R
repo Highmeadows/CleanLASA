@@ -36,6 +36,15 @@ local_negative_db <- function(env = parent.frame()) {
     is_missing = c(FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE),
     stringsAsFactors = FALSE
   ))
+  # The harmonized labels call -2 a missing code; wave B documents it as a
+  # real value.
+  db$value_labels_harmonized <- rbind(db$value_labels_harmonized, data.frame(
+    filecode = "998", canonical_name = "rmpf",
+    value_numeric = c(-2, -1, 1, 2),
+    value_label = c("not available", "na", "short interview", "interview terminated"),
+    is_missing = c(TRUE, TRUE, FALSE, FALSE),
+    stringsAsFactors = FALSE
+  ))
   .lasa_save_label_db(db)
   tmp
 }
@@ -115,9 +124,61 @@ test_that("re-labelling already-converted output keeps real negative values", {
     c("valid score", NA, "short version", NA, "interview terminated")
   )
   expect_false("na, asked" %in% levels(out$brmpf))
-  expect_equal(as.character(out$bsrt)[c(1, 3)], c("-6.4", "1.5"))
+  # -9.2 is documented without wording, so its level is its own number.
+  expect_equal(as.character(kept$bsrt)[1:3], c("-6.4", "-9.2", "1.5"))
+  expect_equal(as.character(out$bsrt)[1:3], c("-6.4", "-9.2", "1.5"))
   expect_true(all(is.na(out$bsrt[4:5])))
   expect_false(any(c("test not done", "non-valid, too many incomplete triplets") %in% levels(out$bsrt)))
+})
+
+test_that("a wave's real code keeps its own label text under harmonized value labels", {
+  local_negative_db()
+  out <- .lasa_apply_labels(negative_fixture(), filecode = "998", wave = "B")
+
+  expect_equal(
+    as.character(out$rmpf),
+    c("valid score", NA, "short interview", NA, "interview terminated")
+  )
+  expect_false("not available" %in% levels(out$rmpf))
+  # The reference attribute still shows the harmonized labels as documented.
+  expect_equal(attr(out$rmpf, "labels_harmonized")[["not available"]], -2)
+
+  kept <- .lasa_apply_labels(negative_fixture(), filecode = "998", wave = "B", keep_user_na = TRUE)
+  expect_equal(
+    as.character(kept$rmpf),
+    c("valid score", "na", "short interview", "-3", "interview terminated")
+  )
+})
+
+test_that("a manual label correction keeps a documented code's meaning", {
+  local_negative_db()
+  fixture <- data.frame(respnr = 1:4, brmpf = c(-2, -1, -4, 1))
+
+  manual_update_lasa_labels(
+    filecode = "998", wave = "B", variable = "brmpf",
+    val_labels = c(`-2` = "valid score (all tests)", `-4` = "new reason")
+  )
+  out <- relabel(fixture)
+  expect_equal(as.character(out$brmpf), c("valid score (all tests)", NA, NA, "short version"))
+
+  manual_update_lasa_labels(
+    filecode = "998", wave = "B", variable = "brmpf",
+    val_labels = c(`-4` = "valid, other"), not_missing = -4
+  )
+  expect_equal(as.character(relabel(fixture)$brmpf), c("valid score (all tests)", NA, "valid, other", "short version"))
+
+  # A later text-only correction keeps the earlier correction's meaning.
+  manual_update_lasa_labels(filecode = "998", wave = "B", variable = "brmpf", val_labels = c(`-4` = "valid (other)"))
+  expect_equal(as.character(relabel(fixture)$brmpf)[3], "valid (other)")
+
+  expect_error(
+    manual_update_lasa_labels(filecode = "998", wave = "B", variable = "brmpf", val_labels = c(`-1` = "na"), not_missing = -3),
+    "negative codes that 'val_labels' labels"
+  )
+  expect_error(
+    manual_update_lasa_labels(filecode = "998", wave = "B", variable = "brmpf", val_labels = c(`1` = "short"), not_missing = 1),
+    "negative codes that 'val_labels' labels"
+  )
 })
 
 test_that("the documented missing/real split comes from the database's is_missing flag", {
@@ -223,4 +284,15 @@ test_that("the bundled database keeps documented real negative values", {
 
   kept <- read_lasa_sav(path, standardize = FALSE, keep_user_na = TRUE)
   expect_equal(sort(attr(kept$emsrttn, "na_values")), c(-24, -23, -22))
+
+  # With the default settings (harmonized value labels), a code that only
+  # the wave documents as a real answer keeps the wave's label text.
+  path <- write_lasa_sav(data.frame(respnr = 1:3, gqeoldt1 = c(-1, 0, -2)), "LASAG148.SAV")
+  out <- read_lasa_sav(path)
+  expect_equal(as.character(out$qeoldt1)[1:2], c("mentioned", "not mentioned"))
+  expect_true(is.na(out$qeoldt1[3]))
+
+  path <- write_lasa_sav(data.frame(respnr = 1:3, fmarmpar = c(-2, -1, -3)), "LASAF151.SAV")
+  out <- read_lasa_sav(path)
+  expect_equal(as.character(out$marmpar), c("normal test", NA, NA))
 })
