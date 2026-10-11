@@ -172,7 +172,7 @@ test_that("format_as_long = TRUE returns a Z file in long format", {
   expect_named(long, c("respnr", "Wave", "Time", "oak", "oah"))
   expect_equal(nrow(long), 9L)
   expect_equal(long$Wave, rep(c("B", "C", "D"), 3), ignore_attr = TRUE)
-  expect_identical(as.vector(long$Time), rep(1:3, 3))
+  expect_identical(as.vector(long$Time), rep(0:2, 3))
   expect_true(is.factor(long$oah))
   expect_equal(as.character(long$oah[long$Wave == "C"]), c("dropout", "missing", "possible"))
   expect_equal(attr(long, "LASA_file_code"), "zoa1")
@@ -205,7 +205,8 @@ test_that("format_as_long gives a wave file a Time column", {
   path <- write_lasa_sav(lasa046_fixture("C"), "LASAC046.SAV")
   dat <- read_lasa_sav(path, format_as_long = TRUE)
   expect_equal(names(dat)[1:3], c("respnr", "Wave", "Time"))
-  expect_identical(as.vector(dat$Time), rep(2L, 3))
+  # Wave C is the first cohort's first wave after its baseline (B).
+  expect_identical(as.vector(dat$Time), rep(1L, 3))
   expect_equal(attr(dat, "LASA_wave"), "C")
 
   # Without standardizing, the wave-prefixed names lose their prefix too.
