@@ -348,11 +348,16 @@ whatever its type:
 data <- read_lasa_sav("LASAB014.sav", keep_user_na = TRUE)
 ```
 
-A code counts as missing when the label database flags it as one
-(every negative documented code), and so does a negative value that
-isn't documented at all. Positive codes, such as "dropout" in the
-osteoarthritis files, are real answers and are never treated as
-missing.
+A code counts as missing when the label database flags it as one:
+every negative documented code, except the few that LASA's
+documentation shows are real values, such as `-2` = "valid score" in
+the performance tests' "reason missing" variable. A negative value that
+isn't documented at all counts as missing too, unless the variable is
+numeric and its documentation shows genuine negative values, such as a
+speech-reception threshold in dB; then only its documented missing
+codes count, and every other negative value is kept as a measurement.
+Positive codes, such as "dropout" in the osteoarthritis files, are real
+answers and are never treated as missing.
 
 ### Standardize variable names and separate the wave code
 

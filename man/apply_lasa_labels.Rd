@@ -148,13 +148,18 @@ whose numeric codes disagree but whose label text agrees (e.g.
 \verb{0 = "no", 1 = "yes"} vs. \verb{1 = "no", 2 = "yes"}) still merge correctly.
 
 A code counts as missing when the label database flags its value label
-as missing (every negative documented code, e.g. \code{-1} = "na, asked"),
-and so does any negative value that appears in the data without being
-documented at all -- LASA uses negative codes only for reasons of
-missingness. Positive codes such as "dropout" are real answers, never
-missing. Columns the database doesn't document are left as they are,
-except that \code{keep_user_na = FALSE} applies the file's own SPSS
-user-missing declaration to them (as \code{\link[haven:zap_missing]{haven::zap_missing()}} does).
+as missing: every negative documented code, e.g. \code{-1} = "na, asked",
+except the few that LASA's documentation shows are real values, such
+as \code{-2} = "valid score" in a "reason missing" variable. So does any
+negative value that appears in the data without being documented at
+all, since LASA codes reasons of missingness as negative numbers --
+unless the variable is numeric and its documentation shows genuine
+negative values (e.g. a speech-reception threshold in dB), in which case
+only its documented missing codes count and every other negative value
+is kept as a measurement. Positive codes such as "dropout" are real
+answers, never missing. Columns the database doesn't document are left
+as they are, except that \code{keep_user_na = FALSE} applies the file's own
+SPSS user-missing declaration to them (as \code{\link[haven:zap_missing]{haven::zap_missing()}} does).
 }
 \examples{
 \dontrun{

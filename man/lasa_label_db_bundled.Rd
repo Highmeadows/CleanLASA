@@ -14,7 +14,9 @@ description of the same variable), \code{var_type}
 (\code{"numeric"}/\code{"categorical"}/\code{"text"}/\code{"date"}).}
 \item{value_labels}{One row per (\code{filecode}, \code{wave}, \code{variable_name},
 \code{value_numeric}): \code{value_label}, \code{is_missing} -- the value labels as
-documented for that wave.}
+documented for that wave. \code{is_missing} is \code{TRUE} for a missing-value
+code: every negative code, except the few the documentation shows
+are real values (e.g. \code{-2} = "valid score").}
 \item{value_labels_harmonized}{One row per (\code{filecode},
 \code{canonical_name}, \code{value_numeric}): \code{value_label}, \code{is_missing} --
 the cross-wave-standardized value labels for that variable,

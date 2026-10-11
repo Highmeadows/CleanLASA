@@ -19,7 +19,9 @@
 #'     (`"numeric"`/`"categorical"`/`"text"`/`"date"`).}
 #'   \item{value_labels}{One row per (`filecode`, `wave`, `variable_name`,
 #'     `value_numeric`): `value_label`, `is_missing` -- the value labels as
-#'     documented for that wave.}
+#'     documented for that wave. `is_missing` is `TRUE` for a missing-value
+#'     code: every negative code, except the few the documentation shows
+#'     are real values (e.g. `-2` = "valid score").}
 #'   \item{value_labels_harmonized}{One row per (`filecode`,
 #'     `canonical_name`, `value_numeric`): `value_label`, `is_missing` --
 #'     the cross-wave-standardized value labels for that variable,
