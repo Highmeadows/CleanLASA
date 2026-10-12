@@ -110,16 +110,19 @@ With \code{format_as_long = TRUE}, the labelled data are finally passed to
 already long under the default \code{standardize = TRUE} and only gains a
 \code{"Time"} column (read with \code{standardize = FALSE}, its wave-prefixed
 names lose their prefix too); a Z file's wave-prefixed columns become
-one column per variable, with the wave of each row in \code{"Wave"}. A Z file
-without wave-specific columns, such as \code{LASAZ004.SAV}, has no wave
+one column per variable, with the wave of each row in \code{"Wave"}. A file
+without wave-specific columns, such as the Z file \code{LASAZ004.SAV} or the
+migrant cohort's \code{LASMB004.SAV} (sex, year of birth, ...), has no wave
 dimension: it keeps one row per respondent, without \code{"Wave"} and
-\code{"Time"} columns, and a message says so. Long data that span several
-waves no longer carry a single \code{"LASA_wave"} attribute.
+\code{"Time"} columns, and a message says so; merge it with long data by
+\code{respnr} alone. Long data that span several waves no longer carry a
+single \code{"LASA_wave"} attribute.
 
 \code{"Time"} counts the waves since each respondent's baseline (Time 0), so
-it needs the respondent's cohort: a baseline file's rows are Time 0, a
-file of waves C to E, which only the first cohort takes part in, gets
-that cohort's Time, and wave A (the LSN pilot study) has no Time. The
+it needs the respondent's cohort: every row of a baseline file is Time
+0, and every row of a file of waves C to E, which only the first cohort
+takes part in, gets that cohort's Time -- also rows holding nothing but
+missing-value codes. Wave A (the LSN pilot study) has no Time. The
 waves from F on are shared by several cohorts, so a file of one of those
 waves doesn't show who belongs to which: its rows get no Time, with a
 message, until it is combined with data that show the cohorts, such as
