@@ -974,7 +974,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see J/KMINDTYPE",
+  `-2` = "na, see MINDTYPE",
   .applies_to_vars = c("mpgbac", "mpgbao", "mpgbap", "mpgbaph", "mpgbas", "mppgbdn", "mppgbfo", "mppgbnf", "mppgbot", "mppgbpa", "mppgbpc", "mppgbph", "mppgbrc", "mppgbro", "mppgbvo"),
   .applies_to_waves = c("J", "K")
 )

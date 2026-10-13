@@ -89,7 +89,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/ERMPTSD in LASAD/E291",
+  `-2` = "na, see RMPTSD in LASAD/E291",
   .applies_to_vars = c("ptsd01", "ptsd02", "ptsd03", "ptsd04", "ptsd05", "ptsd06", "ptsd07", "ptsd08", "ptsd09", "ptsd10", "ptsd11", "ptsd12", "ptsd13", "ptsd14", "ptsd15", "ptsd16", "ptsd17", "ptsd18", "ptsd19", "ptsd20", "ptsd21", "ptsd22", "ptsd23"),
   .applies_to_waves = c("D", "E")
 )

@@ -655,13 +655,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/DMDIZZR", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see MDIZZR", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mdizzgup", "mdizzlup", "mdizzoth", "mdizztrnhd"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-2` = "na, see C/DMDIZZOTH", `1` = "no specific reason", `2` = "bending down", `3` = "tension/ tiredness", `4` = "sickness, medication",
+  `-2` = "na, see MDIZZOTH", `1` = "no specific reason", `2` = "bending down", `3` = "tension/ tiredness", `4` = "sickness, medication",
   .applies_to_vars = c("mdizzothsp"),
   .applies_to_waves = c("C", "D")
 )
@@ -673,7 +673,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/DFALLLY",
+  `-2` = "na, see FALLLY",
   .applies_to_vars = c("mfallf"),
   .applies_to_waves = c("C", "D")
 )
@@ -787,25 +787,25 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see F/G/HMWALKAID",
+  `-2` = "na, see MWALKAID",
   .applies_to_vars = c("mwalkaid1", "mwalkaid2", "mwalkaid3", "mwalkaid4", "mwalkaid5"),
   .applies_to_waves = c("F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see F/GMDIZZR", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see MDIZZR", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mdizzgup", "mdizzlup", "mdizzoth", "mdizztrnhd"),
   .applies_to_waves = c("F", "G")
 )
 
 value_labels(
-  `-2` = "na, see F/GMDIZZOTH", `0` = "to be coded", `1` = "no specific reason", `2` = "bending down", `3` = "tension/ tiredness", `4` = "sickness, medication",
+  `-2` = "na, see MDIZZOTH", `0` = "to be coded", `1` = "no specific reason", `2` = "bending down", `3` = "tension/ tiredness", `4` = "sickness, medication",
   .applies_to_vars = c("mdizzothsp"),
   .applies_to_waves = c("F", "G")
 )
 
 value_labels(
-  `-2` = "na, see F/GMWALKAID5", `0` = "to be coded",
+  `-2` = "na, see MWALKAID5", `0` = "to be coded",
   .applies_to_vars = c("mwalkaid6"),
   .applies_to_waves = c("F", "G")
 )

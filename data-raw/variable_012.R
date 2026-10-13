@@ -129,7 +129,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/EPETS",
+  `-2` = "na, see PETS",
   .applies_to_vars = c("bird", "cat", "dog", "nspecie", "petothe"),
   .applies_to_waves = c("D", "E")
 )
@@ -153,7 +153,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see F/G/H/B/I/JPTS",
+  `-2` = "na, see PTS",
   .applies_to_vars = c("bird", "cat", "dog", "nspecie", "petothe"),
   .applies_to_waves = c("F", "G", "H", "3B", "I", "J", "K")
 )

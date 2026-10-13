@@ -214,7 +214,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see J/KQORH3", `-1` = "no answer", `1` = "never", `2` = "rarely", `3` = "occasionally", `4` = "rather often", `5` = "very often",
+  `-2` = "na, see QORH3", `-1` = "no answer", `1` = "never", `2` = "rarely", `3` = "occasionally", `4` = "rather often", `5` = "very often",
   .applies_to_vars = c("qorh3d"),
   .applies_to_waves = c("J", "K")
 )

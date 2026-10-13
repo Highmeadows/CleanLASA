@@ -102,7 +102,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/B/F/G/H/B/B/I/J/KRMCESD in LAS(A)*225",
+  `-2` = "na, see RMCESD in LAS(A)*225",
   .applies_to_vars = c("cesd01", "cesd02", "cesd03", "cesd04", "cesd05", "cesd06", "cesd07", "cesd08", "cesd09", "cesd10", "cesd11", "cesd12", "cesd13", "cesd14", "cesd15", "cesd16", "cesd17", "cesd18", "cesd19", "cesd20"),
   .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )

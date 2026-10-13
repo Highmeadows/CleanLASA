@@ -284,7 +284,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "no answer, see F/GMATTW", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "no answer, see MATTW", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mlwm01"),
   .applies_to_waves = c("Z", "F", "G")
 )
@@ -410,19 +410,19 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/JMWEIGHTCH", `-1` = "na, asked",
+  `-2` = "na, see MWEIGHTCH", `-1` = "na, asked",
   .applies_to_vars = c("mweightchkgg", "mweightchkgl"),
   .applies_to_waves = c("Z", "I", "J")
 )
 
 value_labels(
-  `-2` = "na, see BMWEIGHTCH", `-1` = "na, asked", `1` = "sickness", `2` = "diet", `3` = "social factors", `4` = "other, see WEIGHTCHCR / other, see C/D/E/BMWEIGHTCHRC / other, see F/GMWEIGHTCHRC", `5` = "do not know",
+  `-2` = "na, see BMWEIGHTCH", `-1` = "na, asked", `1` = "sickness", `2` = "diet", `3` = "social factors", `4` = "other, see WEIGHTCHCR / other, see MWEIGHTCHRC / other, see MWEIGHTCHRC", `5` = "do not know",
   .applies_to_vars = c("mweightchr"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `-3` = "no valid data", `-2` = "no weight change / na, see H/BMWEIGHTLR2/GR2", `-1` = "no answer, asked see *Table reason", `1` = "sickness (unintentional)", `1.1` = "medication (unintentional)", `1.2` = "physical inactive due to sickness (unintentional)", `1.3` = "lost weight due to sickness; now gained weight (unintentional)", `2` = "diet (intentional)", `2.1` = "eating less or different (unknown)", `2.2` = "eating more or different (unintentional)", `2.3` = "eating more and physical inactive (unintentional)", `2.4` = "quit smoking (unknown)", `2.5` = "smoking (unknown)", `2.6` = "eating less and physical active (intentional)", `2.7` = "eating less or different (unintentional)", `3` = "social factors (unintentional)", `3.1` = "social factors recoded (unintentional)", `5` = "do not know (unintentional)", `5.1` = "other reason (implausible reason) (unknown)", `6` = "physical activities (intentional)", `6.1` = "physical activity (unknown)", `6.2` = "physical inactivity (unintentional)", `6.3` = "working harder (unintentional)", `6.4` = "physical activity (unintentional)", `7` = "older age (unintentional)", `8` = "loss of appetite (unintentional)", `9` = "diuretics or dehydration", `9.1` = "oedeme/ascites", `9.2` = "quit prednison",
+  `-3` = "no valid data", `-2` = "no weight change / na, see MWEIGHTLR2/GR2", `-1` = "no answer, asked see *Table reason", `1` = "sickness (unintentional)", `1.1` = "medication (unintentional)", `1.2` = "physical inactive due to sickness (unintentional)", `1.3` = "lost weight due to sickness; now gained weight (unintentional)", `2` = "diet (intentional)", `2.1` = "eating less or different (unknown)", `2.2` = "eating more or different (unintentional)", `2.3` = "eating more and physical inactive (unintentional)", `2.4` = "quit smoking (unknown)", `2.5` = "smoking (unknown)", `2.6` = "eating less and physical active (intentional)", `2.7` = "eating less or different (unintentional)", `3` = "social factors (unintentional)", `3.1` = "social factors recoded (unintentional)", `5` = "do not know (unintentional)", `5.1` = "other reason (implausible reason) (unknown)", `6` = "physical activities (intentional)", `6.1` = "physical activity (unknown)", `6.2` = "physical inactivity (unintentional)", `6.3` = "working harder (unintentional)", `6.4` = "physical activity (unintentional)", `7` = "older age (unintentional)", `8` = "loss of appetite (unintentional)", `9` = "diuretics or dehydration", `9.1` = "oedeme/ascites", `9.2` = "quit prednison",
   .applies_to_vars = c("mweightchrc"),
   .applies_to_waves = c("Z")
 )
@@ -434,7 +434,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see H/BMWEIGHTCH", `-1` = "na, asked", `1` = "sickness", `2` = "eating more or different", `3` = "less physical activity", `4` = "combination of eating more/different and physical inactive", `5` = "reason unknown", `6` = "other reason",
+  `-2` = "na, see MWEIGHTCH", `-1` = "na, asked", `1` = "sickness", `2` = "eating more or different", `3` = "less physical activity", `4` = "combination of eating more/different and physical inactive", `5` = "reason unknown", `6` = "other reason",
   .applies_to_vars = c("mweightgr2"),
   .applies_to_waves = c("Z", "H", "3B")
 )
@@ -452,7 +452,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see H/BMWEIGHTCH", `-1` = "na, asked", `1` = "sickness (unintentional)", `2` = "diet (intentional)", `3` = "other diet (unintentional)", `4` = "more physical activity (intentional)", `5` = "reason unknown (unintentional)", `6` = "social factors (unintentional)", `7` = "other reason",
+  `-2` = "na, see MWEIGHTCH", `-1` = "na, asked", `1` = "sickness (unintentional)", `2` = "diet (intentional)", `3` = "other diet (unintentional)", `4` = "more physical activity (intentional)", `5` = "reason unknown (unintentional)", `6` = "social factors (unintentional)", `7` = "other reason",
   .applies_to_vars = c("mweightlr2"),
   .applies_to_waves = c("Z", "H", "3B")
 )
@@ -512,13 +512,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/BMWEIGHTCH", `-1` = "na, asked",
+  `-2` = "na, see MWEIGHTCH", `-1` = "na, asked",
   .applies_to_vars = c("mweightchkg"),
   .applies_to_waves = c("C", "D", "E", "2B")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/BMWEIGHTCH", `-1` = "na, asked", `1` = "sickness", `2` = "diet", `3` = "social factors", `4` = "other, see C/D/E/BMWEIGHTCHRC", `5` = "do not know",
+  `-2` = "na, see MWEIGHTCH", `-1` = "na, asked", `1` = "sickness", `2` = "diet", `3` = "social factors", `4` = "other, see MWEIGHTCHRC", `5` = "do not know",
   .applies_to_vars = c("mweightchr"),
   .applies_to_waves = c("C", "D", "E", "2B")
 )
@@ -554,13 +554,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see F/GMWEIGHTCH", `-1` = "na, asked",
+  `-2` = "na, see MWEIGHTCH", `-1` = "na, asked",
   .applies_to_vars = c("mweightchkg"),
   .applies_to_waves = c("F", "G")
 )
 
 value_labels(
-  `-2` = "na, see F/GMWEIGHTCH", `-1` = "na, asked", `1` = "sickness", `2` = "diet", `3` = "social factors", `4` = "other, see F/GMWEIGHTCHRC", `5` = "do not know",
+  `-2` = "na, see MWEIGHTCH", `-1` = "na, asked", `1` = "sickness", `2` = "diet", `3` = "social factors", `4` = "other, see MWEIGHTCHRC", `5` = "do not know",
   .applies_to_vars = c("mweightchr"),
   .applies_to_waves = c("F", "G")
 )
@@ -620,13 +620,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see H/BMWEIGHTCH", `-1` = "na, asked",
+  `-2` = "na, see MWEIGHTCH", `-1` = "na, asked",
   .applies_to_vars = c("mweightchkg"),
   .applies_to_waves = c("H", "3B")
 )
 
 value_labels(
-  `-3` = "no valid data", `-2` = "na, see H/BMWEIGHTLR2/GR2", `-1` = "na, asked see *Table Reason", `1` = "sickness (unintentional)", `1.1` = "medication (unintentional)", `1.2` = "physical inactive due to sickness (unintentional)", `2` = "diet (intentional)", `2.1` = "eating less or different (unknown)", `2.2` = "eating more or different (unintentional)", `2.3` = "eating more and physical inactive (unintentional)", `2.4` = "quit smoking (unknown)", `2.5` = "smoking (unknown)", `2.6` = "eating less and physical active (intentional)", `2.7` = "eating less or different (unintentional)", `3` = "social factors (unintentional)", `3.1` = "social factors recoded (unintentional)", `5` = "do not know (unintentional)", `5.1` = "other reason (implausible reason) (unknown)", `6` = "physical activities (intentional)", `6.1` = "physical activity (unknown)", `6.2` = "physical inactivity (unintentional)", `6.3` = "working harder (unintentional)", `6.4` = "physical activity (unintentional)", `7` = "older age (unintentional)", `8` = "loss of appetite (unintentional)", `9` = "diuretics or dehydration", `9.1` = "oedeme/ascites", `9.2` = "quit prednison",
+  `-3` = "no valid data", `-2` = "na, see MWEIGHTLR2/GR2", `-1` = "na, asked see *Table Reason", `1` = "sickness (unintentional)", `1.1` = "medication (unintentional)", `1.2` = "physical inactive due to sickness (unintentional)", `2` = "diet (intentional)", `2.1` = "eating less or different (unknown)", `2.2` = "eating more or different (unintentional)", `2.3` = "eating more and physical inactive (unintentional)", `2.4` = "quit smoking (unknown)", `2.5` = "smoking (unknown)", `2.6` = "eating less and physical active (intentional)", `2.7` = "eating less or different (unintentional)", `3` = "social factors (unintentional)", `3.1` = "social factors recoded (unintentional)", `5` = "do not know (unintentional)", `5.1` = "other reason (implausible reason) (unknown)", `6` = "physical activities (intentional)", `6.1` = "physical activity (unknown)", `6.2` = "physical inactivity (unintentional)", `6.3` = "working harder (unintentional)", `6.4` = "physical activity (unintentional)", `7` = "older age (unintentional)", `8` = "loss of appetite (unintentional)", `9` = "diuretics or dehydration", `9.1` = "oedeme/ascites", `9.2` = "quit prednison",
   .applies_to_vars = c("mweightchrc"),
   .applies_to_waves = c("H", "3B")
 )
@@ -680,7 +680,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/JMWEIGHTCH", `-1` = "na, asked", `1` = "sickness (unintentional)", `2` = "diet (intentional)", `3` = "other diet (unintentional)", `4` = "more physical activity (intentional)", `5` = "reason unknown (unintentional)", `6` = "social factors (unintentional)", `7` = "other reason",
+  `-2` = "na, see MWEIGHTCH", `-1` = "na, asked", `1` = "sickness (unintentional)", `2` = "diet (intentional)", `3` = "other diet (unintentional)", `4` = "more physical activity (intentional)", `5` = "reason unknown (unintentional)", `6` = "social factors (unintentional)", `7` = "other reason",
   .applies_to_vars = c("mweightlr2"),
   .applies_to_waves = c("I", "J")
 )

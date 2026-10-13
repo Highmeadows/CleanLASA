@@ -571,103 +571,103 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1",
+  `-2` = "na, see CHAIR1",
   .applies_to_vars = c("chair2"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR1&2",
+  `-2` = "na, see CHAIR1&2",
   .applies_to_vars = c("chair3", "chair4"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR4",
+  `-2` = "na, see CHAIR4",
   .applies_to_vars = c("chair5"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KCHAIR5",
+  `-2` = "na, see CHAIR5",
   .applies_to_vars = c("chair6", "chair7"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KRMPF",
+  `-2` = "na, see RMPF",
   .applies_to_vars = c("chair1", "walk01"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01",
+  `-2` = "na, see WALK01",
   .applies_to_vars = c("walk02"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK01&02",
+  `-2` = "na, see WALK01&02",
   .applies_to_vars = c("walk03"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK03",
+  `-2` = "na, see WALK03",
   .applies_to_vars = c("walk04", "walk19"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/H/B/B/I/J/KWALK09",
+  `-2` = "na, see WALK09",
   .applies_to_vars = c("walk10", "walk11", "walk12", "walk13", "walk14", "walk15", "walk16", "walk17", "walk18"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG1",
+  `-2` = "na, see CARDIG1",
   .applies_to_vars = c("cardig4", "cardig5"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KCARDIG5",
+  `-2` = "na, see CARDIG5",
   .applies_to_vars = c("cardig8"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-7` = "na, technical missing", `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMPF",
+  `-7` = "na, technical missing", `-2` = "na, see RMPF",
   .applies_to_vars = c("cardig1"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/HCHAIR5",
+  `-2` = "na, see CHAIR5",
   .applies_to_vars = c("chair8", "chair9"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/HWALK03",
+  `-2` = "na, see WALK03",
   .applies_to_vars = c("walk07", "walk08"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/GWALK03",
+  `-2` = "na, see WALK03",
   .applies_to_vars = c("walk05", "walk09"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KRMPF",
+  `-2` = "na, see RMPF",
   .applies_to_vars = c("tandem1"),
   .applies_to_waves = c("C", "D", "E", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/F/G/H/B/B/I/J/KTANDEM1",
+  `-2` = "na, see TANDEM1",
   .applies_to_vars = c("tandem2"),
   .applies_to_waves = c("C", "D", "E", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
@@ -679,13 +679,13 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/D/E/B/F/G/H/BCARDIG1", `-1` = "na, asked", `1` = "completed without help", `2` = "completed with help", `3` = "terminated", `4` = "not done",
+  `-3` = "na, wrong skip", `-2` = "na, see CARDIG1", `-1` = "na, asked", `1` = "completed without help", `2` = "completed with help", `3` = "terminated", `4` = "not done",
   .applies_to_vars = c("cardig2"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/D/E/B/F/G/H/BCARDIG2", `-1` = "na, asked", `1` = "completed without help", `2` = "completed with help", `3` = "terminated", `4` = "not done",
+  `-3` = "na, wrong skip", `-2` = "na, see CARDIG2", `-1` = "na, asked", `1` = "completed without help", `2` = "completed with help", `3` = "terminated", `4` = "not done",
   .applies_to_vars = c("cardig3"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B")
 )
@@ -697,13 +697,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/H/BCARDIG5", `-1` = "na, asked", `1` = "completed without help", `2` = "completed with help", `3` = "terminated", `4` = "not done",
+  `-2` = "na, see CARDIG5", `-1` = "na, asked", `1` = "completed without help", `2` = "completed with help", `3` = "terminated", `4` = "not done",
   .applies_to_vars = c("cardig6"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/H/BCARDIG6", `-1` = "na, asked", `1` = "completed without help", `2` = "completed with help", `3` = "terminated", `4` = "not done",
+  `-2` = "na, see CARDIG6", `-1` = "na, asked", `1` = "completed without help", `2` = "completed with help", `3` = "terminated", `4` = "not done",
   .applies_to_vars = c("cardig7"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B")
 )
@@ -793,7 +793,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see D/E/BCARDIG1", `-1` = "na, asked", `1` = "standing", `2` = "sitting", `3` = "otherway",
+  `-3` = "na, wrong skip", `-2` = "na, see CARDIG1", `-1` = "na, asked", `1` = "standing", `2` = "sitting", `3` = "otherway",
   .applies_to_vars = c("cardig9"),
   .applies_to_waves = c("D", "E", "2B")
 )
@@ -811,7 +811,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see E/B/F/G/H/B/B/I/JWALK03",
+  `-2` = "na, see WALK03",
   .applies_to_vars = c("walk06"),
   .applies_to_waves = c("E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
@@ -823,37 +823,37 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see F/G/H/3B/I/J/KCARDIG1", `-1` = "na, asked", `1` = "standing", `2` = "sitting", `3` = "test not done", `4` = "other way",
+  `-3` = "na, wrong skip", `-2` = "na, see CARDIG1", `-1` = "na, asked", `1` = "standing", `2` = "sitting", `3` = "test not done", `4` = "other way",
   .applies_to_vars = c("cardig9"),
   .applies_to_waves = c("F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-6` = "na, no measurement", `-2` = "na, see H/B/B/I/JWALK03", `-1` = "no (valid) answer",
+  `-6` = "na, no measurement", `-2` = "na, see WALK03", `-1` = "no (valid) answer",
   .applies_to_vars = c("walk04a"),
   .applies_to_waves = c("H", "3B", "MB", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/B/I/J/KWALK09", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-3` = "na, wrong skip", `-2` = "na, see WALK09", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("walk17a"),
   .applies_to_waves = c("H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-6` = "na, wrong skip", `-2` = "na, see B/BCHAIR5", `-1` = "na, asked", `0` = "no hurt", `2` = "hurts a little bit", `4` = "hurts a little more", `6` = "hurts even more", `8` = "hurts a whole lot", `10` = "hurts worst",
+  `-6` = "na, wrong skip", `-2` = "na, see CHAIR5", `-1` = "na, asked", `0` = "no hurt", `2` = "hurts a little bit", `4` = "hurts a little more", `6` = "hurts even more", `8` = "hurts a whole lot", `10` = "hurts worst",
   .applies_to_vars = c("chair10"),
   .applies_to_waves = c("3B", "MB")
 )
 
 value_labels(
-  `-6` = "na, wrong skip", `-2` = "na, see B/BWALK03", `-1` = "na, asked", `0` = "no hurt", `2` = "hurts a little bit", `4` = "hurts a little more", `6` = "hurts even more", `8` = "hurts a whole lot", `10` = "hurts worst",
+  `-6` = "na, wrong skip", `-2` = "na, see WALK03", `-1` = "na, asked", `0` = "no hurt", `2` = "hurts a little bit", `4` = "hurts a little more", `6` = "hurts even more", `8` = "hurts a whole lot", `10` = "hurts worst",
   .applies_to_vars = c("walk07"),
   .applies_to_waves = c("3B", "MB")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/B/I/J/KWALK03", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see WALK03", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("walk09"),
   .applies_to_waves = c("3B", "MB", "I", "J", "K")
 )
@@ -865,7 +865,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/J/KWALK03", `-1` = "na, asked", `1` = "no",
+  `-3` = "na, wrong skip", `-2` = "na, see WALK03", `-1` = "na, asked", `1` = "no",
   .applies_to_vars = c("walk07"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -877,19 +877,19 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see J/KTANDEM1", `-1` = "na, asked", `1` = "normal test", `2` = "not capable", `3` = "immediately steps out of position (in less than 1 second)", `5` = "refusal", `6` = "physical impossible",
+  `-3` = "na, wrong skip", `-2` = "na, see TANDEM1", `-1` = "na, asked", `1` = "normal test", `2` = "not capable", `3` = "immediately steps out of position (in less than 1 second)", `5` = "refusal", `6` = "physical impossible",
   .applies_to_vars = c("tandem3"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see J/KTANDEM3", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see TANDEM3", `-1` = "na, asked",
   .applies_to_vars = c("tandem4"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-6` = "na, no measurement", `-3` = "na, born after 1940", `-2` = "na, see H/B/B/I/JWALK03", `-1` = "no (valid) answer",
+  `-6` = "na, no measurement", `-3` = "na, born after 1940", `-2` = "na, see WALK03", `-1` = "no (valid) answer",
   .applies_to_vars = c("walk04a"),
   .applies_to_waves = c("J")
 )
