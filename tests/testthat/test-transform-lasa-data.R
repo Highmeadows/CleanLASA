@@ -570,6 +570,26 @@ test_that("baseline files of several cohorts stacked with LASA's own names keep 
   expect_equal(back$Wave, rep(c("B", "2B"), each = 3), ignore_attr = TRUE)
 })
 
+test_that("a baseline column of wide data reads back at its wave also without the other columns", {
+  read_long <- function(prefix, filename, ids) {
+    suppressMessages(read_fixture(wave_fixture("046", prefix, ids = ids), filename, format_as_long = TRUE))
+  }
+  long <- transform_lasa_data(rbind(
+    read_long("B", "LASAB046.SAV", 1:3), read_long("C", "LASAC046.SAV", 1:3), read_long("B", "LAS2B046.SAV", 4:6)
+  ))
+  wide <- transform_lasa_data(long, format = "wide")
+  expect_named(wide, c("respnr", "blphya01", "blphya07", "clphya01", "clphya07", "b2lphya01", "b2lphya07"))
+  # Wave C's columns show respondents 1 to 3 are of the first cohort, but
+  # "blphya01", every cohort's baseline name, says its wave itself.
+  expect_equal(attr(wide$blphya01, "LASA_wave"), "B")
+  expect_equal(attr(wide$blphya01, "LASA_long_name"), "lphya01")
+  expect_null(attr(wide$clphya01, "LASA_wave"))
+  expect_null(attr(wide$b2lphya01, "LASA_wave"))
+  expect_silent(back <- transform_lasa_data(wide[c("respnr", "blphya01", "b2lphya01")]))
+  expect_equal(paste(back$respnr, back$Wave, back$Time), c("1 B 0", "2 B 0", "3 B 0", "4 2B 0", "5 2B 0", "6 2B 0"))
+  expect_equal(as.character(back$lphya01), as.character(long$lphya01[long$Wave != "C"]))
+})
+
 test_that("a baseline column merged into long data goes to each respondent's own baseline", {
   # Respondent 1 (first cohort) has rows at B and C, respondent 2 (second
   # cohort) at 2B and F, and respondent 3 only at C, a first-cohort wave.
@@ -1948,6 +1968,26 @@ test_that("values at waves the label database doesn't document for them read bac
   back <- transform_lasa_data(haven::read_sav(write_transform_sav(wide, "wide.sav")))
   expect_equal(back$Wave, c("4B", "L", "4B", "L"), ignore_attr = TRUE)
   expect_equal(as.vector(back$Time), c(0, 1, 0, 1))
+})
+
+test_that("a file's waves stacked keep their values at waves the label database documents nothing of the file at", {
+  # seh_reden, a name file 045 uses without a wave prefix, is documented at
+  # wave J only, and the label database documents nothing of file 045 at
+  # wave K. Values the same at J and K, as a column merged in by respnr
+  # would hold them, stay at their rows' waves, whichever file comes first.
+  read_045 <- function(wave, ids, values) {
+    suppressMessages(read_fixture(data.frame(RespNr = ids, SEH_REDEN = values), paste0("LASA", wave, "045.SAV"), format_as_long = TRUE))
+  }
+  j <- read_045("J", c(1, 2), c(3, 1))
+  k <- read_045("K", c(1, 2), c(3, 1))
+  for (stacked in list(rbind(j, k), rbind(k, j))) {
+    expect_warning(long <- suppressMessages(transform_lasa_data(stacked)), "seh_reden hold the same value on every row")
+    expect_equal(paste(long$respnr, long$Wave, long$seh_reden), paste(stacked$respnr, stacked$Wave, stacked$seh_reden))
+  }
+  # Respondents only at K stay at K.
+  stacked <- rbind(read_045("J", 1:3, c(3, 1, 2)), read_045("K", c(1, 4, 5), c(3, 2, 1)))
+  long <- suppressWarnings(suppressMessages(transform_lasa_data(stacked)))
+  expect_equal(paste(long$respnr, long$Wave, long$seh_reden), c("1 J 3", "2 J 1", "3 J 2", "1 K 3", "4 K 2", "5 K 1"))
 })
 
 test_that("blank text, as SPSS stores missing text, holds no value", {

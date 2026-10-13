@@ -240,7 +240,10 @@
 #' label report lists the column) -- also where the label database doesn't
 #' document the name at that wave, as for the files of waves 4B and L,
 #' which it doesn't document yet -- and, for a name LASA's wave files use
-#' without a wave prefix (`drinking`), those undocumented waves and any
+#' without a wave prefix (`drinking`), those undocumented waves and, where
+#' the data are a LASA file of that name (their `"LASA_file_code"`, which
+#' stacking the file's waves keeps), the waves the label database documents
+#' nothing of that file at (wave K for file 045's `seh_reden`), and any
 #' wave, once its values differ between a respondent's rows. In the data
 #' of a LASA file of wave L, a column the file's label report lists named
 #' `l` followed by a wave-specific variable (`lhhnch`) is that variable's
@@ -368,13 +371,12 @@
 #' where it isn't missing. A wide column whose name still doesn't say which
 #' wave and variable it holds (a name the label database doesn't document,
 #' or a wave B name the later cohorts' baselines share, such as
-#' `blphya01`) carries the attributes `"LASA_wave"` and `"LASA_long_name"`
-#' where transforming the whole result back needs them to place it (not
-#' where the respondents' other columns show their cohorts, so a
-#' selection of the result's columns may need a guess). Base R's [merge()]
-#' and row subsetting drop those attributes from factor and numeric
-#' columns (haven's labelled columns keep them); the column is then placed
-#' like a column of LASA's own files, see **Names of several waves**.
+#' `blphya01`) carries the attributes `"LASA_wave"` and `"LASA_long_name"`,
+#' which transforming it back uses, also without the result's other
+#' columns. Base R's [merge()] and row subsetting drop those attributes
+#' from factor and numeric columns (haven's labelled columns keep them);
+#' the column is then placed like a column of LASA's own files, see
+#' **Names of several waves**.
 #'
 #' **Labels** travel with the data. A long column keeps each wave's own
 #' `"wave_label"`/`"labels_wave"` as one entry per wave. Its variable label
@@ -638,6 +640,8 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 ##   unprefixed_stems
 ##                  canonical names of the names LASA's wave files use
 ##                  without a wave prefix (wide_rows that aren't `prefixed`).
+##   file_waves     per file code, the waves the database documents any of
+##                  that file's variables at.
 ##   missing_codes, missing_labels
 ##                  per variable or canonical name, the codes and value-label
 ##                  texts LASA marks as missing-value codes (is_missing: its
@@ -744,6 +748,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     canonical_wave = .lasa_hash_set(stem_wave),
     time_varying = .lasa_hash_set(time_varying),
     unprefixed_stems = .lasa_hash_set(wide_rows$cn[!wide_rows$prefixed]),
+    file_waves = .lasa_hash(lapply(split(wave, fc), unique)),
     stable = .lasa_hash_set(setdiff(unique(cn[z_stable]), time_varying)),
     missing_codes = missing_of("code"),
     missing_labels = missing_of("text")
@@ -2271,9 +2276,11 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     # LASA's own names and stacked. That includes wave 4B for a "b" name,
     # the wave of the data's own file for a name its wave files share
     # (`own_wave`), and for a name without a wave prefix, the waves the
-    # label database doesn't document yet -- and any wave, when its values
-    # differ between a respondent's rows, as a column merged in by respnr
-    # never does.
+    # label database doesn't document yet -- also, in data of the name's
+    # own file code (its files stacked), the waves it documents nothing of
+    # that file for (file 045 at K): their rows are that file's -- and any
+    # wave, when its values differ between a respondent's rows, as a column
+    # merged in by respnr never does.
     for (name in names(cands)) {
       cand <- cands[[name]]
       has <- has_value[[name]]
@@ -2288,9 +2295,11 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
           next
         }
       }
+      own_file <- cand$unprefixed && isTRUE(cand$trusted) && isTRUE(provenance$file_code %in% cand$fc)
       waves <- c(
         cand$wave, if (!is.na(cand$stem_4b)) "4B", if (!is.na(cand$own_wave)) cand$own_wave,
-        if (cand$unprefixed) undocumented
+        if (cand$unprefixed) undocumented,
+        if (own_file) setdiff(all_waves, c("A", .lasa_lookup(db_info$file_waves, provenance$file_code)))
       )
       already_long[[name]] <- any(has) && (all(wave_codes[has] %in% waves) ||
         (cand$unprefixed && .lasa_varies_within(data[[cand$position]], resp$r, n_resp)))
@@ -4008,9 +4017,12 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
       # is MB's long name of bimmse01) reads as that variable once merged
       # into long data without these attributes.
       other_long_name <- .lasa_has(db_info$canonical, tolower(name)) && tolower(name) != tolower(stems[[k]])
+      # Nor does a name of several waves (blphya01), which the other columns
+      # place only as long as they come along.
+      several_waves <- length(unique(back$candidates[[name]]$wave)) > 1L
       read_back <- nrow(found) == 1L && identical(found$stem, stems[[k]]) &&
         identical(found$wave, entry_waves[[k]]) && !name %in% c(back$guessed_columns, back$ambiguous_columns) &&
-        !other_long_name
+        !other_long_name && !several_waves
       if (read_back || !is.null(attr(result[[name]], "LASA_wide_name", exact = TRUE))) next
       renamed <- if (use_original[[k]]) name_of(k, FALSE) else name
       if (!identical(renamed, name) && !renamed %in% names(result)) {
