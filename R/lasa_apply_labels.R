@@ -17,7 +17,7 @@
 .lasa_apply_value_map <- function(value_labels, variable_name) {
   rows <- value_labels[value_labels$variable_name == variable_name & !is.na(value_labels$value_numeric), , drop = FALSE]
   if (nrow(rows) == 0L) return(NULL)
-  stats::setNames(rows$value_numeric, rows$value_label)
+  .lasa_value_map(rows)
 }
 
 ## Same idea as .lasa_apply_value_map(), but for the cross-wave-standardized
@@ -29,7 +29,16 @@
     drop = FALSE
   ]
   if (nrow(rows) == 0L) return(NULL)
-  stats::setNames(rows$value_numeric, rows$value_label)
+  .lasa_value_map(rows)
+}
+
+## A code the codebook lists without wording (an NA label) is named after
+## its own number, so a labelled result never carries an NA-named label
+## (haven::as_factor() would turn that value into NA).
+.lasa_value_map <- function(rows) {
+  text <- rows$value_label
+  text[is.na(text)] <- as.character(rows$value_numeric[is.na(text)])
+  stats::setNames(rows$value_numeric, text)
 }
 
 ## "respnr" is a structural identifier, not a documented database variable
@@ -556,17 +565,17 @@
 #'
 #' A code counts as missing when the label database flags its value label
 #' as missing: every negative documented code, e.g. `-1` = "na, asked", or
-#' `-2` = "valid score" in a "reason missing" variable, which explains why
-#' the score itself is missing. So does any negative value that appears in
-#' the data without being documented at all, since LASA codes reasons of
-#' missingness as negative numbers -- unless the variable is numeric and
-#' its genuine values can be negative (e.g. a speech-reception threshold
-#' in dB), in which case only its documented missing codes count and every
-#' other negative value is kept as a measurement. Positive codes such as
-#' "dropout" are real answers, never missing. Columns the database doesn't
-#' document are left as they are, except that `keep_user_na = FALSE`
-#' applies the file's own SPSS user-missing declaration to them (as
-#' [haven::zap_missing()] does).
+#' `-2` = "valid score" in a "reason missing" variable (the score is valid,
+#' so there is no reason to record). So does any negative value that
+#' appears in the data without being documented at all, since LASA codes
+#' reasons of missingness as negative numbers -- unless the variable is
+#' numeric and its genuine values can be negative (e.g. a
+#' speech-reception threshold in dB), in which case only its documented
+#' missing codes count and every other negative value is kept as a
+#' measurement. Positive codes such as "dropout" are real answers, never
+#' missing. Columns the database doesn't document are left as they are,
+#' except that `keep_user_na = FALSE` applies the file's own SPSS
+#' user-missing declaration to them (as [haven::zap_missing()] does).
 #'
 #' @return `data`, labelled (and optionally reshaped/renamed) with
 #'   `"label_report"`, `"variable.labels"`, `"LASA_wave"`, and

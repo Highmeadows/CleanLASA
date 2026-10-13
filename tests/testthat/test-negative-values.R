@@ -1,10 +1,10 @@
 # Negative values: a negative code is always a missing-value code, even
-# when its label names a valid answer (`-2` = "valid score" explains why a
-# "reason missing" score is missing), and so is an undocumented negative
-# value -- except in a variable whose genuine values can be negative
-# (database can_be_negative), such as a speech-reception threshold in dB,
-# where only the documented missing codes count and every other negative
-# value is a measurement.
+# when its label names a valid answer (`-2` = "valid score": the score is
+# valid, so its "reason missing" variable has nothing to record), and so
+# is an undocumented negative value -- except in a variable whose genuine
+# values can be negative (database can_be_negative), such as a
+# speech-reception threshold in dB, where only the documented missing
+# codes count and every other negative value is a measurement.
 
 local_negative_db <- function(env = parent.frame()) {
   tmp <- tempfile(fileext = ".rds")
@@ -122,6 +122,17 @@ test_that("a code listed without wording gets its own number as level text", {
   expect_false(anyNA(levels(out)))
 })
 
+test_that("a code listed without wording is a labelled value named after its number", {
+  testthat::local_mocked_bindings(.lasa_label_db_path = function() tempfile(fileext = ".rds"))
+
+  # LASAB047 brandom lists 0, 59 and 99 without wording.
+  path <- write_lasa_sav(data.frame(respnr = 1:4, brandom = c(0, 30, 99, -1)), "LASAB047.SAV")
+  out <- read_lasa_sav(path, standardize = FALSE, keep_user_na = TRUE)
+  expect_s3_class(out$brandom, "haven_labelled_spss")
+  expect_false(anyNA(names(attr(out$brandom, "labels"))))
+  expect_equal(as.character(haven::as_factor(out$brandom))[1:3], c("0", "30", "99"))
+})
+
 test_that("a local database saved without can_be_negative still labels", {
   local_negative_db()
   db <- .lasa_load_label_db()
@@ -161,7 +172,7 @@ test_that("negative_values() reaches the build", {
 test_that("the bundled database treats codes as missing and keeps measurements", {
   testthat::local_mocked_bindings(.lasa_label_db_path = function() tempfile(fileext = ".rds"))
 
-  # "valid score" explains why a performance-test score is missing.
+  # "valid score": the score is valid, so its reason-missing value is missing.
   path <- write_lasa_sav(data.frame(respnr = 1:4, brmpf = c(-2, 1, -1, 2)), "LASAB034.SAV")
   out <- read_lasa_sav(path, standardize = FALSE)
   expect_s3_class(out$brmpf, "factor")
