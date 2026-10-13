@@ -23,16 +23,12 @@
 #'   \item{value_labels}{One row per (`filecode`, `wave`, `variable_name`,
 #'     `value_numeric`): `value_label`, `is_missing` -- the value labels as
 #'     documented for that wave. `is_missing` is `TRUE` for a missing-value
-#'     code: every negative code, except the few measurements the
-#'     documentation lists among the codes (e.g. a speech-reception
-#'     threshold of `-9.2` dB).}
+#'     code: every negative code.}
 #'   \item{value_labels_harmonized}{One row per (`filecode`,
 #'     `canonical_name`, `value_numeric`): `value_label`, `is_missing` --
 #'     the cross-wave-standardized value labels for that variable,
 #'     independent of wave (used where a variable's coding was harmonized
-#'     across waves that documented it slightly differently). Where a
-#'     wave's `value_labels` document the same code, the wave's
-#'     `is_missing` decides whether that wave's code is missing.}
+#'     across waves that documented it slightly differently).}
 #'   \item{manual_overrides}{A list of `variables`/`value_labels` patch
 #'     tables; empty in the bundled snapshot -- populated only in a user's
 #'     local copy by [manual_update_lasa_labels()].}

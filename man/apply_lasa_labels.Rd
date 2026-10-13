@@ -148,23 +148,18 @@ whose numeric codes disagree but whose label text agrees (e.g.
 \verb{0 = "no", 1 = "yes"} vs. \verb{1 = "no", 2 = "yes"}) still merge correctly.
 
 A code counts as missing when the label database flags its value label
-as missing: every negative documented code, e.g. \code{-1} = "na, asked" or
-\code{-2} = "valid score" in a "reason missing" variable, except the few
-measurements LASA's documentation lists among the codes, such as a
-speech-reception threshold of \code{-9.2} dB. So does any
-negative value that appears in the data without being documented at
-all, since LASA codes reasons of missingness as negative numbers --
-unless the variable is numeric and its documentation shows genuine
-negative values (e.g. a speech-reception threshold in dB), in which case
-only its documented missing codes count and every other negative value
-is kept as a measurement. Where a wave's own value labels and the
-harmonized ones disagree about a code, the wave's labels decide, and a
-code the wave documents as a real value keeps the wave's label text even
-when the harmonized value labels are active. Positive codes such as
+as missing: every negative documented code, e.g. \code{-1} = "na, asked", or
+\code{-2} = "valid score" in a "reason missing" variable, which explains why
+the score itself is missing. So does any negative value that appears in
+the data without being documented at all, since LASA codes reasons of
+missingness as negative numbers -- unless the variable is numeric and
+its genuine values can be negative (e.g. a speech-reception threshold
+in dB), in which case only its documented missing codes count and every
+other negative value is kept as a measurement. Positive codes such as
 "dropout" are real answers, never missing. Columns the database doesn't
-document are left
-as they are, except that \code{keep_user_na = FALSE} applies the file's own
-SPSS user-missing declaration to them (as \code{\link[haven:zap_missing]{haven::zap_missing()}} does).
+document are left as they are, except that \code{keep_user_na = FALSE}
+applies the file's own SPSS user-missing declaration to them (as
+\code{\link[haven:zap_missing]{haven::zap_missing()}} does).
 }
 \examples{
 \dontrun{

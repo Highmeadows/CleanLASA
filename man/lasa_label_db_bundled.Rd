@@ -18,16 +18,12 @@ documented missing-value codes count as missing).}
 \item{value_labels}{One row per (\code{filecode}, \code{wave}, \code{variable_name},
 \code{value_numeric}): \code{value_label}, \code{is_missing} -- the value labels as
 documented for that wave. \code{is_missing} is \code{TRUE} for a missing-value
-code: every negative code, except the few measurements the
-documentation lists among the codes (e.g. a speech-reception
-threshold of \code{-9.2} dB).}
+code: every negative code.}
 \item{value_labels_harmonized}{One row per (\code{filecode},
 \code{canonical_name}, \code{value_numeric}): \code{value_label}, \code{is_missing} --
 the cross-wave-standardized value labels for that variable,
 independent of wave (used where a variable's coding was harmonized
-across waves that documented it slightly differently). Where a
-wave's \code{value_labels} document the same code, the wave's
-\code{is_missing} decides whether that wave's code is missing.}
+across waves that documented it slightly differently).}
 \item{manual_overrides}{A list of \code{variables}/\code{value_labels} patch
 tables; empty in the bundled snapshot -- populated only in a user's
 local copy by \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}.}

@@ -27,8 +27,6 @@
 
 ## Normalizes `val_labels` (a named vector, possibly numeric- or
 ## backtick-named) into a data frame of value_numeric/value_label/is_missing.
-## `is_missing` here is only the default for a code the database doesn't
-## document yet (see .lasa_manual_is_missing()).
 .lasa_manual_parse_val_labels <- function(val_labels) {
   if (is.null(names(val_labels)) || any(!nzchar(names(val_labels)))) {
     stop(
@@ -46,44 +44,6 @@
     is_missing = codes < 0,
     stringsAsFactors = FALSE
   )
-}
-
-## Whether each manually labelled code in `codes` is a missing code for
-## one (filecode, wave, variable_name). A code the database already
-## documents keeps its meaning -- from an earlier correction, else the
-## wave's value labels, else the harmonized ones -- so correcting a label's
-## text never turns a real value into a missing code or back. A code it
-## doesn't document is missing when negative. Either way, a code listed in
-## `not_missing` is a real value.
-.lasa_manual_is_missing <- function(db, filecode, wave, variable_name, codes, not_missing) {
-  fc <- .lasa_normalize_filecode(filecode)
-  flag_of <- function(tbl, keep) {
-    rows <- tbl[keep, , drop = FALSE]
-    rows$is_missing[match(codes, rows$value_numeric)]
-  }
-  mo <- db$manual_overrides$value_labels
-  vl <- db$value_labels
-  hz <- db$value_labels_harmonized
-  vars <- db$variables
-  cname <- vars$canonical_name[
-    .lasa_normalize_filecode(vars$filecode) == fc & toupper(vars$wave) == toupper(wave) &
-      vars$variable_name == variable_name
-  ]
-  cname <- if (length(cname) > 0L) cname[[1L]] else variable_name
-
-  is_missing <- flag_of(
-    mo,
-    .lasa_normalize_filecode(mo$filecode) == fc & toupper(mo$wave) == toupper(wave) & mo$variable_name == variable_name
-  )
-  wave_flag <- flag_of(
-    vl,
-    .lasa_normalize_filecode(vl$filecode) == fc & toupper(vl$wave) == toupper(wave) & vl$variable_name == variable_name
-  )
-  harmonized_flag <- flag_of(hz, .lasa_normalize_filecode(hz$filecode) == fc & hz$canonical_name == cname)
-  is_missing[is.na(is_missing)] <- wave_flag[is.na(is_missing)]
-  is_missing[is.na(is_missing)] <- harmonized_flag[is.na(is_missing)]
-  is_missing[is.na(is_missing)] <- codes[is.na(is_missing)] < 0
-  is_missing & !codes %in% not_missing
 }
 
 #' Manually correct or add LASA variable/value labels
@@ -111,12 +71,6 @@
 #' @param val_labels Optional named vector of value-label corrections,
 #'   keyed by numeric code, e.g. `c(\`-5\` = "NA, wrong, skip", \`1\` =
 #'   "man")` (quote or backtick negative/numeric-looking names).
-#' @param not_missing Optional numeric vector of negative codes in
-#'   `val_labels` that are real values rather than missing-value codes,
-#'   for a measurement LASA's documentation lists among the codes (e.g. a
-#'   speech-reception threshold of `-9.2` dB). A code the database already
-#'   documents otherwise keeps its documented meaning when only its label
-#'   text is corrected; a new negative code is a missing-value code.
 #' @param replace_val_labels Logical, default `FALSE`. If `FALSE`, `val_labels`
 #'   is merged into the existing value-label set (upserted by code). If
 #'   `TRUE`, the result is *only* `val_labels` -- every other coded value
@@ -137,12 +91,6 @@
 #'   val_labels = c(`-5` = "NA, wrong, skip")
 #' )
 #'
-#' # Label a negative measurement, not a missing-value code:
-#' manual_update_lasa_labels(
-#'   filecode = "193", wave = "E", variable = "emsrttn",
-#'   val_labels = c(`-9.4` = "-9.4 dB"), not_missing = -9.4
-#' )
-#'
 #' # Fully replace a variable's value labels:
 #' manual_update_lasa_labels(
 #'   variable = "lphya01", wave = "all", filecode = "046",
@@ -154,8 +102,7 @@ manual_update_lasa_labels <- function(filecode = NULL,
                                       variable,
                                       var_label = NULL,
                                       val_labels = NULL,
-                                      replace_val_labels = FALSE,
-                                      not_missing = NULL) {
+                                      replace_val_labels = FALSE) {
   if (missing(variable) || !is.character(variable) || length(variable) != 1L ||
       is.na(variable) || !nzchar(variable)) {
     stop("'variable' must be a single non-empty character string.", call. = FALSE)
@@ -167,13 +114,6 @@ manual_update_lasa_labels <- function(filecode = NULL,
   if (!is.null(var_label)) {
     if (!is.character(var_label) || length(var_label) != 1L) {
       stop("'var_label' must be a single character string (or NA).", call. = FALSE)
-    }
-  }
-  if (!is.null(not_missing)) {
-    declared <- suppressWarnings(as.numeric(names(val_labels)))
-    if (!is.numeric(not_missing) || anyNA(not_missing) || any(not_missing >= 0) ||
-        !all(not_missing %in% declared)) {
-      stop("'not_missing' must list negative codes that 'val_labels' labels.", call. = FALSE)
     }
   }
   if (!is.null(filecode)) {
@@ -280,7 +220,6 @@ manual_update_lasa_labels <- function(filecode = NULL,
     parsed_vals <- .lasa_manual_parse_val_labels(val_labels)
     value_rows <- do.call(rbind, lapply(waves_to_apply, function(w) {
       out <- parsed_vals
-      out$is_missing <- .lasa_manual_is_missing(db, filecode, w, variable_name, out$value_numeric, not_missing)
       out$filecode <- filecode
       out$wave <- w
       out$variable_name <- variable_name

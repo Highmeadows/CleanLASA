@@ -96,10 +96,9 @@ value_labels(
 )
 
 value_labels(
-  `-24` = "non-valid, too many incomplete triplets", `-23` = "non-valid, aborted measurement", `-22` = "test not done", `-9.8` = NA_character_, `-9.2` = NA_character_, `5.71` = NA_character_, `6.36` = NA_character_, `8` = NA_character_,
+  `-24` = "non-valid, too many incomplete triplets", `-23` = "non-valid, aborted measurement", `-22` = "test not done",
   .applies_to_vars = c("msrttn"),
-  .applies_to_waves = c("Z"),
-  .not_missing = c(-9.8, -9.2)
+  .applies_to_waves = c("Z", "E", "F")
 )
 
 value_labels(
@@ -108,24 +107,11 @@ value_labels(
   .applies_to_waves = c("Z", "E", "F")
 )
 
-value_labels(
-  `-24` = "non-valid, too many incomplete triplets", `-23` = "non-valid, aborted measurement", `-22` = "test not done", `-9.2` = NA_character_, `5.71` = NA_character_, `6.36` = NA_character_,
-  .applies_to_vars = c("msrttn"),
-  .applies_to_waves = c("E"),
-  .not_missing = -9.2
-)
-
-value_labels(
-  `-24` = "non-valid, too many incomplete triplets", `-23` = "non-valid, aborted measurement", `-22` = "test not done", `-9.8` = NA_character_, `-9.2` = NA_character_, `6.36` = NA_character_, `8` = NA_character_,
-  .applies_to_vars = c("msrttn"),
-  .applies_to_waves = c("F"),
-  .not_missing = c(-9.8, -9.2)
-)
-
 # define variables whose values can be negative ----
 ## Speech-reception thresholds in dB (signal-to-noise ratio) are negative
 ## for good hearing; only their documented negative codes are missing.
-## The listed -9.8/-9.2 are measured thresholds, not missing codes.
+## (The varinfo lists example thresholds such as -9.8, -9.2, 5.71 and 8
+## after the codes: measurements, not value labels.)
 negative_values("msrttn", .applies_to_waves = c("E", "F"))
 negative_values("msrtnb", "msrtns", .applies_to_waves = c("G"))
 

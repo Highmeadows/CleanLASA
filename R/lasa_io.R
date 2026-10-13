@@ -44,11 +44,9 @@
 #   * to_numeric                - restore count/continuous variables to
 #                                plain numeric.
 #   * keep_user_na              - how missing-value codes (every code the
-#                                database flags `is_missing`, the wave's
-#                                own value labels deciding over the
-#                                harmonized ones, plus any
+#                                database flags `is_missing`, plus any
 #                                undocumented negative value unless the
-#                                variable's documented values can be
+#                                variable's genuine values can be
 #                                negative) are
 #                                represented, uniformly for every variable
 #                                type: FALSE (default) turns them into NA;
@@ -207,14 +205,15 @@
 ## Shared `keep_user_na = FALSE` transformation for a factor/character
 ## column that was already converted (its numeric codes are gone): blanks
 ## every value that is a missing code's label text (`missing_text`, see
-## .lasa_missing_text()) or a number that counts as a missing code (see
-## .lasa_is_missing_number(); an undocumented missing code is kept as its
-## own number), and drops those factor levels.
-.lasa_blank_missing_text <- function(x, missing_text, documented = .lasa_no_documented_codes(),
-                                     infer_negative = TRUE) {
+## .lasa_missing_text()) or a number that is a missing code -- one of
+## `missing_codes`, or, unless `infer_negative` is FALSE, any negative
+## number (an undocumented missing code kept as its own number) -- and
+## drops those factor levels.
+.lasa_blank_missing_text <- function(x, missing_text, missing_codes = numeric(0), infer_negative = TRUE) {
   is_missing_text <- function(text) {
     as_number <- suppressWarnings(as.numeric(text))
-    !is.na(text) & (text %in% missing_text | .lasa_is_missing_number(as_number, documented, infer_negative))
+    is_missing_number <- !is.na(as_number) & (as_number %in% missing_codes | (infer_negative & as_number < 0))
+    !is.na(text) & (text %in% missing_text | is_missing_number)
   }
   if (is.factor(x)) {
     # Every level for a missing code goes, observed or not.
@@ -226,79 +225,38 @@
   text
 }
 
-## The numeric codes one variable's wave-specific and harmonized value
-## labels document, split by meaning: `missing` holds each code flagged
-## `is_missing`, `real` each code documented as a real answer or value --
-## every non-negative code, plus any negative code the documentation
-## shows is a measurement (e.g. a `-9.2` dB threshold listed among the
-## codes, see data-raw/label_db_helpers.R's value_labels(.not_missing =
-## ...)). Where both document the same code, the wave-specific meaning
-## wins: a code can be a real value in one wave and a missing code in the
-## harmonized labels.
-.lasa_documented_codes <- function(value_labels, variable_name, value_labels_harmonized, canonical_name) {
+## Every code that counts as missing for one variable: each code its
+## wave-specific or harmonized value labels flag `is_missing`, plus any
+## observed negative value that no value label documents as a real
+## answer (LASA's convention: negative codes are reasons for missingness,
+## documented or not). `infer_negative = FALSE` -- a variable whose
+## genuine values can be negative (the label database's
+## `can_be_negative`) -- leaves out that second part, so only its
+## documented missing codes count. Only a numerically-coded `x`
+## contributes observed values -- a factor/character column (e.g. one
+## already converted by an earlier apply_lasa_labels() call) or a date
+## has no codes to inspect.
+.lasa_missing_codes <- function(x, value_labels, variable_name, value_labels_harmonized, canonical_name,
+                                infer_negative = TRUE) {
   pick <- function(tbl, key_col, key) {
     rows <- tbl[tbl[[key_col]] == key & !is.na(tbl$value_numeric), , drop = FALSE]
     data.frame(value_numeric = rows$value_numeric, is_missing = rows$is_missing)
   }
-  wave_rows <- pick(value_labels, "variable_name", variable_name)
-  harmonized_rows <- pick(value_labels_harmonized, "canonical_name", canonical_name)
   documented <- rbind(
-    wave_rows,
-    harmonized_rows[!harmonized_rows$value_numeric %in% wave_rows$value_numeric, , drop = FALSE]
+    pick(value_labels, "variable_name", variable_name),
+    pick(value_labels_harmonized, "canonical_name", canonical_name)
   )
-  list(
-    missing = unique(documented$value_numeric[documented$is_missing %in% TRUE]),
-    real = unique(documented$value_numeric[documented$is_missing %in% FALSE])
-  )
-}
+  flagged <- documented$value_numeric[documented$is_missing %in% TRUE]
+  real_answers <- documented$value_numeric[documented$is_missing %in% FALSE]
 
-.lasa_no_documented_codes <- function() list(missing = numeric(0), real = numeric(0))
-
-## The harmonized value labels as shown for one wave's variable. A code the
-## wave documents as a real value (`documented$real`, see
-## .lasa_documented_codes()) but the harmonized labels flag as missing
-## takes the wave's own label text instead of the harmonized one (e.g.
-## "not available"), so a real value is never shown under a missing-value
-## label.
-.lasa_harmonized_map_for_wave <- function(harmonized_value_map, value_map, documented,
-                                          value_labels_harmonized, canonical_name) {
-  if (is.null(harmonized_value_map) || is.null(value_map)) return(harmonized_value_map)
-  harmonized_missing <- value_labels_harmonized$value_numeric[
-    value_labels_harmonized$canonical_name == canonical_name & value_labels_harmonized$is_missing %in% TRUE
-  ]
-  wave_real <- value_map[value_map %in% documented$real & value_map %in% harmonized_missing]
-  if (length(wave_real) == 0L) return(harmonized_value_map)
-  c(harmonized_value_map[!harmonized_value_map %in% wave_real], wave_real)
-}
-
-## TRUE where a number counts as a missing code: a documented missing
-## code (`documented$missing`), or -- when `infer_negative` -- any other
-## negative number not documented as a real value. LASA codes missing
-## values as negative numbers, documented or not; `infer_negative` is
-## FALSE only for a variable whose genuine values can be negative (the
-## label database's `can_be_negative`). `NA` is never a missing code.
-.lasa_is_missing_number <- function(values, documented, infer_negative = TRUE) {
-  !is.na(values) & (
-    values %in% documented$missing |
-      (infer_negative & values < 0 & !values %in% documented$real)
-  )
-}
-
-## Every code that counts as missing for one variable: each documented
-## missing code (`documented`, from .lasa_documented_codes()), plus any
-## observed number in `x` that .lasa_is_missing_number() counts as an
-## undocumented missing code. Only a numerically-coded `x` contributes
-## observed values -- a factor/character column (e.g. one already
-## converted by an earlier apply_lasa_labels() call) or a date has no
-## codes to inspect.
-.lasa_missing_codes <- function(x, documented, infer_negative = TRUE) {
-  observed <- if (.lasa_is_coded(x)) {
+  observed <- if (infer_negative && .lasa_is_coded(x)) {
     values <- .lasa_numeric_values(x)
-    unique(values[.lasa_is_missing_number(values, documented, infer_negative)])
+    unique(values[!is.na(values) & values < 0 & !values %in% real_answers])
   } else {
     numeric(0)
   }
-  sort(unique(c(documented$missing, observed)))
+
+  sort(unique(c(flagged, observed)))
 }
 
 ## Shared `keep_user_na = FALSE` transformation for a numerically-coded

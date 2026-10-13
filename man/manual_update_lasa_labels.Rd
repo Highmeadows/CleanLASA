@@ -10,8 +10,7 @@ manual_update_lasa_labels(
   variable,
   var_label = NULL,
   val_labels = NULL,
-  replace_val_labels = FALSE,
-  not_missing = NULL
+  replace_val_labels = FALSE
 )
 }
 \arguments{
@@ -39,13 +38,6 @@ keyed by numeric code, e.g. \verb{c(\\}-5\\verb{ = "NA, wrong, skip", \\}1\\verb
 is merged into the existing value-label set (upserted by code). If
 \code{TRUE}, the result is \emph{only} \code{val_labels} -- every other coded value
 for this variable is dropped when labels are applied.}
-
-\item{not_missing}{Optional numeric vector of negative codes in
-\code{val_labels} that are real values rather than missing-value codes,
-for a measurement LASA's documentation lists among the codes (e.g. a
-speech-reception threshold of \code{-9.2} dB). A code the database already
-documents otherwise keeps its documented meaning when only its label
-text is corrected; a new negative code is a missing-value code.}
 }
 \value{
 Invisibly, a list describing what was recorded: \code{filecode},
@@ -66,12 +58,6 @@ package update never silently discards a correction recorded here.
 manual_update_lasa_labels(
   filecode = "046", wave = "B", variable = "lphya01",
   val_labels = c(`-5` = "NA, wrong, skip")
-)
-
-# Label a negative measurement, not a missing-value code:
-manual_update_lasa_labels(
-  filecode = "193", wave = "E", variable = "emsrttn",
-  val_labels = c(`-9.4` = "-9.4 dB"), not_missing = -9.4
 )
 
 # Fully replace a variable's value labels:

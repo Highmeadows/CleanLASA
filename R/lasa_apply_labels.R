@@ -138,9 +138,8 @@
     } else {
       wave_label
     }
-    documented <- .lasa_documented_codes(vals, vname, vals_harmonized, cname)
     active_value_map <- if (isTRUE(eff_val_labels) && !is.null(harmonized_value_map)) {
-      .lasa_harmonized_map_for_wave(harmonized_value_map, value_map, documented, vals_harmonized, cname)
+      harmonized_value_map
     } else {
       value_map
     }
@@ -174,7 +173,7 @@
     missing_codes <- if (is_respnr) {
       numeric(0)
     } else {
-      .lasa_missing_codes(x, documented, infer_negative)
+      .lasa_missing_codes(x, vals, vname, vals_harmonized, cname, infer_negative)
     }
 
     if (is_respnr || inherits(x, c("Date", "POSIXt", "difftime", "hms"))) {
@@ -185,7 +184,7 @@
       # missing code's label text can still be blanked.
       if (!isTRUE(keep_user_na)) {
         missing_text <- .lasa_missing_text(list(value_map, harmonized_value_map), missing_codes)
-        x <- .lasa_blank_missing_text(x, missing_text, documented, infer_negative)
+        x <- .lasa_blank_missing_text(x, missing_text, missing_codes, infer_negative)
       }
       x <- attach_attrs(x)
     } else if (isTRUE(to_numeric) && numeric_eligible) {
@@ -556,23 +555,18 @@
 #' `0 = "no", 1 = "yes"` vs. `1 = "no", 2 = "yes"`) still merge correctly.
 #'
 #' A code counts as missing when the label database flags its value label
-#' as missing: every negative documented code, e.g. `-1` = "na, asked" or
-#' `-2` = "valid score" in a "reason missing" variable, except the few
-#' measurements LASA's documentation lists among the codes, such as a
-#' speech-reception threshold of `-9.2` dB. So does any
-#' negative value that appears in the data without being documented at
-#' all, since LASA codes reasons of missingness as negative numbers --
-#' unless the variable is numeric and its documentation shows genuine
-#' negative values (e.g. a speech-reception threshold in dB), in which case
-#' only its documented missing codes count and every other negative value
-#' is kept as a measurement. Where a wave's own value labels and the
-#' harmonized ones disagree about a code, the wave's labels decide, and a
-#' code the wave documents as a real value keeps the wave's label text even
-#' when the harmonized value labels are active. Positive codes such as
+#' as missing: every negative documented code, e.g. `-1` = "na, asked", or
+#' `-2` = "valid score" in a "reason missing" variable, which explains why
+#' the score itself is missing. So does any negative value that appears in
+#' the data without being documented at all, since LASA codes reasons of
+#' missingness as negative numbers -- unless the variable is numeric and
+#' its genuine values can be negative (e.g. a speech-reception threshold
+#' in dB), in which case only its documented missing codes count and every
+#' other negative value is kept as a measurement. Positive codes such as
 #' "dropout" are real answers, never missing. Columns the database doesn't
-#' document are left
-#' as they are, except that `keep_user_na = FALSE` applies the file's own
-#' SPSS user-missing declaration to them (as [haven::zap_missing()] does).
+#' document are left as they are, except that `keep_user_na = FALSE`
+#' applies the file's own SPSS user-missing declaration to them (as
+#' [haven::zap_missing()] does).
 #'
 #' @return `data`, labelled (and optionally reshaped/renamed) with
 #'   `"label_report"`, `"variable.labels"`, `"LASA_wave"`, and

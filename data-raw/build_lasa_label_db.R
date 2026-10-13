@@ -79,17 +79,8 @@ for (fc in names(fc_objects)) {
   vl <- obj$variable_labels # wave-specific + harmonized label text
   vv <- obj$value_labels # wave-specific + harmonized value-label sets (list-columns)
   vty <- obj$variable_types # collapsed type, constant per canonical name
-  nm <- obj$not_missing # negative codes the documentation shows are real values
   neg <- obj$negative_values # (wave, canonical name) pairs whose genuine values can be negative
   neg_keys <- if (is.null(neg)) character(0) else paste(neg$LASA_Wave, neg$canonical_name)
-
-  # LASA codes missing values as negative numbers, so a negative code is
-  # a missing-value code unless value_labels(.not_missing = ...) marked
-  # it as a real value for this wave ("all" = harmonized) and variable.
-  is_missing_code <- function(codes, wave, cn) {
-    real <- if (is.null(nm)) numeric(0) else nm$code[nm$LASA_Wave == wave & nm$canonical_name == cn]
-    codes < 0 & !codes %in% real
-  }
 
   canonical_cols <- setdiff(names(vt), identifier_cols)
   all_row <- which(vt$LASA_Wave == "all")
@@ -165,7 +156,7 @@ for (fc in names(fc_objects)) {
       codes <- suppressWarnings(as.numeric(names(vec)))
       vl_rows[[length(vl_rows) + 1L]] <- data.frame(
         filecode = fc, wave = wave, variable_name = vname,
-        value_numeric = codes, value_label = unname(vec), is_missing = is_missing_code(codes, wave, cn),
+        value_numeric = codes, value_label = unname(vec), is_missing = codes < 0,
         stringsAsFactors = FALSE
       )
     }
@@ -184,7 +175,7 @@ for (fc in names(fc_objects)) {
     codes <- suppressWarnings(as.numeric(names(vec)))
     hz_rows[[length(hz_rows) + 1L]] <- data.frame(
       filecode = fc, canonical_name = cn,
-      value_numeric = codes, value_label = unname(vec), is_missing = is_missing_code(codes, "all", cn),
+      value_numeric = codes, value_label = unname(vec), is_missing = codes < 0,
       stringsAsFactors = FALSE
     )
   }
@@ -227,8 +218,6 @@ cat(
   " value_labels:", nrow(lasa_label_db_bundled$value_labels), "\n",
   " value_labels_harmonized:", nrow(lasa_label_db_bundled$value_labels_harmonized), "\n",
   " variables downgraded to text (inconsistent harmonized coding):", n_placeholder_total, "\n",
-  " negative codes documented as real values (not missing):",
-  sum(!lasa_label_db_bundled$value_labels$is_missing & lasa_label_db_bundled$value_labels$value_numeric < 0, na.rm = TRUE), "\n",
   " variables whose values can be negative:", sum(lasa_label_db_bundled$variables$can_be_negative), "\n"
 )
 
