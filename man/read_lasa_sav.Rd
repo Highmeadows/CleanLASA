@@ -107,10 +107,12 @@ generic \code{"label_report"} attribute; retrieve it with
 
 With \code{format_as_long = TRUE}, the labelled data are finally passed to
 \code{\link[=transform_lasa_data]{transform_lasa_data()}} (\code{format = "long"}). A regular wave file is
-already long under the default \code{standardize = TRUE} and only gains a
-\code{"Time"} column (read with \code{standardize = FALSE}, its wave-prefixed
-names lose their prefix too); a Z file's wave-prefixed columns become
-one column per variable, with the wave of each row in \code{"Wave"}. A file
+already long under the default \code{standardize = TRUE} and gains a
+\code{"Time"} column; its wave-prefixed names lose their prefix where
+\code{standardize} left it: all of them with \code{standardize = FALSE}, and
+those of waves 4B and L, which the label database doesn't document yet.
+A Z file's wave-prefixed columns become one column per variable, with
+the wave of each row in \code{"Wave"}. A file
 without wave-specific columns, such as the Z file \code{LASAZ004.SAV} or the
 migrant cohort's \code{LASMB004.SAV} (sex, year of birth, ...), has no wave
 dimension: it keeps one row per respondent, without \code{"Wave"} and

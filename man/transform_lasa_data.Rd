@@ -48,8 +48,9 @@ column right after \code{respnr}. Each wave-specific variable becomes one
 column named after its wave-stripped (canonical) name, so \code{boak}, \code{coak},
 ... become \code{oak}. A respondent gets a row for each wave at which at least
 one of the wave-specific columns has a value for them -- anything but
-\code{NA}, so a missing-value code that is kept as a value (e.g. "dropout")
-counts. Respondents of a later cohort therefore only get rows for the
+\code{NA} or blank text (which is how SPSS stores missing text), so a
+missing-value code that is kept as a value (e.g. "dropout") counts.
+Respondents of a later cohort therefore only get rows for the
 waves before they joined LASA where the data hold such a code for them,
 as LASA's Z files do ("no observation birth cohorts 1938-1947"). A
 respondent without any value at any wave keeps a row for every wave, so
@@ -76,14 +77,16 @@ which \code{LASAZ008.SAV} uses (\code{t2_dat} is wave B there); for time itself,
 use the interview dates or ages in \code{LASAZ008.SAV}.
 
 A row's Time depends on the respondent's cohort, so the data must show
-it: a value (other than \code{NA} or a missing-value code) at the
-respondent's baseline or at a wave only their cohort takes part in (B to
-E for the first cohort); any row of a single LASA file of such a wave,
-whatever it holds (the data's \code{"LASA_file_code"} and \code{"LASA_wave"}
-attributes say which file; not a Z file, whose rows may hold codes for
-waves before a cohort joined); a \code{"Baseline"} column with each
-respondent's baseline wave (as Time-prefixed wide data have, see below);
-or a \code{"Time"} column already in long data. Values show it in the
+it: a value (other than \code{NA}, blank text, or a missing-value code) at
+the respondent's baseline or at a wave only their cohort takes part in
+(B to E for the first cohort); any row of a single LASA file of such a
+wave (the data's \code{"LASA_file_code"} and \code{"LASA_wave"} attributes say
+which file; not a Z file, whose rows may hold codes for waves before a
+cohort joined), whatever it holds, unless that is nothing but values a
+guess put at its wave (see \strong{Names of several waves}); a \code{"Baseline"}
+column with each respondent's baseline wave (as Time-prefixed wide data
+have, see below); or a \code{"Time"} column already in long data. Values
+show it in the
 wave-specific variables the label database documents (and long columns
 \code{transform_lasa_data()} made from wide columns); in long data without
 any, in the columns whose values differ between a respondent's rows (a
@@ -106,8 +109,11 @@ with each other; it is replaced by the recomputed one. A \code{"Baseline"}
 column must give each respondent one baseline wave (B, 2B, 3B, MB, or
 4B) or none (\code{NA}) -- unless none of its values is a baseline wave: then
 it is an ordinary column. The \code{Baseline.x}/\code{Baseline.y} columns of
-Time-prefixed data sets merged by \code{respnr} are combined, and must
-agree.
+Time-prefixed data sets merged by \code{respnr}, and the further copies
+merging more of them gives (\code{Baseline.x.x}, or several of the same
+name), are combined into one \code{"Baseline"}, and must agree. A copy that
+holds baseline waves must hold nothing else; a copy without any is
+another data set's own column, and stays as it is.
 
 \strong{Stable variables} -- columns that hold for every wave, such as sex or
 year of birth (\code{byear}) in \code{LASAZ004.SAV} -- keep one column and are
@@ -132,11 +138,14 @@ name by fuzzy matching or \code{name_corrections} -- or, for data that aren't
 long yet (no \code{"Wave"} column, or only the \code{"Z"} placeholder
 \code{\link[=read_lasa_sav]{read_lasa_sav()}} gives a Z file), when its name is a wave prefix
 followed by a variable the label database documents for that wave (the
-names wide format uses, see below). All other columns are treated as
-stable, including columns the label database doesn't know. A warning
-names columns kept stable that look like wave-specific variables: names
-a merge suffixed with \code{.x}/\code{.y}, and, in wide data, variables read with
-their wave stripped from their name.
+names wide format uses, see below), by any wave-specific variable it
+documents if the wave is 4B or L, which it doesn't document yet
+(\code{lhhnch}), or by a variable LASA's wave files name without a wave
+prefix if the wave isn't A (\code{kseh_reden}). All other columns are
+treated as stable, including columns the label database doesn't know. A
+warning names columns kept stable that look like wave-specific
+variables: names a merge suffixed with \code{.x}/\code{.y}, and, in wide data,
+variables read with their wave stripped from their name.
 
 In long data, a column named after a variable (its long-format name) is
 that variable's long column, whose values stay at their rows' waves.
@@ -147,11 +156,14 @@ label report lists the column) -- also where the label database doesn't
 document the name at that wave, as for the files of waves 4B and L,
 which it doesn't document yet -- and, for a name LASA's wave files use
 without a wave prefix (\code{drinking}), those undocumented waves and any
-wave, once its values differ between a respondent's rows. Wave I's
-\code{immse01} to \code{immse23} are also the long names of the migrant cohort's
-\code{bimmse01} to \code{bimmse23}: such a column is the migrant cohort's long
-column when its values are on rows of wave MB (or its \code{canonical_name}
-attribute says so), and wave I's column otherwise.
+wave, once its values differ between a respondent's rows. In the data
+of a LASA file of wave L, a column the file's label report lists named
+\code{l} followed by a wave-specific variable (\code{lhhnch}) is that variable's
+long column too, so wave L's files become long as other waves' do. Wave
+I's \code{immse01} to \code{immse23} are also the long names of the migrant
+cohort's \code{bimmse01} to \code{bimmse23}: such a column is the migrant cohort's
+long column when its values are on rows of wave MB (or its
+\code{canonical_name} attribute says so), and wave I's column otherwise.
 
 \strong{Names of several waves.} LASA's wave files name the baseline of every
 cohort (B, 2B, 3B, MB, and 4B) with the same \code{b} prefix, so a name such
@@ -168,16 +180,23 @@ most the first file's attributes). If nothing says, the value goes, with
 a message naming the column, to the first of these waves the
 respondent's cohort may take part in: the wave the column's other
 respondents were placed at by their cohort, the wave of the data's
-\code{"LASA_wave"} attribute, and the column's waves in calendar order. Such
-a guess doesn't count as showing the respondent's cohort, so it gives
-none of their rows a Time -- also when the result is transformed again:
-the long column remembers which of its values were placed by a guess
-(in its attributes, as long as it keeps them), and wide format gives
-their column a name that doesn't say the wave (its original name, or
-else LASA's own, such as \code{blphya01}), so transforming that back guesses
-again, with the message. To avoid guesses, transform each LASA file to
-long format before combining files (with \code{format_as_long = TRUE} in
-\code{\link[=read_lasa_sav]{read_lasa_sav()}}).
+\code{"LASA_wave"} attribute, and the column's waves in calendar order (and
+for a name LASA's wave files use without a wave prefix, \code{drinking}, if
+the respondent's cohort takes part in none of those: waves 4B and L,
+which the label database doesn't document yet). Such a guess doesn't
+count as showing the respondent's cohort, so it gives none of their
+rows a Time -- also when the result is transformed again: the long
+column remembers which of its values were placed by a guess, and wide
+format gives those values one column, also when the guesses put them at
+several waves, under a name that doesn't say the wave (its original
+name, or else LASA's own, such as \code{blphya01}), so transforming that back
+guesses again, with the message. The long column keeps that memory in
+its attributes, which \code{\link[=rbind]{rbind()}}, \code{\link[=merge]{merge()}}, \code{dplyr::bind_rows()},
+subsetting or sorting the rows of a data frame (rather than a tibble),
+and writing the data to a \code{.sav} file can drop: after that, those values
+count as showing the cohort of the wave they were put at. To avoid
+guesses, transform each LASA file to long format before combining files
+(with \code{format_as_long = TRUE} in \code{\link[=read_lasa_sav]{read_lasa_sav()}}).
 
 One name stands for two variables at one wave: \code{bmmsesc1} is file 221's
 \code{mmsesc} and file 421's \code{mmsesc1} at wave MB. The data's file (or the
@@ -188,25 +207,29 @@ a message.
 \strong{Merged files.} \code{data} may be several LASA files merged together, in
 any of three shapes:
 \itemize{
-\item long (the most reliable), e.g. files read with \code{format_as_long = TRUE}
-(or wave files read with the default \code{standardize = TRUE}), stacked
-per file code with \code{\link[=rbind]{rbind()}} (or \code{dplyr::bind_rows()}, if the files'
-columns differ) and merged by \code{respnr} and \code{"Wave"} (with
-\code{all = TRUE}, to keep the rows of respondents missing from some
-files); the \code{Time.x} and \code{Time.y} columns that merge makes become one
-\code{"Time"} again, now also for the rows of files that didn't show the
-respondent's cohort on their own. Stacking and merging drop the
-columns' labels (or keep one file's for all rows), which
-\code{transform_lasa_data()} gives back (see \strong{Labels}). A file without
-wave-specific columns (\code{LASAZ004.SAV}, \code{LASMB004.SAV}) read with
-\code{format_as_long = TRUE} has no \code{"Wave"} column: merge it by \code{respnr}
-alone;
+\item long (the most reliable): files read with \code{format_as_long = TRUE},
+which gives each file's rows their Time while the file still shows
+their cohort (in a baseline file, also rows holding nothing but
+missing-value codes), stacked per file code with \code{dplyr::bind_rows()}
+(or \code{\link[=rbind]{rbind()}}, if the files have the same columns) and merged by
+\code{respnr} and \code{"Wave"} (with \code{all = TRUE}, to keep the rows of
+respondents missing from some files); the \code{Time.x} and \code{Time.y}
+columns that merge makes become one \code{"Time"} again, now also for the
+rows of files that didn't show the respondent's cohort on their own.
+Stacking and merging drop the columns' labels (or keep one file's for
+all rows), which \code{transform_lasa_data()} gives back (see \strong{Labels}).
+A file without wave-specific columns (\code{LASAZ004.SAV}, \code{LASMB004.SAV})
+read with \code{format_as_long = TRUE} has no \code{"Wave"} column: merge it by
+\code{respnr} alone;
 \item wide, e.g. \code{LASAB046.SAV}, \code{LASAC046.SAV}, \code{LASAB030.SAV}, ... read
 with \code{standardize = FALSE} and merged by \code{respnr} (with \code{all = TRUE}),
-or a Z file merged with \code{LASAZ004.SAV}. Don't stack wide files of
-different cohorts that share column names (e.g. \code{LAS2B046.SAV} below
-\code{LASAB046.SAV}, or \code{LASAZDC2.SAV} below \code{LASAZDC1.SAV}): stack them in
-long format;
+or a Z file merged with \code{LASAZ004.SAV}. \code{\link[=merge]{merge()}} drops the files'
+attributes, so the values in \code{b} columns of a respondent the data show
+nowhere else (one who dropped out after wave B, say) are placed by a
+guess (see \strong{Names of several waves}) and get no Time. Don't stack
+wide files of different cohorts that share column names (e.g.
+\code{LAS2B046.SAV} below \code{LASAB046.SAV}, or \code{LASAZDC2.SAV} below
+\code{LASAZDC1.SAV}): stack them in long format;
 \item a mix: long data that wide columns were merged into by \code{respnr}, for
 example a Z file's -- without the placeholder \code{"Wave"} column
 \code{\link[=read_lasa_sav]{read_lasa_sav()}} gives a Z file, or the two \code{"Wave"} columns end up as
@@ -262,11 +285,13 @@ stable variable (such as \code{sex}) only needs to agree across the rows
 where it isn't missing. A wide column whose name still doesn't say which
 wave and variable it holds (a name the label database doesn't document,
 or a wave B name the later cohorts' baselines share, such as
-\code{blphya01}) carries the attributes \code{"LASA_wave"} and \code{"LASA_long_name"},
-which transforming it back uses. Base R's \code{\link[=merge]{merge()}} and row subsetting
-drop those attributes from factor and numeric columns (haven's labelled
-columns keep them); the column is then placed like a column of LASA's
-own files, see \strong{Names of several waves}.
+\code{blphya01}) carries the attributes \code{"LASA_wave"} and \code{"LASA_long_name"}
+where transforming the whole result back needs them to place it (not
+where the respondents' other columns show their cohorts, so a
+selection of the result's columns may need a guess). Base R's \code{\link[=merge]{merge()}}
+and row subsetting drop those attributes from factor and numeric
+columns (haven's labelled columns keep them); the column is then placed
+like a column of LASA's own files, see \strong{Names of several waves}.
 
 \strong{Labels} travel with the data. A long column keeps each wave's own
 \code{"wave_label"}/\code{"labels_wave"} as one entry per wave. Its variable label
@@ -281,10 +306,11 @@ wave-specific columns whose types don't combine (e.g. a factor at one
 wave and numbers at another) become text, without value labels or
 user-missing codes, with a warning. Time spans (\code{difftime}) get a unit
 every wave's values convert to exactly, the first wave's if possible;
-date-times that become text keep their offset from UTC. Converting back
-to wide restores each wide column's original type (also from text),
-attributes, and user-missing codes, as long as its values still fit
-them.
+date-times that become text are written in UTC
+(\code{"2021-10-31 00:30:00+0000"}), so they read back as the same moment.
+Converting back to wide restores each wide column's original type (also
+from text), attributes, and user-missing codes, as long as its values
+still fit them.
 
 In long data, the column of a wave-specific variable the label database
 documents that has lost its labels -- \code{\link[=rbind]{rbind()}}, \code{dplyr::bind_rows()}
@@ -296,7 +322,15 @@ entry per wave, \code{"canonical_name"}, the harmonized label and value
 labels where the database has them, and as \code{"label"} and \code{"labels"}
 the harmonized ones, or else the waves' shared (or first) wording and
 all their value labels. The data then get a \code{"variable.labels"}
-attribute too, if they had none.
+attribute too, if they had none. So does a long column made of wide
+columns that have all lost their labels (wide files merged with
+\code{\link[=merge]{merge()}}); wide format gives those columns back as they were. Labels
+of a column's own (not ones the database gives the variable, such as a
+user's own wording) are kept as they are, and a column with
+\code{"wave_label"} entries for some of its waves only gets the other
+waves', as long as those it has are the database's. A wave at which the
+database documents the variable with different labels in several files
+(\code{partner} at wave MB) gets none.
 }
 \examples{
 # A Z-file-shaped data frame: knee osteoarthritis (oak) of two

@@ -413,10 +413,12 @@
 #'
 #' With `format_as_long = TRUE`, the labelled data are finally passed to
 #' [transform_lasa_data()] (`format = "long"`). A regular wave file is
-#' already long under the default `standardize = TRUE` and only gains a
-#' `"Time"` column (read with `standardize = FALSE`, its wave-prefixed
-#' names lose their prefix too); a Z file's wave-prefixed columns become
-#' one column per variable, with the wave of each row in `"Wave"`. A file
+#' already long under the default `standardize = TRUE` and gains a
+#' `"Time"` column; its wave-prefixed names lose their prefix where
+#' `standardize` left it: all of them with `standardize = FALSE`, and
+#' those of waves 4B and L, which the label database doesn't document yet.
+#' A Z file's wave-prefixed columns become one column per variable, with
+#' the wave of each row in `"Wave"`. A file
 #' without wave-specific columns, such as the Z file `LASAZ004.SAV` or the
 #' migrant cohort's `LASMB004.SAV` (sex, year of birth, ...), has no wave
 #' dimension: it keeps one row per respondent, without `"Wave"` and
