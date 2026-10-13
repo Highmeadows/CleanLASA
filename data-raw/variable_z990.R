@@ -83,8 +83,7 @@ value_labels(
 value_labels(
   `-2` = "no records found", `-1` = "no records, moved abroad", `1` = "data available",
   .applies_to_vars = c("gbadata"),
-  .applies_to_waves = c("Z", "B"),
-  .not_missing = c(-2, -1)
+  .applies_to_waves = c("Z", "B")
 )
 
 value_labels(

@@ -173,8 +173,7 @@ value_labels(
 value_labels(
   `-2` = "valid data", `1` = "short interview", `2` = "interview terminated",
   .applies_to_vars = c("rmgl"),
-  .applies_to_waves = c("Z", "C", "D", "E", "2B", "F", "G", "H"),
-  .not_missing = -2
+  .applies_to_waves = c("Z", "C", "D", "E", "2B", "F", "G", "H")
 )
 
 value_labels(

@@ -598,8 +598,7 @@ value_labels(
 value_labels(
   `-2` = "valid data",
   .applies_to_vars = c("rmso"),
-  .applies_to_waves = c("Z", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J"),
-  .not_missing = -2
+  .applies_to_waves = c("Z", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J")
 )
 
 value_labels(

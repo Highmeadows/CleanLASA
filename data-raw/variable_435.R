@@ -1384,8 +1384,7 @@ value_labels(
 value_labels(
   `-2` = "valid data", `1` = "interview terminated", `2` = "Reason missing: chronic diseases status", `4` = "refused test",
   .applies_to_vars = c("xrmch"),
-  .applies_to_waves = c("Z"),
-  .not_missing = -2
+  .applies_to_waves = c("Z")
 )
 
 value_labels(
@@ -1745,8 +1744,7 @@ value_labels(
 value_labels(
   `-2` = "valid data", `1` = "terminated interview", `2` = "short interview",
   .applies_to_vars = c("xrmch"),
-  .applies_to_waves = c("B"),
-  .not_missing = -2
+  .applies_to_waves = c("B")
 )
 
 value_labels(
@@ -2220,8 +2218,7 @@ value_labels(
 value_labels(
   `-2` = "valid data", `2` = "interview terminated", `4` = "refused test",
   .applies_to_vars = c("xrmch"),
-  .applies_to_waves = c("C"),
-  .not_missing = -2
+  .applies_to_waves = c("C")
 )
 
 .lasa_fc_435 <- .lasa_finalize_fc("435")

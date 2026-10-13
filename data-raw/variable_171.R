@@ -147,15 +147,13 @@ value_labels(
 value_labels(
   `-2` = "valid data", `0` = "- to be coded -", `1` = "short version", `2` = "interview terminated",
   .applies_to_vars = c("rm161"),
-  .applies_to_waves = c("Z", "G"),
-  .not_missing = -2
+  .applies_to_waves = c("Z", "G")
 )
 
 value_labels(
   `-2` = "valid data", `0` = "- to be coded -", `1` = "short version", `2` = "interview terminated",
   .applies_to_vars = c("rm171"),
-  .applies_to_waves = c("Z", "H", "3B"),
-  .not_missing = -2
+  .applies_to_waves = c("Z", "H", "3B")
 )
 
 value_labels(
@@ -197,8 +195,7 @@ value_labels(
 value_labels(
   `-2` = "valid data", `2` = "interview terminated",
   .applies_to_vars = c("rm161"),
-  .applies_to_waves = c("D", "E"),
-  .not_missing = -2
+  .applies_to_waves = c("D", "E")
 )
 
 value_labels(
@@ -228,8 +225,7 @@ value_labels(
 value_labels(
   `-2` = "valid data", `1` = "short version", `2` = "interview terminated",
   .applies_to_vars = c("rm161"),
-  .applies_to_waves = c("F"),
-  .not_missing = -2
+  .applies_to_waves = c("F")
 )
 
 value_labels(

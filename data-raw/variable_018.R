@@ -29,15 +29,13 @@ variable_labels(
 value_labels(
   `-5` = "no insurance", `-1` = "not available, do not know", `1` = "sick-fund: mandatory", `2` = "sick-fund: voluntary", `3` = "private insurance",
   .applies_to_vars = c("hinsura"),
-  .applies_to_waves = c("Z"),
-  .not_missing = -5
+  .applies_to_waves = c("Z")
 )
 
 value_labels(
   `-5` = "no insurance", `-1` = "na, do not know", `1` = "sick-fund: mandatory", `2` = "sick-fund: voluntary", `3` = "private Insurance",
   .applies_to_vars = c("hinsura"),
-  .applies_to_waves = c("B"),
-  .not_missing = -5
+  .applies_to_waves = c("B")
 )
 
 .lasa_fc_018 <- .lasa_finalize_fc("018")

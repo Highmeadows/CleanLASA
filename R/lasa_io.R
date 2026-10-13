@@ -230,11 +230,11 @@
 ## labels document, split by meaning: `missing` holds each code flagged
 ## `is_missing`, `real` each code documented as a real answer or value --
 ## every non-negative code, plus any negative code the documentation
-## shows is a real value (e.g. `-2` = "valid score", see
-## data-raw/label_db_helpers.R's value_labels(.not_missing = ...)). Where
-## both document the same code, the wave-specific meaning wins: a code
-## can be a real value in one wave and a missing code in the harmonized
-## labels (e.g. `-1` = "normal test" in one wave only).
+## shows is a measurement (e.g. a `-9.2` dB threshold listed among the
+## codes, see data-raw/label_db_helpers.R's value_labels(.not_missing =
+## ...)). Where both document the same code, the wave-specific meaning
+## wins: a code can be a real value in one wave and a missing code in the
+## harmonized labels.
 .lasa_documented_codes <- function(value_labels, variable_name, value_labels_harmonized, canonical_name) {
   pick <- function(tbl, key_col, key) {
     rows <- tbl[tbl[[key_col]] == key & !is.na(tbl$value_numeric), , drop = FALSE]
@@ -257,9 +257,9 @@
 ## The harmonized value labels as shown for one wave's variable. A code the
 ## wave documents as a real value (`documented$real`, see
 ## .lasa_documented_codes()) but the harmonized labels flag as missing
-## takes the wave's own label text, e.g. wave G's `-1` = "mentioned"
-## instead of the harmonized `-1` = "not available", so a real answer is
-## never shown under a missing-value label.
+## takes the wave's own label text instead of the harmonized one (e.g.
+## "not available"), so a real value is never shown under a missing-value
+## label.
 .lasa_harmonized_map_for_wave <- function(harmonized_value_map, value_map, documented,
                                           value_labels_harmonized, canonical_name) {
   if (is.null(harmonized_value_map) || is.null(value_map)) return(harmonized_value_map)

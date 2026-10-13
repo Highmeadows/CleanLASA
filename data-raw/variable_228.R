@@ -47,8 +47,7 @@ value_labels(
 value_labels(
   `-2` = "valid score",
   .applies_to_vars = c("rmalc"),
-  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K"),
-  .not_missing = -2
+  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(

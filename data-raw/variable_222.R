@@ -51,15 +51,13 @@ value_labels(
 value_labels(
   `-2` = "valid score", `-1` = "see FMRMCRAV", `0` = "- to be coded -", `1` = "short version", `2` = "interview terminated", `3` = "too many missings", `4` = "refused test", `5` = "not able to (cognitive)", `6` = "not able to (physical)", `7` = "technical problems", `8` = "unknown",
   .applies_to_vars = c("rmcrab"),
-  .applies_to_waves = c("Z"),
-  .not_missing = -2
+  .applies_to_waves = c("Z")
 )
 
 value_labels(
   `-2` = "valid score", `-1` = "see FMRMCRAV", `0` = "- to be coded -", `1` = "short version", `2` = "interview terminated", `3` = "too many missings", `4` = "refused test", `5` = "not able to (cognitive)", `6` = "not able to complete test (physical)", `7` = "technical problems", `8` = "unknown",
   .applies_to_vars = c("rmcrav"),
-  .applies_to_waves = c("Z"),
-  .not_missing = -2
+  .applies_to_waves = c("Z")
 )
 
 value_labels(
@@ -71,29 +69,25 @@ value_labels(
 value_labels(
   `-2` = "valid score", `1` = "short version", `2` = "interview terminated", `3` = "too many missings", `4` = "refused test", `5` = "not able to (cognitive)", `6` = "not able to (physical): visus", `7` = "technical problems", `8` = "unknown",
   .applies_to_vars = c("rmcrav"),
-  .applies_to_waves = c("B", "C"),
-  .not_missing = -2
+  .applies_to_waves = c("B", "C")
 )
 
 value_labels(
   `-2` = "valid score", `1` = "short version", `2` = "interview terminated", `3` = "too many missings", `4` = "refused test", `5` = "not able to (cognitive)", `6` = "not able to (physical)", `7` = "technical problems", `8` = "unknown",
   .applies_to_vars = c("rmcrav"),
-  .applies_to_waves = c("D", "E", "2B"),
-  .not_missing = -2
+  .applies_to_waves = c("D", "E", "2B")
 )
 
 value_labels(
   `-2` = "valid score", `-1` = "see FMRMCRAV", `1` = "short version", `2` = "interview terminated", `3` = "too many missings", `4` = "refused test", `5` = "not able to (cognitive)", `6` = "not able to (physical)", `7` = "technical problems", `8` = "unknown",
   .applies_to_vars = c("rmcrab", "rmcrav"),
-  .applies_to_waves = c("F"),
-  .not_missing = -2
+  .applies_to_waves = c("F")
 )
 
 value_labels(
   `-2` = "valid score", `-1` = "see GMRMCRAV", `0` = "- to be coded -", `1` = "short version", `2` = "interview terminated", `3` = "too many missings", `4` = "refused test", `5` = "not able to (cognitive)", `6` = "not able to (physical)", `7` = "technical problems", `8` = "unknown",
   .applies_to_vars = c("rmcrab", "rmcrav"),
-  .applies_to_waves = c("G"),
-  .not_missing = -2
+  .applies_to_waves = c("G")
 )
 
 .lasa_fc_222 <- .lasa_finalize_fc("222")

@@ -296,13 +296,14 @@ variable_labels <- function(..., .applies_to_waves) {
 ##
 ## LASA codes missing values as negative numbers, so every negative code
 ## is a missing-value code by default (build_lasa_label_db.R sets
-## `is_missing = code < 0`). `.not_missing` lists the negative codes of
-## this call that the documentation shows are real values instead -- a
-## valid answer such as `-2` = "valid score" in a "reason missing"
-## variable, or a measurement documented below zero (a hearing threshold
-## of -9.2 dB) -- so they're never treated as missing. Each must be one
-## of this call's own negative codes; it applies to every variable and
-## wave the call names.
+## `is_missing = code < 0`). That includes a discrete code whose label
+## names a valid answer (`-2` = "valid score", "never had job", "normal
+## test"): in context it explains why the value is missing. `.not_missing`
+## lists the negative codes of this call that are measurements instead --
+## a value the documentation lists among the codes, such as a hearing
+## threshold of -9.2 dB -- so they're never treated as missing. Each must
+## be one of this call's own negative codes; it applies to every variable
+## and wave the call names.
 value_labels <- function(..., .applies_to_vars, .applies_to_waves, .not_missing = NULL) {
   labels <- c(...)
   if (length(labels) == 0L) {

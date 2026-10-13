@@ -82,15 +82,13 @@ value_labels(
 value_labels(
   `-2` = "valid score", `1` = "short interview", `2` = "interview terminated", `3` = "too many missings", `4` = "refused to answer / refusal / lack of understanding",
   .applies_to_vars = c("rmmas"),
-  .applies_to_waves = c("Z"),
-  .not_missing = -2
+  .applies_to_waves = c("Z")
 )
 
 value_labels(
   `-2` = "valid score", `1` = "short interview", `2` = "interview terminated", `3` = "too many missings", `4` = "refusal / lack of understanding",
   .applies_to_vars = c("rmmas7", "rmself"),
-  .applies_to_waves = c("Z", "G", "H", "I", "J", "K"),
-  .not_missing = -2
+  .applies_to_waves = c("Z", "G", "H", "I", "J", "K")
 )
 
 value_labels(
@@ -108,50 +106,43 @@ value_labels(
 value_labels(
   `-2` = "valid score", `1` = "short interview", `2` = "interview terminated", `3` = "too many missings",
   .applies_to_vars = c("rmmas"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "MB"),
-  .not_missing = -2
+  .applies_to_waves = c("B", "C", "D", "E", "2B", "MB")
 )
 
 value_labels(
   `-2` = "valid score", `1` = "short interview", `2` = "interview terminated", `3` = "too many missings",
   .applies_to_vars = c("rmself"),
-  .applies_to_waves = c("C", "D", "E", "2B"),
-  .not_missing = -2
+  .applies_to_waves = c("C", "D", "E", "2B")
 )
 
 value_labels(
   `-2` = "valid score", `1` = "short interview", `2` = "interview terminated", `3` = "too many missings",
   .applies_to_vars = c("rmmas7"),
-  .applies_to_waves = c("D", "E"),
-  .not_missing = -2
+  .applies_to_waves = c("D", "E")
 )
 
 value_labels(
   `-2` = "valid score", `1` = "short interview", `2` = "interview terminated", `3` = "too many missings", `4` = "refused to answer",
   .applies_to_vars = c("rmmas"),
-  .applies_to_waves = c("F", "G", "H", "3B", "I"),
-  .not_missing = -2
+  .applies_to_waves = c("F", "G", "H", "3B", "I")
 )
 
 value_labels(
   `-2` = "valid score", `1` = "short interview", `2` = "interview terminated", `3` = "too many missings", `4` = "refused to answer",
   .applies_to_vars = c("rmmas7", "rmself"),
-  .applies_to_waves = c("F"),
-  .not_missing = -2
+  .applies_to_waves = c("F")
 )
 
 value_labels(
   `-2` = "valid score", `1` = "short interview", `2` = "interview terminated", `3` = "too many missings", `4` = "refusal, lack of understanding",
   .applies_to_vars = c("rmself"),
-  .applies_to_waves = c("3B"),
-  .not_missing = -2
+  .applies_to_waves = c("3B")
 )
 
 value_labels(
   `-2` = "valid score", `1` = "short interview", `2` = "interview terminated", `3` = "too many missings", `4` = "refusal / lack of understanding",
   .applies_to_vars = c("rmmas"),
-  .applies_to_waves = c("J", "K"),
-  .not_missing = -2
+  .applies_to_waves = c("J", "K")
 )
 
 .lasa_fc_227 <- .lasa_finalize_fc("227")

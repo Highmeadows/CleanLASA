@@ -349,9 +349,10 @@ data <- read_lasa_sav("LASAB014.sav", keep_user_na = TRUE)
 ```
 
 A code counts as missing when the label database flags it as one:
-every negative documented code, except the few that LASA's
-documentation shows are real values, such as `-2` = "valid score" in
-the performance tests' "reason missing" variable. A negative value that
+every negative documented code, including labels such as "valid score"
+or "never had job" that explain why a value is missing. The exceptions
+are the few measurements LASA's documentation lists among the codes,
+such as a speech-reception threshold of `-9.2` dB. A negative value that
 isn't documented at all counts as missing too, unless the variable is
 numeric and its documentation shows genuine negative values, such as a
 speech-reception threshold in dB; then only its documented missing
@@ -602,18 +603,18 @@ manual_update_lasa_labels(
 ```
 
 Correcting the text of a code the database already documents keeps
-its meaning: a missing-value code stays missing, and a real negative
-value such as `-2` = "valid score" stays a value. A negative code you
-add is a missing-value code, unless you list it in `not_missing`
-because the documentation shows it is a real answer:
+its meaning: a missing-value code stays missing, and a negative
+measurement such as a `-9.2` dB threshold stays a value. A negative
+code you add is a missing-value code, unless you list it in
+`not_missing` because it is a measurement:
 
 ```{r manual-update-not-missing, eval=FALSE}
 manual_update_lasa_labels(
-  filecode = "034",
-  wave = "B",
-  variable = "brmpf",
-  val_labels = c(`-2` = "valid score"),
-  not_missing = -2
+  filecode = "193",
+  wave = "E",
+  variable = "emsrttn",
+  val_labels = c(`-9.4` = "-9.4 dB"),
+  not_missing = -9.4
 )
 ```
 

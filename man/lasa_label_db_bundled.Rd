@@ -18,8 +18,9 @@ documented missing-value codes count as missing).}
 \item{value_labels}{One row per (\code{filecode}, \code{wave}, \code{variable_name},
 \code{value_numeric}): \code{value_label}, \code{is_missing} -- the value labels as
 documented for that wave. \code{is_missing} is \code{TRUE} for a missing-value
-code: every negative code, except the few the documentation shows
-are real values (e.g. \code{-2} = "valid score").}
+code: every negative code, except the few measurements the
+documentation lists among the codes (e.g. a speech-reception
+threshold of \code{-9.2} dB).}
 \item{value_labels_harmonized}{One row per (\code{filecode},
 \code{canonical_name}, \code{value_numeric}): \code{value_label}, \code{is_missing} --
 the cross-wave-standardized value labels for that variable,

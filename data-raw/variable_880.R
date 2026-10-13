@@ -29,8 +29,7 @@ variable_labels(
 value_labels(
   `-3` = "no participation LASA t5", `-2` = "na, tel. int.", `-1` = "cortisol data", `1` = "deceased before approach", `2` = "refusals", `3` = "ineligible", `4` = "not contacted", `5` = "technical error",
   .applies_to_vars = c("cortrsp"),
-  .applies_to_waves = c("Z", "E"),
-  .not_missing = -1
+  .applies_to_waves = c("Z", "E")
 )
 
 .lasa_fc_880 <- .lasa_finalize_fc("880")

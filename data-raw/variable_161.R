@@ -777,8 +777,7 @@ value_labels(
 value_labels(
   `-2` = "valid data / interview terminated", `1` = "short version / short interview", `2` = "interview terminated",
   .applies_to_vars = c("rm161"),
-  .applies_to_waves = c("Z"),
-  .not_missing = -2
+  .applies_to_waves = c("Z")
 )
 
 value_labels(
@@ -790,15 +789,13 @@ value_labels(
 value_labels(
   `-3` = "no measurement", `-2` = "no answer, skipped", `-1` = "no particularities scored", `1` = "no bare arm", `2` = "much room between", `3` = "R sitting down", `4` = "on right arm", `5` = "refused",
   .applies_to_vars = c("marmp"),
-  .applies_to_waves = c("B"),
-  .not_missing = -1
+  .applies_to_waves = c("B")
 )
 
 value_labels(
   `-3` = "no measurement", `-2` = "no answer, skipped", `-1` = "no particularities scored", `1` = "cannot stand", `2` = "kyphose", `3` = "scoliose", `4` = "head not parallel", `5` = "shoes", `6` = "too much hair", `7` = "refused",
   .applies_to_vars = c("mheightp"),
-  .applies_to_waves = c("B"),
-  .not_missing = -1
+  .applies_to_waves = c("B")
 )
 
 value_labels(
@@ -810,8 +807,7 @@ value_labels(
 value_labels(
   `-3` = "no measurement", `-2` = "no answer, skipped", `-1` = "no particularities scored", `1` = "lying down", `2` = "much skinfolds", `3` = "refused",
   .applies_to_vars = c("mhipp"),
-  .applies_to_waves = c("B"),
-  .not_missing = -1
+  .applies_to_waves = c("B")
 )
 
 value_labels(
@@ -823,8 +819,7 @@ value_labels(
 value_labels(
   `-3` = "no measurement", `-2` = "no answer, skipped", `-1` = "no particularities scored", `1` = "lying down", `2` = "hard to find right spot", `3` = "much skinfolds under", `4` = "refused",
   .applies_to_vars = c("mwaistp"),
-  .applies_to_waves = c("B"),
-  .not_missing = -1
+  .applies_to_waves = c("B")
 )
 
 value_labels(
@@ -836,8 +831,7 @@ value_labels(
 value_labels(
   `-3` = "no measurement", `-2` = "no answer, skipped", `-1` = "no particularities scored", `1` = "cannot stand", `2` = "clothes", `3` = "corset", `4` = "amputation", `5` = "brace", `6` = "prosthesis", `7` = ">150kg", `8` = "refused",
   .applies_to_vars = c("mweightp"),
-  .applies_to_waves = c("B"),
-  .not_missing = -1
+  .applies_to_waves = c("B")
 )
 
 value_labels(
@@ -909,8 +903,7 @@ value_labels(
 value_labels(
   `-2` = "valid data", `2` = "interview terminated",
   .applies_to_vars = c("rm161"),
-  .applies_to_waves = c("C", "E"),
-  .not_missing = -2
+  .applies_to_waves = c("C", "E")
 )
 
 value_labels(
@@ -946,8 +939,7 @@ value_labels(
 value_labels(
   `-2` = "valid data",
   .applies_to_vars = c("rm161"),
-  .applies_to_waves = c("D"),
-  .not_missing = -2
+  .applies_to_waves = c("D")
 )
 
 value_labels(
@@ -1157,8 +1149,7 @@ value_labels(
 value_labels(
   `-2` = "valid data", `1` = "short version", `2` = "interview terminated",
   .applies_to_vars = c("rm161"),
-  .applies_to_waves = c("F", "G"),
-  .not_missing = -2
+  .applies_to_waves = c("F", "G")
 )
 
 value_labels(
@@ -1338,8 +1329,7 @@ value_labels(
 value_labels(
   `-2` = "valid data", `1` = "short interview", `2` = "interview terminated",
   .applies_to_vars = c("rm161"),
-  .applies_to_waves = c("H", "3B", "I", "J"),
-  .not_missing = -2
+  .applies_to_waves = c("H", "3B", "I", "J")
 )
 
 value_labels(

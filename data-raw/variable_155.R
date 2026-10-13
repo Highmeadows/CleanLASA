@@ -78,8 +78,7 @@ value_labels(
 value_labels(
   `-4` = "no valid data", `-3` = "no test", `-2` = "no particularities", `0` = "not mentioned / no", `1` = "mentioned / yes",
   .applies_to_vars = c("mcodtp"),
-  .applies_to_waves = c("Z"),
-  .not_missing = -2
+  .applies_to_waves = c("Z")
 )
 
 value_labels(
@@ -97,8 +96,7 @@ value_labels(
 value_labels(
   `-4` = "no valid data", `-2` = "valid score", `0` = "complete test done / to be coded", `1` = "visus problems / short interview", `2` = "refused / interview terminated", `3` = "cognitive / too many missings", `4` = "physical / refused test", `5` = "technical / not able to (cognitive)", `6` = "unknown / not able to (physical)", `7` = "technical/interruption",
   .applies_to_vars = c("mcormis"),
-  .applies_to_waves = c("Z"),
-  .not_missing = -2
+  .applies_to_waves = c("Z")
 )
 
 value_labels(
@@ -110,8 +108,7 @@ value_labels(
 value_labels(
   `-3` = "no test", `-2` = "no particularities", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mcodtp"),
-  .applies_to_waves = c("B"),
-  .not_missing = -2
+  .applies_to_waves = c("B")
 )
 
 value_labels(
@@ -129,8 +126,7 @@ value_labels(
 value_labels(
   `-4` = "no valid data", `-3` = "no test", `-2` = "no particularities", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mcodtp"),
-  .applies_to_waves = c("C", "D", "E"),
-  .not_missing = -2
+  .applies_to_waves = c("C", "D", "E")
 )
 
 value_labels(
@@ -142,8 +138,7 @@ value_labels(
 value_labels(
   `-2` = "valid score", `0` = "to be coded", `1` = "short interview", `2` = "interview terminated", `3` = "too many missings", `4` = "refused test", `5` = "not able to (cognitive)", `6` = "not able to (physical)", `7` = "technical/interruption",
   .applies_to_vars = c("mcormis"),
-  .applies_to_waves = c("F", "G", "H", "3B"),
-  .not_missing = -2
+  .applies_to_waves = c("F", "G", "H", "3B")
 )
 
 .lasa_fc_155 <- .lasa_finalize_fc("155")

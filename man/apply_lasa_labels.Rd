@@ -148,9 +148,10 @@ whose numeric codes disagree but whose label text agrees (e.g.
 \verb{0 = "no", 1 = "yes"} vs. \verb{1 = "no", 2 = "yes"}) still merge correctly.
 
 A code counts as missing when the label database flags its value label
-as missing: every negative documented code, e.g. \code{-1} = "na, asked",
-except the few that LASA's documentation shows are real values, such
-as \code{-2} = "valid score" in a "reason missing" variable. So does any
+as missing: every negative documented code, e.g. \code{-1} = "na, asked" or
+\code{-2} = "valid score" in a "reason missing" variable, except the few
+measurements LASA's documentation lists among the codes, such as a
+speech-reception threshold of \code{-9.2} dB. So does any
 negative value that appears in the data without being documented at
 all, since LASA codes reasons of missingness as negative numbers --
 unless the variable is numeric and its documentation shows genuine

@@ -41,11 +41,11 @@ is merged into the existing value-label set (upserted by code). If
 for this variable is dropped when labels are applied.}
 
 \item{not_missing}{Optional numeric vector of negative codes in
-\code{val_labels} that are real values rather than missing-value codes, for
-a code LASA's documentation shows is a real answer or measurement
-(e.g. \code{-2} = "valid score"). A code the database already documents
-otherwise keeps its documented meaning when only its label text is
-corrected; a new negative code is a missing-value code.}
+\code{val_labels} that are real values rather than missing-value codes,
+for a measurement LASA's documentation lists among the codes (e.g. a
+speech-reception threshold of \code{-9.2} dB). A code the database already
+documents otherwise keeps its documented meaning when only its label
+text is corrected; a new negative code is a missing-value code.}
 }
 \value{
 Invisibly, a list describing what was recorded: \code{filecode},
@@ -68,10 +68,10 @@ manual_update_lasa_labels(
   val_labels = c(`-5` = "NA, wrong, skip")
 )
 
-# Label a negative code the documentation shows is a real answer:
+# Label a negative measurement, not a missing-value code:
 manual_update_lasa_labels(
-  filecode = "034", wave = "B", variable = "brmpf",
-  val_labels = c(`-2` = "valid score"), not_missing = -2
+  filecode = "193", wave = "E", variable = "emsrttn",
+  val_labels = c(`-9.4` = "-9.4 dB"), not_missing = -9.4
 )
 
 # Fully replace a variable's value labels:

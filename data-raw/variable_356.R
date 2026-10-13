@@ -168,8 +168,7 @@ value_labels(
 value_labels(
   `-4` = "interview terminated", `-2` = "zero on trial",
   .applies_to_vars = c("mwtt1"),
-  .applies_to_waves = c("Z"),
-  .not_missing = -2
+  .applies_to_waves = c("Z")
 )
 
 value_labels(
@@ -181,8 +180,7 @@ value_labels(
 value_labels(
   `-2` = "zero on trial",
   .applies_to_vars = c("mwtt1"),
-  .applies_to_waves = c("B"),
-  .not_missing = -2
+  .applies_to_waves = c("B")
 )
 
 value_labels(

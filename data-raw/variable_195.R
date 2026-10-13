@@ -256,8 +256,7 @@ value_labels(
 value_labels(
   `-2` = "valid score", `1` = "short version", `2` = "interview terminated", `3` = "too many missings", `4` = "refused test", `5` = "not able to [cognitive]", `6` = "not able to (physical)", `7` = "emotional reasons", `8` = "unknown",
   .applies_to_vars = c("mrmeol"),
-  .applies_to_waves = c("Z"),
-  .not_missing = -2
+  .applies_to_waves = c("Z")
 )
 
 value_labels(
@@ -305,8 +304,7 @@ value_labels(
 value_labels(
   `-2` = "valid score", `1` = "short version", `2` = "interview terminated", `3` = "too many missings", `4` = "refused test", `5` = "not able to [cognitive]", `6` = "not able to [physical]", `7` = "emotional reasons", `8` = "unknown",
   .applies_to_vars = c("mrmeol"),
-  .applies_to_waves = c("F", "G"),
-  .not_missing = -2
+  .applies_to_waves = c("F", "G")
 )
 
 value_labels(
@@ -390,8 +388,7 @@ value_labels(
 value_labels(
   `-2` = "valid score", `1` = "short version", `2` = "interview terminated", `3` = "too many missings", `4` = "refused test", `5` = "not able to [cognitive]", `6` = "not able to [physical]", `7` = "emotional reasons", `8` = "unknown / to be coded",
   .applies_to_vars = c("mrmeol"),
-  .applies_to_waves = c("H", "I", "J", "K"),
-  .not_missing = -2
+  .applies_to_waves = c("H", "I", "J", "K")
 )
 
 value_labels(

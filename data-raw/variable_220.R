@@ -50,8 +50,7 @@ value_labels(
 value_labels(
   `-2` = "valid score", `1` = "short interview", `2` = "interview terminated", `3` = "too many missings", `4` = "language problem",
   .applies_to_vars = c("rmds"),
-  .applies_to_waves = c("Z", "3B"),
-  .not_missing = -2
+  .applies_to_waves = c("Z", "3B")
 )
 
 .lasa_fc_220 <- .lasa_finalize_fc("220")

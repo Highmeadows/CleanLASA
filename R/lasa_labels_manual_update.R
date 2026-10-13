@@ -112,11 +112,11 @@
 #'   keyed by numeric code, e.g. `c(\`-5\` = "NA, wrong, skip", \`1\` =
 #'   "man")` (quote or backtick negative/numeric-looking names).
 #' @param not_missing Optional numeric vector of negative codes in
-#'   `val_labels` that are real values rather than missing-value codes, for
-#'   a code LASA's documentation shows is a real answer or measurement
-#'   (e.g. `-2` = "valid score"). A code the database already documents
-#'   otherwise keeps its documented meaning when only its label text is
-#'   corrected; a new negative code is a missing-value code.
+#'   `val_labels` that are real values rather than missing-value codes,
+#'   for a measurement LASA's documentation lists among the codes (e.g. a
+#'   speech-reception threshold of `-9.2` dB). A code the database already
+#'   documents otherwise keeps its documented meaning when only its label
+#'   text is corrected; a new negative code is a missing-value code.
 #' @param replace_val_labels Logical, default `FALSE`. If `FALSE`, `val_labels`
 #'   is merged into the existing value-label set (upserted by code). If
 #'   `TRUE`, the result is *only* `val_labels` -- every other coded value
@@ -137,10 +137,10 @@
 #'   val_labels = c(`-5` = "NA, wrong, skip")
 #' )
 #'
-#' # Label a negative code the documentation shows is a real answer:
+#' # Label a negative measurement, not a missing-value code:
 #' manual_update_lasa_labels(
-#'   filecode = "034", wave = "B", variable = "brmpf",
-#'   val_labels = c(`-2` = "valid score"), not_missing = -2
+#'   filecode = "193", wave = "E", variable = "emsrttn",
+#'   val_labels = c(`-9.4` = "-9.4 dB"), not_missing = -9.4
 #' )
 #'
 #' # Fully replace a variable's value labels:

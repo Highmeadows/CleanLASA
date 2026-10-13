@@ -125,6 +125,7 @@ value_labels(
 # define variables whose values can be negative ----
 ## Speech-reception thresholds in dB (signal-to-noise ratio) are negative
 ## for good hearing; only their documented negative codes are missing.
+## The listed -9.8/-9.2 are measured thresholds, not missing codes.
 negative_values("msrttn", .applies_to_waves = c("E", "F"))
 negative_values("msrtnb", "msrtns", .applies_to_waves = c("G"))
 
