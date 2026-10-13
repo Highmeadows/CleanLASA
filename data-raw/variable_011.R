@@ -95,13 +95,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/BHINDEP in LASA014", `0` = "none",
+  `-2` = "na, see HINDEP in LASA014", `0` = "none",
   .applies_to_vars = c("nupers"),
   .applies_to_waves = c("C", "D", "E", "2B")
 )
 
 value_labels(
-  `-2` = "na, see F/G/H/B/I/J/KNUPERS",
+  `-2` = "na, see NUPERS",
   .applies_to_vars = c("hhnch", "hhnnonk", "hhnothf", "hhnsib", "hhnstch", "hhpart"),
   .applies_to_waves = c("F", "G", "H", "3B", "I", "J", "K")
 )
@@ -113,7 +113,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see F/G/H/B/I/J/KHINDEP in LASA014", `0` = "none",
+  `-2` = "na, see HINDEP in LASA014", `0` = "none",
   .applies_to_vars = c("nupers"),
   .applies_to_waves = c("F", "G", "H", "3B", "I", "J", "K")
 )

@@ -671,13 +671,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/EMBOT1#",
+  `-2` = "na, see MBOT1#",
   .applies_to_vars = c("mbot2_1", "mbot2_2", "mbot2_3", "mbot51", "mbot52", "mbot53"),
   .applies_to_waves = c("D", "E")
 )
 
 value_labels(
-  `-2` = "na, see D/EMBOT1",
+  `-2` = "na, see MBOT1",
   .applies_to_vars = c("mbot1#"),
   .applies_to_waves = c("D", "E")
 )
@@ -707,7 +707,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/EMHIPPRO", `-1` = "na, asked",
+  `-2` = "na, see MHIPPRO", `-1` = "na, asked",
   .applies_to_vars = c("mhipply", "mhippry"),
   .applies_to_waves = c("D", "E")
 )
@@ -863,25 +863,25 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see H/B/IMBOT1#",
+  `-2` = "na, see MBOT1#",
   .applies_to_vars = c("mbot111", "mbot112", "mbot113", "mbot2_1", "mbot2_2", "mbot2_3", "mbot41m", "mbot41y", "mbot42d", "mbot42m", "mbot42y", "mbot43d", "mbot43m", "mbot43y", "mbot51", "mbot52", "mbot53"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-2` = "na, see H/B/IMBOT1",
+  `-2` = "na, see MBOT1",
   .applies_to_vars = c("mbot1#"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-2` = "na, see H/IMBOT1#", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-2` = "na, see MBOT1#", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("mbot121", "mbot122", "mbot123", "mbot132", "mbot133"),
   .applies_to_waves = c("H", "I")
 )
 
 value_labels(
-  `-2` = "na, see H/IMBOT1#", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-2` = "na, see MBOT1#", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("mbot131"),
   .applies_to_waves = c("H")
 )
@@ -917,13 +917,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see H/B/IMHIPPRO", `-1` = "na, asked",
+  `-2` = "na, see MHIPPRO", `-1` = "na, asked",
   .applies_to_vars = c("mhipply", "mhippry"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-2` = "na, see H/IMKNEPRO", `-1` = "na, asked",
+  `-2` = "na, see MKNEPRO", `-1` = "na, asked",
   .applies_to_vars = c("mkneply", "mknepry"),
   .applies_to_waves = c("H", "I")
 )
@@ -1001,7 +1001,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see H/IMBOT#", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-2` = "na, see MBOT#", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("mbot122"),
   .applies_to_waves = c("J")
 )

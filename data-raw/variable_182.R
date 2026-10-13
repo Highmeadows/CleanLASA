@@ -94,7 +94,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/DMBACKP", `1` = "less than one week", `2` = "> week < one month", `3` = "> one month",
+  `-2` = "na, see MBACKP", `1` = "less than one week", `2` = "> week < one month", `3` = "> one month",
   .applies_to_vars = c("mbackpd"),
   .applies_to_waves = c("C", "D")
 )

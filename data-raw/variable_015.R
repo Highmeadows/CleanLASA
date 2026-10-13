@@ -212,13 +212,13 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/H/I/J/KHINDEP in LASAC/D/E/F/H/I/J/K014", `-1` = "na, asked", `1` = "owner", `2` = "tenant", `3` = "subtenant", `4` = "resident", `5` = "free",
+  `-3` = "na, wrong skip", `-2` = "na, see HINDEP in LASAC/D/E/F/H/I/J/K014", `-1` = "na, asked", `1` = "owner", `2` = "tenant", `3` = "subtenant", `4` = "resident", `5` = "free",
   .applies_to_vars = c("howner"),
   .applies_to_waves = c("C", "D", "E", "F", "H", "I", "J", "K")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/H/I/J/KHOWNER", `-1` = "na, asked", `1` = "no mortgage", `2` = "mortgage",
+  `-3` = "na, wrong skip", `-2` = "na, see HOWNER", `-1` = "na, asked", `1` = "no mortgage", `2` = "mortgage",
   .applies_to_vars = c("mortga"),
   .applies_to_waves = c("C", "D", "E", "F", "H", "I", "J", "K")
 )

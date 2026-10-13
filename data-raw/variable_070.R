@@ -292,7 +292,7 @@ variable_labels(
   socp94 = "Calling mobile or using messaging service: how often",
   socp95 = "Internet: usage",
   socp96 = "Internet: contact with family, friends",
-  socp97 = "In need of IT support na, wrong skip)-3), na, see H/B/ISOCP72 &",
+  socp97 = "In need of IT support na, wrong skip)-3), na, see SOCP72 &",
   socp98 = "IT support: how",
   socp99 = "Voted last election",
   socpr50 = "Cultural: outdoor sporting",
@@ -926,19 +926,19 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/DRMSO",
+  `-2` = "na, see RMSO",
   .applies_to_vars = c("socp46", "socp47", "socp48", "socp49", "socp51", "socp52", "socp54", "socp55", "socp66", "socpr50", "socpyn"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-2` = "na, see C/DSOCP55",
+  `-2` = "na, see SOCP55",
   .applies_to_vars = c("socp56", "socp57", "socp58", "socp59", "socp60", "socp61"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-2` = "na, see C/DSOCPYN",
+  `-2` = "na, see SOCPYN",
   .applies_to_vars = c("socp01", "socp02", "socp03", "socp04", "socp05", "socp06", "socp07", "socp08", "socp09", "socp10", "socp11", "socp12", "socp13"),
   .applies_to_waves = c("C", "D")
 )
@@ -956,115 +956,115 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP13", `-1` = "na, asked", `0` = "- to be coded -", `1` = "garden & pets", `2` = "cult.hist. ass.", `3` = "housing ass.", `4` = "other",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP13", `-1` = "na, asked", `0` = "- to be coded -", `1` = "garden & pets", `2` = "cult.hist. ass.", `3` = "housing ass.", `4` = "other",
   .applies_to_vars = c("socp13x"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP01", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP01", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp14"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP02", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP02", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp15"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP03", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP03", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp16"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP04", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP04", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp17"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP05", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP05", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp18"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP06", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP06", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp19"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP07", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP07", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp20"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP08", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP08", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp21"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP09", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP09", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp22"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP10", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP10", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp23"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP11", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP11", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp24"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP12", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP12", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp25"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP13", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP13", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp26"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP14 to 26", `-1` = "na, asked", `0` = "does not visit",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP14 to 26", `-1` = "na, asked", `0` = "does not visit",
   .applies_to_vars = c("socp27"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP27", `-1` = "na, asked", `0` = "does not visit", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP27", `-1` = "na, asked", `0` = "does not visit", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp28"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP28", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP28", `-1` = "na, asked",
   .applies_to_vars = c("socp30"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP27", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP27", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp31"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DSOCP31", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP31", `-1` = "na, asked",
   .applies_to_vars = c("socp33"),
   .applies_to_waves = c("C", "D")
 )
@@ -1088,7 +1088,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/DSOCP66", `-1` = "na, asked", `0` = "dependent on person", `3` = "na, wrong skip",
+  `-2` = "na, see SOCP66", `-1` = "na, asked", `0` = "dependent on person", `3` = "na, wrong skip",
   .applies_to_vars = c("socp67"),
   .applies_to_waves = c("C", "D")
 )
@@ -1262,175 +1262,175 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see B/FRMSO",
+  `-2` = "na, see RMSO",
   .applies_to_vars = c("socp46", "socp47", "socp48", "socp49", "socp51", "socp52", "socp54", "socp55", "socp66", "socp72", "socpr50", "socpyn"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see B/FSOCP28 & 31",
+  `-2` = "na, see SOCP28 & 31",
   .applies_to_vars = c("socp34", "socp35", "socp36", "socp37", "socp38"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see B/FSOCP55",
+  `-2` = "na, see SOCP55",
   .applies_to_vars = c("socp56", "socp57", "socp58", "socp59", "socp60", "socp61"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see B/FSOCP72",
+  `-2` = "na, see SOCP72",
   .applies_to_vars = c("socp73", "socp74", "socp75", "socp76", "socp77", "socp78", "socp79"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see B/FSOCP78",
+  `-2` = "na, see SOCP78",
   .applies_to_vars = c("socp81", "socp82", "socp83", "socp84", "socp85", "socp86", "socp87", "socp88", "socp90", "socp91", "socp92"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see B/FSOCPYN",
+  `-2` = "na, see SOCPYN",
   .applies_to_vars = c("socp01", "socp02", "socp03", "socp04", "socp05", "socp06", "socp07", "socp08", "socp09", "socp10", "socp11", "socp12", "socp13"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see B/FSOCPYN,14-33",
+  `-2` = "na, see SOCPYN,14-33",
   .applies_to_vars = c("socp39", "socp40", "socp41", "socp42", "socp43", "socp44", "socp44b", "socp45"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP13", `-1` = "na, asked", `0` = "- to be coded -", `1` = "garden & pets", `2` = "cult.hist. ass.", `3` = "housing ass.", `4` = "other",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP13", `-1` = "na, asked", `0` = "- to be coded -", `1` = "garden & pets", `2` = "cult.hist. ass.", `3` = "housing ass.", `4` = "other",
   .applies_to_vars = c("socp13x"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP01", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP01", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp14"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP02", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP02", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp15"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP03", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP03", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp16"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP04", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP04", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp17"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP05", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP05", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp18"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP06", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP06", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp19"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP07", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP07", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp20"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP08", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP08", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp21"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP09", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP09", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp22"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP10", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP10", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp23"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP11", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP11", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp24"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP12", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP12", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp25"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP13", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP13", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp26"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP14-26", `-1` = "na, asked", `0` = "does not visit",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP14-26", `-1` = "na, asked", `0` = "does not visit",
   .applies_to_vars = c("socp27"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP27", `-1` = "na, asked", `0` = "does not visit", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP27", `-1` = "na, asked", `0` = "does not visit", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp28"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP28", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP28", `-1` = "na, asked",
   .applies_to_vars = c("socp30"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP27", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP27", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp31"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP31", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP31", `-1` = "na, asked",
   .applies_to_vars = c("socp33"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP66", `-1` = "na, asked", `0` = "dependent on person",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP66", `-1` = "na, asked", `0` = "dependent on person",
   .applies_to_vars = c("socp67"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP79", `-1` = "na, asked", `0` = "- to be coded -",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP79", `-1` = "na, asked", `0` = "- to be coded -",
   .applies_to_vars = c("socp80"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see B/FSOCP88", `-1` = "na, asked", `0` = "- to be coded -",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP88", `-1` = "na, asked", `0` = "- to be coded -",
   .applies_to_vars = c("socp89"),
   .applies_to_waves = c("2B", "F")
 )
@@ -1616,37 +1616,37 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see H/B/IRMSO",
+  `-2` = "na, see RMSO",
   .applies_to_vars = c("socp46", "socp47", "socp48", "socp49", "socp50", "socp51", "socp52", "socp55", "socp66", "socp68", "socp72", "socp93", "socp95", "socpyn"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-2` = "na, see H/B/ISOCP55",
+  `-2` = "na, see SOCP55",
   .applies_to_vars = c("socp56", "socp57", "socp58", "socp59", "socp60", "socp61"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-2` = "na, see H/B/ISOCP72",
+  `-2` = "na, see SOCP72",
   .applies_to_vars = c("socp73", "sp72n1", "sp72n10", "sp72n11", "sp72n12", "sp72n2", "sp72n3", "sp72n4", "sp72n5", "sp72n6", "sp72n7", "sp72n8", "sp72n9"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-2` = "na, see H/B/ISOCP95",
+  `-2` = "na, see SOCP95",
   .applies_to_vars = c("sp95f1", "sp95f10", "sp95f11", "sp95f12", "sp95f13", "sp95f2", "sp95f3", "sp95f4", "sp95f5", "sp95f6", "sp95f7", "sp95f8", "sp95f9"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-2` = "na, see H/B/ISOCP97",
+  `-2` = "na, see SOCP97",
   .applies_to_vars = c("socp98", "sp97s1", "sp97s2", "sp97s3", "sp97s4", "sp97s5", "sp97s6", "sp97s7", "sp97s8"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-2` = "na, see H/B/ISOCPYN",
+  `-2` = "na, see SOCPYN",
   .applies_to_vars = c("socp01", "socp02", "socp03", "socp04", "socp05", "socp06", "socp07", "socp08", "socp09", "socp10", "socp11", "socp12", "socp13"),
   .applies_to_waves = c("H", "3B", "I")
 )
@@ -1658,133 +1658,133 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP01", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP01", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp14"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP02", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP02", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp15"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP03", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP03", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp16"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP04", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP04", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp17"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP05", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP05", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp18"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP06", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP06", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp19"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP07", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP07", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp20"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP08", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP08", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp21"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP09", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP09", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp22"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP10", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP10", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp23"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP11", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP11", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp24"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP12", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP12", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp25"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP13", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP13", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp26"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP14-26", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP14-26", `-1` = "na, asked",
   .applies_to_vars = c("socp27"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP27", `-1` = "na, asked", `0` = "does not visit", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP27", `-1` = "na, asked", `0` = "does not visit", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp28"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP28", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP28", `-1` = "na, asked",
   .applies_to_vars = c("socp30"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP27", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP27", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("socp31"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP31", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP31", `-1` = "na, asked",
   .applies_to_vars = c("socp33"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP66", `-1` = "na, asked", `0` = "dependent on person",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP66", `-1` = "na, asked", `0` = "dependent on person",
   .applies_to_vars = c("socp67"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP68", `-1` = "na, asked", `0` = "dependent on person",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP68", `-1` = "na, asked", `0` = "dependent on person",
   .applies_to_vars = c("socp69"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "often na, wrong skip", `-2` = "na, see H/B/ISOCP93", `-1` = "na, asked", `1` = "daily", `2` = "a few times a week", `3` = "a few times a month", `4` = "a few times a year", `5` = "less than a few times a year",
+  `-3` = "often na, wrong skip", `-2` = "na, see SOCP93", `-1` = "na, asked", `1` = "daily", `2` = "a few times a week", `3` = "a few times a month", `4` = "a few times a year", `5` = "less than a few times a year",
   .applies_to_vars = c("socp94"),
   .applies_to_waves = c("H", "3B", "I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISP95F6", `-1` = "na, asked", `1` = "daily", `2` = "a few times a week", `3` = "a few times a month", `4` = "a few times a year", `5` = "less than a few times a year",
+  `-3` = "na, wrong skip", `-2` = "na, see SP95F6", `-1` = "na, asked", `1` = "daily", `2` = "a few times a week", `3` = "a few times a month", `4` = "a few times a year", `5` = "less than a few times a year",
   .applies_to_vars = c("socp96"),
   .applies_to_waves = c("H", "3B", "I")
 )
@@ -1796,13 +1796,13 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/BRMSO", `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "not allowed to vote",
+  `-3` = "na, wrong skip", `-2` = "na, see RMSO", `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "not allowed to vote",
   .applies_to_vars = c("socp99"),
   .applies_to_waves = c("H", "3B")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see H/B/ISOCP93", `0` = "not mentioned", `1` = "mentioned",
+  `-3` = "na, wrong skip", `-2` = "na, see SOCP93", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("sp93n1"),
   .applies_to_waves = c("H", "3B", "I")
 )

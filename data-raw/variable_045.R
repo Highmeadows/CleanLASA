@@ -147,7 +147,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/GPSYCH", `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "R does not know", `4` = "refused",
+  `-2` = "na, see PSYCH", `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "R does not know", `4` = "refused",
   .applies_to_vars = c("psyhosp"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G")
 )
@@ -165,7 +165,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see H/IPSYCH", `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "R does not know", `4` = "refused",
+  `-2` = "na, see PSYCH", `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "R does not know", `4` = "refused",
   .applies_to_vars = c("psyhosp"),
   .applies_to_waves = c("H", "I")
 )

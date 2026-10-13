@@ -469,7 +469,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/ESENSE01",
+  `-2` = "na, see SENSE01",
   .applies_to_vars = c("sense02", "sense03", "sense05", "sense07", "sense08", "sense09", "sense11", "sense13", "sense14"),
   .applies_to_waves = c("D", "E")
 )
@@ -487,13 +487,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/ESENSE03", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not use aid",
+  `-2` = "na, see SENSE03", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not use aid",
   .applies_to_vars = c("sense04"),
   .applies_to_waves = c("D", "E")
 )
 
 value_labels(
-  `-2` = "na, see D/ESENSE05", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not have glasses or contact lenses",
+  `-2` = "na, see SENSE05", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not have glasses or contact lenses",
   .applies_to_vars = c("sense06"),
   .applies_to_waves = c("D", "E")
 )
@@ -511,13 +511,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/ESENSE09", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not have a hearing aid",
+  `-2` = "na, see SENSE09", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not have a hearing aid",
   .applies_to_vars = c("sense10"),
   .applies_to_waves = c("D", "E")
 )
 
 value_labels(
-  `-2` = "na, see D/ESENSE11", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not have a hearing aid",
+  `-2` = "na, see SENSE11", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not have a hearing aid",
   .applies_to_vars = c("sense12"),
   .applies_to_waves = c("D", "E")
 )
@@ -565,7 +565,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see F/GMSENS01",
+  `-2` = "na, see MSENS01",
   .applies_to_vars = c("msens02", "msens03", "msens05", "msens07", "msens08", "msens09", "msens11", "msens13", "msens14", "msens15"),
   .applies_to_waves = c("F", "G")
 )
@@ -583,13 +583,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see F/GMSENS03", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not use aid",
+  `-2` = "na, see MSENS03", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not use aid",
   .applies_to_vars = c("msens04"),
   .applies_to_waves = c("F", "G")
 )
 
 value_labels(
-  `-2` = "na, see F/GMSENS05", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot",
+  `-2` = "na, see MSENS05", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot",
   .applies_to_vars = c("msens06"),
   .applies_to_waves = c("F", "G")
 )
@@ -613,13 +613,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see F/GMSENS09", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not have a hearing aid",
+  `-2` = "na, see MSENS09", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not have a hearing aid",
   .applies_to_vars = c("msens10"),
   .applies_to_waves = c("F", "G")
 )
 
 value_labels(
-  `-2` = "na, see F/GMSENS11", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not have a hearing aid",
+  `-2` = "na, see MSENS11", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not have a hearing aid",
   .applies_to_vars = c("msens12"),
   .applies_to_waves = c("F", "G")
 )
@@ -871,25 +871,25 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see J/KMSENS7A",
+  `-2` = "na, see MSENS7A",
   .applies_to_vars = c("msens08", "msens10a", "msens11", "msens12a", "msens16", "msens17a", "msens21", "msens7b", "msens7c"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KMSENS01", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot",
+  `-2` = "na, see MSENS01", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot",
   .applies_to_vars = c("msens03", "msens05"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KMSENS01OF 03????", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not have glasses or contact lenses",
+  `-2` = "na, see MSENS01OF 03????", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not have glasses or contact lenses",
   .applies_to_vars = c("msens04"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KMSENS05", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not have glasses or contact lenses",
+  `-2` = "na, see MSENS05", `-1` = "na, asked", `1` = "yes, without difficulty", `2` = "yes, with some difficulty", `3` = "yes, with much difficulty", `4` = "no, I cannot", `5` = "R does not have glasses or contact lenses",
   .applies_to_vars = c("msens06"),
   .applies_to_waves = c("J", "K")
 )

@@ -303,13 +303,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/DRMCRAV in LASAC/D/E222",
+  `-2` = "na, see RMCRAV in LASAC/D/E222",
   .applies_to_vars = c("raabmis", "rava1", "rava10", "rava11", "rava12", "rava2", "rava3", "rava4", "rava5", "rava6", "rava7", "rava8", "rava9", "ravamis", "ravb1", "ravb10", "ravb11", "ravb12", "ravb2", "ravb3", "ravb4", "ravb5", "ravb6", "ravb7", "ravb8", "ravb9", "ravbmis"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-2` = "na, see E/F/GMRMCRAV in LASAF/G222",
+  `-2` = "na, see MRMCRAV in LASAF/G222",
   .applies_to_vars = c("mraabmis", "mrava1", "mrava10", "mrava11", "mrava12", "mrava2", "mrava3", "mrava4", "mrava5", "mrava6", "mrava7", "mrava8", "mrava9", "mravamis", "mravb1", "mravb10", "mravb11", "mravb12", "mravb2", "mravb3", "mravb4", "mravb5", "mravb6", "mravb7", "mravb8", "mravb9", "mravbmis"),
   .applies_to_waves = c("E", "F", "G")
 )
@@ -321,7 +321,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/DRMCRAV in LAS2B222", `-1` = "na, asked", `1` = "correct",
+  `-2` = "na, see RMCRAV in LAS2B222", `-1` = "na, asked", `1` = "correct",
   .applies_to_vars = c("mrava9"),
   .applies_to_waves = c("2B")
 )

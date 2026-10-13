@@ -187,13 +187,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQPDEME",
+  `-2` = "na, see QPDEME",
   .applies_to_vars = c("qprespc1", "qprespc2", "qprespc3", "qprespc4"),
   .applies_to_waves = c("I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQPMEMO", `-1` = "no answer", `1` = "no", `2` = "yes",
+  `-2` = "na, see QPMEMO", `-1` = "no answer", `1` = "no", `2` = "yes",
   .applies_to_vars = c("qpdeme"),
   .applies_to_waves = c("I", "J", "K")
 )

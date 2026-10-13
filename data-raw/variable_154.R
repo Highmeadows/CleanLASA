@@ -195,13 +195,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KMSMOKECIGP", `-1` = "na, asked", `0` = "< 1 a week",
+  `-2` = "na, see MSMOKECIGP", `-1` = "na, asked", `0` = "< 1 a week",
   .applies_to_vars = c("msmokecignwp"),
   .applies_to_waves = c("Z", "I", "J", "K")
 )
 
 value_labels(
-  `-5` = "na, interview terminated", `-3` = "na, wrong skip", `-2` = "na, see E/B/F/G/HMSMOKEYN", `-1` = "na, asked", `1` = "no / yes", `2` = "yes / no",
+  `-5` = "na, interview terminated", `-3` = "na, wrong skip", `-2` = "na, see MSMOKEYN", `-1` = "na, asked", `1` = "no / yes", `2` = "yes / no",
   .applies_to_vars = c("msmokecigp"),
   .applies_to_waves = c("Z")
 )
@@ -213,31 +213,31 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-2` = "na, see MSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("msmokeecig"),
   .applies_to_waves = c("Z", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see I/J/KMSMOKEECIG", `1` = "no nicotine", `2` = "1-10 mg nicotine", `3` = "11-20 mg nicotine", `4` = "21-35 mg nicotine", `5` = ">36 mg nicotine",
+  `-2` = "na, see MSMOKEECIG", `1` = "no nicotine", `2` = "1-10 mg nicotine", `3` = "11-20 mg nicotine", `4` = "21-35 mg nicotine", `5` = ">36 mg nicotine",
   .applies_to_vars = c("msmokeecigd"),
   .applies_to_waves = c("Z", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see I/J/KMSMOKEECIG", `1` = "most of the day", `2` = "a few times a day", `3` = "a few times a week", `4` = "a few times a month", `5` = "a few times a year",
+  `-2` = "na, see MSMOKEECIG", `1` = "most of the day", `2` = "a few times a day", `3` = "a few times a week", `4` = "a few times a month", `5` = "a few times a year",
   .applies_to_vars = c("msmokeecigf"),
   .applies_to_waves = c("Z", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see I/J/KMSMOKEBEF / SMOKECIGP", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-2` = "na, see MSMOKEBEF / SMOKECIGP", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("msmokeecigp"),
   .applies_to_waves = c("Z", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see I/J/KMSMOKEECIGP", `-1` = "na, asked", `1` = "most of the day", `2` = "a few times a day", `3` = "a few times a week", `4` = "a few times a month", `5` = "a few times a year",
+  `-2` = "na, see MSMOKEECIGP", `-1` = "na, asked", `1` = "most of the day", `2` = "a few times a day", `3` = "a few times a week", `4` = "a few times a month", `5` = "a few times a year",
   .applies_to_vars = c("msmokeecigpf"),
   .applies_to_waves = c("Z", "I", "J", "K")
 )
@@ -423,7 +423,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see E/B/F/G/HMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-2` = "na, see MSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("msmokebef"),
   .applies_to_waves = c("E", "2B", "F", "G", "H")
 )
@@ -435,7 +435,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see E/B/F/G/HMSMOKEYN", `-1` = "na, asked", `1` = "yes", `2` = "no",
+  `-3` = "na, wrong skip", `-2` = "na, see MSMOKEYN", `-1` = "na, asked", `1` = "yes", `2` = "no",
   .applies_to_vars = c("msmokeciga"),
   .applies_to_waves = c("E", "2B", "F", "G", "H")
 )
@@ -447,31 +447,31 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see E/B/F/GMSMOKECIG", `-1` = "na, asked", `0` = "less than 1 a week", `1` = "1 or less a week",
+  `-2` = "na, see MSMOKECIG", `-1` = "na, asked", `0` = "less than 1 a week", `1` = "1 or less a week",
   .applies_to_vars = c("msmokecignw"),
   .applies_to_waves = c("E", "2B")
 )
 
 value_labels(
-  `-2` = "na, see E/B/F/G/HSMOKEYN /SMOKEBEF", `-1` = "na, asked",
+  `-2` = "na, see SMOKEYN /SMOKEBEF", `-1` = "na, asked",
   .applies_to_vars = c("msmokesage"),
   .applies_to_waves = c("E", "2B", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see E/B/F/GMSMOKECIG", `-1` = "na, asked",
+  `-2` = "na, see MSMOKECIG", `-1` = "na, asked",
   .applies_to_vars = c("msmokecignw"),
   .applies_to_waves = c("F", "G")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see E/B/F/GSMOKEYN", `-1` = "na, asked", `1` = "yes", `2` = "no",
+  `-3` = "na, wrong skip", `-2` = "na, see SMOKEYN", `-1` = "na, asked", `1` = "yes", `2` = "no",
   .applies_to_vars = c("msmokecig"),
   .applies_to_waves = c("H")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see E/B/F/G/HMSMOKEYN", `-1` = "na, asked", `1` = "yes", `2` = "no",
+  `-3` = "na, wrong skip", `-2` = "na, see MSMOKEYN", `-1` = "na, asked", `1` = "yes", `2` = "no",
   .applies_to_vars = c("msmokecigp"),
   .applies_to_waves = c("H")
 )
@@ -507,43 +507,43 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KMSMOKEYN", `-1` = "na, short interview", `1` = "no", `2` = "yes",
+  `-2` = "na, see MSMOKEYN", `-1` = "na, short interview", `1` = "no", `2` = "yes",
   .applies_to_vars = c("msmokebef"),
   .applies_to_waves = c("I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see I/J/KMSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-2` = "na, see MSMOKEYN", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("msmokecig", "msmokeciga"),
   .applies_to_waves = c("I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see I/J/KMSMOKECIGA", `-1` = "na, asked", `0` = "< 1 a week",
+  `-2` = "na, see MSMOKECIGA", `-1` = "na, asked", `0` = "< 1 a week",
   .applies_to_vars = c("msmokeciganw"),
   .applies_to_waves = c("I", "J", "K")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/J/KMSMOKECIG", `-1` = "na, asked", `0` = "< 1 a week",
+  `-3` = "na, wrong skip", `-2` = "na, see MSMOKECIG", `-1` = "na, asked", `0` = "< 1 a week",
   .applies_to_vars = c("msmokecignw"),
   .applies_to_waves = c("I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see I/J/KMSMOKEBEF", `-1` = "na, asked",
+  `-2` = "na, see MSMOKEBEF", `-1` = "na, asked",
   .applies_to_vars = c("msmokecigp"),
   .applies_to_waves = c("I", "J", "K")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/J/KMSMOKEBEF", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see MSMOKEBEF", `-1` = "na, asked",
   .applies_to_vars = c("msmokeqage"),
   .applies_to_waves = c("I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see I/J/KMSMOKEYN", `-1` = "na, asked",
+  `-2` = "na, see MSMOKEYN", `-1` = "na, asked",
   .applies_to_vars = c("msmokesage"),
   .applies_to_waves = c("I", "J", "K")
 )
