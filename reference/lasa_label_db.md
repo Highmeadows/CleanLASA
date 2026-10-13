@@ -29,7 +29,7 @@ the package README for the full schema.
 ``` r
 db <- lasa_label_db()
 nrow(db$variables)
-#> [1] 23780
+#> [1] 23891
 subset(db$variables, filecode == "046" & wave == "B")
 #>      filecode wave variable_name canonical_name
 #> 9014      046    B      blphya01        lphya01
