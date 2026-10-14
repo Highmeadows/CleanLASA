@@ -155,13 +155,15 @@ at, and the wave of the LASA file the data are (as far as the data's
 label report lists the column) -- also where the label database doesn't
 document the name at that wave, as for the files of waves 4B and L,
 which it doesn't document yet -- and, for a name LASA's wave files use
-without a wave prefix (\code{drinking}), those undocumented waves and, where
-the data are a LASA file of that name (their \code{"LASA_file_code"}, which
-stacking the file's waves keeps), the waves the label database documents
-nothing of that file at (wave K for file 045's \code{seh_reden}), and any
-wave, once its values differ between a respondent's rows. In the data
-of a LASA file of wave L, a column the file's label report lists named
-\code{l} followed by a wave-specific variable (\code{lhhnch}) is that variable's
+without a wave prefix (\code{drinking}), those undocumented waves, any wave
+once its values differ between a respondent's rows, and, in the data of
+that name's LASA file (as far as the data's label report lists the
+column; stacked files keep the first one's), the waves \code{\link[=lasa_topics]{lasa_topics()}}
+lists the file at that the label database doesn't document of it yet
+(wave K for file 045's \code{seh_reden}), unless the file's wave-prefixed
+columns are wide there (a wide file joined onto other long data). In the
+data of a LASA file of wave L, a column the file's label report lists
+named \code{l} followed by a wave-specific variable (\code{lhhnch}) is that variable's
 long column too, so wave L's files become long as other waves' do. Wave
 I's \code{immse01} to \code{immse23} are also the long names of the migrant
 cohort's \code{bimmse01} to \code{bimmse23}: such a column is the migrant cohort's
@@ -288,12 +290,13 @@ stable variable (such as \code{sex}) only needs to agree across the rows
 where it isn't missing. A wide column whose name still doesn't say which
 wave and variable it holds (a name the label database doesn't document,
 or a wave B name the later cohorts' baselines share, such as
-\code{blphya01}) carries the attributes \code{"LASA_wave"} and \code{"LASA_long_name"},
-which transforming it back uses, also without the result's other
-columns. Base R's \code{\link[=merge]{merge()}} and row subsetting drop those attributes
-from factor and numeric columns (haven's labelled columns keep them);
-the column is then placed like a column of LASA's own files, see
-\strong{Names of several waves}.
+\code{blphya01}, and, in a result with wave 4B, whose files use the
+baselines' \code{b} names, any baseline's \code{b} name) carries the attributes
+\code{"LASA_wave"} and \code{"LASA_long_name"}, which transforming it back uses,
+also without the result's other columns. Base R's \code{\link[=merge]{merge()}} and row
+subsetting drop those attributes from factor and numeric columns
+(haven's labelled columns keep them); the column is then placed like a
+column of LASA's own files, see \strong{Names of several waves}.
 
 \strong{Labels} travel with the data. A long column keeps each wave's own
 \code{"wave_label"}/\code{"labels_wave"} as one entry per wave. Its variable label

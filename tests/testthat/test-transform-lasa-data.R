@@ -588,6 +588,23 @@ test_that("a baseline column of wide data reads back at its wave also without th
   expect_silent(back <- transform_lasa_data(wide[c("respnr", "blphya01", "b2lphya01")]))
   expect_equal(paste(back$respnr, back$Wave, back$Time), c("1 B 0", "2 B 0", "3 B 0", "4 2B 0", "5 2B 0", "6 2B 0"))
   expect_equal(as.character(back$lphya01), as.character(long$lphya01[long$Wave != "C"]))
+
+  # In a result with wave 4B, whose files use the baselines' "b" names, so
+  # does a name of a single baseline (bcva02, wave B).
+  read_035 <- function(filename, ids, values) {
+    suppressMessages(read_fixture(data.frame(RespNr = ids, BCVA02 = values), filename, format_as_long = TRUE))
+  }
+  long <- suppressMessages(transform_lasa_data(merge(
+    rbind(read_035("LASAB035.SAV", 1:2, c(60, 70)), read_035("LAS4B035.SAV", c(401, 402), c(55, 65))),
+    read_long("C", "LASAC046.SAV", 1:2),
+    by = c("respnr", "Wave"), all = TRUE
+  )))
+  wide <- transform_lasa_data(long, format = "wide")
+  expect_named(wide, c("respnr", "bcva02", "clphya01", "clphya07", "b4cva02"))
+  expect_equal(attr(wide$bcva02, "LASA_wave"), "B")
+  expect_null(attr(wide$b4cva02, "LASA_wave"))
+  expect_silent(back <- transform_lasa_data(wide[c("respnr", "bcva02", "b4cva02")]))
+  expect_equal(paste(back$respnr, back$Wave, back$Time, back$cva02), c("1 B 0 60", "2 B 0 70", "401 4B 0 55", "402 4B 0 65"))
 })
 
 test_that("a baseline column merged into long data goes to each respondent's own baseline", {
@@ -1988,6 +2005,45 @@ test_that("a file's waves stacked keep their values at waves the label database 
   stacked <- rbind(read_045("J", 1:3, c(3, 1, 2)), read_045("K", c(1, 4, 5), c(3, 2, 1)))
   long <- suppressWarnings(suppressMessages(transform_lasa_data(stacked)))
   expect_equal(paste(long$respnr, long$Wave, long$seh_reden), c("1 J 3", "2 J 1", "3 J 2", "1 K 3", "4 K 2", "5 K 1"))
+})
+
+test_that("a wide file joined first onto long data keeps its columns at its wave, also names without a wave prefix", {
+  # A join that keeps the wide file's attributes, as dplyr's joins do with
+  # it first: the rows are the long data's, not the file's.
+  join_onto <- function(wide, long) {
+    joined <- merge(wide, long, by = "respnr")
+    for (name in c("LASA_file_code", "LASA_wave", "label_report")) attr(joined, name) <- attr(wide, name)
+    joined
+  }
+  # File 045 also has a wave K, which the label database doesn't document.
+  j045 <- read_fixture(
+    data.frame(RespNr = 1:3, JHOSP = c(1, 0, 1), SEH_REDEN = c(3, 1, 2), ZIEKAN = c(1, 2, 1)), "LASAJ045.SAV",
+    standardize = FALSE
+  )
+  k046 <- suppressMessages(read_fixture(wave_fixture("046", "K"), "LASAK046.SAV", format_as_long = TRUE))
+  long <- suppressMessages(transform_lasa_data(join_onto(j045, k046)))
+  expect_equal(paste(long$respnr, long$Wave), c("1 J", "1 K", "2 J", "2 K", "3 J", "3 K"))
+  expect_equal(as.vector(long$seh_reden), c(3, NA, 1, NA, 2, NA))
+  expect_equal(as.vector(long$ziekan), c(1, NA, 2, NA, 1, NA))
+
+  # File 878 has wave G only: its columns go to G, and the first cohort's
+  # rows keep their Time.
+  read_long <- function(prefix, filename) {
+    suppressMessages(read_fixture(wave_fixture("046", prefix, ids = 1:2), filename, format_as_long = TRUE))
+  }
+  long046 <- transform_lasa_data(rbind(
+    read_long("B", "LASAB046.SAV"), read_long("C", "LASAC046.SAV"), read_long("G", "LASAG046.SAV")
+  ))
+  g878 <- read_fixture(
+    data.frame(RespNr = 1:2, GMSE_SELECTIN = c(10.5, 12.1), SELG878 = c(1, 1)), "LASAG878.SAV",
+    standardize = FALSE
+  )
+  expect_silent(long <- transform_lasa_data(join_onto(g878, long046)))
+  expect_equal(paste(long$respnr, long$Wave, long$Time), c("1 B 0", "1 C 1", "1 G 5", "2 B 0", "2 C 1", "2 G 5"))
+  expect_equal(!is.na(long$selg878), rep(c(FALSE, FALSE, TRUE), 2))
+  expect_named(transform_lasa_data(long, format = "wide"), c(
+    "respnr", "gmse_selectin", "selg878", "blphya01", "blphya07", "clphya01", "clphya07", "glphya01", "glphya07"
+  ))
 })
 
 test_that("blank text, as SPSS stores missing text, holds no value", {
