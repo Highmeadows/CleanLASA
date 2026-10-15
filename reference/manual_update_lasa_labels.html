@@ -97,7 +97,9 @@ leaves the existing label untouched.</p></dd>
 
 <dt id="arg-val-labels">val_labels<a class="anchor" aria-label="anchor" href="#arg-val-labels"></a></dt>
 <dd><p>Optional named vector of value-label corrections,
-keyed by numeric code, e.g. <code>c(\</code>-5\verb = "NA, wrong, skip", \1\verb = "man") (quote or backtick negative/numeric-looking names).</p></dd>
+keyed by numeric code, e.g. <code>c(\</code>-5\verb = "NA, wrong, skip", \1\verb = "man") (quote or backtick negative/numeric-looking names). A negative
+code is stored as a missing-value code, so don't use <code>val_labels</code> to
+label a measurement.</p></dd>
 
 
 <dt id="arg-replace-val-labels">replace_val_labels<a class="anchor" aria-label="anchor" href="#arg-replace-val-labels"></a></dt>

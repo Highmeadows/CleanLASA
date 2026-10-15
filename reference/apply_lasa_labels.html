@@ -77,7 +77,8 @@ single-valued <code>"Wave"</code> column.</p>
 <span>  .standardize_val_labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  add_wavecode <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  to_factor <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  to_numeric <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  to_numeric <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  keep_user_na <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -162,8 +163,22 @@ value coding is inconsistent across waves (database <code>var_type == "text"</co
 
 <dt id="arg-to-numeric">to_numeric<a class="anchor" aria-label="anchor" href="#arg-to-numeric"></a></dt>
 <dd><p>Logical, default <code>TRUE</code>. Restore count/continuous
-variables (per the database's <code>var_type</code>) to plain numeric, converting
-negative codes to <code>NA</code>.</p></dd>
+variables (per the database's <code>var_type</code>) to plain numeric. How their
+missing-value codes come out is set by <code>keep_user_na</code>.</p></dd>
+
+
+<dt id="arg-keep-user-na">keep_user_na<a class="anchor" aria-label="anchor" href="#arg-keep-user-na"></a></dt>
+<dd><p>Logical, default <code>FALSE</code>. How missing-value codes
+(e.g. <code>-2</code> = "na, see BMOVED") are represented, the same way for every
+variable type. With <code>FALSE</code>, every missing code becomes <code>NA</code>, and
+factors get no level for it. With <code>TRUE</code>, every missing code is kept:
+factors and label-text (character) variables show its label text, and
+any other variable – including a <code>to_numeric</code> one, since a numeric
+vector can't hold text – keeps the raw code as a
+<code>haven_labelled_spss</code> vector with the value labels attached and the
+missing codes declared user-missing (so <code><a href="https://haven.tidyverse.org/reference/zap_missing.html" class="external-link">haven::zap_missing()</a></code> or
+<code><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na()</a></code> still recognise them). See Details for which codes count as
+missing.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -210,6 +225,19 @@ harmonized value labels for it at all. <code>to_factor</code> then recodes it to
 its wave-specific label text (character) instead of a factor, so waves
 whose numeric codes disagree but whose label text agrees (e.g.
 <code>0 = "no", 1 = "yes"</code> vs. <code>1 = "no", 2 = "yes"</code>) still merge correctly.</p>
+<p>A code counts as missing when the label database flags its value label
+as missing: every negative documented code, e.g. <code>-1</code> = "na, asked", or
+<code>-2</code> = "valid score" in a "reason missing" variable (the score is valid,
+so there is no reason to record). So does any negative value that
+appears in the data without being documented at all, since LASA codes
+reasons of missingness as negative numbers – unless the variable is
+numeric and its genuine values can be negative (e.g. a
+speech-reception threshold in dB), in which case only its documented
+missing codes count and every other negative value is kept as a
+measurement. Positive codes such as "dropout" are real answers, never
+missing. Columns the database doesn't document are left as they are,
+except that <code>keep_user_na = FALSE</code> applies the file's own SPSS
+user-missing declaration to them (as <code><a href="https://haven.tidyverse.org/reference/zap_missing.html" class="external-link">haven::zap_missing()</a></code> does).</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

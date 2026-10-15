@@ -55,7 +55,9 @@ manual_update_lasa_labels(
 
   Optional named vector of value-label corrections, keyed by numeric
   code, e.g. `c(\`-5\verb = "NA, wrong, skip", \1\verb = "man") (quote
-  or backtick negative/numeric-looking names).
+  or backtick negative/numeric-looking names). A negative code is stored
+  as a missing-value code, so don't use `val_labels` to label a
+  measurement.
 
 - replace_val_labels:
 

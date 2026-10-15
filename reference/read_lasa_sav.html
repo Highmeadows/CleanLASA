@@ -66,8 +66,9 @@ which does all of the actual matching/transforming/standardizing work.
 <span>  add_wavecode <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  to_factor <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  to_numeric <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  user_na <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  read_sav_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  keep_user_na <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  read_sav_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="va">user_na</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -96,17 +97,27 @@ for a nonstandard baseline wave). If omitted, derived from <code>path</code>.</p
 <code><a href="apply_lasa_labels.html">apply_lasa_labels()</a></code> for the full description of each.</p></dd>
 
 
-<dt id="arg-user-na">user_na<a class="anchor" aria-label="anchor" href="#arg-user-na"></a></dt>
-<dd><p>Logical passed to <code><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">haven::read_sav()</a></code>. The default is <code>TRUE</code>
-so SPSS user-defined missing codes remain available to the labelling
-step before any requested conversion to <code>NA</code>.</p></dd>
+<dt id="arg-keep-user-na">keep_user_na<a class="anchor" aria-label="anchor" href="#arg-keep-user-na"></a></dt>
+<dd><p>Logical, default <code>FALSE</code>. With <code>FALSE</code>, every
+missing-value code becomes <code>NA</code>; with <code>TRUE</code>, missing codes are kept
+(as label text in factors and character variables, as the raw code
+declared user-missing otherwise). See <code><a href="apply_lasa_labels.html">apply_lasa_labels()</a></code>. The file
+itself is always read with every code intact
+(<code>haven::read_sav(user_na = TRUE)</code>), so this choice is made from the
+LASA documentation rather than from whatever the <code>.sav</code> file happens
+to declare.</p></dd>
 
 
 <dt id="arg-read-sav-args">read_sav_args<a class="anchor" aria-label="anchor" href="#arg-read-sav-args"></a></dt>
 <dd><p>Optional named list of additional arguments passed to
 <code><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">haven::read_sav()</a></code>, for example <code>list(encoding = "UTF-8")</code>. Do not
-include <code>file</code> or <code>user_na</code>; those are controlled by <code>path</code> and
-<code>user_na</code>.</p></dd>
+include <code>file</code> (set by <code>path</code>) or <code>user_na</code> (always <code>TRUE</code>; choose how
+missing codes come out with <code>keep_user_na</code>).</p></dd>
+
+
+<dt id="arg-user-na">user_na<a class="anchor" aria-label="anchor" href="#arg-user-na"></a></dt>
+<dd><p>Deprecated: use <code>keep_user_na</code> instead. A supplied value
+is used as <code>keep_user_na</code>, with a warning.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -176,6 +187,10 @@ generic <code>"label_report"</code> attribute; retrieve it with
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dat_z004</span> <span class="op">&lt;-</span> <span class="fu">read_lasa_sav</span><span class="op">(</span><span class="st">"LASAZ004.SAV"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Keep missing-value codes (e.g. "na, asked") instead of turning them</span></span></span>
+<span class="r-in"><span><span class="co"># into NA:</span></span></span>
+<span class="r-in"><span><span class="va">dat_b014</span> <span class="op">&lt;-</span> <span class="fu">read_lasa_sav</span><span class="op">(</span><span class="st">"LASAB014.SAV"</span>, keep_user_na <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

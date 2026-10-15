@@ -232,11 +232,10 @@ are named <code>LAS[wave][filecode].sav</code>. If your file doesn’t
 follow this pattern, pass <code>filecode</code>/<code>wave</code>
 yourself (see <a href="#id_6-apply-lasa-labels-to-an-existing-data-frame">section
 6</a>).</p>
-<p>By default, <code><a href="../reference/read_lasa_sav.html">read_lasa_sav()</a></code> reads the file with
-<code>user_na = TRUE</code>, so SPSS’s user-defined missing-value codes
-stay visible instead of silently becoming <code>NA</code> before
-CleanLASA gets a chance to label them. You can pass any other
-<code><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">haven::read_sav()</a></code> argument through
+<p><code><a href="../reference/read_lasa_sav.html">read_lasa_sav()</a></code> always reads the file with every code
+intact, so CleanLASA – not whatever the <code>.sav</code> file happens
+to declare – decides which codes are missing values (see <a href="#missing-value-codes">Missing-value codes</a> below). You can pass
+any other <code><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">haven::read_sav()</a></code> argument through
 <code>read_sav_args</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span></span>
@@ -245,7 +244,7 @@ CleanLASA gets a chance to label them. You can pass any other
 <span><span class="op">)</span></span></code></pre></div>
 <p>(Don’t put <code>file</code> or <code>user_na</code> inside
 <code>read_sav_args</code> – those are controlled by <code>path</code>
-and <code>user_na</code> directly, not by this list.)</p>
+and <code>keep_user_na</code> directly, not by this list.)</p>
 <p>Once imported, the result carries a few extra pieces of information
 about where it came from: which wave and file code it is, and the source
 file name. It also carries the full matching audit, described in <a href="#id_5-audit-how-variables-were-matched">section 5</a>.</p>
@@ -293,12 +292,12 @@ documented value labels become R factor levels.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">lphya01</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Na, interview terminated      Na, short interview           Na, wrong skip</span></span>
-<span><span class="co">#&gt;                       13                      175                        0</span></span>
-<span><span class="co">#&gt;                  Na, see                Na, asked     Respondent bedridden</span></span>
-<span><span class="co">#&gt;                        0                        4                       20</span></span>
-<span><span class="co">#&gt; Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3</span></span>
-<span><span class="co">#&gt;                        5                       20                     2870</span></span>
+<span><span class="co">#&gt;           respondent bedridden respondent in elec. wheelchair</span></span>
+<span><span class="co">#&gt;                             20                              5</span></span>
+<span><span class="co">#&gt; respondent in mech. wheelchair                  not 1, 2 or 3</span></span>
+<span><span class="co">#&gt;                             20                           2870</span></span>
+<span><span class="co">#&gt;                           NA's</span></span>
+<span><span class="co">#&gt;                            192</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">lphya01</span>, <span class="st">"labels_wave"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Na, interview terminated      Na, short interview           Na, wrong skip</span></span>
@@ -307,12 +306,14 @@ documented value labels become R factor levels.</p>
 <span><span class="co">#&gt;                       -2                       -1                        1</span></span>
 <span><span class="co">#&gt; Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3</span></span>
 <span><span class="co">#&gt;                        2                        3                        4</span></span></code></pre></div>
-<p>If a value shows up in the data but LASA’s documentation has no label
-for it, that value is kept as its own factor level (shown as the number
-itself) rather than silently turned into <code>NA</code> – so you’ll
-notice an undocumented code instead of quietly losing data. Set
-<code>to_factor = FALSE</code> to leave the variable as a plain
-numeric/character vector instead.</p>
+<p>The negative “Na, …” codes are missing values, so by default they
+become <code>NA</code> (see <a href="#missing-value-codes">Missing-value
+codes</a> below). If a non-negative value shows up in the data but
+LASA’s documentation has no label for it, that value is kept as its own
+factor level (shown as the number itself) rather than silently turned
+into <code>NA</code> – so you’ll notice an undocumented code instead of
+quietly losing data. Set <code>to_factor = FALSE</code> to leave the
+variable as a plain numeric/character vector instead.</p>
 </div>
 <div class="section level3">
 <h3 id="variables-that-mean-the-same-thing-but-were-coded-differently">Variables that mean the same thing but were coded differently<a class="anchor" aria-label="anchor" href="#variables-that-mean-the-same-thing-but-were-coded-differently"></a>
@@ -356,6 +357,41 @@ against each other: in the same call, categorical variables become
 factors and numeric-classified variables become plain numbers.</p>
 </div>
 <div class="section level3">
+<h3 id="missing-value-codes">Missing-value codes<a class="anchor" aria-label="anchor" href="#missing-value-codes"></a>
+</h3>
+<p>LASA records <em>why</em> an answer is missing with negative codes,
+such as <code>-1</code> = “Na, asked” or <code>-2</code> = “Na, see
+BMOVED”. <code>keep_user_na</code> decides what happens to them, and it
+does the same thing for every variable, whatever its type:</p>
+<ul>
+<li>
+<code>keep_user_na = FALSE</code> (the default): every missing code
+becomes <code>NA</code>, in factors, label-text variables and numeric
+variables alike, and factors get no level for it. This is what you want
+for most analyses.</li>
+<li>
+<code>keep_user_na = TRUE</code>: every missing code is kept.
+Factors and label-text variables show the reason as text
+(<code>"Na, see BMOVED"</code>). A numeric variable can’t hold text, so
+it keeps the raw code (<code>-2</code>) as a
+<code>haven_labelled_spss</code> vector, with the reason as its value
+label and the code declared missing: <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na()</a></code> reports it as
+missing, and <code><a href="https://haven.tidyverse.org/reference/zap_missing.html" class="external-link">haven::zap_missing()</a></code> turns it into
+<code>NA</code> when you need to compute with it.</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB014.sav"</span>, keep_user_na <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>A code counts as missing when the label database flags it as one:
+every negative documented code, including labels such as “valid score”
+or “never had job” that explain why a value is missing. A negative value
+that isn’t documented at all counts as missing too, unless the variable
+is numeric and its genuine values can be negative, such as a
+speech-reception threshold in dB; then only its documented missing codes
+count, and every other negative value is kept as a measurement. Positive
+codes, such as “dropout” in the osteoarthritis files, are real answers
+and are never treated as missing.</p>
+</div>
+<div class="section level3">
 <h3 id="standardize-variable-names-and-separate-the-wave-code">Standardize variable names and separate the wave code<a class="anchor" aria-label="anchor" href="#standardize-variable-names-and-separate-the-wave-code"></a>
 </h3>
 <p>LASA variable names usually carry a wave-specific prefix – the same
@@ -385,7 +421,7 @@ of that wave’s own wording.</li>
 idea, but for value labels: use the harmonized codebook (where LASA’s
 documentation defines one) instead of the wave-specific one.</li>
 </ul>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span> <span class="co"># standardize = TRUE by default</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
@@ -397,7 +433,7 @@ documentation defines one) instead of the wave-specific one.</li>
 still want to know which wave you’re looking at,
 <code>add_wavecode</code> adds the <code>"Wave"</code> column on its
 own, without renaming anything else:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span></span>
 <span>  <span class="st">"LASAB046.sav"</span>,</span>
 <span>  .standardize_names <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -419,7 +455,7 @@ expects, so it wouldn’t be matched at all on its own. If you already
 know which documented variable it actually is,
 <code>name_corrections</code> tells CleanLASA directly, as
 <code>canonical_name = "actual name in the datafile"</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span></span>
 <span>  <span class="st">"LASAB046.sav"</span>,</span>
 <span>  name_corrections <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>lphya08 <span class="op">=</span> <span class="st">"BLPYA08"</span>, </span>
@@ -449,7 +485,7 @@ kept as the <code>"wave_label"</code> and <code>"labels_wave"</code>
 attributes. This stays true even after converting to a factor or plain
 number, so you can always check what R did against the original SPSS
 coding:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">lphya01</span>, <span class="st">"wave_label"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">lphya01</span>, <span class="st">"labels_wave"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -461,7 +497,7 @@ coding:</p>
 <code><a href="../reference/apply_lasa_labels.html">apply_lasa_labels()</a></code> call keeps a record of exactly how each
 variable was matched – or if it wasn’t. <code><a href="../reference/lasa_label_report.html">lasa_label_report()</a></code>
 returns that record:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">report</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lasa_label_report.html">lasa_label_report</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="va">report</span></span></code></pre></div>
 <p>By default this returns the complete picture, in both directions:
@@ -478,7 +514,7 @@ data that don’t correspond to anything documented
 an error: an unmatched variable is simply left as-is and reported here
 for you to look at.</p>
 <p>To skip straight to what might need your attention:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/lasa_label_report.html">lasa_label_report</a></span><span class="op">(</span><span class="va">data</span>, problems_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Run this before you start analysing the data. It confirms the
 variables you expected were actually matched (and if not, is often
@@ -495,7 +531,7 @@ never touched by the labelling engine, so nothing is lost.</p>
 <code><a href="../reference/read_lasa_sav.html">read_lasa_sav()</a></code> uses, made available on its own. Use it
 when you’ve already imported a <code>.sav</code> file some other way, or
 need to re-apply labels after a transformation removed them.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">read_sav</a></span><span class="op">(</span><span class="st">"LASAC046.sav"</span>, user_na <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/apply_lasa_labels.html">apply_lasa_labels</a></span><span class="op">(</span></span>
@@ -508,7 +544,7 @@ that <code><a href="../reference/read_lasa_sav.html">read_lasa_sav()</a></code> 
 <code><a href="../reference/apply_lasa_labels.html">apply_lasa_labels()</a></code> call) attached to it, you can usually
 leave <code>filecode</code>/<code>wave</code> out entirely – CleanLASA
 remembers:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># ...perform transformations that may remove column attributes...</span></span>
@@ -534,11 +570,12 @@ four parts:</p>
 file-code/wave/variable combination: the variable’s name as it appears
 in that wave’s data, its canonical (shared-across-waves) name, its label
 for that specific wave, its cross-wave-consistent (“harmonized”) label,
-and its type (numeric, categorical, or text).</li>
+its type (numeric, categorical, or text), and whether its genuine values
+can be negative (<code>can_be_negative</code>).</li>
 <li>
 <strong><code>value_labels</code></strong> – the value/code labels
-(what each numeric code means) exactly as documented for that one
-wave.</li>
+(what each numeric code means) exactly as documented for that one wave,
+with <code>is_missing</code> marking the missing-value codes.</li>
 <li>
 <strong><code>value_labels_harmonized</code></strong> – the same
 variable’s value labels, standardized across every wave that documents
@@ -554,7 +591,7 @@ earlier section</a> on why.</li>
 hand-authored corrections, kept separately from the bundled data (see
 the next section).</li>
 </ul>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lasa_label_db.html">lasa_label_db</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Which wave-B variables are currently known for file code 046?</span></span>
@@ -585,7 +622,7 @@ update won’t quietly wipe it out – the update only replaces the
 <em>bundled</em> data your correction sits on top of.</p>
 <p>By default, a supplied value label is merged into the existing set
 for that variable, leaving everything else untouched:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/manual_update_lasa_labels.html">manual_update_lasa_labels</a></span><span class="op">(</span></span>
 <span>  filecode <span class="op">=</span> <span class="st">"046"</span>,</span>
 <span>  wave <span class="op">=</span> <span class="st">"B"</span>,</span>
@@ -596,7 +633,7 @@ for that variable, leaving everything else untouched:</p>
 <p>Set <code>replace_val_labels = TRUE</code> to replace the
 <em>entire</em> value-label set for that variable instead of merging
 into it:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/manual_update_lasa_labels.html">manual_update_lasa_labels</a></span><span class="op">(</span></span>
 <span>  filecode <span class="op">=</span> <span class="st">"046"</span>,</span>
 <span>  wave <span class="op">=</span> <span class="st">"all"</span>,</span>
@@ -607,7 +644,7 @@ into it:</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The same function replaces a variable’s <em>label</em> (as opposed to
 its value labels) through <code>var_label</code>:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/manual_update_lasa_labels.html">manual_update_lasa_labels</a></span><span class="op">(</span></span>
 <span>  filecode <span class="op">=</span> <span class="st">"046"</span>,</span>
 <span>  wave <span class="op">=</span> <span class="st">"B"</span>,</span>
@@ -618,7 +655,7 @@ its value labels) through <code>var_label</code>:</p>
 one call, and <code>wave</code> accepts either <code>"all"</code> or a
 vector of specific waves, so a single call can update several waves at
 once:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/manual_update_lasa_labels.html">manual_update_lasa_labels</a></span><span class="op">(</span></span>
 <span>  filecode <span class="op">=</span> <span class="st">"046"</span>,</span>
 <span>  wave <span class="op">=</span> <span class="st">"all"</span>, <span class="co"># update every wave currently covered (B-K)</span></span>
@@ -653,7 +690,7 @@ you name), and/or rebuild that local copy from whatever the
 currently-installed package version now ships, so a package update’s new
 or corrected coverage actually reaches you instead of staying hidden
 behind an old local copy.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Undo one correction:</span></span>
 <span><span class="fu"><a href="../reference/restore_lasa_labels.html">restore_lasa_labels</a></span><span class="op">(</span>filecode <span class="op">=</span> <span class="st">"046"</span>, variable <span class="op">=</span> <span class="st">"lphya01"</span><span class="op">)</span></span>
 <span></span>
@@ -670,7 +707,7 @@ behind an old local copy.</p>
 </h2>
 <p>Putting it all together, most analyses only need a handful of
 calls:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://highmeadows.github.io/CleanLASA/">CleanLASA</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 1. Find the relevant LASA topic and file code</span></span>
@@ -680,7 +717,8 @@ calls:</p>
 <span><span class="fu"><a href="../reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 3. Import the LASA file -- to_factor/to_numeric/standardize (names,</span></span>
-<span><span class="co">#    variable labels, value labels) all default to TRUE</span></span>
+<span><span class="co">#    variable labels, value labels) all default to TRUE, and missing-value</span></span>
+<span><span class="co">#    codes become NA (keep_user_na = FALSE)</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 4. Check only matching problems before analysis</span></span>

@@ -30,7 +30,8 @@ apply_lasa_labels(
   .standardize_val_labels = NULL,
   add_wavecode = FALSE,
   to_factor = TRUE,
-  to_numeric = TRUE
+  to_numeric = TRUE,
+  keep_user_na = FALSE
 )
 ```
 
@@ -115,8 +116,23 @@ apply_lasa_labels(
 - to_numeric:
 
   Logical, default `TRUE`. Restore count/continuous variables (per the
-  database's `var_type`) to plain numeric, converting negative codes to
-  `NA`.
+  database's `var_type`) to plain numeric. How their missing-value codes
+  come out is set by `keep_user_na`.
+
+- keep_user_na:
+
+  Logical, default `FALSE`. How missing-value codes (e.g. `-2` = "na,
+  see BMOVED") are represented, the same way for every variable type.
+  With `FALSE`, every missing code becomes `NA`, and factors get no
+  level for it. With `TRUE`, every missing code is kept: factors and
+  label-text (character) variables show its label text, and any other
+  variable – including a `to_numeric` one, since a numeric vector can't
+  hold text – keeps the raw code as a `haven_labelled_spss` vector with
+  the value labels attached and the missing codes declared user-missing
+  (so
+  [`haven::zap_missing()`](https://haven.tidyverse.org/reference/zap_missing.html)
+  or [`is.na()`](https://rdrr.io/r/base/NA.html) still recognise them).
+  See Details for which codes count as missing.
 
 ## Value
 
@@ -165,6 +181,22 @@ harmonized value labels for it at all. `to_factor` then recodes it to
 its wave-specific label text (character) instead of a factor, so waves
 whose numeric codes disagree but whose label text agrees (e.g.
 `0 = "no", 1 = "yes"` vs. `1 = "no", 2 = "yes"`) still merge correctly.
+
+A code counts as missing when the label database flags its value label
+as missing: every negative documented code, e.g. `-1` = "na, asked", or
+`-2` = "valid score" in a "reason missing" variable (the score is valid,
+so there is no reason to record). So does any negative value that
+appears in the data without being documented at all, since LASA codes
+reasons of missingness as negative numbers – unless the variable is
+numeric and its genuine values can be negative (e.g. a speech-reception
+threshold in dB), in which case only its documented missing codes count
+and every other negative value is kept as a measurement. Positive codes
+such as "dropout" are real answers, never missing. Columns the database
+doesn't document are left as they are, except that
+`keep_user_na = FALSE` applies the file's own SPSS user-missing
+declaration to them (as
+[`haven::zap_missing()`](https://haven.tidyverse.org/reference/zap_missing.html)
+does).
 
 ## See also
 

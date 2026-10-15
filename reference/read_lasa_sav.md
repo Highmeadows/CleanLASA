@@ -25,8 +25,9 @@ read_lasa_sav(
   add_wavecode = FALSE,
   to_factor = TRUE,
   to_numeric = TRUE,
-  user_na = TRUE,
-  read_sav_args = list()
+  keep_user_na = FALSE,
+  read_sav_args = list(),
+  user_na
 )
 ```
 
@@ -56,20 +57,30 @@ read_lasa_sav(
   [`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
   for the full description of each.
 
-- user_na:
+- keep_user_na:
 
-  Logical passed to
-  [`haven::read_sav()`](https://haven.tidyverse.org/reference/read_spss.html).
-  The default is `TRUE` so SPSS user-defined missing codes remain
-  available to the labelling step before any requested conversion to
-  `NA`.
+  Logical, default `FALSE`. With `FALSE`, every missing-value code
+  becomes `NA`; with `TRUE`, missing codes are kept (as label text in
+  factors and character variables, as the raw code declared user-missing
+  otherwise). See
+  [`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md).
+  The file itself is always read with every code intact
+  (`haven::read_sav(user_na = TRUE)`), so this choice is made from the
+  LASA documentation rather than from whatever the `.sav` file happens
+  to declare.
 
 - read_sav_args:
 
   Optional named list of additional arguments passed to
   [`haven::read_sav()`](https://haven.tidyverse.org/reference/read_spss.html),
-  for example `list(encoding = "UTF-8")`. Do not include `file` or
-  `user_na`; those are controlled by `path` and `user_na`.
+  for example `list(encoding = "UTF-8")`. Do not include `file` (set by
+  `path`) or `user_na` (always `TRUE`; choose how missing codes come out
+  with `keep_user_na`).
+
+- user_na:
+
+  Deprecated: use `keep_user_na` instead. A supplied value is used as
+  `keep_user_na`, with a warning.
 
 ## Value
 
@@ -153,5 +164,9 @@ dat_b <- read_lasa_sav(
 )
 
 dat_z004 <- read_lasa_sav("LASAZ004.SAV")
+
+# Keep missing-value codes (e.g. "na, asked") instead of turning them
+# into NA:
+dat_b014 <- read_lasa_sav("LASAB014.SAV", keep_user_na = TRUE)
 } # }
 ```

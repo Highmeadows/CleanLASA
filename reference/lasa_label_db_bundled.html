@@ -75,12 +75,16 @@ any local updates.</p>
 <code>canonical_name</code> (the wave-stripped name), <code>variable_label</code> (the
 wave-specific text), <code>harmonized_var_label</code> (a cross-wave-consistent
 description of the same variable), <code>var_type</code>
-(<code>"numeric"</code>/<code>"categorical"</code>/<code>"text"</code>/<code>"date"</code>).</p></dd>
+(<code>"numeric"</code>/<code>"categorical"</code>/<code>"text"</code>/<code>"date"</code>), <code>can_be_negative</code>
+(<code>TRUE</code> when the documentation shows the variable's genuine values
+can be negative, e.g. a hearing threshold in dB, so only its
+documented missing-value codes count as missing).</p></dd>
 
 <dt>value_labels</dt>
 <dd><p>One row per (<code>filecode</code>, <code>wave</code>, <code>variable_name</code>,
 <code>value_numeric</code>): <code>value_label</code>, <code>is_missing</code> – the value labels as
-documented for that wave.</p></dd>
+documented for that wave. <code>is_missing</code> is <code>TRUE</code> for a missing-value
+code: every negative code.</p></dd>
 
 <dt>value_labels_harmonized</dt>
 <dd><p>One row per (<code>filecode</code>,
