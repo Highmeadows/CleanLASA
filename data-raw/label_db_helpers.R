@@ -297,11 +297,11 @@ variable_labels <- function(..., .applies_to_waves) {
 ## < 0`) -- including a code whose label names a valid answer (`-2` =
 ## "valid score", "never had job", "normal test"): in context it explains
 ## why the value is missing. Values a numeric variable's documentation
-## lists without wording (its range, or example values such as a -9.2 dB
-## threshold) are measurements, not codes, so they are left out:
-## .lasa_finalize_fc() rejects a wording-less label on a numeric
-## variable's non-negative value, and a negative one would become a
-## missing-value code.
+## lists only to describe its scale (its range or endpoints, such as
+## "lowest" or "high prestige", or example values such as a -9.2 dB
+## threshold) are measurements, not codes, so they get no value label
+## (.lasa_finalize_fc() refuses one transcribed without wording); a value
+## that stands for a range keeps its wording, e.g. `98` = "98 or more".
 value_labels <- function(..., .applies_to_vars, .applies_to_waves) {
   labels <- c(...)
   if (length(labels) == 0L) {
@@ -509,22 +509,29 @@ negative_values <- function(..., .applies_to_waves) {
     check_names(call$covered, "variable_labels()")
     check_waves(call$waves, "variable_labels()")
   }
-  # A value a numeric variable's documentation lists without wording (its
-  # range, or an example value) is a measurement, not a code, so it gets no
-  # value label; "NA" as label text is a transcription slip for one.
+  # A value a numeric variable's documentation lists only to describe its
+  # scale (an endpoint such as "lowest" or "high prestige", or an example
+  # value) is a measurement, not a code, so it gets no value label, and one
+  # transcribed without wording is refused; a value that stands for a range
+  # keeps its wording (`98` = "98 or more"). Blank or "NA" label text is a
+  # transcription slip. A wording-less negative is a missing-value code,
+  # except on a variable declared with negative_values(), whose negative
+  # values are measurements too.
+  signed_vars <- unique(unlist(lapply(neg_calls, `[[`, "vars")))
   check_wordless <- function(call) {
     text <- unname(call$labels)
     codes <- suppressWarnings(as.numeric(names(call$labels)))
-    slip <- text %in% "NA"
+    slip <- !is.na(text) & trimws(text) %in% c("", "NA")
     if (any(slip)) {
       stop(filecode, ": value_labels() gives code(s) ", paste(names(call$labels)[slip], collapse = ", "),
-        " the label text \"NA\" (", paste(call$vars, collapse = ", "), ").", call. = FALSE)
+        " blank or \"NA\" label text (", paste(call$vars, collapse = ", "), ").", call. = FALSE)
     }
     numeric_vars <- call$vars[var_types_vec[call$vars] == "numeric"]
-    listed <- is.na(text) & !is.na(codes) & codes >= 0
-    if (length(numeric_vars) > 0L && any(listed)) {
+    signed <- any(call$vars %in% signed_vars)
+    listed <- is.na(text) & !is.na(codes) & (codes >= 0 | signed)
+    if ((length(numeric_vars) > 0L || signed) && any(listed)) {
       stop(filecode, ": value_labels() lists ", paste(names(call$labels)[listed], collapse = ", "),
-        " without wording for numeric variable(s) ", paste(numeric_vars, collapse = ", "),
+        " without wording for numeric variable(s) ", paste(union(numeric_vars, intersect(call$vars, signed_vars)), collapse = ", "),
         ": a listed value of a numeric variable is a measurement, not a code -- leave it out.", call. = FALSE)
     }
   }

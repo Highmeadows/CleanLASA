@@ -60,7 +60,7 @@ value_labels(
 )
 
 value_labels(
-  `-9` = "born <= 1907", `-5` = "short version", `-1` = ">1 missing items", `6` = "source-defined code 6", `7` = "proxy (unit nonresponse)", `8` = "telephone interview (unit nonresponse)", `9` = "born <=1907 or >1937",
+  `-9` = "born <= 1907", `-5` = "short version", `-1` = ">1 missing items", `7` = "proxy (unit nonresponse)", `8` = "telephone interview (unit nonresponse)", `9` = "born <=1907 or >1937",
   .applies_to_vars = c("loemo"),
   .applies_to_waves = c("Z")
 )

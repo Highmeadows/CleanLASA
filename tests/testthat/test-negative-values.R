@@ -147,6 +147,15 @@ test_that("a numeric variable's listed values are values, not value labels", {
   out <- read_lasa_sav(path, standardize = FALSE, to_numeric = FALSE)
   expect_false(any(c(13, 87) %in% attr(out$bcjpresi, "labels_wave")))
   expect_equal(as.character(out$bcjpresi), c("13", "50", "87", NA))
+
+  # A value that stands for a range keeps its wording: bjob5 is top-coded.
+  path <- write_lasa_sav(data.frame(respnr = 1:3, bjob5 = c(3, 98, -1)), "LASAB016.SAV")
+  expect_equal(as.character(read_lasa_sav(path, to_numeric = FALSE)$job5), c("3", "98 or more", NA))
+
+  # LASAB273 bloemo scores 0-6: the maximum score is a value, not a code.
+  path <- write_lasa_sav(data.frame(respnr = 1:3, bloemo = c(5, 6, 7)), "LASAB273.SAV")
+  out <- read_lasa_sav(path, to_numeric = FALSE)
+  expect_equal(as.character(out$loemo), c("5", "6", "proxy (unit nonresponse)"))
 })
 
 test_that("a local database saved without can_be_negative still labels", {
@@ -195,7 +204,19 @@ test_that("negative_values() reaches the build, and listed values of numeric var
     var_types_vec <- c(rating = "categorical")
     variable_labels(rating = "A rating", .applies_to_waves = c("Z", "C"))
     value_labels(`98` = "NA", .applies_to_vars = "rating", .applies_to_waves = "C")
-    expect_error(.lasa_finalize_fc("994"), "label text \"NA\"")
+    expect_error(.lasa_finalize_fc("994"), "blank or \"NA\" label text")
+
+    var_types_vec <- c(score = "numeric")
+    variable_labels(score = "A score", .applies_to_waves = c("Z", "C"))
+    value_labels(`-1` = "na, asked", `13` = " ", .applies_to_vars = "score", .applies_to_waves = "C")
+    expect_error(.lasa_finalize_fc("993"), "blank or \"NA\" label text")
+
+    # On a signed variable, a wording-less negative is a measurement too.
+    var_types_vec <- c(srt = "numeric")
+    variable_labels(srt = "Speech-reception threshold (in dB)", .applies_to_waves = c("Z", "C"))
+    negative_values("srt", .applies_to_waves = "C")
+    value_labels(`-22` = "test not done", `-9.2` = NA_character_, .applies_to_vars = "srt", .applies_to_waves = "C")
+    expect_error(.lasa_finalize_fc("992"), "-9.2 without wording")
   }, envir = env)
 
   expect_error(env$negative_values("x", .applies_to_waves = "Z"), "real waves")

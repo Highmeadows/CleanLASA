@@ -440,6 +440,12 @@ value_labels(
 )
 
 value_labels(
+  `0` = "< 30 minutes",
+  .applies_to_vars = c("mhhchnh", "mhhprnh", "mhhprth", "mphchnh", "mphprnh", "mphprth", "qhhchnh", "qhhprnh", "qhhprth", "qphchnh", "qphprnh", "qphprth"),
+  .applies_to_waves = c("Z")
+)
+
+value_labels(
   `-5` = "not available", `1` = "no", `2` = "yes",
   .applies_to_vars = c("mhhyn"),
   .applies_to_waves = c("Z")
@@ -494,7 +500,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see b/fqhhchin", `-1` = "na, asked",
+  `-2` = "na, see b/fqhhchin", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("qhhchnh"),
   .applies_to_waves = c("2B", "F")
 )
@@ -524,13 +530,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see b/fqhhparn", `-1` = "na, asked",
+  `-2` = "na, see b/fqhhparn", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("qhhprnh"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqhhpart", `-1` = "na, asked",
+  `-2` = "na, see b/fqhhpart", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("qhhprth"),
   .applies_to_waves = c("2B", "F")
 )
@@ -668,7 +674,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqhhchin", `-1` = "na, asked",
+  `-2` = "na, see g/hqhhchin", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("qhhchnh"),
   .applies_to_waves = c("G", "H")
 )
@@ -758,7 +764,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqhhparn", `-1` = "na, asked",
+  `-2` = "na, see g/hqhhparn", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("qhhprnh"),
   .applies_to_waves = c("G", "H")
 )
@@ -776,7 +782,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqhhpart", `-1` = "na, asked",
+  `-2` = "na, see g/hqhhpart", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("qhhprth"),
   .applies_to_waves = c("G", "H")
 )
@@ -1058,7 +1064,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqhhchin", `-1` = "na, asked",
+  `-2` = "na, see bqhhchin", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("qhhchnh"),
   .applies_to_waves = c("3B")
 )
@@ -1148,7 +1154,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqhhparn", `-1` = "na, asked",
+  `-2` = "na, see bqhhparn", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("qhhprnh"),
   .applies_to_waves = c("3B")
 )
@@ -1166,7 +1172,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqhhpart", `-1` = "na, asked",
+  `-2` = "na, see bqhhpart", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("qhhprth"),
   .applies_to_waves = c("3B")
 )
@@ -1226,7 +1232,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqphchin", `-1` = "na, asked",
+  `-2` = "na, see bqphchin", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("qphchnh"),
   .applies_to_waves = c("3B")
 )
@@ -1316,7 +1322,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqphparn", `-1` = "na, asked",
+  `-2` = "na, see bqphparn", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("qphprnh"),
   .applies_to_waves = c("3B")
 )
@@ -1334,7 +1340,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqphpart", `-1` = "na, asked",
+  `-2` = "na, see bqphpart", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("qphprth"),
   .applies_to_waves = c("3B")
 )
@@ -1382,7 +1388,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMHHCHIN", `-1` = "na, asked",
+  `-2` = "na, see BMHHCHIN", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("mhhchnh"),
   .applies_to_waves = c("MB")
 )
@@ -1442,7 +1448,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMHHPARN", `-1` = "na, asked",
+  `-2` = "na, see BMHHPARN", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("mhhprnh"),
   .applies_to_waves = c("MB")
 )
@@ -1454,7 +1460,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMHHPART", `-1` = "na, asked",
+  `-2` = "na, see BMHHPART", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("mhhprth"),
   .applies_to_waves = c("MB")
 )
@@ -1502,7 +1508,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMPHCHIN", `-1` = "na, asked",
+  `-2` = "na, see BMPHCHIN", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("mphchnh"),
   .applies_to_waves = c("MB")
 )
@@ -1562,7 +1568,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMPHPARN", `-1` = "na, asked",
+  `-2` = "na, see BMPHPARN", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("mphprnh"),
   .applies_to_waves = c("MB")
 )
@@ -1574,7 +1580,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMPHPART", `-1` = "na, asked",
+  `-2` = "na, see BMPHPART", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("mphprth"),
   .applies_to_waves = c("MB")
 )
@@ -1634,7 +1640,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQHHCHIN", `-1` = "na, asked",
+  `-2` = "na, see I/J/KQHHCHIN", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("qhhchnh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1694,7 +1700,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQHHPARN", `-1` = "na, asked",
+  `-2` = "na, see I/J/KQHHPARN", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("qhhprnh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1706,7 +1712,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQHHPART", `-1` = "na, asked",
+  `-2` = "na, see I/J/KQHHPART", `-1` = "na, asked", `0` = "< 30 minutes",
   .applies_to_vars = c("qhhprth"),
   .applies_to_waves = c("I", "J", "K")
 )

@@ -973,7 +973,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("job5", "joblo5"),
   .applies_to_waves = c("Z")
 )
@@ -1315,7 +1315,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see BJOB1", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see BJOB1", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("job5"),
   .applies_to_waves = c("B")
 )
@@ -1357,7 +1357,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see BJOB8 & BJOBLO1", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see BJOB8 & BJOBLO1", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("joblo5"),
   .applies_to_waves = c("B")
 )
@@ -1915,7 +1915,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/GJOB4", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/GJOB4", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("job5"),
   .applies_to_waves = c("F", "G")
 )
@@ -1969,7 +1969,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see HJOB4", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see HJOB4", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("job5"),
   .applies_to_waves = c("H")
 )
@@ -2479,7 +2479,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see IJOB4", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see IJOB4", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("job5"),
   .applies_to_waves = c("I")
 )
@@ -2689,7 +2689,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see JJOB4", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see JJOB4", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("job5"),
   .applies_to_waves = c("J")
 )
@@ -2899,7 +2899,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see KJOB4", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see KJOB4", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("job5"),
   .applies_to_waves = c("K")
 )
