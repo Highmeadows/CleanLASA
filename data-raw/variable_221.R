@@ -34,37 +34,37 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-5` = "no valid data", `-4` = "na, no valid data", `-3` = "interview terminated", `-2` = "no scale (too many missing)", `1` = NA_character_, `2` = NA_character_, `30` = NA_character_,
+  `-5` = "no valid data", `-4` = "na, no valid data", `-3` = "interview terminated", `-2` = "no scale (too many missing)",
   .applies_to_vars = c("mmsesc"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `-5` = "no valid data", `-4` = "na, no valid data", `-3` = "interview terminated", `-2` = "no scale (too many missing)", `1` = NA_character_, `30` = NA_character_,
+  `-5` = "no valid data", `-4` = "na, no valid data", `-3` = "interview terminated", `-2` = "no scale (too many missing)",
   .applies_to_vars = c("mmsesc2"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `-2` = "no scale (too many missing)", `2` = NA_character_, `30` = NA_character_,
+  `-2` = "no scale (too many missing)",
   .applies_to_vars = c("mmsesc"),
   .applies_to_waves = c("B")
 )
 
 value_labels(
-  `-2` = "no scale (too many missing)", `1` = NA_character_, `30` = NA_character_,
+  `-2` = "no scale (too many missing)",
   .applies_to_vars = c("mmsesc"),
   .applies_to_waves = c("C")
 )
 
 value_labels(
-  `-3` = "interview terminated", `-2` = "no scale (too many missing)", `1` = NA_character_, `30` = NA_character_,
+  `-3` = "interview terminated", `-2` = "no scale (too many missing)",
   .applies_to_vars = c("mmsesc"),
   .applies_to_waves = c("D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-5` = "na, see BMMSEVRS", `-4` = "na, no valid data", `-3` = "interview terminated", `-2` = "no scale (too many missing)", `1` = NA_character_, `30` = NA_character_,
+  `-5` = "na, see BMMSEVRS", `-4` = "na, no valid data", `-3` = "interview terminated", `-2` = "no scale (too many missing)",
   .applies_to_vars = c("mmsesc", "mmsesc2"),
   .applies_to_waves = c("MB")
 )

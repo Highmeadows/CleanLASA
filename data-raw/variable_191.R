@@ -89,7 +89,7 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-3` = "no valid data", `1` = NA_character_, `18` = NA_character_,
+  `-3` = "no valid data",
   .applies_to_vars = c("macl", "maclst", "macr", "macrst"),
   .applies_to_waves = c("Z")
 )
@@ -113,13 +113,13 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "no valid data", `10` = NA_character_, `100` = NA_character_,
+  `-3` = "no valid data",
   .applies_to_vars = c("mvasl", "mvaslst", "mvasr", "mvasrst"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `-3` = "no data", `1` = NA_character_, `18` = NA_character_,
+  `-3` = "no data",
   .applies_to_vars = c("macl", "maclst", "macr", "macrst"),
   .applies_to_waves = c("E", "H", "3B")
 )
@@ -131,7 +131,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "no data", `10` = NA_character_, `100` = NA_character_,
+  `-3` = "no data",
   .applies_to_vars = c("mvasl", "mvaslst", "mvasr", "mvasrst"),
   .applies_to_waves = c("E", "F", "G", "H", "3B")
 )

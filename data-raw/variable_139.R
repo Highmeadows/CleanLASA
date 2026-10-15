@@ -121,12 +121,6 @@ value_labels(
 )
 
 value_labels(
-  `1` = NA_character_, `10` = NA_character_,
-  .applies_to_vars = c("qprel7", "qprel8"),
-  .applies_to_waves = c("Z")
-)
-
-value_labels(
   `-2` = "not available, routing", `1` = "no", `2` = "yes",
   .applies_to_vars = c("qprespc1", "qprespc2", "qprespc3", "qprespc4"),
   .applies_to_waves = c("Z")
@@ -175,7 +169,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "no partner", `-1` = "no answer", `1` = NA_character_, `10` = NA_character_,
+  `-2` = "no partner", `-1` = "no answer",
   .applies_to_vars = c("qprel7", "qprel8"),
   .applies_to_waves = c("E", "F", "G", "H", "3B", "I", "J")
 )

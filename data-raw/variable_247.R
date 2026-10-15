@@ -97,19 +97,19 @@ value_labels(
 )
 
 value_labels(
-  `-5` = "terminated", `-4` = "refusal R/skip by Interviewer", `-3` = "short version", `-1` = "na, asked", `0` = NA_character_, `1` = NA_character_, `2` = NA_character_, `3` = NA_character_, `4` = NA_character_, `5` = NA_character_, `6` = NA_character_, `7` = NA_character_, `8` = NA_character_, `9` = NA_character_,
+  `-5` = "terminated", `-4` = "refusal R/skip by Interviewer", `-3` = "short version", `-1` = "na, asked",
   .applies_to_vars = c("confnum"),
   .applies_to_waves = c("Z", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-6` = "damaged information", `-5` = "terminated", `-4` = "refusal R/skip by Interviewer", `-3` = "short version", `0` = NA_character_, `36` = NA_character_,
+  `-6` = "damaged information", `-5` = "terminated", `-4` = "refusal R/skip by Interviewer", `-3` = "short version",
   .applies_to_vars = c("eg", "er", "ig", "ir"),
   .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-6` = "damaged information", `-5` = "terminated", `-4` = "refusal R/skip by Interviewer", `-3` = "short version", `0` = NA_character_, `1` = NA_character_, `2` = NA_character_, `3` = NA_character_,
+  `-6` = "damaged information", `-5` = "terminated", `-4` = "refusal R/skip by Interviewer", `-3` = "short version",
   .applies_to_vars = c("meg", "mer", "mig", "mir"),
   .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
@@ -139,13 +139,13 @@ value_labels(
 )
 
 value_labels(
-  `-8` = "telephone interview", `-7` = "proxy interview", `-6` = "damaged information", `-5` = "terminated", `-4` = "refusal R/skip by Interviewer", `-3` = "short version", `0` = NA_character_, `100` = NA_character_,
+  `-8` = "telephone interview", `-7` = "proxy interview", `-6` = "damaged information", `-5` = "terminated", `-4` = "refusal R/skip by Interviewer", `-3` = "short version",
   .applies_to_vars = c("nwpctnonkin"),
   .applies_to_waves = c("Z", "J", "K")
 )
 
 value_labels(
-  `-6` = "damaged information", `-5` = "terminated", `-4` = "refusal R/skip by Interviewer", `-3` = "short version", `0` = NA_character_, `1` = NA_character_, `10` = NA_character_, `20` = NA_character_, `30` = NA_character_, `40` = NA_character_, `50` = NA_character_, `60` = NA_character_, `70` = NA_character_, `80` = NA_character_,
+  `-6` = "damaged information", `-5` = "terminated", `-4` = "refusal R/skip by Interviewer", `-3` = "short version",
   .applies_to_vars = c("nwsize"),
   .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )

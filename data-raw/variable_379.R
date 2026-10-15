@@ -27,13 +27,13 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-5` = "na, section not done", `-4` = "score unavailable", `0` = NA_character_, `9` = NA_character_,
+  `-5` = "na, section not done", `-4` = "score unavailable",
   .applies_to_vars = c("madint"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `-5` = "na, section not done", `-4` = "not able to [cognitive]", `0` = NA_character_, `9` = NA_character_,
+  `-5` = "na, section not done", `-4` = "not able to [cognitive]",
   .applies_to_vars = c("madint"),
   .applies_to_waves = c("G")
 )

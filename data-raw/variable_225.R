@@ -106,7 +106,7 @@ value_labels(
 )
 
 value_labels(
-  `0` = NA_character_, `16` = "cut off", `60` = NA_character_,
+  `16` = "cut off",
   .applies_to_vars = c("cesdint"),
   .applies_to_waves = c("Z", "C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
@@ -118,7 +118,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BRMCESD", `0` = NA_character_, `16` = "cut off", `60` = NA_character_,
+  `-2` = "na, see BRMCESD", `16` = "cut off",
   .applies_to_vars = c("cesdint"),
   .applies_to_waves = c("B")
 )

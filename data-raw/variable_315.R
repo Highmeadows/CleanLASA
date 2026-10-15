@@ -32,12 +32,6 @@ value_labels(
   .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
-value_labels(
-  `5` = NA_character_, `10` = NA_character_,
-  .applies_to_vars = c("qpain"),
-  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
-)
-
 .lasa_fc_315 <- .lasa_finalize_fc("315")
 .lasa_fc_315$variables <- .lasa_fc_315$variables |>
   .override_label(wave = "MB", variable = "qpain", override_value = "bmpain")

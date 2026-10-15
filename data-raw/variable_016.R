@@ -853,7 +853,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-1` = "not available", `0` = "-to be coded-", `13` = "NA", `87` = "NA",
+  `-3` = "na, wrong skip", `-1` = "not available", `0` = "-to be coded-",
   .applies_to_vars = c("cjpresi"),
   .applies_to_waves = c("Z")
 )
@@ -907,7 +907,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-1` = "unknown", `0` = "-to be coded-", `13` = "NA", `87` = "NA",
+  `-3` = "na, wrong skip", `-1` = "unknown", `0` = "-to be coded-",
   .applies_to_vars = c("flpresi", "pcpresi", "plpresi", "rlpresi"),
   .applies_to_waves = c("Z")
 )
@@ -973,7 +973,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-1` = "na, asked", `98` = "NA",
+  `-3` = "na, wrong skip", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("job5", "joblo5"),
   .applies_to_waves = c("Z")
 )
@@ -1075,7 +1075,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-1` = "na, asked", `13` = "NA", `87` = "NA",
+  `-3` = "na, wrong skip", `-1` = "na, asked",
   .applies_to_vars = c("ljpresi"),
   .applies_to_waves = c("Z")
 )
@@ -1267,7 +1267,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see BJOB1", `-1` = "na, asked", `13` = "NA", `87` = "NA",
+  `-3` = "na, wrong skip", `-2` = "na, see BJOB1", `-1` = "na, asked",
   .applies_to_vars = c("cjpresi"),
   .applies_to_waves = c("B")
 )
@@ -1315,7 +1315,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see BJOB1", `-1` = "na, asked", `98` = "NA",
+  `-3` = "na, wrong skip", `-2` = "na, see BJOB1", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("job5"),
   .applies_to_waves = c("B")
 )
@@ -1357,7 +1357,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see BJOB8 & BJOBLO1", `-1` = "na, asked", `98` = "NA",
+  `-3` = "na, wrong skip", `-2` = "na, see BJOB8 & BJOBLO1", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("joblo5"),
   .applies_to_waves = c("B")
 )
@@ -1399,7 +1399,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see BJOB8 & BJOBLO1", `-1` = "na, asked", `13` = "NA", `87` = "NA",
+  `-3` = "na, wrong skip", `-2` = "na, see BJOB8 & BJOBLO1", `-1` = "na, asked",
   .applies_to_vars = c("ljpresi"),
   .applies_to_waves = c("B")
 )
@@ -1471,7 +1471,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-1` = "na, asked", `13` = "NA", `87` = "NA",
+  `-3` = "na, wrong skip", `-1` = "na, asked",
   .applies_to_vars = c("cjpresi"),
   .applies_to_waves = c("C")
 )
@@ -1579,7 +1579,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-1` = "na, asked / not classified", `0` = "- to be coded -", `13` = "NA", `87` = "NA",
+  `-3` = "na, wrong skip", `-1` = "na, asked / not classified", `0` = "- to be coded -",
   .applies_to_vars = c("cjpresi"),
   .applies_to_waves = c("D")
 )
@@ -1609,7 +1609,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-1` = "na, asked / not classified", `13` = "NA", `87` = "NA",
+  `-3` = "na, wrong skip", `-1` = "na, asked / not classified",
   .applies_to_vars = c("cjpresi"),
   .applies_to_waves = c("E")
 )
@@ -1633,7 +1633,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see BCJSBC92", `-1` = "unknown", `0` = "- to be coded -", `13` = "NA", `87` = "NA",
+  `-3` = "na, wrong skip", `-2` = "na, see BCJSBC92", `-1` = "unknown", `0` = "- to be coded -",
   .applies_to_vars = c("cjpresi"),
   .applies_to_waves = c("2B")
 )
@@ -1681,7 +1681,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see BFLSBC92", `-1` = "unknown", `0` = "- to be coded -", `13` = "NA", `87` = "NA",
+  `-3` = "na, wrong skip", `-2` = "na, see BFLSBC92", `-1` = "unknown", `0` = "- to be coded -",
   .applies_to_vars = c("flpresi"),
   .applies_to_waves = c("2B")
 )
@@ -1735,7 +1735,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see BPCSBC92", `-1` = "unknown", `0` = "- to be coded -", `13` = "NA", `87` = "NA",
+  `-3` = "na, wrong skip", `-2` = "na, see BPCSBC92", `-1` = "unknown", `0` = "- to be coded -",
   .applies_to_vars = c("pcpresi"),
   .applies_to_waves = c("2B")
 )
@@ -1807,7 +1807,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see BPLSBC92", `-1` = "unknown", `0` = "- to be coded -", `13` = "NA", `87` = "NA",
+  `-3` = "na, wrong skip", `-2` = "na, see BPLSBC92", `-1` = "unknown", `0` = "- to be coded -",
   .applies_to_vars = c("plpresi"),
   .applies_to_waves = c("2B")
 )
@@ -1873,7 +1873,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see BRLSBC92", `-1` = "unknown", `0` = "- to be coded -", `13` = "NA", `87` = "NA",
+  `-3` = "na, wrong skip", `-2` = "na, see BRLSBC92", `-1` = "unknown", `0` = "- to be coded -",
   .applies_to_vars = c("rlpresi"),
   .applies_to_waves = c("2B")
 )
@@ -1903,7 +1903,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-1` = "na, asked", `0` = "- to be coded -", `13` = "NA", `87` = "NA",
+  `-3` = "na, wrong skip", `-1` = "na, asked", `0` = "- to be coded -",
   .applies_to_vars = c("cjpresi"),
   .applies_to_waves = c("F", "G")
 )
@@ -1915,7 +1915,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/GJOB4", `-1` = "na, asked", `98` = "NA",
+  `-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/GJOB4", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("job5"),
   .applies_to_waves = c("F", "G")
 )
@@ -1969,7 +1969,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see HJOB4", `-1` = "na, asked", `98` = "NA",
+  `-3` = "na, wrong skip", `-2` = "na, see HJOB4", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("job5"),
   .applies_to_waves = c("H")
 )
@@ -2479,7 +2479,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see IJOB4", `-1` = "na, asked", `98` = "NA",
+  `-3` = "na, wrong skip", `-2` = "na, see IJOB4", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("job5"),
   .applies_to_waves = c("I")
 )
@@ -2689,7 +2689,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see JJOB4", `-1` = "na, asked", `98` = "NA",
+  `-3` = "na, wrong skip", `-2` = "na, see JJOB4", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("job5"),
   .applies_to_waves = c("J")
 )
@@ -2899,7 +2899,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see KJOB4", `-1` = "na, asked", `98` = "NA",
+  `-3` = "na, wrong skip", `-2` = "na, see KJOB4", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("job5"),
   .applies_to_waves = c("K")
 )

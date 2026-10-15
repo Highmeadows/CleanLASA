@@ -30,13 +30,13 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-1` = "no scale, missing values", `0` = NA_character_, `30` = NA_character_,
+  `-1` = "no scale, missing values",
   .applies_to_vars = c("qneurot"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `-1` = "no scale, missing values", `0` = NA_character_, `20` = NA_character_,
+  `-1` = "no scale, missing values",
   .applies_to_vars = c("qsocina"),
   .applies_to_waves = c("Z")
 )
@@ -44,18 +44,6 @@ value_labels(
 value_labels(
   `-1` = "no scale, mv",
   .applies_to_vars = c("qneurot", "qsocina"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "3B")
-)
-
-value_labels(
-  `0` = NA_character_, `30` = NA_character_,
-  .applies_to_vars = c("qneurot"),
-  .applies_to_waves = c("B", "C", "D", "E", "2B", "3B")
-)
-
-value_labels(
-  `0` = NA_character_, `20` = NA_character_,
-  .applies_to_vars = c("qsocina"),
   .applies_to_waves = c("B", "C", "D", "E", "2B", "3B")
 )
 

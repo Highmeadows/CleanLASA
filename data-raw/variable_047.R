@@ -172,7 +172,7 @@ value_labels(
 )
 
 value_labels(
-  `-1` = "missing", `0` = NA_character_, `59` = NA_character_, `99` = NA_character_,
+  `-1` = "missing",
   .applies_to_vars = c("random"),
   .applies_to_waves = c("Z")
 )
@@ -244,7 +244,7 @@ value_labels(
 )
 
 value_labels(
-  `-6` = "NA: see 247", `-3` = "RCF/SYS addition", `-1` = "missing", `0` = NA_character_, `59` = NA_character_, `99` = NA_character_,
+  `-6` = "NA: see 247", `-3` = "RCF/SYS addition", `-1` = "missing",
   .applies_to_vars = c("random"),
   .applies_to_waves = c("B", "C", "D", "E", "2B", "F", "G")
 )

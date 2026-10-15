@@ -38,59 +38,5 @@ value_labels(
   .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "3B", "I", "J", "K")
 )
 
-value_labels(
-  `6` = NA_character_, `7` = NA_character_, `8` = NA_character_, `27` = NA_character_,
-  .applies_to_vars = c("qqulims"),
-  .applies_to_waves = c("Z")
-)
-
-value_labels(
-  `6` = NA_character_, `20` = NA_character_,
-  .applies_to_vars = c("qqulips"),
-  .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "3B", "I", "J", "K")
-)
-
-value_labels(
-  `12` = NA_character_, `13` = NA_character_, `14` = NA_character_, `47` = NA_character_,
-  .applies_to_vars = c("qqulisf"),
-  .applies_to_waves = c("Z")
-)
-
-value_labels(
-  `6` = NA_character_, `27` = NA_character_,
-  .applies_to_vars = c("qqulims"),
-  .applies_to_waves = c("D", "G")
-)
-
-value_labels(
-  `12` = NA_character_, `47` = NA_character_,
-  .applies_to_vars = c("qqulisf"),
-  .applies_to_waves = c("D")
-)
-
-value_labels(
-  `8` = NA_character_, `27` = NA_character_,
-  .applies_to_vars = c("qqulims"),
-  .applies_to_waves = c("E", "F")
-)
-
-value_labels(
-  `14` = NA_character_, `47` = NA_character_,
-  .applies_to_vars = c("qqulisf"),
-  .applies_to_waves = c("E", "F")
-)
-
-value_labels(
-  `13` = NA_character_, `47` = NA_character_,
-  .applies_to_vars = c("qqulisf"),
-  .applies_to_waves = c("G", "H", "3B", "I", "J", "K")
-)
-
-value_labels(
-  `7` = NA_character_, `27` = NA_character_,
-  .applies_to_vars = c("qqulims"),
-  .applies_to_waves = c("H", "3B", "I", "J", "K")
-)
-
 .lasa_fc_333 <- .lasa_finalize_fc("333")
 

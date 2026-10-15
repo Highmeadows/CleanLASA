@@ -44,23 +44,5 @@ value_labels(
   .applies_to_waves = c("Z", "G", "H")
 )
 
-value_labels(
-  `14` = NA_character_, `84` = NA_character_,
-  .applies_to_vars = c("qgsr"),
-  .applies_to_waves = c("Z", "G", "H")
-)
-
-value_labels(
-  `6` = NA_character_, `36` = NA_character_,
-  .applies_to_vars = c("qgsracp"),
-  .applies_to_waves = c("Z", "G", "H")
-)
-
-value_labels(
-  `4` = NA_character_, `24` = NA_character_,
-  .applies_to_vars = c("qgsrmk", "qgsrsu"),
-  .applies_to_waves = c("Z", "G", "H")
-)
-
 .lasa_fc_349 <- .lasa_finalize_fc("349")
 

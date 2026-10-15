@@ -55,49 +55,49 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-1` = "no valid data", `4` = NA_character_, `20` = NA_character_,
+  `-1` = "no valid data",
   .applies_to_vars = c("qachcha", "qstrat1"),
   .applies_to_waves = c("Z", "B", "C", "D")
 )
 
 value_labels(
-  `-1` = "no valid data", `8` = NA_character_, `40` = NA_character_,
+  `-1` = "no valid data",
   .applies_to_vars = c("qachiev"),
   .applies_to_waves = c("Z", "C", "D")
 )
 
 value_labels(
-  `-1` = "no valid data", `12` = NA_character_, `60` = NA_character_,
+  `-1` = "no valid data",
   .applies_to_vars = c("qanxadd"),
   .applies_to_waves = c("Z", "C", "D")
 )
 
 value_labels(
-  `-1` = "no valid data", `9` = NA_character_, `45` = NA_character_,
+  `-1` = "no valid data",
   .applies_to_vars = c("qanxiet"),
   .applies_to_waves = c("Z", "B", "C", "D")
 )
 
 value_labels(
-  `-1` = "no valid data", `5` = NA_character_, `25` = NA_character_,
+  `-1` = "no valid data",
   .applies_to_vars = c("qlocus"),
   .applies_to_waves = c("Z", "B", "C", "D")
 )
 
 value_labels(
-  `-1` = "no valid data", `7` = NA_character_, `35` = NA_character_,
+  `-1` = "no valid data",
   .applies_to_vars = c("qlocusa"),
   .applies_to_waves = c("Z", "C", "D")
 )
 
 value_labels(
-  `-1` = "no valid data", `6` = NA_character_, `30` = NA_character_,
+  `-1` = "no valid data",
   .applies_to_vars = c("qstrat2"),
   .applies_to_waves = c("Z", "B", "C", "D")
 )
 
 value_labels(
-  `-1` = "no valid data", `10` = NA_character_, `50` = NA_character_,
+  `-1` = "no valid data",
   .applies_to_vars = c("qstratt"),
   .applies_to_waves = c("Z", "B", "C", "D")
 )

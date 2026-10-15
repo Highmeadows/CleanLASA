@@ -262,7 +262,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "sys/rcf addition", `-1` = "exists?,del by iter", `1` = NA_character_, `2` = NA_character_, `11` = ">10 not selected",
+  `-3` = "sys/rcf addition", `-1` = "exists?,del by iter", `11` = ">10 not selected",
   .applies_to_vars = c("freqran"),
   .applies_to_waves = c("Z")
 )
@@ -286,7 +286,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "sys/rcf addition", `0` = NA_character_, `99` = NA_character_,
+  `-3` = "sys/rcf addition",
   .applies_to_vars = c("random"),
   .applies_to_waves = c("Z")
 )
@@ -298,13 +298,13 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "SYS/RCF addition", `-1` = "exists?,del by iter", `1` = NA_character_, `2` = NA_character_, `11` = ">10 not selected",
+  `-3` = "SYS/RCF addition", `-1` = "exists?,del by iter", `11` = ">10 not selected",
   .applies_to_vars = c("freqran"),
   .applies_to_waves = c("C")
 )
 
 value_labels(
-  `-3` = "SYS/RCF addition", `0` = NA_character_, `99` = NA_character_,
+  `-3` = "SYS/RCF addition",
   .applies_to_vars = c("random"),
   .applies_to_waves = c("C")
 )

@@ -30,7 +30,7 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-2` = "no valid data", `22` = NA_character_, `39` = "cut off", `52` = "cut off", `69` = NA_character_, `75` = NA_character_,
+  `-2` = "no valid data", `39` = "cut off", `52` = "cut off",
   .applies_to_vars = c("ptsdint"),
   .applies_to_waves = c("Z")
 )
@@ -42,13 +42,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "no valid data", `22` = NA_character_, `52` = "cut off", `75` = NA_character_,
+  `-2` = "no valid data", `52` = "cut off",
   .applies_to_vars = c("ptsdint"),
   .applies_to_waves = c("D")
 )
 
 value_labels(
-  `-2` = "no valid data", `22` = NA_character_, `39` = "cut off", `69` = NA_character_,
+  `-2` = "no valid data", `39` = "cut off",
   .applies_to_vars = c("ptsdint"),
   .applies_to_waves = c("E")
 )
