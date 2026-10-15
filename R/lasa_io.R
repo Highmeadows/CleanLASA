@@ -60,6 +60,11 @@
 # (`"wave_label"`/`"labels_wave"`), so R output can be cross-checked
 # against another program's (e.g. SPSS) coding even after
 # `to_numeric`/`to_factor` reshaping.
+#
+# `read_lasa_sav()` additionally accepts `format_as_long`, which isn't part
+# of this contract: it reshapes the labelled result with
+# `transform_lasa_data()` (R/lasa_transform.R), which works on any data
+# frame -- `apply_lasa_labels()` users call it directly.
 
 #' Assert that a value is a single, non-missing TRUE/FALSE
 #'
@@ -535,6 +540,15 @@
 #'   (`haven::read_sav(user_na = TRUE)`), so this choice is made from the
 #'   LASA documentation rather than from whatever the `.sav` file happens
 #'   to declare.
+#' @param format_as_long Logical, default `FALSE`. If `TRUE`, the labelled
+#'   data are transformed to long format with
+#'   [transform_lasa_data()]: one row per respondent per wave, with a
+#'   `"Wave"` column and a `"Time"` column (the number of waves since the
+#'   respondent's baseline). Meant for Z files, which LASA stores in wide
+#'   format (e.g. `boak`, `coak`, `doak`, ... become one `oak` column);
+#'   their stable variables, such as sex or year of birth, are repeated on
+#'   every row of the respondent. The default `FALSE` returns the data as
+#'   before, a Z file in its own wide layout.
 #' @param read_sav_args Optional named list of additional arguments passed to
 #'   [haven::read_sav()], for example `list(encoding = "UTF-8")`. Do not
 #'   include `file` (set by `path`) or `user_na` (always `TRUE`; choose how
@@ -579,11 +593,38 @@
 #' generic `"label_report"` attribute; retrieve it with
 #' [lasa_label_report()].
 #'
+#' With `format_as_long = TRUE`, the labelled data are finally passed to
+#' [transform_lasa_data()] (`format = "long"`). A regular wave file is
+#' already long under the default `standardize = TRUE` and gains a
+#' `"Time"` column; its wave-prefixed names lose their prefix where
+#' `standardize` left it: all of them with `standardize = FALSE`, and
+#' those of waves 4B and L, which the label database doesn't document yet.
+#' A Z file's wave-prefixed columns become one column per variable, with
+#' the wave of each row in `"Wave"`. A file
+#' without wave-specific columns, such as the Z file `LASAZ004.SAV` or the
+#' migrant cohort's `LASMB004.SAV` (sex, year of birth, ...), has no wave
+#' dimension: it keeps one row per respondent, without `"Wave"` and
+#' `"Time"` columns, and a message says so; merge it with long data by
+#' `respnr` alone. Long data that span several waves no longer carry a
+#' single `"LASA_wave"` attribute.
+#'
+#' `"Time"` counts the waves since each respondent's baseline (Time 0), so
+#' it needs the respondent's cohort: every row of a baseline file is Time
+#' 0, and every row of a file of waves C to E, which only the first cohort
+#' takes part in, gets that cohort's Time -- also rows holding nothing but
+#' missing-value codes. Wave A (the LSN pilot study) has no Time. The
+#' waves from F on are shared by several cohorts, so a file of one of those
+#' waves doesn't show who belongs to which: its rows get no Time, with a
+#' message, until it is combined with data that show the cohorts, such as
+#' the baseline files, and transformed again (see [transform_lasa_data()],
+#' which also explains combining files).
+#'
 #' @return `data` as imported by [haven::read_sav()], labelled (and
 #'   optionally reshaped/renamed) with generic LASA provenance attributes
-#'   attached.
+#'   attached -- in long format when `format_as_long = TRUE`.
 #'
-#' @seealso [lasa_label_report()], [apply_lasa_labels()], [lasa_label_db()]
+#' @seealso [lasa_label_report()], [apply_lasa_labels()], [lasa_label_db()],
+#'   [transform_lasa_data()]
 #' @export
 #'
 #' @examples
@@ -612,6 +653,10 @@
 #' # Keep missing-value codes (e.g. "na, asked") instead of turning them
 #' # into NA:
 #' dat_b014 <- read_lasa_sav("LASAB014.SAV", keep_user_na = TRUE)
+#'
+#' # A Z file in long format: one row per respondent per wave, with the
+#' # wave-prefixed boak, coak, ... combined into one oak column.
+#' dat_oa_long <- read_lasa_sav("LASAZOA1.SAV", format_as_long = TRUE)
 #' }
 read_lasa_sav <- function(path,
                           filecode = NULL,
@@ -626,6 +671,7 @@ read_lasa_sav <- function(path,
                           to_factor = TRUE,
                           to_numeric = TRUE,
                           keep_user_na = FALSE,
+                          format_as_long = FALSE,
                           read_sav_args = list(),
                           user_na) {
   if (!requireNamespace("haven", quietly = TRUE)) {
@@ -654,6 +700,7 @@ read_lasa_sav <- function(path,
   .lasa_assert_scalar_logical(add_wavecode, "add_wavecode")
   .lasa_assert_scalar_logical(to_factor, "to_factor")
   .lasa_assert_scalar_logical(to_numeric, "to_numeric")
+  .lasa_assert_scalar_logical(format_as_long, "format_as_long")
   .lasa_assert_name_corrections(name_corrections)
 
   if (!is.list(read_sav_args)) {
@@ -718,6 +765,10 @@ read_lasa_sav <- function(path,
   # .lasa_apply_labels() already sets "LASA_wave" and "LASA_file_code";
   # read_lasa_sav() additionally records the source file it read.
   attr(out, "LASA_source_file") <- info$file_name
+
+  if (isTRUE(format_as_long)) {
+    out <- transform_lasa_data(out, format = "long")
+  }
 
   out
 }

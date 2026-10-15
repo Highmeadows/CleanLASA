@@ -18,6 +18,7 @@ read_lasa_sav(
   to_factor = TRUE,
   to_numeric = TRUE,
   keep_user_na = FALSE,
+  format_as_long = FALSE,
   read_sav_args = list(),
   user_na
 )
@@ -45,6 +46,16 @@ itself is always read with every code intact
 LASA documentation rather than from whatever the \code{.sav} file happens
 to declare.}
 
+\item{format_as_long}{Logical, default \code{FALSE}. If \code{TRUE}, the labelled
+data are transformed to long format with
+\code{\link[=transform_lasa_data]{transform_lasa_data()}}: one row per respondent per wave, with a
+\code{"Wave"} column and a \code{"Time"} column (the number of waves since the
+respondent's baseline). Meant for Z files, which LASA stores in wide
+format (e.g. \code{boak}, \code{coak}, \code{doak}, ... become one \code{oak} column);
+their stable variables, such as sex or year of birth, are repeated on
+every row of the respondent. The default \code{FALSE} returns the data as
+before, a Z file in its own wide layout.}
+
 \item{read_sav_args}{Optional named list of additional arguments passed to
 \code{\link[haven:read_spss]{haven::read_sav()}}, for example \code{list(encoding = "UTF-8")}. Do not
 include \code{file} (set by \code{path}) or \code{user_na} (always \code{TRUE}; choose how
@@ -56,7 +67,7 @@ is used as \code{keep_user_na}, with a warning.}
 \value{
 \code{data} as imported by \code{\link[haven:read_spss]{haven::read_sav()}}, labelled (and
 optionally reshaped/renamed) with generic LASA provenance attributes
-attached.
+attached -- in long format when \code{format_as_long = TRUE}.
 }
 \description{
 Reads a LASA \code{.sav} file, identifies its wave and file code from the file
@@ -102,6 +113,32 @@ After labelling, provenance attributes are attached: \code{"LASA_wave"},
 supplied again. The variable-name matching audit is attached as the
 generic \code{"label_report"} attribute; retrieve it with
 \code{\link[=lasa_label_report]{lasa_label_report()}}.
+
+With \code{format_as_long = TRUE}, the labelled data are finally passed to
+\code{\link[=transform_lasa_data]{transform_lasa_data()}} (\code{format = "long"}). A regular wave file is
+already long under the default \code{standardize = TRUE} and gains a
+\code{"Time"} column; its wave-prefixed names lose their prefix where
+\code{standardize} left it: all of them with \code{standardize = FALSE}, and
+those of waves 4B and L, which the label database doesn't document yet.
+A Z file's wave-prefixed columns become one column per variable, with
+the wave of each row in \code{"Wave"}. A file
+without wave-specific columns, such as the Z file \code{LASAZ004.SAV} or the
+migrant cohort's \code{LASMB004.SAV} (sex, year of birth, ...), has no wave
+dimension: it keeps one row per respondent, without \code{"Wave"} and
+\code{"Time"} columns, and a message says so; merge it with long data by
+\code{respnr} alone. Long data that span several waves no longer carry a
+single \code{"LASA_wave"} attribute.
+
+\code{"Time"} counts the waves since each respondent's baseline (Time 0), so
+it needs the respondent's cohort: every row of a baseline file is Time
+0, and every row of a file of waves C to E, which only the first cohort
+takes part in, gets that cohort's Time -- also rows holding nothing but
+missing-value codes. Wave A (the LSN pilot study) has no Time. The
+waves from F on are shared by several cohorts, so a file of one of those
+waves doesn't show who belongs to which: its rows get no Time, with a
+message, until it is combined with data that show the cohorts, such as
+the baseline files, and transformed again (see \code{\link[=transform_lasa_data]{transform_lasa_data()}},
+which also explains combining files).
 }
 \examples{
 \dontrun{
@@ -129,8 +166,13 @@ dat_z004 <- read_lasa_sav("LASAZ004.SAV")
 # Keep missing-value codes (e.g. "na, asked") instead of turning them
 # into NA:
 dat_b014 <- read_lasa_sav("LASAB014.SAV", keep_user_na = TRUE)
+
+# A Z file in long format: one row per respondent per wave, with the
+# wave-prefixed boak, coak, ... combined into one oak column.
+dat_oa_long <- read_lasa_sav("LASAZOA1.SAV", format_as_long = TRUE)
 }
 }
 \seealso{
-\code{\link[=lasa_label_report]{lasa_label_report()}}, \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}, \code{\link[=lasa_label_db]{lasa_label_db()}}
+\code{\link[=lasa_label_report]{lasa_label_report()}}, \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}, \code{\link[=lasa_label_db]{lasa_label_db()}},
+\code{\link[=transform_lasa_data]{transform_lasa_data()}}
 }
