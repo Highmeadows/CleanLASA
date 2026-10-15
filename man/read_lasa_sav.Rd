@@ -17,9 +17,10 @@ read_lasa_sav(
   add_wavecode = FALSE,
   to_factor = TRUE,
   to_numeric = TRUE,
+  keep_user_na = FALSE,
   format_as_long = FALSE,
-  user_na = TRUE,
-  read_sav_args = list()
+  read_sav_args = list(),
+  user_na
 )
 }
 \arguments{
@@ -36,6 +37,15 @@ for a nonstandard baseline wave). If omitted, derived from \code{path}.}
 \item{name_corrections, fuzzy_matching, standardize, .standardize_names, .standardize_var_labels, .standardize_val_labels, add_wavecode, to_factor, to_numeric}{The shared reshaping arguments used throughout this package -- see
 \code{\link[=apply_lasa_labels]{apply_lasa_labels()}} for the full description of each.}
 
+\item{keep_user_na}{Logical, default \code{FALSE}. With \code{FALSE}, every
+missing-value code becomes \code{NA}; with \code{TRUE}, missing codes are kept
+(as label text in factors and character variables, as the raw code
+declared user-missing otherwise). See \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}. The file
+itself is always read with every code intact
+(\code{haven::read_sav(user_na = TRUE)}), so this choice is made from the
+LASA documentation rather than from whatever the \code{.sav} file happens
+to declare.}
+
 \item{format_as_long}{Logical, default \code{FALSE}. If \code{TRUE}, the labelled
 data are transformed to long format with
 \code{\link[=transform_lasa_data]{transform_lasa_data()}}: one row per respondent per wave, with a
@@ -46,14 +56,13 @@ their stable variables, such as sex or year of birth, are repeated on
 every row of the respondent. The default \code{FALSE} returns the data as
 before, a Z file in its own wide layout.}
 
-\item{user_na}{Logical passed to \code{\link[haven:read_spss]{haven::read_sav()}}. The default is \code{TRUE}
-so SPSS user-defined missing codes remain available to the labelling
-step before any requested conversion to \code{NA}.}
-
 \item{read_sav_args}{Optional named list of additional arguments passed to
 \code{\link[haven:read_spss]{haven::read_sav()}}, for example \code{list(encoding = "UTF-8")}. Do not
-include \code{file} or \code{user_na}; those are controlled by \code{path} and
-\code{user_na}.}
+include \code{file} (set by \code{path}) or \code{user_na} (always \code{TRUE}; choose how
+missing codes come out with \code{keep_user_na}).}
+
+\item{user_na}{Deprecated: use \code{keep_user_na} instead. A supplied value
+is used as \code{keep_user_na}, with a warning.}
 }
 \value{
 \code{data} as imported by \code{\link[haven:read_spss]{haven::read_sav()}}, labelled (and
@@ -153,6 +162,10 @@ dat_b <- read_lasa_sav(
 )
 
 dat_z004 <- read_lasa_sav("LASAZ004.SAV")
+
+# Keep missing-value codes (e.g. "na, asked") instead of turning them
+# into NA:
+dat_b014 <- read_lasa_sav("LASAB014.SAV", keep_user_na = TRUE)
 
 # A Z file in long format: one row per respondent per wave, with the
 # wave-prefixed boak, coak, ... combined into one oak column.

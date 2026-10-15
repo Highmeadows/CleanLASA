@@ -198,30 +198,34 @@ test_that("waves without any value get no row, unless a respondent has no value 
   expect_identical(columns_of(transform_lasa_data(long, format = "wide")), columns_of(wide))
 })
 
-test_that("prefix = \"Time\" names wide columns t<Time>_<variable>, with a Baseline column, and they convert back", {
+test_that("prefix = \"Time\" names wide columns t<Time>_<variable>, with a cohort column, and they convert back", {
   wide <- data.frame(respnr = c(101, 102), sex = c(1, 2), boak = c(0, 2), coak = c(1, 8))
   long <- transform_lasa_data(wide)
 
   time_wide <- transform_lasa_data(long, format = "wide", prefix = "Time")
-  expect_named(time_wide, c("respnr", "Baseline", "sex", "t0_oak", "t1_oak"))
-  expect_equal(time_wide$Baseline, c("B", "B"), ignore_attr = TRUE)
-  expect_equal(attr(time_wide$Baseline, "label"), "LASA baseline wave of the respondent's cohort")
+  expect_named(time_wide, c("respnr", "cohort", "sex", "t0_oak", "t1_oak"))
+  # The cohort column is LASA's cohort variable, as read_lasa_sav() reads
+  # LASAZ002.SAV's.
+  expect_identical(as.character(time_wide$cohort), c("cohort 1 (1992)", "cohort 1 (1992)"))
+  expect_identical(levels(time_wide$cohort), c("cohort 1 (1992)", "cohort 2 (2002)", "cohort 3 (2012)"))
+  expect_equal(attr(time_wide$cohort, "label"), "cohort sample")
   expect_equal(time_wide$t1_oak, c(1, 8), ignore_attr = TRUE)
 
-  # Back in long format, the Baseline column stays, as a column that holds
+  # Back in long format, the cohort column stays, as a column that holds
   # for every wave ...
   long_again <- transform_lasa_data(time_wide)
-  expect_named(long_again, c("respnr", "Wave", "Time", "Baseline", "sex", "oak"))
+  expect_named(long_again, c("respnr", "Wave", "Time", "cohort", "sex", "oak"))
   expect_identical(columns_of(without_store(long_again))[names(long)], columns_of(without_store(long)))
-  expect_equal(long_again$Baseline, rep("B", 4), ignore_attr = TRUE)
+  expect_identical(as.character(long_again$cohort), as.character(time_wide$cohort)[c(1, 1, 2, 2)])
+  expect_identical(attributes(long_again$cohort), attributes(time_wide$cohort))
   # ... so Time-prefixed wide format gives the same columns again ...
   expect_identical(
     columns_of(transform_lasa_data(long_again, format = "wide", prefix = "Time")),
     columns_of(time_wide)
   )
-  # ... and wave prefixes the original ones, with the Baseline column.
+  # ... and wave prefixes the original ones, with the cohort column.
   back <- transform_lasa_data(long_again, format = "wide")
-  expect_named(back, c("respnr", "Baseline", "sex", "boak", "coak"))
+  expect_named(back, c("respnr", "cohort", "sex", "boak", "coak"))
   expect_identical(columns_of(back)[names(wide)], columns_of(wide))
 })
 
@@ -232,8 +236,13 @@ test_that("Time-prefixed columns of several cohorts are shared, and each respond
     lphya01 = c(1, 2, 3, 4, 5, 6, 7, 8, 9)
   )
   time_wide <- transform_lasa_data(long, format = "wide", prefix = "Time")
-  expect_named(time_wide, c("respnr", "Baseline", "t0_lphya01", "t1_lphya01", "t4_lphya01"))
-  expect_equal(time_wide$Baseline, c("B", "2B", "3B", "MB"), ignore_attr = TRUE)
+  expect_named(time_wide, c("respnr", "cohort", "t0_lphya01", "t1_lphya01", "t4_lphya01"))
+  # The migrant cohort, which LASAZ002.SAV doesn't have, gets a level of its
+  # own.
+  expect_identical(
+    as.character(time_wide$cohort), c("cohort 1 (1992)", "cohort 2 (2002)", "cohort 3 (2012)", "migrant cohort")
+  )
+  expect_identical(levels(time_wide$cohort), c("cohort 1 (1992)", "cohort 2 (2002)", "cohort 3 (2012)", "migrant cohort"))
   expect_equal(time_wide$t0_lphya01, c(1, 4, 6, 8), ignore_attr = TRUE)
   expect_equal(time_wide$t1_lphya01, c(2, 5, 7, 9), ignore_attr = TRUE)
   expect_equal(time_wide$t4_lphya01, c(3, NA, NA, NA), ignore_attr = TRUE)
@@ -243,10 +252,10 @@ test_that("Time-prefixed columns of several cohorts are shared, and each respond
   expect_identical(as.vector(back$Time), c(0L, 1L, 4L, 0L, 1L, 0L, 1L, 0L, 1L))
   expect_equal(back$lphya01, long$lphya01, ignore_attr = TRUE)
 
-  # Without the Baseline column, the waves of Time-prefixed columns are
+  # Without the cohort column, the waves of Time-prefixed columns are
   # unknown: they are kept as they are, with a warning (and no second
   # message saying 'data' has no wave-specific columns).
-  time_wide$Baseline <- NULL
+  time_wide$cohort <- NULL
   expect_warning(
     out <- transform_lasa_data(time_wide),
     "t0_lphya01, t1_lphya01, t4_lphya01 look like the Time-prefixed columns"
@@ -254,8 +263,8 @@ test_that("Time-prefixed columns of several cohorts are shared, and each respond
   expect_named(out, names(time_wide))
 
   # A value at a Time its respondent's cohort doesn't have is an error.
-  time_wide <- data.frame(respnr = 1, Baseline = "4B", t2_lphya01 = 1)
-  expect_error(transform_lasa_data(time_wide), "cohort \\(see the 'Baseline' column\\) has no wave with Time 2")
+  time_wide <- data.frame(respnr = 1, cohort = "cohort 4", t2_lphya01 = 1)
+  expect_error(transform_lasa_data(time_wide), "cohort \\(see the 'cohort' column\\) has no wave with Time 2")
 })
 
 test_that("a Z file read with read_lasa_sav() becomes long, with labels per wave", {
@@ -264,9 +273,11 @@ test_that("a Z file read with read_lasa_sav() becomes long, with labels per wave
 
   expect_s3_class(long, "tbl_df")
   expect_named(long, c("respnr", "Wave", "Time", "oak", "oah"))
-  expect_equal(long$respnr, rep(1:3, each = 3), ignore_attr = TRUE)
-  expect_equal(long$Wave, rep(c("B", "C", "D"), 3), ignore_attr = TRUE)
-  expect_identical(as.vector(long$Time), rep(0:2, 3))
+  # read_lasa_sav() turned the missing-value code -9 into NA, so respondent
+  # 2 has nothing at wave C, and respondent 3 nothing at D: no rows there.
+  expect_equal(long$respnr, c(1, 1, 1, 2, 2, 3, 3), ignore_attr = TRUE)
+  expect_equal(long$Wave, c("B", "C", "D", "B", "D", "B", "C"), ignore_attr = TRUE)
+  expect_identical(as.vector(long$Time), c(0:2, 0L, 2L, 0:1))
 
   expect_s3_class(long$oak, "factor")
   expect_equal(levels(long$oak), levels(zoa1$boak))
@@ -274,8 +285,8 @@ test_that("a Z file read with read_lasa_sav() becomes long, with labels per wave
     as.character(long$oak),
     c(
       "no", "dropout", "dropout at previous waves",
-      "no", "missing", "no",
-      "yes", "no", "missing"
+      "no", "no",
+      "yes", "no"
     )
   )
   expect_equal(attr(long$oak, "label"), "Symptomatic knee osteoarthritis")
@@ -336,15 +347,21 @@ test_that("SPSS user-missing codes of several waves are combined when one defini
 })
 
 test_that("SPSS user-missing codes are values, so their rows are kept", {
+  # Kept with keep_user_na = TRUE, the missing-value codes LASA documents
+  # are declared user-missing (-9 here; "dropout", 8 and 9, are answers,
+  # whatever the file declares).
   spss <- oa_fixture(function(x, labels) haven::labelled_spss(x, labels, na_values = c(-9, 8, 9)))
-  wide <- read_fixture(spss, "lasazoa1.SAV", to_factor = FALSE, user_na = TRUE)
+  wide <- read_fixture(spss, "lasazoa1.SAV", to_factor = FALSE, keep_user_na = TRUE)
   expect_s3_class(wide$doak, "haven_labelled_spss")
 
   long <- transform_lasa_data(wide)
   expect_s3_class(long$oak, "haven_labelled_spss")
   expect_equal(nrow(long), 9L)
   expect_equal(as.vector(unclass(long$oak)), c(0, 8, 9, 0, -9, 0, 2, 0, -9), ignore_attr = TRUE)
-  expect_equal(attr(long$oak, "na_values"), c(-9, 8, 9))
+  expect_equal(attr(long$oak, "na_values"), -9)
+  # They are no evidence of taking part, but the waves of the first cohort
+  # only show it anyway.
+  expect_identical(as.vector(long$Time), rep(0:2, 3))
 
   back <- transform_lasa_data(long, format = "wide")
   expect_identical(columns_of(back), columns_of(wide[setdiff(names(wide), "Wave")]))
@@ -369,9 +386,11 @@ test_that("stable variables of a merged Z file are repeated on every wave's row"
 
   long <- transform_lasa_data(merged)
   expect_named(long, c("respnr", "Wave", "Time", "sex", "byear", "oak", "oah"))
-  expect_equal(nrow(long), 9L)
-  expect_equal(as.character(long$sex), rep(c("male", "female", "male"), each = 3))
-  expect_equal(long$byear, rep(c(1920, 1925, 1930), each = 3), ignore_attr = TRUE)
+  # Respondents 2 and 3 have nothing but a missing-value code (now NA) at
+  # one wave, so they have rows of two waves.
+  expect_equal(nrow(long), 7L)
+  expect_equal(as.character(long$sex), rep(c("male", "female", "male"), c(3, 2, 2)))
+  expect_equal(long$byear, rep(c(1920, 1925, 1930), c(3, 2, 2)), ignore_attr = TRUE)
   expect_equal(attr(long$sex, "label"), attr(z004$sex, "label"))
 
   # Back to wide: the stable variables get one column again.
@@ -435,14 +454,14 @@ test_that("long-merged wave files (046 + 030) become wide and convert back", {
 
   time_wide <- transform_lasa_data(long, format = "wide", prefix = "Time")
   expect_named(time_wide, c(
-    "respnr", "Baseline", "t0_lphya01", "t0_lphya07", "t0_adl1a", "t0_adl1b",
+    "respnr", "cohort", "t0_lphya01", "t0_lphya07", "t0_adl1a", "t0_adl1b",
     "t1_lphya01", "t1_lphya07", "t1_adl1a", "t1_adl1b"
   ))
-  expect_equal(time_wide$Baseline, rep("B", 3), ignore_attr = TRUE)
+  expect_identical(as.character(time_wide$cohort), rep("cohort 1 (1992)", 3))
 
   for (back in list(transform_lasa_data(wide), transform_lasa_data(time_wide))) {
     expect_equal(
-      setdiff(names(back), "Baseline"),
+      setdiff(names(back), "cohort"),
       c("respnr", "Wave", "Time", "lphya01", "lphya07", "adl1a", "adl1b")
     )
     expect_equal(back$respnr, rep(1:3, each = 2), ignore_attr = TRUE)
@@ -466,16 +485,17 @@ test_that("a Z file's columns merged into long data move to their wave's rows", 
 
   long <- transform_lasa_data(mixed)
   expect_named(long, c("respnr", "Wave", "Time", "lphya01", "lphya07", "sex", "byear", "oak", "oah"))
-  # zoa1 adds wave D, which the 046 files don't have.
-  expect_equal(long$Wave, rep(c("B", "C", "D"), 3), ignore_attr = TRUE)
+  # zoa1 adds wave D, which the 046 files don't have -- except for
+  # respondent 3, who has nothing there but a missing-value code (now NA).
+  expect_equal(long$Wave, c(rep(c("B", "C", "D"), 2), "B", "C"), ignore_attr = TRUE)
   expect_true(all(is.na(long$lphya01[long$Wave == "D"])))
   expect_equal(as.character(long$lphya01[long$Wave == "C"]), as.character(long_046$lphya01[long_046$Wave == "C"]))
   # A documented stable variable is filled in on the added rows.
-  expect_equal(as.character(long$sex), rep(c("male", "female", "male"), each = 3))
-  expect_equal(long$byear, rep(c(1920, 1925, 1930), each = 3), ignore_attr = TRUE)
+  expect_equal(as.character(long$sex), rep(c("male", "female", "male"), c(3, 3, 2)))
+  expect_equal(long$byear, rep(c(1920, 1925, 1930), c(3, 3, 2)), ignore_attr = TRUE)
   expect_equal(
     as.character(long$oak[long$Wave == "D"]),
-    c("dropout at previous waves", "no", "missing")
+    c("dropout at previous waves", "no")
   )
 
   wide <- transform_lasa_data(mixed, format = "wide")
@@ -704,7 +724,7 @@ test_that("columns read_lasa_sav() matched by fuzzy matching or name_corrections
   expect_named(zoa1, c("respnr", "boakk", "coak"))
   long <- transform_lasa_data(zoa1)
   expect_named(long, c("respnr", "Wave", "Time", "oak"))
-  expect_equal(long$Wave, rep(c("B", "C"), 3), ignore_attr = TRUE)
+  expect_equal(long$Wave, c("B", "C", "B", "B", "C"), ignore_attr = TRUE)
   expect_equal(as.character(long$oak[long$Wave == "B"]), as.character(zoa1$boakk))
   # Back in wide format, the column gets the documented name read_lasa_sav()
   # matched it to: without the data's label report, which a merge drops,
@@ -910,8 +930,10 @@ test_that("wave 4B is the fourth cohort's baseline, with L its next wave", {
   expect_equal(transform_lasa_data(wide)$Wave, c("4B", "L"), ignore_attr = TRUE)
 
   time_wide <- transform_lasa_data(long, format = "wide", prefix = "Time")
-  expect_named(time_wide, c("respnr", "Baseline", "t0_lphya01", "t1_lphya01"))
-  expect_equal(time_wide$Baseline, "4B", ignore_attr = TRUE)
+  expect_named(time_wide, c("respnr", "cohort", "t0_lphya01", "t1_lphya01"))
+  # LASAZ002.SAV doesn't have the fourth cohort: its level is "cohort 4".
+  expect_identical(as.character(time_wide$cohort), "cohort 4")
+  expect_identical(levels(time_wide$cohort), c("cohort 1 (1992)", "cohort 2 (2002)", "cohort 3 (2012)", "cohort 4"))
   expect_equal(transform_lasa_data(time_wide)$Wave, c("4B", "L"), ignore_attr = TRUE)
 })
 
@@ -940,8 +962,8 @@ test_that("a Time column in long data must match its waves, and tells the cohort
   expect_silent(out <- transform_lasa_data(long))
   expect_identical(as.vector(out$Time), c(1L, 4L))
   time_wide <- transform_lasa_data(long, format = "wide", prefix = "Time")
-  expect_equal(time_wide$Baseline, c("2B", "B"), ignore_attr = TRUE)
-  expect_named(time_wide, c("respnr", "Baseline", "t1_lphya01", "t4_lphya01"))
+  expect_identical(as.character(time_wide$cohort), c("cohort 2 (2002)", "cohort 1 (1992)"))
+  expect_named(time_wide, c("respnr", "cohort", "t1_lphya01", "t4_lphya01"))
 
   # ... which must agree with the respondent's other waves.
   long <- data.frame(respnr = c(1, 1), Wave = c("C", "F"), Time = c(1, 1), lphya01 = c(1, 2))
@@ -972,7 +994,7 @@ test_that("the wave column may be capitalized any way, but not be split by a mer
   expect_true(all(c("Wave.x", "Wave.y") %in% names(merged)))
   long <- transform_lasa_data(merged)
   expect_named(long, c("respnr", "Wave", "Time", "sex", "byear", "oak", "oah"))
-  expect_equal(long$Wave, rep(c("B", "C", "D"), 3), ignore_attr = TRUE)
+  expect_equal(long$Wave, c("B", "C", "D", "B", "D", "B", "C"), ignore_attr = TRUE)
 })
 
 test_that("columns that look wave-specific but can't be placed are kept, with a warning", {
@@ -1044,24 +1066,29 @@ test_that("data that can't be reshaped give a clear error", {
     "Time-prefixed wide format needs the Time of every value, but 1 respondent\\(s\\) have values at waves without one \\(e.g. respondent 1 at wave F\\)"
   )
   expect_error(
-    transform_lasa_data(data.frame(respnr = 1, Baseline = "C", lphya01 = 1, Wave = "B"), format = "wide", prefix = "Time"),
-    "'Baseline' column of its own"
+    transform_lasa_data(data.frame(respnr = 1, Cohort = 1920, lphya01 = 1, Wave = "B"), format = "wide", prefix = "Time"),
+    "'data' has a column named 'Cohort' that doesn't hold LASA's cohorts"
   )
 })
 
 test_that("missing-value codes at waves before a respondent's cohort joined don't count as its waves", {
   # LASAZ010 gives the second cohort "no observation birth cohorts
   # 1938-1947" at waves A-E, which LASA marks as a missing-value code.
-  z010 <- read_fixture(
-    data.frame(
-      RespNr = c(2001, 2002), AMARST = -8, BMARST = -8, CMARST = -8, DMARST = -8, EMARST = -8,
-      FMARST = c(2, 1)
-    ),
-    "LASAZ010.SAV"
+  z010_data <- data.frame(
+    RespNr = c(2001, 2002), AMARST = -8, BMARST = -8, CMARST = -8, DMARST = -8, EMARST = -8,
+    FMARST = c(2, 1)
   )
-  expect_true(all(as.character(z010$cmarst) == "no observation birth cohorts 1938-1947"))
+  # read_lasa_sav() turns the codes into NA unless keep_user_na = TRUE: the
+  # respondents then simply have no rows before their cohort joined.
   # b2oak shows the respondents are of the second cohort.
-  wide <- merge(z010, data.frame(respnr = c(2001, 2002), b2oak = c(0, 1)), by = "respnr")
+  b2oak <- data.frame(respnr = c(2001, 2002), b2oak = c(0, 1))
+  long <- transform_lasa_data(merge(read_fixture(z010_data, "LASAZ010.SAV"), b2oak, by = "respnr"))
+  expect_equal(long$Wave, rep(c("2B", "F"), 2), ignore_attr = TRUE)
+  expect_identical(as.vector(long$Time), rep(0:1, 2))
+
+  z010 <- read_fixture(z010_data, "LASAZ010.SAV", keep_user_na = TRUE)
+  expect_true(all(as.character(z010$cmarst) == "no observation birth cohorts 1938-1947"))
+  wide <- merge(z010, b2oak, by = "respnr")
   expect_silent(long <- transform_lasa_data(wide))
   expect_equal(long$Wave, rep(c("A", "B", "C", "D", "E", "2B", "F"), 2), ignore_attr = TRUE)
   expect_identical(as.vector(long$Time), rep(c(NA, NA, NA, NA, NA, 0L, 1L), 2))
@@ -1073,8 +1100,8 @@ test_that("missing-value codes at waves before a respondent's cohort joined don'
     time_wide <- transform_lasa_data(wide, format = "wide", prefix = "Time"),
     "8 row\\(s\\) hold nothing but missing-value codes"
   )
-  expect_named(time_wide, c("respnr", "Baseline", "amarst", "t0_oak", "t1_marst"))
-  expect_equal(time_wide$Baseline, c("2B", "2B"), ignore_attr = TRUE)
+  expect_named(time_wide, c("respnr", "cohort", "amarst", "t0_oak", "t1_marst"))
+  expect_identical(as.character(time_wide$cohort), c("cohort 2 (2002)", "cohort 2 (2002)"))
 
   # LASAZDC2 and LASAZ010 transformed to long format and merged by respnr
   # and Wave: b_dm is at the second cohort's baseline, and the Time each
@@ -1092,10 +1119,49 @@ test_that("missing-value codes at waves before a respondent's cohort joined don'
   expect_equal(as.character(long$dm[long$Wave == "2B"]), c("definite DM", "no DM"))
 })
 
+test_that("negative codes are missing-value codes, documented or not, except measurements that can be negative", {
+  # -7 isn't one of oak's documented codes, but every negative LASA code
+  # says why a value is missing: it doesn't show wave C (the first
+  # cohort's), so b2oak's second cohort is the respondent's.
+  expect_silent(out <- transform_lasa_data(data.frame(respnr = 1, coak = -7, b2oak = 1)))
+  expect_equal(out$Wave, c("C", "2B"), ignore_attr = TRUE)
+  expect_identical(as.vector(out$Time), c(NA, 0L))
+  # The same as the factor level read_lasa_sav() gives such a code with
+  # keep_user_na = TRUE, its own number.
+  long <- data.frame(respnr = 1, Wave = c("C", "2B"), oak = factor(c("-7", "no")))
+  expect_identical(as.vector(transform_lasa_data(long)$Time), c(NA, 0L))
+  # A column the label database doesn't document keeps its negative values.
+  expect_warning(
+    transform_lasa_data(data.frame(respnr = 1, Wave = c("C", "2B"), score = c(-7, 1))),
+    "at waves of different cohorts"
+  )
+
+  # A speech-reception threshold of -6.4 dB is a measurement, at wave E
+  # (which only the first cohort takes part in); -22 is a documented code
+  # ("test not done").
+  expect_message(
+    out <- transform_lasa_data(data.frame(respnr = 1:2, emsrttn = c(-6.4, -22))),
+    "shows the cohort of 1 respondent\\(s\\) \\(e.g. respondent 2 at wave E\\)"
+  )
+  expect_identical(as.vector(out$Time), c(3L, NA))
+  expect_identical(as.vector(transform_lasa_data(out[1, ], format = "wide", prefix = "Time")$t3_msrttn), -6.4)
+  # Also as text.
+  long <- data.frame(respnr = 1, Wave = "E", msrttn = factor("-6.4"))
+  expect_identical(as.vector(transform_lasa_data(long)$Time), 3L)
+  # Word-recall retention differences can be negative from wave D on; at
+  # wave C, which documents retention as a ratio, -5 is a code.
+  long <- data.frame(respnr = 1:2, Wave = c("C", "D"), mret1pc = c(-5, -5))
+  expect_message(out <- transform_lasa_data(long), "e.g. respondent 1 at wave C")
+  expect_identical(as.vector(out$Time), c(NA, 2L))
+})
+
 test_that("guessed waves don't count as a respondent's waves", {
   # Merged by respnr, LASAZDC2's b_dm could be any cohort's baseline: a
   # guess, which doesn't make the respondents first-cohort.
-  z010 <- read_fixture(data.frame(RespNr = c(2001, 2002), EMARST = -8, FMARST = c(2, 1)), "LASAZ010.SAV")
+  z010 <- read_fixture(
+    data.frame(RespNr = c(2001, 2002), EMARST = -8, FMARST = c(2, 1)), "LASAZ010.SAV",
+    keep_user_na = TRUE
+  )
   zdc2 <- read_fixture(data.frame(RespNr = c(2001, 2002), B_DM = c(1, 0), F_DM = 1), "LASAZDC2.SAV")
   wide <- merge(zdc2, z010, by = "respnr")
   messages <- character(0)
@@ -1478,16 +1544,16 @@ test_that("046 and 030 files of two cohorts, read in long format and merged, con
 
   time_wide <- transform_lasa_data(long, format = "wide", prefix = "Time")
   expect_named(time_wide, c(
-    "respnr", "Baseline",
+    "respnr", "cohort",
     paste0(rep(c("t0_", "t1_", "t4_"), each = 4), c("lphya01", "lphya07", "adl1a", "adl1b"))
   ))
-  expect_equal(time_wide$Baseline, c("B", "B", "2B", "2B", "2B", "B"), ignore_attr = TRUE)
+  expect_identical(as.character(time_wide$cohort), paste("cohort", c(1, 1, 2, 2, 2, 1), c("(1992)", "(2002)")[c(1, 1, 2, 2, 2, 1)]))
   # Time 1 is wave C for the first cohort, wave F for the second.
   expect_equal(as.character(time_wide$t1_lphya01), c("21", "22", "44", "45", "46", "23"))
 
   for (wide_data in list(wide, time_wide)) {
     back <- transform_lasa_data(wide_data)
-    expect_equal(setdiff(names(back), "Baseline"), names(long))
+    expect_equal(setdiff(names(back), "cohort"), names(long))
     for (name in names(long)) {
       expect_equal(as.character(back[[name]]), as.character(long[[name]]), info = name)
     }
@@ -1513,16 +1579,19 @@ test_that("in long data without documented wave-specific columns, values that di
 
 test_that("every row of one LASA file of a wave only one cohort takes part in gets its Time, codes or not", {
   # Respondent 12 holds nothing but 'na, asked' codes in the second
-  # cohort's baseline file.
+  # cohort's baseline file (kept with keep_user_na = TRUE).
   b2 <- read_fixture(
     data.frame(RespNr = c(11, 12), BADL1A = c(4, -1), BADL1B = c(1, -1)), "LAS2B030.SAV",
-    format_as_long = TRUE
+    keep_user_na = TRUE, format_as_long = TRUE
   )
   expect_equal(b2$Wave, c("2B", "2B"), ignore_attr = TRUE)
   expect_identical(as.vector(b2$Time), c(0L, 0L))
   # A file of a wave several cohorts take part in doesn't show the cohort,
   expect_message(
-    f <- read_fixture(data.frame(RespNr = c(11, 12), FADL1A = c(4, -1)), "LASAF030.SAV", format_as_long = TRUE),
+    f <- read_fixture(
+      data.frame(RespNr = c(11, 12), FADL1A = c(4, -1)), "LASAF030.SAV",
+      keep_user_na = TRUE, format_as_long = TRUE
+    ),
     "nothing in 'data' shows the cohort of 2 respondent"
   )
   expect_true(all(is.na(f$Time)))
@@ -1531,19 +1600,171 @@ test_that("every row of one LASA file of a wave only one cohort takes part in ge
   expect_identical(as.vector(long$Time), c(0L, 0L, 1L, 1L))
 })
 
-test_that("a 'Baseline' column must give each respondent one baseline wave", {
-  long <- data.frame(
-    respnr = c(1, 1, 2, 2), Wave = c("F", "G", "F", "G"), Baseline = c("2B", "2B", "B", NA), lphya01 = 1:4
+test_that("LASA's cohort column gives each respondent's baseline", {
+  # LASAZ002.SAV's cohort (here with the file's own wording): cohort 1's
+  # baseline is B, cohort 2's 2B, and cohort 3's 3B.
+  cohorts <- c("Cohort 1 (1992/1993)" = 1, "Cohort 2 (2002/2003)" = 2, "Cohort 3 (2012/2013)" = 3)
+  z002 <- read_fixture(
+    data.frame(RespNr = 1:4, COHORT = haven::labelled(c(1, 2, 3, 3), cohorts)), "LASAZ002.SAV"
   )
-  expect_identical(as.vector(transform_lasa_data(long)$Time), c(1L, 2L, 4L, 5L))
-  long$Baseline[[3L]] <- "B2"
-  expect_error(transform_lasa_data(long), "it says 'B2' for respondent 2")
-  long$Baseline <- c("2B", "B", NA, NA)
-  expect_error(transform_lasa_data(long), "gives respondent 1 several baseline waves \\(2B and B\\)")
-  # A column named Baseline that holds something else is an ordinary column.
-  long$Baseline <- c(5, 6, 7, 8)
-  expect_message(out <- transform_lasa_data(long), "nothing in 'data' shows the cohort")
-  expect_equal(out$Baseline, c(5, 6, 7, 8))
+  expect_equal(as.character(z002$cohort), c("cohort 1 (1992)", "cohort 2 (2002)", "cohort 3 (2012)", "cohort 3 (2012)"))
+  # Waves F and I, which several cohorts share, don't show the cohort.
+  read_long <- function(wave, ids, values) {
+    dat <- data.frame(RespNr = ids, x = values)
+    names(dat)[[2L]] <- paste0(wave, "ADL1A")
+    suppressMessages(read_fixture(dat, paste0("LASA", wave, "030.SAV"), format_as_long = TRUE))
+  }
+  long <- rbind(read_long("F", 1:2, c(4, 2)), read_long("I", 1:4, 1:4))
+  expect_true(all(is.na(long$Time)))
+  merged <- merge(long, z002[c("respnr", "cohort")], by = "respnr")
+  expect_silent(out <- transform_lasa_data(merged))
+  expect_equal(out$Wave, c("F", "I", "F", "I", "I", "I"), ignore_attr = TRUE)
+  expect_identical(as.vector(out$Time), c(4L, 7L, 1L, 4L, 1L, 1L))
+  # The cohort column stays, with the labels merge() dropped.
+  expect_null(attr(merged$cohort, "label"))
+  expect_identical(as.character(out$cohort), as.character(merged$cohort))
+  expect_identical(attributes(out$cohort), attributes(z002$cohort))
+
+  # Its wording may vary, and its codes say it too.
+  for (cohort in list(
+    c("cohort 1", "Cohort 2", "COHORT 3 (2012/2013)", "cohort 3"),
+    factor(c("Cohort 1", "Cohort 2", "Cohort 3", "Cohort 3")),
+    haven::labelled(c(1, 2, 3, 3), cohorts),
+    c(1, 2, 3, 3)
+  )) {
+    merged$cohort <- cohort[merged$respnr]
+    expect_identical(as.vector(transform_lasa_data(merged)$Time), c(4L, 7L, 1L, 4L, 1L, 1L))
+  }
+
+  # Time-prefixed wide format replaces it with its own cohort column, coded
+  # as read_lasa_sav() reads LASAZ002.SAV's, which transforming back reads.
+  time_wide <- transform_lasa_data(merged, format = "wide", prefix = "Time")
+  expect_named(time_wide, c("respnr", "cohort", "t1_adl1a", "t4_adl1a", "t7_adl1a"))
+  expect_identical(time_wide$cohort, z002$cohort)
+  expect_identical(as.vector(transform_lasa_data(time_wide)$Time), c(4L, 7L, 1L, 4L, 1L, 1L))
+
+  # It must fit the waves the data show, and give a respondent one cohort.
+  merged$cohort <- c("cohort 1", "cohort 3", "cohort 2", "cohort 3")[merged$respnr]
+  expect_error(
+    transform_lasa_data(merged),
+    "'cohort' column that doesn't match its waves: for respondent 2 it says 'cohort 3' \\(baseline 3B\\)"
+  )
+  merged$cohort <- c("cohort 1", "cohort 2", "cohort 3", "cohort 3")[merged$respnr]
+  merged$cohort[[1L]] <- "cohort 2"
+  expect_error(transform_lasa_data(merged), "gives respondent 1 several cohorts \\('cohort 2' and 'cohort 1'\\)")
+
+  # A column named cohort that names no LASA cohort is an ordinary column.
+  merged$cohort <- c(1920, 1925, 1930, 1935)[merged$respnr]
+  expect_message(out <- transform_lasa_data(merged), "nothing in 'data' shows the cohort of 4 respondent")
+  expect_identical(out$cohort, merged$cohort)
+})
+
+test_that("a Z file's own cohort column gives its rows their Time", {
+  # LASAZ002.SAV marks the waves before a respondent's cohort joined with a
+  # code naming their cohort ("cohort 2", -3 for result).
+  z002 <- data.frame(RespNr = 1:3, COHORT = 1:3, BRESULT = c(5, -3, -4), FRESULT = c(5, 5, -4), IRESULT = 5)
+  expect_silent(long <- transform_lasa_data(read_fixture(z002, "LASAZ002.SAV")))
+  expect_named(long, c("respnr", "Wave", "Time", "cohort", "result"))
+  expect_equal(long$Wave, c("B", "F", "I", "F", "I", "I"), ignore_attr = TRUE)
+  expect_identical(as.vector(long$Time), c(0L, 4L, 7L, 1L, 4L, 1L))
+  # Kept with keep_user_na = TRUE, the codes get rows of their own, without
+  # a Time.
+  kept <- transform_lasa_data(read_fixture(z002, "LASAZ002.SAV", keep_user_na = TRUE))
+  expect_equal(kept$Wave, rep(c("B", "F", "I"), 3), ignore_attr = TRUE)
+  expect_identical(as.vector(kept$Time), c(0L, 4L, 7L, NA, 1L, 4L, NA, NA, 1L))
+  expect_equal(as.character(kept$result[kept$Wave == "B"]), c("data", "cohort 2", "cohort 3"))
+})
+
+test_that("a cohort column names the fourth and the migrant cohort too, and values that name none say nothing", {
+  long <- data.frame(
+    respnr = c(1, 1, 2, 3), Wave = c("I", "J", "L", "F"), cohort = c("migrant cohort", NA, "Cohort 4", "unknown"),
+    lphya01 = 1:4
+  )
+  expect_message(out <- transform_lasa_data(long), "nothing in 'data' shows the cohort of 1 respondent\\(s\\) \\(e.g. respondent 3")
+  expect_identical(as.vector(out$Time), c(1L, 2L, 1L, NA))
+  # Time-prefixed wide format gives them levels of their own.
+  time_wide <- suppressMessages(transform_lasa_data(long[1:3, ], format = "wide", prefix = "Time"))
+  expect_identical(as.character(time_wide$cohort), c("migrant cohort", "cohort 4"))
+  expect_identical(
+    levels(time_wide$cohort), c("cohort 1 (1992)", "cohort 2 (2002)", "cohort 3 (2012)", "cohort 4", "migrant cohort")
+  )
+  expect_identical(as.vector(transform_lasa_data(time_wide)$Time), c(1L, 2L, 1L))
+  # Plain numbers are LASA's codes, as long as they are nothing else.
+  long$cohort <- c(2, 2, 1, NA)
+  expect_identical(suppressMessages(as.vector(transform_lasa_data(long)$Time)), c(4L, 5L, 10L, NA))
+  long$cohort <- c(2, 2, 1, 7)
+  expect_message(out <- transform_lasa_data(long), "nothing in 'data' shows the cohort of 3 respondent")
+  expect_identical(out$cohort, long$cohort)
+})
+
+test_that("a LASA respondent number gives the respondent's cohort", {
+  # Five digits, the first of which says the cohort: 1 to 3 the first, 4 to
+  # 6 the second, and 7 to 9 the third. Rows at waves F and I, which several
+  # cohorts share, get their Time from it.
+  long <- data.frame(
+    respnr = c(21001, 21001, 45001, 45001, 78001, 1234),
+    Wave = c("F", "I", "F", "I", "I", "I"),
+    lphya01 = 1:6
+  )
+  expect_message(
+    out <- transform_lasa_data(long),
+    "nothing in 'data' shows the cohort of 1 respondent\\(s\\) \\(e.g. respondent 1234 at wave I\\)"
+  )
+  expect_identical(as.vector(out$Time), c(4L, 7L, 1L, 4L, 1L, NA))
+  # Held as text too. Numbers of other lengths say nothing, also six digits,
+  # which the fourth cohort's may have.
+  long$respnr <- c("21001", "21001", "45001", "45001", "78001", "100001")
+  expect_message(out <- transform_lasa_data(long), "e.g. respondent 100001 at wave I")
+  expect_identical(as.vector(out$Time), c(4L, 7L, 1L, 4L, 1L, NA))
+
+  # So one LASA file of such a wave read in long format has its Time, and
+  # Time-prefixed wide format the respondents' cohort.
+  i046 <- read_fixture(
+    data.frame(RespNr = c(21001, 45001, 78001), ILPHYA09 = c(30, 20, 10)), "LASAI046.SAV", format_as_long = TRUE
+  )
+  expect_identical(as.vector(i046$Time), c(7L, 4L, 1L))
+  time_wide <- transform_lasa_data(i046, format = "wide", prefix = "Time")
+  expect_named(time_wide, c("respnr", "cohort", "t1_lphya09", "t4_lphya09", "t7_lphya09"))
+  expect_identical(as.character(time_wide$cohort), c("cohort 1 (1992)", "cohort 2 (2002)", "cohort 3 (2012)"))
+
+  # A column of a cohort's baseline goes to each respondent's own.
+  wide <- data.frame(respnr = c(21001, 45001, 78001), blphya01 = 1:3, ilphya01 = 4:6)
+  expect_silent(long <- transform_lasa_data(wide))
+  expect_identical(
+    paste(long$respnr, long$Wave, long$Time),
+    c("21001 B 0", "21001 I 7", "45001 2B 0", "45001 I 4", "78001 3B 0", "78001 I 1")
+  )
+  expect_equal(long$lphya01, c(1, 4, 2, 5, 3, 6), ignore_attr = TRUE)
+})
+
+test_that("the rest of the data decide the cohort of a respondent whose number says another, with a warning", {
+  says_cohort_2 <- "don't fit the rest of the data, which decide their cohort and Time instead \\(e.g. respondent 41001, whose number says cohort 2\\)"
+  long <- data.frame(respnr = 41001, Wave = c("B", "C", "F"), lphya01 = 1:3)
+  expect_warning(out <- transform_lasa_data(long), says_cohort_2)
+  expect_identical(as.vector(out$Time), c(0L, 1L, 4L))
+  # LASA's cohort column too.
+  long <- data.frame(respnr = 41001, Wave = "I", cohort = "cohort 1 (1992)", lphya01 = 1)
+  expect_warning(out <- transform_lasa_data(long), says_cohort_2)
+  expect_identical(as.vector(out$Time), 7L)
+
+  # The migrant cohort's numbers aren't known. Read in long format, a file of
+  # a wave several cohorts share gives the Time the number gives, which the
+  # migrant cohort's own wave then corrects.
+  expect_warning(
+    mb <- read_fixture(data.frame(RespNr = 41001, BLPHYA09 = 20), "LASMB046.SAV", format_as_long = TRUE),
+    says_cohort_2
+  )
+  i046 <- read_fixture(data.frame(RespNr = 41001, ILPHYA09 = 25), "LASAI046.SAV", format_as_long = TRUE)
+  expect_identical(as.vector(i046$Time), 4L)
+  expect_warning(out <- transform_lasa_data(rbind(mb, i046)), says_cohort_2)
+  expect_identical(paste(out$Wave, out$Time), c("MB 0", "I 1"))
+  # A Time that follows neither the number nor the rest of the data (the
+  # first cohort's) is still an error.
+  i046$Time <- 7L
+  expect_error(
+    transform_lasa_data(rbind(mb, i046)),
+    "'Time' column that doesn't match its waves: for respondent 41001"
+  )
 })
 
 test_that("the Time columns of four or more merged long data sets are read, and must agree", {
@@ -1574,7 +1795,7 @@ test_that("the Time columns of four or more merged long data sets are read, and 
   expect_named(transform_lasa_data(joined), names(out))
 })
 
-test_that("Time-prefixed wide data sets merged by respnr convert back with their Baseline columns", {
+test_that("Time-prefixed wide data sets merged by respnr convert back with their cohort columns", {
   pa <- transform_lasa_data(
     data.frame(respnr = c(1, 1), Wave = c("B", "C"), lphya09 = c(30, 20)),
     format = "wide", prefix = "Time"
@@ -1584,16 +1805,38 @@ test_that("Time-prefixed wide data sets merged by respnr convert back with their
     format = "wide", prefix = "Time"
   )
   merged <- merge(pa, adl, by = "respnr")
-  expect_named(merged, c("respnr", "Baseline.x", "t0_lphya09", "t1_lphya09", "Baseline.y", "t0_nupers", "t1_nupers"))
+  expect_named(merged, c("respnr", "cohort.x", "t0_lphya09", "t1_lphya09", "cohort.y", "t0_nupers", "t1_nupers"))
   expect_silent(out <- transform_lasa_data(merged))
-  expect_named(out, c("respnr", "Wave", "Time", "Baseline", "lphya09", "nupers"))
+  expect_named(out, c("respnr", "Wave", "Time", "cohort", "lphya09", "nupers"))
   expect_equal(out$Wave, c("B", "C"), ignore_attr = TRUE)
   expect_equal(out$nupers, c(1, 2), ignore_attr = TRUE)
-  adl$Baseline[] <- "2B"
+  expect_identical(as.character(out$cohort), as.character(pa$cohort)[c(1, 1)])
+  expect_identical(attributes(out$cohort), attributes(pa$cohort))
+  # By respnr and cohort, there is one cohort column to begin with.
+  expect_named(merge(pa, adl, by = c("respnr", "cohort")), c("respnr", "cohort", "t0_lphya09", "t1_lphya09", "t0_nupers", "t1_nupers"))
+  adl$cohort <- factor("cohort 2 (2002)", levels = levels(adl$cohort))
   expect_error(
     transform_lasa_data(merge(pa, adl, by = "respnr")),
-    "'Baseline.x' says B and 'Baseline.y' says 2B"
+    "'cohort.x' says 'cohort 1 \\(1992\\)' and 'cohort.y' says 'cohort 2 \\(2002\\)'"
   )
+})
+
+test_that("Time-prefixed wide data merge with LASAZ002.SAV by respnr and cohort", {
+  z002 <- read_fixture(data.frame(RespNr = c(21001, 41001, 71001), COHORT = c(1, 2, 3), BSELFR = c(1, -5, -6)), "LASAZ002.SAV")
+  long <- data.frame(respnr = c(21001, 41001, 71001), Wave = "I", lphya09 = c(30, 20, 10))
+  time_wide <- transform_lasa_data(long, format = "wide", prefix = "Time")
+  expect_identical(time_wide$cohort, z002$cohort)
+  expect_identical(attributes(time_wide$cohort), attributes(z002$cohort))
+  merged <- merge(time_wide, z002, by = c("respnr", "cohort"))
+  expect_named(merged, c("respnr", "cohort", "t1_lphya09", "t4_lphya09", "t7_lphya09", "Wave", "bselfr"))
+  expect_equal(nrow(merged), 3L)
+  back <- transform_lasa_data(merged)
+  expect_named(back, c("respnr", "Wave", "Time", "cohort", "lphya09", "selfr"))
+  expect_identical(as.character(back$cohort), as.character(z002$cohort)[c(1, 1, 2, 3)])
+  expect_identical(attributes(back$cohort), attributes(z002$cohort))
+  expect_equal(paste(back$Wave, back$Time), c("B 0", "I 7", "I 4", "I 1"))
+  # Merged by respnr alone, the two cohort columns become one again.
+  expect_identical(transform_lasa_data(merge(time_wide, z002, by = "respnr")), back)
 })
 
 test_that("Time-prefixed wide format warns when the data don't give a respondent with a Time their baseline", {
@@ -1609,7 +1852,7 @@ test_that("Time-prefixed wide format warns when the data don't give a respondent
     wide <- transform_lasa_data(followup, format = "wide", prefix = "Time"),
     "no baseline wave for 2 respondent\\(s\\) whose rows have a Time \\(e.g. respondent 301 at wave I\\)"
   )
-  expect_equal(wide$Baseline, c(NA_character_, NA_character_), ignore_attr = TRUE)
+  expect_identical(as.character(wide$cohort), c(NA_character_, NA_character_))
 })
 
 test_that("a LASA file's own columns stay at its wave, also where the label database doesn't document them there", {
@@ -1862,7 +2105,7 @@ test_that("long data stacked and merged the documented way get back the labels r
 })
 
 test_that("the migrant cohort's file of stable variables has no wave dimension, and its variables hold for every wave", {
-  ids <- c(40001, 40002)
+  ids <- c(4001, 4002)
   z <- data.frame(RespNr = ids, SEX = c(1, 2), BYEAR = c(1950, 1955))
   expect_message(mb004 <- read_fixture(z, "LASMB004.SAV", format_as_long = TRUE), "no wave dimension")
   expect_named(mb004, c("respnr", "sex", "byear"))
@@ -1920,8 +2163,8 @@ test_that("a variable placed at several waves by guesses keeps one column that d
 
   # A single wave's guesses: the wide data's own "LASA_wave" (B) is no LASA
   # file's, so it doesn't place them either.
-  b2 <- read_fixture(data.frame(RespNr = c(20001, 20002), BLPHYA01 = c(4, 1)), "LAS2B046.SAV", standardize = FALSE)
-  b2_030 <- read_fixture(data.frame(RespNr = c(20001, 20002), BADL1B = c(1, 2)), "LAS2B030.SAV", standardize = FALSE)
+  b2 <- read_fixture(data.frame(RespNr = c(2001, 2002), BLPHYA01 = c(4, 1)), "LAS2B046.SAV", standardize = FALSE)
+  b2_030 <- read_fixture(data.frame(RespNr = c(2001, 2002), BADL1B = c(1, 2)), "LAS2B030.SAV", standardize = FALSE)
   long <- suppressMessages(transform_lasa_data(merge(b2, b2_030, by = "respnr", all = TRUE)))
   wide <- transform_lasa_data(long, format = "wide")
   expect_equal(attr(wide, "LASA_wave"), "B")
@@ -1936,8 +2179,8 @@ test_that("rows of a LASA file's respondents placed only by a guess get no Time 
   # A join that keeps the first file's provenance (wave B): the second
   # cohort's respondents of the 2B file only have values placed at wave B
   # by a guess, which doesn't make them first-cohort respondents.
-  b <- read_fixture(data.frame(RespNr = c(10001, 10002), BLPHYA01 = c(4, 1)), "LASAB046.SAV", standardize = FALSE)
-  b2 <- read_fixture(data.frame(RespNr = c(20001, 20002), BADL1B = c(1, 2)), "LAS2B030.SAV", standardize = FALSE)
+  b <- read_fixture(data.frame(RespNr = c(1001, 1002), BLPHYA01 = c(4, 1)), "LASAB046.SAV", standardize = FALSE)
+  b2 <- read_fixture(data.frame(RespNr = c(2001, 2002), BADL1B = c(1, 2)), "LAS2B030.SAV", standardize = FALSE)
   joined <- merge(b, b2, by = "respnr", all = TRUE)
   for (name in c("LASA_file_code", "LASA_wave", "label_report")) attr(joined, name) <- attr(b, name)
   expect_message(
@@ -1960,7 +2203,7 @@ test_that("a guess goes to a wave the respondent's cohort takes part in, also on
 
 test_that("values at waves the label database doesn't document for them read back without attributes", {
   # Wave L's files (lhhnch), read with or without standardizing.
-  l011 <- data.frame(RespNr = c(10001, 30001), LHHNCH = c(2, 3))
+  l011 <- data.frame(RespNr = c(1001, 3001), LHHNCH = c(2, 3))
   for (standardize in c(FALSE, TRUE)) {
     expect_message(l <- read_fixture(l011, "LASAL011.SAV", standardize = standardize, format_as_long = TRUE), "the cohort of 2")
     expect_named(l, c("respnr", "Wave", "Time", "hhnch"))
@@ -2052,7 +2295,7 @@ test_that("blank text, as SPSS stores missing text, holds no value", {
   long <- transform_lasa_data(rbind(
     read_long(data.frame(RespNr = c(10001, 10002), BADL1A = haven::labelled(c(5, 2), lab)), "LASAB030.SAV"),
     read_long(data.frame(RespNr = 10001, CADL1A = haven::labelled(5, lab)), "LASAC030.SAV"),
-    read_long(data.frame(RespNr = 20001, BADL1A = haven::labelled(5, lab)), "LAS2B030.SAV")
+    read_long(data.frame(RespNr = 40001, BADL1A = haven::labelled(5, lab)), "LAS2B030.SAV")
   ))
   expect_type(long$adl1a, "character")
   for (prefix in c("Wave", "Time")) {
@@ -2060,7 +2303,7 @@ test_that("blank text, as SPSS stores missing text, holds no value", {
     saved <- haven::read_sav(write_transform_sav(wide, "wide.sav"))
     expect_true(any(vapply(saved, function(x) is.character(x) && any(x == "", na.rm = TRUE), logical(1))))
     back <- suppressMessages(transform_lasa_data(saved))
-    expect_equal(paste(back$respnr, back$Wave), c("10001 B", "10001 C", "10002 B", "20001 2B"))
+    expect_equal(paste(back$respnr, back$Wave), c("10001 B", "10001 C", "10002 B", "40001 2B"))
   }
 })
 
@@ -2074,6 +2317,20 @@ test_that("long columns made of merged wide files get the database's labels back
   expect_false(is.null(attr(long$lphya07, "label")))
   expect_false(is.null(attr(long$lphya07, "labels")))
   expect_identical(columns_of(without_tags(transform_lasa_data(long, format = "wide"))), columns_of(wide))
+})
+
+test_that("codes listed without wording keep their number as label when labels come back", {
+  # File 047's random lists 0, 59 and 99 without wording; read_lasa_sav()
+  # names them after their number. rbind() keeps wave B's labels for wave
+  # D's rows too, and the database gives each wave its own back.
+  b <- read_fixture(data.frame(RespNr = 1:2, BRANDOM = c(0, 59)), "LASAB047.SAV")
+  d <- read_fixture(data.frame(RespNr = 1:2, DRANDOM = c(99, 0)), "LASAD047.SAV")
+  expect_true(all(c("0", "59", "99") %in% names(attr(d$random, "labels"))))
+  long <- transform_lasa_data(rbind(b, d))
+  expect_identical(attr(long$random, "labels_wave"), list(B = attr(b$random, "labels_wave"), D = attr(d$random, "labels_wave")))
+  wide <- transform_lasa_data(long, format = "wide")
+  expect_identical(attr(wide$drandom, "labels_wave"), attr(d$random, "labels_wave"))
+  expect_identical(attr(wide$drandom, "wave_label"), attr(d$random, "wave_label"))
 })
 
 test_that("labels a user gave a variable are kept, not mixed with the database's", {
@@ -2110,7 +2367,7 @@ test_that("a variable documented with different wordings in several files of a w
   expect_null(attr(long$partner, "wave_label"))
 })
 
-test_that("the Baseline columns of four or more merged Time-prefixed data sets are combined, or say what's wrong", {
+test_that("the cohort columns of four or more merged Time-prefixed data sets are combined, or say what's wrong", {
   time_wide <- function(var, values) {
     d <- data.frame(respnr = c(1, 1, 2, 2), Wave = c("B", "C", "2B", "F"))
     d[[var]] <- values
@@ -2121,20 +2378,21 @@ test_that("the Baseline columns of four or more merged Time-prefixed data sets a
     time_wide("cesd01", c(0, 1, 2, 3)), time_wide("adl1a", c(1, 1, 2, 2))
   )
   merged <- suppressWarnings(Reduce(function(x, y) merge(x, y, by = "respnr"), sets))
-  expect_equal(sum(names(merged) == "Baseline.x"), 2L)
+  expect_equal(sum(names(merged) == "cohort.x"), 2L)
   long <- transform_lasa_data(merged)
-  expect_named(long, c("respnr", "Wave", "Time", "Baseline", "lphya09", "nupers", "cesd01", "adl1a"))
+  expect_named(long, c("respnr", "Wave", "Time", "cohort", "lphya09", "nupers", "cesd01", "adl1a"))
   expect_equal(as.vector(long$Time), c(0, 1, 0, 1))
+  expect_identical(as.character(long$cohort), rep(c("cohort 1 (1992)", "cohort 2 (2002)"), each = 2))
 
-  # A copy with a value that is no baseline wave is an error naming it ...
-  two <- merge(sets[[1]], sets[[2]], by = "respnr")
-  two$Baseline.y[[1]] <- "B2"
-  expect_error(transform_lasa_data(two), "'Baseline.y' column of baseline waves, but it says 'B2' for respondent 1")
-  # ... and one without any baseline wave another data set's own column.
-  own <- merge(sets[[1]], data.frame(respnr = c(1, 2), Baseline = c(12, 17)), by = "respnr")
+  # Copies that disagree are an error naming them by their position ...
+  four <- merged
+  four[[which(names(four) == "cohort.y")[[2L]]]][[1L]] <- "cohort 2 (2002)"
+  expect_error(transform_lasa_data(four), "'cohort.y' \\(column [0-9]+\\) says 'cohort 2 \\(2002\\)'")
+  # ... and a copy that names no cohort is another data set's own column.
+  own <- merge(sets[[1]], data.frame(respnr = c(1, 2), cohort = c(1920, 1925)), by = "respnr")
   long <- transform_lasa_data(own)
-  expect_named(long, c("respnr", "Wave", "Time", "Baseline", "lphya09", "Baseline.y"))
-  expect_equal(long$Baseline.y, c(12, 12, 17, 17))
+  expect_named(long, c("respnr", "Wave", "Time", "cohort", "lphya09", "cohort.y"))
+  expect_equal(long$cohort.y, c(1920, 1920, 1925, 1925))
 
   # Time columns of four merged long data sets that disagree are named by
   # their position, as several have the same name.

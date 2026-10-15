@@ -91,9 +91,20 @@
   `2B` = "2B", `3B` = "3B", MB = "MB", `4B` = "4B"
 )
 
+## LASA's cohorts as its cohort variable (LASAZ002.SAV's `cohort`) numbers
+## them, by baseline: cohort 1 (B), 2 (2B), 3 (3B) -- and 4 (4B), which
+## LASAZ002.SAV doesn't have yet. The migrant cohort (MB) has no number.
+.lasa_cohort_numbers <- c(B = 1L, `2B` = 2L, `3B` = 3L, `4B` = 4L)
+
+## The cohort column's own wording for the cohorts LASAZ002.SAV doesn't
+## have (see .lasa_cohort_column()), and its wording for all of them where
+## the label database doesn't document LASAZ002.SAV's.
+.lasa_cohort_texts <- c(
+  B = "cohort 1", `2B` = "cohort 2", `3B` = "cohort 3", `4B` = "cohort 4", MB = "migrant cohort"
+)
+
 .lasa_wave_column_label <- "LASA measurement wave"
 .lasa_time_column_label <- "LASA waves since the respondent's baseline (baseline = 0)"
-.lasa_baseline_column_label <- "LASA baseline wave of the respondent's cohort"
 
 ## Attributes transform_lasa_data() manages itself. Wide columns it creates
 ## carry "LASA_wave"/"LASA_long_name" when their name alone doesn't say
@@ -136,14 +147,14 @@
 #' ... become `oak`. A respondent gets a row for each wave at which at least
 #' one of the wave-specific columns has a value for them -- anything but
 #' `NA` or blank text (which is how SPSS stores missing text), so a
-#' missing-value code that is kept as a value (e.g. "dropout") counts.
-#' Respondents of a later cohort therefore only get rows for the
-#' waves before they joined LASA where the data hold such a code for them,
-#' as LASA's Z files do ("no observation birth cohorts 1938-1947"). A
-#' respondent without any value at any wave keeps a row for every wave, so
-#' nobody disappears. Rows are sorted by respondent (in order of first
-#' appearance) and wave, except in long data without wide columns, which
-#' keep their order.
+#' missing-value code kept as a value (read with
+#' `read_lasa_sav(keep_user_na = TRUE)`) counts too. Respondents of a
+#' later cohort therefore only get rows for the waves before they joined
+#' LASA where the data hold such a code for them, as LASA's Z files do
+#' ("no observation birth cohorts 1938-1947"). A respondent without any
+#' value at any wave keeps a row for every wave, so nobody disappears.
+#' Rows are sorted by respondent (in order of first appearance) and wave,
+#' except in long data without wide columns, which keep their order.
 #'
 #' **Time** counts the waves since the respondent's baseline, the wave at
 #' which their cohort joined LASA, which is Time 0. A cohort takes part in
@@ -161,44 +172,71 @@
 #' which `LASAZ008.SAV` uses (`t2_dat` is wave B there); for time itself,
 #' use the interview dates or ages in `LASAZ008.SAV`.
 #'
-#' A row's Time depends on the respondent's cohort, so the data must show
-#' it: a value (other than `NA`, blank text, or a missing-value code) at
-#' the respondent's baseline or at a wave only their cohort takes part in
-#' (B to E for the first cohort); any row of a single LASA file of such a
-#' wave (the data's `"LASA_file_code"` and `"LASA_wave"` attributes say
-#' which file; not a Z file, whose rows may hold codes for waves before a
-#' cohort joined), whatever it holds, unless that is nothing but values a
-#' guess put at its wave (see **Names of several waves**); a `"Baseline"`
-#' column with each respondent's baseline wave (as Time-prefixed wide data
-#' have, see below); or a `"Time"` column already in long data. Values
-#' show it in the
-#' wave-specific variables the label database documents (and long columns
-#' `transform_lasa_data()` made from wide columns); in long data without
-#' any, in the columns whose values differ between a respondent's rows (a
-#' variable computed per wave, say; an `NA` counts as a value of its own),
-#' or else in all columns but the documented stable variables; and in long
-#' data without such columns, every row shows its wave. The waves from
-#' F on, which cohorts share, don't show the cohort: the rows of a
-#' respondent seen only at those waves get no Time (unless every cohort the
-#' data leave open gives their wave the same Time), with a message. Data
-#' showing waves of several cohorts for one respondent give that respondent
-#' no Time, with a warning. So a single LASA file of wave F or later has no
-#' Time until it is combined with data that show the cohorts, such as the
-#' baseline files.
+#' A row's Time depends on the respondent's cohort, which the data show by:
+#' * a value (other than `NA`, blank text, or a missing-value code) at the
+#'   respondent's baseline or at a wave only their cohort takes part in (B
+#'   to E for the first cohort);
+#' * any row of a single LASA file of such a wave (the data's
+#'   `"LASA_file_code"` and `"LASA_wave"` attributes say which file; not a
+#'   Z file, whose rows may hold codes for waves before a cohort joined),
+#'   whatever it holds, unless that is nothing but values a guess put at its
+#'   wave (see **Names of several waves**);
+#' * LASA's `cohort` column, as `LASAZ002.SAV` and Time-prefixed wide data
+#'   (see **Wide format**) have it: `"cohort 1 (1992)"` -- also written
+#'   `"Cohort 1"` or `"cohort 1 (1992/1993)"` -- or its code 1 is the first
+#'   cohort, whose baseline is B; cohort 2's is 2B, cohort 3's 3B, cohort
+#'   4's 4B, and the `"migrant cohort"`'s MB;
+#' * a `"Time"` column already in long data;
+#' * the respondent number: LASA numbers its respondents with five digits,
+#'   the first of which is 1, 2, or 3 in the first cohort (1 also in the LSN
+#'   pilot study), 4, 5, or 6 in the second cohort, and 7, 8, or 9 in the
+#'   third. The fourth and the migrant cohort's numbers aren't known yet, so
+#'   theirs say nothing, nor does a number of any other form (such as the
+#'   small numbers of the examples below). Where the rest of the data show
+#'   another cohort than a respondent's number, they decide, with a warning,
+#'   also over a `"Time"` column that follows the number (as
+#'   [read_lasa_sav()] gives it at waves several cohorts share).
+#'
+#' A missing-value code is what [read_lasa_sav()] turns into `NA` unless
+#' `keep_user_na = TRUE`: an SPSS user-missing value; in a variable the
+#' label database documents, any negative code, documented or not, except
+#' in a variable whose values can be negative at that wave (such as the
+#' speech-reception thresholds `msrttn`), where only its documented codes
+#' are; and in any column, a negative code with a value label -- also as
+#' the text or factor level read_lasa_sav() gives it (its label, or its own
+#' number). Values show the cohort in the wave-specific variables the label
+#' database documents (and long columns `transform_lasa_data()` made from
+#' wide columns); in long data without any, in the columns whose values
+#' differ between a respondent's rows (a variable computed per wave, say;
+#' an `NA` counts as a value of its own), or else in all columns but the
+#' documented stable variables; and in long data without such columns,
+#' every row shows its wave. The waves from F on, which cohorts share,
+#' don't show the cohort: the rows of a respondent seen only at those waves
+#' get no Time, with a message, unless their respondent number or another
+#' of the sources above shows it (or every cohort the data leave open gives
+#' their wave the same Time). Data showing waves of several cohorts for one
+#' respondent give that respondent no Time, with a warning.
 #'
 #' A `"Time"` column already in long data -- also the `Time.x`/`Time.y`
 #' columns [merge()] makes of two, and the further copies merging more data
 #' sets gives (`Time.x.x`, or several of the same name) -- must give each
-#' row a Time that some cohort's waves give its wave, and copies must agree
-#' with each other; it is replaced by the recomputed one. A `"Baseline"`
-#' column must give each respondent one baseline wave (B, 2B, 3B, MB, or
-#' 4B) or none (`NA`) -- unless none of its values is a baseline wave: then
-#' it is an ordinary column. The `Baseline.x`/`Baseline.y` columns of
-#' Time-prefixed data sets merged by `respnr`, and the further copies
-#' merging more of them gives (`Baseline.x.x`, or several of the same
-#' name), are combined into one `"Baseline"`, and must agree. A copy that
-#' holds baseline waves must hold nothing else; a copy without any is
-#' another data set's own column, and stays as it is.
+#' row a Time that the respondent's cohort, as far as the rest of the data
+#' show it, gives its wave, and copies must agree with each other; it is
+#' replaced by the recomputed one. A `cohort` column (in any
+#' capitalization) must give each respondent one cohort, which the waves
+#' the data show must fit; values that name no cohort (a missing-value
+#' code) say nothing, and a `cohort` column none of whose values, factor
+#' levels, or value labels names one, or holding numbers other than LASA's
+#' codes 1 to 4, is an ordinary column. In long format, the `cohort` column
+#' stays as it is; coded as Time-prefixed wide data have it (as
+#' [read_lasa_sav()] reads `LASAZ002.SAV`'s), it gets back the labels
+#' [merge()] and row subsetting drop. The `cohort.x`/`cohort.y` columns of
+#' data sets with a `cohort` column merged by `respnr` (`LASAZ002.SAV`,
+#' Time-prefixed wide data), and the further copies merging more of them
+#' gives (`cohort.x.x`, or several of the same name), are combined into one
+#' `cohort`, coded as Time-prefixed wide data have it, and must agree; a
+#' copy that names no cohort is another data set's own column, and stays as
+#' it is.
 #'
 #' **Stable variables** -- columns that hold for every wave, such as sex or
 #' year of birth (`byear`) in `LASAZ004.SAV` -- keep one column and are
@@ -262,15 +300,16 @@
 #' and C). Each respondent's value in such a column goes to the wave the
 #' data show for that respondent: in long data, a value already on a row of
 #' one of those waves stays there; otherwise, the respondent's cohort, as
-#' far as the data show it (the first cohort has no wave 3B, so its
-#' respondents' `bqvalu16` is wave J's), and then the file the column came
-#' from (the data's `"LASA_file_code"` and `"LASA_wave"` attributes, as far
-#' as the data's label report lists the column, since a merge keeps at
-#' most the first file's attributes). If nothing says, the value goes, with
-#' a message naming the column, to the first of these waves the
-#' respondent's cohort may take part in: the wave the column's other
-#' respondents were placed at by their cohort, the wave of the data's
-#' `"LASA_wave"` attribute, and the column's waves in calendar order (and
+#' far as the data (or the respondent number) show it (the first cohort has
+#' no wave 3B, so its respondents' `bqvalu16` is wave J's), and then the
+#' file the column came from (the data's `"LASA_file_code"` and
+#' `"LASA_wave"` attributes, as far as the data's label report lists the
+#' column, since a merge keeps at most the first file's attributes). If
+#' nothing says, the value goes, with a message naming the column, to the
+#' first of these waves the respondent's cohort may take part in: the wave
+#' the column's other respondents were placed at by their cohort, the wave
+#' of the data's `"LASA_wave"` attribute, and the column's waves in
+#' calendar order (and
 #' for a name LASA's wave files use without a wave prefix, `drinking`, if
 #' the respondent's cohort takes part in none of those: waves 4B and L,
 #' which the label database doesn't document yet). Such a guess doesn't
@@ -351,14 +390,21 @@
 #' followed by the variable name: `t0_oak` holds each respondent's value at
 #' their own baseline, `t1_oak` at their cohort's next wave (wave C for the
 #' first cohort, F for the second), and so on, so the cohorts share
-#' columns. A `"Baseline"` column after `respnr` gives each respondent's
-#' baseline wave, which transforming the data back to long format uses.
-#' Wave A, which has no Time, keeps its own column (`aoak`). Every other
-#' value needs a Time: values at a wave without one for their respondent
-#' are an error, except missing-value codes, which are left out with a
-#' message. A respondent whose rows have a Time while the data leave their
-#' baseline open (rows of waves I to L only, which the third and the
-#' migrant cohort give the same Time) gets a missing `"Baseline"`, with a
+#' columns. A `cohort` column after `respnr` gives each respondent's
+#' cohort, which transforming the data back to long format uses. It is
+#' LASA's cohort variable the way [read_lasa_sav()] reads `LASAZ002.SAV`'s
+#' -- a factor of its value labels (`"cohort 1 (1992)"`, `"cohort 2
+#' (2002)"`, `"cohort 3 (2012)"`), with its labels -- so the result merges
+#' with that file's columns by `respnr` and `cohort`; the fourth and the
+#' migrant cohort, which `LASAZ002.SAV` doesn't have, get levels of their
+#' own (`"cohort 4"`, `"migrant cohort"`) where respondents have them. It
+#' replaces a `cohort` column `data` have. Wave A, which has no Time, keeps
+#' its own column (`aoak`). Every other value needs a Time: values at a
+#' wave without one for their respondent are an error, except
+#' missing-value codes, which are left out with a message. A respondent
+#' whose rows have a Time while the data leave their cohort open (rows of
+#' waves I to L only, which the third and the migrant cohort give the same
+#' Time, without a LASA respondent number) gets a missing `cohort`, with a
 #' warning: their columns can't be transformed back. A column holding
 #' several cohorts' waves (`t0_oak`: B, 2B, ...) gets those waves' types,
 #' value labels and user-missing codes, combined the way long format
@@ -507,25 +553,25 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   grepl("^Time(\\.x|\\.y)*(\\.\\.\\.[0-9]+)?$", names)
 }
 
-## Whether each of `names` is a copy merge() made of the "Baseline" column
-## of Time-prefixed wide data: "Baseline.x" and "Baseline.y", and the
-## further copies that merging more data sets with a "Baseline" column
-## gives ("Baseline.x.x", or several of the same name).
-.lasa_is_baseline_copy <- function(names) {
-  grepl("^Baseline((\\.x|\\.y)+(\\.\\.\\.[0-9]+)?|\\.\\.\\.[0-9]+)$", names)
+## Whether each of `names` is a copy merge() made of a "cohort" column (in
+## any capitalization) -- that of Time-prefixed wide data, or LASA's own,
+## as in LASAZ002.SAV: "cohort.x" and "cohort.y", and the further copies
+## that merging more data sets with a "cohort" column gives ("cohort.x.x",
+## or several of the same name).
+.lasa_is_cohort_copy <- function(names) {
+  grepl("^cohort((\\.x|\\.y)+(\\.\\.\\.[0-9]+)?|\\.\\.\\.[0-9]+)$", names, ignore.case = TRUE)
 }
 
-## Base R's merge() of four or more data sets with a "Time" or a
-## "Baseline" column gives several columns named "Time.x" and "Time.y" (or
-## "Baseline.x" and "Baseline.y"). In long data (with a "Wave" column),
-## Time copies are only ever dropped for the recomputed "Time", and
-## Baseline copies are combined into one "Baseline" (see
-## .lasa_combine_baseline_copies()), so they get unique names to be read
-## by. Returns list(data, renamed): `renamed` gives the columns of a
-## repeated name (by their new names) their names and positions in `data`,
-## for messages (see .lasa_show_column()).
+## Base R's merge() of four or more data sets with a "Time" or a "cohort"
+## column gives several columns named "Time.x" and "Time.y" (or "cohort.x"
+## and "cohort.y"). Time copies in long data (with a "Wave" column) are
+## only ever dropped for the recomputed "Time", and cohort copies are
+## combined into one "cohort" (see .lasa_combine_cohort_copies()), so they
+## get unique names to be read by. Returns list(data, renamed): `renamed`
+## gives the columns of a repeated name (by their new names) their names
+## and positions in `data`, for messages (see .lasa_show_column()).
 .lasa_unique_copies <- function(data) {
-  copy <- .lasa_is_baseline_copy(names(data))
+  copy <- .lasa_is_cohort_copy(names(data))
   if (any(tolower(names(data)) == "wave")) copy <- copy | .lasa_is_time_copy(names(data))
   repeated <- copy & names(data) %in% names(data)[copy][duplicated(names(data)[copy])]
   if (!any(repeated)) return(list(data = data, renamed = .lasa_no_renamed))
@@ -651,6 +697,15 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 ##                  texts LASA marks as missing-value codes (is_missing: its
 ##                  negative codes), as numbers and as text (the factor
 ##                  levels or text read_lasa_sav() may turn them into).
+##   signed         the variable and canonical names of the variables whose
+##                  values can be negative (can_be_negative: msrttn's dB
+##                  thresholds, say), by themselves (at any of their waves)
+##                  and as "<name>\r<wave>" (at that wave).
+##   cohort_codes   LASA's cohort variable (LASAZ002.SAV's cohort) as
+##                  read_lasa_sav() reads its codes 1 to 4 (a code the
+##                  database doesn't document reads as its own number), for
+##                  the cohort column of Time-prefixed wide data
+##                  (.lasa_cohort_column()); NULL if that fails.
 .lasa_transform_db_info <- function() {
   db <- .lasa_load_label_db()
   topic_db <- .lasa_topic_database()
@@ -686,6 +741,8 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   stem_wave <- paste(cn, wave, sep = "\r")
 
   override_names <- tolower(db$manual_overrides$variables$variable_name)
+  # A local database saved before can_be_negative existed lacks it.
+  signed <- v$can_be_negative %in% TRUE
 
   # Missing-value codes, by the variable's own and its canonical name.
   vl <- db$value_labels
@@ -717,7 +774,8 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     !wide_rows$z_file
 
   # What read_lasa_sav() labels each variable with at each wave, for long
-  # columns that lost their labels (.lasa_restore_db_labels()).
+  # columns that lost their labels (.lasa_restore_db_labels()): a code
+  # listed without wording is named after its own number.
   value_rows <- !is.na(vl$value_numeric)
   vl_key <- paste(.lasa_normalize_filecode(vl$filecode), toupper(vl$wave), vl_names, sep = "\r")
   harmonized_rows <- !is.na(harmonized$value_numeric)
@@ -731,12 +789,9 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     harmonized_label = v$harmonized_var_label,
     value_key = paste(fc, wave, vn, sep = "\r"),
     harmonized_key = paste(fc, cn, sep = "\r"),
-    value_maps = .lasa_hash(split(
-      stats::setNames(vl$value_numeric[value_rows], vl$value_label[value_rows]), vl_key[value_rows]
-    )),
+    value_maps = .lasa_hash(split(.lasa_value_map(vl[value_rows, , drop = FALSE]), vl_key[value_rows])),
     harmonized_maps = .lasa_hash(split(
-      stats::setNames(harmonized$value_numeric[harmonized_rows], harmonized$value_label[harmonized_rows]),
-      harmonized_key[harmonized_rows]
+      .lasa_value_map(harmonized[harmonized_rows, , drop = FALSE]), harmonized_key[harmonized_rows]
     ))
   )
 
@@ -768,7 +823,15 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     file_gaps = .lasa_hash(file_gaps[lengths(file_gaps) > 0L]),
     stable = .lasa_hash_set(setdiff(unique(cn[z_stable]), time_varying)),
     missing_codes = missing_of("code"),
-    missing_labels = missing_of("text")
+    missing_labels = missing_of("text"),
+    signed = .lasa_hash_set(c(vn[signed], cn[signed], paste(c(vn[signed], cn[signed]), wave[signed], sep = "\r"))),
+    cohort_codes = tryCatch(
+      suppressWarnings(suppressMessages(.lasa_apply_labels(
+        data.frame(respnr = seq_along(.lasa_cohort_numbers), cohort = as.numeric(.lasa_cohort_numbers)),
+        filecode = "z002", wave = "Z"
+      )$cohort)),
+      error = function(e) NULL
+    )
   )
   .lasa_transform_cache$db <- db
   .lasa_transform_cache$topics <- topic_db
@@ -934,119 +997,234 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   list(names = found, values = values)
 }
 
-## Merges the copies merge() made of the "Baseline" column of Time-prefixed
-## wide data (see .lasa_is_baseline_copy(); merging such data by respnr
-## alone gives them) into one "Baseline" column where the first of them
-## was. A copy holding baseline waves (see .lasa_find_baseline()) must hold
-## nothing else, and the copies must agree; a copy holding values that are
-## none of those waves (another data set's own "Baseline") is an ordinary
-## column. `id` is the respondent identifier column; `renamed` (see
-## .lasa_unique_copies()) names columns in errors.
-.lasa_combine_baseline_copies <- function(data, id, renamed = .lasa_no_renamed) {
-  copies <- names(data)[.lasa_is_baseline_copy(names(data))]
+## The cohort (by its baseline wave) each of the texts `text` names, the way
+## LASA's cohort variable (LASAZ002.SAV's cohort) and the cohort column of
+## Time-prefixed wide data name them: "cohort 1 (1992)" -- also without the
+## years, capitalized, or "cohort 1 (1992/1993)" -- is the first cohort,
+## whose baseline is B; cohort 2's is 2B, cohort 3's 3B, and cohort 4's 4B;
+## "migrant cohort" is the migrant cohort's (MB). NA for anything else.
+.lasa_cohort_of_text <- function(text) {
+  hits <- regmatches(text, regexec("^\\s*cohort\\s*([0-9]+)", text, ignore.case = TRUE))
+  number <- vapply(hits, function(hit) if (length(hit) == 2L) as.numeric(hit[[2L]]) else NA_real_, numeric(1))
+  out <- names(.lasa_cohort_numbers)[match(number, .lasa_cohort_numbers)]
+  out[!is.na(text) & grepl("^\\s*migrant", text, ignore.case = TRUE)] <- "MB"
+  out
+}
+
+## The cohort (by baseline wave, see .lasa_cohort_of_text()) each element of
+## column `x` names: by its text, a factor's level, a code's value label, or
+## in a column of plain numbers, LASA's code itself (1 to 4). NA for
+## anything else (a missing value or missing-value code). NULL when `x`
+## names no cohort at all -- none of its values, levels, or value labels
+## does, or a column of plain numbers holds other numbers too (negative
+## missing-value codes aside) -- which makes it an ordinary column.
+## Attribute "says" holds each element as text.
+.lasa_cohort_codes <- function(x) {
+  values <- .lasa_bare(x)
+  if (is.factor(x)) {
+    of_level <- .lasa_cohort_of_text(levels(x))
+    if (all(is.na(of_level))) return(NULL)
+    return(structure(of_level[values], says = levels(x)[values]))
+  }
+  if (is.character(values)) {
+    codes <- .lasa_cohort_of_text(values)
+    if (all(is.na(codes))) return(NULL)
+    return(structure(codes, says = values))
+  }
+  if (!is.numeric(values)) return(NULL)
+  labels <- attr(x, "labels", exact = TRUE)
+  if (is.numeric(labels) && !is.null(names(labels))) {
+    of_label <- .lasa_cohort_of_text(names(labels))
+    if (any(!is.na(of_label))) {
+      at <- match(values, labels)
+      says <- ifelse(is.na(at), as.character(values), names(labels)[at])
+      return(structure(of_label[at], says = says))
+    }
+  }
+  present <- !is.na(values) & values >= 0
+  if (!any(present) || !all(values[present] %in% .lasa_cohort_numbers)) return(NULL)
+  structure(names(.lasa_cohort_numbers)[match(values, .lasa_cohort_numbers)], says = as.character(values))
+}
+
+## The cohort column of Time-prefixed wide data, from each respondent's
+## cohort by baseline wave (`baselines`, NA where unknown): LASA's cohort
+## variable the way read_lasa_sav() reads LASAZ002.SAV's (see
+## db_info$cohort_codes) -- a factor of its value labels ("cohort 1
+## (1992)", ...), with its labels -- so that it merges with that file's
+## cohort column. The cohorts LASAZ002.SAV doesn't have, the fourth
+## ("cohort 4") and the migrant cohort ("migrant cohort"), get levels of
+## their own after its levels, where respondents have them.
+.lasa_cohort_column <- function(baselines, db_info) {
+  template <- db_info$cohort_codes
+  texts <- .lasa_cohort_texts
+  levels <- character(0)
+  if (is.factor(template)) {
+    levels <- levels(template)
+    of_level <- .lasa_cohort_of_text(levels)
+    levels <- levels[!is.na(of_level)]
+    of_level <- of_level[!is.na(of_level)]
+    texts[of_level[!duplicated(of_level)]] <- levels[!duplicated(of_level)]
+  }
+  values <- unname(texts[baselines])
+  extra <- setdiff(unname(texts[c(names(.lasa_cohort_numbers), "MB")]), levels)
+  out <- factor(values, levels = c(levels, extra[extra %in% values]))
+  if (is.factor(template)) {
+    a <- attributes(template)
+    for (nm in setdiff(names(a), c("levels", "class", "names"))) attr(out, nm) <- a[[nm]]
+  } else {
+    attr(out, "label") <- .lasa_cohort_column_label
+  }
+  out
+}
+
+.lasa_cohort_column_label <- "LASA cohort of the respondent"
+
+## A cohort column coded as .lasa_cohort_column() codes it, whose labels
+## merge() or base R's row subsetting dropped (as they drop any factor's
+## attributes but its levels): with them back, as long format gives other
+## columns the database's labels back (.lasa_restore_db_labels()). NULL for
+## any other column.
+.lasa_restore_cohort_labels <- function(x, db_info) {
+  if (!identical(class(x), "factor") || !setequal(names(attributes(x)), c("levels", "class"))) return(NULL)
+  standard <- .lasa_cohort_column(c(names(.lasa_cohort_numbers), "MB"), db_info)
+  own <- levels(.lasa_cohort_column(character(0), db_info))
+  if (!identical(levels(x)[seq_along(own)], own) || !all(levels(x) %in% levels(standard))) return(NULL)
+  a <- attributes(standard)
+  for (nm in setdiff(names(a), c("levels", "class"))) attr(x, nm) <- a[[nm]]
+  x
+}
+
+## Merges the copies merge() made of a cohort column (see
+## .lasa_is_cohort_copy(); merging Time-prefixed wide data, or LASA's
+## LASAZ002.SAV, by respnr alone gives them) into one "cohort" column where
+## the first of them was, coded as Time-prefixed wide data have it
+## (.lasa_cohort_column()). The copies must agree on each respondent's
+## cohort (.lasa_cohort_codes(); a value that names none says nothing); a
+## copy that names no cohort at all (another data set's own "cohort") is an
+## ordinary column. `id` is the respondent identifier column; `renamed`
+## (see .lasa_unique_copies()) names columns in errors.
+.lasa_combine_cohort_copies <- function(data, id, db_info, renamed = .lasa_no_renamed) {
+  copies <- names(data)[.lasa_is_cohort_copy(names(data))]
   if (length(copies) == 0L) return(data)
-  columns <- c(intersect("Baseline", names(data)), copies)
-  codes <- lapply(stats::setNames(columns, columns), function(name) {
-    x <- .lasa_normalize_wave_codes(data[[name]])
-    x[!is.na(x) & !nzchar(x)] <- NA_character_
-    x
-  })
-  of_waves <- vapply(codes, function(x) any(x %in% .lasa_baselines), logical(1))
-  other <- columns[!of_waves & vapply(codes, function(x) any(!is.na(x)), logical(1))]
-  if (!any(of_waves[copies])) {
+  own <- names(data)[tolower(names(data)) == "cohort"]
+  columns <- c(own, copies)
+  codes <- lapply(stats::setNames(columns, columns), function(name) .lasa_cohort_codes(data[[name]]))
+  of_cohorts <- !vapply(codes, is.null, logical(1))
+  other <- columns[!of_cohorts & vapply(columns, function(name) any(!.lasa_is_na(data[[name]])), logical(1))]
+  if (!any(of_cohorts[copies])) {
     .lasa_stop_repeated(copies, renamed)
     return(data)
   }
-  if ("Baseline" %in% other) {
+  if (length(intersect(own, other)) > 0L) {
     stop(
-      "'data' has a 'Baseline' column of its own next to copies of the 'Baseline' column of ",
-      "Time-prefixed wide data that merge() made (", paste(copies[of_waves[copies]], collapse = ", "),
-      "); rename it first.",
+      "'data' has a '", intersect(own, other)[[1L]], "' column of its own next to copies of a cohort column ",
+      "that merge() made (", paste(copies[of_cohorts[copies]], collapse = ", "), "); rename it first.",
       call. = FALSE
     )
   }
   .lasa_stop_repeated(other, renamed)
   columns <- setdiff(columns, other)
-  for (name in columns) {
-    invalid <- !is.na(codes[[name]]) & !codes[[name]] %in% .lasa_baselines
-    if (any(invalid)) {
-      i <- which(invalid)[[1L]]
-      stop(
-        "'data' has a ", .lasa_show_column(name, renamed, " column"), " of baseline waves, but it says '",
-        codes[[name]][[i]], "' for respondent ", .lasa_text_key(.lasa_slice(data[[id]], i)),
-        "; a respondent's baseline wave is B, 2B, 3B, MB, or 4B (or missing). Correct it, or rename ",
-        "the column if it holds something else.",
-        call. = FALSE
-      )
-    }
-  }
-  combined <- codes[[columns[[1L]]]]
+  code_of <- function(name) if (is.null(codes[[name]])) rep(NA_character_, nrow(data)) else as.vector(codes[[name]])
+  says_of <- function(name) if (is.null(codes[[name]])) code_of(name) else attr(codes[[name]], "says", exact = TRUE)
+  combined <- code_of(columns[[1L]])
+  says <- says_of(columns[[1L]])
   given_by <- ifelse(is.na(combined), NA_character_, columns[[1L]])
   for (name in columns[-1L]) {
-    disagree <- !is.na(combined) & !is.na(codes[[name]]) & combined != codes[[name]]
+    these <- code_of(name)
+    disagree <- !is.na(combined) & !is.na(these) & combined != these
     if (any(disagree)) {
       i <- which(disagree)[[1L]]
       stop(
-        "'data' has 'Baseline' columns that disagree: for respondent ",
-        .lasa_text_key(.lasa_slice(data[[id]], i)), ", ", .lasa_show_column(given_by[[i]], renamed), " says ",
-        combined[[i]], " and ", .lasa_show_column(name, renamed), " says ", codes[[name]][[i]],
-        ". Merging data sets with a 'Baseline' column needs them to agree on each respondent's ",
-        "baseline wave.",
+        "'data' has cohort columns that disagree: for respondent ", .lasa_text_key(.lasa_slice(data[[id]], i)),
+        ", ", .lasa_show_column(given_by[[i]], renamed), " says '", says[[i]], "' and ",
+        .lasa_show_column(name, renamed), " says '", says_of(name)[[i]], "'. Merging data sets with a ",
+        "cohort column needs them to agree on each respondent's cohort.",
         call. = FALSE
       )
     }
-    new <- is.na(combined) & !is.na(codes[[name]])
-    combined[new] <- codes[[name]][new]
+    new <- is.na(combined) & !is.na(these)
+    combined[new] <- these[new]
+    says[new] <- says_of(name)[new]
     given_by[new] <- name
   }
   positions <- match(columns, names(data))
   first <- min(positions)
-  attr(combined, "label") <- .lasa_baseline_column_label
-  data[[first]] <- combined
+  data[[first]] <- .lasa_cohort_column(combined, db_info)
   others <- setdiff(positions, first)
   if (length(others) > 0L) data[others] <- NULL
-  names(data)[[first]] <- "Baseline"
+  names(data)[[first]] <- "cohort"
   data
 }
 
-## The "Baseline" column of `data` -- each respondent's baseline wave (B,
-## 2B, 3B, MB or 4B), as transform_lasa_data(prefix = "Time") gives wide
-## data -- as each row's uppercase code (NA if none), or NULL if `data` has
-## no such column (a column of another name, or one with values that are
-## none of those waves, is an ordinary column). A column of baseline waves
-## must hold nothing else and (in long data, with respondents `r` of `n`)
-## give each respondent one; `row_ids` names each row's respondent in the
-## errors saying otherwise.
-.lasa_find_baseline <- function(data, r = NULL, n = NULL, row_ids = NULL) {
-  if (!"Baseline" %in% names(data)) return(NULL)
-  codes <- .lasa_normalize_wave_codes(data[["Baseline"]])
-  codes[!is.na(codes) & !nzchar(codes)] <- NA_character_
-  present <- !is.na(codes)
-  if (any(present) && !any(codes[present] %in% .lasa_baselines)) return(NULL)
-  name_row <- function(i) if (is.null(row_ids)) paste0("row ", i) else paste0("respondent ", row_ids[[i]])
-  invalid <- present & !codes %in% .lasa_baselines
-  if (any(invalid)) {
-    i <- which(invalid)[[1L]]
-    stop(
-      "'data' has a 'Baseline' column of baseline waves, but it says '", codes[[i]], "' for ",
-      name_row(i), "; a respondent's baseline wave is B, 2B, 3B, MB, or 4B (or missing). Correct ",
-      "it, or rename the column if it holds something else.",
-      call. = FALSE
-    )
-  }
+## The cohort column of `data` -- a column named "cohort" (in any
+## capitalization) that names LASA cohorts (.lasa_cohort_codes()), as
+## LASAZ002.SAV and Time-prefixed wide data have -- as each row's cohort by
+## baseline wave (NA where it names none), or NULL if `data` has no such
+## column (one that names no cohort is an ordinary column). In long data
+## (respondents `r` of `n`), it must give each respondent one cohort;
+## `row_ids` names each row's respondent in the error saying otherwise.
+## Attribute "says" holds each row's value as text, and "column" the
+## column's name.
+.lasa_find_cohort <- function(data, r = NULL, n = NULL, row_ids = NULL) {
+  name <- names(data)[tolower(names(data)) == "cohort"]
+  if (length(name) != 1L) return(NULL)
+  codes <- .lasa_cohort_codes(data[[name]])
+  if (is.null(codes)) return(NULL)
+  says <- attr(codes, "says", exact = TRUE)
+  codes <- as.vector(codes)
   if (!is.null(r)) {
     several <- .lasa_distinct_values(r, codes, n) > 1L
     if (any(several)) {
       i <- which(several[r])[[1L]]
-      waves <- unique(codes[r == r[[i]] & present])
+      cohorts <- unique(says[r == r[[i]] & !is.na(codes)])
+      who <- if (is.null(row_ids)) paste0("row ", i) else paste0("respondent ", row_ids[[i]])
       stop(
-        "'data' has a 'Baseline' column that gives ", name_row(i), " several baseline waves (",
-        paste(waves, collapse = " and "), ") on different rows; it must give each respondent one.",
+        "'data' has a '", name, "' column that gives ", who, " several cohorts ('",
+        paste(cohorts, collapse = "' and '"), "') on different rows; it must give each respondent one.",
         call. = FALSE
       )
     }
   }
-  codes
+  structure(codes, says = says, column = name)
+}
+
+## Each respondent's (1..n, of rows `r`) baseline wave as the data give it
+## themselves: in a cohort column (.lasa_find_cohort()). Returns
+## list(baseline, time_columns): `baseline` NA where it says nothing, NULL
+## without such a column, with attributes "column" (its name) and "says"
+## (what it says for each respondent, for errors); `time_columns` TRUE
+## when there is one, as Time-prefixed wide columns come with. `row_ids`
+## names each row's respondent in errors.
+.lasa_given_baselines <- function(data, r, n, row_ids = NULL) {
+  from_cohort <- .lasa_find_cohort(data, r, n, row_ids)
+  if (is.null(from_cohort)) return(list(baseline = NULL, time_columns = FALSE))
+  at <- .lasa_first_row(r, n, keep = !is.na(from_cohort))
+  baseline <- as.vector(from_cohort)[at]
+  attr(baseline, "column") <- attr(from_cohort, "column", exact = TRUE)
+  attr(baseline, "says") <- attr(from_cohort, "says", exact = TRUE)[at]
+  list(baseline = baseline, time_columns = TRUE)
+}
+
+## The cohorts each respondent may belong to by their LASA respondent
+## number (`ids`, each respondent's identifier as text, see
+## .lasa_text_key()). LASA's respondent numbers have five digits, the first
+## of which says the cohort: 1 (also the LSN pilot study's, wave A), 2, or
+## 3 the first cohort, 4, 5, or 6 the second, and 7, 8, or 9 the third.
+## (The fourth cohort's are likely longer, which is unconfirmed, and the
+## migrant cohort's are unknown: those say nothing, as does an identifier
+## of any other form.) A logical matrix, respondents x cohorts of
+## .lasa_cohort_times(), with every cohort open where the number says
+## nothing; NULL if no identifier is such a number.
+.lasa_id_cohorts <- function(ids) {
+  if (length(ids) == 0L) return(NULL)
+  text <- trimws(ids)
+  lasa <- !is.na(text) & grepl("^[1-9][0-9]{4}$", text)
+  if (!any(lasa)) return(NULL)
+  cohorts <- colnames(.lasa_cohort_times())
+  by_digit <- rep(c("B", "2B", "3B"), each = 3L)
+  out <- matrix(TRUE, nrow = length(ids), ncol = length(cohorts), dimnames = list(NULL, cohorts))
+  out[lasa, ] <- outer(by_digit[as.integer(substr(text[lasa], 1L, 1L))], cohorts, `==`)
+  out
 }
 
 ## Whether column `x` (named `name`) holds a wave-specific variable as far
@@ -1060,14 +1238,22 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 }
 
 ## Which elements of column `x` show that the respondent took part:
-## anything but NA and a missing-value code -- an SPSS user-missing value,
-## or a code LASA marks as missing (a negative code, also as the factor
-## level or text read_lasa_sav() gives it), which LASA's Z files also use
+## anything but NA and a missing-value code, which LASA's Z files also use
 ## for waves before a respondent's cohort joined (e.g. "no observation
-## birth cohorts 1938-1947"). The label database's missing-value codes are
-## looked up by `names` (the column's name, the variable's long-format
-## name) and the column's canonical_name attribute.
-.lasa_real_value <- function(x, names, db_info) {
+## birth cohorts 1938-1947"). A missing-value code is what read_lasa_sav()
+## turns into NA unless keep_user_na = TRUE: an SPSS user-missing value; in
+## a variable the label database documents, any negative code, documented
+## or not -- except in a variable whose values can be negative
+## (can_be_negative) at the element's wave, where only its documented
+## codes are; and in any column, a negative code it has a value label for.
+## Codes count also as the factor level or text read_lasa_sav() gives them
+## (their label, or their own number for a code without wording). The
+## label database is looked up by `names` (the column's name, the
+## variable's long-format name) and the column's canonical_name attribute.
+## `waves` are the waves the elements may be at (NULL, or NA among them:
+## any wave), or with `each = TRUE`, each element's own wave (NA if
+## unknown).
+.lasa_real_value <- function(x, names, db_info, waves = NULL, each = FALSE) {
   values <- .lasa_bare(x)
   real <- !.lasa_is_na(x)
   if (!any(real)) return(real)
@@ -1079,36 +1265,68 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   canonical <- attr(x, "canonical_name", exact = TRUE)
   lookup_names <- unique(tolower(c(names, if (is.character(canonical) && length(canonical) == 1L) canonical)))
   documented <- function(table) unlist(lapply(lookup_names, function(nm) .lasa_lookup(table, nm)))
+  documented_codes <- documented(db_info$missing_codes)
   labels <- attr(x, "labels", exact = TRUE)
   label_codes <- if (is.numeric(labels) && !is.null(names(labels))) labels else NULL
   label_text <- names(label_codes)
 
+  # Whether an undocumented negative value is a measurement rather than a
+  # missing-value code, per element: never in a column the database
+  # doesn't document (which keeps it as it is), and in one it does, only
+  # where the variable can be negative at the element's wave.
+  in_database <- any(vapply(lookup_names, function(nm) .lasa_has(db_info$documented, nm), logical(1)))
+  signed_at <- function(w) {
+    keys <- if (length(w) == 0L || anyNA(w)) lookup_names else paste(rep(lookup_names, each = length(w)), w, sep = "\r")
+    any(vapply(keys, function(key) .lasa_has(db_info$signed, key), logical(1)))
+  }
+  measured <- if (!in_database) {
+    TRUE
+  } else if (isTRUE(each) && length(waves) == length(values)) {
+    distinct <- unique(waves)
+    vapply(distinct, signed_at, logical(1))[match(waves, distinct)]
+  } else {
+    signed_at(waves)
+  }
+  measured <- rep_len(measured, length(values))
+
   ## Which of the texts `text` are missing-value codes: texts the database
   ## documents as missing values for this variable, the text of a missing
-  ## code read_lasa_sav() disambiguated, and texts only negative codes have.
+  ## code read_lasa_sav() disambiguated, texts only negative codes have, and
+  ## a negative code's own number -- unless `signed` (see `measured`), only
+  ## a documented one's.
   missing_label <- function(text) {
     !is.na(text) & (text %in% documented(db_info$missing_labels) | grepl(" \\[-[0-9.]+\\]$", text))
   }
-  missing_text <- function(text) {
+  missing_text <- function(text, signed) {
     negative_only <- vapply(text, function(t) {
       codes <- unname(label_codes)[which(label_text == t)]
       length(codes) > 0L && all(codes < 0)
     }, logical(1), USE.NAMES = FALSE)
-    negative_only | missing_label(text)
+    number <- suppressWarnings(as.numeric(text))
+    negative_number <- !is.na(number) & number < 0 & (!signed | number %in% documented_codes)
+    negative_only | missing_label(text) | negative_number
+  }
+  ## Which elements hold a text `missing_text()` says is a code, each by
+  ## its own `measured`.
+  text_missing <- function(text, element_text) {
+    out <- rep(FALSE, length(element_text))
+    for (signed in unique(measured)) {
+      here <- measured == signed
+      out[here] <- element_text[here] %in% text[missing_text(text, signed)]
+    }
+    out
   }
   if (is.factor(x)) {
-    level_missing <- missing_text(levels(x))
-    return(real & !level_missing[values])
+    return(real & !text_missing(levels(x), levels(x)[values]))
   }
   if (is.character(values)) {
-    text <- unique(values[real])
-    return(real & !values %in% text[missing_text(text)])
+    return(real & !text_missing(unique(values[real]), values))
   }
   if (is.numeric(values)) {
-    negative <- unique(values[real & values < 0])
-    if (length(negative) > 0L) {
-      coded <- negative[negative %in% c(unname(label_codes), documented(db_info$missing_codes))]
-      real <- real & !values %in% coded
+    negative <- real & !is.na(values) & values < 0
+    if (any(negative)) {
+      coded <- values %in% c(unname(label_codes)[label_codes < 0], documented_codes)
+      real <- real & !(negative & (coded | !measured))
     }
     # A code labelled as a missing value, whatever its number (a factor
     # saved with haven::write_sav() numbers its levels from 1) -- by its own
@@ -1134,17 +1352,17 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   any_guess & !other
 }
 
-## Which of the `n_rows` rows of long data hold a value that shows their
-## respondent took part (.lasa_real_value()) in one of `columns` (a named
-## list of the long data's wave-specific columns, see
+## Which of the `n_rows` rows of long data (of waves `wave_codes`) hold a
+## value that shows their respondent took part (.lasa_real_value()) in one
+## of `columns` (a named list of the long data's wave-specific columns, see
 ## .lasa_evidence_columns()) -- every row, without such columns.
 ## `exclude[[name]]` marks rows whose value in column `name` doesn't count
 ## (its wave was a guess).
-.lasa_long_real_rows <- function(columns, n_rows, db_info, exclude = list()) {
+.lasa_long_real_rows <- function(columns, n_rows, db_info, wave_codes, exclude = list()) {
   if (length(columns) == 0L) return(rep(TRUE, n_rows))
   shown <- rep(FALSE, n_rows)
   for (name in names(columns)) {
-    real <- .lasa_real_value(columns[[name]], name, db_info)
+    real <- .lasa_real_value(columns[[name]], name, db_info, wave_codes, each = TRUE)
     if (!is.null(exclude[[name]])) real <- real & !exclude[[name]]
     shown <- shown | real
   }
@@ -1203,14 +1421,15 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 ## respondent's rows (a variable a user computed per wave, say), or else
 ## all of those other columns -- and NULL when `columns` has none at all,
 ## so every row counts; `held` are the columns whose values belong to a
-## row's wave, those of either kind. Documented stable variables and the
-## "Baseline" column are neither: they hold for all of a respondent's rows.
+## row's wave, those of either kind. Documented stable variables and a
+## "cohort" column (in any capitalization) are neither: they hold for all
+## of a respondent's rows.
 .lasa_evidence_columns <- function(columns, r, n, db_info, documented = character(0)) {
   is_documented <- vapply(names(columns), function(name) {
     name %in% documented || .lasa_documented_varying(columns[[name]], name, db_info)
   }, logical(1))
   stable <- vapply(names(columns), function(name) {
-    identical(name, "Baseline") || .lasa_documented_stable(columns[[name]], name, db_info)
+    tolower(name) == "cohort" || .lasa_documented_stable(columns[[name]], name, db_info)
   }, logical(1))
   other <- !is_documented & !stable
   varies <- other
@@ -1420,15 +1639,22 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 ## rule out the cohorts that don't take part in it -- wave A, which isn't
 ## part of any cohort's waves, says nothing -- and `allowed` (respondents x
 ## cohorts) rules out more; a known baseline (`baseline`, per respondent,
-## NA if none) rules out every other cohort; and a Time already in long
-## data (`time`, per row, of respondent `r` at wave `wave_codes`) the
-## cohorts whose numbering doesn't give that wave that Time. A baseline or
-## Time contradicting the rest of the data is an error, naming the
-## respondent by `ids` (each respondent's identifier as text).
+## NA if none, see .lasa_given_baselines()) rules out every other cohort;
+## and a Time already in long data (`time`, per row, of respondent `r` at
+## wave `wave_codes`) the cohorts whose numbering doesn't give that wave
+## that Time. A baseline or Time contradicting the rest of the data is an
+## error, naming the respondent by `ids` (each respondent's identifier as
+## text) -- except Times that follow the cohort a LASA respondent number
+## (.lasa_id_cohorts()) gives, as read_lasa_sav() gives them at waves
+## several cohorts share: those yield to the rest of the data like the
+## number itself. Last, the respondent number rules out the other cohorts,
+## unless the rest of the data contradict it: then they decide, and
+## attribute "id_contradicted" lists those respondents.
 .lasa_possible_cohorts <- function(has_data, baseline = NULL, time = NULL, r = NULL, wave_codes = NULL,
                                    ids = NULL, allowed = NULL) {
   times <- .lasa_cohort_times()
   possible <- matrix(TRUE, nrow = nrow(has_data), ncol = ncol(times), dimnames = list(NULL, colnames(times)))
+  by_id <- if (length(ids) == nrow(possible)) .lasa_id_cohorts(ids) else NULL
   if (!is.null(allowed)) possible <- possible & allowed
   for (w in colnames(has_data)) {
     at <- has_data[, w]
@@ -1442,9 +1668,11 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     contradicted <- before & rowSums(possible[known, , drop = FALSE]) == 0L
     if (any(contradicted)) {
       i <- known[contradicted][[1L]]
+      says <- attr(baseline, "says", exact = TRUE)
       stop(
-        "'data' has a 'Baseline' column that doesn't match its waves: for respondent ", ids[[i]],
-        " it says ", baseline[[i]], ", but the rest of the data show them at a wave that cohort ",
+        "'data' has a '", attr(baseline, "column", exact = TRUE) %||% "cohort", "' column that doesn't match ",
+        "its waves: for respondent ", ids[[i]], " it says '", if (is.null(says)) baseline[[i]] else says[[i]],
+        "' (baseline ", baseline[[i]], "), but the rest of the data show them at a wave that cohort ",
         "doesn't take part in.",
         call. = FALSE
       )
@@ -1455,11 +1683,27 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   if (length(given) > 0L) {
     fits <- times[wave_codes[given], , drop = FALSE] == time[given]
     fits[is.na(fits)] <- FALSE
-    ruled_out <- rowsum(1L * !fits, r[given], reorder = FALSE)
-    who <- as.integer(rownames(ruled_out))
-    before <- rowSums(possible[who, , drop = FALSE]) > 0L
-    possible[who, ] <- possible[who, , drop = FALSE] & ruled_out == 0L
-    contradicted <- before & rowSums(possible[who, , drop = FALSE]) == 0L
+    # possible[who, ] narrowed by the Times of rows `rows` of `given`.
+    by_times <- function(rows) {
+      ruled_out <- rowsum(1L * !fits[rows, , drop = FALSE], r[given[rows]], reorder = FALSE)
+      who <- as.integer(rownames(ruled_out))
+      list(who = who, possible = possible[who, , drop = FALSE] & ruled_out == 0L)
+    }
+    all_rows <- by_times(seq_along(given))
+    who <- all_rows$who
+    contradicted <- rowSums(possible[who, , drop = FALSE]) > 0L & rowSums(all_rows$possible) == 0L
+    if (any(contradicted) && !is.null(by_id)) {
+      # Without the Times that follow the respondent number's cohort.
+      number <- by_id[r[given], , drop = FALSE]
+      follows <- rowSums(fits & number) > 0L & rowSums(!number) > 0L
+      rest <- by_times(which(!follows))
+      without <- possible[who, , drop = FALSE]
+      kept <- match(who, rest$who)
+      without[!is.na(kept), ] <- rest$possible[kept[!is.na(kept)], , drop = FALSE]
+      yields <- contradicted & rowSums(without) > 0L
+      all_rows$possible[yields, ] <- without[yields, , drop = FALSE]
+      contradicted <- contradicted & !yields
+    }
     if (any(contradicted)) {
       stop(
         "'data' has a 'Time' column that doesn't match its waves: for respondent ",
@@ -1468,6 +1712,15 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
         call. = FALSE
       )
     }
+    possible[who, ] <- all_rows$possible
+  }
+
+  if (!is.null(by_id)) {
+    narrowed <- possible & by_id
+    fits <- rowSums(narrowed) > 0L
+    possible[fits, ] <- narrowed[fits, , drop = FALSE]
+    contradicted <- which(!fits & rowSums(possible) > 0L)
+    if (length(contradicted) > 0L) attr(possible, "id_contradicted") <- contradicted
   }
   possible
 }
@@ -1503,11 +1756,14 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 ## unless `quiet`: in a message when the data don't show their cohort (as
 ## far as those rows hold values, missing-value codes too: `held_rows`, see
 ## .lasa_long_held_rows(); an empty row loses nothing), and in a warning
-## when they show waves of several cohorts. Returns list(time, baseline).
+## when they show waves of several cohorts -- and in a warning, which
+## respondents' LASA respondent numbers the rest of the data contradict.
+## Returns list(time, baseline).
 .lasa_long_times <- function(r, wave_codes, real_rows, baseline, time, ids, quiet = FALSE,
                              held_rows = real_rows) {
   has_data <- .lasa_long_has_data(real_rows, r, length(ids), wave_codes)
   possible <- .lasa_possible_cohorts(has_data, baseline, time, r, wave_codes, ids)
+  id_contradicted <- attr(possible, "id_contradicted", exact = TRUE)
   row_time <- .lasa_row_times(possible, r, wave_codes)
 
   times <- .lasa_cohort_times()[wave_codes, , drop = FALSE]
@@ -1530,14 +1786,25 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
       call. = FALSE
     )
   }
+  if (!quiet && length(id_contradicted) > 0L) {
+    i <- id_contradicted[[1L]]
+    digit <- as.integer(substr(trimws(ids[[i]]), 1L, 1L))
+    warning(
+      "The respondent numbers of ", length(id_contradicted), " respondent(s) don't fit the rest of the ",
+      "data, which decide their cohort and Time instead (e.g. respondent ", ids[[i]], ", whose number says cohort ",
+      (digit - 1L) %/% 3L + 1L, "). LASA numbers its respondents with five digits, the first of which is ",
+      "1, 2, or 3 in the first cohort, 4, 5, or 6 in the second, and 7, 8, or 9 in the third.",
+      call. = FALSE
+    )
+  }
   if (!quiet && any(undecided)) {
     message(
       "transform_lasa_data(): Time counts the waves since each respondent's baseline (Time 0), but ",
       "nothing in 'data' shows the cohort of ", length(unique(r[undecided])), " respondent(s) (",
       example(undecided), "), so those rows have no Time. A cohort shows in values (other than ",
       "missing-value codes) at its baseline or at a wave only it takes part in (B to E for the ",
-      "first cohort), in every row of a LASA file of such a wave, or in a 'Baseline' column with ",
-      "each respondent's baseline wave (B, 2B, 3B, MB, or 4B)."
+      "first cohort), in every row of a LASA file of such a wave, in LASA's 'cohort' column (as ",
+      "LASAZ002.SAV has), or in a LASA respondent number (five digits, the first of which says the cohort)."
     )
   }
   list(time = row_time, baseline = .lasa_known_baselines(possible))
@@ -2158,7 +2425,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     if (.lasa_has(db_info$documented, lower)) return(NULL)
 
     # 3. In wide data, transform_lasa_data()'s own wide names: Time-prefixed
-    # ones (when the "Baseline" column they come with is there), and
+    # ones (when the cohort column they come with is there), and
     # wave-prefixed ones.
     if (time_columns) {
       time_candidate <- match_time(name)
@@ -2242,10 +2509,12 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 ## `candidates` the wide columns' candidates (see
 ## .lasa_wave_candidates()). `ids` names each respondent in messages;
 ## `time` is the Time long data already have (per row) and `baseline` each
-## respondent's "Baseline" (NULL without either). `simulate` = TRUE reads
-## `data` the way transform_lasa_data() would without its provenance
-## attributes (which a merge drops), clashing columns or warnings: how wide
-## data it made itself will be read back.
+## respondent's baseline wave as a cohort column gives it (NULL without
+## either, see .lasa_given_baselines()); `cohort_column` says whether there
+## is such a column, with which wide data's Time-prefixed columns are read.
+## `simulate` = TRUE reads `data` the way transform_lasa_data() would
+## without its provenance attributes (which a merge drops), clashing
+## columns or warnings: how wide data it made itself will be read back.
 ##
 ## In long data, a column whose values are all on rows of waves its name
 ## stands for (see the comment in the code) holds each value at its row's
@@ -2259,7 +2528,8 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 ## or the earliest. A Time-prefixed column's values go to the wave with
 ## that Time in each respondent's cohort.
 .lasa_resolve_wide_columns <- function(data, skip, long_mode, wave_codes, resp, db_info, ids,
-                                       time = NULL, baseline = NULL, simulate = FALSE) {
+                                       time = NULL, baseline = NULL, cohort_column = !is.null(baseline),
+                                       simulate = FALSE) {
   all_waves <- .lasa_wave_table()$wave
   cohort_times <- .lasa_cohort_times()
   takes_part <- !is.na(cohort_times)
@@ -2269,7 +2539,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   provenance <- if (simulate) list() else .lasa_provenance(data)
   candidates_of <- .lasa_wave_candidates(
     db_info, provenance, long_mode,
-    time_columns = !long_mode && !is.null(baseline)
+    time_columns = !long_mode && cohort_column
   )
 
   cands <- list()
@@ -2357,9 +2627,12 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
       candidates = list()
     ))
   }
-  real <- lapply(stats::setNames(names(cands), names(cands)), function(name) {
-    .lasa_real_value(data[[name]], c(name, cands[[name]]$stem), db_info)
-  })
+  ## Which values of candidate column `name` show that their respondent took
+  ## part (.lasa_real_value()), at the waves `waves` they may be at -- with
+  ## `each = TRUE`, each row's own.
+  real_at <- function(name, waves, each = FALSE) {
+    .lasa_real_value(data[[name]], c(name, cands[[name]]$stem), db_info, waves, each = each)
+  }
 
   # Wave 4B's own files are read with LASA's "b" names, which the label
   # database documents for the other cohorts' baselines only: where the
@@ -2391,7 +2664,8 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     # show the wave either.
     exclude <- .lasa_guessed_rows(chosen$evidence, ids[resp$r], wave_codes)
     has_data <- .lasa_long_has_data(
-      .lasa_long_real_rows(chosen$evidence, nrow(data), db_info, exclude = exclude), resp$r, n_resp, wave_codes
+      .lasa_long_real_rows(chosen$evidence, nrow(data), db_info, wave_codes, exclude = exclude), resp$r, n_resp,
+      wave_codes
     )
   }
   allowed <- matrix(TRUE, nrow = n_resp, ncol = ncol(takes_part))
@@ -2399,7 +2673,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     cand <- cands[[name]]
     if (!is.na(cand$time) || already_long[[name]]) next
     options <- options_of(cand)
-    who <- unique(resp$r[real[[name]]])
+    who <- unique(resp$r[real_at(name, options)])
     if (length(options) == 1L) {
       has_data[who, options] <- TRUE
     } else if (length(options) == 2L && identical(options[[2L]], "4B") && !is.na(cand$stem_4b) &&
@@ -2500,8 +2774,10 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
         # Only a value that shows the respondent took part makes the guess
         # matter: a missing-value code ("no observation ...") says nothing
         # about the wave it is placed at.
+        row_wave <- rep(NA_character_, nrow(data))
+        row_wave[rows[holders]] <- assigned[holders]
         real_holder <- nobody
-        real_holder[holders] <- real[[name]][rows[holders]]
+        real_holder[holders] <- real_at(name, row_wave, each = TRUE)[rows[holders]]
         guessed <- rest & real_holder
       }
     }
@@ -2527,14 +2803,14 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
       if (n_open[[i]] == 0L) {
         stop(
           "Column '", name, "' holds a value for respondent ", ids[[i]], ", whose cohort ",
-          "(see the 'Baseline' column) has no wave with Time ", cand$time, ".",
+          "(see the 'cohort' column) has no wave with Time ", cand$time, ".",
           call. = FALSE
         )
       }
       stop(
         "Column '", name, "' holds values for ", sum(unknown), " respondent(s) whose cohort ",
-        "'data' don't show (e.g. respondent ", ids[[i]], ", without a 'Baseline'), so the wave ",
-        "with Time ", cand$time, " is unknown for them.",
+        "'data' don't show (e.g. respondent ", ids[[i]], ", without one in the 'cohort' column), so ",
+        "the wave with Time ", cand$time, " is unknown for them.",
         call. = FALSE
       )
     }
@@ -2557,7 +2833,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
       if (!is.na(cands[[name]]$time)) next
       p <- placed[[name]]
       for (k in seq_along(p$waves)) {
-        has_data[!is.na(p$sources[[k]]) & real[[name]] & !p$guessed, p$waves[[k]]] <- TRUE
+        has_data[!is.na(p$sources[[k]]) & real_at(name, p$waves[[k]]) & !p$guessed, p$waves[[k]]] <- TRUE
       }
     }
     possible <- .lasa_possible_cohorts(has_data, baseline, ids = ids, allowed = allowed)
@@ -2680,7 +2956,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 ## variables measured at several waves: names a merge suffixed (.x/.y), so
 ## their wave is unknown; in data that aren't long yet, columns
 ## read_lasa_sav() gave a wave-stripped name; and Time-prefixed names,
-## which only wide data with their "Baseline" column can be read with
+## which only wide data with their cohort column can be read with
 ## (`time_columns`: whether they were). Returns the Time-prefixed ones
 ## (invisibly).
 .lasa_warn_unplaced <- function(data, columns, long_mode, db_info, time_columns = FALSE) {
@@ -2729,8 +3005,8 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     warning(
       "Column(s) ", paste(time_named, collapse = ", "), " look like the Time-prefixed columns of ",
       "transform_lasa_data(format = \"wide\", prefix = \"Time\"), which can only be read back from ",
-      "wide data together with their 'Baseline' column (each respondent's baseline wave), so ",
-      "they're kept as they are.",
+      "wide data together with their 'cohort' column (each respondent's cohort), so they're kept ",
+      "as they are.",
       call. = FALSE
     )
   }
@@ -2759,7 +3035,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 .lasa_to_long <- function(data, db_info, for_wide = FALSE, renamed = .lasa_no_renamed) {
   id <- .lasa_find_respnr(data)
   all_waves <- .lasa_wave_table()$wave
-  data <- .lasa_combine_baseline_copies(data, id, renamed)
+  data <- .lasa_combine_cohort_copies(data, id, db_info, renamed)
 
   wave_column <- .lasa_find_wave(data)
   wave_name <- wave_column$name
@@ -2791,18 +3067,18 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   n_resp <- resp$n
   respondent_row <- .lasa_first_row(resp$r, n_resp)
   ids <- .lasa_text_key(.lasa_slice(data[[id]], respondent_row))
-  baseline <- .lasa_find_baseline(data, resp$r, n_resp, row_ids)
-  if (!is.null(baseline)) baseline <- baseline[.lasa_first_row(resp$r, n_resp, keep = !is.na(baseline))]
+  given <- .lasa_given_baselines(data, resp$r, n_resp, row_ids)
+  baseline <- given$baseline
 
   skip <- c(id, wave_name, wave_column$placeholders, existing_time$names)
   found <- .lasa_resolve_wide_columns(
     data, skip, long_mode, wave_codes, resp, db_info, ids,
-    time = existing_time$values, baseline = baseline
+    time = existing_time$values, baseline = baseline, cohort_column = given$time_columns
   )
   wide <- found$spec
   time_named <- .lasa_warn_unplaced(
     data, setdiff(names(data), c(skip, wide$column)), long_mode, db_info,
-    time_columns = !long_mode && !is.null(baseline)
+    time_columns = !long_mode && given$time_columns
   )
   if (length(found$guessed) > 0L) {
     message(
@@ -2842,7 +3118,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
       # columns merged in).
       !.lasa_only_guessed_rows(chosen$held, exclude, length(r))
     } else {
-      .lasa_long_real_rows(chosen$evidence, length(r), db_info, exclude = exclude)
+      .lasa_long_real_rows(chosen$evidence, length(r), db_info, w, exclude = exclude)
     }
     time <- if (is.null(existing_time$values)) NULL else existing_time$values[source_row]
     .lasa_long_times(
@@ -2852,12 +3128,13 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   }
 
   ## Rows `rows` of `data`'s column `name` (NA for a row added for
-  ## respondent `row_r`) -- for a documented stable variable, or the
-  ## "Baseline" column, which hold for every wave, with a missing value
-  ## filled in from the respondent's single value (rows another file's
-  ## columns added, or rows of other waves merged in by respnr and Wave).
+  ## respondent `row_r`) -- for a documented stable variable, or the cohort
+  ## column, which hold for every wave, with a missing value filled in from
+  ## the respondent's single value (rows another file's columns added, or
+  ## rows of other waves merged in by respnr and Wave).
+  cohort_name <- attr(baseline, "column", exact = TRUE)
   stable_rows <- function(name, rows, row_r) {
-    if (!(.lasa_documented_stable(data[[name]], name, db_info) || (identical(name, "Baseline") && !is.null(baseline)))) {
+    if (!(.lasa_documented_stable(data[[name]], name, db_info) || identical(name, cohort_name))) {
       return(rows)
     }
     key <- .lasa_value_key(data[[name]])
@@ -2880,7 +3157,11 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
       for (name in setdiff(names(data), skip)) {
         rows <- stable_rows(name, seq_len(nrow(data)), resp$r)
         if (!identical(rows, seq_len(nrow(data)))) columns[[name]] <- .lasa_slice(data[[name]], rows)
-        restored <- .lasa_restore_db_labels(columns[[name]], name, wave_codes, db_info)
+        restored <- if (identical(name, cohort_name)) {
+          .lasa_restore_cohort_labels(columns[[name]], db_info)
+        } else {
+          .lasa_restore_db_labels(columns[[name]], name, wave_codes, db_info)
+        }
         if (!is.null(restored)) {
           columns[[name]] <- restored
           relabelled <- TRUE
@@ -2900,7 +3181,10 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     }
     columns <- as.list(data)
     columns[setdiff(skip, id)] <- NULL
+    restored <- if (!is.null(cohort_name)) .lasa_restore_cohort_labels(columns[[cohort_name]], db_info)
+    if (!is.null(restored)) columns[[cohort_name]] <- restored
     out <- .lasa_build_frame(columns, data)
+    if (!is.null(restored)) out <- .lasa_add_variable_labels(out)
     return(list(
       data = .lasa_set_wave_attr(out, character(0), long = TRUE, template = data),
       added = rep(FALSE, nrow(data)),
@@ -3084,12 +3368,12 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     if (name %in% c(wide$column, merged_into)) next
 
     x <- data[[j]]
-    if (!long_mode) {
-      result[[name]] <- .lasa_slice(x, data_row)
-      next
+    result[[name]] <- .lasa_slice(x, if (long_mode) stable_rows(name, data_row, grid_r) else data_row)
+    restored <- if (identical(name, cohort_name)) {
+      .lasa_restore_cohort_labels(result[[name]], db_info)
+    } else if (long_mode) {
+      .lasa_restore_db_labels(result[[name]], name, grid_w, db_info)
     }
-    result[[name]] <- .lasa_slice(x, stable_rows(name, data_row, grid_r))
-    restored <- .lasa_restore_db_labels(result[[name]], name, grid_w, db_info)
     if (!is.null(restored)) {
       result[[name]] <- restored
       relabelled <- TRUE
@@ -3693,8 +3977,8 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 ## values of wide columns (NULL if none): columns that aren't wave-specific
 ## were never measured there, so such rows don't count against their being
 ## stable. `baseline` gives each row's respondent's baseline wave (NA where
-## the data don't show it), which prefix = "Time" puts in a "Baseline"
-## column.
+## the data don't show it), which prefix = "Time" puts in a "cohort" column
+## (.lasa_cohort_column()).
 .lasa_to_wide <- function(long, prefix, db_info, added = NULL, baseline = NULL) {
   id <- .lasa_find_respnr(long)
   waves_table <- .lasa_wave_table()
@@ -3715,16 +3999,18 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   measured_row[is.na(measured_row)] <- respondent_row[is.na(measured_row)]
 
   reserved <- c(id, "Wave", "Time")
-  if (by_time && "Baseline" %in% names(long)) {
-    if (is.null(.lasa_find_baseline(long, resp$r, n_resp, .lasa_text_key(long[[id]])))) {
+  own_cohort <- names(long)[tolower(names(long)) == "cohort"]
+  if (by_time && length(own_cohort) > 0L) {
+    if (length(own_cohort) > 1L || is.null(.lasa_find_cohort(long))) {
       stop(
-        "'data' has a 'Baseline' column of its own, but Time-prefixed wide format adds one ",
-        "with each respondent's baseline wave; rename it first.",
+        "'data' has a column named '", own_cohort[[1L]], "' that doesn't hold LASA's cohorts, but ",
+        "Time-prefixed wide format adds a 'cohort' column with each respondent's cohort; rename it first.",
         call. = FALSE
       )
     }
-    # One an earlier transformation made: replaced by the one made now.
-    reserved <- c(reserved, "Baseline")
+    # LASA's own (LASAZ002.SAV's) or one an earlier transformation made,
+    # which the cohorts found agree with: replaced by the one made now.
+    reserved <- c(reserved, own_cohort)
   }
 
   stable <- list()
@@ -3804,7 +4090,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     }
     # A respondent whose rows have a Time without the data showing their
     # cohort (the third cohort and the migrant cohort give their waves the
-    # same Time) gets no "Baseline", which reading the columns back needs.
+    # same Time) gets no cohort, which reading the columns back needs.
     known_baseline <- if (is.null(baseline)) rep(NA_character_, n_resp) else baseline[respondent_row]
     unknown <- !no_slot & slot >= 0L & is.na(known_baseline[resp$r]) & holding(function(x, name) !.lasa_is_na(x))
     if (any(unknown)) {
@@ -3813,14 +4099,14 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
         "Time-prefixed wide format has no baseline wave for ", length(unique(resp$r[unknown])),
         " respondent(s) whose rows have a Time (e.g. respondent ", .lasa_text_key(.lasa_slice(long[[id]], i)),
         " at wave ", wave_codes[[i]], "): the data leave several cohorts open that give their waves ",
-        "the same Time, such as the third cohort and the migrant cohort. Their 'Baseline' stays ",
+        "the same Time, such as the third cohort and the migrant cohort. Their 'cohort' stays ",
         "missing, so their Time-prefixed columns can't be transformed back to long format. Keep ",
-        "their baseline rows, or give 'data' a 'Baseline' column with each respondent's baseline wave.",
+        "their baseline rows, or give 'data' LASA's 'cohort' column (as LASAZ002.SAV has).",
         call. = FALSE
       )
     }
     if (any(no_slot)) {
-      stuck <- no_slot & holding(function(x, name) .lasa_real_value(x, name, db_info))
+      stuck <- no_slot & holding(function(x, name) .lasa_real_value(x, name, db_info, wave_codes, each = TRUE))
       if (any(stuck)) {
         i <- which(stuck)[[1L]]
         stop(
@@ -3828,7 +4114,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
           " respondent(s) have values at waves without one (e.g. respondent ",
           .lasa_text_key(.lasa_slice(long[[id]], i)), " at wave ", wave_codes[[i]], "): the data ",
           "don't show their cohort, or show waves of several cohorts. Use prefix = \"Wave\", or give ",
-          "'data' a 'Baseline' column with each respondent's baseline wave (B, 2B, 3B, MB, or 4B).",
+          "'data' LASA's 'cohort' column (as LASAZ002.SAV has).",
           call. = FALSE
         )
       }
@@ -3969,7 +4255,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   # from one cohort's file, after files of several cohorts were stacked in
   # long format): then it yields -- a column of guessed values last.
   repeat {
-    taken <- c(id, if (by_time) "Baseline", names(stable), wide_names)
+    taken <- c(id, if (by_time) "cohort", names(stable), wide_names)
     clash <- use_original & wide_names %in% taken[duplicated(taken)]
     if (!any(clash)) break
     yield <- clash & !guessed_entry
@@ -3995,9 +4281,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 
   result <- stats::setNames(list(.lasa_slice(long[[id]], respondent_row)), id)
   if (by_time) {
-    baseline_column <- if (is.null(baseline)) rep(NA_character_, n_resp) else baseline[respondent_row]
-    attr(baseline_column, "label") <- .lasa_baseline_column_label
-    result[["Baseline"]] <- baseline_column
+    result[["cohort"]] <- .lasa_cohort_column(known_baseline, db_info)
   }
   result <- c(result, stable, stats::setNames(lapply(entries, `[[`, "column"), wide_names))
   duplicated_names <- unique(names(result)[duplicated(names(result))])
@@ -4026,9 +4310,10 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   out_ids <- .lasa_text_key(result[[id]])
   for (pass in 1:4) {
     out <- .lasa_build_frame(result, long)
+    given <- .lasa_given_baselines(out, out_resp$r, n_resp)
     back <- .lasa_resolve_wide_columns(
       out, skip = id, long_mode = FALSE, wave_codes = NULL, resp = out_resp, db_info = db_info,
-      ids = out_ids, baseline = .lasa_find_baseline(out, out_resp$r, n_resp), simulate = TRUE
+      ids = out_ids, baseline = given$baseline, cohort_column = given$time_columns, simulate = TRUE
     )
     changed <- FALSE
     for (k in seq_along(wide_names)) {
@@ -4077,6 +4362,6 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     }
     if (!changed) break
   }
-  label_sources <- c(stats::setNames(as.list(stems), wide_names), if (by_time) list(Baseline = character(0)))
+  label_sources <- c(stats::setNames(as.list(stems), wide_names), if (by_time) list(cohort = character(0)))
   .lasa_set_wave_attr(.lasa_build_frame(result, long, label_sources), output_waves, long = FALSE, template = long)
 }

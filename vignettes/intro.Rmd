@@ -198,11 +198,11 @@ doesn't matter): regular single-letter waves are named
 doesn't follow this pattern, pass `filecode`/`wave` yourself (see
 [section 6](#6-apply-lasa-labels-to-an-existing-data-frame)).
 
-By default, `read_lasa_sav()` reads the file with
-`user_na = TRUE`, so SPSS's user-defined missing-value codes stay
-visible instead of silently becoming `NA` before CleanLASA gets a
-chance to label them. You can pass any other `haven::read_sav()`
-argument through `read_sav_args`:
+`read_lasa_sav()` always reads the file with every code intact, so
+CleanLASA -- not whatever the `.sav` file happens to declare -- decides
+which codes are missing values (see [Missing-value
+codes](#missing-value-codes) below). You can pass any other
+`haven::read_sav()` argument through `read_sav_args`:
 
 ```{r import-extra, eval=FALSE}
 data <- read_lasa_sav(
@@ -212,7 +212,7 @@ data <- read_lasa_sav(
 ```
 
 (Don't put `file` or `user_na` inside `read_sav_args` -- those are
-controlled by `path` and `user_na` directly, not by this list.)
+controlled by `path` and `keep_user_na` directly, not by this list.)
 
 Once imported, the result carries a few extra pieces of information
 about where it came from: which wave and file code it is, and the
@@ -266,12 +266,12 @@ become R factor levels.
 ```{r factors}
 data <- read_lasa_sav("LASAB046.sav")
 summary(data$lphya01)
-#> Na, interview terminated      Na, short interview           Na, wrong skip
-#>                       13                      175                        0
-#>                  Na, see                Na, asked     Respondent bedridden
-#>                        0                        4                       20
-#> Respondent in elec. whee Respondent in mech. whee             not 1 2 or 3
-#>                        5                       20                     2870
+#>           respondent bedridden respondent in elec. wheelchair
+#>                             20                              5
+#> respondent in mech. wheelchair                  not 1, 2 or 3
+#>                             20                           2870
+#>                           NA's
+#>                            192
 
 attr(data$lphya01, "labels_wave")
 #> Na, interview terminated      Na, short interview           Na, wrong skip
@@ -282,9 +282,11 @@ attr(data$lphya01, "labels_wave")
 #>                        2                        3                        4
 ```
 
-If a value shows up in the data but LASA's documentation has no label
-for it, that value is kept as its own factor level (shown as the
-number itself) rather than silently turned into `NA` -- so you'll
+The negative "Na, ..." codes are missing values, so by default they
+become `NA` (see [Missing-value codes](#missing-value-codes) below). If
+a non-negative value shows up in the data but LASA's documentation has
+no label for it, that value is kept as its own factor level (shown as
+the number itself) rather than silently turned into `NA` -- so you'll
 notice an undocumented code instead of quietly losing data. Set
 `to_factor = FALSE` to leave the variable as a plain
 numeric/character vector instead.
@@ -328,6 +330,39 @@ summary(data$lphya09)
 `to_factor` and `to_numeric` work together, not against each other:
 in the same call, categorical variables become factors and
 numeric-classified variables become plain numbers.
+
+### Missing-value codes
+
+LASA records *why* an answer is missing with negative codes, such as
+`-1` = "Na, asked" or `-2` = "Na, see BMOVED". `keep_user_na` decides
+what happens to them, and it does the same thing for every variable,
+whatever its type:
+
+* `keep_user_na = FALSE` (the default): every missing code becomes
+  `NA`, in factors, label-text variables and numeric variables alike,
+  and factors get no level for it. This is what you want for most
+  analyses.
+* `keep_user_na = TRUE`: every missing code is kept. Factors and
+  label-text variables show the reason as text (`"Na, see BMOVED"`).
+  A numeric variable can't hold text, so it keeps the raw code (`-2`)
+  as a `haven_labelled_spss` vector, with the reason as its value
+  label and the code declared missing: `is.na()` reports it as
+  missing, and `haven::zap_missing()` turns it into `NA` when you
+  need to compute with it.
+
+```{r missing-codes, eval=FALSE}
+data <- read_lasa_sav("LASAB014.sav", keep_user_na = TRUE)
+```
+
+A code counts as missing when the label database flags it as one:
+every negative documented code, including labels such as "valid score"
+or "never had job" that explain why a value is missing. A negative value
+that isn't documented at all counts as missing too, unless the variable
+is numeric and its genuine values can be negative, such as a
+speech-reception threshold in dB; then only its documented missing
+codes count, and every other negative value is kept as a measurement.
+Positive codes, such as "dropout" in the osteoarthritis files, are real
+answers and are never treated as missing.
 
 ### Standardize variable names and separate the wave code
 
@@ -509,10 +544,12 @@ parts:
 - **`variables`** -- one row per file-code/wave/variable combination:
   the variable's name as it appears in that wave's data, its
   canonical (shared-across-waves) name, its label for that specific
-  wave, its cross-wave-consistent ("harmonized") label, and its type
-  (numeric, categorical, or text).
+  wave, its cross-wave-consistent ("harmonized") label, its type
+  (numeric, categorical, or text), and whether its genuine values can
+  be negative (`can_be_negative`).
 - **`value_labels`** -- the value/code labels (what each numeric code
-  means) exactly as documented for that one wave.
+  means) exactly as documented for that one wave, with `is_missing`
+  marking the missing-value codes.
 - **`value_labels_harmonized`** -- the same variable's value labels,
   standardized across every wave that documents it (there's no `wave`
   column here -- a row applies no matter which wave you're looking
@@ -709,18 +746,36 @@ the interview dates or ages in `LASAZ008.sav`.
 
 A row's Time needs the respondent's cohort, which the data have to
 show: a value at the respondent's baseline or at a wave only their
-cohort takes part in (B to E for the first cohort), or any row of a
-file of such a wave -- every respondent in `LASAC046.sav` belongs to
-the first cohort, even one whose row holds nothing but missing-value
-codes. The waves from F on are shared, so a file of wave F or later,
-read on its own, can't tell the cohorts apart: its rows get no Time,
-with a message saying so, until it is combined with files that do (see
-below).
+cohort takes part in (B to E for the first cohort), any row of a file
+of such a wave -- every respondent in `LASAC046.sav` belongs to the
+first cohort, even one whose row holds nothing but missing-value
+codes -- LASA's `cohort` column, as in `LASAZ002.sav`
+("cohort 1 (1992)" has baseline B, cohort 2 2B, cohort 3 3B), or the
+respondent number. LASA numbers its respondents with five digits, the
+first of which says the cohort: 1, 2, or 3 the first (1 also the LSN
+pilot study), 4, 5, or 6 the second, and 7, 8, or 9 the third. The
+fourth and the migrant cohort's numbers aren't known yet, so theirs
+say nothing. Where the rest of the data show another cohort than the
+number, they decide, with a warning.
+
+The waves from F on are shared, so a file of wave F or later, read on
+its own, can't tell the cohorts apart by its waves: its rows get their
+Time from the respondent numbers, and the rows of respondents whose
+number doesn't say get no Time, with a message saying so, until the
+file is combined with files that do (see below), or with the `cohort`
+column:
+
+```{r cohort, eval=FALSE}
+f030 <- read_lasa_sav("LASAF030.sav", format_as_long = TRUE)  # Time by respondent number
+z002 <- read_lasa_sav("LASAZ002.sav")
+f030 <- transform_lasa_data(merge(f030, z002[c("respnr", "cohort")], by = "respnr"))
+```
 
 A respondent gets a row for each wave at which they have a value --
 anything but `NA` or blank text (which is how SPSS stores missing
-text), so a missing-value code that is kept as a value, such as
-"dropout", counts. Stable variables are repeated on each of the
+text). Missing-value codes become `NA` by default; kept with
+`keep_user_na = TRUE`, they count for the rows, but not as showing a
+cohort. Stable variables are repeated on each of the
 respondent's rows. Each long column keeps the variable and value
 labels its waves share, and each wave's own wording in its
 `"wave_label"` and `"labels_wave"` attributes, one entry per wave:
@@ -740,19 +795,31 @@ names(transform_lasa_data(oa_long, format = "wide"))
 #> "respnr" "boak"   "boah"   "coak"   "coah"   "doak"   "doah"
 
 names(transform_lasa_data(oa_long, format = "wide", prefix = "Time"))
-#> "respnr"   "Baseline" "t0_oak"   "t0_oah"   "t1_oak"   "t1_oah"   "t2_oak"   "t2_oah"
+#> "respnr" "cohort" "t0_oak" "t0_oah" "t1_oak" "t1_oah" "t2_oak" "t2_oah"
 ```
 
 With `prefix = "Time"`, the cohorts share columns: `t0_oak` holds each
 respondent's value at their own baseline, `t1_oak` at their cohort's
-next wave, and so on. The `"Baseline"` column says which baseline that
-was, so the columns convert back to the right waves; Time-prefixed data
-sets merged by respondent get `Baseline.x` and `Baseline.y`, which
-`transform_lasa_data()` combines again. A value needs a Time to get a
-Time-prefixed name, so `prefix = "Time"` stops with an error naming a
-respondent with values (other than missing-value codes) on rows without
-one, such as a respondent seen only at waves the cohorts share (F and
-later); `prefix = "Wave"` works for any data.
+next wave, and so on. The `cohort` column says which cohort each
+respondent belongs to, so the columns convert back to the right waves.
+It is LASA's own cohort variable, coded as `read_lasa_sav()` reads
+`LASAZ002.sav`'s (`"cohort 1 (1992)"`, `"cohort 2 (2002)"`,
+`"cohort 3 (2012)"`, and `"cohort 4"` or `"migrant cohort"` for the
+cohorts that file doesn't have), so the result merges with that file by
+`respnr` and `cohort`. Data sets merged by `respnr` alone get
+`cohort.x` and `cohort.y`, which `transform_lasa_data()` combines again:
+
+```{r time-wide-merge, eval=FALSE}
+oa_time <- transform_lasa_data(oa_long, format = "wide", prefix = "Time")
+oa_time <- merge(oa_time, z002, by = c("respnr", "cohort"))
+oa_long <- transform_lasa_data(oa_time)
+```
+
+A value needs a Time to get a Time-prefixed name, so `prefix = "Time"`
+stops with an error naming a respondent with values (other than
+missing-value codes) on rows without one, such as a respondent seen
+only at waves the cohorts share (F and later) whose number doesn't say
+their cohort; `prefix = "Wave"` works for any data.
 
 Columns that came from a wide LASA file get their original type and
 labels back, and with `prefix = "Wave"` their original name too, as
@@ -816,8 +883,9 @@ long <- transform_lasa_data(wide)
 
 `merge()` drops the attributes that say which file the data came from,
 though, so the values in `b` columns of a respondent the data show
-nowhere else, such as one who dropped out after wave B, are placed by a
-guess (see below) and get no Time.
+nowhere else, such as one who dropped out after wave B, are placed by
+their respondent number, or else by a guess (see below), which gives
+them no Time.
 
 To add a Z file to long data, merge its wide columns by `respnr`
 (without its `"Wave"` placeholder column, or read it with
@@ -836,7 +904,8 @@ Some LASA names stand for several waves: every cohort's baseline (B,
 2B, 3B, MB, and 4B) uses the same `b` names, so a wide column such as
 `blphya01` may belong to any of them. `transform_lasa_data()` places
 each respondent's value at the wave their data show -- the row it is
-on, the respondent's cohort, or the file it was read from. If nothing
+on, the respondent's cohort (also by their respondent number), or the
+file it was read from. If nothing
 shows it, it guesses, with a message naming the column, and a guessed
 wave doesn't count as showing the respondent's cohort -- also when the
 result is transformed again, as long as its columns keep their
@@ -861,7 +930,8 @@ lasa_topics(topic = "physical activity")
 lasa_var_info("046")
 
 # 3. Import the LASA file -- to_factor/to_numeric/standardize (names,
-#    variable labels, value labels) all default to TRUE
+#    variable labels, value labels) all default to TRUE, and missing-value
+#    codes become NA (keep_user_na = FALSE)
 data <- read_lasa_sav("LASAB046.sav")
 
 # 4. Check only matching problems before analysis
