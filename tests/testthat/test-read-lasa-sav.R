@@ -9,21 +9,6 @@ lasa046_fixture <- function(prefix = "B") {
   dat
 }
 
-write_lasa_sav <- function(data, filename) {
-  skip_if_not_installed("haven")
-  path <- tempfile(fileext = ".sav")
-  haven::write_sav(data, path)
-  # Written into R's session tempdir, which is cleaned up automatically;
-  # no explicit removal needed here.
-  newpath <- file.path(dirname(path), filename)
-  # overwrite = TRUE: several tests in this file reuse the same LASA file
-  # name (e.g. "LASAB046.SAV") in the shared session tempdir with
-  # different fixture content; file.copy()'s default (overwrite = FALSE)
-  # would silently keep an earlier test's stale file in place.
-  file.copy(path, newpath, overwrite = TRUE)
-  newpath
-}
-
 test_that("read_lasa_sav labels via the database-driven engine (no dispatch table)", {
   path <- write_lasa_sav(lasa046_fixture(), "LASAB046.SAV")
   dat <- read_lasa_sav(path, standardize = FALSE)
@@ -145,8 +130,13 @@ test_that("a Z file labels every wave's columns and converts them to factors", {
   for (v in c("boak", "boah", "coak", "coah", "doak", "doah")) {
     expect_true(is.factor(dat[[v]]), info = v)
   }
-  expect_equal(as.character(dat$coah), c("dropout", "missing", "possible"))
-  expect_equal(as.character(dat$doak), c("dropout at previous waves", "no", "missing"))
+  # "dropout" codes are real answers; -9 "missing" is a missing code and
+  # becomes NA by default (keep_user_na = FALSE).
+  expect_equal(as.character(dat$coah), c("dropout", NA, "possible"))
+  expect_equal(as.character(dat$doak), c("dropout at previous waves", "no", NA))
+  kept <- read_lasa_sav(path, keep_user_na = TRUE)
+  expect_equal(as.character(kept$coah), c("dropout", "missing", "possible"))
+  expect_equal(as.character(kept$doak), c("dropout at previous waves", "no", "missing"))
   expect_equal(attr(dat$coah, "label"), "Symptomatic hip osteoarthritis")
   expect_equal(attr(dat$coah, "wave_label"), "symptomatic hip OA at C")
 
