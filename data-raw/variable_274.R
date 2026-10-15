@@ -27,7 +27,7 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-1` = ">3 missings", `0` = NA_character_, `19` = NA_character_,
+  `-1` = ">3 missings",
   .applies_to_vars = c("vignet"),
   .applies_to_waves = c("Z", "D")
 )

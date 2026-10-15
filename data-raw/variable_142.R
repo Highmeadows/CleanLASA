@@ -434,20 +434,8 @@ value_labels(
 )
 
 value_labels(
-  `168` = NA_character_,
-  .applies_to_vars = c("mhhacqh", "mhhbrsh", "mhhgrah", "mhhneih", "mhhotfh", "mhhothh", "mphacqh", "mphbrsh", "mphgrah", "mphneih", "mphotfh", "mphothh", "qhhacqh", "qhhbrsh", "qhhgrah", "qhhneih", "qhhotfh", "qhhothh", "qphacqh", "qphbrsh", "qphchrh", "qphgrah", "qphneih", "qphotfh", "qphothh", "qphotrh", "qphprrh"),
-  .applies_to_waves = c("Z")
-)
-
-value_labels(
   `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mhhacqu", "mhhbrsi", "mhhchin", "mhhgrch", "mhhneig", "mhhotfa", "mhhothn", "mhhparn", "mhhpart", "mphacqu", "mphbrsi", "mphchin", "mphgrch", "mphneig", "mphotfa", "mphothn", "mphparn", "mphpart", "qhhacqu", "qhhbrsi", "qhhchin", "qhhgrch", "qhhneig", "qhhotfa", "qhhothn", "qhhparn", "qhhpart", "qphacqu", "qphbrsi", "qphchin", "qphchir", "qphgrch", "qphneig", "qphotfa", "qphothn", "qphothr", "qphparn", "qphparr", "qphpart"),
-  .applies_to_waves = c("Z")
-)
-
-value_labels(
-  `0` = NA_character_, `168` = NA_character_,
-  .applies_to_vars = c("mhhchnh", "mhhprnh", "mhhprth", "mphchnh", "mphprnh", "mphprth", "qhhchnh", "qhhprnh", "qhhprth", "qphchnh", "qphprnh", "qphprth"),
   .applies_to_waves = c("Z")
 )
 
@@ -488,7 +476,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see b/fqhhacqu", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqhhacqu", `-1` = "na, asked",
   .applies_to_vars = c("qhhacqh"),
   .applies_to_waves = c("2B", "F")
 )
@@ -500,49 +488,49 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see b/fqhhbrsi", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqhhbrsi", `-1` = "na, asked",
   .applies_to_vars = c("qhhbrsh"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqhhchin", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see b/fqhhchin", `-1` = "na, asked",
   .applies_to_vars = c("qhhchnh"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqhhgrch", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqhhgrch", `-1` = "na, asked",
   .applies_to_vars = c("qhhgrah"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqhhneig", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqhhneig", `-1` = "na, asked",
   .applies_to_vars = c("qhhneih"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqhhotfa", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqhhotfa", `-1` = "na, asked",
   .applies_to_vars = c("qhhotfh"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqhhothn", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqhhothn", `-1` = "na, asked",
   .applies_to_vars = c("qhhothh"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqhhparn", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see b/fqhhparn", `-1` = "na, asked",
   .applies_to_vars = c("qhhprnh"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqhhpart", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see b/fqhhpart", `-1` = "na, asked",
   .applies_to_vars = c("qhhprth"),
   .applies_to_waves = c("2B", "F")
 )
@@ -554,73 +542,73 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see b/fqphacqu", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqphacqu", `-1` = "na, asked",
   .applies_to_vars = c("qphacqh"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqphbrsi", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqphbrsi", `-1` = "na, asked",
   .applies_to_vars = c("qphbrsh"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqphchin", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqphchin", `-1` = "na, asked",
   .applies_to_vars = c("qphchnh"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqphchir", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqphchir", `-1` = "na, asked",
   .applies_to_vars = c("qphchrh"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqphgrch", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqphgrch", `-1` = "na, asked",
   .applies_to_vars = c("qphgrah"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqphneig", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqphneig", `-1` = "na, asked",
   .applies_to_vars = c("qphneih"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqphotfa", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqphotfa", `-1` = "na, asked",
   .applies_to_vars = c("qphotfh"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqphothn", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqphothn", `-1` = "na, asked",
   .applies_to_vars = c("qphothh"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqphothr", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqphothr", `-1` = "na, asked",
   .applies_to_vars = c("qphotrh"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqphparn", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqphparn", `-1` = "na, asked",
   .applies_to_vars = c("qphprnh"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqphparr", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqphparr", `-1` = "na, asked",
   .applies_to_vars = c("qphprrh"),
   .applies_to_waves = c("2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see b/fqphpart", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see b/fqphpart", `-1` = "na, asked",
   .applies_to_vars = c("qphprth"),
   .applies_to_waves = c("2B", "F")
 )
@@ -644,7 +632,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqhhacqu", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqhhacqu", `-1` = "na, asked",
   .applies_to_vars = c("qhhacqh"),
   .applies_to_waves = c("G", "H")
 )
@@ -662,7 +650,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqhhbrsi", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqhhbrsi", `-1` = "na, asked",
   .applies_to_vars = c("qhhbrsh"),
   .applies_to_waves = c("G", "H")
 )
@@ -680,7 +668,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqhhchin", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see g/hqhhchin", `-1` = "na, asked",
   .applies_to_vars = c("qhhchnh"),
   .applies_to_waves = c("G", "H")
 )
@@ -698,7 +686,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqhhgrch", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqhhgrch", `-1` = "na, asked",
   .applies_to_vars = c("qhhgrah"),
   .applies_to_waves = c("G", "H")
 )
@@ -716,7 +704,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqhhneig", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqhhneig", `-1` = "na, asked",
   .applies_to_vars = c("qhhneih"),
   .applies_to_waves = c("G", "H")
 )
@@ -734,7 +722,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqhhotfa", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqhhotfa", `-1` = "na, asked",
   .applies_to_vars = c("qhhotfh"),
   .applies_to_waves = c("G", "H")
 )
@@ -752,7 +740,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqhhothn", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqhhothn", `-1` = "na, asked",
   .applies_to_vars = c("qhhothh"),
   .applies_to_waves = c("G", "H")
 )
@@ -770,7 +758,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqhhparn", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see g/hqhhparn", `-1` = "na, asked",
   .applies_to_vars = c("qhhprnh"),
   .applies_to_waves = c("G", "H")
 )
@@ -788,7 +776,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqhhpart", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see g/hqhhpart", `-1` = "na, asked",
   .applies_to_vars = c("qhhprth"),
   .applies_to_waves = c("G", "H")
 )
@@ -806,7 +794,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqphacqu", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqphacqu", `-1` = "na, asked",
   .applies_to_vars = c("qphacqh"),
   .applies_to_waves = c("G", "H")
 )
@@ -824,7 +812,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqphbrsi", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqphbrsi", `-1` = "na, asked",
   .applies_to_vars = c("qphbrsh"),
   .applies_to_waves = c("G", "H")
 )
@@ -842,7 +830,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqphchin", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqphchin", `-1` = "na, asked",
   .applies_to_vars = c("qphchnh"),
   .applies_to_waves = c("G", "H")
 )
@@ -860,7 +848,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqphchir", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqphchir", `-1` = "na, asked",
   .applies_to_vars = c("qphchrh"),
   .applies_to_waves = c("G", "H")
 )
@@ -878,7 +866,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqphgrch", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqphgrch", `-1` = "na, asked",
   .applies_to_vars = c("qphgrah"),
   .applies_to_waves = c("G", "H")
 )
@@ -896,7 +884,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqphneig", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqphneig", `-1` = "na, asked",
   .applies_to_vars = c("qphneih"),
   .applies_to_waves = c("G", "H")
 )
@@ -914,7 +902,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqphotfa", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqphotfa", `-1` = "na, asked",
   .applies_to_vars = c("qphotfh"),
   .applies_to_waves = c("G", "H")
 )
@@ -932,7 +920,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqphothn", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqphothn", `-1` = "na, asked",
   .applies_to_vars = c("qphothh"),
   .applies_to_waves = c("G", "H")
 )
@@ -950,7 +938,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqphothr", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqphothr", `-1` = "na, asked",
   .applies_to_vars = c("qphotrh"),
   .applies_to_waves = c("G", "H")
 )
@@ -968,7 +956,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqphparn", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqphparn", `-1` = "na, asked",
   .applies_to_vars = c("qphprnh"),
   .applies_to_waves = c("G", "H")
 )
@@ -986,7 +974,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqphparr", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqphparr", `-1` = "na, asked",
   .applies_to_vars = c("qphprrh"),
   .applies_to_waves = c("G", "H")
 )
@@ -1004,7 +992,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see g/hqphpart", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see g/hqphpart", `-1` = "na, asked",
   .applies_to_vars = c("qphprth"),
   .applies_to_waves = c("G", "H")
 )
@@ -1028,7 +1016,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqhhacqu", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see bqhhacqu", `-1` = "na, asked",
   .applies_to_vars = c("qhhacqh"),
   .applies_to_waves = c("3B")
 )
@@ -1052,7 +1040,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqhhbrsi", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see bqhhbrsi", `-1` = "na, asked",
   .applies_to_vars = c("qhhbrsh"),
   .applies_to_waves = c("3B")
 )
@@ -1070,7 +1058,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqhhchin", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see bqhhchin", `-1` = "na, asked",
   .applies_to_vars = c("qhhchnh"),
   .applies_to_waves = c("3B")
 )
@@ -1088,7 +1076,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqhhgrch", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see bqhhgrch", `-1` = "na, asked",
   .applies_to_vars = c("qhhgrah"),
   .applies_to_waves = c("3B")
 )
@@ -1106,7 +1094,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqhhneig", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see bqhhneig", `-1` = "na, asked",
   .applies_to_vars = c("qhhneih"),
   .applies_to_waves = c("3B")
 )
@@ -1124,7 +1112,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqhhotfa", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see bqhhotfa", `-1` = "na, asked",
   .applies_to_vars = c("qhhotfh"),
   .applies_to_waves = c("3B")
 )
@@ -1142,7 +1130,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqhhothn", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see bqhhothn", `-1` = "na, asked",
   .applies_to_vars = c("qhhothh"),
   .applies_to_waves = c("3B")
 )
@@ -1160,7 +1148,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqhhparn", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see bqhhparn", `-1` = "na, asked",
   .applies_to_vars = c("qhhprnh"),
   .applies_to_waves = c("3B")
 )
@@ -1178,7 +1166,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqhhpart", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see bqhhpart", `-1` = "na, asked",
   .applies_to_vars = c("qhhprth"),
   .applies_to_waves = c("3B")
 )
@@ -1196,7 +1184,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqphacqu", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see bqphacqu", `-1` = "na, asked",
   .applies_to_vars = c("qphacqh"),
   .applies_to_waves = c("3B")
 )
@@ -1220,7 +1208,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqphbrsi", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see bqphbrsi", `-1` = "na, asked",
   .applies_to_vars = c("qphbrsh"),
   .applies_to_waves = c("3B")
 )
@@ -1238,7 +1226,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqphchin", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see bqphchin", `-1` = "na, asked",
   .applies_to_vars = c("qphchnh"),
   .applies_to_waves = c("3B")
 )
@@ -1256,7 +1244,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqphgrch", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see bqphgrch", `-1` = "na, asked",
   .applies_to_vars = c("qphgrah"),
   .applies_to_waves = c("3B")
 )
@@ -1274,7 +1262,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqphneig", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see bqphneig", `-1` = "na, asked",
   .applies_to_vars = c("qphneih"),
   .applies_to_waves = c("3B")
 )
@@ -1292,7 +1280,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqphotfa", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see bqphotfa", `-1` = "na, asked",
   .applies_to_vars = c("qphotfh"),
   .applies_to_waves = c("3B")
 )
@@ -1310,7 +1298,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqphothn", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see bqphothn", `-1` = "na, asked",
   .applies_to_vars = c("qphothh"),
   .applies_to_waves = c("3B")
 )
@@ -1328,7 +1316,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqphparn", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see bqphparn", `-1` = "na, asked",
   .applies_to_vars = c("qphprnh"),
   .applies_to_waves = c("3B")
 )
@@ -1346,7 +1334,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see bqphpart", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see bqphpart", `-1` = "na, asked",
   .applies_to_vars = c("qphprth"),
   .applies_to_waves = c("3B")
 )
@@ -1364,7 +1352,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMHHACQU", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see BMHHACQU", `-1` = "na, asked",
   .applies_to_vars = c("mhhacqh"),
   .applies_to_waves = c("MB")
 )
@@ -1382,7 +1370,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMHHBRSI", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see BMHHBRSI", `-1` = "na, asked",
   .applies_to_vars = c("mhhbrsh"),
   .applies_to_waves = c("MB")
 )
@@ -1394,7 +1382,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMHHCHIN", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see BMHHCHIN", `-1` = "na, asked",
   .applies_to_vars = c("mhhchnh"),
   .applies_to_waves = c("MB")
 )
@@ -1406,7 +1394,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMHHGRCH", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see BMHHGRCH", `-1` = "na, asked",
   .applies_to_vars = c("mhhgrah"),
   .applies_to_waves = c("MB")
 )
@@ -1418,7 +1406,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMHHNEIG", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see BMHHNEIG", `-1` = "na, asked",
   .applies_to_vars = c("mhhneih"),
   .applies_to_waves = c("MB")
 )
@@ -1430,7 +1418,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMHHOTFA", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see BMHHOTFA", `-1` = "na, asked",
   .applies_to_vars = c("mhhotfh"),
   .applies_to_waves = c("MB")
 )
@@ -1442,7 +1430,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMHHOTHN", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see BMHHOTHN", `-1` = "na, asked",
   .applies_to_vars = c("mhhothh"),
   .applies_to_waves = c("MB")
 )
@@ -1454,7 +1442,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMHHPARN", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see BMHHPARN", `-1` = "na, asked",
   .applies_to_vars = c("mhhprnh"),
   .applies_to_waves = c("MB")
 )
@@ -1466,7 +1454,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMHHPART", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see BMHHPART", `-1` = "na, asked",
   .applies_to_vars = c("mhhprth"),
   .applies_to_waves = c("MB")
 )
@@ -1484,7 +1472,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMPHACQU", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see BMPHACQU", `-1` = "na, asked",
   .applies_to_vars = c("mphacqh"),
   .applies_to_waves = c("MB")
 )
@@ -1502,7 +1490,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMPHBRSI", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see BMPHBRSI", `-1` = "na, asked",
   .applies_to_vars = c("mphbrsh"),
   .applies_to_waves = c("MB")
 )
@@ -1514,7 +1502,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMPHCHIN", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see BMPHCHIN", `-1` = "na, asked",
   .applies_to_vars = c("mphchnh"),
   .applies_to_waves = c("MB")
 )
@@ -1526,7 +1514,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMPHGRCH", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see BMPHGRCH", `-1` = "na, asked",
   .applies_to_vars = c("mphgrah"),
   .applies_to_waves = c("MB")
 )
@@ -1538,7 +1526,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMPHNEIG", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see BMPHNEIG", `-1` = "na, asked",
   .applies_to_vars = c("mphneih"),
   .applies_to_waves = c("MB")
 )
@@ -1550,7 +1538,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMPHOTFA", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see BMPHOTFA", `-1` = "na, asked",
   .applies_to_vars = c("mphotfh"),
   .applies_to_waves = c("MB")
 )
@@ -1562,7 +1550,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMPHOTHN", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see BMPHOTHN", `-1` = "na, asked",
   .applies_to_vars = c("mphothh"),
   .applies_to_waves = c("MB")
 )
@@ -1574,7 +1562,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMPHPARN", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see BMPHPARN", `-1` = "na, asked",
   .applies_to_vars = c("mphprnh"),
   .applies_to_waves = c("MB")
 )
@@ -1586,7 +1574,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see BMPHPART", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see BMPHPART", `-1` = "na, asked",
   .applies_to_vars = c("mphprth"),
   .applies_to_waves = c("MB")
 )
@@ -1622,7 +1610,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQHHACQU", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQHHACQU", `-1` = "na, asked",
   .applies_to_vars = c("qhhacqh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1634,7 +1622,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQHHBRSI", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQHHBRSI", `-1` = "na, asked",
   .applies_to_vars = c("qhhbrsh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1646,7 +1634,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQHHCHIN", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see I/J/KQHHCHIN", `-1` = "na, asked",
   .applies_to_vars = c("qhhchnh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1658,7 +1646,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQHHGRCH", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQHHGRCH", `-1` = "na, asked",
   .applies_to_vars = c("qhhgrah"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1670,7 +1658,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQHHNEIG", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQHHNEIG", `-1` = "na, asked",
   .applies_to_vars = c("qhhneih"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1682,7 +1670,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQHHOTFA", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQHHOTFA", `-1` = "na, asked",
   .applies_to_vars = c("qhhotfh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1694,7 +1682,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQHHOTHN", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQHHOTHN", `-1` = "na, asked",
   .applies_to_vars = c("qhhothh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1706,7 +1694,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQHHPARN", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see I/J/KQHHPARN", `-1` = "na, asked",
   .applies_to_vars = c("qhhprnh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1718,7 +1706,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQHHPART", `-1` = "na, asked", `0` = NA_character_, `168` = NA_character_,
+  `-2` = "na, see I/J/KQHHPART", `-1` = "na, asked",
   .applies_to_vars = c("qhhprth"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1730,7 +1718,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQPHACQU", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQPHACQU", `-1` = "na, asked",
   .applies_to_vars = c("qphacqh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1742,7 +1730,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQPHBRSI", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQPHBRSI", `-1` = "na, asked",
   .applies_to_vars = c("qphbrsh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1754,7 +1742,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQPHCHIN", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQPHCHIN", `-1` = "na, asked",
   .applies_to_vars = c("qphchnh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1766,7 +1754,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQPHCHIR", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQPHCHIR", `-1` = "na, asked",
   .applies_to_vars = c("qphchrh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1778,7 +1766,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQPHGRCH", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQPHGRCH", `-1` = "na, asked",
   .applies_to_vars = c("qphgrah"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1790,7 +1778,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQPHNEIG", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQPHNEIG", `-1` = "na, asked",
   .applies_to_vars = c("qphneih"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1802,7 +1790,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQPHOTFA", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQPHOTFA", `-1` = "na, asked",
   .applies_to_vars = c("qphotfh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1814,7 +1802,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQPHOTHN", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQPHOTHN", `-1` = "na, asked",
   .applies_to_vars = c("qphothh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1826,7 +1814,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQPHOTHR", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQPHOTHR", `-1` = "na, asked",
   .applies_to_vars = c("qphotrh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1838,7 +1826,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQPHPARN", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQPHPARN", `-1` = "na, asked",
   .applies_to_vars = c("qphprnh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1850,7 +1838,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQPHPARR", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQPHPARR", `-1` = "na, asked",
   .applies_to_vars = c("qphprrh"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -1862,7 +1850,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KQPHPART", `-1` = "na, asked", `168` = NA_character_,
+  `-2` = "na, see I/J/KQPHPART", `-1` = "na, asked",
   .applies_to_vars = c("qphprth"),
   .applies_to_waves = c("I", "J", "K")
 )

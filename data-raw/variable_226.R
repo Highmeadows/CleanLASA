@@ -42,19 +42,13 @@ value_labels(
 )
 
 value_labels(
-  `0` = NA_character_, `21` = NA_character_,
-  .applies_to_vars = c("anxint"),
-  .applies_to_waves = c("Z", "C", "D", "E", "F", "G", "H", "3B", "MB", "I", "J")
-)
-
-value_labels(
   `1` = "short interview", `2` = "interview terminated", `3` = "too many missings", `4` = "refused test",
   .applies_to_vars = c("rmanx"),
   .applies_to_waves = c("Z", "B")
 )
 
 value_labels(
-  `-2` = "na, see BRMANX", `0` = NA_character_, `21` = NA_character_,
+  `-2` = "na, see BRMANX",
   .applies_to_vars = c("anxint"),
   .applies_to_waves = c("B")
 )

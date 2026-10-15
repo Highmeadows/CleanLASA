@@ -27,19 +27,19 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-1` = "no valid data", `7` = NA_character_, `9` = NA_character_, `25` = NA_character_,
+  `-1` = "no valid data",
   .applies_to_vars = c("qsocdes"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `-1` = "no valid data", `7` = NA_character_, `25` = NA_character_,
+  `-1` = "no valid data",
   .applies_to_vars = c("qsocdes"),
   .applies_to_waves = c("C")
 )
 
 value_labels(
-  `-1` = "no valid data", `9` = NA_character_, `25` = NA_character_,
+  `-1` = "no valid data",
   .applies_to_vars = c("qsocdes"),
   .applies_to_waves = c("F")
 )

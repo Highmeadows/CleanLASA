@@ -57,7 +57,7 @@ value_labels(
 )
 
 value_labels(
-  `-4` = "no valid data", `0` = "R does not drink", `0.5` = NA_character_, `77` = NA_character_,
+  `-4` = "no valid data", `0` = "R does not drink",
   .applies_to_vars = c("malconw"),
   .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )

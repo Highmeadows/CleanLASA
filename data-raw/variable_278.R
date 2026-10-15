@@ -27,19 +27,19 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-4` = "not assessed", `-3` = "interview terminated", `-2` = "no valid scale score", `-1` = ">0 missing items", `6` = NA_character_, `18` = NA_character_,
+  `-4` = "not assessed", `-3` = "interview terminated", `-2` = "no valid scale score", `-1` = ">0 missing items",
   .applies_to_vars = c("an"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `-4` = "short version questionnaire", `-3` = "interview terminated", `-2` = "no valid data", `-1` = ">0 missing items", `6` = NA_character_, `18` = NA_character_,
+  `-4` = "short version questionnaire", `-3` = "interview terminated", `-2` = "no valid data", `-1` = ">0 missing items",
   .applies_to_vars = c("an"),
   .applies_to_waves = c("B")
 )
 
 value_labels(
-  `-4` = "refusal/skip by interviewer", `-3` = "interview terminated", `-2` = ">0 missing items", `-1` = ">0 missing items", `6` = NA_character_, `18` = NA_character_,
+  `-4` = "refusal/skip by interviewer", `-3` = "interview terminated", `-2` = ">0 missing items", `-1` = ">0 missing items",
   .applies_to_vars = c("an"),
   .applies_to_waves = c("E")
 )

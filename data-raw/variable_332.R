@@ -27,7 +27,7 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-1` = ">2 missing items", `16` = NA_character_, `80` = NA_character_,
+  `-1` = ">2 missing items",
   .applies_to_vars = c("qfioe"),
   .applies_to_waves = c("Z", "D", "E", "J")
 )

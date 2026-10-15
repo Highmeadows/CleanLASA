@@ -51,55 +51,31 @@ value_labels(
 )
 
 value_labels(
-  `4` = NA_character_, `20` = NA_character_,
-  .applies_to_vars = c("adversi"),
-  .applies_to_waves = c("Z", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
-)
-
-value_labels(
-  `14` = NA_character_, `20` = NA_character_, `22` = NA_character_, `23` = NA_character_, `60` = NA_character_,
-  .applies_to_vars = c("alcos"),
-  .applies_to_waves = c("Z")
-)
-
-value_labels(
-  `5` = NA_character_, `8` = NA_character_, `25` = NA_character_,
-  .applies_to_vars = c("comple"),
-  .applies_to_waves = c("Z")
-)
-
-value_labels(
-  `3` = NA_character_, `15` = NA_character_,
-  .applies_to_vars = c("initia"),
-  .applies_to_waves = c("Z", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
-)
-
-value_labels(
   `1` = "short interview", `2` = "interview terminated", `3` = "too many missings", `4` = "refusal / lack of understanding",
   .applies_to_vars = c("rmalc"),
   .applies_to_waves = c("Z", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see BRMALC", `4` = NA_character_, `20` = NA_character_,
+  `-2` = "na, see BRMALC",
   .applies_to_vars = c("adversi"),
   .applies_to_waves = c("B")
 )
 
 value_labels(
-  `-2` = "na, see BRMALC", `14` = NA_character_, `60` = NA_character_,
+  `-2` = "na, see BRMALC",
   .applies_to_vars = c("alcos"),
   .applies_to_waves = c("B")
 )
 
 value_labels(
-  `-2` = "na, see BRMALC", `5` = NA_character_, `25` = NA_character_,
+  `-2` = "na, see BRMALC",
   .applies_to_vars = c("comple"),
   .applies_to_waves = c("B")
 )
 
 value_labels(
-  `-2` = "na, see BRMALC", `3` = NA_character_, `15` = NA_character_,
+  `-2` = "na, see BRMALC",
   .applies_to_vars = c("initia"),
   .applies_to_waves = c("B")
 )
@@ -111,39 +87,9 @@ value_labels(
 )
 
 value_labels(
-  `20` = NA_character_, `60` = NA_character_,
-  .applies_to_vars = c("alcos"),
-  .applies_to_waves = c("C", "D")
-)
-
-value_labels(
-  `8` = NA_character_, `25` = NA_character_,
-  .applies_to_vars = c("comple"),
-  .applies_to_waves = c("C", "D", "G", "H", "3B", "I", "J", "K")
-)
-
-value_labels(
-  `23` = NA_character_, `60` = NA_character_,
-  .applies_to_vars = c("alcos"),
-  .applies_to_waves = c("E", "2B", "F")
-)
-
-value_labels(
-  `5` = NA_character_, `25` = NA_character_,
-  .applies_to_vars = c("comple"),
-  .applies_to_waves = c("E", "2B", "F")
-)
-
-value_labels(
   `1` = "short interview", `2` = "interview terminated", `3` = "too many missings", `4` = "refused to answer",
   .applies_to_vars = c("rmalc"),
   .applies_to_waves = c("F")
-)
-
-value_labels(
-  `22` = NA_character_, `60` = NA_character_,
-  .applies_to_vars = c("alcos"),
-  .applies_to_waves = c("G", "H", "3B", "I", "J", "K")
 )
 
 .lasa_fc_228 <- .lasa_finalize_fc("228")

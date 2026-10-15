@@ -41,79 +41,79 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-2` = "na, see RMGL", `-1` = "na, too many missings", `0` = NA_character_, `7` = NA_character_,
+  `-2` = "na, see RMGL", `-1` = "na, too many missings",
   .applies_to_vars = c("cort_int"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `-2` = "na, see RMGL", `-1` = "na, too many missings", `0` = NA_character_, `4` = NA_character_,
+  `-2` = "na, see RMGL", `-1` = "na, too many missings",
   .applies_to_vars = c("cos_int"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `-2` = "na, see RMGL", `-1` = "na, too many missings", `0` = NA_character_, `20` = NA_character_,
+  `-2` = "na, see RMGL", `-1` = "na, too many missings",
   .applies_to_vars = c("sal_int"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `-2` = "na, see CRMGL", `-1` = "na, too many missings", `0` = NA_character_, `7` = NA_character_,
+  `-2` = "na, see CRMGL", `-1` = "na, too many missings",
   .applies_to_vars = c("cort_int"),
   .applies_to_waves = c("C")
 )
 
 value_labels(
-  `-2` = "na, see CRMGL", `-1` = "na, too many missings", `0` = NA_character_, `4` = NA_character_,
+  `-2` = "na, see CRMGL", `-1` = "na, too many missings",
   .applies_to_vars = c("cos_int"),
   .applies_to_waves = c("C")
 )
 
 value_labels(
-  `-2` = "na, see CRMGL", `-1` = "na, too many missings", `0` = NA_character_, `20` = NA_character_,
+  `-2` = "na, see CRMGL", `-1` = "na, too many missings",
   .applies_to_vars = c("sal_int"),
   .applies_to_waves = c("C")
 )
 
 value_labels(
-  `-2` = "na, see DRMGL", `-1` = "na, too many missings", `0` = NA_character_, `4` = NA_character_,
+  `-2` = "na, see DRMGL", `-1` = "na, too many missings",
   .applies_to_vars = c("cos_int"),
   .applies_to_waves = c("D")
 )
 
 value_labels(
-  `-2` = "na, see DRMGL", `-1` = "na, too many missings", `0` = NA_character_, `20` = NA_character_,
+  `-2` = "na, see DRMGL", `-1` = "na, too many missings",
   .applies_to_vars = c("sal_int"),
   .applies_to_waves = c("D")
 )
 
 value_labels(
-  `-2` = "na, see ERMGL", `-1` = "na, too many missings", `0` = NA_character_, `4` = NA_character_,
+  `-2` = "na, see ERMGL", `-1` = "na, too many missings",
   .applies_to_vars = c("cos_int"),
   .applies_to_waves = c("E")
 )
 
 value_labels(
-  `-2` = "na, see ERMGL", `-1` = "na, too many missings", `0` = NA_character_, `20` = NA_character_,
+  `-2` = "na, see ERMGL", `-1` = "na, too many missings",
   .applies_to_vars = c("sal_int"),
   .applies_to_waves = c("E")
 )
 
 value_labels(
-  `-2` = "na, see BRMGL", `-1` = "na, too many missings", `0` = NA_character_, `4` = NA_character_,
+  `-2` = "na, see BRMGL", `-1` = "na, too many missings",
   .applies_to_vars = c("cos_int"),
   .applies_to_waves = c("2B")
 )
 
 value_labels(
-  `-2` = "na, see BRMGL", `-1` = "na, too many missings", `0` = NA_character_, `20` = NA_character_,
+  `-2` = "na, see BRMGL", `-1` = "na, too many missings",
   .applies_to_vars = c("sal_int"),
   .applies_to_waves = c("2B")
 )
 
 value_labels(
-  `-2` = "na, see FRMGL", `-1` = "na, too many missings", `0` = NA_character_, `4` = NA_character_,
+  `-2` = "na, see FRMGL", `-1` = "na, too many missings",
   .applies_to_vars = c("cos_int"),
   .applies_to_waves = c("F")
 )

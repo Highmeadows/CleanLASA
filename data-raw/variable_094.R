@@ -57,13 +57,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "not asked", `-1` = "na, asked", `0` = NA_character_, `1` = NA_character_,
+  `-2` = "not asked", `-1` = "na, asked",
   .applies_to_vars = c("happy"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `-4` = "interview terminated", `-3` = "short interview", `-2` = "not available, routing", `-1` = "na, asked", `0` = NA_character_, `1` = NA_character_,
+  `-4` = "interview terminated", `-3` = "short interview", `-2` = "not available, routing", `-1` = "na, asked",
   .applies_to_vars = c("lifeli"),
   .applies_to_waves = c("Z")
 )
@@ -87,13 +87,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "not asked", `-1` = "asked, no score", `0` = NA_character_, `1` = NA_character_,
+  `-2` = "not asked", `-1` = "asked, no score",
   .applies_to_vars = c("happy", "lifeli"),
   .applies_to_waves = c("D")
 )
 
 value_labels(
-  `-4` = "interview terminated", `-3` = "short interview", `-2` = "na, refused", `0` = NA_character_, `1` = NA_character_,
+  `-4` = "interview terminated", `-3` = "short interview", `-2` = "na, refused",
   .applies_to_vars = c("lifeli"),
   .applies_to_waves = c("E", "F")
 )
@@ -111,7 +111,7 @@ value_labels(
 )
 
 value_labels(
-  `-4` = "interview terminated", `-3` = "short interview", `-2` = "na, refused", `-1` = "na, asked", `0` = NA_character_, `1` = NA_character_,
+  `-4` = "interview terminated", `-3` = "short interview", `-2` = "na, refused", `-1` = "na, asked",
   .applies_to_vars = c("lifeli"),
   .applies_to_waves = c("G", "H", "I", "J", "K")
 )

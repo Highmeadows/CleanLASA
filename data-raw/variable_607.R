@@ -56,7 +56,7 @@ value_labels(
 )
 
 value_labels(
-  `-1` = "missing values", `6` = NA_character_, `30` = NA_character_,
+  `-1` = "missing values",
   .applies_to_vars = c("tpcogdc"),
   .applies_to_waves = c("Z", "C", "D", "E", "F", "G", "H", "I", "J")
 )

@@ -67,7 +67,7 @@ value_labels(
 )
 
 value_labels(
-  `-1` = "not available", `0` = NA_character_, `100` = NA_character_,
+  `-1` = "not available",
   .applies_to_vars = c("qeqvas"),
   .applies_to_waves = c("Z")
 )
@@ -105,12 +105,6 @@ value_labels(
 value_labels(
   `1` = "not anxious/depressed", `2` = "moderately anxious/depressed", `3` = "extreme anxious/depressed",
   .applies_to_vars = c("qeq5d5"),
-  .applies_to_waves = c("E", "F", "G", "H", "3B", "I")
-)
-
-value_labels(
-  `0` = NA_character_, `100` = NA_character_,
-  .applies_to_vars = c("qeqvas"),
   .applies_to_waves = c("E", "F", "G", "H", "3B", "I")
 )
 

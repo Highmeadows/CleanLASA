@@ -68,13 +68,13 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-2` = "no valid data", `5` = NA_character_, `25` = NA_character_,
+  `-2` = "no valid data",
   .applies_to_vars = c("mastery"),
   .applies_to_waves = c("Z", "C", "D", "E", "2B", "F", "G", "H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "no valid data", `7` = NA_character_, `35` = NA_character_,
+  `-2` = "no valid data",
   .applies_to_vars = c("mastry7"),
   .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "I", "J", "K")
 )
@@ -92,13 +92,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "no valid data", `4` = NA_character_, `20` = NA_character_,
+  `-2` = "no valid data",
   .applies_to_vars = c("selfest"),
   .applies_to_waves = c("Z", "C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see BRMMAS", `5` = NA_character_, `25` = NA_character_,
+  `-2` = "na, see BRMMAS",
   .applies_to_vars = c("mastery"),
   .applies_to_waves = c("B")
 )

@@ -298,8 +298,10 @@ variable_labels <- function(..., .applies_to_waves) {
 ## "valid score", "never had job", "normal test"): in context it explains
 ## why the value is missing. Values a numeric variable's documentation
 ## lists without wording (its range, or example values such as a -9.2 dB
-## threshold) are measurements, not codes: a negative one listed here
-## would become a missing-value code.
+## threshold) are measurements, not codes, so they are left out:
+## .lasa_finalize_fc() rejects a wording-less label on a numeric
+## variable's non-negative value, and a negative one would become a
+## missing-value code.
 value_labels <- function(..., .applies_to_vars, .applies_to_waves) {
   labels <- c(...)
   if (length(labels) == 0L) {
@@ -507,9 +509,29 @@ negative_values <- function(..., .applies_to_waves) {
     check_names(call$covered, "variable_labels()")
     check_waves(call$waves, "variable_labels()")
   }
+  # A value a numeric variable's documentation lists without wording (its
+  # range, or an example value) is a measurement, not a code, so it gets no
+  # value label; "NA" as label text is a transcription slip for one.
+  check_wordless <- function(call) {
+    text <- unname(call$labels)
+    codes <- suppressWarnings(as.numeric(names(call$labels)))
+    slip <- text %in% "NA"
+    if (any(slip)) {
+      stop(filecode, ": value_labels() gives code(s) ", paste(names(call$labels)[slip], collapse = ", "),
+        " the label text \"NA\" (", paste(call$vars, collapse = ", "), ").", call. = FALSE)
+    }
+    numeric_vars <- call$vars[var_types_vec[call$vars] == "numeric"]
+    listed <- is.na(text) & !is.na(codes) & codes >= 0
+    if (length(numeric_vars) > 0L && any(listed)) {
+      stop(filecode, ": value_labels() lists ", paste(names(call$labels)[listed], collapse = ", "),
+        " without wording for numeric variable(s) ", paste(numeric_vars, collapse = ", "),
+        ": a listed value of a numeric variable is a measurement, not a code -- leave it out.", call. = FALSE)
+    }
+  }
   for (call in val_calls) {
     check_names(call$vars, "value_labels()")
     check_waves(call$waves, "value_labels()")
+    check_wordless(call)
   }
   for (call in neg_calls) {
     check_names(call$vars, "negative_values()")
