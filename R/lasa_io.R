@@ -612,12 +612,19 @@
 #' it needs the respondent's cohort: every row of a baseline file is Time
 #' 0, and every row of a file of waves C to E, which only the first cohort
 #' takes part in, gets that cohort's Time -- also rows holding nothing but
-#' missing-value codes. Wave A (the LSN pilot study) has no Time. The
-#' waves from F on are shared by several cohorts, so a file of one of those
-#' waves doesn't show who belongs to which: its rows get no Time, with a
-#' message, until it is combined with data that show the cohorts, such as
-#' the baseline files, and transformed again (see [transform_lasa_data()],
-#' which also explains combining files).
+#' missing-value codes, whatever the respondent numbers say. Wave A (the
+#' LSN pilot study) has no Time. The waves from F on are shared by several
+#' cohorts, so the wave of such a file doesn't show who belongs to which:
+#' its rows get their Time from LASA's respondent numbers, five digits the
+#' first of which says the cohort (1 to 3 the first, 4 to 6 the second, 7
+#' to 9 the third). The rows of respondents whose number doesn't say get no
+#' Time, with a message, until the file is combined with data that show
+#' the cohorts (the baseline files, or `LASAZ002.SAV`'s `cohort` column)
+#' and transformed again; where those show another cohort than a number,
+#' they decide, with a warning. The fourth and the migrant cohort's numbers
+#' aren't known yet, so read on its own, a file of waves I to L may give
+#' their rows another cohort's Time (see [transform_lasa_data()], which
+#' also explains combining files).
 #'
 #' @return `data` as imported by [haven::read_sav()], labelled (and
 #'   optionally reshaped/renamed) with generic LASA provenance attributes

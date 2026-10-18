@@ -749,14 +749,18 @@ show: a value at the respondent's baseline or at a wave only their
 cohort takes part in (B to E for the first cohort), any row of a file
 of such a wave -- every respondent in `LASAC046.sav` belongs to the
 first cohort, even one whose row holds nothing but missing-value
-codes -- LASA's `cohort` column, as in `LASAZ002.sav`
-("cohort 1 (1992)" has baseline B, cohort 2 2B, cohort 3 3B), or the
-respondent number. LASA numbers its respondents with five digits, the
-first of which says the cohort: 1, 2, or 3 the first (1 also the LSN
-pilot study), 4, 5, or 6 the second, and 7, 8, or 9 the third. The
-fourth and the migrant cohort's numbers aren't known yet, so theirs
-say nothing. Where the rest of the data show another cohort than the
-number, they decide, with a warning.
+codes, and every respondent in `LASMB046.sav` to the migrant cohort,
+whatever their number says -- LASA's `cohort` column, as in
+`LASAZ002.sav` ("cohort 1 (1992)" has baseline B, cohort 2 2B, cohort
+3 3B), or the respondent number. LASA numbers its respondents with
+five digits, the first of which says the cohort: 1, 2, or 3 the first,
+4, 5, or 6 the second, and 7, 8, or 9 the third. A 1 also numbers the
+LSN pilot study's respondents, so it only counts for a respondent the
+data show at another wave than A. The fourth and the migrant cohort's
+numbers aren't known yet: if they have five digits too, they say one
+of the first three cohorts until the rest of the data show their own.
+Where the rest of the data show another cohort than the number, they
+decide, with a warning.
 
 The waves from F on are shared, so a file of wave F or later, read on
 its own, can't tell the cohorts apart by its waves: its rows get their
@@ -804,10 +808,14 @@ next wave, and so on. The `cohort` column says which cohort each
 respondent belongs to, so the columns convert back to the right waves.
 It is LASA's own cohort variable, coded as `read_lasa_sav()` reads
 `LASAZ002.sav`'s (`"cohort 1 (1992)"`, `"cohort 2 (2002)"`,
-`"cohort 3 (2012)"`, and `"cohort 4"` or `"migrant cohort"` for the
-cohorts that file doesn't have), so the result merges with that file by
-`respnr` and `cohort`. Data sets merged by `respnr` alone get
-`cohort.x` and `cohort.y`, which `transform_lasa_data()` combines again:
+`"cohort 3 (2012)"`; `"4"` for the fourth cohort, whose code the label
+database doesn't document yet, and `"migrant cohort"` for the cohort
+that file doesn't have), so the result merges with that file by
+`respnr` and `cohort`, as long as the file is read with
+`to_factor = TRUE`, the default. Data sets merged by `respnr` alone get
+`cohort.x` and `cohort.y`, which `transform_lasa_data()` combines again,
+as it combines `cohort` with `COHORT`, the name `haven::read_sav()`
+gives that file's column:
 
 ```{r time-wide-merge, eval=FALSE}
 oa_time <- transform_lasa_data(oa_long, format = "wide", prefix = "Time")
@@ -819,7 +827,9 @@ A value needs a Time to get a Time-prefixed name, so `prefix = "Time"`
 stops with an error naming a respondent with values (other than
 missing-value codes) on rows without one, such as a respondent seen
 only at waves the cohorts share (F and later) whose number doesn't say
-their cohort; `prefix = "Wave"` works for any data.
+their cohort; `prefix = "Wave"` works for any data. The `cohort` column
+also needs its name: rename a `cohort` column of your own (birth
+cohorts, say) first.
 
 Columns that came from a wide LASA file get their original type and
 labels back, and with `prefix = "Wave"` their original name too, as
@@ -885,7 +895,9 @@ long <- transform_lasa_data(wide)
 though, so the values in `b` columns of a respondent the data show
 nowhere else, such as one who dropped out after wave B, are placed by
 their respondent number, or else by a guess (see below), which gives
-them no Time.
+them no Time. Combine the baseline files of the migrant and the fourth
+cohort (`LASMB046.sav`, `LAS4B046.sav`), whose respondent numbers
+aren't known yet, in long format, so their rows keep their wave.
 
 To add a Z file to long data, merge its wide columns by `respnr`
 (without its `"Wave"` placeholder column, or read it with
@@ -905,13 +917,14 @@ Some LASA names stand for several waves: every cohort's baseline (B,
 `blphya01` may belong to any of them. `transform_lasa_data()` places
 each respondent's value at the wave their data show -- the row it is
 on, the respondent's cohort (also by their respondent number), or the
-file it was read from. If nothing
-shows it, it guesses, with a message naming the column, and a guessed
-wave doesn't count as showing the respondent's cohort -- also when the
-result is transformed again, as long as its columns keep their
-attributes (`rbind()`, `merge()`, `dplyr::bind_rows()`, sorting or
-subsetting the rows of a data frame rather than a tibble, and saving
-to a `.sav` file can drop them). To avoid guesses, combine such files
+file it was read from. If nothing shows it, it guesses, with a message
+naming the column, and a guessed wave doesn't count as showing the
+respondent's cohort (their row gets a Time only from something else,
+such as their respondent number) -- also when the result is
+transformed again, as long as its columns keep their attributes
+(`rbind()`, `merge()`, `dplyr::bind_rows()`, sorting or subsetting the
+rows of a data frame rather than a tibble, and saving to a `.sav` file
+can drop them). To avoid guesses, combine such files
 in long format, where each row carries its own wave, rather than in
 wide format (such as `LASAB046.sav` and `LAS2B046.sav` read with
 `standardize = FALSE`).

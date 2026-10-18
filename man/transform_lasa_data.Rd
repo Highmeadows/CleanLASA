@@ -81,11 +81,14 @@ A row's Time depends on the respondent's cohort, which the data show by:
 \item a value (other than \code{NA}, blank text, or a missing-value code) at the
 respondent's baseline or at a wave only their cohort takes part in (B
 to E for the first cohort);
-\item any row of a single LASA file of such a wave (the data's
-\code{"LASA_file_code"} and \code{"LASA_wave"} attributes say which file; not a
-Z file, whose rows may hold codes for waves before a cohort joined),
-whatever it holds, unless that is nothing but values a guess put at its
-wave (see \strong{Names of several waves});
+\item a single LASA file of such a wave, whose respondents all belong to its
+cohort, whatever their values (the data's \code{"LASA_file_code"} and
+\code{"LASA_wave"} attributes say which file; not a Z file, whose rows may
+hold codes for waves before a cohort joined): in long data, any row of
+the file, unless it holds nothing but values a guess put at its wave
+(see \strong{Names of several waves}); in the file read with LASA's own
+names (\code{standardize = FALSE} in \code{\link[=read_lasa_sav]{read_lasa_sav()}}), any value in a
+column its label report lists;
 \item LASA's \code{cohort} column, as \code{LASAZ002.SAV} and Time-prefixed wide data
 (see \strong{Wide format}) have it: \code{"cohort 1 (1992)"} -- also written
 \code{"Cohort 1"} or \code{"cohort 1 (1992/1993)"} -- or its code 1 is the first
@@ -93,14 +96,19 @@ cohort, whose baseline is B; cohort 2's is 2B, cohort 3's 3B, cohort
 4's 4B, and the \code{"migrant cohort"}'s MB;
 \item a \code{"Time"} column already in long data;
 \item the respondent number: LASA numbers its respondents with five digits,
-the first of which is 1, 2, or 3 in the first cohort (1 also in the LSN
-pilot study), 4, 5, or 6 in the second cohort, and 7, 8, or 9 in the
-third. The fourth and the migrant cohort's numbers aren't known yet, so
-theirs say nothing, nor does a number of any other form (such as the
-small numbers of the examples below). Where the rest of the data show
-another cohort than a respondent's number, they decide, with a warning,
-also over a \code{"Time"} column that follows the number (as
-\code{\link[=read_lasa_sav]{read_lasa_sav()}} gives it at waves several cohorts share).
+the first of which is 1, 2, or 3 in the first cohort, 4, 5, or 6 in
+the second cohort, and 7, 8, or 9 in the third. A 1 also numbers the
+LSN pilot study's respondents, so it only says the first cohort of a
+respondent the data show at a wave other than A. The fourth and the
+migrant cohort's numbers aren't known yet: if they have five digits
+too, they say one of the first three cohorts until the rest of the
+data show their own (their baseline file, say, or a \code{cohort} column).
+A number of any other form (the longer numbers the fourth cohort may
+have, or the small numbers of the examples below) says nothing. Where
+the rest of the data show another cohort than a respondent's number,
+they decide, with a warning in long and Time-prefixed wide format,
+which show the cohort -- also over a \code{"Time"} column that follows the
+number (as \code{\link[=read_lasa_sav]{read_lasa_sav()}} gives it at waves several cohorts share).
 }
 
 A missing-value code is what \code{\link[=read_lasa_sav]{read_lasa_sav()}} turns into \code{NA} unless
@@ -127,22 +135,37 @@ A \code{"Time"} column already in long data -- also the \code{Time.x}/\code{Time
 columns \code{\link[=merge]{merge()}} makes of two, and the further copies merging more data
 sets gives (\code{Time.x.x}, or several of the same name) -- must give each
 row a Time that the respondent's cohort, as far as the rest of the data
-show it, gives its wave, and copies must agree with each other; it is
-replaced by the recomputed one. A \code{cohort} column (in any
-capitalization) must give each respondent one cohort, which the waves
-the data show must fit; values that name no cohort (a missing-value
-code) say nothing, and a \code{cohort} column none of whose values, factor
-levels, or value labels names one, or holding numbers other than LASA's
-codes 1 to 4, is an ordinary column. In long format, the \code{cohort} column
-stays as it is; coded as Time-prefixed wide data have it (as
+show it, gives its wave, and copies must agree with each other, except
+that a copy following the respondent number gives way to one that
+doesn't (that of a file of a wave several cohorts share read on its
+own, next to that of data that showed another cohort, say); it is
+replaced by the recomputed one.
+
+A \code{cohort} column (in any capitalization) is LASA's when its values,
+factor levels, or value labels name cohorts the way above, or when it
+holds nothing but their codes (and missing values): LASA's codes 1 to 4,
+and 5 for the migrant cohort, as Time-prefixed wide data code it, as
+numbers, or as text or factor levels (\code{"4"}, the way \code{\link[=read_lasa_sav]{read_lasa_sav()}}
+reads a code the label database doesn't document) -- unless value labels
+say they are something else (birth cohorts, say; labels of negative
+missing-value codes aside). In a column whose value labels name cohorts,
+a code without a value label names its cohort too. Any other \code{cohort}
+column is an ordinary column. LASA's cohort column must give each
+respondent one cohort, which the waves the data show must fit; values
+that name no cohort (a missing-value code) say nothing. In long format,
+it stays as it is; coded as Time-prefixed wide data have it (as
 \code{\link[=read_lasa_sav]{read_lasa_sav()}} reads \code{LASAZ002.SAV}'s), it gets back the labels
-\code{\link[=merge]{merge()}} and row subsetting drop. The \code{cohort.x}/\code{cohort.y} columns of
-data sets with a \code{cohort} column merged by \code{respnr} (\code{LASAZ002.SAV},
-Time-prefixed wide data), and the further copies merging more of them
-gives (\code{cohort.x.x}, or several of the same name), are combined into one
-\code{cohort}, coded as Time-prefixed wide data have it, and must agree; a
-copy that names no cohort is another data set's own column, and stays as
-it is.
+\code{\link[=merge]{merge()}} and row subsetting drop. Several columns named \code{cohort} -- the
+\code{cohort.x}/\code{cohort.y} columns of data sets with a \code{cohort} column merged
+by \code{respnr} (\code{LASAZ002.SAV}, Time-prefixed wide data), the further
+copies merging more of them gives (\code{cohort.x.x}, or several of the same
+name), and columns whose names differ in capitalization only
+(\code{LASAZ002.SAV}'s \code{COHORT} as \code{\link[haven:read_spss]{haven::read_sav()}} reads it, next to
+Time-prefixed wide data's \code{cohort}) -- are combined into one \code{cohort},
+coded as Time-prefixed wide data have it, and must agree. A copy that
+names no cohort is another data set's own column, and stays as it is; a
+column named \code{cohort} that names none, next to one that does, is an
+error.
 
 \strong{Stable variables} -- columns that hold for every wave, such as sex or
 year of birth (\code{byear}) in \code{LASAZ004.SAV} -- keep one column and are
@@ -206,9 +229,9 @@ several waves too (\code{bqvalu16} for waves 3B and J, \code{xcancer1} for waves
 and C). Each respondent's value in such a column goes to the wave the
 data show for that respondent: in long data, a value already on a row of
 one of those waves stays there; otherwise, the respondent's cohort, as
-far as the data (or the respondent number) show it (the first cohort has
-no wave 3B, so its respondents' \code{bqvalu16} is wave J's), and then the
-file the column came from (the data's \code{"LASA_file_code"} and
+far as the data (or else the respondent number) show it (the first
+cohort has no wave 3B, so its respondents' \code{bqvalu16} is wave J's), and
+then the file the column came from (the data's \code{"LASA_file_code"} and
 \code{"LASA_wave"} attributes, as far as the data's label report lists the
 column, since a merge keeps at most the first file's attributes). If
 nothing says, the value goes, with a message naming the column, to the
@@ -220,7 +243,10 @@ for a name LASA's wave files use without a wave prefix, \code{drinking}, if
 the respondent's cohort takes part in none of those: waves 4B and L,
 which the label database doesn't document yet). Such a guess doesn't
 count as showing the respondent's cohort, so it gives none of their
-rows a Time -- also when the result is transformed again: the long
+rows a Time unless something else, such as their respondent number,
+shows the cohort (which may leave several of the column's waves open:
+the third cohort takes part in both of \code{bqvalu16}'s) -- also when the
+result is transformed again: the long
 column remembers which of its values were placed by a guess, and wide
 format gives those values one column, also when the guesses put them at
 several waves, under a name that doesn't say the wave (its original
@@ -259,9 +285,13 @@ read with \code{format_as_long = TRUE} has no \code{"Wave"} column: merge it by
 \item wide, e.g. \code{LASAB046.SAV}, \code{LASAC046.SAV}, \code{LASAB030.SAV}, ... read
 with \code{standardize = FALSE} and merged by \code{respnr} (with \code{all = TRUE}),
 or a Z file merged with \code{LASAZ004.SAV}. \code{\link[=merge]{merge()}} drops the files'
-attributes, so the values in \code{b} columns of a respondent the data show
-nowhere else (one who dropped out after wave B, say) are placed by a
-guess (see \strong{Names of several waves}) and get no Time. Don't stack
+attributes (\code{dplyr}'s joins keep the first data set's), so the values
+in \code{b} columns of a respondent the data show nowhere else (one who
+dropped out after wave B, say) go to the baseline their respondent
+number says, or else are placed by a guess (see \strong{Names of several
+waves}), which gives them no Time. So merge the baseline files of the
+migrant and the fourth cohort (\code{LASMB046.SAV}, \code{LAS4B046.SAV}), whose
+respondent numbers aren't known yet, in long format. Don't stack
 wide files of different cohorts that share column names (e.g.
 \code{LAS2B046.SAV} below \code{LASAB046.SAV}, or \code{LASAZDC2.SAV} below
 \code{LASAZDC1.SAV}): stack them in long format;
@@ -302,21 +332,31 @@ columns. A \code{cohort} column after \code{respnr} gives each respondent's
 cohort, which transforming the data back to long format uses. It is
 LASA's cohort variable the way \code{\link[=read_lasa_sav]{read_lasa_sav()}} reads \code{LASAZ002.SAV}'s
 -- a factor of its value labels (\code{"cohort 1 (1992)"}, \code{"cohort 2 (2002)"}, \code{"cohort 3 (2012)"}), with its labels -- so the result merges
-with that file's columns by \code{respnr} and \code{cohort}; the fourth and the
-migrant cohort, which \code{LASAZ002.SAV} doesn't have, get levels of their
-own (\code{"cohort 4"}, \code{"migrant cohort"}) where respondents have them. It
-replaces a \code{cohort} column \code{data} have. Wave A, which has no Time, keeps
-its own column (\code{aoak}). Every other value needs a Time: values at a
-wave without one for their respondent are an error, except
-missing-value codes, which are left out with a message. A respondent
-whose rows have a Time while the data leave their cohort open (rows of
-waves I to L only, which the third and the migrant cohort give the same
-Time, without a LASA respondent number) gets a missing \code{cohort}, with a
-warning: their columns can't be transformed back. A column holding
-several cohorts' waves (\code{t0_oak}: B, 2B, ...) gets those waves' types,
-value labels and user-missing codes, combined the way long format
-combines waves, with a warning where their user-missing codes don't
-combine, and their \code{"wave_label"}/\code{"labels_wave"} as one entry per wave.
+with that file by \code{respnr} and \code{cohort}, read with \code{to_factor = TRUE}
+(the default); read with \code{to_factor = FALSE}, merge it by \code{respnr}
+alone (the \code{cohort.x} and \code{cohort.y} columns that gives are combined,
+see above). The fourth cohort, whose code 4 the label database doesn't
+document yet, gets the level \code{"4"}, as \code{\link[=read_lasa_sav]{read_lasa_sav()}} reads that
+code, and the migrant cohort, which \code{LASAZ002.SAV} doesn't have, the
+level \code{"migrant cohort"} after it. These levels come where the data have
+respondents of these cohorts -- \code{"4"} also with only the migrant
+cohort's -- so that each cohort keeps its code (1 to 5) when the factor
+becomes numbers (in a \code{.sav} file, say). The column replaces a \code{cohort}
+column \code{data} have, which must then be LASA's: any other column named
+\code{cohort} (in any capitalization) is an error, so rename it first. Wave
+A, which has no Time, keeps its own column (\code{aoak}). Every other value
+needs a Time: values at a wave without one for their respondent are an
+error, except missing-value codes, which are left out with a message. A
+respondent whose rows have a Time while the data leave their cohort
+open (rows of waves I to L only, which the third and the migrant cohort
+give the same Time, of a respondent whose number doesn't say the
+cohort, or says one the data rule out) gets a missing \code{cohort}, with a
+warning: their columns can't be transformed back, also not by their
+respondent number. A column holding several cohorts' waves (\code{t0_oak}: B,
+2B, ...) gets those waves' types, value labels and user-missing codes,
+combined the way long format combines waves, with a warning where their
+user-missing codes don't combine, and their \code{"wave_label"}/\code{"labels_wave"}
+as one entry per wave.
 Original names aren't kept with \code{prefix = "Time"}, also not when such
 data are made wide again with \code{prefix = "Wave"}.
 
