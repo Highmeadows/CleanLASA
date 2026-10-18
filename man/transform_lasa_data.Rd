@@ -86,11 +86,15 @@ cohort, whatever their values (the data's \code{"LASA_file_code"} and
 \code{"LASA_wave"} attributes say which file; not a Z file, whose rows may
 hold codes for waves before a cohort joined): in long data all of whose
 rows are of that wave, any row, unless it holds nothing but values a
-guess put at its wave (see \strong{Names of several waves}); in the file
-read with LASA's own names (\code{standardize = FALSE} in
-\code{\link[=read_lasa_sav]{read_lasa_sav()}}), every respondent -- or, once other data are joined
-on (columns its label report doesn't list), every respondent with a
-value in a column it lists (one the join added has none);
+guess put at its wave (see \strong{Names of several waves}); in wide data
+(the file read with LASA's own names, \code{standardize = FALSE} in
+\code{\link[=read_lasa_sav]{read_lasa_sav()}}, or transformed to wide format), every respondent,
+as long as all columns are the file's (those its label report lists,
+and the names wide format gives columns of its wave) -- once other
+data are joined on, every respondent with a value in one of the file's
+columns (one the join added has none), also when the file in wide data
+was joined onto long data, keeping its attributes (as \code{dplyr}'s joins
+do with it first);
 \item LASA's \code{cohort} column, as \code{LASAZ002.SAV} and Time-prefixed wide data
 (see \strong{Wide format}) have it: \code{"cohort 1 (1992)"} -- also written
 \code{"Cohort 1"} or \code{"cohort 1 (1992/1993)"} -- or its code 1 is the first
