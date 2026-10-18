@@ -138,11 +138,13 @@ LSN pilot study) has no Time. The waves from F on are shared by several
 cohorts, so the wave of such a file doesn't show who belongs to which:
 its rows get their Time from LASA's respondent numbers, five digits the
 first of which says the cohort (1 to 3 the first, 4 to 6 the second, 7
-to 9 the third). The rows of respondents whose number doesn't say get no
-Time, with a message, until the file is combined with data that show
-the cohorts (the baseline files, or \code{LASAZ002.SAV}'s \code{cohort} column)
-and transformed again; where those show another cohort than a number,
-they decide, with a warning. The fourth and the migrant cohort's numbers
+to 9 the third; a 1, which the LSN pilot study's respondents have too,
+only where the respondent's values aren't all missing-value codes). The
+rows of respondents whose number doesn't say get no Time, with a
+message, until the file is combined with data that show the cohorts
+(the baseline files, or \code{LASAZ002.SAV}'s \code{cohort} column) and
+transformed again; where those show another cohort than a number, they
+decide, with a warning. The fourth and the migrant cohort's numbers
 aren't known yet, so read on its own, a file of waves I to L may give
 their rows another cohort's Time (see \code{\link[=transform_lasa_data]{transform_lasa_data()}}, which
 also explains combining files).

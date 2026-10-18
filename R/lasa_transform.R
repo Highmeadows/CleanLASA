@@ -184,11 +184,13 @@
 #' * a single LASA file of such a wave, whose respondents all belong to its
 #'   cohort, whatever their values (the data's `"LASA_file_code"` and
 #'   `"LASA_wave"` attributes say which file; not a Z file, whose rows may
-#'   hold codes for waves before a cohort joined): in long data, any row of
-#'   the file, unless it holds nothing but values a guess put at its wave
-#'   (see **Names of several waves**); in the file read with LASA's own
-#'   names (`standardize = FALSE` in [read_lasa_sav()]), any value in a
-#'   column its label report lists;
+#'   hold codes for waves before a cohort joined): in long data all of whose
+#'   rows are of that wave, any row, unless it holds nothing but values a
+#'   guess put at its wave (see **Names of several waves**); in the file
+#'   read with LASA's own names (`standardize = FALSE` in
+#'   [read_lasa_sav()]), every respondent -- or, once other data are joined
+#'   on (columns its label report doesn't list), every respondent with a
+#'   value in a column it lists (one the join added has none);
 #' * LASA's `cohort` column, as `LASAZ002.SAV` and Time-prefixed wide data
 #'   (see **Wide format**) have it: `"cohort 1 (1992)"` -- also written
 #'   `"Cohort 1"` or `"cohort 1 (1992/1993)"` -- or its code 1 is the first
@@ -199,16 +201,18 @@
 #'   the first of which is 1, 2, or 3 in the first cohort, 4, 5, or 6 in
 #'   the second cohort, and 7, 8, or 9 in the third. A 1 also numbers the
 #'   LSN pilot study's respondents, so it only says the first cohort of a
-#'   respondent the data show at a wave other than A. The fourth and the
-#'   migrant cohort's numbers aren't known yet: if they have five digits
-#'   too, they say one of the first three cohorts until the rest of the
-#'   data show their own (their baseline file, say, or a `cohort` column).
-#'   A number of any other form (the longer numbers the fourth cohort may
-#'   have, or the small numbers of the examples below) says nothing. Where
-#'   the rest of the data show another cohort than a respondent's number,
-#'   they decide, with a warning in long and Time-prefixed wide format,
-#'   which show the cohort -- also over a `"Time"` column that follows the
-#'   number (as [read_lasa_sav()] gives it at waves several cohorts share).
+#'   respondent the data show at a wave other than A, by a value there
+#'   (rows that hold nothing but missing-value codes don't count). The
+#'   fourth and the migrant cohort's numbers aren't known yet: if they have
+#'   five digits too, they say one of the first three cohorts until the
+#'   rest of the data show their own (their baseline file, say, or a
+#'   `cohort` column). A number of any other form (the longer numbers the
+#'   fourth cohort may have, or the small numbers of the examples below)
+#'   says nothing. Where the rest of the data show another cohort than a
+#'   respondent's number, they decide, with a warning in long and
+#'   Time-prefixed wide format, which show the cohort -- also over a
+#'   `"Time"` column that follows the number (as [read_lasa_sav()] gives
+#'   it at waves several cohorts share).
 #'
 #' A missing-value code is what [read_lasa_sav()] turns into `NA` unless
 #' `keep_user_na = TRUE`: an SPSS user-missing value; in a variable the
@@ -248,8 +252,9 @@
 #' reads a code the label database doesn't document) -- unless value labels
 #' say they are something else (birth cohorts, say; labels of negative
 #' missing-value codes aside). In a column whose value labels name cohorts,
-#' a code without a value label names its cohort too. Any other `cohort`
-#' column is an ordinary column. LASA's cohort column must give each
+#' a code without a value label names its cohort too, as does one labelled
+#' with its own number (the level `"4"` in a `.sav` file). Any other
+#' `cohort` column is an ordinary column. LASA's cohort column must give each
 #' respondent one cohort, which the waves the data show must fit; values
 #' that name no cohort (a missing-value code) say nothing. In long format,
 #' it stays as it is; coded as Time-prefixed wide data have it (as
@@ -286,13 +291,15 @@
 #' `b2oak` (`oak`, wave 2B), or `totalalpha`, which LASA's wave H file uses
 #' without a wave prefix, and a column [read_lasa_sav()] matched to such a
 #' name by fuzzy matching or `name_corrections` -- or, for data that aren't
-#' long yet (no `"Wave"` column, or only the `"Z"` placeholder
-#' [read_lasa_sav()] gives a Z file), when its name is a wave prefix
-#' followed by a variable the label database documents for that wave (the
-#' names wide format uses, see below), by any wave-specific variable it
-#' documents if the wave is 4B or L, which it doesn't document yet
-#' (`lhhnch`), or by a variable LASA's wave files name without a wave
-#' prefix if the wave isn't A (`kseh_reden`). All other columns are
+#' long yet (no `"Wave"` column, or one holding nothing but the `"Z"`
+#' placeholder [read_lasa_sav()] gives a Z file and the missing values
+#' merging with that file gives -- only missing values, too, in data with
+#' one row per respondent), when its name is a wave prefix followed by a
+#' variable the label database documents for that wave (the names wide
+#' format uses, see below), by any wave-specific variable it documents if
+#' the wave is 4B or L, which it doesn't document yet (`lhhnch`), or by a
+#' variable LASA's wave files name without a wave prefix if the wave isn't
+#' A (`kseh_reden`). All other columns are
 #' treated as stable, including columns the label database doesn't know. A
 #' warning names columns kept stable that look like wave-specific
 #' variables: names a merge suffixed with `.x`/`.y`, and, in wide data,
@@ -1017,6 +1024,8 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   for (name in found) {
     x <- data[[name]]
     text <- if (is.factor(x)) as.character(x) else .lasa_bare(x)
+    # Blank text is how SPSS stores a missing text value.
+    if (is.character(text)) text[!is.na(text) & !nzchar(trimws(text))] <- NA_character_
     numbers <- suppressWarnings(as.numeric(text))
     fits <- rowSums(times == numbers, na.rm = TRUE) > 0L
     wrong <- !is.na(text) & (is.na(numbers) | !fits)
@@ -1081,9 +1090,10 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 ## column `x` names: by its text, a factor's level, or a code's value label;
 ## and by its code (.lasa_cohort_column_codes: LASA's codes 1 to 4, and 5,
 ## the migrant cohort's in the cohort column transform_lasa_data() makes) a
-## plain number, and a level, text, or value without a value label that is
-## a code -- as read_lasa_sav() reads a code the label database doesn't
-## document (LASAZ002.SAV's 4, say), by its own number. NA for anything else
+## plain number, and a level, text, or value without a value label (or with
+## its own number for one) that is a code -- as read_lasa_sav() reads a
+## code the label database doesn't document (LASAZ002.SAV's 4, say), by its
+## own number, and haven::write_sav() writes that level. NA for anything else
 ## (a missing value or missing-value code). NULL when `x` names no cohort at
 ## all -- none of its values, levels, or value labels does, and it holds
 ## other things than codes too (negative missing-value codes aside), or has
@@ -1127,7 +1137,11 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     if (any(!is.na(of_label))) {
       at <- match(values, labels)
       named <- of_label[at]
-      named[is.na(at)] <- of_code(values[is.na(at)])
+      # A code without a value label, or whose label is its own number (the
+      # level "4" of the cohort column, written to a .sav file).
+      label_number <- suppressWarnings(as.numeric(names(labels)))[at]
+      by_code <- is.na(at) | (is.na(named) & !is.na(label_number) & label_number == values)
+      named[by_code] <- of_code(values[by_code])
       says <- ifelse(is.na(at), as.character(values), names(labels)[at])
       return(structure(named, says = says))
     }
@@ -1875,9 +1889,11 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 
 ## The Time of long data's rows (respondent `r` at wave `wave_codes`) and
 ## each respondent's baseline, from what the rows that show their
-## respondent took part (`real_rows`, see .lasa_long_real_rows()),
-## `baseline` and `time` show about their cohort (see
-## .lasa_possible_cohorts()). Says which respondents' rows get no Time,
+## respondent took part (`real_rows`, see .lasa_long_real_rows()), the
+## waves the data show each respondent at besides (`shown`, respondents x
+## waves of .lasa_wave_table(), NULL for none), `baseline` and `time` show
+## about their cohort (see .lasa_possible_cohorts()). Says which
+## respondents' rows get no Time,
 ## unless `quiet`: in a message when the data don't show their cohort (as
 ## far as those rows hold values, missing-value codes too: `held_rows`, see
 ## .lasa_long_held_rows(); an empty row loses nothing), and in a warning
@@ -1885,12 +1901,13 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 ## FALSE, in a warning, which respondents' LASA respondent numbers the rest
 ## of the data contradict. Returns list(time, baseline).
 .lasa_long_times <- function(r, wave_codes, real_rows, baseline, time, ids, quiet = FALSE,
-                             held_rows = real_rows, warn_numbers = !quiet) {
+                             held_rows = real_rows, warn_numbers = !quiet, shown = NULL) {
   has_data <- .lasa_long_has_data(real_rows, r, length(ids), wave_codes)
+  if (!is.null(shown)) has_data <- has_data | shown
   # A respondent number starting with 1 may be an LSN pilot respondent's
-  # who never joined LASA: it only counts for those with rows of other
-  # waves than A.
-  in_lasa <- tabulate(r[wave_codes != "A"], nbins = length(ids)) > 0L
+  # who never joined LASA: it only counts for those the data show at a wave
+  # other than A.
+  in_lasa <- rowSums(has_data[, colnames(has_data) != "A", drop = FALSE]) > 0L
   possible <- .lasa_possible_cohorts(
     has_data, baseline, time, r, wave_codes, ids,
     by_id = .lasa_id_cohorts(ids, in_lasa)
@@ -2629,8 +2646,8 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 
 ## Decides which columns of `data` are wave-specific (wide) columns, and
 ## the wave each of their values belongs to. Returns list(spec, sources,
-## guessed_sources, guessed, guessed_columns, ambiguous, candidates): `spec`
-## has one row per wide column and wave -- `column`, `stem` (its
+## guessed_sources, guessed, guessed_columns, ambiguous, candidates, shown):
+## `spec` has one row per wide column and wave -- `column`, `stem` (its
 ## long-format name), `wave`, `position` (its index in `data`), and
 ## `original` (its name, NA if its values went to several waves or it is
 ## Time-prefixed); `sources[[k]]` gives, per respondent, the row of `data`
@@ -2639,12 +2656,15 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 ## whose wave had to be guessed for some respondents' values, `guessed` the
 ## same with those waves, and `ambiguous` the columns whose name stands for
 ## several variables at a wave (see .lasa_candidate_stem()), for messages;
-## `candidates` the wide columns' candidates (see
-## .lasa_wave_candidates()). `ids` names each respondent in messages;
-## `time` is the Time long data already have (per row) and `baseline` each
-## respondent's baseline wave as a cohort column gives it (NULL without
-## either, see .lasa_given_baselines()); `cohort_column` says whether there
-## is such a column, with which wide data's Time-prefixed columns are read.
+## `candidates` the wide columns' candidates (see .lasa_wave_candidates());
+## `shown` (respondents x waves of .lasa_wave_table()) the wave of the
+## data's LASA file, when only one cohort takes part in it, at which that
+## file shows its respondents (see the comment in the code). `ids` names
+## each respondent in messages; `time` is the Time long data already have
+## (per row) and `baseline` each respondent's baseline wave as a cohort
+## column gives it (NULL without either, see .lasa_given_baselines());
+## `cohort_column` says whether there is such a column, with which wide
+## data's Time-prefixed columns are read.
 ## `simulate` = TRUE reads `data` the way transform_lasa_data() would
 ## without its provenance attributes (which a merge drops), clashing
 ## columns or warnings: how wide data it made itself will be read back.
@@ -2753,11 +2773,59 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     has_value[kept] <- NULL
     already_long <- already_long[names(cands)]
   }
+
+  # What the data show about each respondent's cohort: in the data of a
+  # LASA file of a wave only one cohort takes part in
+  # (.lasa_cohort_file_wave()), every respondent of the file, whatever
+  # their values (`shown`, which .lasa_to_long() takes for their Time too):
+  # in long data all of whose rows are of that wave, every respondent with
+  # a row that holds more than values an earlier transformation placed
+  # there by a guess; in wide data, every respondent -- or once other data
+  # are joined on (columns the file's label report doesn't list), every
+  # respondent with a value in a column it lists. Further, values (other
+  # than missing-value codes) of the long data's wave-specific columns on
+  # their row's wave, and of columns with a single wave -- for a "b" name
+  # that may stand for 4B, at that wave or 4B (`allowed`, by cohort, below).
+  file_wave <- .lasa_cohort_file_wave(provenance)
+  has_data <- matrix(FALSE, nrow = n_resp, ncol = length(all_waves), dimnames = list(NULL, all_waves))
+  in_file <- rep(FALSE, n_resp)
+  if (long_mode) {
+    # The long data's own columns, without the wide ones merged into them.
+    columns <- list()
+    for (j in seq_along(data)) {
+      name <- names(data)[[j]]
+      if (name %in% skip || (name %in% names(cands) && !already_long[[name]])) next
+      columns[[name]] <- data[[j]]
+    }
+    chosen <- .lasa_evidence_columns(columns, resp$r, n_resp, db_info, documented = names(cands))
+    # A value an earlier transformation placed at a guessed wave doesn't
+    # show the wave either.
+    exclude <- .lasa_guessed_rows(chosen$held, ids[resp$r], wave_codes)
+    if (!is.null(file_wave) && all(wave_codes == file_wave)) {
+      in_file[resp$r[!.lasa_only_guessed_rows(chosen$held, exclude, nrow(data))]] <- TRUE
+    } else {
+      real_rows <- .lasa_long_real_rows(chosen$evidence, nrow(data), db_info, wave_codes, exclude = exclude)
+      has_data <- .lasa_long_has_data(real_rows, resp$r, n_resp, wave_codes)
+    }
+  } else if (!is.null(file_wave)) {
+    listed <- function(name) is.null(provenance$listed) || .lasa_has(provenance$listed, tolower(name))
+    if (all(vapply(setdiff(names(data), skip), listed, logical(1)))) {
+      in_file[] <- TRUE
+    } else {
+      for (name in names(cands)) {
+        if (listed(name) && is.na(cands[[name]]$time)) in_file[resp$r[has_value[[name]]]] <- TRUE
+      }
+    }
+  }
+  shown <- matrix(FALSE, nrow = n_resp, ncol = length(all_waves), dimnames = list(NULL, all_waves))
+  if (any(in_file)) shown[in_file, file_wave] <- TRUE
+  has_data <- has_data | shown
+
   if (length(cands) == 0L) {
     return(list(
       spec = .lasa_spec(), sources = list(), guessed_sources = list(), guessed = character(0),
       guessed_columns = character(0), ambiguous = character(0), ambiguous_columns = character(0),
-      candidates = list()
+      candidates = list(), shown = shown
     ))
   }
   ## Which values of candidate column `name` show that their respondent took
@@ -2779,49 +2847,17 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     all_waves[all_waves %in% options]
   }
 
-  # What the data show about each respondent's cohort: values (other than
-  # missing-value codes) of the long data's wave-specific columns on their
-  # row's wave, and of columns with a single wave -- for a "b" name that
-  # may stand for 4B, at that wave or 4B (`allowed`, by cohort) -- and in
-  # the data of a LASA file of a wave only one cohort takes part in
-  # (.lasa_cohort_file_wave()), every respondent of the file, whatever
-  # their values: in long data all of whose rows are of that wave, every
-  # respondent with a row that holds more than values an earlier
-  # transformation placed there by a guess, as .lasa_to_long() takes them
-  # for their Time; in wide data, every respondent with a value in a column
-  # the file's label report lists.
-  file_wave <- .lasa_cohort_file_wave(provenance)
-  has_data <- matrix(FALSE, nrow = n_resp, ncol = length(all_waves), dimnames = list(NULL, all_waves))
-  if (long_mode) {
-    # The long data's own columns, without the wide ones merged into them.
-    columns <- list()
-    for (j in seq_along(data)) {
-      name <- names(data)[[j]]
-      if (name %in% skip || (name %in% names(cands) && !already_long[[name]])) next
-      columns[[name]] <- data[[j]]
-    }
-    chosen <- .lasa_evidence_columns(columns, resp$r, n_resp, db_info, documented = names(cands))
-    # A value an earlier transformation placed at a guessed wave doesn't
-    # show the wave either.
-    exclude <- .lasa_guessed_rows(chosen$held, ids[resp$r], wave_codes)
-    real_rows <- if (!is.null(file_wave) && all(wave_codes == file_wave)) {
-      !.lasa_only_guessed_rows(chosen$held, exclude, nrow(data))
-    } else {
-      .lasa_long_real_rows(chosen$evidence, nrow(data), db_info, wave_codes, exclude = exclude)
-    }
-    has_data <- .lasa_long_has_data(real_rows, resp$r, n_resp, wave_codes)
-  } else if (!is.null(file_wave)) {
-    for (name in names(cands)) {
-      in_file <- is.null(provenance$listed) || .lasa_has(provenance$listed, tolower(name))
-      if (in_file && is.na(cands[[name]]$time)) has_data[unique(resp$r[has_value[[name]]]), file_wave] <- TRUE
-    }
-  }
   allowed <- matrix(TRUE, nrow = n_resp, ncol = ncol(takes_part))
+  # Respondents with a value (other than a missing-value code) in a column
+  # of waves other than A: the data show them at such a wave, also where
+  # the column's name doesn't say which.
+  in_lasa <- rep(FALSE, n_resp)
   for (name in names(cands)) {
     cand <- cands[[name]]
     if (!is.na(cand$time) || already_long[[name]]) next
     options <- options_of(cand)
     who <- unique(resp$r[real_at(name, options)])
+    if (!"A" %in% options) in_lasa[who] <- TRUE
     if (length(options) == 1L) {
       has_data[who, options] <- TRUE
     } else if (length(options) == 2L && identical(options[[2L]], "4B") && !is.na(cand$stem_4b) &&
@@ -2842,7 +2878,12 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     }
     numbers[timed & is.na(baseline)] <- NA_character_
   }
-  by_id <- .lasa_id_cohorts(numbers)
+  ## The cohorts each respondent's number leaves open (.lasa_id_cohorts()),
+  ## a 1 only for respondents the data show at a wave other than A.
+  numbers_say <- function(has_data) {
+    .lasa_id_cohorts(numbers, in_lasa | rowSums(has_data[, all_waves != "A", drop = FALSE]) > 0L)
+  }
+  by_id <- numbers_say(has_data)
   possible <- .lasa_possible_cohorts(has_data, baseline, time, resp$r, wave_codes, ids, allowed, by_id)
 
   ## Each respondent's single value of long-data column `x`: the row it is
@@ -2960,6 +3001,13 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     unknown <- has & n_open != 1L
     if (any(unknown) && !simulate) {
       i <- which(unknown)[[1L]]
+      if (!any(possible[i, ])) {
+        stop(
+          "Column '", name, "' holds a value for respondent ", ids[[i]], ", whom the rest of the data show at ",
+          "waves of different cohorts, so the wave with Time ", cand$time, " is unknown for them.",
+          call. = FALSE
+        )
+      }
       if (n_open[[i]] == 0L) {
         says <- attr(baseline, "says", exact = TRUE)
         shown_by <- if (!is.null(baseline) && !is.na(baseline[[i]])) {
@@ -3005,7 +3053,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
         has_data[!is.na(p$sources[[k]]) & real_at(name, p$waves[[k]]) & !p$guessed, p$waves[[k]]] <- TRUE
       }
     }
-    possible <- .lasa_possible_cohorts(has_data, baseline, ids = ids, allowed = allowed, by_id = by_id)
+    possible <- .lasa_possible_cohorts(has_data, baseline, ids = ids, allowed = allowed, by_id = numbers_say(has_data))
     placed[guessed_any] <- lapply(names(cands)[guessed_any], place, possible = possible)
   }
 
@@ -3051,7 +3099,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   list(
     spec = spec, sources = sources, guessed_sources = guessed_sources, guessed = guessed,
     guessed_columns = guessed_columns, ambiguous = ambiguous, ambiguous_columns = ambiguous_columns,
-    candidates = cands
+    candidates = cands, shown = shown
   )
 }
 
@@ -3214,9 +3262,12 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   wave_codes <- if (!is.null(wave_name)) .lasa_normalize_wave_codes(data[[wave_name]]) else NULL
   # A Z file read with standardize = TRUE has a placeholder "Wave" = "Z":
   # still wide data -- also merged with data without that column, which
-  # leaves it missing on their rows.
-  long_mode <- !is.null(wave_name) &&
-    !(nrow(data) > 0L && any(wave_codes %in% "Z") && all(is.na(wave_codes) | !nzchar(wave_codes) | wave_codes == "Z"))
+  # leaves it missing on their rows, and on every row of data with one row
+  # per respondent where none of them matched.
+  placeholder <- !is.null(wave_name) && nrow(data) > 0L &&
+    all(is.na(wave_codes) | !nzchar(wave_codes) | wave_codes == "Z") &&
+    (any(wave_codes %in% "Z") || anyDuplicated(.lasa_value_key(data[[id]])) == 0L)
+  long_mode <- !is.null(wave_name) && !placeholder
   if (long_mode) .lasa_check_wave_codes(wave_codes, wave_name)
 
   resp <- .lasa_respondents(data[[id]], id)
@@ -3278,25 +3329,19 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   ## baselines (.lasa_long_times()), from what the long data's wave-specific
   ## `columns` show about each respondent's cohort -- except for values
   ## placed at a guessed wave, now (`guessed`, see .lasa_long_real_rows())
-  ## or by an earlier transformation (.lasa_store_guessed()).
-  ## Every row of a LASA file of a wave only one cohort takes part in
-  ## shows that cohort, whatever it holds.
-  cohort_wave <- .lasa_cohort_file_wave(.lasa_provenance(data))
+  ## or by an earlier transformation (.lasa_store_guessed()) -- and from
+  ## the respondents of a LASA file of a wave only one cohort takes part in,
+  ## whom the file shows at its wave whatever their values, as their wide
+  ## columns' values were placed (`found$shown`).
   times_of <- function(columns, r, w, source_row, guessed = list()) {
     chosen <- .lasa_evidence_columns(columns, r, n_resp, db_info)
     exclude <- .lasa_guessed_rows(chosen$held, ids[r], w, also = guessed)
-    real_rows <- if (!is.null(cohort_wave) && length(w) > 0L && all(w == cohort_wave)) {
-      # Every row of the file shows the cohort -- but not one holding
-      # nothing but values placed at its wave by a guess (another file's
-      # columns merged in).
-      !.lasa_only_guessed_rows(chosen$held, exclude, length(r))
-    } else {
-      .lasa_long_real_rows(chosen$evidence, length(r), db_info, w, exclude = exclude)
-    }
+    real_rows <- .lasa_long_real_rows(chosen$evidence, length(r), db_info, w, exclude = exclude)
     time <- if (is.null(existing_time$values)) NULL else existing_time$values[source_row]
     .lasa_long_times(
       r, w, real_rows, baseline, time, ids,
-      quiet = for_wide, held_rows = .lasa_long_held_rows(chosen$held, length(r)), warn_numbers = warn_numbers
+      quiet = for_wide, held_rows = .lasa_long_held_rows(chosen$held, length(r)), warn_numbers = warn_numbers,
+      shown = found$shown
     )
   }
 

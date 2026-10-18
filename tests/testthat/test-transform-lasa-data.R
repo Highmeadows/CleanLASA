@@ -1045,7 +1045,7 @@ test_that("data that can't be reshaped give a clear error", {
     "Unknown LASA wave code\\(s\\) in the 'Wave' column: X"
   )
   expect_error(
-    transform_lasa_data(data.frame(respnr = 1, Wave = NA, oak = 1)),
+    transform_lasa_data(data.frame(respnr = 1:2, Wave = c("B", NA), oak = 1:2)),
     "'Wave' column has missing values"
   )
   expect_error(
@@ -2051,6 +2051,135 @@ test_that("a Time-prefixed value at a Time the respondent's cohort lacks names w
     transform_lasa_data(time_wide),
     "'t5_lphya01' holds a value for respondent 2, whose cohort \\(as the rest of the data show it\\) has no wave with Time 5"
   )
+})
+
+test_that("the respondents of a file of a wave only one cohort takes part in keep its cohort when other data are joined on", {
+  # Read on its own, also a respondent whose missing-value codes became NA.
+  c046 <- data.frame(RespNr = c(21001, 13000, 100001), CLPHYA01 = c(1, -1, -1))
+  for (standardize in c(FALSE, TRUE)) {
+    out <- read_fixture(c046, "LASAC046.SAV", standardize = standardize, format_as_long = TRUE)
+    expect_identical(paste(out$respnr, out$Wave, out$Time), c("21001 C 1", "13000 C 1", "100001 C 1"))
+  }
+  skip_if_not_installed("dplyr")
+  says_other <- "The respondent numbers of 2 respondent\\(s\\) say a cohort the rest of the data rule out"
+  # The migrant cohort's baseline file, in which 41001 holds only a
+  # missing-value code; a wave-I file joined on keeps its attributes.
+  baseline <- data.frame(RespNr = c(41001, 41002), BLPHYA09 = c(-1, 30))
+  i046 <- read_fixture(data.frame(RespNr = c(41001, 41002), ILPHYA09 = c(25, 26)), "LASAI046.SAV", standardize = FALSE)
+  expected <- c("41001 MB 0", "41001 I 1", "41002 MB 0", "41002 I 1")
+  for (format_as_long in c(FALSE, TRUE)) {
+    for (standardize in c(FALSE, TRUE)) {
+      mb <- suppressWarnings(read_fixture(
+        baseline, "LASMB046.SAV", standardize = standardize, keep_user_na = TRUE, format_as_long = format_as_long
+      ))
+      joined <- dplyr::left_join(mb, i046, by = "respnr")
+      expect_identical(attr(joined, "LASA_wave"), "MB")
+      expect_warning(out <- transform_lasa_data(joined), says_other)
+      expect_identical(paste(out$respnr, out$Wave, out$Time), expected)
+    }
+  }
+
+  # Respondents of other cohorts that a join with another file adds aren't
+  # the file's: only their own data (here, their number) show their cohort.
+  mb <- read_fixture(data.frame(RespNr = c(900001, 900002), BLPHYA09 = c(30, 31)), "LASMB046.SAV", standardize = FALSE)
+  z004 <- data.frame(RespNr = c(900001, 21001, 41001, 300001), SEX = c(1, 2, 1, 2), BYEAR = c(1950, 1930, 1940, 1945))
+  for (standardize in c(FALSE, TRUE)) {
+    joined <- dplyr::full_join(mb, read_fixture(z004, "LASAZ004.SAV", standardize = standardize), by = "respnr")
+    expect_silent(out <- transform_lasa_data(joined))
+    expect_identical(paste(out$respnr, out$Wave, out$Time), c(
+      "900001 MB 0", "900002 MB 0", "21001 MB NA", "41001 MB NA", "300001 MB NA"
+    ))
+    time_wide <- transform_lasa_data(joined, format = "wide", prefix = "Time")
+    expect_identical(
+      as.character(time_wide$cohort),
+      c("migrant cohort", "migrant cohort", "cohort 1 (1992)", "cohort 2 (2002)", NA)
+    )
+  }
+})
+
+test_that("a respondent number starting with 1 only counts for respondents the data show at LASA's waves", {
+  # 13000 took part in the LSN pilot study (wave A) only: a row that holds
+  # nothing, or nothing but missing-value codes, at another wave doesn't
+  # show them in LASA.
+  long <- data.frame(respnr = c(13000, 13000, 21001, 21001), Wave = c("A", "F", "B", "F"), oak = c(1, NA, 2, 3))
+  out <- transform_lasa_data(long)
+  expect_identical(paste(out$respnr, out$Wave, out$Time), c("13000 A NA", "13000 F NA", "21001 B 0", "21001 F 4"))
+  time_wide <- transform_lasa_data(long, format = "wide", prefix = "Time")
+  expect_identical(as.character(time_wide$cohort), c(NA, "cohort 1 (1992)"))
+  code <- function(x) haven::labelled_spss(x, c("no observation" = -5), na_values = -5)
+  long <- data.frame(respnr = 13000, Wave = c("A", "B", "F"), lphya01 = code(c(1, -5, -5)))
+  expect_message(out <- transform_lasa_data(long), "nothing in 'data' shows the cohort of 1 respondent\\(s\\)")
+  expect_identical(as.vector(out$Time), rep(NA_integer_, 3))
+  # A Z file holding LASA's "sample attrition" code at waves B and C.
+  lab <- c("sample attrition" = -6, "never married" = 1, married = 2)
+  z <- data.frame(
+    RespNr = 12345, AMARST = haven::labelled(2, lab), BMARST = haven::labelled(-6, lab),
+    CMARST = haven::labelled(-6, lab)
+  )
+  expect_message(out <- read_fixture(z, "LASAZ010.SAV", keep_user_na = TRUE, format_as_long = TRUE), "nothing in 'data'")
+  expect_identical(paste(out$Wave, out$Time), c("A NA", "B NA", "C NA"))
+  # A value in a column of LASA's waves does show them there, also where
+  # the column's name doesn't say which wave.
+  out <- transform_lasa_data(data.frame(respnr = 12345, blphya01 = 5))
+  expect_identical(paste(out$Wave, out$Time), "B 0")
+})
+
+test_that("Time-prefixed data with the fourth cohort read back from a .sav file with their labels", {
+  long <- data.frame(respnr = c(21001, 21001, 120001, 120001), Wave = c("B", "L", "4B", "L"), lphya01 = 1:4)
+  time_wide <- transform_lasa_data(long, format = "wide", prefix = "Time")
+  path <- write_transform_sav(time_wide, "time_wide.sav")
+  saved <- haven::read_sav(path)
+  expect_identical(attr(saved$cohort, "labels")[["4"]], 4)
+  out <- transform_lasa_data(saved)
+  expect_identical(paste(out$respnr, out$Wave, out$Time), c("21001 B 0", "21001 L 10", "120001 4B 0", "120001 L 1"))
+  expect_identical(as.vector(out$cohort), c(1, 1, 4, 4))
+  # So do the long rows of wave L alone, whose cohort column is all that
+  # shows the fourth cohort.
+  followup <- out[out$Wave == "L", c("respnr", "Wave", "cohort", "lphya01")]
+  out <- transform_lasa_data(haven::read_sav(write_transform_sav(followup, "followup.sav")))
+  expect_identical(paste(out$respnr, out$Wave, out$Time), c("21001 L 10", "120001 L 1"))
+})
+
+test_that("Time-prefixed data merged with LASAZ002.SAV holding none of their respondents transform back", {
+  # LASAZ002.SAV has no migrant cohort.
+  time_wide <- transform_lasa_data(
+    data.frame(respnr = 100001, Wave = c("MB", "I"), lphya09 = 1:2), format = "wide", prefix = "Time"
+  )
+  labs <- c("cohort 1 (1992)" = 1, "cohort 2 (2002)" = 2, "cohort 3 (2012)" = 3)
+  z002 <- read_fixture(data.frame(RespNr = 21001, COHORT = haven::labelled(1, labs), BSELFR = 1), "LASAZ002.SAV")
+  merged <- merge(time_wide, z002, by = c("respnr", "cohort"), all.x = TRUE)
+  expect_identical(as.vector(merged$Wave), NA_character_)
+  out <- transform_lasa_data(merged)
+  expect_identical(paste(out$respnr, out$Wave, out$Time), c("100001 MB 0", "100001 I 1"))
+  expect_identical(as.vector(out$lphya09), 1:2)
+  # Long data, with several rows per respondent, still need their waves.
+  expect_error(
+    transform_lasa_data(data.frame(respnr = c(1, 1), Wave = NA, oak = 1:2)),
+    "'Wave' column has missing values"
+  )
+})
+
+test_that("a Time-prefixed value of a respondent the data show at waves of different cohorts says so", {
+  time_wide <- transform_lasa_data(
+    data.frame(respnr = 1, Wave = c("B", "C"), lphya01 = 1:2), format = "wide", prefix = "Time"
+  )
+  # Respondent 2's wave-C value shows the first cohort, their wave-3B value
+  # the third: both have a Time 1.
+  time_wide <- data.frame(
+    respnr = c(1, 2), cohort = time_wide$cohort[c(1, NA)], clphya01 = c(NA, 1), b3lphya01 = c(NA, 2), t1_lphya01 = 3:4
+  )
+  expect_error(
+    transform_lasa_data(time_wide),
+    "'t1_lphya01' holds a value for respondent 2, whom the rest of the data show at waves of different cohorts"
+  )
+})
+
+test_that("a Time column of text holds no value where it is blank, as SPSS stores missing text", {
+  long <- data.frame(respnr = c(21001, 21001, 100001), Wave = c("B", "C", "F"), Time = c("0", "1", NA), lphya01 = 1:3)
+  saved <- haven::read_sav(write_transform_sav(long, "long.sav"))
+  expect_identical(as.vector(saved$Time), c("0", "1", ""))
+  expect_message(out <- transform_lasa_data(saved), "nothing in 'data' shows the cohort of 1 respondent\\(s\\)")
+  expect_identical(as.vector(out$Time), c(0L, 1L, NA))
 })
 
 test_that("the Time columns of four or more merged long data sets are read, and must agree", {

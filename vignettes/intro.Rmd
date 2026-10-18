@@ -756,11 +756,12 @@ whatever their number says -- LASA's `cohort` column, as in
 five digits, the first of which says the cohort: 1, 2, or 3 the first,
 4, 5, or 6 the second, and 7, 8, or 9 the third. A 1 also numbers the
 LSN pilot study's respondents, so it only counts for a respondent the
-data show at another wave than A. The fourth and the migrant cohort's
-numbers aren't known yet: if they have five digits too, they say one
-of the first three cohorts until the rest of the data show their own.
-Where the rest of the data show another cohort than the number, they
-decide, with a warning.
+data show at another wave than A, by a value there other than a
+missing-value code. The fourth and the migrant cohort's numbers aren't
+known yet: if they have five digits too, they say one of the first
+three cohorts until the rest of the data show their own. Where the
+rest of the data show another cohort than the number, they decide,
+with a warning.
 
 The waves from F on are shared, so a file of wave F or later, read on
 its own, can't tell the cohorts apart by its waves: its rows get their
