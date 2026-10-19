@@ -180,7 +180,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see H/IQMUS1 & H/IQMUS3",
+  `-2` = "na, see QMUS1 & QMUS3",
   .applies_to_vars = c("qmus4", "qmus5", "qsmus1", "qsmus2", "qsmus3", "qsmus4", "qsmus5", "qsmus6"),
   .applies_to_waves = c("H", "I")
 )

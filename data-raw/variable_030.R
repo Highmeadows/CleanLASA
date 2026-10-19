@@ -362,37 +362,37 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/D/EADL1A",
+  `-2` = "na, see ADL1A",
   .applies_to_vars = c("adl1b", "adl1c", "adl1d", "adl1e", "adl2a", "adl3a", "adl4a", "adl5a", "adl6a"),
   .applies_to_waves = c("C", "D", "E")
 )
 
 value_labels(
-  `-2` = "na, see C/D/EADL2A",
+  `-2` = "na, see ADL2A",
   .applies_to_vars = c("adl2b", "adl2c", "adl2d", "adl2e"),
   .applies_to_waves = c("C", "D", "E")
 )
 
 value_labels(
-  `-2` = "na, see C/D/EADL3A",
+  `-2` = "na, see ADL3A",
   .applies_to_vars = c("adl3b", "adl3c", "adl3d", "adl3e"),
   .applies_to_waves = c("C", "D", "E")
 )
 
 value_labels(
-  `-2` = "na, see C/D/EADL4A",
+  `-2` = "na, see ADL4A",
   .applies_to_vars = c("adl4b", "adl4c", "adl4d", "adl4e"),
   .applies_to_waves = c("C", "D", "E")
 )
 
 value_labels(
-  `-2` = "na, see C/D/EADL5A",
+  `-2` = "na, see ADL5A",
   .applies_to_vars = c("adl5b", "adl5c", "adl5d", "adl5e"),
   .applies_to_waves = c("C", "D", "E")
 )
 
 value_labels(
-  `-2` = "na, see C/D/EADL6A",
+  `-2` = "na, see ADL6A",
   .applies_to_vars = c("adl6b", "adl6c", "adl6d", "adl6e"),
   .applies_to_waves = c("C", "D", "E")
 )
@@ -410,43 +410,43 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see B/F/GADL1A",
+  `-2` = "na, see ADL1A",
   .applies_to_vars = c("adl1b", "adl1c", "adl1d", "adl1e", "adl2a", "adl3a", "adl4a", "adl5a", "adl6a", "adl7a"),
   .applies_to_waves = c("2B", "F", "G")
 )
 
 value_labels(
-  `-2` = "na, see B/F/GADL2A",
+  `-2` = "na, see ADL2A",
   .applies_to_vars = c("adl2b", "adl2c", "adl2d", "adl2e"),
   .applies_to_waves = c("2B", "F", "G")
 )
 
 value_labels(
-  `-2` = "na, see B/F/GADL3A",
+  `-2` = "na, see ADL3A",
   .applies_to_vars = c("adl3b", "adl3c", "adl3d", "adl3e"),
   .applies_to_waves = c("2B", "F", "G")
 )
 
 value_labels(
-  `-2` = "na, see B/F/GADL4A",
+  `-2` = "na, see ADL4A",
   .applies_to_vars = c("adl4b", "adl4c", "adl4d", "adl4e"),
   .applies_to_waves = c("2B", "F", "G")
 )
 
 value_labels(
-  `-2` = "na, see B/F/GADL5A",
+  `-2` = "na, see ADL5A",
   .applies_to_vars = c("adl5b", "adl5c", "adl5d", "adl5e"),
   .applies_to_waves = c("2B", "F", "G")
 )
 
 value_labels(
-  `-2` = "na, see B/F/GADL6A",
+  `-2` = "na, see ADL6A",
   .applies_to_vars = c("adl6b", "adl6c", "adl6d", "adl6e"),
   .applies_to_waves = c("2B", "F", "G")
 )
 
 value_labels(
-  `-2` = "na, see B/F/GADL7A",
+  `-2` = "na, see ADL7A",
   .applies_to_vars = c("adl7b", "adl7c", "adl7d", "adl7e"),
   .applies_to_waves = c("2B", "F", "G")
 )
@@ -542,43 +542,43 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see B/I/J/KADL1A",
+  `-2` = "na, see ADL1A",
   .applies_to_vars = c("adl1b", "adl1c", "adl1d", "adl2a", "adl3a", "adl4a", "adl5a", "adl6a", "adl7a"),
   .applies_to_waves = c("3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/I/J/KADL2A",
+  `-2` = "na, see ADL2A",
   .applies_to_vars = c("adl2b", "adl2c", "adl2d"),
   .applies_to_waves = c("3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/I/J/KADL3A",
+  `-2` = "na, see ADL3A",
   .applies_to_vars = c("adl3b", "adl3c", "adl3d"),
   .applies_to_waves = c("3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/I/J/KADL4A",
+  `-2` = "na, see ADL4A",
   .applies_to_vars = c("adl4b", "adl4c", "adl4d"),
   .applies_to_waves = c("3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/I/J/KADL5A",
+  `-2` = "na, see ADL5A",
   .applies_to_vars = c("adl5b", "adl5c", "adl5d"),
   .applies_to_waves = c("3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/I/J/KADL6A",
+  `-2` = "na, see ADL6A",
   .applies_to_vars = c("adl6b", "adl6c", "adl6d"),
   .applies_to_waves = c("3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/I/J/KADL7A",
+  `-2` = "na, see ADL7A",
   .applies_to_vars = c("adl7b", "adl7c", "adl7d"),
   .applies_to_waves = c("3B", "I", "J", "K")
 )

@@ -159,8 +159,7 @@ test_that("the bundled database documents wave K for filecodes 046 and 161", {
   vl <- db$value_labels
   na_see <- vl$value_label[vl$filecode == "046" & vl$wave == "K" &
     vl$variable_name == "klphya02" & vl$value_numeric == -2]
-  expect_equal(na_see, "na, see B/C/D/E/B/F/G/H/B/I/J/KLPHYA01")
-  expect_false(any(grepl("I/JLPHYA", vl$value_label[vl$filecode == "046"], fixed = TRUE)))
+  expect_equal(na_see, "na, see LPHYA01")
 
   # K reworded the hand-strength particularities; item 2 is a new question.
   k161 <- v[v$filecode == "161" & v$wave == "K", ]
@@ -188,4 +187,12 @@ test_that("codebook typos are corrected in the bundled database", {
     h$value_label[h$filecode == "z004" & h$canonical_name == "bycohort" & h$value_numeric == 6],
     "1928-32"
   )
+})
+
+test_that("routing labels name the variable without a list of wave codes", {
+  db <- .lasa_bundled_label_db()
+  labs <- unique(c(db$value_labels$value_label, db$value_labels_harmonized$value_label))
+  wave <- "(2B|3B|MB|[A-K])"
+  listed <- grepl("see", labs) & grepl(paste0("(^|[^A-Za-z0-9/])(", wave, "/)+", wave, "[A-Z]"), labs)
+  expect_identical(labs[listed], character(0))
 })

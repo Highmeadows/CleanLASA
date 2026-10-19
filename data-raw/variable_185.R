@@ -75,7 +75,7 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-2` = "na, see C/DMFEETINSP",
+  `-2` = "na, see MFEETINSP",
   .applies_to_vars = c("mfeetinsp1", "mfeetinsp2", "mfeetinsp3", "mfeetinsp4", "mfeetinsp5", "mfeetinsp6", "mfeetinsp7", "mfeetinsp8"),
   .applies_to_waves = c("Z", "C", "D")
 )
@@ -105,7 +105,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DMFEETINSP8", `-1` = "no valid data / na, asked", `0` = "to be coded",
+  `-3` = "na, wrong skip", `-2` = "na, see MFEETINSP8", `-1` = "no valid data / na, asked", `0` = "to be coded",
   .applies_to_vars = c("mfeetinspo"),
   .applies_to_waves = c("Z", "C", "D")
 )

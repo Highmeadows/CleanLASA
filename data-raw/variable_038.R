@@ -189,7 +189,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/E/BRMGL",
+  `-2` = "na, see RMGL",
   .applies_to_vars = c("relig01", "relig08", "relig09", "relig10", "relig11", "relig12", "relig13", "relig14", "relig15", "relig16", "relig17", "relig18", "relig19", "relig8a"),
   .applies_to_waves = c("D", "E", "2B")
 )
@@ -201,7 +201,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/E/BRELIG01", `-1` = "na, asked", `1` = "never", `2` = "once a year or less", `3` = "a few times a year", `4` = "approx. once a month", `5` = "2 or 3 times a month", `6` = "once a week or more",
+  `-2` = "na, see RELIG01", `-1` = "na, asked", `1` = "never", `2` = "once a year or less", `3` = "a few times a year", `4` = "approx. once a month", `5` = "2 or 3 times a month", `6` = "once a week or more",
   .applies_to_vars = c("relig1b"),
   .applies_to_waves = c("D", "E", "2B")
 )
@@ -237,19 +237,19 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see G/HRMGL", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-2` = "na, see RMGL", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("relig08"),
   .applies_to_waves = c("G", "H")
 )
 
 value_labels(
-  `-2` = "na, see G/HRMGL", `-1` = "na, asked", `1` = "never", `2` = "once a year or less", `3` = "a few times a year", `4` = "approx. once a month", `5` = "2 or 3 times a month", `6` = "once a week or more",
+  `-2` = "na, see RMGL", `-1` = "na, asked", `1` = "never", `2` = "once a year or less", `3` = "a few times a year", `4` = "approx. once a month", `5` = "2 or 3 times a month", `6` = "once a week or more",
   .applies_to_vars = c("relig1b"),
   .applies_to_waves = c("G", "H")
 )
 
 value_labels(
-  `-2` = "na, see G/HRMGL", `-1` = "na, asked", `1` = "never", `2` = "less than once a month", `3` = "once a month", `4` = "a few times a month", `5` = "once a week", `6` = "a few times a week", `7` = "once a day", `8` = "more than once a day",
+  `-2` = "na, see RMGL", `-1` = "na, asked", `1` = "never", `2` = "less than once a month", `3` = "once a month", `4` = "a few times a month", `5` = "once a week", `6` = "a few times a week", `7` = "once a day", `8` = "more than once a day",
   .applies_to_vars = c("relig8a"),
   .applies_to_waves = c("G", "H")
 )

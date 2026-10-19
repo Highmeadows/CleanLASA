@@ -3044,37 +3044,37 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/BDHELP01",
+  `-2` = "na, see DHELP01",
   .applies_to_vars = c("dhour01", "dhour02", "dhour03", "dhour04", "dhour05", "dhour06", "dhour07", "dhour08", "dhour09", "dhour10", "dhour11", "dhour12"),
   .applies_to_waves = c("D", "2B")
 )
 
 value_labels(
-  `-2` = "na, see D/BDHELPYN",
+  `-2` = "na, see DHELPYN",
   .applies_to_vars = c("dhelp01", "dhelp02", "dhelp03", "dhelp04", "dhelp05", "dhelp06", "dhelp07", "dhelp08", "dhelp09", "dhelp10", "dhelp11", "dhelp12", "rsick15", "rsick16", "rsick17", "rsick18", "rsick19", "rsick20", "rsick21", "rsick22", "rsick23", "rsick24", "rsick25", "rsick26", "rsick27", "rsick28"),
   .applies_to_waves = c("D", "2B")
 )
 
 value_labels(
-  `-2` = "na, see D/BPHELP01",
+  `-2` = "na, see PHELP01",
   .applies_to_vars = c("phour01", "phour02", "phour03", "phour04", "phour05", "phour06", "phour07", "phour08", "phour09", "phour10", "phour11", "phour12"),
   .applies_to_waves = c("D", "2B")
 )
 
 value_labels(
-  `-2` = "na, see D/BPHELPYN",
+  `-2` = "na, see PHELPYN",
   .applies_to_vars = c("phelp01", "phelp02", "phelp03", "phelp04", "phelp05", "phelp06", "phelp07", "phelp08", "phelp09", "phelp10", "phelp11", "phelp12"),
   .applies_to_waves = c("D", "2B")
 )
 
 value_labels(
-  `-2` = "na, see D/BRHELP02",
+  `-2` = "na, see RHELP02",
   .applies_to_vars = c("rhour02", "rhour03", "rhour04", "rhour05", "rhour06", "rhour07", "rhour08", "rhour09", "rhour10", "rhour11", "rhour12"),
   .applies_to_waves = c("D", "2B")
 )
 
 value_labels(
-  `-2` = "na, see D/BRHELPYN",
+  `-2` = "na, see RHELPYN",
   .applies_to_vars = c("rhelp01", "rhelp02", "rhelp03", "rhelp04", "rhelp05", "rhelp06", "rhelp07", "rhelp08", "rhelp09", "rhelp10", "rhelp11", "rhelp12", "rsick01", "rsick02", "rsick03", "rsick04", "rsick05", "rsick06", "rsick07", "rsick08", "rsick09", "rsick10", "rsick11", "rsick12", "rsick13", "rsick14"),
   .applies_to_waves = c("D", "2B")
 )
@@ -3092,13 +3092,13 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see D/BHEALTH1", `-1` = "na, asked", `1` = "> 3 months", `2` = "< 3 months", `3` = "do not know", `4` = "refused to answer",
+  `-3` = "na, wrong skip", `-2` = "na, see HEALTH1", `-1` = "na, asked", `1` = "> 3 months", `2` = "< 3 months", `3` = "do not know", `4` = "refused to answer",
   .applies_to_vars = c("health2"),
   .applies_to_waves = c("D", "2B")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see D/BHEALTH1", `-1` = "na, asked", `1` = "0 days", `2` = "1-3 days", `3` = "4-7 days", `4` = "> 1 week but < 1 month", `5` = "all the time", `6` = "do not know", `7` = "refused to answer",
+  `-3` = "na, wrong skip", `-2` = "na, see HEALTH1", `-1` = "na, asked", `1` = "0 days", `2` = "1-3 days", `3` = "4-7 days", `4` = "> 1 week but < 1 month", `5` = "all the time", `6` = "do not know", `7` = "refused to answer",
   .applies_to_vars = c("health3", "health4"),
   .applies_to_waves = c("D", "2B")
 )
@@ -3110,7 +3110,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see D/BRHELP01", `-1` = "na, asked", `0` = "<30 minutes", `168` = "continuously day and night",
+  `-3` = "na, wrong skip", `-2` = "na, see RHELP01", `-1` = "na, asked", `0` = "<30 minutes", `168` = "continuously day and night",
   .applies_to_vars = c("rhour01"),
   .applies_to_waves = c("D", "2B")
 )
@@ -3806,85 +3806,85 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see J/KAHELP01",
+  `-2` = "na, see AHELP01",
   .applies_to_vars = c("ahour01", "ahour02a", "ahour02b", "ahour03", "ahour04a", "ahour04b", "ahour05", "ahour06a", "ahour06b", "ahour07", "ahour08", "ahour09", "ahour10", "ahour11", "ahour12"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KAHELPYN",
+  `-2` = "na, see AHELPYN",
   .applies_to_vars = c("ahelp01", "ahelp02a", "ahelp02b", "ahelp03", "ahelp04a", "ahelp04b", "ahelp05", "ahelp06a", "ahelp06b", "ahelp07", "ahelp08", "ahelp09", "ahelp10", "ahelp11", "ahelp12", "ahourtot"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KDHELP01",
+  `-2` = "na, see DHELP01",
   .applies_to_vars = c("dhour01", "dhour02a", "dhour02b", "dhour03", "dhour04a", "dhour04b", "dhour05", "dhour06a", "dhour06b", "dhour07", "dhour08", "dhour09", "dhour10", "dhour11", "dhour12"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KDHELPYN",
+  `-2` = "na, see DHELPYN",
   .applies_to_vars = c("dhelp01", "dhelp02a", "dhelp02b", "dhelp03", "dhelp04a", "dhelp04b", "dhelp05", "dhelp06a", "dhelp06b", "dhelp07", "dhelp08", "dhelp09", "dhelp10", "dhelp11", "dhelp12", "dhourtot", "rsick15", "rsick16", "rsick17a", "rsick17b", "rsick18", "rsick19a", "rsick19b", "rsick20", "rsick21a", "rsick21b", "rsick22", "rsick23", "rsick24", "rsick25", "rsick26", "rsick27", "rsick28a", "rsick28b"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KGHELP01",
+  `-2` = "na, see GHELP01",
   .applies_to_vars = c("ghour01", "ghour02a", "ghour02b", "ghour03", "ghour04a", "ghour04b", "ghour05", "ghour06a", "ghour06b", "ghour07", "ghour08", "ghour09", "ghour10", "ghour11", "ghour12"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KGHELPYN",
+  `-2` = "na, see GHELPYN",
   .applies_to_vars = c("ghelp01", "ghelp02a", "ghelp02b", "ghelp03", "ghelp04a", "ghelp04b", "ghelp05", "ghelp06a", "ghelp06b", "ghelp07", "ghelp08", "ghelp09", "ghelp10", "ghelp11", "ghelp12", "ghourtot"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KHELPR",
+  `-2` = "na, see HELPR",
   .applies_to_vars = c("hhnic", "hhnprof", "hhnvol", "regie1", "regie2", "regie3", "regie4", "suffic"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KHELPR & J/KSUFFIC",
+  `-2` = "na, see HELPR & SUFFIC",
   .applies_to_vars = c("hn1", "hn2", "hn3", "hn4", "hn5", "hn6"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KNHELP01",
+  `-2` = "na, see NHELP01",
   .applies_to_vars = c("nhour01", "nhour02a", "nhour02b", "nhour03", "nhour04a", "nhour04b", "nhour05", "nhour06a", "nhour06b", "nhour07", "nhour08", "nhour09", "nhour10", "nhour11", "nhour12"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KNHELPYN",
+  `-2` = "na, see NHELPYN",
   .applies_to_vars = c("nhelp01", "nhelp02a", "nhelp02b", "nhelp03", "nhelp04a", "nhelp04b", "nhelp05", "nhelp06a", "nhelp06b", "nhelp07", "nhelp08", "nhelp09", "nhelp10", "nhelp11", "nhelp12", "nhourtot"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KPHELP01",
+  `-2` = "na, see PHELP01",
   .applies_to_vars = c("phlp01b", "phlp01m", "phlp01y", "phour01", "phour02a", "phour02b", "phour03", "phour04a", "phour04b", "phour05", "phour06a", "phour06b", "phour07", "phour08", "phour09", "phour10", "phour11", "phour12"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KPHELPYN",
+  `-2` = "na, see PHELPYN",
   .applies_to_vars = c("phelp01", "phelp02a", "phelp02b", "phelp03", "phelp04a", "phelp04b", "phelp05", "phelp06a", "phelp06b", "phelp07", "phelp08", "phelp09", "phelp10", "phelp11", "phelp12", "phourtot"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KRHELP01",
+  `-2` = "na, see RHELP01",
   .applies_to_vars = c("rhour01", "rhour02a", "rhour02b", "rhour03", "rhour04a", "rhour04b", "rhour05", "rhour06a", "rhour06b", "rhour07", "rhour08", "rhour09", "rhour10", "rhour11", "rhour12"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KRHELPYN",
+  `-2` = "na, see RHELPYN",
   .applies_to_vars = c("rhelp01", "rhelp02a", "rhelp02b", "rhelp03", "rhelp04a", "rhelp04b", "rhelp05", "rhelp07", "rhelp08", "rhelp09", "rhelp10", "rhelp11", "rhelp12", "rhelp6a", "rhelp6b", "rhourtot"),
   .applies_to_waves = c("J", "K")
 )
@@ -3902,7 +3902,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see J/KHEALTH1", `-1` = "na, asked", `1` = "> 3 months", `2` = "< 3 months", `3` = "do not know", `4` = "refused to answer",
+  `-3` = "na, wrong skip", `-2` = "na, see HEALTH1", `-1` = "na, asked", `1` = "> 3 months", `2` = "< 3 months", `3` = "do not know", `4` = "refused to answer",
   .applies_to_vars = c("health2"),
   .applies_to_waves = c("J", "K")
 )

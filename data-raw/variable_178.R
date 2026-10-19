@@ -313,19 +313,19 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see J/KMCIZCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see MCIZCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mcizpc1", "mcizpc10", "mcizpc11", "mcizpc2", "mcizpc3", "mcizpc4", "mcizpc5", "mcizpc6", "mcizpc7", "mcizpc8", "mcizpc9"),
   .applies_to_waves = c("Z", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KMHWWCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see MHWWCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mhwwpc1", "mhwwpc10", "mhwwpc11", "mhwwpc2", "mhwwpc3", "mhwwpc4", "mhwwpc5", "mhwwpc6", "mhwwpc7", "mhwwpc8", "mhwwpc9"),
   .applies_to_waves = c("Z", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see G/HMWMOMUN", `-1` = "na, asked", `1` = "yes, approved", `2` = "no, denied: informal network", `3` = "no, denied: not severe enough", `4` = "no, denied: other",
+  `-2` = "na, see MWMOMUN", `-1` = "na, asked", `1` = "yes, approved", `2` = "no, denied: informal network", `3` = "no, denied: not severe enough", `4` = "no, denied: other",
   .applies_to_vars = c("mwmoapp"),
   .applies_to_waves = c("Z", "G", "H")
 )
@@ -337,7 +337,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see J/KMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see MWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mwmopc1", "mwmopc10", "mwmopc11", "mwmopc2", "mwmopc3", "mwmopc4", "mwmopc5", "mwmopc6", "mwmopc7", "mwmopc8", "mwmopc9"),
   .applies_to_waves = c("Z", "J", "K")
 )
@@ -355,7 +355,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see G/HMWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see MWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mwmota1", "mwmota2", "mwmota3", "mwmota4", "mwmota5", "mwmota6", "mwmota7"),
   .applies_to_waves = c("Z", "G", "H")
 )
@@ -367,7 +367,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see G/HMWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see MWMOMUN", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mwmonc1", "mwmonc2", "mwmonc3", "mwmonc4", "mwmonc5", "mwmonc6"),
   .applies_to_waves = c("G", "H")
 )
@@ -391,19 +391,19 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see J/KMCIZCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see MCIZCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mciznc1", "mciznc2", "mciznc3", "mciznc4", "mciznc5", "mciznc6", "mcizrc1", "mcizrc2", "mcizrc3", "mcizrc4", "mcizrc5", "mcizrc6", "mcizrc7"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KMHWWCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see MHWWCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mhwwnc1", "mhwwnc2", "mhwwnc3", "mhwwnc4", "mhwwnc5", "mhwwnc6", "mhwwrc1", "mhwwrc2", "mhwwrc3", "mhwwrc4", "mhwwrc5", "mhwwrc6", "mhwwrc7"),
   .applies_to_waves = c("J", "K")
 )
 
 value_labels(
-  `-2` = "na, see J/KMWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see MWMOCTC", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mwmonc1", "mwmonc2", "mwmonc3", "mwmonc4", "mwmonc5", "mwmonc6", "mwmorc1", "mwmorc2", "mwmorc3", "mwmorc4", "mwmorc5", "mwmorc6", "mwmorc7"),
   .applies_to_waves = c("J", "K")
 )

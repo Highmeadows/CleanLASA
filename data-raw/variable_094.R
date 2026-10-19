@@ -99,7 +99,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see G/H/I/J/KLIFELI",
+  `-2` = "na, see LIFELI",
   .applies_to_vars = c("dltd", "eltd", "pflt", "subjage"),
   .applies_to_waves = c("G", "H", "I", "J", "K")
 )

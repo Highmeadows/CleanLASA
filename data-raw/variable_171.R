@@ -103,7 +103,7 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-3` = "not in sample", `-2` = "na, see H/BRM171", `-1` = "measurement missing",
+  `-3` = "not in sample", `-2` = "na, see RM171", `-1` = "measurement missing",
   .applies_to_vars = c("mcalf01"),
   .applies_to_waves = c("Z")
 )
@@ -169,13 +169,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/EMCALF02",
+  `-2` = "na, see MCALF02",
   .applies_to_vars = c("mcalf03", "mcalf04", "mcalf06", "mcalf12", "mcalf13"),
   .applies_to_waves = c("D", "E")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see D/ERM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see RM161", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("mcalf02"),
   .applies_to_waves = c("D", "E")
 )
@@ -187,7 +187,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see D/ERM161", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see RM161", `-1` = "na, asked",
   .applies_to_vars = c("mcalf1a", "mcalf1b"),
   .applies_to_waves = c("D", "E")
 )
@@ -247,19 +247,19 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see H/BMCALF02",
+  `-2` = "na, see MCALF02",
   .applies_to_vars = c("mcalf03", "mcalf04", "mcalf06", "mcalf12", "mcalf13"),
   .applies_to_waves = c("H", "3B")
 )
 
 value_labels(
-  `-2` = "na, see H/BRM171", `-1` = "na, asked",
+  `-2` = "na, see RM171", `-1` = "na, asked",
   .applies_to_vars = c("mcalf01"),
   .applies_to_waves = c("H", "3B")
 )
 
 value_labels(
-  `-2` = "na, see H/BRM171", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see RM171", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("mcalf02"),
   .applies_to_waves = c("H", "3B")
 )

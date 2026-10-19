@@ -1435,19 +1435,19 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/F/GJOB1",
+  `-2` = "na, see JOB1",
   .applies_to_vars = c("cjclass", "cjlevel", "cjpresi", "cjsbc92", "cjtype", "jobc"),
   .applies_to_waves = c("C", "D", "E", "F", "G")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/F/GJOBC",
+  `-2` = "na, see JOBC",
   .applies_to_vars = c("disabl", "employ", "job3", "job4", "job6", "job7", "jobstam", "jobstay", "jobstom", "jobstoy", "retired"),
   .applies_to_waves = c("C", "D", "E", "F", "G")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/F/GRETIFUT",
+  `-2` = "na, see RETIFUT",
   .applies_to_vars = c("retirf1", "retirf2", "retirf3", "retirf4", "retirf5", "retirf6"),
   .applies_to_waves = c("C", "D", "E", "F", "G")
 )
@@ -1495,7 +1495,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/F/GDISABL", `-1` = "na, asked",
+  `-2` = "na, see DISABL", `-1` = "na, asked",
   .applies_to_vars = c("disablp"),
   .applies_to_waves = c("C", "D", "E", "F", "G")
 )
@@ -1519,7 +1519,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/GJOB4", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see JOB4", `-1` = "na, asked",
   .applies_to_vars = c("job5"),
   .applies_to_waves = c("C", "D", "E")
 )
@@ -1549,7 +1549,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/F/GRETIRED", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-2` = "na, see RETIRED", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("retifut"),
   .applies_to_waves = c("C", "D", "E", "F", "G")
 )
@@ -1915,7 +1915,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/GJOB4", `-1` = "na, asked", `98` = "98 or more",
+  `-3` = "na, wrong skip", `-2` = "na, see JOB4", `-1` = "na, asked", `98` = "98 or more",
   .applies_to_vars = c("job5"),
   .applies_to_waves = c("F", "G")
 )
@@ -1927,7 +1927,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see G/JOBC", `-1` = "na, asked", `1` = "no, not retired", `2` = "yes, retired entirely voluntarily", `3` = "yes, retired but not entirely voluntarily",
+  `-3` = "na, wrong skip", `-2` = "na, see OBC", `-1` = "na, asked", `1` = "no, not retired", `2` = "yes, retired entirely voluntarily", `3` = "yes, retired but not entirely voluntarily",
   .applies_to_vars = c("retivol"),
   .applies_to_waves = c("G")
 )

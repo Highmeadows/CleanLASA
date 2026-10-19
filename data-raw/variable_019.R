@@ -122,13 +122,13 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DINCDECL", `-1` = "na, asked", `1` = "January", `2` = "February", `3` = "March", `4` = "April", `5` = "May", `6` = "June", `7` = "July", `8` = "August", `9` = "September", `10` = "October", `11` = "November", `12` = "December",
+  `-3` = "na, wrong skip", `-2` = "na, see INCDECL", `-1` = "na, asked", `1` = "January", `2` = "February", `3` = "March", `4` = "April", `5` = "May", `6` = "June", `7` = "July", `8` = "August", `9` = "September", `10` = "October", `11` = "November", `12` = "December",
   .applies_to_vars = c("incdclm"),
   .applies_to_waves = c("C", "D")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/DINCDECL", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see INCDECL", `-1` = "na, asked",
   .applies_to_vars = c("incdcly"),
   .applies_to_waves = c("C", "D")
 )
@@ -170,7 +170,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see G/H/I/J/KINCDECL",
+  `-2` = "na, see INCDECL",
   .applies_to_vars = c("incdclm", "incdcly"),
   .applies_to_waves = c("G", "H", "I", "J", "K")
 )
