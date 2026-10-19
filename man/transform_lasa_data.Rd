@@ -115,8 +115,12 @@ fourth cohort may have, or the small numbers of the examples below)
 says nothing. Where the rest of the data show another cohort than a
 respondent's number, they decide, with a warning in long and
 Time-prefixed wide format, which show the cohort -- also over a
-\code{"Time"} column that follows the number (as \code{\link[=read_lasa_sav]{read_lasa_sav()}} gives
-it at waves several cohorts share).
+\code{"Time"} column that follows the number, as \code{\link[=read_lasa_sav]{read_lasa_sav()}} and
+long format give it where the data don't show the cohort: at waves
+several cohorts share, and on rows holding nothing but missing-value
+codes (a Time at wave B is the first cohort's). Such a Time gives way
+also where a file of a wave of one cohort gave it, which stacked
+files no longer show.
 }
 
 A missing-value code is what \code{\link[=read_lasa_sav]{read_lasa_sav()}} turns into \code{NA} unless
@@ -315,7 +319,13 @@ respondent has a value at a wave the long data don't have a row for
 yet. On those added rows, stable variables the label database
 documents (such as \code{sex}) are filled in from the respondent's other
 rows, and other columns are left missing, since they weren't measured
-at that wave.
+at that wave. Merged with \code{all = TRUE} (or \code{dplyr::full_join()}), the
+respondents the long data lack get a row without a wave, holding
+their values of the wide columns and stable variables (a value in
+another column is an error): long format gives them the rows those
+values need (a row at every wave of the wide columns if they have
+none), and no row where no wide columns were merged in (with a
+message).
 }
 
 \strong{Wide format} has one row per respondent and drops the \code{"Wave"} and
