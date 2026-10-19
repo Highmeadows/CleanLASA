@@ -240,7 +240,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see B/CMEMORY1", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-2` = "na, see MEMORY1", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("memory2"),
   .applies_to_waves = c("B", "C")
 )
@@ -252,13 +252,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/E/B/F/G/H/B/I/J/KMEMORY1",
+  `-2` = "na, see MEMORY1",
   .applies_to_vars = c("memory2"),
   .applies_to_waves = c("D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see D/E/B/F/G/H/B/I/J/KMMSESC in LAS(A)*221",
+  `-2` = "na, see MMSESC in LAS(A)*221",
   .applies_to_vars = c("memory1", "mmse01", "mmse02", "mmse03", "mmse04", "mmse05", "mmse06", "mmse07", "mmse08", "mmse09", "mmse10", "mmse11", "mmse12", "mmse13", "mmse14", "mmse15", "mmse16", "mmse17", "mmse18", "mmse19", "mmse20", "mmse21", "mmse22", "mmse23"),
   .applies_to_waves = c("D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )

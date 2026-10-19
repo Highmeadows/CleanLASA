@@ -62,7 +62,7 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-2` = "na, see C/DMDIET",
+  `-2` = "na, see MDIET",
   .applies_to_vars = c("mdietlcal", "mdietlchol", "mdietlsalt", "mdietsugf", "mdietveg"),
   .applies_to_waves = c("Z", "C", "D")
 )

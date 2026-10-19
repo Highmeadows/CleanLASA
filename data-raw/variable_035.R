@@ -2328,133 +2328,133 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HARTVEI1",
+  `-2` = "na, see ARTVEI1",
   .applies_to_vars = c("artvei2", "artvei4", "artvei5", "artvei8", "artvei9"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HARTVEI5",
+  `-2` = "na, see ARTVEI5",
   .applies_to_vars = c("artvei6", "artvei7"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HARTVEI8",
+  `-2` = "na, see ARTVEI8",
   .applies_to_vars = c("artve8a", "artve8b", "artve8c", "artve8d", "artve8e"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HCANCER1",
+  `-2` = "na, see CANCER1",
   .applies_to_vars = c("cance5a", "cance5b", "cance5c", "cance5d", "cance5e", "cance5f", "cance5g", "cance5h", "cance5i", "cance5j", "cance5k", "cance5l", "cance7a", "cance7b", "cance7c", "cance7d", "cancer2", "cancer3", "cancer4", "cancer5", "cancer6", "cancer8"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HCANCER6",
+  `-2` = "na, see CANCER6",
   .applies_to_vars = c("cance6a", "cance6b", "cance6c", "cance6d", "cance6e", "cance6f"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HCARA01",
+  `-2` = "na, see CARA01",
   .applies_to_vars = c("cara02", "cara03", "cara04", "cara05", "cara06", "cara07", "cara08", "cara09", "cara10", "cara11", "cara12"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HCVA01",
+  `-2` = "na, see CVA01",
   .applies_to_vars = c("cva02a", "cva06", "cva07", "cva08", "cva09", "cva10", "cva11", "cva12"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HCVA02B",
+  `-2` = "na, see CVA02B",
   .applies_to_vars = c("cva03j", "cva03m", "cva04j", "cva04m", "cva05j", "cva05m"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HDIABE01",
+  `-2` = "na, see DIABE01",
   .applies_to_vars = c("diabe02", "diabe03", "diabe04", "diabe05", "diabe07", "diabe10", "diabe11", "diabe13"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HDIABE05",
+  `-2` = "na, see DIABE05",
   .applies_to_vars = c("diabe6a", "diabe6b", "diabe6c"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HDIABE07",
+  `-2` = "na, see DIABE07",
   .applies_to_vars = c("diabe08", "diabe09"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HHART01",
+  `-2` = "na, see HART01",
   .applies_to_vars = c("hart02", "hart03", "hart04", "hart05", "hart10", "hart12", "hart13", "hart14", "hart15", "hart15b", "hart15c", "hart15d", "hart15e", "hart16"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HHART06",
+  `-2` = "na, see HART06",
   .applies_to_vars = c("hart07j", "hart07m", "hart08j", "hart08m", "hart09j", "hart09m"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HHBD1",
+  `-2` = "na, see HBD1",
   .applies_to_vars = c("hbd2", "hbd2a", "hbd3"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HINCON1",
+  `-2` = "na, see INCON1",
   .applies_to_vars = c("incon2", "incon3", "incon4", "incon5", "incon6", "incon7", "incon8"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HOTHSI01",
+  `-2` = "na, see OTHSI01",
   .applies_to_vars = c("othsi02", "othsi04", "othsi05", "othsi06", "othsi07"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HOTHSI07",
+  `-2` = "na, see OTHSI07",
   .applies_to_vars = c("othsi08", "othsi10", "othsi11", "othsi12"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HRHEUM01&02",
+  `-2` = "na, see RHEUM01&02",
   .applies_to_vars = c("rheum03", "rheum04", "rheum05", "rheum06", "rheum07", "rheum08", "rheum09", "rheum11", "rheum12", "rheum8a", "rheum8b", "rheum8c", "rheum8d", "rheum8e", "rheum8f", "rheum8g", "rheum8h", "rheum8i"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/G/HRHEUM09",
+  `-2` = "na, see RHEUM09",
   .applies_to_vars = c("rheum9a", "rheum9b", "rheum9c", "rheum9d", "rheum9e", "rheum9f", "rheum9g", "rheum9h", "rheum9i"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see D/E/F/GCVA02C",
+  `-2` = "na, see CVA02C",
   .applies_to_vars = c("cva03a", "cva04a", "cva05a"),
   .applies_to_waves = c("D", "E", "F", "G")
 )
 
 value_labels(
-  `-5` = "na, see D/E/F/G/HRMCH",
+  `-5` = "na, see RMCH",
   .applies_to_vars = c("artvei1", "cancer1", "cara01", "cva01", "diabe01", "hart01", "hbd1", "incon1", "rheum01", "rheum02"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-6` = "na, see D/E/F/G/HCANCER5",
+  `-6` = "na, see CANCER5",
   .applies_to_vars = c("cance5a", "cance5b", "cance5c", "cance5d", "cance5e", "cance5f", "cance5g", "cance5h", "cance5i", "cance5j", "cance5k", "cance5l"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
@@ -2466,7 +2466,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see D/E/F/G/HARTVE1", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see ARTVE1", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("artvei3"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
@@ -2490,7 +2490,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see D/E/F/G/HCANCE5L", `-1` = "na, asked", `0` = "to be coded",
+  `-3` = "na, wrong skip", `-2` = "na, see CANCE5L", `-1` = "na, asked", `0` = "to be coded",
   .applies_to_vars = c("cance5m"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
@@ -2502,7 +2502,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see D/E/F/G/HCANCE6F", `-1` = "na, asked", `0` = "to be coded",
+  `-3` = "na, wrong skip", `-2` = "na, see CANCE6F", `-1` = "na, asked", `0` = "to be coded",
   .applies_to_vars = c("cance6g"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
@@ -2532,13 +2532,13 @@ value_labels(
 )
 
 value_labels(
-  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see D/E/F/G/HCVA02A", `-1` = "na, asked", `1` = "once", `2` = "two times or more",
+  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see CVA02A", `-1` = "na, asked", `1` = "once", `2` = "two times or more",
   .applies_to_vars = c("cva02b"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-4` = "na, no short version", `-3` = "na, wrong skip", `-2` = "na, see D/E/F/GCVA01", `-1` = "na, asked", `1` = "once", `2` = "two times or more",
+  `-4` = "na, no short version", `-3` = "na, wrong skip", `-2` = "na, see CVA01", `-1` = "na, asked", `1` = "once", `2` = "two times or more",
   .applies_to_vars = c("cva02c"),
   .applies_to_waves = c("D", "E", "F", "G")
 )
@@ -2562,13 +2562,13 @@ value_labels(
 )
 
 value_labels(
-  `-6` = "na, see D/E/F/G/HHART01", `-4` = "na, short interview", `-3` = "na, wrong skip", `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "no exertion: chest pain", `4` = "no exertion: pain legs", `5` = "no exertion: shortness of breath", `6` = "no exertion: joint complaints", `7` = "no exertion: other reason",
+  `-6` = "na, see HART01", `-4` = "na, short interview", `-3` = "na, wrong skip", `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "no exertion: chest pain", `4` = "no exertion: pain legs", `5` = "no exertion: shortness of breath", `6` = "no exertion: joint complaints", `7` = "no exertion: other reason",
   .applies_to_vars = c("diabe11"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see D/E/F/G/HDIABE11", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see DIABE11", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("diabe12"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
@@ -2586,7 +2586,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see D/E/F/G/HHART05", `-1` = "na, asked", `1` = "once", `2` = "two times or more",
+  `-3` = "na, wrong skip", `-2` = "na, see HART05", `-1` = "na, asked", `1` = "once", `2` = "two times or more",
   .applies_to_vars = c("hart06"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
@@ -2598,13 +2598,13 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see D/E/F/G/HHART10", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see HART10", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("hart11"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see D/E/F/G/HHART15", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-3` = "na, wrong skip", `-2` = "na, see HART15", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("hart15a"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
@@ -2664,7 +2664,7 @@ value_labels(
 )
 
 value_labels(
-  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see D/E/F/G/HRHEUM01", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see RHEUM01", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("rheum10"),
   .applies_to_waves = c("D", "E", "F", "G", "H")
 )
@@ -3030,19 +3030,19 @@ value_labels(
 )
 
 value_labels(
-  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see F/G/HRHEUM01&02", `-1` = "na, asked", `1` = "not mentioned", `2` = "mentioned",
+  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see RHEUM01&02", `-1` = "na, asked", `1` = "not mentioned", `2` = "mentioned",
   .applies_to_vars = c("rheum8j"),
   .applies_to_waves = c("F", "G", "H")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see F/G/HRHEUM09", `-1` = "na, asked", `1` = "not mentioned", `2` = "mentioned",
+  `-3` = "na, wrong skip", `-2` = "na, see RHEUM09", `-1` = "na, asked", `1` = "not mentioned", `2` = "mentioned",
   .applies_to_vars = c("rheum9j"),
   .applies_to_waves = c("F", "G", "H")
 )
 
 value_labels(
-  `-5` = "na, see G/HRMCH", `1` = "long interview", `2` = "short interview",
+  `-5` = "na, see RMCH", `1` = "long interview", `2` = "short interview",
   .applies_to_vars = c("chmodus"),
   .applies_to_waves = c("G", "H")
 )
@@ -3114,49 +3114,49 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/JARTVEI8",
+  `-2` = "na, see ARTVEI8",
   .applies_to_vars = c("artve8a", "artve8b", "artve8c", "artve8d", "artve8e"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-2` = "na, see I/JCANCER6",
+  `-2` = "na, see CANCER6",
   .applies_to_vars = c("cance6a", "cance6b", "cance6c", "cance6d", "cance6e", "cance6f"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-2` = "na, see I/JCHOUTD",
+  `-2` = "na, see CHOUTD",
   .applies_to_vars = c("choutd01", "choutd02", "choutd03", "choutd04", "choutd05", "choutd06", "choutd07", "choutd08", "choutd09", "choutd10", "choutd11", "choutd12"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-2` = "na, see I/JHART01",
+  `-2` = "na, see HART01",
   .applies_to_vars = c("hart04", "hart05", "hart10", "hart12", "hart15"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-2` = "na, see I/JHART15",
+  `-2` = "na, see HART15",
   .applies_to_vars = c("hart15a", "hart15b", "hart15c", "hart15d", "hart15e"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-2` = "na, see I/JKNEEP1",
+  `-2` = "na, see KNEEP1",
   .applies_to_vars = c("kneep2", "kneep3", "kneep4", "kneep5", "kneep6", "kneep7", "kneep8", "kneep9"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-2` = "na, see I/JRHEUM01&02",
+  `-2` = "na, see RHEUM01&02",
   .applies_to_vars = c("rheum04", "rheum05", "rheum06", "rheum07", "rheum08", "rheum09", "rheum12", "rheum8a", "rheum8b", "rheum8c", "rheum8d", "rheum8e", "rheum8f", "rheum8g", "rheum8h", "rheum8i", "rheum8j"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-2` = "na, see I/JRHEUM09",
+  `-2` = "na, see RHEUM09",
   .applies_to_vars = c("rheum9a", "rheum9b", "rheum9c", "rheum9d", "rheum9e", "rheum9f", "rheum9g", "rheum9h", "rheum9i", "rheum9j"),
   .applies_to_waves = c("I", "J")
 )
@@ -3168,7 +3168,7 @@ value_labels(
 )
 
 value_labels(
-  `-5` = "na, see I/JRMCH",
+  `-5` = "na, see RMCH",
   .applies_to_vars = c("artvei1", "cancer1", "cara01", "choutd", "cva01", "diabe01", "hart01", "hbd1", "incon10", "incon9", "kneep1", "othsi01", "rheum01", "rheum02"),
   .applies_to_waves = c("I", "J")
 )
@@ -3180,19 +3180,19 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JARTVEI1", `-1` = "na, asked", `1` = "no", `2` = "yes, family physician", `3` = "yes, specialist",
+  `-3` = "na, wrong skip", `-2` = "na, see ARTVEI1", `-1` = "na, asked", `1` = "no", `2` = "yes, family physician", `3` = "yes, specialist",
   .applies_to_vars = c("artvei4"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see I/JARTVEI1", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see ARTVEI1", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("artvei5", "artvei8"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JARTVEI5", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see ARTVEI5", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("artvei7"),
   .applies_to_waves = c("I", "J")
 )
@@ -3210,31 +3210,31 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JCARA01", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see CARA01", `-1` = "na, asked",
   .applies_to_vars = c("cara02"),
   .applies_to_waves = c("I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JCARA01", `-1` = "na, asked", `1` = "no", `2` = "yes, family physician", `3` = "yes, specialist",
+  `-3` = "na, wrong skip", `-2` = "na, see CARA01", `-1` = "na, asked", `1` = "no", `2` = "yes, family physician", `3` = "yes, specialist",
   .applies_to_vars = c("cara04"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see I/JCARA01", `-1` = "na, asked", `1` = "no", `2` = "yes, with heavy exertion", `3` = "yes, with light exertion", `4` = "yes, at rest",
+  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see CARA01", `-1` = "na, asked", `1` = "no", `2` = "yes, with heavy exertion", `3` = "yes, with light exertion", `4` = "yes, at rest",
   .applies_to_vars = c("cara08"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see I/JCARA01", `-1` = "na, asked", `1` = "not at all", `2` = "sometimes", `3` = "often", `4` = "always",
+  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see CARA01", `-1` = "na, asked", `1` = "not at all", `2` = "sometimes", `3` = "often", `4` = "always",
   .applies_to_vars = c("cara11"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-2` = "na, see I/JRMCH", `1` = "long interview", `2` = "short interview",
+  `-2` = "na, see RMCH", `1` = "long interview", `2` = "short interview",
   .applies_to_vars = c("chmodus"),
   .applies_to_waves = c("I", "J")
 )
@@ -3246,7 +3246,7 @@ value_labels(
 )
 
 value_labels(
-  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see I/JCVA01", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see CVA01", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("cva02a"),
   .applies_to_waves = c("I", "J")
 )
@@ -3276,7 +3276,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JCVA01", `-1` = "na, asked", `1` = "no", `2` = "yes, family physician", `3` = "yes, specialist",
+  `-3` = "na, wrong skip", `-2` = "na, see CVA01", `-1` = "na, asked", `1` = "no", `2` = "yes, family physician", `3` = "yes, specialist",
   .applies_to_vars = c("cva07"),
   .applies_to_waves = c("I", "J")
 )
@@ -3288,19 +3288,19 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JDIABE01", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see DIABE01", `-1` = "na, asked",
   .applies_to_vars = c("diabe02"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JDIABE01", `-1` = "na, asked", `1` = "none", `2` = "insulin injections", `3` = "tablets",
+  `-3` = "na, wrong skip", `-2` = "na, see DIABE01", `-1` = "na, asked", `1` = "none", `2` = "insulin injections", `3` = "tablets",
   .applies_to_vars = c("diabe03a"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JDIABE01", `-1` = "na, asked", `1` = "no", `2` = "yes, family physician", `3` = "yes, specialist",
+  `-3` = "na, wrong skip", `-2` = "na, see DIABE01", `-1` = "na, asked", `1` = "no", `2` = "yes, family physician", `3` = "yes, specialist",
   .applies_to_vars = c("diabe04"),
   .applies_to_waves = c("I", "J")
 )
@@ -3312,13 +3312,13 @@ value_labels(
 )
 
 value_labels(
-  `-6` = "na, see I/JARTVEI1", `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see I/JDIABE01", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-6` = "na, see ARTVEI1", `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see DIABE01", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("diabe07"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JDIABE07", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see DIABE07", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("diabe09"),
   .applies_to_waves = c("I", "J")
 )
@@ -3330,7 +3330,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JDIABE11", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see DIABE11", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("diabe12"),
   .applies_to_waves = c("I", "J")
 )
@@ -3366,7 +3366,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JHART10", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see HART10", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("hart11"),
   .applies_to_waves = c("I", "J")
 )
@@ -3378,19 +3378,19 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JHBD1", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see HBD1", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("hbd1a"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JHBD1 & I/JHBD1A1", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see HBD1 & HBD1A1", `-1` = "na, asked",
   .applies_to_vars = c("hbd2"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JHBD1", `-1` = "na, asked", `1` = "no", `2` = "yes, family physician", `3` = "yes, specialist",
+  `-3` = "na, wrong skip", `-2` = "na, see HBD1", `-1` = "na, asked", `1` = "no", `2` = "yes, family physician", `3` = "yes, specialist",
   .applies_to_vars = c("hbd3"),
   .applies_to_waves = c("I", "J")
 )
@@ -3402,13 +3402,13 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JOTHSI01", `-1` = "na, asked", `1` = "hypertension", `2` = "ulcer stomach or duodenum", `3` = "serious intestinal disease", `4` = "gall-stones/gall-bladder", `5` = "liver disease or cirrhosis", `6` = "inguinal hernia", `7` = "kidney stone", `8` = "kidney disease-serious", `9` = "chronic cystitis", `10` = "prostate complaints (males)", `11` = "prolapse (females)", `12` = "thyroid disease", `13` = "back problems, hernia", `14` = "epilepsy", `15` = "dizziness with falling", `16` = "migraine", `17` = "serious skin disease", `18` = "decubitus-ulcer", `19` = "allergy/hay-fever", `20` = "serious consequences accident", `21` = "other serious consequences/burns", `22` = "consequences surgery/operations", `23` = "disease of nervous system", `24` = "Parkinson", `25` = "mental problems, incl. depression", `26` = "other to be coded",
+  `-3` = "na, wrong skip", `-2` = "na, see OTHSI01", `-1` = "na, asked", `1` = "hypertension", `2` = "ulcer stomach or duodenum", `3` = "serious intestinal disease", `4` = "gall-stones/gall-bladder", `5` = "liver disease or cirrhosis", `6` = "inguinal hernia", `7` = "kidney stone", `8` = "kidney disease-serious", `9` = "chronic cystitis", `10` = "prostate complaints (males)", `11` = "prolapse (females)", `12` = "thyroid disease", `13` = "back problems, hernia", `14` = "epilepsy", `15` = "dizziness with falling", `16` = "migraine", `17` = "serious skin disease", `18` = "decubitus-ulcer", `19` = "allergy/hay-fever", `20` = "serious consequences accident", `21` = "other serious consequences/burns", `22` = "consequences surgery/operations", `23` = "disease of nervous system", `24` = "Parkinson", `25` = "mental problems, incl. depression", `26` = "other to be coded",
   .applies_to_vars = c("othsi02"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JOTHSI01", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see OTHSI01", `-1` = "na, asked",
   .applies_to_vars = c("othsi04"),
   .applies_to_waves = c("I", "J")
 )
@@ -3420,61 +3420,61 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JOTHSI01", `-1` = "na, asked", `1` = "no", `2` = "yes, family physician", `3` = "yes, specialist",
+  `-3` = "na, wrong skip", `-2` = "na, see OTHSI01", `-1` = "na, asked", `1` = "no", `2` = "yes, family physician", `3` = "yes, specialist",
   .applies_to_vars = c("othsi06"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JOTHSI01", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-3` = "na, wrong skip", `-2` = "na, see OTHSI01", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("othsi07"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JOTHSI07", `-1` = "na, asked", `1` = "hypertension", `2` = "ulcer stomach or duodenum", `3` = "serious intestinal disease", `4` = "gall-stones/gall-bladder", `5` = "liver disease or cirrhosis", `6` = "inguinal hernia", `7` = "kidney stone", `8` = "kidney disease-serious", `9` = "chronic cystitis", `10` = "prostate complaints (males)", `11` = "prolapse (females)", `12` = "thyroid disease", `13` = "back problems, hernia", `14` = "epilepsy", `15` = "dizziness with falling", `16` = "migraine", `17` = "serious skin disease", `18` = "decubitus-ulcer", `19` = "allergy/hay-fever", `20` = "serious consequences accident", `21` = "other serious consequences/burns", `22` = "consequences surgery/operations", `23` = "disease of nervous system", `24` = "Parkinson", `25` = "mental problems, incl. depression", `26` = "other to be coded",
+  `-3` = "na, wrong skip", `-2` = "na, see OTHSI07", `-1` = "na, asked", `1` = "hypertension", `2` = "ulcer stomach or duodenum", `3` = "serious intestinal disease", `4` = "gall-stones/gall-bladder", `5` = "liver disease or cirrhosis", `6` = "inguinal hernia", `7` = "kidney stone", `8` = "kidney disease-serious", `9` = "chronic cystitis", `10` = "prostate complaints (males)", `11` = "prolapse (females)", `12` = "thyroid disease", `13` = "back problems, hernia", `14` = "epilepsy", `15` = "dizziness with falling", `16` = "migraine", `17` = "serious skin disease", `18` = "decubitus-ulcer", `19` = "allergy/hay-fever", `20` = "serious consequences accident", `21` = "other serious consequences/burns", `22` = "consequences surgery/operations", `23` = "disease of nervous system", `24` = "Parkinson", `25` = "mental problems, incl. depression", `26` = "other to be coded",
   .applies_to_vars = c("othsi08"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JOTHSI07", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see OTHSI07", `-1` = "na, asked",
   .applies_to_vars = c("othsi10"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JOTHSI07", `-1` = "na, asked", `1` = "no", `2` = "yes, family physician", `3` = "yes, specialist",
+  `-3` = "na, wrong skip", `-2` = "na, see OTHSI07", `-1` = "na, asked", `1` = "no", `2` = "yes, family physician", `3` = "yes, specialist",
   .applies_to_vars = c("othsi12"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-2` = "na, see I/JRHEUM10A", `-1` = "na, asked", `1` = "right hip", `2` = "left hip", `3` = "both hips", `4` = "right knee", `5` = "left knee", `6` = "both knees", `7` = "right hand fingers", `8` = "left hand fingers", `9` = "both hands fingers", `10` = "right hand/wrist", `11` = "left hand/wrist", `12` = "both hands/wrists", `13` = "toes right foot", `14` = "toes left foot", `15` = "toes both feet", `16` = "right foot/ankle", `17` = "left foot/ankle", `18` = "both feet/ankles", `19` = "neck", `20` = "back", `21` = "right shoulder", `22` = "left shoulder", `23` = "other",
+  `-2` = "na, see RHEUM10A", `-1` = "na, asked", `1` = "right hip", `2` = "left hip", `3` = "both hips", `4` = "right knee", `5` = "left knee", `6` = "both knees", `7` = "right hand fingers", `8` = "left hand fingers", `9` = "both hands fingers", `10` = "right hand/wrist", `11` = "left hand/wrist", `12` = "both hands/wrists", `13` = "toes right foot", `14` = "toes left foot", `15` = "toes both feet", `16` = "right foot/ankle", `17` = "left foot/ankle", `18` = "both feet/ankles", `19` = "neck", `20` = "back", `21` = "right shoulder", `22` = "left shoulder", `23` = "other",
   .applies_to_vars = c("rh10_1j"),
   .applies_to_waves = c("I")
 )
 
 value_labels(
-  `-2` = "na, see I/JRHEUM10A", `-1` = "na, asked", `1` = "osteoarthritis/wear and tear/loss of cartilage", `2` = "rheumatoid arthritis", `3` = "infection (unclear if this is due to osteoarthritis or rheumatoid arthritis)", `4` = "fracture (due to accident)", `5` = "pain", `6` = "other (unable to stand or walk/immobility/etc)",
+  `-2` = "na, see RHEUM10A", `-1` = "na, asked", `1` = "osteoarthritis/wear and tear/loss of cartilage", `2` = "rheumatoid arthritis", `3` = "infection (unclear if this is due to osteoarthritis or rheumatoid arthritis)", `4` = "fracture (due to accident)", `5` = "pain", `6` = "other (unable to stand or walk/immobility/etc)",
   .applies_to_vars = c("rh10_1r"),
   .applies_to_waves = c("I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JRHEUM10A", `-1` = "na, asked", `1` = "right", `2` = "left", `3` = "right and left",
+  `-3` = "na, wrong skip", `-2` = "na, see RHEUM10A", `-1` = "na, asked", `1` = "right", `2` = "left", `3` = "right and left",
   .applies_to_vars = c("rh10_1s"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JRHEUM10A", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see RHEUM10A", `-1` = "na, asked",
   .applies_to_vars = c("rh10_1y1"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JRH10_1S", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see RH10_1S", `-1` = "na, asked",
   .applies_to_vars = c("rh10_1y2"),
   .applies_to_waves = c("I", "J")
 )
@@ -3486,25 +3486,25 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/JRHEUM10A2", `-1` = "na, asked", `1` = "osteoarthritis/wear and tear/loss of cartilage", `2` = "rheumatoid arthritis", `3` = "infection (unclear if this is due to osteoarthritis or rheumatoid arthritis)", `4` = "fracture (due to accident)", `5` = "pain", `6` = "other (unable to stand or walk/immobility/etc)",
+  `-2` = "na, see RHEUM10A2", `-1` = "na, asked", `1` = "osteoarthritis/wear and tear/loss of cartilage", `2` = "rheumatoid arthritis", `3` = "infection (unclear if this is due to osteoarthritis or rheumatoid arthritis)", `4` = "fracture (due to accident)", `5` = "pain", `6` = "other (unable to stand or walk/immobility/etc)",
   .applies_to_vars = c("rh10_2r"),
   .applies_to_waves = c("I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JRHEUM10A2", `-1` = "na, asked", `1` = "right", `2` = "left", `3` = "right and left",
+  `-3` = "na, wrong skip", `-2` = "na, see RHEUM10A2", `-1` = "na, asked", `1` = "right", `2` = "left", `3` = "right and left",
   .applies_to_vars = c("rh10_2s"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JRHEUM10A2", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see RHEUM10A2", `-1` = "na, asked",
   .applies_to_vars = c("rh10_2y1"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JRH10_2S", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see RH10_2S", `-1` = "na, asked",
   .applies_to_vars = c("rh10_2y2"),
   .applies_to_waves = c("I", "J")
 )
@@ -3516,25 +3516,25 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/JRHEUM10A3", `-1` = "na, asked", `1` = "osteoarthritis/wear and tear/loss of cartilage", `2` = "rheumatoid arthritis", `3` = "infection (unclear if this is due to osteoarthritis or rheumatoid arthritis)", `4` = "fracture (due to accident)", `5` = "pain", `6` = "other (unable to stand or walk/immobility/etc)",
+  `-2` = "na, see RHEUM10A3", `-1` = "na, asked", `1` = "osteoarthritis/wear and tear/loss of cartilage", `2` = "rheumatoid arthritis", `3` = "infection (unclear if this is due to osteoarthritis or rheumatoid arthritis)", `4` = "fracture (due to accident)", `5` = "pain", `6` = "other (unable to stand or walk/immobility/etc)",
   .applies_to_vars = c("rh10_3r"),
   .applies_to_waves = c("I")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JRHEUM10A3", `-1` = "na, asked", `1` = "right", `2` = "left", `3` = "right and left",
+  `-3` = "na, wrong skip", `-2` = "na, see RHEUM10A3", `-1` = "na, asked", `1` = "right", `2` = "left", `3` = "right and left",
   .applies_to_vars = c("rh10_3s"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JRHEUM10A3", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see RHEUM10A3", `-1` = "na, asked",
   .applies_to_vars = c("rh10_3y1"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JRH10_3S", `-1` = "na, asked",
+  `-3` = "na, wrong skip", `-2` = "na, see RH10_3S", `-1` = "na, asked",
   .applies_to_vars = c("rh10_3y2"),
   .applies_to_waves = c("I", "J")
 )
@@ -3546,13 +3546,13 @@ value_labels(
 )
 
 value_labels(
-  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see I/JRHEUM01", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see RHEUM01", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("rheum10a"),
   .applies_to_waves = c("I", "J")
 )
 
 value_labels(
-  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see I/JRHEUM10A2", `-1` = "na, asked", `1` = "no", `2` = "yes",
+  `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see RHEUM10A2", `-1` = "na, asked", `1` = "no", `2` = "yes",
   .applies_to_vars = c("rheum10a2", "rheum10a3"),
   .applies_to_waves = c("I", "J")
 )
@@ -3582,7 +3582,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JCARA01", `-1` = "na, asked / R does not know",
+  `-3` = "na, wrong skip", `-2` = "na, see CARA01", `-1` = "na, asked / R does not know",
   .applies_to_vars = c("cara02"),
   .applies_to_waves = c("J")
 )
@@ -3606,7 +3606,7 @@ value_labels(
 )
 
 value_labels(
-  `-6` = "na, see IHART10", `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see I/JDIABE01", `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "no exertion: chest pain", `4` = "no exertion: pain legs", `5` = "no exertion: shortness of breath", `6` = "no exertion: joint complaints", `7` = "no exertion: other reason",
+  `-6` = "na, see IHART10", `-4` = "na, short interview", `-3` = "na, wrong skip", `-2` = "na, see DIABE01", `-1` = "na, asked", `1` = "no", `2` = "yes", `3` = "no exertion: chest pain", `4` = "no exertion: pain legs", `5` = "no exertion: shortness of breath", `6` = "no exertion: joint complaints", `7` = "no exertion: other reason",
   .applies_to_vars = c("diabe11"),
   .applies_to_waves = c("J")
 )
@@ -3636,13 +3636,13 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na wrong skip", `-2` = "na, see I/JRHEUM10A", `-1` = "na, asked", `1` = "hip", `2` = "knee", `3` = "fingers", `4` = "hand/wrist", `5` = "toes", `6` = "foot/ankle", `7` = "neck", `8` = "back", `9` = "shoulder", `10` = "other",
+  `-3` = "na wrong skip", `-2` = "na, see RHEUM10A", `-1` = "na, asked", `1` = "hip", `2` = "knee", `3` = "fingers", `4` = "hand/wrist", `5` = "toes", `6` = "foot/ankle", `7` = "neck", `8` = "back", `9` = "shoulder", `10` = "other",
   .applies_to_vars = c("rh10_1j"),
   .applies_to_waves = c("J")
 )
 
 value_labels(
-  `-2` = "na, wrong skip na, see I/JRHEUM10A", `-1` = "na, asked", `1` = "osteoarthritis/wear and tear/loss of cartilage", `2` = "rheumatoid arthritis", `3` = "infection (unclear if this is due to osteoarthritis or rheumatoid arthritis)", `4` = "fracture (due to accident)", `5` = "pain", `6` = "other (unable to stand or walk/immobility/etc)",
+  `-2` = "na, wrong skip na, see RHEUM10A", `-1` = "na, asked", `1` = "osteoarthritis/wear and tear/loss of cartilage", `2` = "rheumatoid arthritis", `3` = "infection (unclear if this is due to osteoarthritis or rheumatoid arthritis)", `4` = "fracture (due to accident)", `5` = "pain", `6` = "other (unable to stand or walk/immobility/etc)",
   .applies_to_vars = c("rh10_1r"),
   .applies_to_waves = c("J")
 )
@@ -3654,7 +3654,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, wrong skip na, see I/JRHEUM10A2", `-1` = "na, asked", `1` = "osteoarthritis/wear and tear/loss of cartilage", `2` = "rheumatoid arthritis", `3` = "infection (unclear if this is due to osteoarthritis or rheumatoid arthritis)", `4` = "fracture (due to accident)", `5` = "pain", `6` = "other (unable to stand or walk/immobility/etc)",
+  `-2` = "na, wrong skip na, see RHEUM10A2", `-1` = "na, asked", `1` = "osteoarthritis/wear and tear/loss of cartilage", `2` = "rheumatoid arthritis", `3` = "infection (unclear if this is due to osteoarthritis or rheumatoid arthritis)", `4` = "fracture (due to accident)", `5` = "pain", `6` = "other (unable to stand or walk/immobility/etc)",
   .applies_to_vars = c("rh10_2r"),
   .applies_to_waves = c("J")
 )
@@ -3666,7 +3666,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JRHEUM10A3", `-1` = "na, asked", `1` = "osteoarthritis/wear and tear/loss of cartilage", `2` = "rheumatoid arthritis", `3` = "infection (unclear if this is due to osteoarthritis or rheumatoid arthritis)", `4` = "fracture (due to accident)", `5` = "pain", `6` = "other (unable to stand or walk/immobility/etc)",
+  `-3` = "na, wrong skip", `-2` = "na, see RHEUM10A3", `-1` = "na, asked", `1` = "osteoarthritis/wear and tear/loss of cartilage", `2` = "rheumatoid arthritis", `3` = "infection (unclear if this is due to osteoarthritis or rheumatoid arthritis)", `4` = "fracture (due to accident)", `5` = "pain", `6` = "other (unable to stand or walk/immobility/etc)",
   .applies_to_vars = c("rh10_3r"),
   .applies_to_waves = c("J")
 )

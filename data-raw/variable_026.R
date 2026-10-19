@@ -101,7 +101,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see B/C/D/E/F/G/H/B/I/JRMANX in LAS(A)*226",
+  `-2` = "na, see RMANX in LAS(A)*226",
   .applies_to_vars = c("anxiet1", "anxiet2", "anxiet3", "anxiet4", "anxiet5", "anxiet6", "anxiet7"),
   .applies_to_waves = c("B", "C", "D", "E", "F", "G", "H", "3B", "I", "J")
 )

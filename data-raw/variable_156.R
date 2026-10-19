@@ -599,7 +599,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see H/B/I/J/KM15WTP0", `0` = "not mentioned", `1` = "mentioned",
+  `-2` = "na, see M15WTP0", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("m15wtp1"),
   .applies_to_waves = c("H", "3B", "I", "J", "K")
 )

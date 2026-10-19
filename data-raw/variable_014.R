@@ -506,19 +506,19 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/F/GMOVED",
+  `-2` = "na, see MOVED",
   .applies_to_vars = c("fdoor", "hindep", "housem", "lrooms", "momonth", "moyear", "nrooms", "specadj"),
   .applies_to_waves = c("C", "D", "E", "F", "G")
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/F/GSPECADJ",
+  `-2` = "na, see SPECADJ",
   .applies_to_vars = c("spec01", "spec02", "spec03", "spec04", "spec05", "spec06", "spec07", "spec08", "spec09", "spec10", "spec11", "spec12", "spec13", "spec14", "spec15", "spec16", "spec17"),
   .applies_to_waves = c("C", "D", "E", "F", "G")
 )
 
 value_labels(
-  `-5` = "na, see C/D/E/F/GHINDEP",
+  `-5` = "na, see HINDEP",
   .applies_to_vars = c("fdoor", "housem", "lrooms", "nrooms", "spec06", "spec07", "spec14", "spec15", "spec16"),
   .applies_to_waves = c("C", "D", "E", "F", "G")
 )
@@ -560,7 +560,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see C/D/E/F/GFDOOR", `-1` = "na, asked", `1` = "only stairs", `2` = "elevator present", `3` = "other",
+  `-3` = "na, wrong skip", `-2` = "na, see FDOOR", `-1` = "na, asked", `1` = "only stairs", `2` = "elevator present", `3` = "other",
   .applies_to_vars = c("rfdoor"),
   .applies_to_waves = c("C", "D", "E", "F", "G")
 )
@@ -758,19 +758,19 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see I/J/KMOVED",
+  `-2` = "na, see MOVED",
   .applies_to_vars = c("hindep", "housem", "hwhacc", "momonth", "moyear", "specadj"),
   .applies_to_waves = c("I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see I/J/KSPECADJ",
+  `-2` = "na, see SPECADJ",
   .applies_to_vars = c("spec1", "spec2", "spec3", "spec4", "spec5", "spec6", "spec7", "spec8", "specwho"),
   .applies_to_waves = c("I", "J", "K")
 )
 
 value_labels(
-  `-5` = "na, see I/J/KHINDEP",
+  `-5` = "na, see HINDEP",
   .applies_to_vars = c("housem", "hwhacc", "spec4", "spec5", "spec8"),
   .applies_to_waves = c("I", "J", "K")
 )
@@ -800,7 +800,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, wrong skip", `-2` = "na, see I/JSPECADJ", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
+  `-3` = "na, wrong skip", `-2` = "na, see SPECADJ", `-1` = "na, asked", `0` = "not mentioned", `1` = "mentioned",
   .applies_to_vars = c("spec9"),
   .applies_to_waves = c("I", "J")
 )

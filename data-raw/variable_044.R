@@ -569,7 +569,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/GHINDEP",
+  `-2` = "na, see HINDEP",
   .applies_to_vars = c("lst2c01", "lst2c02", "lst2c03", "lst2c04", "lst2c05", "lst2c06", "lst2c07", "lst2c08", "lst2c09", "lst2c10", "lst2c11", "lst2c12", "lst2c13", "lst2c14", "lst2c15", "lst2k09"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G")
 )
@@ -593,7 +593,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see H/BHINDEP",
+  `-2` = "na, see HINDEP",
   .applies_to_vars = c("lst2c01", "lst2c02", "lst2c03", "lst2c04", "lst2c05", "lst2c06", "lst2c07", "lst2c08", "lst2c09", "lst2c10", "lst2c11", "lst2c12", "lst2c13", "lst2c14", "lst2c15"),
   .applies_to_waves = c("H", "3B")
 )
@@ -611,7 +611,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see H/BLST1C01", `-1` = "na, asked: R does not know", `98` = "98 times or more",
+  `-2` = "na, see LST1C01", `-1` = "na, asked: R does not know", `98` = "98 times or more",
   .applies_to_vars = c("lst1c1n"),
   .applies_to_waves = c("H", "3B")
 )

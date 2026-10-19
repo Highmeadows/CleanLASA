@@ -87,7 +87,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see C/D/E/B/F/G/H/B/I/J/KRMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
+  `-2` = "na, see RMALC in LASAC/D/E/2B/F/G/H/3B/I/J/K228",
   .applies_to_vars = c("alcos01", "alcos02", "alcos03", "alcos04", "alcos05", "alcos06", "alcos07", "alcos08", "alcos09", "alcos10", "alcos11", "alcos12"),
   .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
 )

@@ -604,49 +604,49 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "na, for thrombosis", `-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked",
+  `-3` = "na, for thrombosis", `-2` = "na, see M#MED", `-1` = "na, asked",
   .applies_to_vars = c("m#timp1", "m#timp2", "m#timp3", "m#timp4", "m#timp5", "m#timp6", "m#timp7", "m#timp8"),
   .applies_to_waves = c("Z", "D", "E", "2B", "F")
 )
 
 value_labels(
-  `-3` = "na, for thrombosis", `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked",
+  `-3` = "na, for thrombosis", `-2` = "na, see M#MED", `-1` = "na, asked",
   .applies_to_vars = c("m#timp10", "m#timp9"),
   .applies_to_waves = c("Z", "G", "H")
 )
 
 value_labels(
-  `-3` = "na, for thrombosis", `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked",
+  `-3` = "na, for thrombosis", `-2` = "na, see M#MED", `-1` = "na, asked",
   .applies_to_vars = c("m#timp11", "m#timp12", "m#timp13", "m#timp14"),
   .applies_to_waves = c("Z", "H")
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked",
+  `-2` = "na, see MMEDUSE", `-1` = "na, asked",
   .applies_to_vars = c("matc1"),
   .applies_to_waves = c("Z", "G", "H", "3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked",
+  `-2` = "na, see MMEDUSE", `-1` = "na, asked",
   .applies_to_vars = c("matc10", "matc9"),
   .applies_to_waves = c("Z", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked",
+  `-2` = "na, see MMEDUSE", `-1` = "na, asked",
   .applies_to_vars = c("matc11", "matc12", "matc13", "matc14"),
   .applies_to_waves = c("Z", "H")
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/I/J/KMMEDUSE", `-1` = "na, asked",
+  `-2` = "na, see MMEDUSE", `-1` = "na, asked",
   .applies_to_vars = c("matc2", "matc3", "matc4", "matc5", "matc6", "matc7", "matc8"),
   .applies_to_waves = c("Z", "G", "H", "3B")
 )
 
 value_labels(
-  `-2` = "na, see D/EM#MED", `-1` = "na, asked",
+  `-2` = "na, see M#MED", `-1` = "na, asked",
   .applies_to_vars = c("mbffnr"),
   .applies_to_waves = c("Z", "D", "E")
 )
@@ -658,25 +658,25 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked",
+  `-2` = "na, see M#MED", `-1` = "na, asked",
   .applies_to_vars = c("mccsnr"),
   .applies_to_waves = c("Z", "D", "E", "2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see G/HM#MED", `-1` = "na, asked", `1` = "tablet", `2` = "capsule", `3` = "drops", `4` = "effervescent tablet", `5` = "injection", `6` = "inhaler", `7` = "powder", `8` = "ointment", `9` = "other form / plaster", `10` = "suppository", `11` = "spray", `12` = "other form",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "tablet", `2` = "capsule", `3` = "drops", `4` = "effervescent tablet", `5` = "injection", `6` = "inhaler", `7` = "powder", `8` = "ointment", `9` = "other form / plaster", `10` = "suppository", `11` = "spray", `12` = "other form",
   .applies_to_vars = c("mdform1", "mdform2", "mdform3", "mdform4", "mdform5", "mdform6", "mdform7", "mdform8"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `-2` = "na, see G/HM#MED", `-1` = "na, asked", `1` = "tablet", `2` = "capsule", `3` = "drops", `4` = "effervescent tablet", `5` = "injection", `6` = "inhaler", `7` = "powder", `8` = "ointment", `9` = "other form",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "tablet", `2` = "capsule", `3` = "drops", `4` = "effervescent tablet", `5` = "injection", `6` = "inhaler", `7` = "powder", `8` = "ointment", `9` = "other form",
   .applies_to_vars = c("mdform10", "mdform9"),
   .applies_to_waves = c("Z", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see G/HM#MED", `-1` = "na, asked", `1` = "tablet", `2` = "capsule", `3` = "drops", `4` = "effervescent tablet", `5` = "injection", `6` = "inhaler", `7` = "powder", `8` = "ointment", `9` = "other form",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "tablet", `2` = "capsule", `3` = "drops", `4` = "effervescent tablet", `5` = "injection", `6` = "inhaler", `7` = "powder", `8` = "ointment", `9` = "other form",
   .applies_to_vars = c("mdform11", "mdform12", "mdform13", "mdform14"),
   .applies_to_waves = c("Z", "H")
 )
@@ -688,13 +688,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked", `1` = "less than 1 month", `2` = "1 month to 1 year", `3` = "1 to 5 years", `4` = "longer than 5 years 1",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "less than 1 month", `2` = "1 month to 1 year", `3` = "1 to 5 years", `4` = "longer than 5 years 1",
   .applies_to_vars = c("mdurat10", "mdurat9"),
   .applies_to_waves = c("Z", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked", `1` = "less than 1 month", `2` = "1 month to 1 year", `3` = "1 to 5 years", `4` = "longer than 5 years 1",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "less than 1 month", `2` = "1 month to 1 year", `3` = "1 to 5 years", `4` = "longer than 5 years 1",
   .applies_to_vars = c("mdurat11", "mdurat12", "mdurat13", "mdurat14"),
   .applies_to_waves = c("Z", "H")
 )
@@ -706,19 +706,19 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked", `1` = "microgramme", `2` = "milligramme", `3` = "gramme", `4` = "other measurement / milliliter", `5` = "unit per ml", `6` = "percentage",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "microgramme", `2` = "milligramme", `3` = "gramme", `4` = "other measurement / milliliter", `5` = "unit per ml", `6` = "percentage",
   .applies_to_vars = c("mmeasu1", "mmeasu2", "mmeasu3", "mmeasu4", "mmeasu5", "mmeasu6", "mmeasu7", "mmeasu8"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `-2` = "na, see G/HM#MED", `-1` = "na, asked", `1` = "microgramme", `2` = "milligramme", `3` = "gramme", `4` = "other measurement",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "microgramme", `2` = "milligramme", `3` = "gramme", `4` = "other measurement",
   .applies_to_vars = c("mmeasu10", "mmeasu9"),
   .applies_to_waves = c("Z", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see G/HM#MED", `-1` = "na, asked", `1` = "microgramme", `2` = "milligramme", `3` = "gramme", `4` = "other measurement",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "microgramme", `2` = "milligramme", `3` = "gramme", `4` = "other measurement",
   .applies_to_vars = c("mmeasu11", "mmeasu12", "mmeasu13", "mmeasu14"),
   .applies_to_waves = c("Z", "H")
 )
@@ -742,7 +742,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "only once/ short cure / only once / short cure", `-2` = "na, see D/E/B/FMMEDCORT", `-1` = "R does not know period / na, asked / na, asked", `99` = "99 months or longer",
+  `-3` = "only once/ short cure / only once / short cure", `-2` = "na, see MMEDCORT", `-1` = "R does not know period / na, asked / na, asked", `99` = "99 months or longer",
   .applies_to_vars = c("mmedcortnm"),
   .applies_to_waves = c("Z")
 )
@@ -814,19 +814,19 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked", `1` = "day", `2` = "week", `3` = "month", `4` = "for thrombosis", `5` = "as required", `6` = "other kind of period",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "day", `2` = "week", `3` = "month", `4` = "for thrombosis", `5` = "as required", `6` = "other kind of period",
   .applies_to_vars = c("mperio1", "mperio2", "mperio3", "mperio4", "mperio5", "mperio6", "mperio7", "mperio8"),
   .applies_to_waves = c("Z", "D", "E", "2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked", `1` = "day", `2` = "week", `3` = "month", `4` = "for thrombosis", `5` = "as required", `6` = "other kind of period",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "day", `2` = "week", `3` = "month", `4` = "for thrombosis", `5` = "as required", `6` = "other kind of period",
   .applies_to_vars = c("mperio10", "mperio9"),
   .applies_to_waves = c("Z", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked", `1` = "day", `2` = "week", `3` = "month", `4` = "for thrombosis", `5` = "as required", `6` = "other kind of period",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "day", `2` = "week", `3` = "month", `4` = "for thrombosis", `5` = "as required", `6` = "other kind of period",
   .applies_to_vars = c("mperio11", "mperio12", "mperio13", "mperio14"),
   .applies_to_waves = c("Z", "H")
 )
@@ -838,13 +838,13 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked",
+  `-2` = "na, see M#MED", `-1` = "na, asked",
   .applies_to_vars = c("mquant10", "mquant9"),
   .applies_to_waves = c("Z", "G", "H")
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked",
+  `-2` = "na, see M#MED", `-1` = "na, asked",
   .applies_to_vars = c("mquant11", "mquant12", "mquant13", "mquant14"),
   .applies_to_waves = c("Z", "H")
 )
@@ -916,127 +916,127 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked", `1` = "less than 1 month", `2` = "1 month to 1 year", `3` = "1 to 5 years", `4` = "longer than 5 years",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "less than 1 month", `2` = "1 month to 1 year", `3` = "1 to 5 years", `4` = "longer than 5 years",
   .applies_to_vars = c("mdurat1", "mdurat2", "mdurat3", "mdurat4", "mdurat5", "mdurat6", "mdurat7", "mdurat8"),
   .applies_to_waves = c("D", "E", "2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked", `1` = "microgramme", `2` = "milligramme", `3` = "gramme", `4` = "other measurement",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "microgramme", `2` = "milligramme", `3` = "gramme", `4` = "other measurement",
   .applies_to_vars = c("mmeasu1", "mmeasu2", "mmeasu3", "mmeasu4", "mmeasu5", "mmeasu6", "mmeasu7", "mmeasu8"),
   .applies_to_waves = c("D", "E", "2B", "F")
 )
 
 value_labels(
-  `-2` = "na, see D/E/B/FMMEDCORT", `-1` = "R does not know period / na, asked", `99` = "99 months or longer",
+  `-2` = "na, see MMEDCORT", `-1` = "R does not know period / na, asked", `99` = "99 months or longer",
   .applies_to_vars = c("mmedcortnm"),
   .applies_to_waves = c("D")
 )
 
 value_labels(
-  `-2` = "na, see D/E/B/FM#MED", `-1` = "na, asked",
+  `-2` = "na, see M#MED", `-1` = "na, asked",
   .applies_to_vars = c("mmednr1", "mmednr2", "mmednr3", "mmednr4", "mmednr5", "mmednr6", "mmednr7", "mmednr8", "mquant1", "mquant2", "mquant3", "mquant4", "mquant5", "mquant6", "mquant7", "mquant8"),
   .applies_to_waves = c("D", "E", "2B", "F")
 )
 
 value_labels(
-  `-3` = "only once/ short cure", `-2` = "na, see D/E/B/FMMEDCORT", `-1` = "R does not know period / na, asked",
+  `-3` = "only once/ short cure", `-2` = "na, see MMEDCORT", `-1` = "R does not know period / na, asked",
   .applies_to_vars = c("mmedcortnm"),
   .applies_to_waves = c("E", "2B", "F")
 )
 
 value_labels(
-  `-3` = "na, for thrombosis", `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked",
+  `-3` = "na, for thrombosis", `-2` = "na, see M#MED", `-1` = "na, asked",
   .applies_to_vars = c("m#timp1"),
   .applies_to_waves = c("G", "H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-3` = "na, for thrombosis", `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked",
+  `-3` = "na, for thrombosis", `-2` = "na, see M#MED", `-1` = "na, asked",
   .applies_to_vars = c("m#timp2", "m#timp3", "m#timp4", "m#timp5", "m#timp6", "m#timp7", "m#timp8"),
   .applies_to_waves = c("G", "H", "3B")
 )
 
 value_labels(
-  `-2` = "na, see G/HM#MED", `-1` = "na, asked", `1` = "tablet", `2` = "capsule", `3` = "drops", `4` = "effervescent tablet", `5` = "injection", `6` = "inhaler", `7` = "powder", `8` = "ointment", `9` = "other form",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "tablet", `2` = "capsule", `3` = "drops", `4` = "effervescent tablet", `5` = "injection", `6` = "inhaler", `7` = "powder", `8` = "ointment", `9` = "other form",
   .applies_to_vars = c("mdform1", "mdform2", "mdform3", "mdform4", "mdform5", "mdform6", "mdform7", "mdform8"),
   .applies_to_waves = c("G", "H")
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked", `1` = "less than 1 month", `2` = "1 month to 1 year", `3` = "1 to 5 years", `4` = "longer than 5 years 1",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "less than 1 month", `2` = "1 month to 1 year", `3` = "1 to 5 years", `4` = "longer than 5 years 1",
   .applies_to_vars = c("mdurat1"),
   .applies_to_waves = c("G", "H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked", `1` = "less than 1 month", `2` = "1 month to 1 year", `3` = "1 to 5 years", `4` = "longer than 5 years 1",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "less than 1 month", `2` = "1 month to 1 year", `3` = "1 to 5 years", `4` = "longer than 5 years 1",
   .applies_to_vars = c("mdurat2", "mdurat3", "mdurat4", "mdurat5", "mdurat6", "mdurat7", "mdurat8"),
   .applies_to_waves = c("G", "H", "3B")
 )
 
 value_labels(
-  `-2` = "na, see G/HM#MED", `-1` = "na, asked", `1` = "microgramme", `2` = "milligramme", `3` = "gramme", `4` = "other measurement",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "microgramme", `2` = "milligramme", `3` = "gramme", `4` = "other measurement",
   .applies_to_vars = c("mmeasu1", "mmeasu2", "mmeasu3", "mmeasu4", "mmeasu5", "mmeasu6", "mmeasu7", "mmeasu8"),
   .applies_to_waves = c("G", "H")
 )
 
 value_labels(
-  `-3` = "only once / short cure", `-2` = "na, see G/HMMEDCORT", `-1` = "na, asked",
+  `-3` = "only once / short cure", `-2` = "na, see MMEDCORT", `-1` = "na, asked",
   .applies_to_vars = c("mmedcortnm"),
   .applies_to_waves = c("G")
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked", `1` = "day", `2` = "week", `3` = "month", `4` = "for thrombosis", `5` = "as required", `6` = "other kind of period",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "day", `2` = "week", `3` = "month", `4` = "for thrombosis", `5` = "as required", `6` = "other kind of period",
   .applies_to_vars = c("mperio1"),
   .applies_to_waves = c("G", "H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked", `1` = "day", `2` = "week", `3` = "month", `4` = "for thrombosis", `5` = "as required", `6` = "other kind of period",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "day", `2` = "week", `3` = "month", `4` = "for thrombosis", `5` = "as required", `6` = "other kind of period",
   .applies_to_vars = c("mperio2", "mperio3", "mperio4", "mperio5", "mperio6", "mperio7", "mperio8"),
   .applies_to_waves = c("G", "H", "3B")
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked",
+  `-2` = "na, see M#MED", `-1` = "na, asked",
   .applies_to_vars = c("mquant1"),
   .applies_to_waves = c("G", "H", "3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see G/H/B/B/I/J/KM#MED", `-1` = "na, asked",
+  `-2` = "na, see M#MED", `-1` = "na, asked",
   .applies_to_vars = c("mquant2", "mquant3", "mquant4", "mquant5", "mquant6", "mquant7", "mquant8"),
   .applies_to_waves = c("G", "H", "3B")
 )
 
 value_labels(
-  `-2` = "na, see B/I/J/KMMEDUSE", `0` = "no medicines",
+  `-2` = "na, see MMEDUSE", `0` = "no medicines",
   .applies_to_vars = c("m#med"),
   .applies_to_waves = c("3B", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/B/I/J/KM#MED", `-1` = "na, asked", `1` = "tablet", `2` = "capsule", `3` = "drops", `4` = "effervescent tablet", `5` = "injection", `6` = "inhaler", `7` = "powder", `8` = "ointment", `9` = "plaster", `10` = "suppository", `11` = "spray", `12` = "other form",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "tablet", `2` = "capsule", `3` = "drops", `4` = "effervescent tablet", `5` = "injection", `6` = "inhaler", `7` = "powder", `8` = "ointment", `9` = "plaster", `10` = "suppository", `11` = "spray", `12` = "other form",
   .applies_to_vars = c("mdform1"),
   .applies_to_waves = c("3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/B/I/J/KM#MED", `-1` = "na, asked", `1` = "tablet", `2` = "capsule", `3` = "drops", `4` = "effervescent tablet", `5` = "injection", `6` = "inhaler", `7` = "powder", `8` = "ointment", `9` = "plaster", `10` = "suppository", `11` = "spray", `12` = "other form",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "tablet", `2` = "capsule", `3` = "drops", `4` = "effervescent tablet", `5` = "injection", `6` = "inhaler", `7` = "powder", `8` = "ointment", `9` = "plaster", `10` = "suppository", `11` = "spray", `12` = "other form",
   .applies_to_vars = c("mdform2", "mdform3", "mdform4", "mdform5", "mdform6", "mdform7", "mdform8"),
   .applies_to_waves = c("3B")
 )
 
 value_labels(
-  `-2` = "na, see B/B/I/J/KM#MED", `-1` = "na, asked", `1` = "microgramme", `2` = "milligramme", `3` = "gramme", `4` = "milliliter", `5` = "unit per ml", `6` = "percentage",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "microgramme", `2` = "milligramme", `3` = "gramme", `4` = "milliliter", `5` = "unit per ml", `6` = "percentage",
   .applies_to_vars = c("mmeasu1"),
   .applies_to_waves = c("3B", "MB", "I", "J", "K")
 )
 
 value_labels(
-  `-2` = "na, see B/B/I/J/KM#MED", `-1` = "na, asked", `1` = "microgramme", `2` = "milligramme", `3` = "gramme", `4` = "milliliter", `5` = "unit per ml", `6` = "percentage",
+  `-2` = "na, see M#MED", `-1` = "na, asked", `1` = "microgramme", `2` = "milligramme", `3` = "gramme", `4` = "milliliter", `5` = "unit per ml", `6` = "percentage",
   .applies_to_vars = c("mmeasu2", "mmeasu3", "mmeasu4", "mmeasu5", "mmeasu6", "mmeasu7", "mmeasu8"),
   .applies_to_waves = c("3B")
 )
