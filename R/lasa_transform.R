@@ -418,12 +418,15 @@
 #'   documents (such as `sex`) are filled in from the respondent's other
 #'   rows, and other columns are left missing, since they weren't measured
 #'   at that wave. Merged with `all = TRUE` (or `dplyr::full_join()`), the
-#'   respondents the long data lack get a row without a wave, holding
-#'   their values of the wide columns and stable variables (a value in
-#'   another column is an error): long format gives them the rows those
-#'   values need (a row at every wave of the wide columns if they have
-#'   none), and no row where no wide columns were merged in (with a
-#'   message).
+#'   respondents the long data lack get a row without a wave, holding the
+#'   wide data's values: those of wide columns go to their waves, adding
+#'   the rows they need (a row at every wave of the wide columns if there
+#'   are none), and the others hold for every wave, as in wide data, so
+#'   they fill each of the respondent's rows (a value in a `"Time"`
+#'   column, or in a column of a wave-specific variable the label
+#'   database documents, needs a wave, so it is an error). Where no wide
+#'   columns were merged in, such respondents have no row in long format
+#'   (with a message), but one in wide format.
 #'
 #' **Wide format** has one row per respondent and drops the `"Wave"` and
 #' `"Time"` columns. Each wave-specific variable gets one column per wave
@@ -929,11 +932,12 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 
 ## The wave column: list(name, placeholders). `name` is "Wave" in any
 ## capitalization, or NULL if there is none. Copies merge() made of it
-## ("Wave.x"/"Wave.y", next to a "Wave" column when three data sets with
-## one were merged) are fine when they hold nothing but the "Z" placeholder
-## of Z files and missing values (NA, or blank text once saved to .sav):
-## `placeholders`, to drop. Otherwise data sets with a "Wave" column were
-## merged by respondent alone, which mixes up their waves.
+## ("Wave.x"/"Wave.y", "Wave.x.x" and so on of further merges, next to a
+## "Wave" column when three data sets with one were merged) are fine when
+## they hold nothing but the "Z" placeholder of Z files and missing values
+## (NA, or blank text once saved to .sav): `placeholders`, to drop.
+## Otherwise data sets with a "Wave" column were merged by respondent
+## alone, which mixes up their waves.
 .lasa_find_wave <- function(data) {
   lower <- tolower(names(data))
   hits <- names(data)[lower == "wave"]
@@ -943,7 +947,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
       call. = FALSE
     )
   }
-  copies <- names(data)[grepl("^wave(\\.x|\\.y|\\.\\.\\.[0-9]+)$", lower)]
+  copies <- names(data)[grepl("^wave(\\.x|\\.y)*(\\.\\.\\.[0-9]+)?$", lower) & lower != "wave"]
   placeholders <- vapply(copies, function(name) {
     codes <- .lasa_normalize_wave_codes(data[[name]])
     all(is.na(codes) | codes %in% c("Z", ""))
@@ -999,24 +1003,26 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
 
 ## Checks long data's rows without a wave (`waveless`), which merging wide
 ## data into long data by respnr gives respondents the long data lack (with
-## all = TRUE, or dplyr::full_join()): they may only hold values for other
-## rows -- of wide columns, which go to the respondent's rows at their
-## waves, and of documented stable variables and the cohort column, which
-## fill the respondent's rows (`allowed` names the wide columns, the cohort
-## column, the identifier and the wave column). A value in another column
-## (one of the long data's, which needs the row's wave) is an error, naming
-## the respondent by `row_ids` (per row) and the column as `renamed` says
-## (see .lasa_show_column()).
-.lasa_check_waveless <- function(data, waveless, row_ids, wave_name, allowed, db_info, renamed) {
-  for (name in setdiff(names(data), allowed)) {
+## all = TRUE, or dplyr::full_join()). They hold the values of the wide
+## data merged in: of wide columns, which go to the respondent's rows at
+## their waves, and of other columns, which hold for every wave, as in wide
+## data, and fill the respondent's rows (see stable_rows() in
+## .lasa_to_long()). Of `columns` (all but those), a Time column
+## (`time_names`) and a column of a wave-specific variable the label
+## database documents need the row's wave: a value there is an error,
+## naming the respondent by `row_ids` (per row) and the column as `renamed`
+## says (see .lasa_show_column()).
+.lasa_check_waveless <- function(data, waveless, row_ids, wave_name, columns, time_names, db_info, renamed) {
+  for (name in columns) {
     held <- waveless & !.lasa_is_na(data[[name]])
-    if (!any(held) || .lasa_documented_stable(data[[name]], name, db_info)) next
+    if (!any(held)) next
+    if (!name %in% time_names && !.lasa_documented_varying(data[[name]], name, db_info)) next
     stop(
       "The '", wave_name, "' column has missing values, on rows holding values that need a wave (e.g. ",
       .lasa_show_column(name, renamed), " for respondent ", row_ids[[which(held)[[1L]]]], "). Every row of ",
-      "long data needs a wave, except rows holding nothing but values of wide columns, which go to the ",
-      "respondent's rows at their waves, and of stable variables -- as merging wide data into long data by ",
-      "respnr gives respondents the long data lack (with all = TRUE, or dplyr::full_join()).",
+      "long data needs a wave, except the rows that merging wide data into long data by respnr gives ",
+      "respondents the long data lack (with all = TRUE, or dplyr::full_join()): their values of wide ",
+      "columns go to the respondent's rows at their waves, and their other values hold for every wave.",
       call. = FALSE
     )
   }
@@ -1965,7 +1971,11 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     has_data, baseline, time, r, wave_codes, ids,
     by_id = .lasa_id_cohorts(ids, at_lasa_wave)
   )
+  # Respondents of `ids` without rows here (only on rows without a wave,
+  # say) don't count in warnings.
+  present <- tabulate(r, nbins = length(ids)) > 0L
   id_contradicted <- attr(possible, "id_contradicted", exact = TRUE)
+  id_contradicted <- id_contradicted[present[id_contradicted]]
   row_time <- .lasa_row_times(possible, r, wave_codes)
 
   times <- .lasa_cohort_times()[wave_codes, , drop = FALSE]
@@ -1983,7 +1993,7 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   }
   if (!quiet && any(conflicting[r])) {
     warning(
-      "The data show ", sum(conflicting), " respondent(s) at waves of different cohorts (",
+      "The data show ", sum(conflicting & present), " respondent(s) at waves of different cohorts (",
       example(conflicting[r]), "), so their rows have no Time.",
       call. = FALSE
     )
@@ -3464,22 +3474,27 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
   ## respondent `row_r`) -- for a documented stable variable, or the cohort
   ## column, which hold for every wave, with a missing value filled in from
   ## the respondent's single value (rows another file's columns added, or
-  ## rows of other waves merged in by respnr and Wave).
+  ## rows of other waves merged in by respnr and Wave); for another column,
+  ## from the respondent's single value on rows without a wave, which hold
+  ## wide data's values for every wave (see .lasa_check_waveless()).
   cohort_name <- attr(baseline, "column", exact = TRUE)
   stable_rows <- function(name, rows, row_r) {
-    if (!(.lasa_documented_stable(data[[name]], name, db_info) || identical(name, cohort_name))) {
-      return(rows)
-    }
+    stable <- .lasa_documented_stable(data[[name]], name, db_info) || identical(name, cohort_name)
+    if (!stable && !any(waveless)) return(rows)
     key <- .lasa_value_key(data[[name]])
-    single <- .lasa_distinct_values(resp$r, key, n_resp) == 1L
-    source_row <- .lasa_first_row(resp$r, n_resp, keep = !is.na(key))
+    given <- key
+    if (!stable) given[!waveless] <- NA
+    single <- .lasa_distinct_values(resp$r, given, n_resp) == 1L
+    source_row <- .lasa_first_row(resp$r, n_resp, keep = !is.na(given))
     fill <- is.na(key[rows]) & single[row_r]
     rows[fill] <- source_row[row_r[fill]]
     rows
   }
   if (any(waveless)) {
     .lasa_check_waveless(
-      data, waveless, row_ids, wave_name, c(id, wave_name, wide$column, cohort_name), db_info, renamed
+      data, waveless, row_ids, wave_name,
+      setdiff(names(data), c(id, wave_name, wave_column$placeholders, wide$column, cohort_name)),
+      existing_time$names, db_info, renamed
     )
   }
 
@@ -3489,40 +3504,50 @@ transform_lasa_data <- function(data, format = "long", prefix = "Wave") {
     # files like a Z file, have no wave dimension either.
     if (long_mode && .lasa_stable_mb_file(data, skip, wave_codes[!waveless], db_info)) long_mode <- FALSE
     if (long_mode) {
-      # Rows without a wave hold nothing but stable variables here, which
-      # fill the respondent's other rows: a respondent without such rows
-      # has none in long format.
-      rows <- which(!waveless)
-      lost <- setdiff(resp$r[waveless], resp$r[rows])
-      if (length(lost) > 0L) {
+      # Rows without a wave only hold values for every wave here, which
+      # fill the respondent's other rows. A respondent without such rows has
+      # none in long format, but a row in wide format: from a row added at
+      # a wave of the data, holding nothing of that wave.
+      lost <- setdiff(resp$r[waveless], resp$r[!waveless])
+      first_lost <- waveless & !duplicated(resp$r) & resp$r %in% lost
+      if (length(lost) > 0L && !for_wide) {
         message(
           "transform_lasa_data(): ", length(lost), " respondent(s) (e.g. respondent ", ids[[lost[[1L]]]],
           ") are only on rows without a wave -- as merging long data with all = TRUE gives respondents the ",
-          "long data lack -- that hold nothing but stable variables, so long format has no row for them."
+          "long data lack -- whose values hold for every wave, so long format has no row for them (wide ",
+          "format has)."
         )
+        first_lost[] <- FALSE
       }
+      picked <- which(!waveless | first_lost)
+      added <- first_lost[picked]
+      rows <- ifelse(added, NA_integer_, picked)
+      row_r <- resp$r[picked]
+      row_w <- wave_codes[picked]
+      row_w[added] <- all_waves[all_waves %in% wave_codes][[1L]]
       columns <- as.list(data)
-      if (length(rows) < nrow(data)) columns <- lapply(columns, .lasa_slice, rows)
-      times <- times_of(columns[setdiff(names(data), skip)], resp$r[rows], wave_codes[rows], rows)
+      if (!identical(rows, seq_len(nrow(data)))) columns <- lapply(columns, .lasa_slice, rows)
+      if (any(added)) columns[[id]] <- .lasa_slice(data[[id]], respondent_row[row_r])
+      times <- times_of(columns[setdiff(names(data), skip)], row_r, row_w, rows)
       relabelled <- FALSE
       for (name in setdiff(names(data), skip)) {
-        from <- stable_rows(name, rows, resp$r[rows])
+        from <- stable_rows(name, rows, row_r)
         if (!identical(from, rows)) columns[[name]] <- .lasa_slice(data[[name]], from)
         restored <- if (identical(name, cohort_name)) {
           .lasa_restore_cohort_labels(columns[[name]], db_info)
         } else {
-          .lasa_restore_db_labels(columns[[name]], name, wave_codes[rows], db_info)
+          .lasa_restore_db_labels(columns[[name]], name, row_w, db_info)
         }
         if (!is.null(restored)) {
           columns[[name]] <- restored
           relabelled <- TRUE
         }
       }
-      columns <- .lasa_place_wave_time(columns, id, wave_codes[rows], times$time, drop = setdiff(skip, id))
+      columns <- .lasa_place_wave_time(columns, id, row_w, times$time, drop = setdiff(skip, id))
       out <- .lasa_build_frame(columns, data)
       if (relabelled) out <- .lasa_add_variable_labels(out)
-      out <- .lasa_set_wave_attr(out, unique(wave_codes[rows]), long = TRUE, template = data)
-      return(list(data = out, added = rep(FALSE, length(rows)), baseline = times$baseline[resp$r[rows]]))
+      out <- .lasa_set_wave_attr(out, unique(row_w), long = TRUE, template = data)
+      return(list(data = out, added = added, baseline = times$baseline[row_r]))
     }
     if (!for_wide && length(time_named) == 0L) {
       message(

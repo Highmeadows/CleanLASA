@@ -905,9 +905,9 @@ To add a Z file to long data, merge its wide columns by `respnr`
 `standardize = FALSE`); `transform_lasa_data()` then moves each value
 to the row of its own wave, adding rows for waves the long data didn't
 have yet -- also for respondents the long data lack, whom a merge with
-`all = TRUE` gives a row without a wave. Merging two data sets that
-both have a `"Wave"` column by `respnr` alone gives `Wave.x` and
-`Wave.y`, which `transform_lasa_data()` refuses: merge long data by
+`all = TRUE` gives a row without a wave. Merging data sets that each
+have a `"Wave"` column by `respnr` alone gives copies such as `Wave.x`
+and `Wave.y`, which `transform_lasa_data()` refuses: merge long data by
 `respnr` and `"Wave"`. A file of stable variables only, such as
 `LASAZ004.sav` or the migrant cohort's `LASMB004.sav`, has no wave
 dimension, so with `format_as_long = TRUE` it has no `"Wave"` column:

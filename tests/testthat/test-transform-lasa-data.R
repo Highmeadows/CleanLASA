@@ -559,6 +559,87 @@ test_that("respondents a merge with all = TRUE adds to long data get the rows th
     transform_lasa_data(merged),
     "'Wave' column has missing values, on rows holding values that need a wave \\(e.g. 'lphya09' for respondent 22001\\)"
   )
+  merged$lphya09[merged$respnr == 22001] <- NA
+  merged$Time[merged$respnr == 22001] <- 0
+  expect_error(
+    transform_lasa_data(merged),
+    "on rows holding values that need a wave \\(e.g. 'Time' for respondent 22001\\)"
+  )
+})
+
+test_that("the other values on the rows a merge with all = TRUE adds hold for every wave, also in wide format", {
+  mlab <- c("never married" = 1, married = 2)
+  f046 <- read_fixture(data.frame(RespNr = c(21001, 41001), FLPHYA09 = c(30, 31)), "LASAF046.SAV", format_as_long = TRUE)
+  # A column the label database doesn't know (a weight, say) fills the
+  # rows of a respondent the long data lack, as in wide data; on the long
+  # data's rows, it stays where the merge put it.
+  z <- read_fixture(
+    data.frame(
+      RespNr = c(21001, 22001), BMARST = haven::labelled(c(1, 2), mlab), CMARST = haven::labelled(c(1, 2), mlab),
+      WEIGHT = c(1.2, 0.8)
+    ),
+    "LASAZ010.SAV", standardize = FALSE
+  )
+  merged <- merge(f046, z, by = "respnr", all = TRUE)
+  out <- transform_lasa_data(merged)
+  expect_identical(
+    paste(out$respnr, out$Wave, out$Time, out$weight),
+    c("21001 B 0 NA", "21001 C 1 NA", "21001 F 4 1.2", "22001 B 0 0.8", "22001 C 1 0.8", "41001 F 1 NA")
+  )
+  wide <- transform_lasa_data(merged, format = "wide")
+  expect_identical(as.vector(wide$respnr), c(21001, 22001, 41001))
+  expect_identical(as.vector(wide$weight), c(1.2, 0.8, NA))
+
+  # Without wide columns, a respondent only on such a row has no row in
+  # long format, but one in wide format, with their values.
+  z004 <- suppressMessages(read_fixture(
+    data.frame(RespNr = c(21001, 22001, 41001), SEX = haven::labelled(c(1, 2, 1), c(male = 1, female = 2))),
+    "LASAZ004.SAV", format_as_long = TRUE
+  ))
+  with_sex <- merge(f046, z004, by = "respnr", all = TRUE)
+  wide <- transform_lasa_data(with_sex, format = "wide")
+  expect_named(wide, c("respnr", "sex", "flphya09"))
+  expect_identical(as.vector(wide$respnr), c(21001, 22001, 41001))
+  expect_identical(as.character(wide$sex), c("male", "female", "male"))
+  expect_identical(as.vector(wide$flphya09), c(30, NA, 31))
+  by_time <- transform_lasa_data(with_sex, format = "wide", prefix = "Time")
+  expect_named(by_time, c("respnr", "cohort", "sex", "t1_lphya09", "t4_lphya09"))
+  expect_identical(as.character(by_time$cohort), c("cohort 1 (1992)", "cohort 1 (1992)", "cohort 2 (2002)"))
+  expect_identical(as.character(by_time$sex), c("male", "female", "male"))
+
+  # Such a respondent only counts where they have a row: their number
+  # contradicting their cohort warns in wide format, not in long format.
+  labs <- c("cohort 1 (1992)" = 1, "cohort 2 (2002)" = 2, "cohort 3 (2012)" = 3)
+  z002 <- suppressMessages(read_fixture(
+    data.frame(RespNr = c(21001, 41001, 23001), COHORT = haven::labelled(c(1, 2, 2), labs)),
+    "LASAZ002.SAV", format_as_long = TRUE
+  ))
+  with_cohort <- merge(f046, z002, by = "respnr", all = TRUE)
+  expect_message(
+    expect_warning(out <- transform_lasa_data(with_cohort), NA),
+    "1 respondent\\(s\\) \\(e.g. respondent 23001\\) are only on rows without a wave"
+  )
+  expect_identical(paste(out$respnr, out$Wave, out$Time), c("21001 F 4", "41001 F 1"))
+  expect_warning(
+    by_time <- transform_lasa_data(with_cohort, format = "wide", prefix = "Time"),
+    "respondent numbers of 1 respondent\\(s\\) say a cohort the rest of the data rule out.*respondent 23001"
+  )
+  expect_identical(as.character(by_time$cohort), c("cohort 1 (1992)", "cohort 2 (2002)", "cohort 2 (2002)"))
+
+  # Z files read with read_lasa_sav()'s defaults have the placeholder "Z"
+  # in their "Wave" column: their copies hold it on such rows too.
+  zz <- merge(read_fixture(z004_fixture(), "LASAZ004.SAV"), read_fixture(oa_fixture(), "lasazoa1.SAV"), by = "respnr")
+  long_data <- data.frame(respnr = c(1, 1, 2), Wave = c("B", "D", "B"), lphya01 = c(5, 6, 7))
+  merged <- merge(long_data, zz, by = "respnr", all = TRUE)
+  expect_identical(as.vector(merged$Wave.x), rep("Z", 4))
+  out <- transform_lasa_data(merged)
+  expect_identical(
+    paste(out$respnr, out$Wave, out$Time, as.character(out$sex), out$lphya01),
+    c("1 B 0 male 5", "1 C 1 male NA", "1 D 2 male 6", "2 B 0 female 7", "2 D 2 female NA", "3 B 0 male NA", "3 C 1 male NA")
+  )
+  skip_if_not_installed("dplyr")
+  joined <- transform_lasa_data(dplyr::full_join(long_data, zz, by = "respnr"))
+  expect_identical(paste(joined$respnr, joined$Wave, joined$Time), paste(out$respnr, out$Wave, out$Time))
 })
 
 test_that("a wide column adds its wave's values to a long column of the same variable", {
@@ -1098,6 +1179,23 @@ test_that("the wave column may be capitalized any way, but not be split by a mer
   expect_equal(paste(long$respnr, long$Wave), c("1 B", "1 C", "1 D", "2 B", "2 D", "3 B", "3 C"))
   back <- transform_lasa_data(saved)
   expect_equal(paste(back$respnr, back$Wave, back$Time), paste(long$respnr, long$Wave, long$Time))
+
+  # dplyr names the copies a fourth data set with a "Wave" column gives
+  # "Wave.x.x" and "Wave.y.y".
+  skip_if_not_installed("dplyr")
+  z010 <- read_fixture(
+    data.frame(RespNr = c(1, 2, 3), BMARST = haven::labelled(c(1, 2, 1), c("never married" = 1, married = 2))),
+    "LASAZ010.SAV"
+  )
+  four <- Reduce(
+    function(x, y) dplyr::left_join(x, y, by = "respnr"),
+    list(
+      read_fixture(z004_fixture(), "LASAZ004.SAV"), read_fixture(oa_fixture(), "lasazoa1.SAV"), z010,
+      read_fixture(z004_fixture(), "LASAZ004.SAV")[c("respnr", "Wave")]
+    )
+  )
+  expect_true(all(c("Wave.x.x", "Wave.y.y") %in% names(four)))
+  expect_named(transform_lasa_data(four), c("respnr", "Wave", "Time", "sex", "byear", "oak", "oah", "marst"))
 })
 
 test_that("columns that look wave-specific but can't be placed are kept, with a warning", {

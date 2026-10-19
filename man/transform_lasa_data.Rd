@@ -320,12 +320,15 @@ yet. On those added rows, stable variables the label database
 documents (such as \code{sex}) are filled in from the respondent's other
 rows, and other columns are left missing, since they weren't measured
 at that wave. Merged with \code{all = TRUE} (or \code{dplyr::full_join()}), the
-respondents the long data lack get a row without a wave, holding
-their values of the wide columns and stable variables (a value in
-another column is an error): long format gives them the rows those
-values need (a row at every wave of the wide columns if they have
-none), and no row where no wide columns were merged in (with a
-message).
+respondents the long data lack get a row without a wave, holding the
+wide data's values: those of wide columns go to their waves, adding
+the rows they need (a row at every wave of the wide columns if there
+are none), and the others hold for every wave, as in wide data, so
+they fill each of the respondent's rows (a value in a \code{"Time"}
+column, or in a column of a wave-specific variable the label
+database documents, needs a wave, so it is an error). Where no wide
+columns were merged in, such respondents have no row in long format
+(with a message), but one in wide format.
 }
 
 \strong{Wide format} has one row per respondent and drops the \code{"Wave"} and
