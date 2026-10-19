@@ -4,19 +4,22 @@
 \alias{.lasa_restore_plain_numeric}
 \title{Restore a value-labelled variable to plain numeric}
 \usage{
-.lasa_restore_plain_numeric(x)
+.lasa_restore_plain_numeric(x, missing_codes = numeric(0))
 }
 \arguments{
 \item{x}{A (possibly value-labelled) vector.}
+
+\item{missing_codes}{Numeric vector of the codes that count as missing
+for this variable (see \code{.lasa_missing_codes()}).}
 }
 \value{
-A plain numeric vector, the same length as \code{x}, with negative
-values replaced by \code{NA_real_}.
+A plain numeric vector, the same length as \code{x}, with missing
+codes replaced by \code{NA_real_}.
 }
 \description{
-Shared \code{to_numeric = TRUE} transformation used by \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}'s
-engine. Strips any value-label attributes and coerces \code{x} to an ordinary
-numeric vector, replacing every negative observed value with \code{NA} --
-including a negative code the codebook did not explicitly label.
+Shared \verb{to_numeric = TRUE, keep_user_na = FALSE} transformation used by
+\code{\link[=apply_lasa_labels]{apply_lasa_labels()}}'s engine. Strips any value-label attributes and
+coerces \code{x} to an ordinary numeric vector, replacing every missing code
+with \code{NA}.
 }
 \keyword{internal}

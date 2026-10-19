@@ -92,5 +92,12 @@ value_labels(
   .applies_to_waves = c("E", "F")
 )
 
+# define variables whose values can be negative ----
+## The noted scores of the speech-reception-threshold tests are thresholds
+## in dB signal-to-noise ratio (see msrtnb/msrtns in LASA193), so they can
+## be negative; only their documented negative codes are missing. (A
+## genuine score of exactly -1 can't be told apart from -1 = "na, asked".)
+negative_values("msrtnbnote", "msrtnsnote", .applies_to_waves = c("G"))
+
 .lasa_fc_194 <- .lasa_finalize_fc("194")
 

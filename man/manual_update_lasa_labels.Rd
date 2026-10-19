@@ -32,7 +32,9 @@ wave-specific name's leading prefix is shared by more than one wave
 leaves the existing label untouched.}
 
 \item{val_labels}{Optional named vector of value-label corrections,
-keyed by numeric code, e.g. \verb{c(\\}-5\\verb{ = "NA, wrong, skip", \\}1\\verb{ = "man")} (quote or backtick negative/numeric-looking names).}
+keyed by numeric code, e.g. \verb{c(\\}-5\\verb{ = "NA, wrong, skip", \\}1\\verb{ = "man")} (quote or backtick negative/numeric-looking names). A negative
+code is stored as a missing-value code, so don't use \code{val_labels} to
+label a measurement.}
 
 \item{replace_val_labels}{Logical, default \code{FALSE}. If \code{FALSE}, \code{val_labels}
 is merged into the existing value-label set (upserted by code). If

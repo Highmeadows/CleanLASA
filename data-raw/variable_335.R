@@ -41,5 +41,10 @@ value_labels(
   .applies_to_waves = c("Z", "E", "F", "G", "H", "3B", "I")
 )
 
+# define variables whose values can be negative ----
+## EQ-5D time-trade-off index values below 0 mean a health state valued as
+## worse than death; only their documented negative codes are missing.
+negative_values("qeqixuk", "qeqixnl", .applies_to_waves = c("E", "F", "G", "H", "3B", "I"))
+
 .lasa_fc_335 <- .lasa_finalize_fc("335")
 

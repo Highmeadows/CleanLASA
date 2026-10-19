@@ -79,6 +79,8 @@ for (fc in names(fc_objects)) {
   vl <- obj$variable_labels # wave-specific + harmonized label text
   vv <- obj$value_labels # wave-specific + harmonized value-label sets (list-columns)
   vty <- obj$variable_types # collapsed type, constant per canonical name
+  neg <- obj$negative_values # (wave, canonical name) pairs whose genuine values can be negative
+  neg_keys <- if (is.null(neg)) character(0) else paste(neg$LASA_Wave, neg$canonical_name)
 
   canonical_cols <- setdiff(names(vt), identifier_cols)
   all_row <- which(vt$LASA_Wave == "all")
@@ -123,6 +125,7 @@ for (fc in names(fc_objects)) {
         filecode = fc, wave = wave, variable_name = vname, canonical_name = cn,
         variable_label = vl[i, cn], harmonized_var_label = vl[all_row, cn],
         var_type = if (cn %in% placeholder_cns) "text" else vty[i, cn],
+        can_be_negative = paste(wave, cn) %in% neg_keys,
         stringsAsFactors = FALSE
       )
     }
@@ -214,7 +217,8 @@ cat(
   " variables:  ", nrow(lasa_label_db_bundled$variables), "\n",
   " value_labels:", nrow(lasa_label_db_bundled$value_labels), "\n",
   " value_labels_harmonized:", nrow(lasa_label_db_bundled$value_labels_harmonized), "\n",
-  " variables downgraded to text (inconsistent harmonized coding):", n_placeholder_total, "\n"
+  " variables downgraded to text (inconsistent harmonized coding):", n_placeholder_total, "\n",
+  " variables whose values can be negative:", sum(lasa_label_db_bundled$variables$can_be_negative), "\n"
 )
 
 usethis::use_data(

@@ -70,7 +70,9 @@
 #'   leaves the existing label untouched.
 #' @param val_labels Optional named vector of value-label corrections,
 #'   keyed by numeric code, e.g. `c(\`-5\` = "NA, wrong, skip", \`1\` =
-#'   "man")` (quote or backtick negative/numeric-looking names).
+#'   "man")` (quote or backtick negative/numeric-looking names). A negative
+#'   code is stored as a missing-value code, so don't use `val_labels` to
+#'   label a measurement.
 #' @param replace_val_labels Logical, default `FALSE`. If `FALSE`, `val_labels`
 #'   is merged into the existing value-label set (upserted by code). If
 #'   `TRUE`, the result is *only* `val_labels` -- every other coded value
