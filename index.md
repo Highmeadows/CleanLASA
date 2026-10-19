@@ -71,6 +71,21 @@ data <- read_lasa_sav("LASAB046.sav") # LASA wave B, file code 046
 lasa_label_report(data, problems_only = TRUE)
 ```
 
+Z files such as `LASAZOA1.sav` store several waves side by side (`boak`,
+`coak`, `doak`, …). With `format_as_long = TRUE` you get them in long
+format instead: one row per respondent per wave, with a `Wave` column, a
+`Time` column counting the waves since the respondent’s baseline, and
+one `oak` column.
+[`transform_lasa_data()`](https://highmeadows.github.io/CleanLASA/reference/transform_lasa_data.md)
+converts any LASA data – including merged files – between long and wide
+format:
+
+``` r
+
+oa <- read_lasa_sav("LASAZOA1.sav", format_as_long = TRUE)
+oa_wide <- transform_lasa_data(oa, format = "wide") # boak, coak, ...
+```
+
 Not sure which file code you need?
 [`lasa_topics()`](https://highmeadows.github.io/CleanLASA/reference/lasa_topics.md)
 searches LASA’s topics and themes for you, and
@@ -92,8 +107,9 @@ worked examples – how the file-name-based matching works, every option
 [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
 offers (fuzzy matching, name corrections, converting to factors/numeric,
 standardizing names and labels across waves), what’s inside the label
-database, how to record your own corrections, and how to search LASA’s
-topic index and documentation. Start there if you’re new to the package.
+database, how to record your own corrections, how to reshape data
+between long and wide format, and how to search LASA’s topic index and
+documentation. Start there if you’re new to the package.
 
 ## Functions
 
@@ -101,6 +117,7 @@ topic index and documentation. Start there if you’re new to the package.
 |----|----|
 | [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md) | Reads a LASA `.sav` file and labels it using [`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md), based on the wave/file code parsed from the file name |
 | [`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md) | Applies [`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md) labels to any data frame, resolving file code/wave explicitly or from stored provenance |
+| [`transform_lasa_data()`](https://highmeadows.github.io/CleanLASA/reference/transform_lasa_data.md) | Transforms LASA data between wide format (one row per respondent, as in Z files) and long format (one row per respondent per wave, with `Wave` and `Time` columns) |
 | [`manual_update_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/manual_update_lasa_labels.md) | Hand-corrects or adds a variable/value label in your local copy of the database |
 | [`restore_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/restore_lasa_labels.md) | Undoes manual corrections (entirely, or scoped) and/or rebuilds the local database cache from the bundled one |
 | [`lasa_label_db()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_db.md) | Returns the label database currently in effect (bundled snapshot + any local updates) |

@@ -88,15 +88,19 @@
 <span></span>
 <span><span class="co"># Check whether anything didn't match:</span></span>
 <span><span class="fu"><a href="reference/lasa_label_report.html">lasa_label_report</a></span><span class="op">(</span><span class="va">data</span>, problems_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>Not sure which file code you need? <code><a href="reference/lasa_topics.html">lasa_topics()</a></code> searches LASA’s topics and themes for you, and <code><a href="reference/lasa_var_info.html">lasa_var_info()</a></code> opens LASA’s own documentation for a topic or file code:</p>
+<p>Z files such as <code>LASAZOA1.sav</code> store several waves side by side (<code>boak</code>, <code>coak</code>, <code>doak</code>, …). With <code>format_as_long = TRUE</code> you get them in long format instead: one row per respondent per wave, with a <code>Wave</code> column, a <code>Time</code> column counting the waves since the respondent’s baseline, and one <code>oak</code> column. <code><a href="reference/transform_lasa_data.html">transform_lasa_data()</a></code> converts any LASA data – including merged files – between long and wide format:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">oa</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAZOA1.sav"</span>, format_as_long <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">oa_wide</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/transform_lasa_data.html">transform_lasa_data</a></span><span class="op">(</span><span class="va">oa</span>, format <span class="op">=</span> <span class="st">"wide"</span><span class="op">)</span> <span class="co"># boak, coak, ...</span></span></code></pre></div>
+<p>Not sure which file code you need? <code><a href="reference/lasa_topics.html">lasa_topics()</a></code> searches LASA’s topics and themes for you, and <code><a href="reference/lasa_var_info.html">lasa_var_info()</a></code> opens LASA’s own documentation for a topic or file code:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"physical activity"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="learn-more">Learn more<a class="anchor" aria-label="anchor" href="#learn-more"></a>
 </h2>
-<p>This README is just a summary. The <a href="https://highmeadows.github.io/CleanLASA/articles/intro.html">package vignette</a> is a full, step-by-step tutorial that walks through every function with worked examples – how the file-name-based matching works, every option <code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code> offers (fuzzy matching, name corrections, converting to factors/numeric, standardizing names and labels across waves), what’s inside the label database, how to record your own corrections, and how to search LASA’s topic index and documentation. Start there if you’re new to the package.</p>
+<p>This README is just a summary. The <a href="https://highmeadows.github.io/CleanLASA/articles/intro.html">package vignette</a> is a full, step-by-step tutorial that walks through every function with worked examples – how the file-name-based matching works, every option <code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code> offers (fuzzy matching, name corrections, converting to factors/numeric, standardizing names and labels across waves), what’s inside the label database, how to record your own corrections, how to reshape data between long and wide format, and how to search LASA’s topic index and documentation. Start there if you’re new to the package.</p>
 </div>
 <div class="section level2">
 <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
@@ -118,6 +122,10 @@
 <tr>
 <td><code><a href="reference/apply_lasa_labels.html">apply_lasa_labels()</a></code></td>
 <td>Applies <code><a href="reference/lasa_label_db.html">lasa_label_db()</a></code> labels to any data frame, resolving file code/wave explicitly or from stored provenance</td>
+</tr>
+<tr>
+<td><code><a href="reference/transform_lasa_data.html">transform_lasa_data()</a></code></td>
+<td>Transforms LASA data between wide format (one row per respondent, as in Z files) and long format (one row per respondent per wave, with <code>Wave</code> and <code>Time</code> columns)</td>
 </tr>
 <tr>
 <td><code><a href="reference/manual_update_lasa_labels.html">manual_update_lasa_labels()</a></code></td>

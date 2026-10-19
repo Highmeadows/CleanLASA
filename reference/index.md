@@ -20,3 +20,5 @@
   : Read and label a LASA SPSS data file
 - [`restore_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/restore_lasa_labels.md)
   : Restore/reset the local LASA label database
+- [`transform_lasa_data()`](https://highmeadows.github.io/CleanLASA/reference/transform_lasa_data.md)
+  : Transform LASA data between long and wide format

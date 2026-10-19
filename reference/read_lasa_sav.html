@@ -67,6 +67,7 @@ which does all of the actual matching/transforming/standardizing work.
 <span>  to_factor <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  to_numeric <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  keep_user_na <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  format_as_long <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  read_sav_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">user_na</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -108,6 +109,18 @@ LASA documentation rather than from whatever the <code>.sav</code> file happens
 to declare.</p></dd>
 
 
+<dt id="arg-format-as-long">format_as_long<a class="anchor" aria-label="anchor" href="#arg-format-as-long"></a></dt>
+<dd><p>Logical, default <code>FALSE</code>. If <code>TRUE</code>, the labelled
+data are transformed to long format with
+<code><a href="transform_lasa_data.html">transform_lasa_data()</a></code>: one row per respondent per wave, with a
+<code>"Wave"</code> column and a <code>"Time"</code> column (the number of waves since the
+respondent's baseline). Meant for Z files, which LASA stores in wide
+format (e.g. <code>boak</code>, <code>coak</code>, <code>doak</code>, ... become one <code>oak</code> column);
+their stable variables, such as sex or year of birth, are repeated on
+every row of the respondent. The default <code>FALSE</code> returns the data as
+before, a Z file in its own wide layout.</p></dd>
+
+
 <dt id="arg-read-sav-args">read_sav_args<a class="anchor" aria-label="anchor" href="#arg-read-sav-args"></a></dt>
 <dd><p>Optional named list of additional arguments passed to
 <code><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">haven::read_sav()</a></code>, for example <code>list(encoding = "UTF-8")</code>. Do not
@@ -124,7 +137,7 @@ is used as <code>keep_user_na</code>, with a warning.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p><code>data</code> as imported by <code><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">haven::read_sav()</a></code>, labelled (and
 optionally reshaped/renamed) with generic LASA provenance attributes
-attached.</p>
+attached – in long format when <code>format_as_long = TRUE</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -158,10 +171,44 @@ package update.</p>
 supplied again. The variable-name matching audit is attached as the
 generic <code>"label_report"</code> attribute; retrieve it with
 <code><a href="lasa_label_report.html">lasa_label_report()</a></code>.</p>
+<p>With <code>format_as_long = TRUE</code>, the labelled data are finally passed to
+<code><a href="transform_lasa_data.html">transform_lasa_data()</a></code> (<code>format = "long"</code>). A regular wave file is
+already long under the default <code>standardize = TRUE</code> and gains a
+<code>"Time"</code> column; its wave-prefixed names lose their prefix where
+<code>standardize</code> left it: all of them with <code>standardize = FALSE</code>, and
+those of waves 4B and L, which the label database doesn't document yet.
+A Z file's wave-prefixed columns become one column per variable, with
+the wave of each row in <code>"Wave"</code>. A file
+without wave-specific columns, such as the Z file <code>LASAZ004.SAV</code> or the
+migrant cohort's <code>LASMB004.SAV</code> (sex, year of birth, ...), has no wave
+dimension: it keeps one row per respondent, without <code>"Wave"</code> and
+<code>"Time"</code> columns, and a message says so; merge it with long data by
+<code>respnr</code> alone. Long data that span several waves no longer carry a
+single <code>"LASA_wave"</code> attribute.</p>
+<p><code>"Time"</code> counts the waves since each respondent's baseline (Time 0), so
+it needs the respondent's cohort: every row of a baseline file is Time
+0, and every row of a file of waves C to E, which only the first cohort
+takes part in, gets that cohort's Time – also rows holding nothing but
+missing-value codes, whatever the respondent numbers say. Wave A (the
+LSN pilot study) has no Time. The waves from F on are shared by several
+cohorts, so the wave of such a file doesn't show who belongs to which:
+its rows get their Time from LASA's respondent numbers, five digits the
+first of which says the cohort (1 to 3 the first, 4 to 6 the second, 7
+to 9 the third; a 1, which the LSN pilot study's respondents have too,
+only where the respondent's values aren't all missing-value codes). The
+rows of respondents whose number doesn't say get no Time, with a
+message, until the file is combined with data that show the cohorts
+(the baseline files, or <code>LASAZ002.SAV</code>'s <code>cohort</code> column) and
+transformed again; where those show another cohort than a number, they
+decide, with a warning. The fourth and the migrant cohort's numbers
+aren't known yet, so read on its own, a file of waves I to L may give
+their rows another cohort's Time (see <code><a href="transform_lasa_data.html">transform_lasa_data()</a></code>, which
+also explains combining files).</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="lasa_label_report.html">lasa_label_report()</a></code>, <code><a href="apply_lasa_labels.html">apply_lasa_labels()</a></code>, <code><a href="lasa_label_db.html">lasa_label_db()</a></code></p></div>
+    <div class="dont-index"><p><code><a href="lasa_label_report.html">lasa_label_report()</a></code>, <code><a href="apply_lasa_labels.html">apply_lasa_labels()</a></code>, <code><a href="lasa_label_db.html">lasa_label_db()</a></code>,
+<code><a href="transform_lasa_data.html">transform_lasa_data()</a></code></p></div>
     </div>
 
     <div class="section level2">
@@ -191,6 +238,10 @@ generic <code>"label_report"</code> attribute; retrieve it with
 <span class="r-in"><span><span class="co"># Keep missing-value codes (e.g. "na, asked") instead of turning them</span></span></span>
 <span class="r-in"><span><span class="co"># into NA:</span></span></span>
 <span class="r-in"><span><span class="va">dat_b014</span> <span class="op">&lt;-</span> <span class="fu">read_lasa_sav</span><span class="op">(</span><span class="st">"LASAB014.SAV"</span>, keep_user_na <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># A Z file in long format: one row per respondent per wave, with the</span></span></span>
+<span class="r-in"><span><span class="co"># wave-prefixed boak, coak, ... combined into one oak column.</span></span></span>
+<span class="r-in"><span><span class="va">dat_oa_long</span> <span class="op">&lt;-</span> <span class="fu">read_lasa_sav</span><span class="op">(</span><span class="st">"LASAZOA1.SAV"</span>, format_as_long <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
