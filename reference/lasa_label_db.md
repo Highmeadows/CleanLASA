@@ -125,51 +125,51 @@ subset(db$variables, filecode == "046" & wave == "B")
 #> 9057                         not normal: vacation
 #> 9058                     not normal: other reason
 #> 9059              not normal: other reasons coded
-#>                              harmonized_var_label    var_type
-#> 9014   Physical condition respondent: observation categorical
-#> 9015                        Wheelchair go outside categorical
-#> 9016        Wheelchair go outside: last two weeks categorical
-#> 9017 Wheelchair go outside: #times last two weeks     numeric
-#> 9018                  Wheelchair: time in minutes     numeric
-#> 9019                              Walking outside categorical
-#> 9020               Walking outside:last two weeks categorical
-#> 9021       Walking outside: #times last two weeks     numeric
-#> 9022                     Walking: time in minutes     numeric
-#> 9023                                    Bicycling categorical
-#> 9024                    Bicycling: last two weeks categorical
-#> 9025            Bicycling: # times last two weeks     numeric
-#> 9026                   Bicycling: time in minutes     numeric
-#> 9027                          Have garden: yes/no categorical
-#> 9028                            Gardening: yes/no categorical
-#> 9029                   Gardening: # months a year     numeric
-#> 9030                    Gardening: last two weeks categorical
-#> 9031                  Gardening: # last two weeks     numeric
-#> 9032                   Gardening: time in minutes     numeric
-#> 9033            Gardening: digging last two weeks categorical
-#> 9034               Sport 1: past two weeks yes/no categorical
-#> 9035                      Sport 1: past two weeks        text
-#> 9036              Sport 1: # times past two weeks     numeric
-#> 9037                     Sport 1: time in minutes     numeric
-#> 9038                              Sport 2: yes/no categorical
-#> 9039                      Sport 2: past two weeks        text
-#> 9040              Sport 2: # times past two weeks     numeric
-#> 9041                    Sport 2 : time in minutes     numeric
-#> 9042        Sport: sweating past two weeks yes/no categorical
-#> 9043        Sport: #times sweating past two weeks     numeric
-#> 9044                      Light household: yes/no categorical
-#> 9045       Light household: past two weeks yes/no categorical
-#> 9046       Light household: # days past two weeks     numeric
-#> 9047             Light household: time in minutes     numeric
-#> 9048                      Heavy household: yes/no categorical
-#> 9049       Heavy household: past two weeks yes/no categorical
-#> 9050       Heavy household: # days past two weeks     numeric
-#> 9051             Heavy household: time in minutes     numeric
-#> 9052                Past two weeks normal: yes/no categorical
-#> 9053                             not normal: sick categorical
-#> 9054                        not normal: depressed categorical
-#> 9055                      not normal: bad weather categorical
-#> 9056                   not normal: family affairs categorical
-#> 9057                         not normal: vacation categorical
-#> 9058                 not normal: cleaning/repairs categorical
-#> 9059                     not normal: good weather        text
+#>                              harmonized_var_label    var_type can_be_negative
+#> 9014   Physical condition respondent: observation categorical           FALSE
+#> 9015                        Wheelchair go outside categorical           FALSE
+#> 9016        Wheelchair go outside: last two weeks categorical           FALSE
+#> 9017 Wheelchair go outside: #times last two weeks     numeric           FALSE
+#> 9018                  Wheelchair: time in minutes     numeric           FALSE
+#> 9019                              Walking outside categorical           FALSE
+#> 9020               Walking outside:last two weeks categorical           FALSE
+#> 9021       Walking outside: #times last two weeks     numeric           FALSE
+#> 9022                     Walking: time in minutes     numeric           FALSE
+#> 9023                                    Bicycling categorical           FALSE
+#> 9024                    Bicycling: last two weeks categorical           FALSE
+#> 9025            Bicycling: # times last two weeks     numeric           FALSE
+#> 9026                   Bicycling: time in minutes     numeric           FALSE
+#> 9027                          Have garden: yes/no categorical           FALSE
+#> 9028                            Gardening: yes/no categorical           FALSE
+#> 9029                   Gardening: # months a year     numeric           FALSE
+#> 9030                    Gardening: last two weeks categorical           FALSE
+#> 9031                  Gardening: # last two weeks     numeric           FALSE
+#> 9032                   Gardening: time in minutes     numeric           FALSE
+#> 9033            Gardening: digging last two weeks categorical           FALSE
+#> 9034               Sport 1: past two weeks yes/no categorical           FALSE
+#> 9035                      Sport 1: past two weeks        text           FALSE
+#> 9036              Sport 1: # times past two weeks     numeric           FALSE
+#> 9037                     Sport 1: time in minutes     numeric           FALSE
+#> 9038                              Sport 2: yes/no categorical           FALSE
+#> 9039                      Sport 2: past two weeks        text           FALSE
+#> 9040              Sport 2: # times past two weeks     numeric           FALSE
+#> 9041                    Sport 2 : time in minutes     numeric           FALSE
+#> 9042        Sport: sweating past two weeks yes/no categorical           FALSE
+#> 9043        Sport: #times sweating past two weeks     numeric           FALSE
+#> 9044                      Light household: yes/no categorical           FALSE
+#> 9045       Light household: past two weeks yes/no categorical           FALSE
+#> 9046       Light household: # days past two weeks     numeric           FALSE
+#> 9047             Light household: time in minutes     numeric           FALSE
+#> 9048                      Heavy household: yes/no categorical           FALSE
+#> 9049       Heavy household: past two weeks yes/no categorical           FALSE
+#> 9050       Heavy household: # days past two weeks     numeric           FALSE
+#> 9051             Heavy household: time in minutes     numeric           FALSE
+#> 9052                Past two weeks normal: yes/no categorical           FALSE
+#> 9053                             not normal: sick categorical           FALSE
+#> 9054                        not normal: depressed categorical           FALSE
+#> 9055                      not normal: bad weather categorical           FALSE
+#> 9056                   not normal: family affairs categorical           FALSE
+#> 9057                         not normal: vacation categorical           FALSE
+#> 9058                 not normal: cleaning/repairs categorical           FALSE
+#> 9059                     not normal: good weather        text           FALSE
 ```
