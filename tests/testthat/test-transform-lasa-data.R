@@ -3067,17 +3067,17 @@ test_that("long columns made of merged wide files get the database's labels back
 })
 
 test_that("codes listed without wording keep their number as label when labels come back", {
-  # File 047's random lists 0, 59 and 99 without wording; read_lasa_sav()
-  # names them after their number. rbind() keeps wave B's labels for wave
-  # D's rows too, and the database gives each wave its own back.
-  b <- read_fixture(data.frame(RespNr = 1:2, BRANDOM = c(0, 59)), "LASAB047.SAV")
-  d <- read_fixture(data.frame(RespNr = 1:2, DRANDOM = c(99, 0)), "LASAD047.SAV")
-  expect_true(all(c("0", "59", "99") %in% names(attr(d$random, "labels"))))
-  long <- transform_lasa_data(rbind(b, d))
-  expect_identical(attr(long$random, "labels_wave"), list(B = attr(b$random, "labels_wave"), D = attr(d$random, "labels_wave")))
+  # File 804's qphyfem lists 0 and 10 without wording; read_lasa_sav()
+  # names them after their number. rbind() keeps wave J's labels for wave
+  # K's rows too, and the database gives each wave its own back.
+  j <- read_fixture(data.frame(RespNr = c(21001, 21002), JQPHYFEM = c(0, 5)), "LASAJ804.SAV", to_factor = FALSE)
+  k <- read_fixture(data.frame(RespNr = c(21001, 21002), KQPHYFEM = c(10, 0)), "LASAK804.SAV", to_factor = FALSE)
+  expect_true(all(c("0", "10") %in% names(attr(k$qphyfem, "labels"))))
+  long <- transform_lasa_data(rbind(j, k))
+  expect_identical(attr(long$qphyfem, "labels_wave"), list(J = attr(j$qphyfem, "labels_wave"), K = attr(k$qphyfem, "labels_wave")))
   wide <- transform_lasa_data(long, format = "wide")
-  expect_identical(attr(wide$drandom, "labels_wave"), attr(d$random, "labels_wave"))
-  expect_identical(attr(wide$drandom, "wave_label"), attr(d$random, "wave_label"))
+  expect_identical(attr(wide$kqphyfem, "labels_wave"), attr(k$qphyfem, "labels_wave"))
+  expect_identical(attr(wide$kqphyfem, "wave_label"), attr(k$qphyfem, "wave_label"))
 })
 
 test_that("labels a user gave a variable are kept, not mixed with the database's", {

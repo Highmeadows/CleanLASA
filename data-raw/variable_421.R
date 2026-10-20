@@ -41,25 +41,13 @@ value_labels(
 )
 
 value_labels(
-  `-5` = "na, see BMMSEVRS", `-4` = "na, no valid data", `1` = NA_character_, `2` = NA_character_, `30` = NA_character_,
+  `-5` = "na, see BMMSEVRS", `-4` = "na, no valid data",
   .applies_to_vars = c("mmsesc1", "mmsesc2"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `2` = NA_character_, `30` = NA_character_,
-  .applies_to_vars = c("mmsesc1", "mmsesc2"),
-  .applies_to_waves = c("B")
-)
-
-value_labels(
-  `1` = NA_character_, `30` = NA_character_,
-  .applies_to_vars = c("mmsesc1", "mmsesc2"),
-  .applies_to_waves = c("C", "D", "E", "2B", "F", "G", "H", "3B", "I", "J", "K")
-)
-
-value_labels(
-  `-5` = "na, see BMMSEVRS", `-4` = "na, no valid data", `1` = NA_character_, `30` = NA_character_,
+  `-5` = "na, see BMMSEVRS", `-4` = "na, no valid data",
   .applies_to_vars = c("mmsesc1", "mmsesc2"),
   .applies_to_waves = c("MB")
 )

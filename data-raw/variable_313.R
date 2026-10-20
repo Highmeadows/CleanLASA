@@ -34,17 +34,5 @@ value_labels(
   .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B")
 )
 
-value_labels(
-  `4` = NA_character_, `20` = NA_character_,
-  .applies_to_vars = c("qrand1"),
-  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B")
-)
-
-value_labels(
-  `3` = NA_character_, `15` = NA_character_,
-  .applies_to_vars = c("qrand2"),
-  .applies_to_waves = c("Z", "B", "C", "D", "E", "2B", "F", "G", "H", "3B")
-)
-
 .lasa_fc_313 <- .lasa_finalize_fc("313")
 

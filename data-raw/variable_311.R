@@ -27,7 +27,7 @@ variable_labels(
 
 # define value labels ----
 value_labels(
-  `-1` = "no valid data", `5` = NA_character_, `25` = NA_character_,
+  `-1` = "no valid data",
   .applies_to_vars = c("qhumor"),
   .applies_to_waves = c("Z", "B", "D")
 )

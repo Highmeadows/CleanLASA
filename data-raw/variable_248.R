@@ -79,7 +79,7 @@ value_labels(
 )
 
 value_labels(
-  `-1` = "na, asked", `0` = NA_character_, `4` = NA_character_, `6` = NA_character_, `10` = NA_character_,
+  `-1` = "na, asked",
   .applies_to_vars = c("ch_aliv"),
   .applies_to_waves = c("Z")
 )
@@ -91,7 +91,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "number unknown/no specific information", `-1` = "no answer/refusal/interview terminated", `0` = NA_character_, `1` = NA_character_, `4` = NA_character_, `6` = NA_character_, `10` = NA_character_,
+  `-2` = "number unknown/no specific information", `-1` = "no answer/refusal/interview terminated",
   .applies_to_vars = c("choth", "chown", "chstep"),
   .applies_to_waves = c("Z")
 )
@@ -109,13 +109,13 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "skip questions children", `-1` = "na, asked", `0` = NA_character_, `1` = NA_character_, `4` = NA_character_, `6` = NA_character_, `10` = NA_character_, `13` = NA_character_,
+  `-3` = "skip questions children", `-1` = "na, asked",
   .applies_to_vars = c("nchild"),
   .applies_to_waves = c("Z")
 )
 
 value_labels(
-  `-2` = "questions 048 not asked", `-1` = "na, asked", `0` = NA_character_, `1` = NA_character_, `13` = NA_character_,
+  `-2` = "questions 048 not asked", `-1` = "na, asked",
   .applies_to_vars = c("nrecs048"),
   .applies_to_waves = c("Z", "MB")
 )
@@ -133,19 +133,13 @@ value_labels(
 )
 
 value_labels(
-  `0` = NA_character_, `4` = NA_character_, `6` = NA_character_, `10` = NA_character_,
-  .applies_to_vars = c("ch_aliv", "nchild"),
-  .applies_to_waves = c("2B")
-)
-
-value_labels(
   `-1` = "children?", `0` = "childless", `1` = "yes; no specific information", `2` = "yes, own", `3` = "yes, step", `4` = "yes, own + step", `5` = "yes, only other",
   .applies_to_vars = c("child"),
   .applies_to_waves = c("2B")
 )
 
 value_labels(
-  `-2` = "no specific information", `0` = NA_character_, `4` = NA_character_, `6` = NA_character_, `10` = NA_character_,
+  `-2` = "no specific information",
   .applies_to_vars = c("choth", "chown", "chstep"),
   .applies_to_waves = c("2B")
 )
@@ -181,7 +175,7 @@ value_labels(
 )
 
 value_labels(
-  `-2` = "children in this category, number unknown", `-1` = "no answer/refusal/interview terminated", `0` = NA_character_, `1` = NA_character_,
+  `-2` = "children in this category, number unknown", `-1` = "no answer/refusal/interview terminated",
   .applies_to_vars = c("choth", "chown", "chstep"),
   .applies_to_waves = c("3B")
 )
@@ -193,7 +187,7 @@ value_labels(
 )
 
 value_labels(
-  `-3` = "skip questions children", `-1` = "no answer question no/yes children", `0` = NA_character_, `1` = NA_character_, `13` = NA_character_,
+  `-3` = "skip questions children", `-1` = "no answer question no/yes children",
   .applies_to_vars = c("nchild"),
   .applies_to_waves = c("MB")
 )

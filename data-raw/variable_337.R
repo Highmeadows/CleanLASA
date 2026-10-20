@@ -41,47 +41,5 @@ value_labels(
   .applies_to_waves = c("Z", "E", "F")
 )
 
-value_labels(
-  `4` = NA_character_, `19` = NA_character_, `20` = NA_character_,
-  .applies_to_vars = c("qamb"),
-  .applies_to_waves = c("Z")
-)
-
-value_labels(
-  `4` = NA_character_, `20` = NA_character_,
-  .applies_to_vars = c("qres", "qzest"),
-  .applies_to_waves = c("Z", "E", "F")
-)
-
-value_labels(
-  `12` = NA_character_, `53` = NA_character_, `56` = NA_character_,
-  .applies_to_vars = c("qvall"),
-  .applies_to_waves = c("Z")
-)
-
-value_labels(
-  `4` = NA_character_, `19` = NA_character_,
-  .applies_to_vars = c("qamb"),
-  .applies_to_waves = c("E")
-)
-
-value_labels(
-  `12` = NA_character_, `56` = NA_character_,
-  .applies_to_vars = c("qvall"),
-  .applies_to_waves = c("E")
-)
-
-value_labels(
-  `4` = NA_character_, `20` = NA_character_,
-  .applies_to_vars = c("qamb"),
-  .applies_to_waves = c("F")
-)
-
-value_labels(
-  `12` = NA_character_, `53` = NA_character_,
-  .applies_to_vars = c("qvall"),
-  .applies_to_waves = c("F")
-)
-
 .lasa_fc_337 <- .lasa_finalize_fc("337")
 

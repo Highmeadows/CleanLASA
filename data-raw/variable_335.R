@@ -35,12 +35,6 @@ value_labels(
   .applies_to_waves = c("Z", "E", "F", "G", "H", "3B", "I")
 )
 
-value_labels(
-  `1` = NA_character_,
-  .applies_to_vars = c("qeqixnl", "qeqixuk"),
-  .applies_to_waves = c("Z", "E", "F", "G", "H", "3B", "I")
-)
-
 # define variables whose values can be negative ----
 ## EQ-5D time-trade-off index values below 0 mean a health state valued as
 ## worse than death; only their documented negative codes are missing.

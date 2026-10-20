@@ -84,7 +84,7 @@ value_labels(
 )
 
 value_labels(
-  `-1` = "missing values", `6` = NA_character_, `30` = NA_character_,
+  `-1` = "missing values",
   .applies_to_vars = c("trcogdc"),
   .applies_to_waves = c("Z", "C")
 )
@@ -116,12 +116,6 @@ value_labels(
 value_labels(
   `-1` = "na, asked", `0` = "0 right", `1` = "1 right", `2` = "2 right", `3` = "3 right", `4` = "4 right", `5` = "5 right",
   .applies_to_vars = c("trmms12", "trmms13"),
-  .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "I", "J", "K")
-)
-
-value_labels(
-  `1` = NA_character_, `16` = NA_character_,
-  .applies_to_vars = c("trmmsc", "trmmsc1", "trmmsc2"),
   .applies_to_waves = c("Z", "D", "E", "F", "G", "H", "I", "J", "K")
 )
 

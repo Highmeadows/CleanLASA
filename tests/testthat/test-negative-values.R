@@ -125,12 +125,37 @@ test_that("a code listed without wording gets its own number as level text", {
 test_that("a code listed without wording is a labelled value named after its number", {
   testthat::local_mocked_bindings(.lasa_label_db_path = function() tempfile(fileext = ".rds"))
 
-  # LASAB047 brandom lists 0, 59 and 99 without wording.
+  # LASAJ804 jqphyfem (a 0-10 rating) lists 0 and 10 without wording.
+  path <- write_lasa_sav(data.frame(respnr = 1:4, jqphyfem = c(0, 5, 10, -1)), "LASAJ804.SAV")
+  out <- read_lasa_sav(path, standardize = FALSE, keep_user_na = TRUE, to_factor = FALSE)
+  expect_s3_class(out$jqphyfem, "haven_labelled_spss")
+  expect_false(anyNA(names(attr(out$jqphyfem, "labels"))))
+  expect_equal(as.character(haven::as_factor(out$jqphyfem))[1:3], c("0", "5", "10"))
+})
+
+test_that("a numeric variable's listed values are values, not value labels", {
+  testthat::local_mocked_bindings(.lasa_label_db_path = function() tempfile(fileext = ".rds"))
+
+  # LASAB047 brandom's documentation lists 0, 59 and 99; LASAB016 bcjpresi
+  # (a prestige score) the range 13-87.
   path <- write_lasa_sav(data.frame(respnr = 1:4, brandom = c(0, 30, 99, -1)), "LASAB047.SAV")
   out <- read_lasa_sav(path, standardize = FALSE, keep_user_na = TRUE)
-  expect_s3_class(out$brandom, "haven_labelled_spss")
-  expect_false(anyNA(names(attr(out$brandom, "labels"))))
-  expect_equal(as.character(haven::as_factor(out$brandom))[1:3], c("0", "30", "99"))
+  expect_equal(unname(attr(out$brandom, "labels_wave")), c(-6, -3, -1))
+  expect_equal(as.vector(read_lasa_sav(path, standardize = FALSE)$brandom), c(0, 30, 99, NA))
+
+  path <- write_lasa_sav(data.frame(respnr = 1:4, bcjpresi = c(13, 50, 87, -1)), "LASAB016.SAV")
+  out <- read_lasa_sav(path, standardize = FALSE, to_numeric = FALSE)
+  expect_false(any(c(13, 87) %in% attr(out$bcjpresi, "labels_wave")))
+  expect_equal(as.character(out$bcjpresi), c("13", "50", "87", NA))
+
+  # A value that stands for a range keeps its wording: bjob5 is top-coded.
+  path <- write_lasa_sav(data.frame(respnr = 1:3, bjob5 = c(3, 98, -1)), "LASAB016.SAV")
+  expect_equal(as.character(read_lasa_sav(path, to_numeric = FALSE)$job5), c("3", "98 or more", NA))
+
+  # LASAB273 bloemo scores 0-6: the maximum score is a value, not a code.
+  path <- write_lasa_sav(data.frame(respnr = 1:3, bloemo = c(5, 6, 7)), "LASAB273.SAV")
+  out <- read_lasa_sav(path, to_numeric = FALSE)
+  expect_equal(as.character(out$loemo), c("5", "6", "proxy (unit nonresponse)"))
 })
 
 test_that("a local database saved without can_be_negative still labels", {
@@ -144,7 +169,7 @@ test_that("a local database saved without can_be_negative still labels", {
   expect_equal(as.character(out$brmpf)[3], "short version")
 })
 
-test_that("negative_values() reaches the build", {
+test_that("negative_values() reaches the build, and listed values of numeric variables are refused", {
   helpers <- testthat::test_path("..", "..", "data-raw", "label_db_helpers.R")
   skip_if_not(file.exists(helpers), "data-raw/ is not shipped with the built package")
   env <- new.env(parent = environment())
@@ -162,6 +187,36 @@ test_that("negative_values() reaches the build", {
     variable_labels(srt = "Speech-reception threshold (in dB)", .applies_to_waves = c("Z", "C"))
     negative_values("srt", .applies_to_waves = "B")
     expect_error(.lasa_finalize_fc("997"), "doesn't cover it there")
+  }, envir = env)
+
+  local({
+    var_types_vec <- c(score = "numeric", rating = "categorical")
+    variable_labels(score = "A score", rating = "A rating", .applies_to_waves = c("Z", "C"))
+    value_labels(`-1` = "na, asked", `-2` = NA_character_, .applies_to_vars = "score", .applies_to_waves = "C")
+    value_labels(`0` = NA_character_, `10` = NA_character_, .applies_to_vars = "rating", .applies_to_waves = "C")
+    expect_type(.lasa_finalize_fc("996"), "list")
+
+    var_types_vec <- c(score = "numeric")
+    variable_labels(score = "A score", .applies_to_waves = c("Z", "C"))
+    value_labels(`-1` = "na, asked", `13` = NA_character_, `87` = NA_character_, .applies_to_vars = "score", .applies_to_waves = "C")
+    expect_error(.lasa_finalize_fc("995"), "13, 87 without wording for numeric variable")
+
+    var_types_vec <- c(rating = "categorical")
+    variable_labels(rating = "A rating", .applies_to_waves = c("Z", "C"))
+    value_labels(`98` = "NA", .applies_to_vars = "rating", .applies_to_waves = "C")
+    expect_error(.lasa_finalize_fc("994"), "blank or \"NA\" label text")
+
+    var_types_vec <- c(score = "numeric")
+    variable_labels(score = "A score", .applies_to_waves = c("Z", "C"))
+    value_labels(`-1` = "na, asked", `13` = " ", .applies_to_vars = "score", .applies_to_waves = "C")
+    expect_error(.lasa_finalize_fc("993"), "blank or \"NA\" label text")
+
+    # On a signed variable, a wording-less negative is a measurement too.
+    var_types_vec <- c(srt = "numeric")
+    variable_labels(srt = "Speech-reception threshold (in dB)", .applies_to_waves = c("Z", "C"))
+    negative_values("srt", .applies_to_waves = "C")
+    value_labels(`-22` = "test not done", `-9.2` = NA_character_, .applies_to_vars = "srt", .applies_to_waves = "C")
+    expect_error(.lasa_finalize_fc("992"), "-9.2 without wording")
   }, envir = env)
 
   expect_error(env$negative_values("x", .applies_to_waves = "Z"), "real waves")

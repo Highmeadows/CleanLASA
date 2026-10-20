@@ -86,7 +86,7 @@ value_labels(
 )
 
 value_labels(
-  `-1` = "not available", `0` = NA_character_, `10` = NA_character_,
+  `-1` = "not available",
   .applies_to_vars = c("qsatis3"),
   .applies_to_waves = c("Z")
 )
@@ -116,7 +116,7 @@ value_labels(
 )
 
 value_labels(
-  `-1` = "no answer", `0` = NA_character_, `10` = NA_character_,
+  `-1` = "no answer",
   .applies_to_vars = c("qsatis3"),
   .applies_to_waves = c("H", "I", "J")
 )
