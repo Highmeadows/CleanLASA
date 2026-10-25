@@ -1,11 +1,11 @@
 ---
 title: "CleanLASA introduction"
 author: "B.Hoogerheide"
-output:
-  html_document:
-    toc: false
-    keep_md: true
-cache: true
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{CleanLASA introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 
@@ -188,7 +188,7 @@ A Z file holds several waves side by side (`boak`, `coak`, `doak`, ...
 for the same question at waves B, C, D, ...). Add
 `format_as_long = TRUE` to get it in long format instead -- one row per
 respondent per wave -- as described in
-[section 9](#9-reshape-between-long-and-wide-format).
+[section 9](#reshape-between-long-and-wide-format).
 
 The file name is what tells `read_lasa_sav()` which wave and file code
 it's looking at, so it needs to follow LASA's naming convention (case
@@ -196,7 +196,7 @@ doesn't matter): regular single-letter waves are named
 `LASA[wave][filecode].sav`, and the replenishment waves `2B`, `3B`,
 `4B`, and `MB` are named `LAS[wave][filecode].sav`. If your file
 doesn't follow this pattern, pass `filecode`/`wave` yourself (see
-[section 6](#6-apply-lasa-labels-to-an-existing-data-frame)).
+[section 6](#apply-lasa-labels-to-an-existing-data-frame)).
 
 `read_lasa_sav()` always reads the file with every code intact, so
 CleanLASA -- not whatever the `.sav` file happens to declare -- decides
@@ -217,7 +217,7 @@ controlled by `path` and `keep_user_na` directly, not by this list.)
 Once imported, the result carries a few extra pieces of information
 about where it came from: which wave and file code it is, and the
 source file name. It also carries the full matching audit, described
-in [section 5](#5-audit-how-variables-were-matched).
+in [section 5](#audit-how-variables-were-matched).
 
 ## 4. Choose how labelled variables are represented
 
@@ -980,6 +980,3 @@ workflow: topics and source documents stay easy to find, imported
 variables keep their documented meaning, every transformation stays
 auditable, and the metadata layer can be refreshed without you having
 to maintain separate labelling code for every file.
-
-```
-```
