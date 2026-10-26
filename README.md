@@ -30,18 +30,22 @@ fix.
 
 ## Installation
 
-CleanLASA needs R 4.0 or later. Install the current version from
-[GitHub](https://github.com/Highmeadows/CleanLASA) with:
+CleanLASA needs R 4.0 or later. Install the latest release (v1.0.0)
+from [GitHub](https://github.com/Highmeadows/CleanLASA) with:
 
 ``` r
 # install.packages("remotes")
+remotes::install_github("Highmeadows/CleanLASA@v1.0.0")
+```
+
+or the development version, with changes that haven't been released
+yet, with:
+
+``` r
 remotes::install_github("Highmeadows/CleanLASA")
 ```
 
-The package is still under development. To pin a tagged release
-instead, add its tag, e.g. `"Highmeadows/CleanLASA@v0.9.0"`; note that
-v0.9.0 predates `transform_lasa_data()` and the long-format options
-described below.
+See [NEWS.md](NEWS.md) for what changed in each release.
 
 ## Quick start
 
