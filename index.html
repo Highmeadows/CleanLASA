@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">CleanLASA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,7 @@
 <li><a class="dropdown-item" href="articles/intro.html">CleanLASA introduction</a></li>
   </ul>
 </li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -67,17 +68,20 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>CleanLASA needs R 4.0 or later. Install the current version from <a href="https://github.com/Highmeadows/CleanLASA" class="external-link">GitHub</a> with:</p>
+<p>CleanLASA needs R 4.0 or later. Install the latest release (v1.0.0) from <a href="https://github.com/Highmeadows/CleanLASA" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Highmeadows/CleanLASA"</span><span class="op">)</span></span></code></pre></div>
-<p>The package is still under development. To pin a tagged release instead, add its tag, e.g. <code>"Highmeadows/CleanLASA@v0.9.0"</code>; note that v0.9.0 predates <code><a href="reference/transform_lasa_data.html">transform_lasa_data()</a></code> and the long-format options described below.</p>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Highmeadows/CleanLASA@v1.0.0"</span><span class="op">)</span></span></code></pre></div>
+<p>or the development version, with changes that haven’t been released yet, with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Highmeadows/CleanLASA"</span><span class="op">)</span></span></code></pre></div>
+<p>See <a href="NEWS.html">NEWS.md</a> for what changed in each release.</p>
 </div>
 <div class="section level2">
 <h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
 <p>The main function is <code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code>. Give it the path to a LASA <code>.sav</code> file and it works out the rest from the file name – reading the file, matching its columns to LASA’s documentation, attaching labels, turning categorical variables into R factors, and renaming columns to a name that’s the same across every wave:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://highmeadows.github.io/CleanLASA/">CleanLASA</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span> <span class="co"># LASA wave B, file code 046</span></span>
@@ -85,11 +89,11 @@
 <span><span class="co"># Check whether anything didn't match:</span></span>
 <span><span class="fu"><a href="reference/lasa_label_report.html">lasa_label_report</a></span><span class="op">(</span><span class="va">data</span>, problems_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Z files such as <code>LASAZOA1.sav</code> store several waves side by side (<code>boak</code>, <code>coak</code>, <code>doak</code>, …). With <code>format_as_long = TRUE</code> you get them in long format instead: one row per respondent per wave, with a <code>Wave</code> column, a <code>Time</code> column counting the waves since the respondent’s baseline, and one <code>oak</code> column. <code><a href="reference/transform_lasa_data.html">transform_lasa_data()</a></code> converts any LASA data – including merged files – between long and wide format:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oa</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAZOA1.sav"</span>, format_as_long <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">oa_wide</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/transform_lasa_data.html">transform_lasa_data</a></span><span class="op">(</span><span class="va">oa</span>, format <span class="op">=</span> <span class="st">"wide"</span><span class="op">)</span> <span class="co"># boak, coak, ...</span></span></code></pre></div>
 <p>Not sure which file code you need? <code><a href="reference/lasa_topics.html">lasa_topics()</a></code> searches LASA’s topics and themes for you, and <code><a href="reference/lasa_var_info.html">lasa_var_info()</a></code> opens LASA’s own documentation for a topic or file code:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"physical activity"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span><span class="op">)</span></span></code></pre></div>
 </div>
