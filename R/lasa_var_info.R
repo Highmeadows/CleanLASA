@@ -15,7 +15,7 @@
 ## `.lasa_node_text_with_breaks()`) before they collapse into ordinary
 ## whitespace -- otherwise two file codes stacked on separate lines in one
 ## cell (e.g. via `<br>`) could get glued together with no separator at all.
-.lasa_break_marker <- "␞"
+.lasa_break_marker <- "\u241e"
 
 #' Open LASA variable information
 #'

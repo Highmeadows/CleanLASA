@@ -4,10 +4,13 @@ Version: 0.9.0
 Authors@R: 
     person("Bram", "Hoogerheide", , "b.hoogerheide@vu.nl", role = c("aut", "cre"))
 Description: Tools for importing and cleaning data from the Longitudinal
-    Aging Study Amsterdam (LASA). Applies SPSS variable- and value-labels
-    from LASA documentation across waves, provides a wrapper function to
-    automatically detect and import LASA datafiles, and reports variables
-    that could not be matched to their corresponding documentation.
+    Aging Study Amsterdam (LASA). Detects the LASA file code and wave from
+    a data file's name, applies variable and value labels from a bundled
+    database transcribed from LASA documentation, harmonizes variable names
+    and codes across waves, and reports variables that could not be matched
+    to their documentation. Also reshapes LASA data between wide and long
+    format with cohort-aware wave and time columns, searches LASA's topic
+    index, and opens LASA's variable documentation.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -16,12 +19,15 @@ Imports:
     haven,
     xml2
 Suggests: 
+    dplyr,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Depends: 
-    R (>= 3.5)
+    R (>= 4.0.0)
 LazyData: true
-URL: https://highmeadows.github.io/CleanLASA/
+URL: https://highmeadows.github.io/CleanLASA/,
+    https://github.com/Highmeadows/CleanLASA
+BugReports: https://github.com/Highmeadows/CleanLASA/issues
