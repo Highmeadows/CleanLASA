@@ -11,8 +11,8 @@
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Import and Clean LASA SPSS Data">
-<meta name="description" content="Tools for importing and cleaning data from the Longitudinal Aging Study Amsterdam (LASA). Applies SPSS variable- and value-labels from LASA documentation across waves, provides a wrapper function to automatically detect and import LASA datafiles, and reports variables that could not be matched to their corresponding documentation.">
-<meta property="og:description" content="Tools for importing and cleaning data from the Longitudinal Aging Study Amsterdam (LASA). Applies SPSS variable- and value-labels from LASA documentation across waves, provides a wrapper function to automatically detect and import LASA datafiles, and reports variables that could not be matched to their corresponding documentation.">
+<meta name="description" content="Tools for importing and cleaning data from the Longitudinal Aging Study Amsterdam (LASA). Detects the LASA file code and wave from a data files name, applies variable and value labels from a bundled database transcribed from LASA documentation, harmonizes variable names and codes across waves, and reports variables that could not be matched to their documentation. Also reshapes LASA data between wide and long format with cohort-aware wave and time columns, searches LASAs topic index, and opens LASA's variable documentation.">
+<meta property="og:description" content="Tools for importing and cleaning data from the Longitudinal Aging Study Amsterdam (LASA). Detects the LASA file code and wave from a data files name, applies variable and value labels from a bundled database transcribed from LASA documentation, harmonizes variable names and codes across waves, and reports variables that could not be matched to their documentation. Also reshapes LASA data between wide and long format with cohort-aware wave and time columns, searches LASAs topic index, and opens LASA's variable documentation.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -43,6 +43,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/Highmeadows/CleanLASA/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -53,8 +54,6 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="cleanlasa">CleanLASA<a class="anchor" aria-label="anchor" href="#cleanlasa"></a>
 </h1></div>
-<!-- badges: start -->
-<!-- badges: end -->
 <p>CleanLASA helps you work with LASA (Longitudinal Aging Study Amsterdam) data in R. LASA data comes as SPSS (<code>.sav</code>) files, and each file uses its own short-hand variable names and numeric codes, which change slightly from one measurement wave to the next. Reading such a file with a generic tool like <code><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">haven::read_sav()</a></code> gives you a data frame of bare numbers with no explanation of what they mean.</p>
 <p>CleanLASA fixes that. Point it at a LASA <code>.sav</code> file and it:</p>
 <ul>
@@ -68,20 +67,17 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of CleanLASA from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>CleanLASA needs R 4.0 or later. Install the current version from <a href="https://github.com/Highmeadows/CleanLASA" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Highmeadows/CleanLASA"</span><span class="op">)</span></span></code></pre></div>
-<p>Note the package is still under development, so please install the latest release. Currently only version 0.9 is available, and can also be specifically installed from GitHub with:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Highmeadows/CleanLASA@v0.9.0"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Highmeadows/CleanLASA"</span><span class="op">)</span></span></code></pre></div>
+<p>The package is still under development. To pin a tagged release instead, add its tag, e.g. <code>"Highmeadows/CleanLASA@v0.9.0"</code>; note that v0.9.0 predates <code><a href="reference/transform_lasa_data.html">transform_lasa_data()</a></code> and the long-format options described below.</p>
 </div>
 <div class="section level2">
 <h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
 <p>The main function is <code><a href="reference/read_lasa_sav.html">read_lasa_sav()</a></code>. Give it the path to a LASA <code>.sav</code> file and it works out the rest from the file name – reading the file, matching its columns to LASA’s documentation, attaching labels, turning categorical variables into R factors, and renaming columns to a name that’s the same across every wave:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://highmeadows.github.io/CleanLASA/">CleanLASA</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB046.sav"</span><span class="op">)</span> <span class="co"># LASA wave B, file code 046</span></span>
@@ -89,11 +85,11 @@
 <span><span class="co"># Check whether anything didn't match:</span></span>
 <span><span class="fu"><a href="reference/lasa_label_report.html">lasa_label_report</a></span><span class="op">(</span><span class="va">data</span>, problems_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Z files such as <code>LASAZOA1.sav</code> store several waves side by side (<code>boak</code>, <code>coak</code>, <code>doak</code>, …). With <code>format_as_long = TRUE</code> you get them in long format instead: one row per respondent per wave, with a <code>Wave</code> column, a <code>Time</code> column counting the waves since the respondent’s baseline, and one <code>oak</code> column. <code><a href="reference/transform_lasa_data.html">transform_lasa_data()</a></code> converts any LASA data – including merged files – between long and wide format:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oa</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAZOA1.sav"</span>, format_as_long <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">oa_wide</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/transform_lasa_data.html">transform_lasa_data</a></span><span class="op">(</span><span class="va">oa</span>, format <span class="op">=</span> <span class="st">"wide"</span><span class="op">)</span> <span class="co"># boak, coak, ...</span></span></code></pre></div>
 <p>Not sure which file code you need? <code><a href="reference/lasa_topics.html">lasa_topics()</a></code> searches LASA’s topics and themes for you, and <code><a href="reference/lasa_var_info.html">lasa_var_info()</a></code> opens LASA’s own documentation for a topic or file code:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/lasa_topics.html">lasa_topics</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"physical activity"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/lasa_var_info.html">lasa_var_info</a></span><span class="op">(</span><span class="st">"046"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -160,7 +156,15 @@
 <p>Full function reference and articles are available at: <a href="https://highmeadows.github.io/CleanLASA/" class="uri">https://highmeadows.github.io/CleanLASA/</a></p>
 </div>
 </div>
-  </main><aside class="col-md-3"><div class="license">
+  </main><aside class="col-md-3"><div class="links">
+<h2 data-toc-skip>Links</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/Highmeadows/CleanLASA/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/Highmeadows/CleanLASA/issues" class="external-link">Report a bug</a></li>
+</ul>
+</div>
+
+<div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>

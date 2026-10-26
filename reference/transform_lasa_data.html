@@ -40,6 +40,7 @@ column."></head><body>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/Highmeadows/CleanLASA/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
 
 
@@ -49,7 +50,7 @@ column."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Transform LASA data between long and wide format</h1>
-
+      <small class="dont-index">Source: <a href="https://github.com/Highmeadows/CleanLASA/blob/main/R/lasa_transform.R" class="external-link"><code>R/lasa_transform.R</code></a></small>
       <div class="d-none name"><code>transform_lasa_data.Rd</code></div>
     </div>
 
@@ -315,7 +316,7 @@ format gives those values one column, also when the guesses put them at
 several waves, under a name that doesn't say the wave (its original
 name, or else LASA's own, such as <code>blphya01</code>), so transforming that back
 guesses again, with the message. The long column keeps that memory in
-its attributes, which <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>, <code><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge()</a></code>, <code>dplyr::bind_rows()</code>,
+its attributes, which <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>, <code><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">dplyr::bind_rows()</a></code>,
 subsetting or sorting the rows of a data frame (rather than a tibble),
 and writing the data to a <code>.sav</code> file can drop: after that, those values
 count as showing the cohort of the wave they were put at. To avoid
@@ -330,7 +331,7 @@ a message.</p>
 any of three shapes:</p><ul><li><p>long (the most reliable): files read with <code>format_as_long = TRUE</code>,
 which gives each file's rows their Time while the file still shows
 their cohort (in a baseline file, also rows holding nothing but
-missing-value codes), stacked per file code with <code>dplyr::bind_rows()</code>
+missing-value codes), stacked per file code with <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">dplyr::bind_rows()</a></code>
 (or <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>, if the files have the same columns) and merged by
 <code>respnr</code> and <code>"Wave"</code> (with <code>all = TRUE</code>, to keep the rows of
 respondents missing from some files); the <code>Time.x</code> and <code>Time.y</code>
@@ -363,7 +364,7 @@ respondent has a value at a wave the long data don't have a row for
 yet. On those added rows, stable variables the label database
 documents (such as <code>sex</code>) are filled in from the respondent's other
 rows, and other columns are left missing, since they weren't measured
-at that wave. Merged with <code>all = TRUE</code> (or <code>dplyr::full_join()</code>), the
+at that wave. Merged with <code>all = TRUE</code> (or <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::full_join()</a></code>), the
 respondents the long data lack get a row without a wave, holding the
 wide data's values: those of wide columns go to their waves, adding
 the rows they need (a row at every wave of the wide columns if there
@@ -456,7 +457,7 @@ Converting back to wide restores each wide column's original type (also
 from text), attributes, and user-missing codes, as long as its values
 still fit them.</p>
 <p>In long data, the column of a wave-specific variable the label database
-documents that has lost its labels – <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>, <code>dplyr::bind_rows()</code>
+documents that has lost its labels – <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">dplyr::bind_rows()</a></code>
 and <code><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge()</a></code> drop them from factor and numeric columns, and <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>
 keeps one file's for all rows of labelled columns – gets back the
 labels <code><a href="read_lasa_sav.html">read_lasa_sav()</a></code> gives the variable at each wave it has values

@@ -41,6 +41,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/Highmeadows/CleanLASA/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -58,7 +59,7 @@
                         <h4 data-toc-skip class="author">B.Hoogerheide</h4>
             
       
-
+      <small class="dont-index">Source: <a href="https://github.com/Highmeadows/CleanLASA/blob/main/vignettes/intro.Rmd" class="external-link"><code>vignettes/intro.Rmd</code></a></small>
       <div class="d-none name"><code>intro.Rmd</code></div>
     </div>
 
@@ -226,7 +227,7 @@ labels.</p>
 <p>A Z file holds several waves side by side (<code>boak</code>,
 <code>coak</code>, <code>doak</code>, … for the same question at waves
 B, C, D, …). Add <code>format_as_long = TRUE</code> to get it in long
-format instead – one row per respondent per wave – as described in <a href="#id_9-reshape-between-long-and-wide-format">section 9</a>.</p>
+format instead – one row per respondent per wave – as described in <a href="#reshape-between-long-and-wide-format">section 9</a>.</p>
 <p>The file name is what tells <code><a href="../reference/read_lasa_sav.html">read_lasa_sav()</a></code> which wave
 and file code it’s looking at, so it needs to follow LASA’s naming
 convention (case doesn’t matter): regular single-letter waves are named
@@ -234,8 +235,7 @@ convention (case doesn’t matter): regular single-letter waves are named
 <code>2B</code>, <code>3B</code>, <code>4B</code>, and <code>MB</code>
 are named <code>LAS[wave][filecode].sav</code>. If your file doesn’t
 follow this pattern, pass <code>filecode</code>/<code>wave</code>
-yourself (see <a href="#id_6-apply-lasa-labels-to-an-existing-data-frame">section
-6</a>).</p>
+yourself (see <a href="#apply-lasa-labels-to-an-existing-data-frame">section 6</a>).</p>
 <p><code><a href="../reference/read_lasa_sav.html">read_lasa_sav()</a></code> always reads the file with every code
 intact, so CleanLASA – not whatever the <code>.sav</code> file happens
 to declare – decides which codes are missing values (see <a href="#missing-value-codes">Missing-value codes</a> below). You can pass
@@ -251,7 +251,7 @@ any other <code><a href="https://haven.tidyverse.org/reference/read_spss.html" c
 and <code>keep_user_na</code> directly, not by this list.)</p>
 <p>Once imported, the result carries a few extra pieces of information
 about where it came from: which wave and file code it is, and the source
-file name. It also carries the full matching audit, described in <a href="#id_5-audit-how-variables-were-matched">section 5</a>.</p>
+file name. It also carries the full matching audit, described in <a href="#audit-how-variables-were-matched">section 5</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="choose-how-labelled-variables-are-represented">4. Choose how labelled variables are represented<a class="anchor" aria-label="anchor" href="#choose-how-labelled-variables-are-represented"></a>
@@ -945,8 +945,8 @@ respondent’s cohort:</p>
 <span></span>
 <span><span class="co"># The files of different waves hold different variables, so they are</span></span>
 <span><span class="co"># stacked with dplyr::bind_rows(); rbind() needs files with the same columns</span></span>
-<span><span class="va">physical_activity</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">bind_rows</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">waves</span>, <span class="st">"046.sav"</span><span class="op">)</span>, <span class="va">read_long</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">adl</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">bind_rows</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">waves</span>, <span class="st">"030.sav"</span><span class="op">)</span>, <span class="va">read_long</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">physical_activity</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">waves</span>, <span class="st">"046.sav"</span><span class="op">)</span>, <span class="va">read_long</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">adl</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">waves</span>, <span class="st">"030.sav"</span><span class="op">)</span>, <span class="va">read_long</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">physical_activity</span>, <span class="va">adl</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"respnr"</span>, <span class="st">"Wave"</span><span class="op">)</span>, all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transform_lasa_data.html">transform_lasa_data</a></span><span class="op">(</span><span class="va">long</span><span class="op">)</span></span>
 <span><span class="va">wide</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transform_lasa_data.html">transform_lasa_data</a></span><span class="op">(</span><span class="va">long</span>, format <span class="op">=</span> <span class="st">"wide"</span><span class="op">)</span></span></code></pre></div>
@@ -1012,7 +1012,7 @@ wave doesn’t count as showing the respondent’s cohort (their row gets a
 Time only from something else, such as their respondent number) – also
 when the result is transformed again, as long as its columns keep their
 attributes (<code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>, <code><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge()</a></code>,
-<code>dplyr::bind_rows()</code>, sorting or subsetting the rows of a
+<code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">dplyr::bind_rows()</a></code>, sorting or subsetting the rows of a
 data frame rather than a tibble, and saving to a <code>.sav</code> file
 can drop them). To avoid guesses, combine such files in long format,
 where each row carries its own wave, rather than in wide format (such as
@@ -1110,7 +1110,6 @@ R workflow: topics and source documents stay easy to find, imported
 variables keep their documented meaning, every transformation stays
 auditable, and the metadata layer can be refreshed without you having to
 maintain separate labelling code for every file.</p>
-<pre><code></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

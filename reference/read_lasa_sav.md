@@ -142,8 +142,9 @@ or wait for a package update.
 After labelling, provenance attributes are attached: `"LASA_wave"`,
 `"LASA_file_code"`, and `"LASA_source_file"`. This is what lets
 [`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md)
-re-label the same object later (e.g. after a `dplyr::mutate()` strips
-attributes) without needing `filecode`/`wave` supplied again. The
+re-label the same object later (e.g. after a
+[`dplyr::mutate()`](https://dplyr.tidyverse.org/reference/mutate.html)
+strips attributes) without needing `filecode`/`wave` supplied again. The
 variable-name matching audit is attached as the generic `"label_report"`
 attribute; retrieve it with
 [`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md).

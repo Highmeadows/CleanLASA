@@ -183,7 +183,7 @@ physical_activity_3b <- read_lasa_sav("LAS3B046.sav")
 A Z file holds several waves side by side (`boak`, `coak`, `doak`, … for
 the same question at waves B, C, D, …). Add `format_as_long = TRUE` to
 get it in long format instead – one row per respondent per wave – as
-described in [section 9](#id_9-reshape-between-long-and-wide-format).
+described in [section 9](#reshape-between-long-and-wide-format).
 
 The file name is what tells
 [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
@@ -192,7 +192,7 @@ naming convention (case doesn’t matter): regular single-letter waves are
 named `LASA[wave][filecode].sav`, and the replenishment waves `2B`,
 `3B`, `4B`, and `MB` are named `LAS[wave][filecode].sav`. If your file
 doesn’t follow this pattern, pass `filecode`/`wave` yourself (see
-[section 6](#id_6-apply-lasa-labels-to-an-existing-data-frame)).
+[section 6](#apply-lasa-labels-to-an-existing-data-frame)).
 
 [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
 always reads the file with every code intact, so CleanLASA – not
@@ -216,7 +216,7 @@ controlled by `path` and `keep_user_na` directly, not by this list.)
 Once imported, the result carries a few extra pieces of information
 about where it came from: which wave and file code it is, and the source
 file name. It also carries the full matching audit, described in
-[section 5](#id_5-audit-how-variables-were-matched).
+[section 5](#audit-how-variables-were-matched).
 
 ## 4. Choose how labelled variables are represented
 
@@ -972,7 +972,8 @@ respondent’s cohort (their row gets a Time only from something else,
 such as their respondent number) – also when the result is transformed
 again, as long as its columns keep their attributes
 ([`rbind()`](https://rdrr.io/r/base/cbind.html),
-[`merge()`](https://rdrr.io/r/base/merge.html), `dplyr::bind_rows()`,
+[`merge()`](https://rdrr.io/r/base/merge.html),
+[`dplyr::bind_rows()`](https://dplyr.tidyverse.org/reference/bind_rows.html),
 sorting or subsetting the rows of a data frame rather than a tibble, and
 saving to a `.sav` file can drop them). To avoid guesses, combine such
 files in long format, where each row carries its own wave, rather than

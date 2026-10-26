@@ -12,8 +12,9 @@ automatically from `data`'s own `"LASA_file_code"`/ `"LASA_wave"`
 provenance attributes (set by
 [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
 and by this function itself, so labelling can be safely re-applied after
-a transformation like `dplyr::mutate()` strips attributes) or from a
-single-valued `"Wave"` column.
+a transformation like
+[`dplyr::mutate()`](https://dplyr.tidyverse.org/reference/mutate.html)
+strips attributes) or from a single-valued `"Wave"` column.
 
 ## Usage
 

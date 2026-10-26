@@ -297,7 +297,8 @@ several waves, under a name that doesn't say the wave (its original
 name, or else LASA's own, such as `blphya01`), so transforming that back
 guesses again, with the message. The long column keeps that memory in
 its attributes, which [`rbind()`](https://rdrr.io/r/base/cbind.html),
-[`merge()`](https://rdrr.io/r/base/merge.html), `dplyr::bind_rows()`,
+[`merge()`](https://rdrr.io/r/base/merge.html),
+[`dplyr::bind_rows()`](https://dplyr.tidyverse.org/reference/bind_rows.html),
 subsetting or sorting the rows of a data frame (rather than a tibble),
 and writing the data to a `.sav` file can drop: after that, those values
 count as showing the cohort of the wave they were put at. To avoid
@@ -317,7 +318,8 @@ any of three shapes:
 - long (the most reliable): files read with `format_as_long = TRUE`,
   which gives each file's rows their Time while the file still shows
   their cohort (in a baseline file, also rows holding nothing but
-  missing-value codes), stacked per file code with `dplyr::bind_rows()`
+  missing-value codes), stacked per file code with
+  [`dplyr::bind_rows()`](https://dplyr.tidyverse.org/reference/bind_rows.html)
   (or [`rbind()`](https://rdrr.io/r/base/cbind.html), if the files have
   the same columns) and merged by `respnr` and `"Wave"` (with
   `all = TRUE`, to keep the rows of respondents missing from some
@@ -355,16 +357,17 @@ any of three shapes:
   added rows, stable variables the label database documents (such as
   `sex`) are filled in from the respondent's other rows, and other
   columns are left missing, since they weren't measured at that wave.
-  Merged with `all = TRUE` (or `dplyr::full_join()`), the respondents
-  the long data lack get a row without a wave, holding the wide data's
-  values: those of wide columns go to their waves, adding the rows they
-  need (a row at every wave of the wide columns if there are none), and
-  the others hold for every wave, as in wide data, so they fill each of
-  the respondent's rows (a value in a `"Time"` column, or in a column of
-  a wave-specific variable the label database documents, needs a wave,
-  so it is an error). Where no wide columns were merged in, such
-  respondents have no row in long format (with a message), but one in
-  wide format.
+  Merged with `all = TRUE` (or
+  [`dplyr::full_join()`](https://dplyr.tidyverse.org/reference/mutate-joins.html)),
+  the respondents the long data lack get a row without a wave, holding
+  the wide data's values: those of wide columns go to their waves,
+  adding the rows they need (a row at every wave of the wide columns if
+  there are none), and the others hold for every wave, as in wide data,
+  so they fill each of the respondent's rows (a value in a `"Time"`
+  column, or in a column of a wave-specific variable the label database
+  documents, needs a wave, so it is an error). Where no wide columns
+  were merged in, such respondents have no row in long format (with a
+  message), but one in wide format.
 
 **Wide format** has one row per respondent and drops the `"Wave"` and
 `"Time"` columns. Each wave-specific variable gets one column per wave
@@ -459,9 +462,10 @@ still fit them.
 
 In long data, the column of a wave-specific variable the label database
 documents that has lost its labels –
-[`rbind()`](https://rdrr.io/r/base/cbind.html), `dplyr::bind_rows()` and
-[`merge()`](https://rdrr.io/r/base/merge.html) drop them from factor and
-numeric columns, and [`rbind()`](https://rdrr.io/r/base/cbind.html)
+[`rbind()`](https://rdrr.io/r/base/cbind.html),
+[`dplyr::bind_rows()`](https://dplyr.tidyverse.org/reference/bind_rows.html)
+and [`merge()`](https://rdrr.io/r/base/merge.html) drop them from factor
+and numeric columns, and [`rbind()`](https://rdrr.io/r/base/cbind.html)
 keeps one file's for all rows of labelled columns – gets back the labels
 [`read_lasa_sav()`](https://highmeadows.github.io/CleanLASA/reference/read_lasa_sav.md)
 gives the variable at each wave it has values at, from the label

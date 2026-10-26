@@ -32,24 +32,20 @@ if something needs a quick, local fix.
 
 ## Installation
 
-You can install the development version of CleanLASA from
-[GitHub](https://github.com/) with:
-
-``` r
-
-# install.packages("devtools")
-devtools::install_github("Highmeadows/CleanLASA")
-```
-
-Note the package is still under development, so please install the
-latest release. Currently only version 0.9 is available, and can also be
-specifically installed from GitHub with:
+CleanLASA needs R 4.0 or later. Install the current version from
+[GitHub](https://github.com/Highmeadows/CleanLASA) with:
 
 ``` r
 
 # install.packages("remotes")
-remotes::install_github("Highmeadows/CleanLASA@v0.9.0")
+remotes::install_github("Highmeadows/CleanLASA")
 ```
+
+The package is still under development. To pin a tagged release instead,
+add its tag, e.g. `"Highmeadows/CleanLASA@v0.9.0"`; note that v0.9.0
+predates
+[`transform_lasa_data()`](https://highmeadows.github.io/CleanLASA/reference/transform_lasa_data.md)
+and the long-format options described below.
 
 ## Quick start
 
