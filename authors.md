@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/Highmeadows/CleanLASA/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/Highmeadows/CleanLASA/blob/v1.0.0/DESCRIPTION)
 
 Hoogerheide B (2026). *CleanLASA: Import and Clean LASA SPSS Data*. R
 package version 1.0.0, <https://highmeadows.github.io/CleanLASA/>.
