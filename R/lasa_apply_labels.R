@@ -49,7 +49,7 @@
 ## documented variable, rather than needing its own special case.
 .lasa_respnr_row <- function() {
   data.frame(
-    variable_name = "respnr", canonical_name = "respnr",
+    variable_name = "respnr", wave = NA_character_, canonical_name = "respnr",
     variable_label = NA_character_, harmonized_var_label = NA_character_,
     var_type = NA_character_, can_be_negative = FALSE, manual_override = FALSE,
     stringsAsFactors = FALSE
@@ -100,12 +100,13 @@
     labels$variables$can_be_negative <- rep(FALSE, nrow(labels$variables))
   }
   vars <- labels$variables[c(
-    "variable_name", "canonical_name", "variable_label",
+    "variable_name", "wave", "canonical_name", "variable_label",
     "harmonized_var_label", "var_type", "can_be_negative", "manual_override"
   )]
   vars <- rbind(vars, .lasa_respnr_row())
   vals <- labels$value_labels
   vals_harmonized <- labels$value_labels_harmonized
+  cw <- labels$value_labels_crosswalk
 
   correction_keys <- if (is.null(name_corrections)) character(0) else tolower(names(name_corrections))
 
@@ -157,13 +158,13 @@
       if (!is.na(wave_label)) attr(x, "wave_label") <- wave_label
       if (!is.na(active_label)) attr(x, "label") <- active_label
       if (!is.null(value_map)) attr(x, "labels_wave") <- value_map
-      if (!is.null(active_value_map)) attr(x, "labels") <- active_value_map
+      # Label text kept as user-missing values carries its own text labels.
+      if (!is.null(active_value_map) && !.lasa_is_labelled_text(x)) attr(x, "labels") <- active_value_map
       attr(x, "canonical_name") <- cname
       if (!is.na(row$harmonized_var_label)) attr(x, "harmonized_label") <- row$harmonized_var_label
       if (!is.null(harmonized_value_map)) attr(x, "labels_harmonized") <- harmonized_value_map
       x
     }
-    x <- attach_attrs(x)
 
     numeric_eligible <- identical(row$var_type, "numeric")
     text_eligible <- identical(row$var_type, "text")
@@ -171,12 +172,24 @@
       x <- suppressWarnings(as.numeric(x))
     }
 
+    # Under standardize, a wave's codes are read in the harmonized coding:
+    # a missing-value code whose meaning differs between waves moves to
+    # its harmonized code (e.g. -4 "do not know" in wave D to -9), and a
+    # variable whose answer labels differ between waves (var_type "text")
+    # is read as its answers' text.
+    row_wave <- if (is.na(row$wave)) wave else row$wave
+    crosswalk <- cw[cw$variable_name == vname & toupper(cw$wave) == toupper(row_wave), , drop = FALSE]
+    if (isTRUE(eff_val_labels) && !text_eligible && nrow(crosswalk) > 0L) {
+      x <- .lasa_recode_values(x, crosswalk$value_numeric, crosswalk$harmonized_numeric)
+    }
+
     # Missing codes are handled the same way whatever the variable type:
     # keep_user_na = FALSE turns every one into NA; keep_user_na = TRUE
-    # keeps it -- as label text in a factor/character result, or as the
-    # raw code declared SPSS user-missing in a numeric one. respnr is an
-    # identifier, never missing-coded. A variable whose genuine values can
-    # be negative only has its documented missing codes treated as missing.
+    # keeps it, with its label, declared SPSS user-missing -- as label text
+    # in a to_factor result (a factor can't mark a level missing), or as
+    # the code itself otherwise. respnr is an identifier, never
+    # missing-coded. A variable whose genuine values can be negative only
+    # has its documented missing codes treated as missing.
     is_respnr <- identical(vname, "respnr")
     infer_negative <- !isTRUE(row$can_be_negative)
     missing_codes <- if (is_respnr) {
@@ -187,6 +200,11 @@
 
     if (is_respnr || inherits(x, c("Date", "POSIXt", "difftime", "hms"))) {
       # An identifier, or a date/time: nothing to convert or blank.
+    } else if (.lasa_is_labelled_text(x)) {
+      # Label text kept as user-missing values (an earlier call's
+      # keep_user_na = TRUE output): never re-coded.
+      if (!isTRUE(keep_user_na)) x <- .lasa_drop_labelled_text(x, to_factor)
+      x <- attach_attrs(x)
     } else if (is.factor(x) || (is.character(x) && !inherits(x, "haven_labelled"))) {
       # Already converted (e.g. re-labelling read_lasa_sav()'s own output):
       # the numeric codes are gone, so it is never re-coded -- only a
@@ -203,22 +221,28 @@
         .lasa_restore_plain_numeric(x, missing_codes)
       }
       x <- attach_attrs(x)
-    } else if (isTRUE(to_factor) && text_eligible && !is.null(value_map)) {
-      # Wave-specific label text, never harmonized: this variable's value
-      # coding is inconsistent across waves (var_type == "text", see
-      # data-raw/build_lasa_label_db.R), so only its wave-specific label
-      # text -- not its numeric codes -- is safe to compare/merge across
-      # waves. Deliberately uses value_map, not active_value_map, so this
-      # is immune to .standardize_val_labels/standardize.
-      x <- .lasa_convert_to_labelled_text(x, value_map, missing_codes, keep_user_na)
+    } else if (isTRUE(eff_val_labels) && text_eligible && .lasa_is_coded(x) &&
+      (!is.null(value_map) || nrow(crosswalk) > 0L)) {
+      # Answer labels differ between waves, so the codes can't be compared
+      # across waves: read as text, with every wave's answers as levels.
+      x <- .lasa_convert_crosswalk_text(
+        x, crosswalk, cw[cw$canonical_name == cname, , drop = FALSE],
+        value_map, harmonized_value_map, missing_codes, keep_user_na, to_factor,
+        overridden = vals$value_numeric[vals$variable_name == vname & vals$manual_override %in% TRUE]
+      )
       x <- attach_attrs(x)
     } else if (isTRUE(to_factor) && !is.null(active_value_map)) {
-      x <- .lasa_convert_to_labelled_factor(x, active_value_map, missing_codes, keep_user_na)
+      x <- if (isTRUE(keep_user_na)) {
+        .lasa_convert_to_labelled_text_na(x, active_value_map, missing_codes)
+      } else {
+        .lasa_convert_to_labelled_factor(x, active_value_map, missing_codes, keep_user_na = FALSE)
+      }
       x <- attach_attrs(x)
     } else {
       # Left in its labelled (numeric-coded) form: to_factor/to_numeric off
       # for this variable, or no value labels to build a factor from.
       # A plain unlabelled vector with nothing missing stays as it is.
+      x <- attach_attrs(x)
       if (!isTRUE(keep_user_na)) {
         x <- attach_attrs(.lasa_blank_missing(x, missing_codes))
       } else if (inherits(x, "haven_labelled") || length(missing_codes) > 0L) {
@@ -502,32 +526,38 @@
 #' @param .standardize_val_labels Logical or `NULL` (default). If `TRUE`,
 #'   the harmonized value-label set is used as the active `"labels"` (and
 #'   for `to_factor` level text) instead of the wave-specific one, where
-#'   one is documented; if `NULL`, follows `standardize`. The wave-specific
-#'   value labels are always available separately as `"labels_wave"`.
+#'   one is documented, and codes are read in the harmonized coding (see
+#'   Details); if `NULL`, follows `standardize`. The wave-specific value
+#'   labels are always available separately as `"labels_wave"`.
 #' @param add_wavecode Logical, default `FALSE`. If `TRUE`, inserts a
 #'   `"Wave"` column (filled with the already-resolved `wave`) right after
 #'   `"respnr"`. Forced to `TRUE` whenever `.standardize_names` is
 #'   effectively `TRUE`.
 #' @param to_factor Logical, default `TRUE`. Convert categorical
 #'   (value-labelled) variables to factors using the active value labels
-#'   as levels, instead of leaving them numeric/character. A variable whose
-#'   value coding is inconsistent across waves (database `var_type ==
-#'   "text"`) is instead recoded to its wave-specific label text
-#'   (character), never a factor -- see Details.
+#'   as levels, instead of leaving them numeric/character. Codes that share
+#'   a label (e.g. 19 and 23 both "Italian") share one level. A variable
+#'   whose answer labels differ between waves (database `var_type ==
+#'   "text"`) gets every wave's answers as levels under standardize -- see
+#'   Details. With `keep_user_na = TRUE`, the result is label text with the
+#'   missing labels declared user-missing instead, since a factor can't
+#'   mark a level missing.
 #' @param to_numeric Logical, default `TRUE`. Restore count/continuous
 #'   variables (per the database's `var_type`) to plain numeric. How their
 #'   missing-value codes come out is set by `keep_user_na`.
 #' @param keep_user_na Logical, default `FALSE`. How missing-value codes
-#'   (e.g. `-2` = "na, see BMOVED") are represented, the same way for every
+#'   (e.g. `-2` = "institution") are represented, the same way for every
 #'   variable type. With `FALSE`, every missing code becomes `NA`, and
-#'   factors get no level for it. With `TRUE`, every missing code is kept:
-#'   factors and label-text (character) variables show its label text, and
-#'   any other variable -- including a `to_numeric` one, since a numeric
-#'   vector can't hold text -- keeps the raw code as a
-#'   `haven_labelled_spss` vector with the value labels attached and the
-#'   missing codes declared user-missing (so [haven::zap_missing()] or
-#'   `is.na()` still recognise them). See Details for which codes count as
-#'   missing.
+#'   factors get no level for it. With `TRUE`, every missing code is kept
+#'   with its own label, declared SPSS user-missing, so the informative
+#'   label stays in the data but is analysed as missing (`is.na()` is
+#'   `TRUE` for it): a `haven_labelled_spss` vector, of label text for a
+#'   `to_factor` or text variable and of the codes otherwise (including a
+#'   `to_numeric` one). [labelled::to_factor()] or [haven::as_factor()]
+#'   turn label text into a factor with the missing labels as extra
+#'   levels, `labelled::to_factor(user_na_to_na = TRUE)` or
+#'   [haven::zap_missing()] into one without them. See Details for which
+#'   codes count as missing.
 #'
 #' @details
 #' Identity (file code and wave) is resolved in priority order: (1) the
@@ -555,13 +585,25 @@
 #' [lasa_label_report()].
 #'
 #' A variable's value coding sometimes genuinely differs by wave (e.g. a
-#' binary code's polarity flipped, or an income variable's brackets were
-#' redefined) so no single cross-wave value label could be written; the
-#' database marks such a variable `var_type == "text"` and documents no
-#' harmonized value labels for it at all. `to_factor` then recodes it to
-#' its wave-specific label text (character) instead of a factor, so waves
-#' whose numeric codes disagree but whose label text agrees (e.g.
-#' `0 = "no", 1 = "yes"` vs. `1 = "no", 2 = "yes"`) still merge correctly.
+#' binary code's polarity flipped, `1 = "no"` in wave C but `1 = "yes"` in
+#' 2B, or an income variable's brackets were redefined), so no single
+#' cross-wave value label can be written; the database marks such a
+#' variable `var_type == "text"` and documents no harmonized label for the
+#' codes that differ. With standardize, it is read as its answers' label
+#' text: a factor (`to_factor`) whose levels are every wave's answers, the
+#' same levels at every wave, or plain text (`to_factor = FALSE`). Waves
+#' whose codes disagree but whose labels agree then merge correctly.
+#' Without standardize, every variable gets its wave's own labels.
+#'
+#' A missing-value code can mean something else in different waves too
+#' (e.g. `-4` = "short version" in wave C but "do not know" from wave D
+#' on). With standardize, the meaning the documentation introduced first
+#' keeps the code, and a later meaning moves to the code another wave
+#' gives it, or else to a free code (`-9`, then `-99`, `-98`, ...), so
+#' that each harmonized code has one label. The database's
+#' `value_labels_crosswalk` lists every such move. Harmonized missing
+#' codes are labelled with what the waves say (e.g. "institution"), not a
+#' label made up to cover several reasons.
 #'
 #' A code counts as missing when the label database flags its value label
 #' as missing: every negative documented code, e.g. `-1` = "na, asked", or
@@ -585,8 +627,9 @@
 #'   is on), `"wave_label"`/`"labels_wave"` (always the wave-specific
 #'   versions), `"canonical_name"` (the wave-stripped variable name), and,
 #'   where the database documents them, `"harmonized_label"`/
-#'   `"labels_harmonized"` (the cross-wave-consistent versions -- never
-#'   present for a `var_type == "text"` variable).
+#'   `"labels_harmonized"` (the cross-wave-consistent versions; for a
+#'   `var_type == "text"` variable only its codes that agree between
+#'   waves).
 #'
 #' @seealso [read_lasa_sav()], [lasa_label_report()], [lasa_label_db()],
 #'   [manual_update_lasa_labels()]

@@ -11,14 +11,14 @@
 ## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
 ## matched by name everywhere below, never by position.
 var_types_vec <- c(
-  erh = "numeric",
+  erh = "categorical",
   erhn = "numeric",
   hosp = "numeric",
   medspec = "numeric",
   psych = "numeric",
   psyhosp = "numeric",
   seh_reden = "text",
-  sych = "numeric",
+  sych = "categorical",
   ziekan = "text"
 )
 

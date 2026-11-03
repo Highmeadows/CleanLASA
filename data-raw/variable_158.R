@@ -14,7 +14,7 @@ var_types_vec <- c(
   mpeakf1 = "numeric",
   mpeakf2 = "numeric",
   mpeakf3 = "numeric",
-  mpeakfc = "numeric",
+  mpeakfc = "categorical",
   mpeakfl = "categorical",
   mpeakfm = "numeric",
   mpeakfp = "categorical",

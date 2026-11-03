@@ -1,6 +1,6 @@
 Package: CleanLASA
 Title: Import and Clean LASA SPSS Data
-Version: 1.0.0
+Version: 1.0.0.9000
 Authors@R: 
     person("Bram", "Hoogerheide", , "b.hoogerheide@vu.nl", role = c("aut", "cre"))
 Description: Tools for importing and cleaning data from the Longitudinal
@@ -21,6 +21,7 @@ Imports:
 Suggests: 
     dplyr,
     knitr,
+    labelled,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

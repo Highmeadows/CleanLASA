@@ -8,8 +8,15 @@ lasa_label_db()
 }
 \value{
 A list with \code{variables}, \code{value_labels}, \code{value_labels_harmonized},
-and \code{manual_overrides} (itself a list of \code{variables}/\code{value_labels}) --
-see the package README for the full schema.
+\code{value_labels_crosswalk}, and \code{manual_overrides} (itself a list of
+\code{variables}/\code{value_labels}) -- see the package README for the full
+schema. \code{value_labels_crosswalk} says how a wave's codes are read under
+\code{standardize}: one row per wave-specific value label of a variable whose
+answer labels differ between waves (\code{var_type == "text"}), with the
+answer's text (\code{harmonized_label}) and its position among the factor
+levels (\code{level}), and one row per missing-value code whose meaning
+differs between waves, with the code it moves to (\code{harmonized_numeric},
+e.g. -9 or -99) and its label.
 }
 \description{
 Returns the label metadata database currently in effect: the bundled

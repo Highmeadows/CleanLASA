@@ -40,7 +40,9 @@ test_that("keep_user_na = FALSE turns every missing code into NA, for every vari
   }
   expect_true(is.factor(dat$hindep))
   expect_true(is.factor(dat$lrooms))
-  expect_true(is.character(dat$housem))
+  # housem's answer labels differ between waves (var_type "text"), so it
+  # reads as text -- a factor with every wave's answers as levels.
+  expect_true(is.factor(dat$housem))
   expect_identical(class(dat$fdoor), "numeric")
   expect_identical(class(dat$nrooms), "numeric")
 })
@@ -58,9 +60,13 @@ test_that("keep_user_na = FALSE leaves no factor level for a missing code", {
 test_that("keep_user_na = TRUE keeps every missing code, for every variable type", {
   dat <- read_014(keep_user_na = TRUE)
 
-  # Factors and label text: the missing code's label, never NA.
+  # Factors and label text: the missing code's label, declared SPSS
+  # user-missing, so it is kept but counts as missing.
   for (v in c("hindep", "lrooms", "momonth", "housem", "spec01")) {
+    expect_s3_class(dat[[v]], "haven_labelled_spss")
+    expect_type(unclass(dat[[v]]), "character")
     expect_false(anyNA(as.character(dat[[v]])), info = v)
+    expect_equal(is.na(dat[[v]]), c(TRUE, FALSE, TRUE, TRUE), info = v)
   }
   harmonized <- lasa_label_db()$value_labels_harmonized
   na_asked <- harmonized$value_label[
@@ -69,12 +75,12 @@ test_that("keep_user_na = TRUE keeps every missing code, for every variable type
   expect_equal(as.character(dat$hindep)[[3L]], na_asked)
   # An undocumented negative code is still kept, as its own number.
   expect_equal(as.character(dat$hindep)[[4L]], "-7")
-  wave_labels <- lasa_label_db()$value_labels
-  see_bmoved <- wave_labels$value_label[
-    wave_labels$filecode == "014" & wave_labels$wave == "B" &
-      wave_labels$variable_name == "bhousem" & wave_labels$value_numeric == -2
-  ]
-  expect_equal(dat$housem[[1L]], see_bmoved)
+  # The informative label, read from the waves' own labels (the routing
+  # label names the variable without its wave prefix).
+  expect_equal(as.character(dat$housem)[[1L]], "na, see MOVED")
+  # haven::as_factor() / labelled::to_factor() turn the missing labels into
+  # levels; labelled::to_factor(user_na_to_na = TRUE) into NA.
+  expect_true("na, see MOVED" %in% levels(haven::as_factor(dat$housem)))
 
   # Numeric variables can't hold text: the raw code, declared user-missing.
   for (v in c("fdoor", "nrooms")) {
@@ -94,8 +100,18 @@ test_that("keep_user_na applies when to_factor/to_numeric are off", {
     expect_equal(is.na(off[[v]]), c(TRUE, FALSE, TRUE, TRUE), info = v)
     expect_false(inherits(off[[v]], "haven_labelled_spss"), info = v)
     expect_s3_class(kept[[v]], "haven_labelled_spss")
+    expect_equal(is.na(kept[[v]]), c(TRUE, FALSE, TRUE, TRUE), info = v)
+  }
+  # Codes stay codes -- except in a variable whose answer labels differ
+  # between waves, which standardize reads as text.
+  for (v in c("lrooms", "momonth", "fdoor", "nrooms")) {
     expect_equal(as.vector(unclass(kept[[v]]))[c(1L, 3L, 4L)], c(-2, -1, -7), info = v)
   }
+  for (v in c("hindep", "housem", "spec01")) {
+    expect_type(unclass(kept[[v]]), "character")
+  }
+  codes <- read_014(to_factor = FALSE, to_numeric = FALSE, keep_user_na = TRUE, standardize = FALSE)
+  expect_equal(as.vector(unclass(codes$bhousem))[c(1L, 3L, 4L)], c(-2, -1, -7))
 })
 
 test_that("an undocumented column follows its own SPSS user-missing declaration", {
@@ -113,7 +129,8 @@ test_that("apply_lasa_labels() takes keep_user_na too", {
   dropped <- apply_lasa_labels(raw, filecode = "014", wave = "B")
   kept <- apply_lasa_labels(raw, filecode = "014", wave = "B", keep_user_na = TRUE)
   expect_equal(is.na(dropped$lrooms), c(TRUE, FALSE, TRUE, TRUE))
-  expect_false(anyNA(kept$lrooms))
+  expect_false(anyNA(as.character(kept$lrooms)))
+  expect_equal(is.na(kept$lrooms), c(TRUE, FALSE, TRUE, TRUE))
   expect_error(
     apply_lasa_labels(raw, filecode = "014", wave = "B", keep_user_na = NA),
     "'keep_user_na' must be TRUE or FALSE"
@@ -131,8 +148,10 @@ test_that("re-labelling kept output with keep_user_na = FALSE blanks its missing
     for (v in c("hindep", "lrooms", "momonth", "housem", "spec01")) {
       expect_identical(as.character(relabelled[[v]]), as.character(direct[[v]]), info = v)
     }
-    for (v in c("hindep", "lrooms", "momonth")) {
-      expect_identical(levels(relabelled[[v]]), levels(direct[[v]]), info = v)
+    if (to_factor) {
+      for (v in c("hindep", "lrooms", "momonth", "housem")) {
+        expect_identical(levels(relabelled[[v]]), levels(direct[[v]]), info = v)
+      }
     }
     for (v in c("fdoor", "nrooms")) {
       expect_equal(is.na(relabelled[[v]]), c(TRUE, FALSE, TRUE, TRUE), info = v)

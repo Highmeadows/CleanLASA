@@ -39,8 +39,9 @@ for a nonstandard baseline wave). If omitted, derived from \code{path}.}
 
 \item{keep_user_na}{Logical, default \code{FALSE}. With \code{FALSE}, every
 missing-value code becomes \code{NA}; with \code{TRUE}, missing codes are kept
-(as label text in factors and character variables, as the raw code
-declared user-missing otherwise). See \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}. The file
+with their labels, declared SPSS user-missing (\code{haven_labelled_spss}:
+label text for a \code{to_factor} or text variable, the code otherwise),
+so they count as missing. See \code{\link[=apply_lasa_labels]{apply_lasa_labels()}}. The file
 itself is always read with every code intact
 (\code{haven::read_sav(user_na = TRUE)}), so this choice is made from the
 LASA documentation rather than from whatever the \code{.sav} file happens

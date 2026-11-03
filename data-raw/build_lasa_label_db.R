@@ -191,10 +191,22 @@ rownames(variables) <- NULL
 rownames(value_labels) <- NULL
 rownames(value_labels_harmonized) <- NULL
 
+## Compare each variable's value labels across waves: answer labels that
+## differ make it var_type "text", and a missing-value code whose meaning
+## differs moves to a free code for its later meaning(s). See
+## .lasa_harmonize_codes() in label_db_helpers.R.
+harmonized <- label_env$.lasa_harmonize_codes(variables, value_labels, value_labels_harmonized)
+variables <- harmonized$variables
+value_labels_harmonized <- harmonized$value_labels_harmonized
+value_labels_crosswalk <- rbind(empty$value_labels_crosswalk, harmonized$value_labels_crosswalk)
+rownames(value_labels_harmonized) <- NULL
+rownames(value_labels_crosswalk) <- NULL
+
 lasa_label_db_bundled <- list(
   variables = variables,
   value_labels = value_labels,
   value_labels_harmonized = value_labels_harmonized,
+  value_labels_crosswalk = value_labels_crosswalk,
   manual_overrides = empty$manual_overrides
 )
 
@@ -218,6 +230,10 @@ cat(
   " value_labels:", nrow(lasa_label_db_bundled$value_labels), "\n",
   " value_labels_harmonized:", nrow(lasa_label_db_bundled$value_labels_harmonized), "\n",
   " variables downgraded to text (inconsistent harmonized coding):", n_placeholder_total, "\n",
+  " variables made text (answer labels differ between waves):", harmonized$n_new_text, "\n",
+  " value_labels_crosswalk:", nrow(lasa_label_db_bundled$value_labels_crosswalk),
+  "(moved missing codes:", sum(!is.na(value_labels_crosswalk$harmonized_numeric) &
+    value_labels_crosswalk$harmonized_numeric != value_labels_crosswalk$value_numeric), ")\n",
   " variables whose values can be negative:", sum(lasa_label_db_bundled$variables$can_be_negative), "\n"
 )
 

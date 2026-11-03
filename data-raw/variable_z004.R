@@ -10,6 +10,9 @@
 ## Every canonical variable name this filecode declares, and its
 ## collapsed type ("numeric"/"categorical"/"text"/"date"). Free order --
 ## matched by name everywhere below, never by position.
+## aedu is years of education (aeducat is the categorical version): its
+## value labels name the level each number of years stands for, so it
+## stays numeric.
 var_types_vec <- c(
   aedu = "numeric",
   aeducat = "categorical",

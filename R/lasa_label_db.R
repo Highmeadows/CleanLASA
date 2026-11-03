@@ -25,6 +25,13 @@
 #                              value_numeric): value_label, is_missing --
 #                              the cross-wave-standardized value labels for
 #                              that variable, independent of wave
+#   value_labels_crosswalk     one row per (filecode, wave, variable_name,
+#                              value_numeric) whose standardized reading
+#                              differs from the wave's own: canonical_name,
+#                              harmonized_numeric (a moved missing code, or
+#                              NA for a text variable's answer),
+#                              harmonized_label, is_missing, level (a text
+#                              variable's answer's factor-level position)
 #   manual_overrides$variables     hand-authored patch rows, written only
 #                              by manual_update_lasa_labels()
 #   manual_overrides$value_labels  ditto, for individual value-label rows
@@ -48,6 +55,12 @@
     value_labels_harmonized = data.frame(
       filecode = character(0), canonical_name = character(0),
       value_numeric = numeric(0), value_label = character(0), is_missing = logical(0),
+      stringsAsFactors = FALSE
+    ),
+    value_labels_crosswalk = data.frame(
+      filecode = character(0), wave = character(0), variable_name = character(0),
+      canonical_name = character(0), value_numeric = numeric(0), harmonized_numeric = numeric(0),
+      harmonized_label = character(0), is_missing = logical(0), level = integer(0),
       stringsAsFactors = FALSE
     ),
     manual_overrides = list(
@@ -183,6 +196,24 @@
     ))
   }
 
+  crosswalk <- db$value_labels_crosswalk
+  if (!is.null(crosswalk) && nrow(crosswalk) > 0L) {
+    key_crosswalk <- with(crosswalk, paste(filecode, wave, variable_name, value_numeric, sep = "\r"))
+    if (anyDuplicated(key_crosswalk) > 0L) {
+      problems <- c(problems, sprintf(
+        "%d duplicate (filecode, wave, variable_name, value_numeric) key(s) in 'value_labels_crosswalk'.",
+        sum(duplicated(key_crosswalk))
+      ))
+    }
+    orphan_crosswalk <- !key_crosswalk %in% key_val_full
+    if (any(orphan_crosswalk)) {
+      problems <- c(problems, sprintf(
+        "%d row(s) in 'value_labels_crosswalk' reference a value label not present in 'value_labels'.",
+        sum(orphan_crosswalk)
+      ))
+    }
+  }
+
   problems
 }
 
@@ -226,6 +257,11 @@
     ,
     drop = FALSE
   ]
+  # A database saved before the crosswalk existed has none: every code
+  # then keeps its own number and harmonized label.
+  crosswalk <- db$value_labels_crosswalk
+  if (is.null(crosswalk)) crosswalk <- .lasa_empty_label_db()$value_labels_crosswalk
+  crosswalk <- crosswalk[.lasa_normalize_filecode(crosswalk$filecode) == normalized_filecode, , drop = FALSE]
   vars$manual_override <- rep(FALSE, nrow(vars))
   vals$manual_override <- rep(FALSE, nrow(vals))
 
@@ -239,7 +275,10 @@
   ]
 
   if (nrow(mo_var_rows) == 0L) {
-    return(list(variables = vars, value_labels = vals, value_labels_harmonized = harmonized))
+    return(list(
+      variables = vars, value_labels = vals, value_labels_harmonized = harmonized,
+      value_labels_crosswalk = crosswalk
+    ))
   }
 
   ## variable_label overrides: upsert by variable_name (last-applied wins
@@ -294,7 +333,10 @@
     vals <- rbind(other_rows, this_var_rows)
   }
 
-  list(variables = vars, value_labels = vals, value_labels_harmonized = harmonized)
+  list(
+    variables = vars, value_labels = vals, value_labels_harmonized = harmonized,
+    value_labels_crosswalk = crosswalk
+  )
 }
 
 #' Inspect the active LASA label database
@@ -306,8 +348,15 @@
 #' manual correction.
 #'
 #' @return A list with `variables`, `value_labels`, `value_labels_harmonized`,
-#'   and `manual_overrides` (itself a list of `variables`/`value_labels`) --
-#'   see the package README for the full schema.
+#'   `value_labels_crosswalk`, and `manual_overrides` (itself a list of
+#'   `variables`/`value_labels`) -- see the package README for the full
+#'   schema. `value_labels_crosswalk` says how a wave's codes are read under
+#'   `standardize`: one row per wave-specific value label of a variable whose
+#'   answer labels differ between waves (`var_type == "text"`), with the
+#'   answer's text (`harmonized_label`) and its position among the factor
+#'   levels (`level`), and one row per missing-value code whose meaning
+#'   differs between waves, with the code it moves to (`harmonized_numeric`,
+#'   e.g. -9 or -99) and its label.
 #'
 #' @seealso [apply_lasa_labels()], [manual_update_lasa_labels()]
 #' @export
@@ -454,6 +503,7 @@ restore_lasa_labels <- function(filecode = NULL, wave = NULL, variable = NULL, r
       db$variables <- bundled$variables
       db$value_labels <- bundled$value_labels
       db$value_labels_harmonized <- bundled$value_labels_harmonized
+      db$value_labels_crosswalk <- bundled$value_labels_crosswalk
     }
   }
 
