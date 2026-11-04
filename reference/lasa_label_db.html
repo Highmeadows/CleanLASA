@@ -15,7 +15,7 @@ manual correction."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">CleanLASA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,8 +61,15 @@ manual correction.</p>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A list with <code>variables</code>, <code>value_labels</code>, <code>value_labels_harmonized</code>,
-and <code>manual_overrides</code> (itself a list of <code>variables</code>/<code>value_labels</code>) –
-see the package README for the full schema.</p>
+<code>value_labels_crosswalk</code>, and <code>manual_overrides</code> (itself a list of
+<code>variables</code>/<code>value_labels</code>) – see the package README for the full
+schema. <code>value_labels_crosswalk</code> says how a wave's codes are read under
+<code>standardize</code>: one row per wave-specific value label of a variable whose
+answer labels differ between waves (<code>var_type == "text"</code>), with the
+answer's text (<code>harmonized_label</code>) and its position among the factor
+levels (<code>level</code>), and one row per missing-value code whose meaning
+differs between waves, with the code it moves to (<code>harmonized_numeric</code>,
+e.g. -9 or -99) and its label.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

@@ -23,7 +23,7 @@ single-valued &quot;Wave&quot; column."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">CleanLASA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,8 +144,9 @@ separately as <code>"wave_label"</code>.</p></dd>
 <dd><p>Logical or <code>NULL</code> (default). If <code>TRUE</code>,
 the harmonized value-label set is used as the active <code>"labels"</code> (and
 for <code>to_factor</code> level text) instead of the wave-specific one, where
-one is documented; if <code>NULL</code>, follows <code>standardize</code>. The wave-specific
-value labels are always available separately as <code>"labels_wave"</code>.</p></dd>
+one is documented, and codes are read in the harmonized coding (see
+Details); if <code>NULL</code>, follows <code>standardize</code>. The wave-specific value
+labels are always available separately as <code>"labels_wave"</code>.</p></dd>
 
 
 <dt id="arg-add-wavecode">add_wavecode<a class="anchor" aria-label="anchor" href="#arg-add-wavecode"></a></dt>
@@ -158,9 +159,12 @@ effectively <code>TRUE</code>.</p></dd>
 <dt id="arg-to-factor">to_factor<a class="anchor" aria-label="anchor" href="#arg-to-factor"></a></dt>
 <dd><p>Logical, default <code>TRUE</code>. Convert categorical
 (value-labelled) variables to factors using the active value labels
-as levels, instead of leaving them numeric/character. A variable whose
-value coding is inconsistent across waves (database <code>var_type == "text"</code>) is instead recoded to its wave-specific label text
-(character), never a factor – see Details.</p></dd>
+as levels, instead of leaving them numeric/character. Codes that share
+a label (e.g. 19 and 23 both "Italian") share one level. A variable
+whose answer labels differ between waves (database <code>var_type == "text"</code>) gets every wave's answers as levels under standardize – see
+Details. With <code>keep_user_na = TRUE</code>, the result is label text with the
+missing labels declared user-missing instead, since a factor can't
+mark a level missing.</p></dd>
 
 
 <dt id="arg-to-numeric">to_numeric<a class="anchor" aria-label="anchor" href="#arg-to-numeric"></a></dt>
@@ -171,16 +175,18 @@ missing-value codes come out is set by <code>keep_user_na</code>.</p></dd>
 
 <dt id="arg-keep-user-na">keep_user_na<a class="anchor" aria-label="anchor" href="#arg-keep-user-na"></a></dt>
 <dd><p>Logical, default <code>FALSE</code>. How missing-value codes
-(e.g. <code>-2</code> = "na, see BMOVED") are represented, the same way for every
+(e.g. <code>-2</code> = "institution") are represented, the same way for every
 variable type. With <code>FALSE</code>, every missing code becomes <code>NA</code>, and
-factors get no level for it. With <code>TRUE</code>, every missing code is kept:
-factors and label-text (character) variables show its label text, and
-any other variable – including a <code>to_numeric</code> one, since a numeric
-vector can't hold text – keeps the raw code as a
-<code>haven_labelled_spss</code> vector with the value labels attached and the
-missing codes declared user-missing (so <code><a href="https://haven.tidyverse.org/reference/zap_missing.html" class="external-link">haven::zap_missing()</a></code> or
-<code><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na()</a></code> still recognise them). See Details for which codes count as
-missing.</p></dd>
+factors get no level for it. With <code>TRUE</code>, every missing code is kept
+with its own label, declared SPSS user-missing, so the informative
+label stays in the data but is analysed as missing (<code><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na()</a></code> is
+<code>TRUE</code> for it): a <code>haven_labelled_spss</code> vector, of label text for a
+<code>to_factor</code> or text variable and of the codes otherwise (including a
+<code>to_numeric</code> one). <code><a href="https://larmarange.github.io/labelled/reference/to_factor.html" class="external-link">labelled::to_factor()</a></code> or <code><a href="https://forcats.tidyverse.org/reference/as_factor.html" class="external-link">haven::as_factor()</a></code>
+turn label text into a factor with the missing labels as extra
+levels, <code>labelled::to_factor(user_na_to_na = TRUE)</code> or
+<code><a href="https://haven.tidyverse.org/reference/zap_missing.html" class="external-link">haven::zap_missing()</a></code> into one without them. See Details for which
+codes count as missing.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -193,8 +199,9 @@ labels – wave-specific unless the corresponding standardize switch
 is on), <code>"wave_label"</code>/<code>"labels_wave"</code> (always the wave-specific
 versions), <code>"canonical_name"</code> (the wave-stripped variable name), and,
 where the database documents them, <code>"harmonized_label"</code>/
-<code>"labels_harmonized"</code> (the cross-wave-consistent versions – never
-present for a <code>var_type == "text"</code> variable).</p>
+<code>"labels_harmonized"</code> (the cross-wave-consistent versions; for a
+<code>var_type == "text"</code> variable only its codes that agree between
+waves).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -220,13 +227,24 @@ by name rather than canonical/value-label lookups).</p>
 they're left alone and recorded in the <code>"label_report"</code> attribute; see
 <code><a href="lasa_label_report.html">lasa_label_report()</a></code>.</p>
 <p>A variable's value coding sometimes genuinely differs by wave (e.g. a
-binary code's polarity flipped, or an income variable's brackets were
-redefined) so no single cross-wave value label could be written; the
-database marks such a variable <code>var_type == "text"</code> and documents no
-harmonized value labels for it at all. <code>to_factor</code> then recodes it to
-its wave-specific label text (character) instead of a factor, so waves
-whose numeric codes disagree but whose label text agrees (e.g.
-<code>0 = "no", 1 = "yes"</code> vs. <code>1 = "no", 2 = "yes"</code>) still merge correctly.</p>
+binary code's polarity flipped, <code>1 = "no"</code> in wave C but <code>1 = "yes"</code> in
+2B, or an income variable's brackets were redefined), so no single
+cross-wave value label can be written; the database marks such a
+variable <code>var_type == "text"</code> and documents no harmonized label for the
+codes that differ. With standardize, it is read as its answers' label
+text: a factor (<code>to_factor</code>) whose levels are every wave's answers, the
+same levels at every wave, or plain text (<code>to_factor = FALSE</code>). Waves
+whose codes disagree but whose labels agree then merge correctly.
+Without standardize, every variable gets its wave's own labels.</p>
+<p>A missing-value code can mean something else in different waves too
+(e.g. <code>-4</code> = "short version" in wave C but "do not know" from wave D
+on). With standardize, the meaning the documentation introduced first
+keeps the code, and a later meaning moves to the code another wave
+gives it, or else to a free code (<code>-9</code>, then <code>-99</code>, <code>-98</code>, ...), so
+that each harmonized code has one label. The database's
+<code>value_labels_crosswalk</code> lists every such move. Harmonized missing
+codes are labelled with what the waves say (e.g. "institution"), not a
+label made up to cover several reasons.</p>
 <p>A code counts as missing when the label database flags its value label
 as missing: every negative documented code, e.g. <code>-1</code> = "na, asked", or
 <code>-2</code> = "valid score" in a "reason missing" variable (the score is valid,

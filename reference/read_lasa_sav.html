@@ -15,7 +15,7 @@ read_lasa_sav() is a thin wrapper around it."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">CleanLASA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,8 +103,9 @@ for a nonstandard baseline wave). If omitted, derived from <code>path</code>.</p
 <dt id="arg-keep-user-na">keep_user_na<a class="anchor" aria-label="anchor" href="#arg-keep-user-na"></a></dt>
 <dd><p>Logical, default <code>FALSE</code>. With <code>FALSE</code>, every
 missing-value code becomes <code>NA</code>; with <code>TRUE</code>, missing codes are kept
-(as label text in factors and character variables, as the raw code
-declared user-missing otherwise). See <code><a href="apply_lasa_labels.html">apply_lasa_labels()</a></code>. The file
+with their labels, declared SPSS user-missing (<code>haven_labelled_spss</code>:
+label text for a <code>to_factor</code> or text variable, the code otherwise),
+so they count as missing. See <code><a href="apply_lasa_labels.html">apply_lasa_labels()</a></code>. The file
 itself is always read with every code intact
 (<code>haven::read_sav(user_na = TRUE)</code>), so this choice is made from the
 LASA documentation rather than from whatever the <code>.sav</code> file happens

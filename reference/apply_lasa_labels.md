@@ -95,9 +95,10 @@ apply_lasa_labels(
 
   Logical or `NULL` (default). If `TRUE`, the harmonized value-label set
   is used as the active `"labels"` (and for `to_factor` level text)
-  instead of the wave-specific one, where one is documented; if `NULL`,
-  follows `standardize`. The wave-specific value labels are always
-  available separately as `"labels_wave"`.
+  instead of the wave-specific one, where one is documented, and codes
+  are read in the harmonized coding (see Details); if `NULL`, follows
+  `standardize`. The wave-specific value labels are always available
+  separately as `"labels_wave"`.
 
 - add_wavecode:
 
@@ -109,10 +110,13 @@ apply_lasa_labels(
 
   Logical, default `TRUE`. Convert categorical (value-labelled)
   variables to factors using the active value labels as levels, instead
-  of leaving them numeric/character. A variable whose value coding is
-  inconsistent across waves (database `var_type == "text"`) is instead
-  recoded to its wave-specific label text (character), never a factor –
-  see Details.
+  of leaving them numeric/character. Codes that share a label (e.g. 19
+  and 23 both "Italian") share one level. A variable whose answer labels
+  differ between waves (database `var_type == "text"`) gets every wave's
+  answers as levels under standardize – see Details. With
+  `keep_user_na = TRUE`, the result is label text with the missing
+  labels declared user-missing instead, since a factor can't mark a
+  level missing.
 
 - to_numeric:
 
@@ -122,18 +126,22 @@ apply_lasa_labels(
 
 - keep_user_na:
 
-  Logical, default `FALSE`. How missing-value codes (e.g. `-2` = "na,
-  see BMOVED") are represented, the same way for every variable type.
+  Logical, default `FALSE`. How missing-value codes (e.g. `-2` =
+  "institution") are represented, the same way for every variable type.
   With `FALSE`, every missing code becomes `NA`, and factors get no
-  level for it. With `TRUE`, every missing code is kept: factors and
-  label-text (character) variables show its label text, and any other
-  variable – including a `to_numeric` one, since a numeric vector can't
-  hold text – keeps the raw code as a `haven_labelled_spss` vector with
-  the value labels attached and the missing codes declared user-missing
-  (so
+  level for it. With `TRUE`, every missing code is kept with its own
+  label, declared SPSS user-missing, so the informative label stays in
+  the data but is analysed as missing
+  ([`is.na()`](https://rdrr.io/r/base/NA.html) is `TRUE` for it): a
+  `haven_labelled_spss` vector, of label text for a `to_factor` or text
+  variable and of the codes otherwise (including a `to_numeric` one).
+  [`labelled::to_factor()`](https://larmarange.github.io/labelled/reference/to_factor.html)
+  or
+  [`haven::as_factor()`](https://forcats.tidyverse.org/reference/as_factor.html)
+  turn label text into a factor with the missing labels as extra levels,
+  `labelled::to_factor(user_na_to_na = TRUE)` or
   [`haven::zap_missing()`](https://haven.tidyverse.org/reference/zap_missing.html)
-  or [`is.na()`](https://rdrr.io/r/base/NA.html) still recognise them).
-  See Details for which codes count as missing.
+  into one without them. See Details for which codes count as missing.
 
 ## Value
 
@@ -145,8 +153,8 @@ carries `"label"`/`"labels"` (the *active* variable label / value labels
 `"wave_label"`/`"labels_wave"` (always the wave-specific versions),
 `"canonical_name"` (the wave-stripped variable name), and, where the
 database documents them, `"harmonized_label"`/ `"labels_harmonized"`
-(the cross-wave-consistent versions – never present for a
-`var_type == "text"` variable).
+(the cross-wave-consistent versions; for a `var_type == "text"` variable
+only its codes that agree between waves).
 
 ## Details
 
@@ -175,13 +183,25 @@ they're left alone and recorded in the `"label_report"` attribute; see
 [`lasa_label_report()`](https://highmeadows.github.io/CleanLASA/reference/lasa_label_report.md).
 
 A variable's value coding sometimes genuinely differs by wave (e.g. a
-binary code's polarity flipped, or an income variable's brackets were
-redefined) so no single cross-wave value label could be written; the
-database marks such a variable `var_type == "text"` and documents no
-harmonized value labels for it at all. `to_factor` then recodes it to
-its wave-specific label text (character) instead of a factor, so waves
-whose numeric codes disagree but whose label text agrees (e.g.
-`0 = "no", 1 = "yes"` vs. `1 = "no", 2 = "yes"`) still merge correctly.
+binary code's polarity flipped, `1 = "no"` in wave C but `1 = "yes"` in
+2B, or an income variable's brackets were redefined), so no single
+cross-wave value label can be written; the database marks such a
+variable `var_type == "text"` and documents no harmonized label for the
+codes that differ. With standardize, it is read as its answers' label
+text: a factor (`to_factor`) whose levels are every wave's answers, the
+same levels at every wave, or plain text (`to_factor = FALSE`). Waves
+whose codes disagree but whose labels agree then merge correctly.
+Without standardize, every variable gets its wave's own labels.
+
+A missing-value code can mean something else in different waves too
+(e.g. `-4` = "short version" in wave C but "do not know" from wave D
+on). With standardize, the meaning the documentation introduced first
+keeps the code, and a later meaning moves to the code another wave gives
+it, or else to a free code (`-9`, then `-99`, `-98`, ...), so that each
+harmonized code has one label. The database's `value_labels_crosswalk`
+lists every such move. Harmonized missing codes are labelled with what
+the waves say (e.g. "institution"), not a label made up to cover several
+reasons.
 
 A code counts as missing when the label database flags its value label
 as missing: every negative documented code, e.g. `-1` = "na, asked", or

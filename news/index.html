@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CleanLASA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,24 @@
       <small>Source: <a href="https://github.com/Highmeadows/CleanLASA/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="cleanlasa-development-version">CleanLASA (development version)<a class="anchor" aria-label="anchor" href="#cleanlasa-development-version"></a></h2>
+<div class="section level3">
+<h3 id="missing-values-development-version">Missing values<a class="anchor" aria-label="anchor" href="#missing-values-development-version"></a></h3>
+<ul><li>
+<code>keep_user_na = TRUE</code> now keeps a missing-value code with its own label, declared SPSS user-missing, for every variable: the informative label (e.g. <code>-2</code> = “institution”) stays in the data but counts as missing (<code><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na()</a></code>). A <code>to_factor</code> variable comes out as a <code>haven_labelled_spss</code> vector of label text instead of a factor with the missing reasons as levels (a factor can’t mark a level missing). <code><a href="https://larmarange.github.io/labelled/reference/to_factor.html" class="external-link">labelled::to_factor()</a></code> turns it into that factor; <code>labelled::to_factor(user_na_to_na = TRUE)</code> into one without them (<a href="https://github.com/Highmeadows/CleanLASA/issues/27" class="external-link">#27</a>).</li>
+<li>With <code>standardize</code>, a missing-value code whose meaning differs between waves keeps its code for the meaning the documentation introduced first; a later meaning moves to the code another wave gives it, or else to a free code (<code>-9</code>, then <code>-99</code>, <code>-98</code>, …). For example, 272’s <code>-4</code> is “short version” in wave C and “do not know” from D on, which now reads as <code>-9</code> (<a href="https://github.com/Highmeadows/CleanLASA/issues/27" class="external-link">#27</a>).</li>
+<li>Harmonized missing codes are labelled with what the waves say (e.g. “na, see MOVED”, “institution”), no longer with a label made up to cover several reasons (“not available, routing”, “response unavailable”) (<a href="https://github.com/Highmeadows/CleanLASA/issues/27" class="external-link">#27</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="value-labels-development-version">Value labels<a class="anchor" aria-label="anchor" href="#value-labels-development-version"></a></h3>
+<ul><li>A variable whose answer labels differ between waves (e.g. 161’s remarks, <code>1 = "no"</code> in C but <code>1 = "yes"</code> in 2B) is now <code>var_type</code> “text”: with <code>standardize</code> it reads as a factor whose levels are every wave’s answers, the same at every wave, or as plain text with <code>to_factor = FALSE</code>. Its harmonized labels no longer join several waves’ labels (“no / yes”). Without <code>standardize</code>, every variable gets its own wave’s labels, as a factor with <code>to_factor</code> (<a href="https://github.com/Highmeadows/CleanLASA/issues/27" class="external-link">#27</a>).</li>
+<li>Codes that share a label, such as z004 <code>anation</code>’s 19 and 23 (“Italian”), are now one factor level instead of “Italian [19]” and “Italian [23]” (<a href="https://github.com/Highmeadows/CleanLASA/issues/27" class="external-link">#27</a>).</li>
+<li>A text variable’s code that its wave doesn’t label falls back to the harmonized label (e.g. 035 <code>hart14</code> at wave B) (<a href="https://github.com/Highmeadows/CleanLASA/issues/27" class="external-link">#27</a>).</li>
+<li>Categorical items typed numeric are now categorical: 035 <code>incon9</code>, <code>incon10</code>, <code>cva02</code>, <code>cva02b</code>, <code>hart06</code>, <code>kneep5</code>, <code>kneep9</code>; 161 <code>mgriplp3</code>/<code>4</code>, <code>mgriprp3</code>/<code>4</code>, <code>mweightp7</code>, <code>rm161</code>; 033 <code>health3</code>, <code>health4</code>; 045 <code>erh</code>, <code>sych</code>; 154 <code>msmokecigpnw</code>; 158 <code>mpeakfc</code>; 184 <code>mmilka50y</code>, <code>mmilkb25y</code>; 435 <code>xcara07</code>, <code>xcara08</code>, <code>xcva02</code>, <code>xdiabe12</code>, <code>xhart06</code>, <code>xhart11</code>. z004 <code>aedu</code> stays numeric: it is years of education, and its labels name each number of years’ level (<a href="https://github.com/Highmeadows/CleanLASA/issues/27" class="external-link">#27</a>).</li>
+<li>The label database has a new table, <code>value_labels_crosswalk</code>, listing how a wave’s codes read under <code>standardize</code>.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="cleanlasa-100">CleanLASA 1.0.0<a class="anchor" aria-label="anchor" href="#cleanlasa-100"></a></h2>
 <p>First stable release.</p>

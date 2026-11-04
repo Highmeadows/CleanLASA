@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CleanLASA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -323,19 +323,33 @@ variable as a plain numeric/character vector instead.</p>
 <div class="section level3">
 <h3 id="variables-that-mean-the-same-thing-but-were-coded-differently">Variables that mean the same thing but were coded differently<a class="anchor" aria-label="anchor" href="#variables-that-mean-the-same-thing-but-were-coded-differently"></a>
 </h3>
-<p>A handful of variables were coded on genuinely different numeric
-scales in different waves – for example a yes/no question where
-<code>0</code> meant “no” in one wave but <code>1</code> meant “no” in
-another, or an income bracket that was redefined. There’s no single set
-of value labels that correctly describes every wave for a variable like
-this, so the label database marks it <code>var_type == "text"</code> and
-doesn’t offer harmonized value labels for it at all.
-<code>to_factor</code> handles this by converting the variable to its
-wave-specific label <em>text</em> (a character vector, not a factor)
-instead – so even though the underlying numeric codes disagree between
-waves, the text itself (<code>"no"</code>/<code>"yes"</code>) still
-lines up, and the variable can still be compared or combined across
-waves.</p>
+<p>Some variables were coded differently in different waves – for
+example a yes/no question where <code>1</code> meant “no” in wave C but
+“yes” in wave 2B, or an income bracket that was redefined. There’s no
+single set of value labels that correctly describes every wave for a
+variable like this, so the label database marks it
+<code>var_type == "text"</code> and doesn’t offer harmonized value
+labels for the codes that differ. With <code>standardize = TRUE</code>
+(the default) such a variable is read as its answers’ label
+<em>text</em>: with <code>to_factor</code> a factor whose levels are
+every answer any wave gives, the same levels in every wave, and with
+<code>to_factor = FALSE</code> plain text. So even though the underlying
+numeric codes disagree between waves, the answers
+(<code>"no"</code>/<code>"yes"</code>) still line up, and the variable
+can be compared or combined across waves. With
+<code>standardize = FALSE</code> every variable gets its own wave’s
+labels.</p>
+<p>Missing-value codes can change meaning between waves too: in file
+272, <code>-4</code> means “short version” in wave C but “do not know”
+from wave D on. With <code>standardize = TRUE</code> the meaning the
+documentation introduced first keeps its code, and a later meaning moves
+to the code another wave gives it, or else to a free code
+(<code>-9</code>, then <code>-99</code>, <code>-98</code>, …). Wave D’s
+“do not know” therefore reads as <code>-9</code>. The label database’s
+<code>value_labels_crosswalk</code> table lists every such move.</p>
+<p>Codes that share a label, such as <code>19</code> and <code>23</code>
+(both “Italian”) in z004’s <code>anation</code>, share one factor
+level.</p>
 </div>
 <div class="section level3">
 <h3 id="restore-countcontinuous-variables-to-plain-numeric">Restore count/continuous variables to plain numeric<a class="anchor" aria-label="anchor" href="#restore-countcontinuous-variables-to-plain-numeric"></a>
@@ -365,9 +379,10 @@ factors and numeric-classified variables become plain numbers.</p>
 <h3 id="missing-value-codes">Missing-value codes<a class="anchor" aria-label="anchor" href="#missing-value-codes"></a>
 </h3>
 <p>LASA records <em>why</em> an answer is missing with negative codes,
-such as <code>-1</code> = “Na, asked” or <code>-2</code> = “Na, see
-BMOVED”. <code>keep_user_na</code> decides what happens to them, and it
-does the same thing for every variable, whatever its type:</p>
+such as <code>-1</code> = “na, asked”, <code>-2</code> = “na, see
+BMOVED” or <code>-2</code> = “institution”. <code>keep_user_na</code>
+decides what happens to them, and it does the same thing for every
+variable, whatever its type:</p>
 <ul>
 <li>
 <code>keep_user_na = FALSE</code> (the default): every missing code
@@ -375,14 +390,20 @@ becomes <code>NA</code>, in factors, label-text variables and numeric
 variables alike, and factors get no level for it. This is what you want
 for most analyses.</li>
 <li>
-<code>keep_user_na = TRUE</code>: every missing code is kept.
-Factors and label-text variables show the reason as text
-(<code>"Na, see BMOVED"</code>). A numeric variable can’t hold text, so
-it keeps the raw code (<code>-2</code>) as a
-<code>haven_labelled_spss</code> vector, with the reason as its value
-label and the code declared missing: <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na()</a></code> reports it as
-missing, and <code><a href="https://haven.tidyverse.org/reference/zap_missing.html" class="external-link">haven::zap_missing()</a></code> turns it into
-<code>NA</code> when you need to compute with it.</li>
+<code>keep_user_na = TRUE</code>: every missing code is kept with
+its own label (e.g. <code>-2</code> = “institution”), declared SPSS
+user-missing, so the informative label stays in the data while it is
+analysed as missing: <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na()</a></code> reports it as missing. A
+categorical variable becomes a <code>haven_labelled_spss</code> vector
+of label text (a factor can’t mark a level as missing), and a numeric
+one keeps the raw code (<code>-2</code>) as a
+<code>haven_labelled_spss</code> vector with the reason as its value
+label. To use the reasons as categories after all, turn the text into a
+factor with <code>labelled::to_factor(x)</code> (missing reasons become
+extra levels) or
+<code>labelled::to_factor(x, user_na_to_na = TRUE)</code> (they become
+<code>NA</code>); <code><a href="https://haven.tidyverse.org/reference/zap_missing.html" class="external-link">haven::zap_missing()</a></code> turns a numeric one
+into <code>NA</code> when you need to compute with it.</li>
 </ul>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_lasa_sav.html">read_lasa_sav</a></span><span class="op">(</span><span class="st">"LASAB014.sav"</span>, keep_user_na <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -568,7 +589,7 @@ Still, for a data frame that didn’t originate from
 <p><code><a href="../reference/lasa_label_db.html">lasa_label_db()</a></code> returns the metadata database CleanLASA
 is currently using – the bundled data shipped with the package, plus any
 manual corrections you’ve made (see the next section). It’s a list with
-four parts:</p>
+five parts:</p>
 <ul>
 <li>
 <strong><code>variables</code></strong> – one row per
@@ -589,8 +610,15 @@ which wave you’re looking at). Useful for combining data across waves
 that coded the same concept in slightly different words. A variable
 whose coding genuinely differs across waves
 (<code>var_type == "text"</code> in <code>variables</code>) has no rows
-here at all – see <a href="#variables-that-mean-the-same-thing-but-were-coded-differently">the
+here for the codes that differ – see <a href="#variables-that-mean-the-same-thing-but-were-coded-differently">the
 earlier section</a> on why.</li>
+<li>
+<strong><code>value_labels_crosswalk</code></strong> – how a wave’s
+codes are read under <code>standardize</code>: for a
+<code>var_type == "text"</code> variable, each answer’s text and its
+place among the factor levels (<code>level</code>), and for a
+missing-value code whose meaning differs between waves, the code it
+moves to (<code>harmonized_numeric</code>, e.g. <code>-9</code>).</li>
 <li>
 <strong><code>manual_overrides</code></strong> – your own
 hand-authored corrections, kept separately from the bundled data (see

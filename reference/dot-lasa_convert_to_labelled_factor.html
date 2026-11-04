@@ -4,16 +4,16 @@ engine. Converts x to a factor using value_label_map's names as
 level text for coded values; an observed value with no codebook label,
 or a code the codebook lists without wording (an NA label), keeps its
 own numeric code (as text) as its level, rather than becoming NA.
-Colliding level text (e.g. two different codes that happen to
-share a label) is disambiguated by appending the numeric code in
-brackets."><meta property="og:description" content="Shared to_factor = TRUE transformation used by apply_lasa_labels()'s
+Codes that share their label text (e.g. 19 and 23 both &quot;Italian&quot;) share
+one level – except that a missing code's text and an answer's text are
+kept apart, by appending the code in brackets."><meta property="og:description" content="Shared to_factor = TRUE transformation used by apply_lasa_labels()'s
 engine. Converts x to a factor using value_label_map's names as
 level text for coded values; an observed value with no codebook label,
 or a code the codebook lists without wording (an NA label), keeps its
 own numeric code (as text) as its level, rather than becoming NA.
-Colliding level text (e.g. two different codes that happen to
-share a label) is disambiguated by appending the numeric code in
-brackets."></head><body>
+Codes that share their label text (e.g. 19 and 23 both &quot;Italian&quot;) share
+one level – except that a missing code's text and an answer's text are
+kept apart, by appending the code in brackets."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -21,7 +21,7 @@ brackets."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">CleanLASA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,9 +57,9 @@ engine. Converts <code>x</code> to a factor using <code>value_label_map</code>'s
 level text for coded values; an observed value with no codebook label,
 or a code the codebook lists without wording (an <code>NA</code> label), keeps its
 own numeric code (as text) as its level, rather than becoming <code>NA</code>.
-Colliding level text (e.g. two different codes that happen to
-share a label) is disambiguated by appending the numeric code in
-brackets.</p>
+Codes that share their label text (e.g. 19 and 23 both "Italian") share
+one level – except that a missing code's text and an answer's text are
+kept apart, by appending the code in brackets.</p>
     </div>
 
     <div class="section level2">

@@ -15,9 +15,16 @@ lasa_label_db()
 
 ## Value
 
-A list with `variables`, `value_labels`, `value_labels_harmonized`, and
-`manual_overrides` (itself a list of `variables`/`value_labels`) – see
-the package README for the full schema.
+A list with `variables`, `value_labels`, `value_labels_harmonized`,
+`value_labels_crosswalk`, and `manual_overrides` (itself a list of
+`variables`/`value_labels`) – see the package README for the full
+schema. `value_labels_crosswalk` says how a wave's codes are read under
+`standardize`: one row per wave-specific value label of a variable whose
+answer labels differ between waves (`var_type == "text"`), with the
+answer's text (`harmonized_label`) and its position among the factor
+levels (`level`), and one row per missing-value code whose meaning
+differs between waves, with the code it moves to (`harmonized_numeric`,
+e.g. -9 or -99) and its label.
 
 ## See also
 

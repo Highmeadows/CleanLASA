@@ -22,7 +22,7 @@ lasa_label_db_bundled
 
 ## Format
 
-A list with four elements:
+A list with five elements:
 
 - variables:
 
@@ -48,6 +48,18 @@ A list with four elements:
   `value_label`, `is_missing` – the cross-wave-standardized value labels
   for that variable, independent of wave (used where a variable's coding
   was harmonized across waves that documented it slightly differently).
+  A missing code whose meaning differs between waves has a row for each
+  meaning, the later ones at a free code such as -9 or -99.
+
+- value_labels_crosswalk:
+
+  One row per (`filecode`, `wave`, `variable_name`, `value_numeric`)
+  whose standardized reading differs from the wave's own:
+  `canonical_name`, `harmonized_numeric` (the harmonized code of a moved
+  missing code; `NA` for an answer of a `"text"` variable),
+  `harmonized_label`, `is_missing`, and `level` (the position of a
+  `"text"` variable's answer among its factor levels, which are every
+  wave's answers).
 
 - manual_overrides:
 

@@ -23,7 +23,7 @@ any local updates."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">CleanLASA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,7 @@ any local updates.</p>
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A list with four elements:</p><dl><dt>variables</dt>
+    <p>A list with five elements:</p><dl><dt>variables</dt>
 <dd><p>One row per (<code>filecode</code>, <code>wave</code>, <code>variable_name</code>):
 <code>canonical_name</code> (the wave-stripped name), <code>variable_label</code> (the
 wave-specific text), <code>harmonized_var_label</code> (a cross-wave-consistent
@@ -93,7 +93,18 @@ code: every negative code.</p></dd>
 <code>canonical_name</code>, <code>value_numeric</code>): <code>value_label</code>, <code>is_missing</code> –
 the cross-wave-standardized value labels for that variable,
 independent of wave (used where a variable's coding was harmonized
-across waves that documented it slightly differently).</p></dd>
+across waves that documented it slightly differently). A missing
+code whose meaning differs between waves has a row for each
+meaning, the later ones at a free code such as -9 or -99.</p></dd>
+
+<dt>value_labels_crosswalk</dt>
+<dd><p>One row per (<code>filecode</code>, <code>wave</code>,
+<code>variable_name</code>, <code>value_numeric</code>) whose standardized reading differs
+from the wave's own: <code>canonical_name</code>, <code>harmonized_numeric</code> (the
+harmonized code of a moved missing code; <code>NA</code> for an answer of a
+<code>"text"</code> variable), <code>harmonized_label</code>, <code>is_missing</code>, and <code>level</code>
+(the position of a <code>"text"</code> variable's answer among its factor
+levels, which are every wave's answers).</p></dd>
 
 <dt>manual_overrides</dt>
 <dd><p>A list of <code>variables</code>/<code>value_labels</code> patch

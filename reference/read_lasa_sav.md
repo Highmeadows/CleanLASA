@@ -61,9 +61,10 @@ read_lasa_sav(
 - keep_user_na:
 
   Logical, default `FALSE`. With `FALSE`, every missing-value code
-  becomes `NA`; with `TRUE`, missing codes are kept (as label text in
-  factors and character variables, as the raw code declared user-missing
-  otherwise). See
+  becomes `NA`; with `TRUE`, missing codes are kept with their labels,
+  declared SPSS user-missing (`haven_labelled_spss`: label text for a
+  `to_factor` or text variable, the code otherwise), so they count as
+  missing. See
   [`apply_lasa_labels()`](https://highmeadows.github.io/CleanLASA/reference/apply_lasa_labels.md).
   The file itself is always read with every code intact
   (`haven::read_sav(user_na = TRUE)`), so this choice is made from the
