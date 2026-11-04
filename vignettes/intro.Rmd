@@ -293,17 +293,30 @@ numeric/character vector instead.
 
 ### Variables that mean the same thing but were coded differently
 
-A handful of variables were coded on genuinely different numeric
-scales in different waves -- for example a yes/no question where `0`
-meant "no" in one wave but `1` meant "no" in another, or an income
-bracket that was redefined. There's no single set of value labels that
-correctly describes every wave for a variable like this, so the label
-database marks it `var_type == "text"` and doesn't offer harmonized
-value labels for it at all. `to_factor` handles this by converting the
-variable to its wave-specific label *text* (a character vector, not a
-factor) instead -- so even though the underlying numeric codes
-disagree between waves, the text itself (`"no"`/`"yes"`) still lines
-up, and the variable can still be compared or combined across waves.
+Some variables were coded differently in different waves -- for
+example a yes/no question where `1` meant "no" in wave C but "yes" in
+wave 2B, or an income bracket that was redefined. There's no single set
+of value labels that correctly describes every wave for a variable like
+this, so the label database marks it `var_type == "text"` and doesn't
+offer harmonized value labels for the codes that differ. With
+`standardize = TRUE` (the default) such a variable is read as its
+answers' label *text*: with `to_factor` a factor whose levels are every
+answer any wave gives, the same levels in every wave, and with
+`to_factor = FALSE` plain text. So even though the underlying numeric
+codes disagree between waves, the answers (`"no"`/`"yes"`) still line
+up, and the variable can be compared or combined across waves. With
+`standardize = FALSE` every variable gets its own wave's labels.
+
+Missing-value codes can change meaning between waves too: in file 272,
+`-4` means "short version" in wave C but "do not know" from wave D on.
+With `standardize = TRUE` the meaning the documentation introduced first
+keeps its code, and a later meaning moves to the code another wave gives
+it, or else to a free code (`-9`, then `-99`, `-98`, ...). Wave D's
+"do not know" therefore reads as `-9`. The label database's
+`value_labels_crosswalk` table lists every such move.
+
+Codes that share a label, such as `19` and `23` (both "Italian") in
+z004's `anation`, share one factor level.
 
 ### Restore count/continuous variables to plain numeric
 
@@ -334,7 +347,7 @@ numeric-classified variables become plain numbers.
 ### Missing-value codes
 
 LASA records *why* an answer is missing with negative codes, such as
-`-1` = "Na, asked" or `-2` = "Na, see BMOVED". `keep_user_na` decides
+`-1` = "na, asked", `-2` = "na, see BMOVED" or `-2` = "institution". `keep_user_na` decides
 what happens to them, and it does the same thing for every variable,
 whatever its type:
 
@@ -342,13 +355,18 @@ whatever its type:
   `NA`, in factors, label-text variables and numeric variables alike,
   and factors get no level for it. This is what you want for most
   analyses.
-* `keep_user_na = TRUE`: every missing code is kept. Factors and
-  label-text variables show the reason as text (`"Na, see BMOVED"`).
-  A numeric variable can't hold text, so it keeps the raw code (`-2`)
-  as a `haven_labelled_spss` vector, with the reason as its value
-  label and the code declared missing: `is.na()` reports it as
-  missing, and `haven::zap_missing()` turns it into `NA` when you
-  need to compute with it.
+* `keep_user_na = TRUE`: every missing code is kept with its own
+  label (e.g. `-2` = "institution"), declared SPSS user-missing, so the
+  informative label stays in the data while it is analysed as missing:
+  `is.na()` reports it as missing. A categorical variable becomes a
+  `haven_labelled_spss` vector of label text (a factor can't mark a
+  level as missing), and a numeric one keeps the raw code (`-2`) as a
+  `haven_labelled_spss` vector with the reason as its value label.
+  To use the reasons as categories after all, turn the text into a
+  factor with `labelled::to_factor(x)` (missing reasons become extra
+  levels) or `labelled::to_factor(x, user_na_to_na = TRUE)` (they
+  become `NA`); `haven::zap_missing()` turns a numeric one into `NA`
+  when you need to compute with it.
 
 ```{r missing-codes, eval=FALSE}
 data <- read_lasa_sav("LASAB014.sav", keep_user_na = TRUE)
@@ -538,7 +556,7 @@ originate from `read_lasa_sav()`, it's most reliable to just tell it
 
 `lasa_label_db()` returns the metadata database CleanLASA is currently
 using -- the bundled data shipped with the package, plus any manual
-corrections you've made (see the next section). It's a list with four
+corrections you've made (see the next section). It's a list with five
 parts:
 
 - **`variables`** -- one row per file-code/wave/variable combination:
@@ -556,9 +574,14 @@ parts:
   at). Useful for combining data across waves that coded the same
   concept in slightly different words. A variable whose coding
   genuinely differs across waves (`var_type == "text"` in `variables`)
-  has no rows here at all -- see [the earlier
+  has no rows here for the codes that differ -- see [the earlier
   section](#variables-that-mean-the-same-thing-but-were-coded-differently)
   on why.
+- **`value_labels_crosswalk`** -- how a wave's codes are read under
+  `standardize`: for a `var_type == "text"` variable, each answer's text
+  and its place among the factor levels (`level`), and for a
+  missing-value code whose meaning differs between waves, the code it
+  moves to (`harmonized_numeric`, e.g. `-9`).
 - **`manual_overrides`** -- your own hand-authored corrections, kept
   separately from the bundled data (see the next section).
 

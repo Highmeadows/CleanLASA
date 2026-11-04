@@ -5,7 +5,7 @@
 \alias{lasa_label_db_bundled}
 \title{Bundled LASA variable/value-label database}
 \format{
-A list with four elements:
+A list with five elements:
 \describe{
 \item{variables}{One row per (\code{filecode}, \code{wave}, \code{variable_name}):
 \code{canonical_name} (the wave-stripped name), \code{variable_label} (the
@@ -23,7 +23,16 @@ code: every negative code.}
 \code{canonical_name}, \code{value_numeric}): \code{value_label}, \code{is_missing} --
 the cross-wave-standardized value labels for that variable,
 independent of wave (used where a variable's coding was harmonized
-across waves that documented it slightly differently).}
+across waves that documented it slightly differently). A missing
+code whose meaning differs between waves has a row for each
+meaning, the later ones at a free code such as -9 or -99.}
+\item{value_labels_crosswalk}{One row per (\code{filecode}, \code{wave},
+\code{variable_name}, \code{value_numeric}) whose standardized reading differs
+from the wave's own: \code{canonical_name}, \code{harmonized_numeric} (the
+harmonized code of a moved missing code; \code{NA} for an answer of a
+\code{"text"} variable), \code{harmonized_label}, \code{is_missing}, and \code{level}
+(the position of a \code{"text"} variable's answer among its factor
+levels, which are every wave's answers).}
 \item{manual_overrides}{A list of \code{variables}/\code{value_labels} patch
 tables; empty in the bundled snapshot -- populated only in a user's
 local copy by \code{\link[=manual_update_lasa_labels]{manual_update_lasa_labels()}}.}

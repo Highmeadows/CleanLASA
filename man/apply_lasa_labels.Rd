@@ -60,8 +60,9 @@ separately as \code{"wave_label"}.}
 \item{.standardize_val_labels}{Logical or \code{NULL} (default). If \code{TRUE},
 the harmonized value-label set is used as the active \code{"labels"} (and
 for \code{to_factor} level text) instead of the wave-specific one, where
-one is documented; if \code{NULL}, follows \code{standardize}. The wave-specific
-value labels are always available separately as \code{"labels_wave"}.}
+one is documented, and codes are read in the harmonized coding (see
+Details); if \code{NULL}, follows \code{standardize}. The wave-specific value
+labels are always available separately as \code{"labels_wave"}.}
 
 \item{add_wavecode}{Logical, default \code{FALSE}. If \code{TRUE}, inserts a
 \code{"Wave"} column (filled with the already-resolved \code{wave}) right after
@@ -70,25 +71,30 @@ effectively \code{TRUE}.}
 
 \item{to_factor}{Logical, default \code{TRUE}. Convert categorical
 (value-labelled) variables to factors using the active value labels
-as levels, instead of leaving them numeric/character. A variable whose
-value coding is inconsistent across waves (database \code{var_type == "text"}) is instead recoded to its wave-specific label text
-(character), never a factor -- see Details.}
+as levels, instead of leaving them numeric/character. Codes that share
+a label (e.g. 19 and 23 both "Italian") share one level. A variable
+whose answer labels differ between waves (database \code{var_type == "text"}) gets every wave's answers as levels under standardize -- see
+Details. With \code{keep_user_na = TRUE}, the result is label text with the
+missing labels declared user-missing instead, since a factor can't
+mark a level missing.}
 
 \item{to_numeric}{Logical, default \code{TRUE}. Restore count/continuous
 variables (per the database's \code{var_type}) to plain numeric. How their
 missing-value codes come out is set by \code{keep_user_na}.}
 
 \item{keep_user_na}{Logical, default \code{FALSE}. How missing-value codes
-(e.g. \code{-2} = "na, see BMOVED") are represented, the same way for every
+(e.g. \code{-2} = "institution") are represented, the same way for every
 variable type. With \code{FALSE}, every missing code becomes \code{NA}, and
-factors get no level for it. With \code{TRUE}, every missing code is kept:
-factors and label-text (character) variables show its label text, and
-any other variable -- including a \code{to_numeric} one, since a numeric
-vector can't hold text -- keeps the raw code as a
-\code{haven_labelled_spss} vector with the value labels attached and the
-missing codes declared user-missing (so \code{\link[haven:zap_missing]{haven::zap_missing()}} or
-\code{is.na()} still recognise them). See Details for which codes count as
-missing.}
+factors get no level for it. With \code{TRUE}, every missing code is kept
+with its own label, declared SPSS user-missing, so the informative
+label stays in the data but is analysed as missing (\code{is.na()} is
+\code{TRUE} for it): a \code{haven_labelled_spss} vector, of label text for a
+\code{to_factor} or text variable and of the codes otherwise (including a
+\code{to_numeric} one). \code{\link[labelled:to_factor]{labelled::to_factor()}} or \code{\link[haven:as_factor]{haven::as_factor()}}
+turn label text into a factor with the missing labels as extra
+levels, \code{labelled::to_factor(user_na_to_na = TRUE)} or
+\code{\link[haven:zap_missing]{haven::zap_missing()}} into one without them. See Details for which
+codes count as missing.}
 }
 \value{
 \code{data}, labelled (and optionally reshaped/renamed) with
@@ -99,8 +105,9 @@ labels -- wave-specific unless the corresponding standardize switch
 is on), \code{"wave_label"}/\code{"labels_wave"} (always the wave-specific
 versions), \code{"canonical_name"} (the wave-stripped variable name), and,
 where the database documents them, \code{"harmonized_label"}/
-\code{"labels_harmonized"} (the cross-wave-consistent versions -- never
-present for a \code{var_type == "text"} variable).
+\code{"labels_harmonized"} (the cross-wave-consistent versions; for a
+\code{var_type == "text"} variable only its codes that agree between
+waves).
 }
 \description{
 The engine behind \code{\link[=read_lasa_sav]{read_lasa_sav()}}: attaches SPSS-style variable and
@@ -139,13 +146,25 @@ they're left alone and recorded in the \code{"label_report"} attribute; see
 \code{\link[=lasa_label_report]{lasa_label_report()}}.
 
 A variable's value coding sometimes genuinely differs by wave (e.g. a
-binary code's polarity flipped, or an income variable's brackets were
-redefined) so no single cross-wave value label could be written; the
-database marks such a variable \code{var_type == "text"} and documents no
-harmonized value labels for it at all. \code{to_factor} then recodes it to
-its wave-specific label text (character) instead of a factor, so waves
-whose numeric codes disagree but whose label text agrees (e.g.
-\verb{0 = "no", 1 = "yes"} vs. \verb{1 = "no", 2 = "yes"}) still merge correctly.
+binary code's polarity flipped, \code{1 = "no"} in wave C but \code{1 = "yes"} in
+2B, or an income variable's brackets were redefined), so no single
+cross-wave value label can be written; the database marks such a
+variable \code{var_type == "text"} and documents no harmonized label for the
+codes that differ. With standardize, it is read as its answers' label
+text: a factor (\code{to_factor}) whose levels are every wave's answers, the
+same levels at every wave, or plain text (\code{to_factor = FALSE}). Waves
+whose codes disagree but whose labels agree then merge correctly.
+Without standardize, every variable gets its wave's own labels.
+
+A missing-value code can mean something else in different waves too
+(e.g. \code{-4} = "short version" in wave C but "do not know" from wave D
+on). With standardize, the meaning the documentation introduced first
+keeps the code, and a later meaning moves to the code another wave
+gives it, or else to a free code (\code{-9}, then \code{-99}, \code{-98}, ...), so
+that each harmonized code has one label. The database's
+\code{value_labels_crosswalk} lists every such move. Harmonized missing
+codes are labelled with what the waves say (e.g. "institution"), not a
+label made up to cover several reasons.
 
 A code counts as missing when the label database flags its value label
 as missing: every negative documented code, e.g. \code{-1} = "na, asked", or

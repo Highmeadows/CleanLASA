@@ -19,7 +19,7 @@ var_types_vec <- c(
   msmokecignw = "numeric",
   msmokecignwp = "numeric",
   msmokecigp = "categorical",
-  msmokecigpnw = "numeric",
+  msmokecigpnw = "categorical",
   msmokeecig = "categorical",
   msmokeecigd = "categorical",
   msmokeecigf = "categorical",

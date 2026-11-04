@@ -40,8 +40,8 @@ var_types_vec <- c(
   mgriplp = "categorical",
   mgriplp1 = "categorical",
   mgriplp2 = "categorical",
-  mgriplp3 = "numeric",
-  mgriplp4 = "numeric",
+  mgriplp3 = "categorical",
+  mgriplp4 = "categorical",
   mgriplpnorm = "categorical",
   mgripmeasp = "categorical",
   mgripp = "categorical",
@@ -50,8 +50,8 @@ var_types_vec <- c(
   mgriprp = "categorical",
   mgriprp1 = "categorical",
   mgriprp2 = "categorical",
-  mgriprp3 = "numeric",
-  mgriprp4 = "numeric",
+  mgriprp3 = "categorical",
+  mgriprp4 = "categorical",
   mgriprpnorm = "categorical",
   mheight = "numeric",
   mheightp = "categorical",
@@ -119,11 +119,11 @@ var_types_vec <- c(
   mweightp4 = "categorical",
   mweightp5 = "categorical",
   mweightp6 = "categorical",
-  mweightp7 = "numeric",
+  mweightp7 = "categorical",
   mweightp8 = "categorical",
   mweightp9 = "categorical",
   mweightself = "numeric",
-  rm161 = "numeric"
+  rm161 = "categorical"
 )
 
 # define variable labels ----

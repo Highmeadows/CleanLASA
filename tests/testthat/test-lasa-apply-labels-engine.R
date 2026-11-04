@@ -287,13 +287,13 @@ local_text_fallback_db <- function(env = parent.frame()) {
   tmp
 }
 
-test_that("var_type == \"text\" recodes to wave-specific label text, never a factor", {
+test_that("var_type == \"text\" without standardize is a factor of the wave's own labels", {
   local_text_fallback_db()
   dat <- data.frame(RespNr = 1:3, BFOO06 = c(0, 1, 0), stringsAsFactors = FALSE)
   out <- .lasa_apply_labels(dat, filecode = "997", wave = "B", standardize = FALSE, to_factor = TRUE)
 
-  expect_type(out$BFOO06, "character")
-  expect_false(is.factor(out$BFOO06))
+  expect_s3_class(out$BFOO06, "factor")
+  expect_equal(levels(out$BFOO06), c("no", "yes"))
   expect_equal(as.vector(out$BFOO06), c("no", "yes", "no"))
   expect_null(attr(out$BFOO06, "labels_harmonized"))
   expect_null(attr(out$BFOO06, "harmonized_label"))

@@ -749,9 +749,10 @@ test_that("a baseline column of wide data reads back at its wave also without th
   expect_equal(as.character(back$lphya01), as.character(long$lphya01[long$Wave != "C"]))
 
   # In a result with wave 4B, whose files use the baselines' "b" names, so
-  # does a name of a single baseline (bcva02, wave B).
+  # does a name of a single baseline (bcva02, wave B; kept as its codes, as
+  # the label database documents nothing of file 035 at 4B).
   read_035 <- function(filename, ids, values) {
-    suppressMessages(read_fixture(data.frame(RespNr = ids, BCVA02 = values), filename, format_as_long = TRUE))
+    suppressMessages(read_fixture(data.frame(RespNr = ids, BCVA02 = values), filename, format_as_long = TRUE, to_factor = FALSE))
   }
   long <- suppressMessages(transform_lasa_data(merge(
     rbind(read_035("LASAB035.SAV", 1:2, c(60, 70)), read_035("LAS4B035.SAV", c(401, 402), c(55, 65))),
@@ -3021,7 +3022,11 @@ test_that("a wide file joined first onto long data keeps its columns at its wave
 
 test_that("blank text, as SPSS stores missing text, holds no value", {
   lab <- c("na, asked" = -1, "no, I cannot" = 1, "only with help" = 2, "yes, without help" = 5)
-  read_long <- function(data, filename) suppressMessages(read_fixture(data, filename, format_as_long = TRUE))
+  # adl1a's answer labels differ between waves, so to_factor = FALSE reads
+  # it as plain text.
+  read_long <- function(data, filename) {
+    suppressMessages(read_fixture(data, filename, format_as_long = TRUE, to_factor = FALSE))
+  }
   long <- transform_lasa_data(rbind(
     read_long(data.frame(RespNr = c(10001, 10002), BADL1A = haven::labelled(c(5, 2), lab)), "LASAB030.SAV"),
     read_long(data.frame(RespNr = 10001, CADL1A = haven::labelled(5, lab)), "LASAC030.SAV"),

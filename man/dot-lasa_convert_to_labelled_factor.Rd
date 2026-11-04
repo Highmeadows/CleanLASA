@@ -32,9 +32,9 @@ engine. Converts \code{x} to a factor using \code{value_label_map}'s names as
 level text for coded values; an observed value with no codebook label,
 or a code the codebook lists without wording (an \code{NA} label), keeps its
 own numeric code (as text) as its level, rather than becoming \code{NA}.
-Colliding level text (e.g. two different codes that happen to
-share a label) is disambiguated by appending the numeric code in
-brackets.
+Codes that share their label text (e.g. 19 and 23 both "Italian") share
+one level -- except that a missing code's text and an answer's text are
+kept apart, by appending the code in brackets.
 }
 \details{
 With \code{keep_user_na = FALSE}, every code in \code{missing_codes} becomes \code{NA}

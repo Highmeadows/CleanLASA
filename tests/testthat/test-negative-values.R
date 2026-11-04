@@ -92,10 +92,12 @@ test_that("the labelled (to_factor/to_numeric off) form keeps negative measureme
 test_that("re-labelling already-converted output keeps negative measurements", {
   local_negative_db()
   kept <- relabel(negative_fixture(), keep_user_na = TRUE, to_numeric = FALSE)
-  # bsrt has value labels, so to_numeric = FALSE makes it a factor whose
-  # measurements are levels named after their own number.
-  expect_s3_class(kept$bsrt, "factor")
+  # bsrt has value labels, so to_numeric = FALSE makes it label text whose
+  # measurements are named after their own number, and only its missing
+  # codes are declared missing.
+  expect_s3_class(kept$bsrt, "haven_labelled_spss")
   expect_equal(as.character(kept$bsrt)[1:3], c("-6.4", "-9.2", "1.5"))
+  expect_equal(is.na(kept$bsrt), c(FALSE, FALSE, FALSE, TRUE, TRUE))
 
   out <- relabel(kept, keep_user_na = FALSE, to_numeric = FALSE)
   expect_equal(as.character(out$brmpf), c(NA, NA, "short version", NA, "interview terminated"))

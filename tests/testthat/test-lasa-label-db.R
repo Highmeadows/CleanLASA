@@ -176,9 +176,15 @@ test_that("codebook typos are corrected in the bundled database", {
   expect_false("kob1" %in% v$canonical_name[v$filecode == "016"])
   expect_equal(v$canonical_name[v$filecode == "016" & v$variable_name == "kjob1"], "job1")
 
-  # 035 choutd -2 means "no chronic disease", not generic missingness.
+  # 035 choutd's "no chronic disease" is not generic missingness. Wave I
+  # gives -2 that meaning with a routing note; J and K's own wording moves
+  # to -9.
   expect_equal(
     h$value_label[h$filecode == "035" & h$canonical_name == "choutd" & h$value_numeric == -2],
+    "na, see HEALTH1 & not any chronic disease"
+  )
+  expect_equal(
+    h$value_label[h$filecode == "035" & h$canonical_name == "choutd" & h$value_numeric == -9],
     "na, not any chronic disease"
   )
 

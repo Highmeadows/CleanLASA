@@ -599,3 +599,225 @@ negative_values <- function(..., .applies_to_waves) {
     negative_values = negative_values
   )
 }
+
+## -----------------------------------------------------------------------
+## Cross-wave harmonization of value codes, run by build_lasa_label_db.R
+## after flattening every filecode. Compares each canonical variable's
+## wave-specific value labels across waves (in documentation order, the
+## order of wave_prefix):
+##
+##   * An answer code (>= 0) of a categorical variable whose label differs
+##     between waves (e.g. 1 = "no" in C but "yes" in 2B) can't carry one
+##     harmonized label. The variable becomes var_type "text": under
+##     standardize it is read as its wave-specific label text, and its
+##     factor levels are every distinct answer text over all waves
+##     (`level`). Its conflicting answer codes get no harmonized label.
+##   * A missing-value code (< 0) whose label differs between waves (e.g.
+##     -4 = "short version Q" in C but "do not know" from D) keeps its code
+##     for the meaning the documentation introduced first; each later
+##     meaning moves to the code another wave already gives it, or else to
+##     a free code -9, -99, -98, ... .
+##   * A missing-value code's harmonized label says what its waves say
+##     (e.g. "institution", "na, see MOVED"), not a label made up to cover
+##     several reasons ("not available, routing").
+##
+## Labels count as the same when they only differ in case, spacing,
+## a trailing "[code]", the "na"/"no answer" abbreviation, or (for a
+## routing label "na, see X") in the wave prefix of the variable they
+## point to.
+## -----------------------------------------------------------------------
+
+## Free codes for a missing-value meaning that has to move, in order.
+.lasa_spare_missing_codes <- c(-9, -99:-90, -999:-990)
+
+## The comparison key of answer label text.
+.lasa_label_key <- function(text) {
+  key <- tolower(trimws(gsub("\\s+", " ", text)))
+  key <- gsub("\\s*/\\s*", "/", key)
+  key <- sub("\\s*\\[-?[0-9.]+\\]$", "", key)
+  sub("\\.$", "", key)
+}
+
+## The routing label "na, see X" with X's wave prefix dropped when X
+## without it, and not X itself, is one of the database's canonical names
+## (`canonical`) -- any wave's prefix, as a label sometimes points to
+## another wave's variable. With `display`, the variable is written as LASA
+## writes it (upper case); otherwise the text keeps its own spelling.
+.lasa_strip_routing_prefix <- function(text, wave, canonical, display = FALSE) {
+  m <- regexec("^(.*\\bsee\\s+)([A-Za-z0-9_#&]+)(.*)$", text)
+  parts <- regmatches(text, m)
+  out <- text
+  prefixes <- unique(wave_prefix)
+  for (i in seq_along(parts)) {
+    p <- parts[[i]]
+    if (length(p) != 4L) next
+    token <- tolower(p[[3L]])
+    if (token %in% canonical || sub("[#&].*$", "", token) %in% canonical) next
+    stripped <- NA_character_
+    for (prefix in prefixes[startsWith(token, prefixes)]) {
+      rest <- substring(token, nchar(prefix) + 1L)
+      if (rest %in% canonical || sub("[#&].*$", "", rest) %in% canonical) stripped <- rest
+    }
+    if (is.na(stripped)) next
+    out[[i]] <- paste0(p[[2L]], if (display) toupper(stripped) else stripped, p[[4L]])
+  }
+  out
+}
+
+## The comparison key of missing-value label text: .lasa_label_key() plus
+## the "na"/"no answer" spellings LASA uses for one reason, and routing
+## labels compared without the wave prefix.
+.lasa_missing_key <- function(text, wave, canonical) {
+  key <- .lasa_label_key(.lasa_strip_routing_prefix(text, wave, canonical))
+  # A leading qualifier only says the item has no answer ("na, asked",
+  # "no answer, asked", "na: died earlier", "not asked: died earlier"):
+  # compare the reason after it.
+  key <- sub("^(na|n\\.a\\.|no answer|answer|not asked|not available)\\s*[:,]\\s*", "", key)
+  key <- sub("^na\\s+", "", key)
+  key[key %in% c("na", "no answer", "")] <- "asked"
+  key <- sub("^short version( interview| q)?$", "short interview", key)
+  key
+}
+
+## Applies the harmonization above to the flattened tables. Returns them
+## updated, plus `value_labels_crosswalk`: one row per wave-specific value
+## label whose harmonized coding differs from the wave's own (a moved
+## missing code), or that belongs to a var_type "text" variable --
+## harmonized_numeric (NA for a text variable's answer), harmonized_label,
+## is_missing, and `level` (a text variable's answer text's position among
+## its factor levels).
+.lasa_harmonize_codes <- function(variables, value_labels, value_labels_harmonized) {
+  wave_order <- names(wave_prefix)
+  var_key <- paste(variables$filecode, variables$wave, variables$variable_name, sep = "\r")
+  vl_key <- paste(value_labels$filecode, value_labels$wave, value_labels$variable_name, sep = "\r")
+  value_labels$canonical_name <- variables$canonical_name[match(vl_key, var_key)]
+  hz_key <- paste(value_labels_harmonized$filecode, value_labels_harmonized$canonical_name, sep = "\r")
+
+  types <- unique(variables[c("filecode", "canonical_name", "var_type")])
+  groups <- split(seq_len(nrow(value_labels)), paste(value_labels$filecode, value_labels$canonical_name, sep = "\r"))
+  # Routing labels can point to a variable of another file code.
+  canonical <- unique(tolower(variables$canonical_name))
+
+  crosswalk <- list()
+  new_text <- character(0)
+  drop_hz <- logical(nrow(value_labels_harmonized))
+  hz_label <- value_labels_harmonized$value_label
+  hz_add <- list()
+
+  for (g in names(groups)) {
+    idx <- groups[[g]]
+    rows <- value_labels[idx, , drop = FALSE]
+    fc <- rows$filecode[[1L]]
+    cn <- rows$canonical_name[[1L]]
+    type <- types$var_type[types$filecode == fc & types$canonical_name == cn][[1L]]
+    if (type %in% c("date")) next
+    ord <- order(match(rows$wave, wave_order), -rows$value_numeric)
+    rows <- rows[ord, , drop = FALSE]
+    labelled <- !is.na(rows$value_label) & !is.na(rows$value_numeric)
+    answer <- labelled & rows$value_numeric >= 0
+    missing <- labelled & rows$value_numeric < 0
+    hz_rows <- which(hz_key == g)
+    hz_codes <- value_labels_harmonized$value_numeric[hz_rows]
+
+    # --- answer codes ---
+    answer_key <- .lasa_label_key(rows$value_label)
+    conflicting <- character(0)
+    if (type %in% c("categorical", "text") && any(answer)) {
+      per_code <- tapply(answer_key[answer], rows$value_numeric[answer], function(k) length(unique(k)))
+      conflicting <- names(per_code)[per_code > 1L]
+    }
+    is_text <- identical(type, "text") || length(conflicting) > 0L
+    if (length(conflicting) > 0L && !identical(type, "text")) new_text <- c(new_text, g)
+    if (length(conflicting) > 0L) {
+      drop_hz[hz_rows[as.character(hz_codes) %in% conflicting & hz_codes >= 0]] <- TRUE
+    }
+
+    # --- missing codes ---
+    mkey <- .lasa_missing_key(rows$value_label, rows$wave, canonical)
+    harmonized_numeric <- rows$value_numeric
+    harmonized_label <- rows$value_label
+    if (any(missing)) {
+      used <- unique(c(rows$value_numeric, hz_codes))
+      key_code <- character(0) # meaning key -> harmonized code
+      code_key <- character(0) # harmonized code -> meaning key
+      for (i in which(missing)) {
+        k <- mkey[[i]]
+        if (k %in% names(key_code)) {
+          harmonized_numeric[[i]] <- as.numeric(key_code[[k]])
+          next
+        }
+        code <- rows$value_numeric[[i]]
+        if (as.character(code) %in% names(code_key)) {
+          code <- setdiff(.lasa_spare_missing_codes, used)[[1L]]
+          used <- c(used, code)
+        }
+        key_code[[k]] <- as.character(code)
+        code_key[[as.character(code)]] <- k
+        harmonized_numeric[[i]] <- code
+      }
+      # Each harmonized missing code is labelled with what its waves say,
+      # not a label made up to cover several reasons: the hand-written
+      # harmonized label when it says the same, else the waves' most common
+      # spelling (routing labels without the wave prefix).
+      display <- .lasa_strip_routing_prefix(rows$value_label, rows$wave, canonical, display = TRUE)
+      for (code in unique(harmonized_numeric[missing])) {
+        holders <- which(missing & harmonized_numeric == code)
+        counts <- table(display[holders])
+        text <- display[holders][display[holders] %in% names(counts)[counts == max(counts)]][[1L]]
+        j <- match(code, hz_codes)
+        if (!is.na(j) && identical(
+          .lasa_missing_key(hz_label[[hz_rows[[j]]]], rows$wave[[holders[[1L]]]], canonical),
+          mkey[[holders[[1L]]]]
+        )) {
+          text <- hz_label[[hz_rows[[j]]]]
+        }
+        harmonized_label[holders] <- text
+        if (!is.na(j)) {
+          hz_label[[hz_rows[[j]]]] <- text
+        } else {
+          hz_add[[length(hz_add) + 1L]] <- data.frame(
+            filecode = fc, canonical_name = cn, value_numeric = code, value_label = text,
+            is_missing = TRUE, stringsAsFactors = FALSE
+          )
+        }
+      }
+    }
+
+    # --- crosswalk rows ---
+    level <- rep(NA_integer_, nrow(rows))
+    if (is_text) {
+      level_keys <- unique(answer_key[answer])
+      level[answer] <- match(answer_key[answer], level_keys)
+      first_spelling <- rows$value_label[answer][match(level_keys, answer_key[answer])]
+      harmonized_label[answer] <- first_spelling[level[answer]]
+      harmonized_numeric[answer] <- NA_real_
+      keep <- labelled
+    } else {
+      keep <- missing & harmonized_numeric != rows$value_numeric
+    }
+    if (any(keep)) {
+      crosswalk[[length(crosswalk) + 1L]] <- data.frame(
+        filecode = fc, wave = rows$wave[keep], variable_name = rows$variable_name[keep],
+        canonical_name = cn, value_numeric = rows$value_numeric[keep], harmonized_numeric = harmonized_numeric[keep],
+        harmonized_label = harmonized_label[keep], is_missing = rows$value_numeric[keep] < 0,
+        level = level[keep], stringsAsFactors = FALSE
+      )
+    }
+  }
+
+  value_labels_harmonized$value_label <- hz_label
+  value_labels_harmonized <- value_labels_harmonized[!drop_hz, , drop = FALSE]
+  if (length(hz_add) > 0L) value_labels_harmonized <- rbind(value_labels_harmonized, do.call(rbind, hz_add))
+  value_labels_harmonized <- value_labels_harmonized[
+    order(value_labels_harmonized$filecode, value_labels_harmonized$canonical_name), , drop = FALSE
+  ]
+  variables$var_type[paste(variables$filecode, variables$canonical_name, sep = "\r") %in% new_text] <- "text"
+  value_labels$canonical_name <- NULL
+
+  crosswalk <- if (length(crosswalk) > 0L) do.call(rbind, crosswalk) else NULL
+  list(
+    variables = variables, value_labels = value_labels,
+    value_labels_harmonized = value_labels_harmonized,
+    value_labels_crosswalk = crosswalk, n_new_text = length(new_text)
+  )
+}

@@ -9,7 +9,7 @@
 # thin wrapper: all matching, transforming, standardizing, and
 # `add_wavecode` logic lives in `apply_lasa_labels()`. The reshaping
 # helpers below (`.lasa_convert_to_labelled_factor()`,
-# `.lasa_convert_to_labelled_text()`, `.lasa_restore_plain_numeric()`,
+# `.lasa_convert_crosswalk_text()`, `.lasa_restore_plain_numeric()`,
 # `.lasa_insert_wave_column()`) are shared by that engine.
 #
 # Shared parameter contract
@@ -37,10 +37,10 @@
 #                                variables to factors instead of leaving
 #                                them numeric/character. A variable whose
 #                                value coding is inconsistent across waves
-#                                (var_type == "text") is instead recoded to
-#                                its wave-specific label text (character),
-#                                never a factor, so it merges correctly
-#                                across waves despite differing codes.
+#                                (var_type == "text") gets every wave's
+#                                answers as its levels under standardize,
+#                                so it merges correctly across waves
+#                                despite differing codes.
 #   * to_numeric                - restore count/continuous variables to
 #                                plain numeric.
 #   * keep_user_na              - how missing-value codes (every code the
@@ -50,10 +50,11 @@
 #                                negative) are
 #                                represented, uniformly for every variable
 #                                type: FALSE (default) turns them into NA;
-#                                TRUE keeps them -- as their label text in
-#                                a factor/character variable, or as the
-#                                raw code declared SPSS user-missing
-#                                (`haven_labelled_spss`) otherwise.
+#                                TRUE keeps them with their labels,
+#                                declared SPSS user-missing
+#                                (`haven_labelled_spss`) -- as label text
+#                                for a to_factor/text variable, as the
+#                                code otherwise.
 #
 # Regardless of these arguments, matched variables always keep their
 # original SPSS value coding available as reference attributes
@@ -317,9 +318,9 @@
 #' level text for coded values; an observed value with no codebook label,
 #' or a code the codebook lists without wording (an `NA` label), keeps its
 #' own numeric code (as text) as its level, rather than becoming `NA`.
-#' Colliding level text (e.g. two different codes that happen to
-#' share a label) is disambiguated by appending the numeric code in
-#' brackets.
+#' Codes that share their label text (e.g. 19 and 23 both "Italian") share
+#' one level -- except that a missing code's text and an answer's text are
+#' kept apart, by appending the code in brackets.
 #'
 #' With `keep_user_na = FALSE`, every code in `missing_codes` becomes `NA`
 #' and gets no level of its own; with `keep_user_na = TRUE`, missing codes
@@ -337,85 +338,164 @@
 #' @keywords internal
 .lasa_convert_to_labelled_factor <- function(x, value_label_map, missing_codes = numeric(0), keep_user_na = TRUE) {
   values <- .lasa_numeric_values(x)
-  label_codes <- as.numeric(unname(value_label_map))
-  label_text <- names(value_label_map)
-
-  # Guard against an (unexpected) repeated code in the value-label vector,
-  # keeping only its first definition so factor() doesn't error out.
-  keep <- !duplicated(label_codes)
-  label_codes <- label_codes[keep]
-  label_text <- label_text[keep]
-
+  if (!isTRUE(keep_user_na)) values[values %in% missing_codes] <- NA_real_
+  levels <- .lasa_code_levels(values, value_label_map, if (isTRUE(keep_user_na)) missing_codes else NULL)
   if (!isTRUE(keep_user_na)) {
-    values[values %in% missing_codes] <- NA_real_
-    keep <- !label_codes %in% missing_codes
-    label_codes <- label_codes[keep]
-    label_text <- label_text[keep]
+    levels <- levels[!levels$code %in% missing_codes, , drop = FALSE]
   }
-
-  observed_codes <- unique(values[!is.na(values)])
-  level_codes <- sort(unique(c(label_codes, observed_codes)))
-
-  level_text <- vapply(
-    level_codes,
-    function(code) {
-      i <- match(code, label_codes)
-      if (!is.na(i) && !is.na(label_text[[i]])) label_text[[i]] else as.character(code)
-    },
-    character(1)
-  )
-
-  # factor() would silently merge two distinct codes if their text happened
-  # to collide. Disambiguate defensively so no numeric value is ever lost.
-  if (anyDuplicated(level_text)) {
-    collided <- unique(level_text[duplicated(level_text) | duplicated(level_text, fromLast = TRUE)])
-    for (txt in collided) {
-      i <- which(level_text == txt)
-      level_text[i] <- paste0(txt, " [", level_codes[i], "]")
-    }
-  }
-
-  factor(values, levels = level_codes, labels = level_text)
+  factor(levels$text[match(values, levels$code)], levels = unique(levels$text))
 }
 
-## Recodes a variable's numeric codes to their wave-specific label TEXT (a
-## character vector), instead of building a factor -- used for variables
-## whose value coding is inconsistent across waves (var_type == "text", see
-## data-raw/build_lasa_label_db.R). Unlike .lasa_convert_to_labelled_factor(),
-## colliding label text across different codes is exactly the point here
-## (e.g. code 0 in one wave and code 1 in another both meaning "no"), so it
-## is never disambiguated.
-##
-## Idempotent: a variable already converted by an earlier apply_lasa_labels()
-## call (e.g. re-labelling read_lasa_sav()'s own output) is already label
-## text, not a numeric code -- left untouched rather than coerced to NA.
-## (The engine blanks its missing label text itself when keep_user_na =
-## FALSE, see .lasa_blank_missing_text().)
-##
-## With keep_user_na = FALSE, every code in `missing_codes` becomes NA;
-## with keep_user_na = TRUE, it becomes its label text like any other code.
-.lasa_convert_to_labelled_text <- function(x, value_label_map, missing_codes = numeric(0), keep_user_na = TRUE) {
-  if (is.character(x)) return(x)
+## The level of every code of `x`'s values and `value_label_map` (names =
+## label text, values = codes), sorted by code: its label, or its own
+## number for a code without one. A text that a missing code (one of
+## `missing_codes`) and an answer code share gets each code in brackets.
+.lasa_code_levels <- function(values, value_label_map, missing_codes = NULL) {
   label_codes <- as.numeric(unname(value_label_map))
   label_text <- names(value_label_map)
-  values <- .lasa_numeric_values(x)
-  if (!isTRUE(keep_user_na)) values[values %in% missing_codes] <- NA_real_
-
-  # Same guard as .lasa_convert_to_labelled_factor(): keep only the first
-  # definition of a repeated code.
+  # Guard against an (unexpected) repeated code in the value-label vector,
+  # keeping only its first definition.
   keep <- !duplicated(label_codes)
   label_codes <- label_codes[keep]
   label_text <- label_text[keep]
 
-  vapply(
-    values,
-    function(v) {
-      if (is.na(v)) return(NA_character_)
-      i <- match(v, label_codes)
-      if (!is.na(i) && !is.na(label_text[[i]])) label_text[[i]] else as.character(v)
-    },
-    character(1)
+  codes <- sort(unique(c(label_codes, values[!is.na(values)])))
+  i <- match(codes, label_codes)
+  text <- ifelse(!is.na(i) & !is.na(label_text[i]), label_text[i], as.character(codes))
+  missing <- codes %in% missing_codes
+  clash <- text %in% text[missing] & text %in% text[!missing]
+  text[clash] <- paste0(text[clash], " [", codes[clash], "]")
+  data.frame(code = codes, text = text, missing = missing, stringsAsFactors = FALSE)
+}
+
+## TRUE when `x` is label text kept as an SPSS-style labelled vector (the
+## keep_user_na = TRUE form of a to_factor or text variable).
+.lasa_is_labelled_text <- function(x) {
+  inherits(x, "haven_labelled") && is.character(unclass(x))
+}
+
+## Label text with its missing labels declared user-missing: a
+## `haven_labelled_spss` character vector whose value labels list every
+## answer level (`answers`, in order) and then every missing label
+## (`missing`), so `labelled::to_factor()` keeps that order.
+.lasa_labelled_text <- function(text, answers, missing) {
+  answers <- setdiff(unique(answers), missing)
+  missing <- unique(missing)
+  labels <- c(answers, missing)
+  haven::labelled_spss(
+    as.character(text),
+    labels = if (length(labels) > 0L) stats::setNames(labels, labels) else NULL,
+    na_values = if (length(missing) > 0L) missing else NULL
   )
+}
+
+## keep_user_na = FALSE applied to label text kept as user-missing values
+## (.lasa_labelled_text()): its missing labels become NA, and the result is
+## a factor of the remaining levels (to_factor) or plain text.
+.lasa_drop_labelled_text <- function(x, to_factor = TRUE) {
+  labels <- attr(x, "labels", exact = TRUE)
+  missing <- attr(x, "na_values", exact = TRUE)
+  text <- as.character(unclass(x))
+  attributes(text) <- NULL
+  text[text %in% missing] <- NA_character_
+  if (!isTRUE(to_factor)) return(text)
+  answers <- setdiff(unname(labels), missing)
+  factor(text, levels = unique(c(answers, sort(setdiff(unique(text[!is.na(text)]), answers)))))
+}
+
+## The to_factor = TRUE, keep_user_na = TRUE form of a coded variable: its
+## label text, with the missing codes' labels declared user-missing (see
+## .lasa_labelled_text()). Levels follow the codes' order, answers first.
+.lasa_convert_to_labelled_text_na <- function(x, value_label_map, missing_codes = numeric(0)) {
+  values <- .lasa_numeric_values(x)
+  levels <- .lasa_code_levels(values, value_label_map, missing_codes)
+  .lasa_labelled_text(
+    levels$text[match(values, levels$code)],
+    answers = levels$text[!levels$missing], missing = levels$text[levels$missing]
+  )
+}
+
+## Moves a coded variable's values to the harmonized coding: each code in
+## `from` becomes the code at the same position in `to`. The value labels
+## and SPSS user-missing declaration of the wave's own coding are dropped
+## (the engine attaches the harmonized ones); other attributes are kept.
+.lasa_recode_values <- function(x, from, to) {
+  keep <- !is.na(from) & !is.na(to)
+  from <- from[keep]
+  to <- to[keep]
+  if (length(from) == 0L || !.lasa_is_coded(x)) return(x)
+  values <- unclass(x)
+  attrs <- attributes(x)
+  attributes(values) <- NULL
+  i <- match(values, from)
+  if (!any(!is.na(i))) return(x)
+  if (is.integer(values) && all(to == round(to))) to <- as.integer(to)
+  values[!is.na(i)] <- to[i[!is.na(i)]]
+  attrs$labels <- NULL
+  attrs$na_values <- NULL
+  attrs$na_range <- NULL
+  if (!is.null(attrs$class)) {
+    attrs$class <- setdiff(attrs$class, c("haven_labelled_spss", "haven_labelled", "vctrs_vctr"))
+    if (length(attrs$class) %in% c(0L, 1L) && all(attrs$class %in% c("double", "integer"))) attrs$class <- NULL
+  }
+  attributes(values) <- attrs
+  values
+}
+
+## Reads a coded variable whose answer labels differ between waves
+## (var_type "text") as its label text, per the label database's
+## value_labels_crosswalk: `crosswalk` holds this wave's rows, `all_waves`
+## every wave's rows of the same variable. An answer reads as its text
+## (one spelling for every wave), a missing code as its harmonized label;
+## a code the crosswalk lacks falls back to `harmonized_value_map`, then to
+## the wave's own `value_map`, then to its own number. A code a manual
+## override relabelled (`overridden`) reads as the override's text.
+##
+## The answer levels are every wave's answer texts, in the order the
+## documentation introduces them, so the levels agree between waves. With
+## keep_user_na = FALSE the missing codes become NA, and the result is a
+## factor (to_factor) or plain text; with keep_user_na = TRUE it is label
+## text with every missing label declared user-missing
+## (.lasa_labelled_text()).
+.lasa_convert_crosswalk_text <- function(x, crosswalk, all_waves, value_map, harmonized_value_map,
+                                         missing_codes, keep_user_na, to_factor, overridden = numeric(0)) {
+  values <- .lasa_numeric_values(x)
+  codes <- sort(unique(c(values[!is.na(values)], crosswalk$value_numeric, as.numeric(unname(value_map)))))
+  text_of <- function(code) {
+    in_map <- function(map) {
+      if (is.null(map)) return(NA_character_)
+      i <- match(code, as.numeric(unname(map)))
+      if (is.na(i)) NA_character_ else names(map)[[i]]
+    }
+    if (code %in% overridden && !is.na(in_map(value_map))) return(in_map(value_map))
+    i <- match(code, crosswalk$value_numeric)
+    if (!is.na(i) && !is.na(crosswalk$harmonized_label[[i]])) return(crosswalk$harmonized_label[[i]])
+    for (map in list(harmonized_value_map, value_map)) {
+      text <- in_map(map)
+      if (!is.na(text)) return(text)
+    }
+    as.character(code)
+  }
+  code_text <- vapply(codes, text_of, character(1))
+  missing <- codes %in% missing_codes
+  text <- code_text[match(values, codes)]
+
+  answers_all <- all_waves[!all_waves$is_missing & !is.na(all_waves$level), , drop = FALSE]
+  answer_levels <- unique(answers_all$harmonized_label[order(answers_all$level)])
+  answer_levels <- unique(c(answer_levels, code_text[!missing]))
+  missing_levels <- unique(c(
+    all_waves$harmonized_label[all_waves$is_missing],
+    if (!is.null(harmonized_value_map)) names(harmonized_value_map)[as.numeric(harmonized_value_map) %in% missing_codes],
+    code_text[missing]
+  ))
+
+  if (isTRUE(keep_user_na)) {
+    observed_missing <- unique(text[!is.na(values) & values %in% missing_codes])
+    return(.lasa_labelled_text(text, answer_levels, unique(c(missing_levels, observed_missing))))
+  }
+  text[!is.na(values) & values %in% missing_codes] <- NA_character_
+  if (!isTRUE(to_factor)) return(text)
+  factor(text, levels = answer_levels)
 }
 
 #' Parse a LASA data-file name
@@ -534,8 +614,9 @@
 #'   [apply_lasa_labels()] for the full description of each.
 #' @param keep_user_na Logical, default `FALSE`. With `FALSE`, every
 #'   missing-value code becomes `NA`; with `TRUE`, missing codes are kept
-#'   (as label text in factors and character variables, as the raw code
-#'   declared user-missing otherwise). See [apply_lasa_labels()]. The file
+#'   with their labels, declared SPSS user-missing (`haven_labelled_spss`:
+#'   label text for a `to_factor` or text variable, the code otherwise),
+#'   so they count as missing. See [apply_lasa_labels()]. The file
 #'   itself is always read with every code intact
 #'   (`haven::read_sav(user_na = TRUE)`), so this choice is made from the
 #'   LASA documentation rather than from whatever the `.sav` file happens
